@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   position: relative;
+  margin-bottom: 100px;
 
   .paragraph {
     position: absolute;
@@ -12,12 +13,14 @@ const Wrapper = styled.div`
       font-size: 36px;
       color: rgba(255, 255, 255, 0.87);
       margin-bottom: 24px;
+      line-height: 48px;
     }
 
     .description {
       font-weight: 400;
       font-size: 18px;
       color: rgba(255, 255, 255, 0.6);
+      line-height: 32px;
     }
   }
 `
@@ -26,10 +29,10 @@ const FeatureEconomy = () => {
   return (
     <Wrapper>
       <div className="paragraph">
-        <p className="title">Be part of the open economy of the future.</p>
+        <p className="title">Built and Available on every leading blockchain.</p>
         <p className="description">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim
-          velit mollit.
+          Creating A Truly Decentralized Multichain Ecosystem with Unlimited possibilities. Supporting Defi and Web3
+          global adoption for a better future.
         </p>
       </div>
       <img src="/images/token-card.svg" alt="token-card" />

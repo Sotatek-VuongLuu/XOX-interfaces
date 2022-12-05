@@ -22,6 +22,7 @@ const Paragraph = styled.p`
   font-size: 18px;
   color: rgba(255, 255, 255, 0.87);
   font-weight: 400;
+  line-height: 32px;
 `
 
 const Watch = styled.div`

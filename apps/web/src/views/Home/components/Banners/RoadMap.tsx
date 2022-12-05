@@ -4,7 +4,9 @@ import RoadMapItem from './RoadMapItem'
 
 export interface IRoadMapItem {
   title: string
-  describe: string
+  describeOne: string
+  describeTow: string
+  time: string
 }
 
 const Wrapper = styled.div`
@@ -12,81 +14,14 @@ const Wrapper = styled.div`
   flex-direction: column;
 
   .main {
-    margin: 48px auto 0;
-    max-width: 1200px;
+    margin-top: 48px;
+    height: 600px;
     display: flex;
-    flex-direction: column;
-    position: relative;
-
-    &::after {
-      background-color: #9072ff;
-      content: '';
-      position: absolute;
-      left: calc(50% - 2px);
-      width: 4px;
-      height: 100%;
-    }
-
-    .timeline-item {
-      display: flex;
-      justify-content: flex-end;
-      position: relative;
-    }
-
-    .timeline-item {
-      .circle {
-        background-color: #9072ff;
-        border: 3px solid #9072ff;
-        border-radius: 50%;
-        position: absolute;
-        top: calc(50% - 10px);
-        right: -100px;
-        width: 20px;
-        height: 20px;
-        z-index: 100;
-      }
-      .line {
-        border: 1px dashed #9072ff;
-        height: 1px;
-        width: 78px;
-        position: absolute;
-        top: calc(50% - 2px);
-        right: -100px;
-        z-index: 100;
-      }
-
-      .arrow {
-        border: 6px solid;
-        border-color: transparent #9072ff transparent transparent;
-        position: absolute;
-        top: calc(50% - 7px);
-        right: -20px;
-        z-index: 100;
-      }
-    }
+    justify-content: space-between;
+    align-items: flex-end;
 
     .timeline-item:nth-child(even) {
-      align-self: flex-end;
-      justify-content: flex-start;
-      padding-right: 0;
-    }
-
-    .timeline-item:nth-child(even) {
-      .circle {
-        right: auto;
-        left: -86px;
-      }
-
-      .line {
-        right: auto;
-        left: -84px;
-      }
-
-      .arrow {
-        right: auto;
-        left: -6px;
-        border-color: transparent transparent transparent #9072ff;
-      }
+      align-self: flex-start;
     }
   }
 `
@@ -111,12 +46,11 @@ const RoadMap = () => {
     <Wrapper>
       <Title>Road map</Title>
       <Description>Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.</Description>
-      <div className="main_container">
-        <div className="main">
-          {listRoadMap.map((item: IRoadMapItem, index) => {
-            return <RoadMapItem item={item} index={index + 1} />
-          })}
-        </div>
+
+      <div className="main">
+        {listRoadMap.map((item: IRoadMapItem, index) => {
+          return <RoadMapItem item={item} index={index + 1} />
+        })}
       </div>
     </Wrapper>
   )
@@ -124,24 +58,34 @@ const RoadMap = () => {
 
 const listRoadMap = [
   {
-    title: 'Q1 2022',
-    describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget.',
+    title: '2022',
+    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
+    describeTow: 'Start contract for development',
+    time: 'Q2',
   },
   {
-    title: 'Q2 2022',
-    describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget.',
+    title: '2022',
+    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
+    describeTow: 'Start contract for development',
+    time: 'Q3',
   },
   {
-    title: 'Q3 2022',
-    describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget.',
+    title: '2022',
+    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
+    describeTow: 'Start contract for development',
+    time: 'Q4',
   },
   {
-    title: 'Q4 2022',
-    describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget.',
+    title: '2023',
+    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
+    describeTow: 'Start contract for development',
+    time: 'Q1',
+  },
+  {
+    title: '2023',
+    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
+    describeTow: 'Start contract for development',
+    time: 'Q2',
   },
 ]
 

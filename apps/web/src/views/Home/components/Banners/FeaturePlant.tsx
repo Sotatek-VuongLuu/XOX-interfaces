@@ -3,7 +3,7 @@ import styled from 'styled-components'
 const Wrapper = styled.div`
   display: flex;
   gap: 64px;
-  margin-top: -150px;
+  margin-top: 100px;
 `
 
 const LeftContent = styled.div``
@@ -22,6 +22,7 @@ const Paragraph = styled.p`
   font-size: 18px;
   color: rgba(255, 255, 255, 0.87);
   font-weight: 400;
+  line-height: 32px;
 `
 
 const Watch = styled.div`

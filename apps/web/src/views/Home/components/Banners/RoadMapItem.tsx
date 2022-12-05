@@ -7,50 +7,10 @@ interface Iprops {
   index: number
 }
 
-interface IpropHightlight {
-  isEven: boolean
-}
-
 const ContainerItem = styled.div`
-  width: fit-content;
-  position: relative;
-  margin-bottom: 50px;
-`
-
-const BorderHightLight = styled.div<IpropHightlight>`
-  width: 180px;
+  width: 255px;
   height: fit-content;
-  position: absolute;
-  height: 168px;
-  top: -15px;
-  border-top: 6px solid #a35aff;
-  border-bottom: 6px solid #a35aff;
-  ${({ isEven }) =>
-    !isEven
-      ? `
-  right: -14px;
-  border-right: 6px solid #a35aff;
-  border-top-right-radius: 16px;
-  border-bottom-right-radius: 16px;
-  border-image: repeating-linear-gradient(to right, black 0%, #a35aff 70%, #6034ff 100%) 10;
-  `
-      : `
-  left: 0;
-  border-left: 6px solid #a35aff;
-  border-top-left-radius: 16px;
-  border-bottom-left-radius: 16px;
-  border-image: repeating-linear-gradient(to left, black 0%, #a35aff 70%, #6034ff 100%) 10;
-  `}
-`
-
-const Item = styled.div<IpropHightlight>`
-  padding: 23px 25px;
-  width: 510px;
-  background: #242424;
-  border-radius: 8px;
-  border: 1px solid #a35aff;
-
-  ${({ isEven }) => isEven && `margin-left: 14px`};
+  margin-bottom: 50px;
 
   .title {
     font-weight: 700;
@@ -62,25 +22,50 @@ const Item = styled.div<IpropHightlight>`
   .describe {
     font-weight: 400;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
+    line-height: 160%;
+    color: #f2f2f2;
+    overflow-wrap: break-word;
+    width: 220px;
+  }
+
+  .item_main_content {
+    display: flex;
+    gap: 15px;
+  }
+
+  .icon_stone {
+    margin-top: 6px;
+  }
+
+  .time {
+    color: #9072ff;
+  }
+
+  .margin_top {
+    margin-top: 30px;
   }
 `
 
-const RoadMapItem = ({ item, index }: Iprops) => {
-  function isEven(n: number) {
-    return n % 2 === 0
-  }
-
+const RoadMapItem = ({ item }: Iprops) => {
   return (
     <ContainerItem className="timeline-item">
-      <BorderHightLight className="hightlight" isEven={isEven(index)} />
-      <Item isEven={isEven(index)}>
-        <div className="title">{item.title}</div>
-        <div className="describe">{item.describe}</div>
-      </Item>
-      <span className="circle" />
-      <span className="line" />
-      <span className="arrow" />
+      <div className="title">
+        {item.title} <span className="time">{item.time}</span>
+      </div>
+
+      <div className="item_main_content">
+        <div>
+          <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+        </div>
+        <div className="describe">{item.describeOne}</div>
+      </div>
+
+      <div className="item_main_content margin_top">
+        <div>
+          <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+        </div>
+        <div className="describe">{item.describeTow}</div>
+      </div>
     </ContainerItem>
   )
 }

@@ -12,6 +12,9 @@ import TeamMenber from './components/Banners/TeamMenber'
 import Partners from './components/Partners'
 import Community from './components/Banners/Community'
 import FeatureEconomy from './components/Banners/FeatureEconomy'
+import Backgroud from './components/Banners/Background'
+import BackgroudWatch from './components/Banners/BackgroundWatch'
+import FeatureReferal from './components/Banners/FeatureReferal'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
@@ -58,41 +61,46 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
+        <Backgroud />
         <FeatureEconomy />
-      </StyledSectionEconomy>
-      <StyledHeroSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <NestedBall />
-        <FeatureWatch />
-      </StyledHeroSection>
-
-      <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <FeaturePlant />
-      </StyledSection>
-
-      <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
         <FeatureSquare />
-      </StyledSection>
+      </StyledSectionEconomy>
+
+      <StyledSectionEconomy
+        innerProps={{ style: { margin: '0', width: '100%' } }}
+        containerProps={{
+          id: 'home',
+        }}
+        index={2}
+        hasCurvedDivider={false}
+      >
+        <BackgroudWatch />
+        <FeatureWatch />
+        <FeaturePlant />
+        <FeatureReferal />
+      </StyledSectionEconomy>
+
+      {/* <StyledSection
+        innerProps={{ style: { margin: '0', width: '100%' } }}
+        containerProps={{
+          id: 'home',
+        }}
+        index={2}
+        hasCurvedDivider={false}
+      >
+        <Partners />
+      </StyledSection> */}
+
+      {/* <StyledSection
+        innerProps={{ style: { margin: '0', width: '100%' } }}
+        containerProps={{
+          id: 'home',
+        }}
+        index={2}
+        hasCurvedDivider={false}
+      >
+        <TeamMenber />
+      </StyledSection> */}
 
       <StyledSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
@@ -103,38 +111,6 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <RoadMap />
-      </StyledSection>
-
-      <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <Partners />
-      </StyledSection>
-
-      <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <TeamMenber />
-      </StyledSection>
-
-      <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
         <Community />
       </StyledSection>
     </>

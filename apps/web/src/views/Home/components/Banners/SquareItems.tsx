@@ -26,6 +26,7 @@ const Description = styled.p`
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6);
   margin: 16px 0;
+  line-height: 24px;
 `
 
 const Icon = styled.div`

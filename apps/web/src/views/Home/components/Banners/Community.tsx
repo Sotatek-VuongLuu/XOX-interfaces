@@ -11,6 +11,7 @@ interface Iprops {
 }
 
 const Wrapper = styled.div`
+  margin-top: 100px;
   .main_container {
     display: flex;
     justify-content: center;
@@ -23,19 +24,39 @@ const Wrapper = styled.div`
 
     .item_container {
       padding: 24px 32px;
+      background: #242424;
+      border-radius: 20px;
       display: flex;
       justify-content: space-between;
       align-items: center;
       gap: 24px;
       width: 578px;
-      .icon {
+
+      .icon-container {
         width: 90px;
         height: 90px;
+        border-radius: 50%;
+        background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        padding: 1px;
+      }
+      .icon {
+        width: 100%;
+        height: 100%;
         border-radius: 50%;
         display: flex;
         justify-content: center;
         align-items: center;
-        background: rgba(255, 255, 255, 0.1);
+        background-color: #242424;
+      }
+
+      .overlay {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(95, 53, 235, 0.1);
       }
 
       .name {
@@ -74,8 +95,12 @@ const CommunityItem = ({ item }: Iprops) => {
   return (
     <div className="item_container">
       <div>
-        <div className="icon">
-          <img src={item.icon} alt="icon" />
+        <div className="icon-container">
+          <div className="icon">
+            <div className="overlay">
+              <img src={item.icon} alt="icon" />
+            </div>
+          </div>
         </div>
       </div>
       <div>
@@ -123,6 +148,16 @@ const listCommunity = [
   {
     icon: '/images/discord.svg',
     name: 'Discord',
+    des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+  },
+  {
+    icon: '/images/youtube.svg',
+    name: 'Youtube',
+    des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+  },
+  {
+    icon: '/images/tiktok.svg',
+    name: 'Tiktok',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
   },
 ]
