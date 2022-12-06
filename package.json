@@ -8,10 +8,10 @@
     "apis/*"
   ],
   "scripts": {
-    "dev": "PORT=9537 turbo run dev --filter=web...",
+    "dev": "PORT=3001 turbo run dev --filter=web...",
     "dev:aptos": "yarn turbo run dev --filter=aptos-web...",
-    "build": "PORT=9537 turbo run build --filter=web...",
-    "start": "PORT=9537 turbo run start --filter=web",
+    "build": "PORT=3001 turbo run build --filter=web...",
+    "start": "PORT=3001 turbo run start --filter=web",
     "test:config": "yarn workspace web run test:config",
     "test:ci": "yarn turbo run test --filter=[HEAD^1]",
     "lint": "turbo run lint --filter=web",
