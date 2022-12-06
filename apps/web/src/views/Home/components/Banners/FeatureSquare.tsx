@@ -60,7 +60,7 @@ const listSquare = [
     icon: '/images/exchange.svg',
     title: 'Revolutionary Multichain DEX',
     description:
-      'Not just swap for free, but also get dual cash back. Our multi-token ecosystem & revolutionary referral program is designed to reward you twice on every transaction you perform in our DEX, receiving...',
+      'Not just swap for free, but get dual cash back for doing so. Our multi token ecosystem & revolutionary referral program is designed to reward you twice on every transaction you perform in our DEX, receiving XOXS Stable Coins & BUSD or USDC not just from your transactions but from every user transactions using your Referral Code.',
     link: '',
   },
   {
@@ -72,9 +72,9 @@ const listSquare = [
   },
   {
     icon: '/images/refferal.svg',
-    title: 'Referral Program',
+    title: 'First Ever Gamified Referral Program With Dual BUSD/USDC Rewards',
     description:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
+      'The XOX Gamified Referral Program is designed to give you cash-back like BUSD/USDC rewards from every transaction that you or any other user applying your referral code perform in our DEX...',
     link: '',
   },
 ]

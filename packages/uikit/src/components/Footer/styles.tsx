@@ -119,3 +119,9 @@ export const StyleStaticPage = styled.ul`
     color: #444444;
   }
 `;
+
+export const ImagBGFooter = styled.img`
+  position: absolute;
+  right: 0;
+  top: 40px;
+`;

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
 import styled from 'styled-components'
 
@@ -20,6 +21,31 @@ const Wrapper = styled.div`
   .title_ref {
     font-weight: 700;
     font-size: 36px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .ref_container {
+    width: 40%;
+  }
+
+  .list {
+    margin-bottom: 24px;
+    display: grid;
+    grid-template-columns: 200px 200px;
+    column-gap: 40px;
+    row-gap: 16px;
+
+    .icon_stone {
+      margin-right: 16px;
+    }
+
+    p {
+      display: flex;
+    }
+  }
+  .title_list_item {
+    font-weight: 400;
+    font-size: 18px;
     color: rgba(255, 255, 255, 0.87);
   }
 
@@ -46,23 +72,51 @@ const Paragraph = styled.p`
 const FeatureReferal = () => {
   return (
     <Wrapper>
-      <div className="leader_board">ngu</div>
-      <div>
-        <p className="title_ref">Referral Program</p>
+      <div className="leader_board">!</div>
+      <div className="ref_container">
+        <p className="title_ref">Gamified Referral Program</p>
         <Paragraph className="description">
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim
-          velit mollit.
+          Built to give back, the XOX Gamified Referral Program rewards both "The Referee" & "The Referrer" Earn Points
+          that's are redeemable for BUSD/USDC after reaching different levels & milestones.
         </Paragraph>
-
-        <Paragraph className="description">
-          Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor
-          do amet sint. Velit officia consequat duis enim velit mollit.
-        </Paragraph>
+        <div className="list">
+          {listTag.map(({ title }) => {
+            return (
+              <p>
+                <span>
+                  <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+                </span>
+                <span className="title_list_item">{title}</span>
+              </p>
+            )
+          })}
+        </div>
 
         <button className="btn_join">Join Now</button>
       </div>
     </Wrapper>
   )
 }
+
+const listTag = [
+  {
+    title: 'Connect',
+  },
+  {
+    title: 'Refer',
+  },
+  {
+    title: 'Earn Points',
+  },
+  {
+    title: 'Level Up',
+  },
+  {
+    title: 'Claim',
+  },
+  {
+    title: 'Get BUSD/USDC',
+  },
+]
 
 export default FeatureReferal

@@ -1,10 +1,23 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+const floatingAnim = (x: string, y: string) => keyframes`
+  from {
+    transform: translate(0,  0px);
+  }
+  50% {
+    transform: translate(${x}, ${y});
+  }
+  to {
+    transform: translate(0, 0px);
+  }
+`
 
 const Wrapper = styled.div`
   position: relative;
   margin-bottom: 100px;
 
   .paragraph {
+    z-index: 3;
     position: absolute;
     right: 31px;
     width: 513px;
@@ -23,6 +36,38 @@ const Wrapper = styled.div`
       line-height: 32px;
     }
   }
+
+  .main_card_content {
+    display: flex;
+    gap: 32px;
+    width: fit-content;
+    position: relative;
+
+    .chain_4 {
+      margin-top: -217px;
+      animation: ${floatingAnim('5px', '10px')} 3s ease-in-out infinite;
+      animation-delay: 0.66s;
+    }
+
+    .chain_1 {
+      margin-top: 117px;
+      animation: ${floatingAnim('4px', '12px')} 3s ease-in-out infinite;
+      animation-delay: 0s;
+    }
+
+    .chain_2 {
+      animation: ${floatingAnim('4px', '12px')} 3s ease-in-out infinite;
+      animation-delay: 0s;
+    }
+  }
+
+  .card_container {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    animation: ${floatingAnim('6px', '5px')} 3s ease-in-out infinite;
+    animation-delay: 0.33s;
+  }
 `
 
 const FeatureEconomy = () => {
@@ -35,7 +80,16 @@ const FeatureEconomy = () => {
           global adoption for a better future.
         </p>
       </div>
-      <img src="/images/token-card.svg" alt="token-card" />
+
+      <div className="main_card_content">
+        <img src="/images/chain_4.svg" alt="token-card" className="chain_4" />
+
+        <div className="card_container">
+          <img src="/images/chain_3.svg" alt="token-card" className="chain_3" />
+          <img src="/images/chain_2.svg" alt="token-card" className="chain_2" />
+        </div>
+        <img src="/images/chain_1.svg" alt="token-card" className="chain_1" />
+      </div>
     </Wrapper>
   )
 }

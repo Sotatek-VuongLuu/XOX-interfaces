@@ -15,11 +15,13 @@ import FeatureEconomy from './components/Banners/FeatureEconomy'
 import Backgroud from './components/Banners/Background'
 import BackgroudWatch from './components/Banners/BackgroundWatch'
 import FeatureReferal from './components/Banners/FeatureReferal'
+import UpComing from './components/Banners/FeatureUpComing'
+import SecuredBy from './components/Banners/SecuredBy'
 
 const StyledHeroSection = styled(PageSection)`
   padding-top: 16px;
   ${({ theme }) => theme.mediaQueries.md} {
-    padding: 48px 118px;
+    padding: 48px 300px;
   }
 `
 
@@ -28,7 +30,7 @@ const StyledSectionEconomy = styled(StyledHeroSection)``
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
   ${({ theme }) => theme.mediaQueries.md} {
-    padding: 48px 118px;
+    padding: 48px 300px;
   }
 `
 
@@ -80,28 +82,6 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <FeatureReferal />
       </StyledSectionEconomy>
 
-      {/* <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <Partners />
-      </StyledSection> */}
-
-      {/* <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <TeamMenber />
-      </StyledSection> */}
-
       <StyledSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
         containerProps={{
@@ -110,6 +90,9 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
+        <Partners />
+        <SecuredBy />
+        <UpComing />
         <RoadMap />
         <Community />
       </StyledSection>

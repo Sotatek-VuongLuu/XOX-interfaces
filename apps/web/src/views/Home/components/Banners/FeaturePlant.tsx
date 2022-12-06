@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -6,7 +7,27 @@ const Wrapper = styled.div`
   margin-top: 100px;
 `
 
-const LeftContent = styled.div``
+const LeftContent = styled.div`
+  .list {
+    display: grid;
+    grid-template-columns: 358px 241px;
+    column-gap: 40px;
+    row-gap: 16px;
+
+    .icon_stone {
+      margin-right: 16px;
+    }
+
+    p {
+      display: flex;
+    }
+  }
+  .title_list_item {
+    font-weight: 400;
+    font-size: 18px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+`
 
 const RightContent = styled.div``
 
@@ -36,15 +57,25 @@ const FeaturePlant = () => {
   return (
     <Wrapper>
       <LeftContent>
-        <Title>Lorem ipsum.</Title>
+        <Title>XOX Dapp - An All-IN-One Solution.</Title>
         <Paragraph style={{ margin: '24px 0' }}>
-          Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis enim
-          velit mollit.
+          Primarily design to provide simple solutions to its users and XOX Holders, the XOX Dapp already provides and
+          will keep implementing more robuts functionalities which will eventually make it a truly One Stop Solution for
+          Crypto Traders. What's ready:
         </Paragraph>
-        <Paragraph>
-          Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua dolor
-          do amet sint. Velit officia consequat duis enim velit mollit.
-        </Paragraph>
+
+        <div className="list">
+          {listTag.map(({ title }) => {
+            return (
+              <p>
+                <span>
+                  <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+                </span>
+                <span className="title_list_item">{title}</span>
+              </p>
+            )
+          })}
+        </div>
       </LeftContent>
 
       <RightContent>
@@ -55,5 +86,26 @@ const FeaturePlant = () => {
     </Wrapper>
   )
 }
+
+const listTag = [
+  {
+    title: 'Multi Chain Hybrid Swap',
+  },
+  {
+    title: 'XOXS Staking',
+  },
+  {
+    title: 'Gamified Stable Coin Referral Program',
+  },
+  {
+    title: 'Assets/Portfolio Tracker',
+  },
+  {
+    title: 'Liquidity Farming',
+  },
+  {
+    title: 'Bridge',
+  },
+]
 
 export default FeaturePlant

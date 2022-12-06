@@ -96,7 +96,7 @@ const WelcomeXOX = (): JSX.Element => {
         scene="https://prod.spline.design/o7-ZQWkGS2tIZeP0/scene.splinecode"
         height={600}
         width={600}
-        onLoad={(e) => e.setZoom(0.5)}
+        onLoad={(e) => e.setZoom(0.8)}
       />
     </Wrapper>
   )

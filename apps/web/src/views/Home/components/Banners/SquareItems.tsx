@@ -19,6 +19,7 @@ const Title = styled.p`
   font-size: 20px;
   color: rgba(255, 255, 255, 0.87);
   margin-top: 32px;
+  line-height: 25px;
 `
 
 const Description = styled.p`
