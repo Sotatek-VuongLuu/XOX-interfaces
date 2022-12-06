@@ -1,6 +1,5 @@
 import styled from 'styled-components'
 import Spline from '@splinetool/react-spline'
-import { SplineEvent } from '@splinetool/runtime'
 
 const Wrapper = styled.div`
   display: flex;

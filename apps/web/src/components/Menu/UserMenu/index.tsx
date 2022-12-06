@@ -8,7 +8,7 @@ import {
   LinkExternal,
   CopyAddress,
   LogoutIcon,
-  RefreshIcon,
+  // RefreshIcon,
   useModal,
   UserMenu as UIKitUserMenu,
   UserMenuDivider,
@@ -18,22 +18,22 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
-import NextLink from 'next/link'
+// import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
 import { usePendingTransactions } from 'state/transactions/hooks'
-import ProfileUserMenuItem from './ProfileUserMenuItem'
-import WalletModal, { WalletView } from './WalletModal'
-import WalletUserMenuItem from './WalletUserMenuItem'
-import styled from 'styled-components'
-import WalletInfo from './WalletInfo'
 import { useAccount, useBalance } from 'wagmi'
 import { parseUnits } from '@ethersproject/units'
 import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
-import { ChainLogo } from 'components/Logo/ChainLogo'
+// import { ChainLogo } from 'components/Logo/ChainLogo'
 import { getBlockExploreLink, getBlockExploreName } from 'utils'
 import { useAppDispatch } from 'state'
 import { updateOpenFormReferral } from 'state/user/actions'
+import styled from 'styled-components'
+import ProfileUserMenuItem from './ProfileUserMenuItem'
+import WalletModal, { WalletView } from './WalletModal'
+// import WalletUserMenuItem from './WalletUserMenuItem'
+// import WalletInfo from './WalletInfo'
 
 export const LOW_NATIVE_BALANCE = parseUnits('0.002', 'ether')
 
@@ -115,7 +115,7 @@ const UserMenu = () => {
         <ProfileInfo>
           <Flex flexDirection="row">
             <Flex width="45px" height="45px" minWidth="45px" mr="8px">
-              <img src="" width="100%" height="100%" />
+              <img src="" width="100%" height="100%" alt="" />
             </Flex>
             <Flex flexDirection="column" width="100%">
               <Flex flexDirection="row" justifyContent="space-between" mb="8px">
@@ -129,7 +129,12 @@ const UserMenu = () => {
                 >
                   @thanh.le
                 </Text>
-                <div style={{ cursor: 'pointer', borderRadius: '50%', overflow: 'hidden' }} onClick={openFormReferral}>
+                {/* eslint-disable-next-line */}
+                <div
+                  style={{ cursor: 'pointer', borderRadius: '50%', overflow: 'hidden' }}
+                  onClick={openFormReferral}
+                  onKeyDown={openFormReferral}
+                >
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
                     <path
                       d="M0.374023 11.6573V14.626H3.34277L12.0986 5.87017L9.12986 2.90142L0.374023 11.6573ZM14.3944 3.57434C14.7032 3.26559 14.7032 2.76684 14.3944 2.45809L12.5419 0.605586C12.2332 0.296836 11.7344 0.296836 11.4257 0.605586L9.97694 2.05434L12.9457 5.02309L14.3944 3.57434Z"
@@ -176,7 +181,7 @@ const UserMenu = () => {
             lineHeight="17px"
             color="rgba(255, 255, 255, 0.87)"
           >
-            Referral Code: {'123456'}
+            Referral Code: 123456
           </Text>
         </Flex>
 

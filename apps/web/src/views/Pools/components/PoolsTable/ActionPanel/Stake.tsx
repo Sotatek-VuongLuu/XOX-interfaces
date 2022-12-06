@@ -1,6 +1,5 @@
 import {
   AddIcon,
-  Button,
   Flex,
   IconButton,
   MinusIcon,
@@ -37,9 +36,7 @@ import { useApprovePool, useCheckVaultApprovalStatus, useVaultApprove } from '..
 import VaultStakeModal from '../../CakeVaultCard/VaultStakeModal'
 import NotEnoughTokensModal from '../../Modals/NotEnoughTokensModal'
 import StakeModal from '../../Modals/StakeModal'
-import { ProfileRequirementWarning } from '../../ProfileRequirementWarning'
 import { ActionContainer, ActionContent, ActionTitles } from './styles'
-import { VaultStakeButtonGroup } from '../../Vault/VaultStakeButtonGroup'
 import AddCakeButton from '../../LockedPool/Buttons/AddCakeButton'
 import ExtendButton from '../../LockedPool/Buttons/ExtendDurationButton'
 import AfterLockedActions from '../../LockedPool/Common/AfterLockedActions'
@@ -456,6 +453,8 @@ const Staked: React.FunctionComponent<React.PropsWithChildren<StackedActionProps
       </>
     )
   }
+
+  return null
 
   // return (
   //   <ActionContainer>

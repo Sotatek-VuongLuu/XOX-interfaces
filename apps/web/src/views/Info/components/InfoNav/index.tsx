@@ -6,6 +6,7 @@ import {
   UserMenu,
   UserMenuDivider,
   UserMenuItem,
+  Button,
   Text,
   NextLinkFromReactRouter,
 } from '@pancakeswap/uikit'
@@ -23,14 +24,26 @@ import { useAccount } from 'wagmi'
 import { bsc, mainnet } from '@pancakeswap/wagmi/chains'
 
 const NavWrapper = styled(Flex)`
-  background: ${({ theme }) => theme.colors.gradientCardHeader};
-  justify-content: space-between;
-  padding: 20px 16px;
-  flex-direction: column;
-  gap: 8px;
-  ${({ theme }) => theme.mediaQueries.sm} {
-    padding: 20px 40px;
-    flex-direction: row;
+  padding: 28px 48px 24px;
+`
+
+const MainContent = styled.div`
+  height: 200px;
+  width: 100%;
+  background: url('/images/bg.svg');
+  background-repeat: no-repeat;
+  background-size: cover;
+  border-radius: 10px;
+  padding: 30px 24px;
+
+  button {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #ffffff;
+    height: 43px;
   }
 `
 
@@ -52,7 +65,32 @@ const InfoNav: React.FC<{ isStableSwap: boolean }> = ({ isStableSwap }) => {
   }
   return (
     <NavWrapper>
-      <Flex>
+      <MainContent>
+        <Text
+          fontSize="18px"
+          fontFamily="Inter"
+          fontStyle="normal"
+          fontWeight="700"
+          lineHeight="22px"
+          color="#FFBD3C"
+          marginBottom="16px"
+        >
+          Swap to get XOX and XOXS
+        </Text>
+        <Text
+          fontSize="36px"
+          fontFamily="Inter"
+          fontStyle="normal"
+          fontWeight="700"
+          lineHeight="44px"
+          color="rgba(255, 255, 255, 0.87)"
+          marginBottom="16px"
+        >
+          Stake XOXS automatically to earn more
+        </Text>
+        <Button>Get XOX</Button>
+      </MainContent>
+      {/* <Flex>
         <Box>
           <ButtonMenu activeIndex={activeIndex} scale="sm" variant="subtle">
             <ButtonMenuItem as={NextLinkFromReactRouter} to={`/info${chainPath}${stableSwapQuery}`}>
@@ -70,7 +108,7 @@ const InfoNav: React.FC<{ isStableSwap: boolean }> = ({ isStableSwap }) => {
       </Flex>
       <Box width={['100%', '100%', '250px']}>
         <Search />
-      </Box>
+      </Box> */}
     </NavWrapper>
   )
 }

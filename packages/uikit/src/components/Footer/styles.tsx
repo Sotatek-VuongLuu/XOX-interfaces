@@ -39,7 +39,7 @@ export const FooterMainContent = styled.div`
   &:before {
     content: "";
     position: absolute;
-    width: 1440px;
+    width: 100%;
     height: 4px;
     left: 0px;
     top: 0px;

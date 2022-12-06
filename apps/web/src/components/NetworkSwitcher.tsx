@@ -111,8 +111,8 @@ export const NetworkSwitcher = () => {
   const { t } = useTranslation()
   const { chainId, isWrongNetwork, isNotMatched } = useActiveChainId()
   const { pendingChainId, isLoading, canSwitch, switchNetworkAsync } = useSwitchNetwork()
-  const router = useRouter()
-  const { address: account } = useAccount()
+  // const router = useRouter()
+  // const { address: account } = useAccount()
 
   useNetworkConnectorUpdater()
 

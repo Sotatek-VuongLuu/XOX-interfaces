@@ -93,7 +93,7 @@ const ProfilePicture: React.FC = () => {
   const { data: signer } = useSigner()
 
   const handleApprove = async () => {
-    const contract = getErc721Contract(selectedNft.collectionAddress, signer)
+    const contract = getErc721Contract(selectedNft.collectionAddress, signer as any)
     const receipt = await fetchWithCatchTxError(() => {
       return callWithGasPrice(contract, 'approve', [getPancakeProfileAddress(), selectedNft.tokenId])
     })

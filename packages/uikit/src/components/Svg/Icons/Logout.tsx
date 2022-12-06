@@ -8,23 +8,23 @@ const Icon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
       <path
         d="M9.49671 2.375H2.375V16.625H9.5"
         stroke="#8E8E8E"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M13.0625 13.0625L16.625 9.5L13.0625 5.9375"
         stroke="#8E8E8E"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M6.33325 9.49683H16.6249"
         stroke="#8E8E8E"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );

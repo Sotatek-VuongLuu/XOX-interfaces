@@ -49,7 +49,6 @@ export const useProtocolChartDataSWR = (): ChartEntry[] | undefined => {
   const { data: chartData } = useSWRImmutable([`info/protocol/updateProtocolChartData/${type}`, chainName], () =>
     fetchGlobalChartData(chainName),
   )
-  console.log(chartData)
   return chartData ?? undefined
 }
 
