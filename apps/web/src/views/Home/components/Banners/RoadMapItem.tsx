@@ -8,7 +8,8 @@ interface Iprops {
 }
 
 const ContainerItem = styled.div`
-  width: 255px;
+  position: relative;
+  width: 278px;
   height: fit-content;
   margin-bottom: 50px;
 
@@ -44,29 +45,59 @@ const ContainerItem = styled.div`
   .margin_top {
     margin-top: 30px;
   }
+
+  .milestone {
+    position: absolute;
+    left: -14%;
+    z-index: 9;
+  }
 `
+
+const Line = styled.div`
+  width: 2px;
+  height: 270px;
+  position: absolute;
+  left: -10%;
+`
+
+const LineNotDone = styled.div`
+  height: 8px;
+  width: 100%;
+  left: -10%;
+  position: absolute;
+  background: #32095b;
+`
+
+const Wrapper = styled.div``
 
 const RoadMapItem = ({ item }: Iprops) => {
   return (
-    <ContainerItem className="timeline-item">
-      <div className="title">
-        {item.title} <span className="time">{item.time}</span>
-      </div>
-
-      <div className="item_main_content">
+    <Wrapper className="timeline-item">
+      <ContainerItem>
+        <LineNotDone className="line_not_done" />
+        <img src="/images/milestone.svg" alt="milestone" className="milestone" />
+        <Line className="line" />
         <div>
-          <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
-        </div>
-        <div className="describe">{item.describeOne}</div>
-      </div>
+          <div className="title">
+            {item.title} <span className="time">{item.time}</span>
+          </div>
 
-      <div className="item_main_content margin_top">
-        <div>
-          <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+          <div className="item_main_content">
+            <div>
+              <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+            </div>
+            <div className="describe">{item.describeOne}</div>
+          </div>
+
+          <div className="item_main_content margin_top">
+            <div>
+              <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+            </div>
+            <div className="describe">{item.describeTow}</div>
+          </div>
         </div>
-        <div className="describe">{item.describeTow}</div>
-      </div>
-    </ContainerItem>
+      </ContainerItem>
+    </Wrapper>
   )
 }
 

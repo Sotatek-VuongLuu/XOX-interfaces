@@ -7,7 +7,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import SwiperCore, { Autoplay } from 'swiper'
 import { useState } from 'react'
-import { spawn } from 'child_process'
 
 SwiperCore.use([Autoplay])
 

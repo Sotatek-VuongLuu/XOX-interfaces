@@ -15,13 +15,36 @@ const Wrapper = styled.div`
 
   .main {
     margin-top: 48px;
-    height: 600px;
+    height: 570px;
     display: flex;
-    justify-content: space-between;
-    align-items: flex-end;
 
     .timeline-item:nth-child(even) {
       align-self: flex-start;
+      .line {
+        background: linear-gradient(180deg, #000000 0%, #9072ff 100%);
+        bottom: -24%;
+      }
+      .milestone {
+        bottom: -30%;
+      }
+
+      .line_not_done {
+        bottom: -26%;
+      }
+    }
+
+    .timeline-item:nth-child(odd) {
+      align-self: flex-end;
+      .line {
+        background: linear-gradient(0deg, #000000 0%, #9072ff 100%);
+        top: -34%;
+      }
+      .milestone {
+        top: -40%;
+      }
+      .line_not_done {
+        top: -36%;
+      }
     }
   }
 `
