@@ -3,19 +3,19 @@ import styled from 'styled-components'
 const BallLeft = styled.img`
   position: absolute;
   left: 0;
-  top: 395px;
+  top: 22%;
   z-index: -1;
 `
 const BallRight = styled.img`
   position: absolute;
   right: 0;
-  top: 154px;
+  top: 16%;
   z-index: -1;
 `
 const BallMoon = styled.img`
   position: absolute;
   left: 0;
-  top: 637px;
+  top: 40%;
   z-index: -2;
 `
 

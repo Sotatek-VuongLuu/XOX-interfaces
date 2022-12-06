@@ -3,12 +3,10 @@ import PageSection from 'components/PageSection'
 import { PageMeta } from 'components/Layout/Page'
 import BallPurple from './components/BallPurple'
 import WelcomeXOX from './components/Banners/WelcomeXOX'
-import NestedBall from './components/NestBallPruple'
 import FeatureWatch from './components/Banners/FeatureWatch'
 import FeaturePlant from './components/Banners/FeaturePlant'
 import FeatureSquare from './components/Banners/FeatureSquare'
 import RoadMap from './components/Banners/RoadMap'
-import TeamMenber from './components/Banners/TeamMenber'
 import Partners from './components/Partners'
 import Community from './components/Banners/Community'
 import FeatureEconomy from './components/Banners/FeatureEconomy'
@@ -17,20 +15,12 @@ import BackgroudWatch from './components/Banners/BackgroundWatch'
 import FeatureReferal from './components/Banners/FeatureReferal'
 import UpComing from './components/Banners/FeatureUpComing'
 import SecuredBy from './components/Banners/SecuredBy'
-
-const StyledHeroSection = styled(PageSection)`
-  padding-top: 16px;
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 48px 300px;
-  }
-`
-
-const StyledSectionEconomy = styled(StyledHeroSection)``
+import BGPartner from './components/Banners/BackgroundPartner'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
   ${({ theme }) => theme.mediaQueries.md} {
-    padding: 48px 300px;
+    padding: 48px 250px;
   }
 `
 
@@ -43,7 +33,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           background: black;
         }
       `}</style>
-      <StyledSectionEconomy
+      <StyledSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
         containerProps={{
           id: 'home',
@@ -53,9 +43,9 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       >
         <BallPurple src="/images/bg-pur.svg" css={{ right: 0 }} />
         <WelcomeXOX />
-      </StyledSectionEconomy>
+      </StyledSection>
 
-      <StyledSectionEconomy
+      <StyledSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
         containerProps={{
           id: 'home',
@@ -66,9 +56,9 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <Backgroud />
         <FeatureEconomy />
         <FeatureSquare />
-      </StyledSectionEconomy>
+      </StyledSection>
 
-      <StyledSectionEconomy
+      <StyledSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
         containerProps={{
           id: 'home',
@@ -80,7 +70,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <FeatureWatch />
         <FeaturePlant />
         <FeatureReferal />
-      </StyledSectionEconomy>
+      </StyledSection>
 
       <StyledSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
@@ -90,6 +80,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
+        <BGPartner />
         <Partners />
         <SecuredBy />
         <UpComing />

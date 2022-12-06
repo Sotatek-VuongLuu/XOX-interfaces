@@ -46,7 +46,7 @@ const Title = styled.p`
   color: #ffffff;
   font-weight: 800;
   font-size: 64px;
-  width: 754px;
+  width: 650px;
   span {
     color:#A35AFF
 `
@@ -96,7 +96,7 @@ const WelcomeXOX = (): JSX.Element => {
         scene="https://prod.spline.design/o7-ZQWkGS2tIZeP0/scene.splinecode"
         height={600}
         width={600}
-        onLoad={(e) => e.setZoom(0.8)}
+        onLoad={(e) => e.setZoom(0.7)}
       />
     </Wrapper>
   )

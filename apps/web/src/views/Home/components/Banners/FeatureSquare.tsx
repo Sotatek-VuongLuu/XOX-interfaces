@@ -25,7 +25,7 @@ const Wrapper = styled.div`
       font-size: 16px;
       color: rgba(255, 255, 255, 0.6);
       width: 409px;
-      line-height: 19px;
+      line-height: 32px;
     }
   }
 `
