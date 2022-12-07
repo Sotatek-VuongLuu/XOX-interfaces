@@ -3,29 +3,24 @@ import PageSection from 'components/PageSection'
 import { PageMeta } from 'components/Layout/Page'
 import BallPurple from './components/BallPurple'
 import WelcomeXOX from './components/Banners/WelcomeXOX'
-import NestedBall from './components/NestBallPruple'
 import FeatureWatch from './components/Banners/FeatureWatch'
 import FeaturePlant from './components/Banners/FeaturePlant'
 import FeatureSquare from './components/Banners/FeatureSquare'
 import RoadMap from './components/Banners/RoadMap'
-import TeamMenber from './components/Banners/TeamMenber'
 import Partners from './components/Partners'
 import Community from './components/Banners/Community'
 import FeatureEconomy from './components/Banners/FeatureEconomy'
-
-const StyledHeroSection = styled(PageSection)`
-  padding-top: 16px;
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 48px 118px;
-  }
-`
-
-const StyledSectionEconomy = styled(StyledHeroSection)``
+import Backgroud from './components/Banners/Background'
+import BackgroudWatch from './components/Banners/BackgroundWatch'
+import FeatureReferal from './components/Banners/FeatureReferal'
+import UpComing from './components/Banners/FeatureUpComing'
+import SecuredBy from './components/Banners/SecuredBy'
+import BGPartner from './components/Banners/BackgroundPartner'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
   ${({ theme }) => theme.mediaQueries.md} {
-    padding: 48px 118px;
+    padding: 48px 250px;
   }
 `
 
@@ -38,7 +33,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           background: black;
         }
       `}</style>
-      <StyledSectionEconomy
+      <StyledSection
         innerProps={{ style: { margin: '0', width: '100%' } }}
         containerProps={{
           id: 'home',
@@ -48,39 +43,6 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       >
         <BallPurple src="/images/bg-pur.svg" css={{ right: 0 }} />
         <WelcomeXOX />
-      </StyledSectionEconomy>
-
-      <StyledSectionEconomy
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <FeatureEconomy />
-      </StyledSectionEconomy>
-      <StyledHeroSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <NestedBall />
-        <FeatureWatch />
-      </StyledHeroSection>
-
-      <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <FeaturePlant />
       </StyledSection>
 
       <StyledSection
@@ -91,6 +53,8 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
+        <Backgroud />
+        <FeatureEconomy />
         <FeatureSquare />
       </StyledSection>
 
@@ -102,7 +66,10 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
-        <RoadMap />
+        <BackgroudWatch />
+        <FeatureWatch />
+        <FeaturePlant />
+        <FeatureReferal />
       </StyledSection>
 
       <StyledSection
@@ -113,28 +80,11 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
+        <BGPartner />
         <Partners />
-      </StyledSection>
-
-      <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
-        <TeamMenber />
-      </StyledSection>
-
-      <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={2}
-        hasCurvedDivider={false}
-      >
+        <SecuredBy />
+        <UpComing />
+        <RoadMap />
         <Community />
       </StyledSection>
     </>

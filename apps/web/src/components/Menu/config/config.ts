@@ -67,7 +67,40 @@ const config: (
       fillIcon: EarnFillIcon,
       image: '/images/decorations/pe2.png',
       items: [],
-    }
+    },
+  ].map((item) => addMenuItemSupported(item, chainId))
+
+export const configLanding: (
+  t: ContextApi['t'],
+  isDark: boolean,
+  languageCode?: string,
+  chainId?: number,
+) => ConfigMenuItemsType[] = (t, isDark, languageCode, chainId) =>
+  [
+    {
+      label: t('Tokenomics'),
+      href: '/',
+      icon: EarnIcon,
+      fillIcon: EarnFillIcon,
+      image: '/images/decorations/pe2.png',
+      items: [],
+    },
+    {
+      label: t('Whitepaper'),
+      href: '#',
+      icon: SwapIcon,
+      fillIcon: SwapFillIcon,
+      showItemsOnMobile: false,
+      items: [],
+    },
+    {
+      label: t('Company'),
+      icon: SwapIcon,
+      fillIcon: SwapFillIcon,
+      href: '#',
+      showItemsOnMobile: false,
+      items: [],
+    },
   ].map((item) => addMenuItemSupported(item, chainId))
 
 export default config

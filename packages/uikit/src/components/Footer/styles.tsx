@@ -39,7 +39,7 @@ export const FooterMainContent = styled.div`
   &:before {
     content: "";
     position: absolute;
-    width: 1440px;
+    width: 100%;
     height: 4px;
     left: 0px;
     top: 0px;
@@ -118,4 +118,10 @@ export const StyleStaticPage = styled.ul`
     font-feature-settings: "liga" off;
     color: #444444;
   }
+`;
+
+export const ImagBGFooter = styled.img`
+  position: absolute;
+  right: 0;
+  top: 40px;
 `;

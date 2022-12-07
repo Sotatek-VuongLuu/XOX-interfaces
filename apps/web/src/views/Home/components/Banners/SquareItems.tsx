@@ -12,6 +12,41 @@ const Wrapper = styled.div`
   border-radius: 10px;
   width: 385px;
   padding: 24px 22px 32px;
+
+  .main_container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .get_xox {
+      padding: 1px;
+      width: fit-content;
+      border-radius: 8px;
+      background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+
+      .boxed-child {
+        width: 100%;
+        height: 100%;
+        background-color: #242424;
+        padding: 10px 20px;
+        border-radius: inherit;
+        span {
+          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-fill-color: transparent;
+          font-weight: 700;
+          font-size: 14px;
+          width: 100%;
+          height: 100%;
+          background-color: #191a28;
+          border-radius: inherit;
+        }
+      }
+    }
+  }
 `
 
 const Title = styled.p`
@@ -19,6 +54,7 @@ const Title = styled.p`
   font-size: 20px;
   color: rgba(255, 255, 255, 0.87);
   margin-top: 32px;
+  line-height: 25px;
 `
 
 const Description = styled.p`
@@ -26,6 +62,7 @@ const Description = styled.p`
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6);
   margin: 16px 0;
+  line-height: 24px;
 `
 
 const Icon = styled.div`
@@ -49,16 +86,21 @@ const Discover = styled.div`
 const SquareItem = ({ item }: Iprops) => {
   return (
     <Wrapper>
-      <Icon>
-        <img src={item.icon} alt="icon" />
-      </Icon>
-      <Title>{item.title}</Title>
-      <Description>{item.description}</Description>
+      <div className="main_container">
+        <div>
+          <Icon>
+            <img src={item.icon} alt="icon" />
+          </Icon>
+          <Title>{item.title}</Title>
+          <Description>{item.description}</Description>
+        </div>
 
-      <Discover>
-        <span>Discover More</span>
-        <img src="/images/next-icon.svg" alt="next-icon" style={{ marginLeft: 11 }} />
-      </Discover>
+        <div className="get_xox">
+          <div className="boxed-child">
+            <span>Discover More</span>
+          </div>
+        </div>
+      </div>
     </Wrapper>
   )
 }

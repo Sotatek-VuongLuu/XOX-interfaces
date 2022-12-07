@@ -11,7 +11,9 @@ const GlobalStyle = createGlobalStyle`
     font-family: 'Kanit', sans-serif;
   }
   body {
-    background-color: ${({ theme }) => theme.colors.background};
+    background-color: black;
+
+    overflow-x: hidden;
 
     img {
       height: auto;

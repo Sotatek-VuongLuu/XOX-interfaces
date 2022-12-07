@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { vars } from "@pancakeswap/ui/css/vars.css";
 import { useIsMounted } from "@pancakeswap/hooks";
 import React from "react";
@@ -12,6 +13,7 @@ import {
   FooterMainContent,
   SubTitleStyle,
   StyleStaticPage,
+  ImagBGFooter,
 } from "./styles";
 import { Text } from "@pancakeswap/uikit";
 import { LogoWithTextIcon } from "../Svg";
@@ -39,6 +41,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
       alignItems="center"
     >
       <FooterMainContent>
+        <ImagBGFooter src="/images/bg_footer.svg" alt="icon_bg" />
         <StyledIconMobileContainer display={["block", null, "none"]}>
           <LogoWithTextIcon width="130px" />
         </StyledIconMobileContainer>
@@ -60,12 +63,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             massa non nisi, placerat.
           </Text>
 
-          <Flex
-            order={[2, null, 1]}
-            flexDirection={["row", null, "row"]}
-            alignItems="flex-start"
-            mb={["0", null, "0"]}
-          >
+          <Flex order={[2, null, 1]} flexDirection={["row", null, "row"]} alignItems="flex-start" mb={["0", null, "0"]}>
             <StyledSocialLinks order={[2]} pb={["0", null, "0"]} mb={["0", null, "0"]} />
           </Flex>
         </Flex>

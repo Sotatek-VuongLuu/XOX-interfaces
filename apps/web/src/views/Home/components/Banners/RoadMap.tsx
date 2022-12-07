@@ -3,8 +3,12 @@ import styled from 'styled-components'
 import RoadMapItem from './RoadMapItem'
 
 export interface IRoadMapItem {
-  title: string
-  describe: string
+  year: string
+  describeOne: string
+  describeTow: string
+  quater: string
+  includeMonth?: number[]
+  status?: string
 }
 
 const Wrapper = styled.div`
@@ -12,80 +16,65 @@ const Wrapper = styled.div`
   flex-direction: column;
 
   .main {
-    margin: 48px auto 0;
-    max-width: 1200px;
+    margin-top: 48px;
+    height: 570px;
     display: flex;
-    flex-direction: column;
-    position: relative;
-
-    &::after {
-      background-color: #9072ff;
-      content: '';
-      position: absolute;
-      left: calc(50% - 2px);
-      width: 4px;
-      height: 100%;
-    }
-
-    .timeline-item {
-      display: flex;
-      justify-content: flex-end;
-      position: relative;
-    }
-
-    .timeline-item {
-      .circle {
-        background-color: #9072ff;
-        border: 3px solid #9072ff;
-        border-radius: 50%;
-        position: absolute;
-        top: calc(50% - 10px);
-        right: -100px;
-        width: 20px;
-        height: 20px;
-        z-index: 100;
-      }
-      .line {
-        border: 1px dashed #9072ff;
-        height: 1px;
-        width: 78px;
-        position: absolute;
-        top: calc(50% - 2px);
-        right: -100px;
-        z-index: 100;
-      }
-
-      .arrow {
-        border: 6px solid;
-        border-color: transparent #9072ff transparent transparent;
-        position: absolute;
-        top: calc(50% - 7px);
-        right: -20px;
-        z-index: 100;
-      }
-    }
 
     .timeline-item:nth-child(even) {
+      align-self: flex-start;
+      .line {
+        background: linear-gradient(180deg, #000000 0%, #9072ff 100%);
+        bottom: -24%;
+      }
+      .milestone {
+        bottom: -30%;
+      }
+
+      .line_status {
+        bottom: -25%;
+      }
+    }
+
+    .timeline-item:nth-child(odd) {
       align-self: flex-end;
-      justify-content: flex-start;
-      padding-right: 0;
+      .line {
+        background: linear-gradient(0deg, #000000 0%, #9072ff 100%);
+        top: -34%;
+      }
+      .milestone {
+        top: -40%;
+      }
+      .line_status {
+        top: -37.5%;
+      }
+    }
+    .timeline-item-5 {
+      .line_status {
+        top: -36.5% !important;
+      }
     }
 
-    .timeline-item:nth-child(even) {
-      .circle {
-        right: auto;
-        left: -86px;
+    .timeline-item-3 {
+      .milestone {
+        top: -50% !important;
+        left: -20% !important;
       }
-
-      .line {
-        right: auto;
-        left: -84px;
+      .line_status {
+        top: -36% !important;
       }
+    }
 
-      .arrow {
-        right: auto;
-        left: -6px;
-        border-color: transparent transparent transparent #9072ff;
+    .timeline-item-1 {
+      .milestone {
+        top: -47% !important;
+        left: -18% !important;
+      }
+    }
+
+    .timeline-item-2 {
+      .milestone {
+        bottom: -33% !important;
+        left: -18% !important;
       }
     }
   }
@@ -111,12 +100,11 @@ const RoadMap = () => {
     <Wrapper>
       <Title>Road map</Title>
       <Description>Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.</Description>
-      <div className="main_container">
-        <div className="main">
-          {listRoadMap.map((item: IRoadMapItem, index) => {
-            return <RoadMapItem item={item} index={index + 1} />
-          })}
-        </div>
+
+      <div className="main">
+        {listRoadMap.map((item: IRoadMapItem, index) => {
+          return <RoadMapItem item={item} index={index + 1} />
+        })}
       </div>
     </Wrapper>
   )
@@ -124,24 +112,39 @@ const RoadMap = () => {
 
 const listRoadMap = [
   {
-    title: 'Q1 2022',
-    describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget.',
+    year: '2022',
+    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
+    describeTow: 'Start contract for development',
+    quater: 'Q2',
+    status: 'done',
   },
   {
-    title: 'Q2 2022',
-    describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget.',
+    year: '2022',
+    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
+    describeTow: 'Start contract for development',
+    quater: 'Q3',
+    status: 'done',
   },
   {
-    title: 'Q3 2022',
-    describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget.',
+    year: '2022',
+    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
+    describeTow: 'Start contract for development',
+    quater: 'Q4',
+    status: 'processing',
   },
   {
-    title: 'Q4 2022',
-    describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget.',
+    year: '2023',
+    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
+    describeTow: 'Start contract for development',
+    quater: 'Q1',
+    status: 'todo',
+  },
+  {
+    year: '2023',
+    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
+    describeTow: 'Start contract for development',
+    quater: 'Q2',
+    status: 'todo',
   },
 ]
 

@@ -90,8 +90,6 @@ const TeamMenberItem = ({ item }: IProps): JSX.Element => {
 const TeamMenber = (): JSX.Element => {
   return (
     <Wrapper>
-      <div className="title">Team member</div>
-      <p className="decoration">Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.</p>
       <div className="main">
         {listMember.map((item: IItemMember) => {
           return <TeamMenberItem item={item} />
@@ -113,6 +111,13 @@ const listMember = [
     avatar: '/images/m2.svg',
     name: 'Cameron Williamson',
     major: 'Art Director',
+    describe:
+      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
+  },
+  {
+    avatar: '/images/m1.svg',
+    name: 'Cameron Williamson',
+    major: 'CTO',
     describe:
       'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
   },
