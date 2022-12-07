@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 // eslint-disable-next-line import/no-cycle
 import { IRoadMapItem } from './RoadMap'
@@ -11,7 +12,7 @@ const ContainerItem = styled.div`
   position: relative;
   width: 278px;
   height: fit-content;
-  margin-bottom: 50px;
+  margin-bottom: 51px;
 
   .title {
     font-weight: 700;
@@ -61,25 +62,40 @@ const Line = styled.div`
 `
 
 const LineNotDone = styled.div`
-  height: 8px;
+  height: 4px;
   width: 100%;
   left: -10%;
   position: absolute;
   background: #32095b;
 `
 
+const LineDash = styled.div`
+  border: none;
+  width: 100%;
+  height: 8px;
+  left: -10%;
+  position: absolute;
+  border-bottom: 4px dashed #9072ff;
+`
+
 const Wrapper = styled.div``
 
-const RoadMapItem = ({ item }: Iprops) => {
+const RoadMapItem = ({ item, index }: Iprops) => {
   return (
-    <Wrapper className="timeline-item">
+    <Wrapper className={`timeline-item timeline-item-${index}`}>
       <ContainerItem>
-        <LineNotDone className="line_not_done" />
-        <img src="/images/milestone.svg" alt="milestone" className="milestone" />
+        {item.status === 'done' ? <LineDash className="line_status" /> : <LineNotDone className="line_status" />}
+        {item.status === 'done' ? (
+          <img src="/images/mile_stone_done.svg" alt="milestone" className="milestone" />
+        ) : item.status === 'processing' ? (
+          <img src="/images/mile_stone_now.svg" alt="milestone" className="milestone" />
+        ) : (
+          <img src="/images/milestone.svg" alt="milestone" className="milestone" />
+        )}
         <Line className="line" />
         <div>
           <div className="title">
-            {item.title} <span className="time">{item.time}</span>
+            {item.year} <span className="time">{item.quater}</span>
           </div>
 
           <div className="item_main_content">

@@ -74,7 +74,7 @@ const listSquare = [
     icon: '/images/refferal.svg',
     title: 'First Ever Gamified Referral Program With Dual BUSD/USDC Rewards',
     description:
-      'The XOX Gamified Referral Program is designed to give you cash-back like BUSD/USDC rewards from every transaction that you or any other user applying your referral code perform in our DEX...',
+      'The XOX Gamified Referral Program is designed to give you cash-back like BUSD/USDC rewards from every transaction that you or any other user applying your referral code perform in our DEX. To make it fun and interactive we have designed a level system based on points where the more points you get the more you earn. Basically you just need to earn points, level up, reach milestones and claim your rewards on BUSD or USDC.',
     link: '',
   },
 ]

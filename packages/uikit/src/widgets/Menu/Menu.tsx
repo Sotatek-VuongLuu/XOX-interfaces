@@ -17,6 +17,9 @@ import { MENU_HEIGHT, MOBILE_MENU_HEIGHT, TOP_BANNER_HEIGHT, TOP_BANNER_HEIGHT_M
 import { MenuContext } from "./context";
 import { NavProps } from "./types";
 
+interface IPropsNav {
+  isLanding?: boolean;
+}
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
@@ -24,14 +27,14 @@ const Wrapper = styled.div`
   grid-template-rows: auto 1fr;
 `;
 
-const StyledNav = styled.nav`
+const StyledNav = styled.nav<IPropsNav>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
   height: ${MENU_HEIGHT}px;
-  background-color: ${({ theme }) => theme.nav.background};
-  border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
+  background-color: ${({ theme, isLanding }) => (isLanding ? "black" : theme.nav.background)};
+  ${({ theme, isLanding }) => !isLanding && ` border-bottom: 1px solid ${theme.colors.cardBorder}`};
   transform: translate3d(0, 0, 0);
   padding: 14px 21px;
 `;
@@ -83,6 +86,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   langs,
   buyCakeLabel,
   children,
+  isLanding = false,
 }) => {
   const { isMobile } = useMatchBreakpoints();
   const isMounted = useIsMounted();
@@ -140,7 +144,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
         <Wrapper>
           <FixedContainer showMenu={showMenu} height={totalTopMenuHeight}>
             {banner && isMounted && <TopBannerContainer height={topBannerHeight}>{banner}</TopBannerContainer>}
-            <StyledNav>
+            <StyledNav isLanding={isLanding}>
               <Flex>
                 <Logo href={homeLink?.href ?? "/"} />
                 <AtomBox display={{ xs: "none", md: "block" }}>

@@ -4,7 +4,7 @@ import { useTheme } from 'styled-components'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useMenuItemsStatus } from './useMenuItemsStatus'
-import config, { ConfigMenuItemsType } from '../config/config'
+import config, { configLanding, ConfigMenuItemsType } from '../config/config'
 
 export const useMenuItems = (): ConfigMenuItemsType[] => {
   const {

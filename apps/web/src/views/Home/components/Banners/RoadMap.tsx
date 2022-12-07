@@ -3,10 +3,12 @@ import styled from 'styled-components'
 import RoadMapItem from './RoadMapItem'
 
 export interface IRoadMapItem {
-  title: string
+  year: string
   describeOne: string
   describeTow: string
-  time: string
+  quater: string
+  includeMonth?: number[]
+  status?: string
 }
 
 const Wrapper = styled.div`
@@ -28,8 +30,8 @@ const Wrapper = styled.div`
         bottom: -30%;
       }
 
-      .line_not_done {
-        bottom: -26%;
+      .line_status {
+        bottom: -25%;
       }
     }
 
@@ -42,8 +44,37 @@ const Wrapper = styled.div`
       .milestone {
         top: -40%;
       }
-      .line_not_done {
-        top: -36%;
+      .line_status {
+        top: -37.5%;
+      }
+    }
+    .timeline-item-5 {
+      .line_status {
+        top: -36.5% !important;
+      }
+    }
+
+    .timeline-item-3 {
+      .milestone {
+        top: -50% !important;
+        left: -20% !important;
+      }
+      .line_status {
+        top: -36% !important;
+      }
+    }
+
+    .timeline-item-1 {
+      .milestone {
+        top: -47% !important;
+        left: -18% !important;
+      }
+    }
+
+    .timeline-item-2 {
+      .milestone {
+        bottom: -33% !important;
+        left: -18% !important;
       }
     }
   }
@@ -81,34 +112,39 @@ const RoadMap = () => {
 
 const listRoadMap = [
   {
-    title: '2022',
+    year: '2022',
     describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
     describeTow: 'Start contract for development',
-    time: 'Q2',
+    quater: 'Q2',
+    status: 'done',
   },
   {
-    title: '2022',
+    year: '2022',
     describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
     describeTow: 'Start contract for development',
-    time: 'Q3',
+    quater: 'Q3',
+    status: 'done',
   },
   {
-    title: '2022',
+    year: '2022',
     describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
     describeTow: 'Start contract for development',
-    time: 'Q4',
+    quater: 'Q4',
+    status: 'processing',
   },
   {
-    title: '2023',
+    year: '2023',
     describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
     describeTow: 'Start contract for development',
-    time: 'Q1',
+    quater: 'Q1',
+    status: 'todo',
   },
   {
-    title: '2023',
+    year: '2023',
     describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
     describeTow: 'Start contract for development',
-    time: 'Q2',
+    quater: 'Q2',
+    status: 'todo',
   },
 ]
 

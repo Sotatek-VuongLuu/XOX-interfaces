@@ -30,6 +30,7 @@ const WrapperItem = styled.div`
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
   border-radius: 20px;
+  width: 300px;
 
   .title_item {
     font-weight: 700;
@@ -76,22 +77,22 @@ const listItem = [
   {
     title: 'Decentralized Wallet',
     describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
+      'With the downfall of Centralized Exchanges, crypto investors finally realized that "Not your Keys not your Crypto", and Decentralized wallets like Trust Wallet & Metamask now more important than ever. The XOX Decentralized Wallet bring inovative features like.',
   },
   {
     title: 'Multichain Launchpad',
     describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
+      'Investing in ICOs, Fair Launches and Pre-sales could be very profitable if you find the right projects. We have set the task to Develop The Best Web3 Multi-Chain Launchpad on the Space and after studying over 50 Launchpads we have a pretty good idea of what works and what does not. The XOX Multi-Chain Launchpad will.',
   },
   {
     title: 'Coin Listing/Ranking Site',
     describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
+      'Multiple Studies have shown that at least 80% of crypto holders check CoinMarketCap once a day. The problem is that there is no accurate ranking system dedicated to a specific community. So we will create our own one, fully dedicated and targeted towards the needs of the XOX Community. No more searching around multiple platforms. Here is what we got in mind.',
   },
   {
     title: 'Advance Trading Station',
     describe:
-      'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
+      'The XOX Multi-Chain Trading Station will transform the way you trade tokens in a decentralized way, mainly targeted for traders that need more than a simple Swapping Platform, by just connecting your wallet to our Trading Station you will be able to take advantage of a set of features and tools that will take your trading skills and success to the Next Level.',
   },
 ]
 

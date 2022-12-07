@@ -86,11 +86,11 @@ const Partners = () => {
           freeMode={true}
           watchSlidesProgress
           autoplay={{
-            delay: 500,
+            delay: 1000,
             disableOnInteraction: false,
           }}
           // modules={[Autoplay]}
-          allowTouchMove={false}
+          allowTouchMove={true}
         >
           {listPartners.map(({ icon }) => {
             return (
@@ -113,7 +113,7 @@ const Partners = () => {
             reverseDirection: true,
           }}
           // modules={[Autoplay]}
-          allowTouchMove={false}
+          allowTouchMove={true}
         >
           {listPartners.map(({ icon }) => {
             return (
@@ -135,7 +135,7 @@ const Partners = () => {
             disableOnInteraction: false,
           }}
           // modules={[Autoplay]}
-          allowTouchMove={false}
+          allowTouchMove={true}
         >
           {listPartners.map(({ icon }) => {
             return (
@@ -150,6 +150,8 @@ const Partners = () => {
       {isShowMore ? (
         <div className="main">
           <Swiper
+            speed={1200}
+            effect="coverflow"
             loop={true}
             slidesPerView={15}
             freeMode={true}
@@ -159,7 +161,7 @@ const Partners = () => {
               disableOnInteraction: false,
             }}
             // modules={[Autoplay]}
-            allowTouchMove={false}
+            allowTouchMove={true}
           >
             {listPartners.map(({ icon }) => {
               return (
