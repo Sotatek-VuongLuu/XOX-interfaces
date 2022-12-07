@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { CopyButton } from "./CopyButton";
-import { Box, Flex, Text, FlexProps } from "../Box";
+import { Box, Flex, FlexProps } from "../Box";
 
 interface CopyAddressProps extends FlexProps {
   account: string;
@@ -69,16 +69,16 @@ export const CopyAddress: React.FC<React.PropsWithChildren<CopyAddressProps>> = 
                 <path
                   d="M14.3432 12.2183V2.65576H4.78027"
                   stroke="#8E8E8E"
-                  stroke-width="1.4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M12.2182 4.78101H2.65527V14.3435H12.2182V4.78101Z"
                   stroke="#8E8E8E"
-                  stroke-width="1.4"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="1.4"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             }

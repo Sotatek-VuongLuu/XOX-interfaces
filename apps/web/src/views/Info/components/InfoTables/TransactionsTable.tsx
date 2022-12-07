@@ -3,7 +3,16 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { ChainId } from '@pancakeswap/sdk'
 import truncateHash from '@pancakeswap/utils/truncateHash'
-import { ArrowBackIcon, ArrowForwardIcon, Box, Flex, LinkExternal, Radio, Skeleton, Text } from '@pancakeswap/uikit'
+import {
+  ArrowBackIcon,
+  ArrowForwardIcon,
+  Box,
+  Flex,
+  LinkExternal,
+  Skeleton,
+  Text,
+  Button,
+} from '@pancakeswap/uikit'
 import { ITEMS_PER_INFO_TABLE_PAGE } from 'config/constants/info'
 import { formatDistanceToNowStrict } from 'date-fns'
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
@@ -17,13 +26,50 @@ import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from '
 
 const Wrapper = styled.div`
   width: 100%;
+  grid-column: 1 / span 2;
+  background: #242424;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+  padding: 24px;
+
+  & .heading {
+    position: relative;
+  }
+
+  & .heading:after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 40px;
+    height: 2px;
+    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+  }
+
+  .btn-filter button {
+    height: 37px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    margin-right: 8px;
+    padding: 10px 16px;
+  }
+
+  .btn-filter button.inactive {
+    background: transparent;
+    border: none;
+    box-shadow: none;
+  }
 `
 
 const ResponsiveGrid = styled.div`
   display: grid;
-  grid-gap: 1em;
+  grid-gap: 35px;
   align-items: center;
-  grid-template-columns: 2fr 0.8fr repeat(4, 1fr);
+  grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 1fr 0.6fr;
   padding: 0 24px;
   @media screen and (max-width: 940px) {
     grid-template-columns: 2fr repeat(4, 1fr);
@@ -58,13 +104,6 @@ const ResponsiveGrid = styled.div`
       display: none;
     }
   }
-`
-
-const RadioGroup = styled(Flex)`
-  align-items: center;
-  margin-right: 16px;
-  margin-top: 8px;
-  cursor: pointer;
 `
 
 const SORT_FIELD = {
@@ -147,7 +186,6 @@ const TransactionTable: React.FC<
 
   const sortedTransactions = useMemo(() => {
     const toBeAbsList = [SORT_FIELD.amountToken0, SORT_FIELD.amountToken1]
-    console.log(transactions)
     return transactions
       ? transactions
           .slice()
@@ -201,91 +239,187 @@ const TransactionTable: React.FC<
     [sortDirection, sortField],
   )
 
-  const arrow = useCallback(
-    (field: string) => {
-      const directionArrow = !sortDirection ? '↑' : '↓'
-      return sortField === field ? directionArrow : ''
-    },
-    [sortDirection, sortField],
-  )
+  const IconSort = useMemo(() => {
+    return (
+      <svg xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17" fill="none">
+        <path d="M4.66675 2.22168V8.33279V2.22168Z" fill="#8E8E8E" />
+        <path
+          d="M4.66675 2.22168V8.33279"
+          stroke="#8E8E8E"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M1 4.66667L4.66667 1L8.33333 4.66667"
+          stroke="#8E8E8E"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path d="M8.33276 14.666V8.5549V14.666Z" fill="#8E8E8E" />
+        <path
+          d="M8.33276 14.666V8.55491"
+          stroke="#8E8E8E"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+        <path
+          d="M4.6665 12.222L8.33317 15.8887L11.9998 12.222"
+          stroke="#8E8E8E"
+          strokeWidth="1.6"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+        />
+      </svg>
+    )
+  }, [])
 
   return (
     <Wrapper>
-      <Flex mb="16px">
-        <Flex flexDirection={['column', 'row']}>
-          <RadioGroup onClick={() => handleFilter(undefined)}>
-            <Radio onChange={() => null} scale="sm" checked={txFilter === undefined} />
-            <Text ml="8px">{t('All')}</Text>
-          </RadioGroup>
-
-          <RadioGroup onClick={() => handleFilter(TransactionType.SWAP)}>
-            <Radio onChange={() => null} scale="sm" checked={txFilter === TransactionType.SWAP} />
-            <Text ml="8px">{t('Swaps')}</Text>
-          </RadioGroup>
-        </Flex>
-
-        <Flex flexDirection={['column', 'row']}>
-          <RadioGroup onClick={() => handleFilter(TransactionType.MINT)}>
-            <Radio onChange={() => null} scale="sm" checked={txFilter === TransactionType.MINT} />
-            <Text ml="8px">{t('Adds')}</Text>
-          </RadioGroup>
-
-          <RadioGroup onClick={() => handleFilter(TransactionType.BURN)}>
-            <Radio onChange={() => null} scale="sm" checked={txFilter === TransactionType.BURN} />
-            <Text ml="8px">{t('Removes')}</Text>
-          </RadioGroup>
+      <Flex mb="16px" justifyContent="space-between">
+        <Text
+          className="heading"
+          fontSize="20px"
+          fontFamily="Inter"
+          fontStyle="normal"
+          fontWeight="700"
+          lineHeight="24px"
+          color="rgba(255, 255, 255, 0.87)"
+          marginRight="5px"
+          height="24px"
+        >
+          Transactions History
+        </Text>
+        <Flex flexDirection="column" alignItems="flex-end">
+          <Flex className="btn-filter" mb="8px">
+            <Button onClick={() => handleFilter(undefined)} className={undefined === txFilter ? 'active' : 'inactive'}>
+              All
+            </Button>
+            <Button
+              onClick={() => handleFilter(TransactionType.SWAP)}
+              className={TransactionType.SWAP === txFilter ? 'active' : 'inactive'}
+            >
+              Swaps
+            </Button>
+            <Button
+              onClick={() => handleFilter(TransactionType.MINT)}
+              className={TransactionType.MINT === txFilter ? 'active' : 'inactive'}
+            >
+              Adds
+            </Button>
+            <Button
+              onClick={() => handleFilter(TransactionType.BURN)}
+              className={TransactionType.BURN === txFilter ? 'active' : 'inactive'}
+            >
+              Removes
+            </Button>
+          </Flex>
+          <Text
+            fontSize="14px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="400"
+            lineHeight="17px"
+            color="rgba(255, 255, 255, 0.6)"
+            marginRight="5px"
+          >
+            Total: 100 transactions
+          </Text>
         </Flex>
       </Flex>
       <TableWrapper>
         <ResponsiveGrid>
-          <Text color="secondary" fontSize="12px" bold textTransform="uppercase">
-            {t('Action')}
+          <Text
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.6)"
+          >
+            No
+          </Text>
+          <Text
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.6)"
+          >
+            Action
           </Text>
           <ClickableColumnHeader
-            color="secondary"
-            fontSize="12px"
-            bold
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.6)"
             onClick={() => handleSort(SORT_FIELD.amountUSD)}
-            textTransform="uppercase"
           >
-            {t('Total Value')} {arrow(SORT_FIELD.amountUSD)}
+            <Flex alignItems="center">
+              <span style={{ marginRight: '12px' }}>Excution Time</span> {IconSort}
+            </Flex>
           </ClickableColumnHeader>
           <ClickableColumnHeader
-            color="secondary"
-            fontSize="12px"
-            bold
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.6)"
             onClick={() => handleSort(SORT_FIELD.amountToken0)}
-            textTransform="uppercase"
           >
-            {t('Token Amount')} {arrow(SORT_FIELD.amountToken0)}
+            <Flex alignItems="center">
+              <span style={{ marginRight: '12px' }}>Total Value</span> {IconSort}
+            </Flex>
           </ClickableColumnHeader>
-          <ClickableColumnHeader
-            color="secondary"
-            fontSize="12px"
-            bold
-            onClick={() => handleSort(SORT_FIELD.amountToken1)}
-            textTransform="uppercase"
+          <Text
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.6)"
           >
-            {t('Token Amount')} {arrow(SORT_FIELD.amountToken1)}
-          </ClickableColumnHeader>
-          <ClickableColumnHeader
-            color="secondary"
-            fontSize="12px"
-            bold
-            onClick={() => handleSort(SORT_FIELD.sender)}
-            textTransform="uppercase"
+            Token Amount
+          </Text>
+          <Text
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.6)"
           >
-            {t('Account')} {arrow(SORT_FIELD.sender)}
-          </ClickableColumnHeader>
+            Token Amount
+          </Text>
           <ClickableColumnHeader
-            color="secondary"
-            fontSize="12px"
-            bold
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.6)"
             onClick={() => handleSort(SORT_FIELD.timestamp)}
-            textTransform="uppercase"
           >
-            {t('Time')} {arrow(SORT_FIELD.timestamp)}
+            <Flex alignItems="center">
+              <span style={{ marginRight: '12px' }}>Stable Coin Staked</span> {IconSort}
+            </Flex>
           </ClickableColumnHeader>
+          <Text
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.6)"
+          >
+            Maker
+          </Text>
         </ResponsiveGrid>
         <Break />
 

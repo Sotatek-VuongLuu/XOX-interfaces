@@ -88,7 +88,7 @@ const HoverableChart = ({
             <span>1y</span>
             <span>3M</span>
             <span>1M</span>
-            <span>1d</span>
+            <span>7d</span>
             <span>1d</span>
           </div>
         </p>

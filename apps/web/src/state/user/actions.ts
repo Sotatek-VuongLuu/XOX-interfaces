@@ -1,4 +1,4 @@
-import { createAction, createAsyncThunk } from '@reduxjs/toolkit'
+import { createAction } from '@reduxjs/toolkit'
 import { SerializedWrappedToken } from '@pancakeswap/token-lists'
 
 export interface SerializedPair {

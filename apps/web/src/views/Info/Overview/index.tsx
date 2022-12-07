@@ -1,8 +1,8 @@
 /* eslint-disable import/order */
 import { useTranslation } from '@pancakeswap/localization'
-import { Card, Flex, Heading, Message, MessageText } from '@pancakeswap/uikit'
+import { Card, Flex } from '@pancakeswap/uikit'
 import Page from 'components/Layout/Page'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import { checkIsStableSwap } from 'state/info/constant'
 import {
   useAllPoolDataSWR,
@@ -13,10 +13,10 @@ import {
   useProtocolTransactionsSWR,
 } from 'state/info/hooks'
 import styled from 'styled-components'
-import BarChart from 'views/Info/components/InfoCharts/BarChart'
+// import BarChart from 'views/Info/components/InfoCharts/BarChart'
 import LineChart from 'views/Info/components/InfoCharts/LineChart'
-import PoolTable from 'views/Info/components/InfoTables/PoolsTable'
-import TokenTable from 'views/Info/components/InfoTables/TokensTable'
+// import PoolTable from 'views/Info/components/InfoTables/PoolsTable'
+// import TokenTable from 'views/Info/components/InfoTables/TokensTable'
 import TransactionTable from 'views/Info/components/InfoTables/TransactionsTable'
 import HoverableChart from '../components/InfoCharts/HoverableChart'
 import WalletInfoTable from 'views/Info/components/InfoTables/WalletInfoTable'
@@ -84,48 +84,46 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
 
   const isStableSwap = checkIsStableSwap()
   const chainName = useGetChainName()
+
+  useEffect(()=> {
+    console.log('transactions: ', transactions)
+  }, [transactions])
+
   return (
     <Page>
       <PageContainer>
-        <div>
-          {/* {chainName === 'BSC' && !isStableSwap && (
+        {/* {chainName === 'BSC' && !isStableSwap && (
             <Message variant="warning" mb="10px">
               <MessageText fontSize={16}>
                 {t('PancakeSwap Info is currently under maintenance. Data may not be accurate or up-to-date.')}
               </MessageText>
             </Message>
           )} */}
-          {/* <Heading scale="lg" mb="16px" id="info-overview-title">
+        {/* <Heading scale="lg" mb="16px" id="info-overview-title">
             {t('PancakeSwap Info & Analytics')}
           </Heading> */}
-          <ChartCardsContainer>
-            <Card>
-              <HoverableChart
-                chartData={chartData}
-                protocolData={protocolData}
-                currentDate={currentDate}
-                valueProperty="volumeUSD"
-                title={t('Volume 24H')}
-                ChartComponent={LineChart}
-              />
-            </Card>
-          </ChartCardsContainer>
-          {/* <Heading scale="lg" mt="40px" mb="16px">
+        <ChartCardsContainer>
+          <Card>
+            <HoverableChart
+              chartData={chartData}
+              protocolData={protocolData}
+              currentDate={currentDate}
+              valueProperty="volumeUSD"
+              title={t('Volume 24H')}
+              ChartComponent={LineChart}
+            />
+          </Card>
+        </ChartCardsContainer>
+        {/* <Heading scale="lg" mt="40px" mb="16px">
             {t('Top Tokens')}
           </Heading>
           <TokenTable tokenDatas={formattedTokens} /> */}
-          {/* <Heading scale="lg" mt="40px" mb="16px">
+        {/* <Heading scale="lg" mt="40px" mb="16px">
             {t('Top Pairs')}
           </Heading>
           <PoolTable poolDatas={poolDatas} loading={somePoolsAreLoading} /> */}
-          <Heading scale="lg" mt="40px" mb="16px">
-            {t('Transactions')}
-          </Heading>
-          <TransactionTable transactions={transactions} />
-        </div>
-        <div>
-          <WalletInfoTable transactions={transactions} />
-        </div>
+        <WalletInfoTable />
+        <TransactionTable transactions={transactions} />
       </PageContainer>
     </Page>
   )
