@@ -17,6 +17,7 @@ const RightContent = styled.div`
     p {
       display: flex;
       margin-bottom: 16px;
+      align-items: center;
     }
   }
 
@@ -24,6 +25,7 @@ const RightContent = styled.div`
     font-weight: 400;
     font-size: 18px;
     color: rgba(255, 255, 255, 0.87);
+    line-height: 32px;
   }
 `
 
@@ -44,7 +46,7 @@ const Paragraph = styled.p`
 
 const Watch = styled.div`
   width: 473px;
-  height: 362px;
+  height: 100%;
   background: #9072ff;
   border-radius: 24px;
 `

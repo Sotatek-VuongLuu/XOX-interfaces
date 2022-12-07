@@ -41,6 +41,7 @@ const Wrapper = styled.div`
 
     p {
       display: flex;
+      align-items: center;
     }
   }
   .title_list_item {

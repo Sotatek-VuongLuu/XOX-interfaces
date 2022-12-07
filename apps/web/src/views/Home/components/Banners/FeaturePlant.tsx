@@ -23,7 +23,7 @@ const LeftContent = styled.div`
   width: 67%;
   .list {
     display: grid;
-    grid-template-columns: 358px 241px;
+    grid-template-columns: 370px 241px;
     column-gap: 40px;
     row-gap: 16px;
 
@@ -33,12 +33,14 @@ const LeftContent = styled.div`
 
     p {
       display: flex;
+      align-items: center;
     }
   }
   .title_list_item {
     font-weight: 400;
     font-size: 18px;
     color: rgba(255, 255, 255, 0.87);
+    line-height: 32px;
   }
 `
 
@@ -50,7 +52,6 @@ const Title = styled.p`
   font-weight: 700;
   font-size: 36px;
   color: rgba(255, 255, 255, 0.87);
-  font-weight: 400;
 `
 
 const Paragraph = styled.p`
