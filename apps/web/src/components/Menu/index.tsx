@@ -7,6 +7,8 @@ import { NetworkSwitcher } from 'components/NetworkSwitcher'
 import useTheme from 'hooks/useTheme'
 import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
 import { usePhishingBannerManager } from 'state/user/hooks'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+import styled from 'styled-components'
 import UserMenu from './UserMenu'
 import { useMenuItems } from './hooks/useMenuItems'
 // import GlobalSettings from './GlobalSettings'
@@ -14,8 +16,6 @@ import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { SettingsMode } from './GlobalSettings/types'
 import { configLanding } from './config/config'
-import { useActiveChainId } from 'hooks/useActiveChainId'
-import styled from 'styled-components'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;
