@@ -14,10 +14,6 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
         href: '/blog',
       },
       {
-        label: t('Careers'),
-        href: '/careers',
-      },
-      {
         label: t('Contact Us'),
         href: '/contact-us',
       },

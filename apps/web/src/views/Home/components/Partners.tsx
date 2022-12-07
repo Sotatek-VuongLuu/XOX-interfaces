@@ -78,7 +78,7 @@ const Partners = () => {
   return (
     <Wrapper>
       <div className="title">Strategic Partners</div>
-      <p className="decoration">Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.</p>
+      <p className="decoration">Backed by the Best to Deliver the Best.</p>
       <div className="main">
         <Swiper
           loop={true}
@@ -86,7 +86,7 @@ const Partners = () => {
           freeMode={true}
           watchSlidesProgress
           autoplay={{
-            delay: 1000,
+            delay: 0,
             disableOnInteraction: false,
           }}
           // modules={[Autoplay]}
@@ -108,7 +108,7 @@ const Partners = () => {
           freeMode={true}
           watchSlidesProgress
           autoplay={{
-            delay: 1000,
+            delay: 0,
             disableOnInteraction: false,
             reverseDirection: true,
           }}
@@ -131,7 +131,7 @@ const Partners = () => {
           freeMode={true}
           watchSlidesProgress
           autoplay={{
-            delay: 2000,
+            delay: 0,
             disableOnInteraction: false,
           }}
           // modules={[Autoplay]}
@@ -150,14 +150,13 @@ const Partners = () => {
       {isShowMore ? (
         <div className="main">
           <Swiper
-            speed={1200}
-            effect="coverflow"
+            speed={1500}
             loop={true}
             slidesPerView={15}
             freeMode={true}
             watchSlidesProgress
             autoplay={{
-              delay: 2000,
+              delay: 0,
               disableOnInteraction: false,
             }}
             // modules={[Autoplay]}

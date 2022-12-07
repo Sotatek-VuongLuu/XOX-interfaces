@@ -72,7 +72,11 @@ const Paragraph = styled.p`
 const FeatureReferal = () => {
   return (
     <Wrapper>
-      <div className="leader_board">!</div>
+      {/* <div className="leader_board">!</div> */}
+
+      <div>
+        <img src="/images/leader_board.svg" alt="leader_board" />
+      </div>
       <div className="ref_container">
         <p className="title_ref">Gamified Referral Program</p>
         <Paragraph className="description">

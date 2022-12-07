@@ -45,28 +45,34 @@ const Wrapper = styled.div`
         top: -40%;
       }
       .line_status {
-        top: -37.5%;
+        top: -32.5%;
       }
     }
     .timeline-item-5 {
-      .line_status {
-        top: -36.5% !important;
+      .milestone {
+        top: -36% !important;
+      }
+    }
+
+    .timeline-item-4 {
+      .milestone {
+        bottom: -28% !important;
       }
     }
 
     .timeline-item-3 {
       .milestone {
-        top: -50% !important;
+        top: -44% !important;
         left: -20% !important;
-      }
-      .line_status {
-        top: -36% !important;
       }
     }
 
     .timeline-item-1 {
+      .line_status {
+        top: -33.3% !important;
+      }
       .milestone {
-        top: -47% !important;
+        top: -42% !important;
         left: -18% !important;
       }
     }

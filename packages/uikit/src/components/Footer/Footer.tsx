@@ -134,14 +134,6 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           <li>
             <a href="#">Privacy Policy</a>
           </li>
-          <li>|</li>
-          <li>
-            <a href="#">Sitemap</a>
-          </li>
-          <li>|</li>
-          <li>
-            <a href="#">Disclaimer</a>
-          </li>
         </StyleStaticPage>
       </Flex>
     </Flex>

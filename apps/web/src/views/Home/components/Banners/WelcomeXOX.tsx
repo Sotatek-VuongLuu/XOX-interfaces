@@ -80,7 +80,7 @@ const WelcomeXOX = (): JSX.Element => {
       <LeftContent>
         <Title>XOX The Multichain Defi Apps & Solutions for Web3 Provider</Title>
         <Feature>Revolutionary - Scalable - Multichain</Feature>
-        <Description>XOX is a decentralized platform built to foster users trading and earning crypto.</Description>
+        <Description>Swap, earn, and build on the leading decentralized Web3 crypto ecosystem.</Description>
         <div className="btn_group">
           <Button>Read Documentation</Button>
           <div className="get_xox">

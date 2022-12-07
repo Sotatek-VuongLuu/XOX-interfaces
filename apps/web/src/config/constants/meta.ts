@@ -58,7 +58,7 @@ export const getCustomMeta = memoize(
 
     if (pathMetadata) {
       return {
-        title: `${pathMetadata.title} | ${t(pathList.defaultTitleSuffix)}`,
+        title: `XOX`,
         ...(pathMetadata.description && { description: pathMetadata.description }),
       }
     }

@@ -70,6 +70,7 @@ const Wrapper = styled.div`
         font-weight: 400;
         font-size: 16px;
         color: rgba(255, 255, 255, 0.87);
+        line-height: 24px;
       }
     }
   }
@@ -137,12 +138,12 @@ const listCommunity = [
   },
   {
     icon: '/images/telegram.svg',
-    name: 'Telegram',
+    name: 'Telegram Group',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
   },
   {
-    icon: '/images/facebook.svg',
-    name: 'Facebook',
+    icon: '/images/telegram.svg',
+    name: 'Telegram Channel',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
   },
   {

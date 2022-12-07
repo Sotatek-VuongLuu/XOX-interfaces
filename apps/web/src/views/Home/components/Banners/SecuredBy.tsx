@@ -29,7 +29,7 @@ const SecuredBy = () => {
   return (
     <Wrapper>
       <p className="title">Secured By</p>
-      <p className="description">Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.</p>
+      <p className="description">XOX has Industry Leading Security. Protected By The Best.</p>
 
       <p className="img">
         <img src="/images/security.svg" alt="security" />

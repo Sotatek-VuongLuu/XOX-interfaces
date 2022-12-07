@@ -62,7 +62,10 @@ const UpComing = () => {
   return (
     <Wrapper>
       <div className="title">Upcoming Utilities</div>
-      <p className="decoration">Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.</p>
+      <p className="decoration">
+        Every utility is current under development and they are gonna be gradually implemented once ready. Adding
+        massive value to the Ecosystem overtime.
+      </p>
 
       <div className="main_content">
         {listItem.map(({ title, describe }) => {

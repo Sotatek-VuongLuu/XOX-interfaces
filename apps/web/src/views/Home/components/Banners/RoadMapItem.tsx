@@ -12,7 +12,7 @@ const ContainerItem = styled.div`
   position: relative;
   width: 278px;
   height: fit-content;
-  margin-bottom: 51px;
+  // margin-bottom: 50px;
 
   .title {
     font-weight: 700;
