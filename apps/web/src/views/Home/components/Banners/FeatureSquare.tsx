@@ -17,15 +17,16 @@ const Wrapper = styled.div`
     .heart {
       font-weight: 700;
       font-size: 36px;
+      line-height: 48px;
       color: rgba(255, 255, 255, 0.87);
     }
 
     .describe {
       font-weight: 400;
       font-size: 16px;
+      line-height: 24px;
       color: rgba(255, 255, 255, 0.6);
       width: 409px;
-      line-height: 32px;
     }
   }
 `

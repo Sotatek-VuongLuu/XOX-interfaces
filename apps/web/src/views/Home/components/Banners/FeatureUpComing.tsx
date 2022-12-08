@@ -21,6 +21,7 @@ const Wrapper = styled.div`
 
   .main_content {
     display: flex;
+    justify-content: space-evenly;
     gap: 24px;
   }
 `

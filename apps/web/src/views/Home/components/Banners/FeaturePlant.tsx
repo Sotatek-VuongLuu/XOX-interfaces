@@ -51,6 +51,7 @@ const RightContent = styled.div`
 const Title = styled.p`
   font-weight: 700;
   font-size: 36px;
+  line-height: 48px;
   color: rgba(255, 255, 255, 0.87);
 `
 

@@ -42,26 +42,26 @@ const LeftContent = styled.div`
 `
 
 const Title = styled.p`
-  color: #ffffff;
-  font-weight: 800;
-  font-size: 64px;
-  width: 650px;
-  span {
-    color:#A35AFF
+  font-weight: 700;
+  font-size: 48px;
+  line-height: 72px;
+  color: rgba(255, 255, 255, 0.87);
 `
 
 const Feature = styled.div`
   font-weight: 700;
-  font-size: 44px;
+  font-size: 36px;
+  line-height: 44px;
   color: #9072ff;
-  margin: 32px 0;
+  margin: 24px 0;
 `
 
 const Description = styled.div`
   font-weight: 500;
   font-size: 18px;
-  color: #ffffff;
-  margin-bottom: 32px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-bottom: 24px;
 `
 
 const Button = styled.button`

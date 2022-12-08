@@ -24,16 +24,16 @@ const Wrapper = styled.div`
     .title {
       font-weight: 700;
       font-size: 36px;
+      line-height: 48px;
       color: rgba(255, 255, 255, 0.87);
       margin-bottom: 24px;
-      line-height: 48px;
     }
 
     .description {
       font-weight: 400;
       font-size: 18px;
-      color: rgba(255, 255, 255, 0.6);
       line-height: 32px;
+      color: rgba(255, 255, 255, 0.87);
     }
   }
 
