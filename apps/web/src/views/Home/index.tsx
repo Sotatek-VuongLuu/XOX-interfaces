@@ -5,7 +5,6 @@ import BallPurple from './components/BallPurple'
 import WelcomeXOX from './components/Banners/WelcomeXOX'
 import FeatureWatch from './components/Banners/FeatureWatch'
 import FeaturePlant from './components/Banners/FeaturePlant'
-import FeatureSquare from './components/Banners/FeatureSquare'
 import RoadMap from './components/Banners/RoadMap'
 import Partners from './components/Partners'
 import Community from './components/Banners/Community'
@@ -16,11 +15,14 @@ import FeatureReferal from './components/Banners/FeatureReferal'
 import UpComing from './components/Banners/FeatureUpComing'
 import SecuredBy from './components/Banners/SecuredBy'
 import BGPartner from './components/Banners/BackgroundPartner'
+import FeatureSquare from './components/Banners/FeatureSquare'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 48px 250px;
+  padding: 20px 14px;
+
+  ${({ theme }) => theme.mediaQueries.xxl} {
+    padding: 48px 130px;
   }
 `
 
@@ -50,12 +52,11 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         containerProps={{
           id: 'home',
         }}
-        index={2}
+        index={1}
         hasCurvedDivider={false}
       >
         <Backgroud />
         <FeatureEconomy />
-        <FeatureSquare />
       </StyledSection>
 
       <StyledSection
@@ -63,10 +64,11 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         containerProps={{
           id: 'home',
         }}
-        index={2}
+        index={1}
         hasCurvedDivider={false}
       >
         <BackgroudWatch />
+        <FeatureSquare />
         <FeatureWatch />
         <FeaturePlant />
         <FeatureReferal />
@@ -84,7 +86,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <Partners />
         <SecuredBy />
         <UpComing />
-        <RoadMap />
+        {/* <RoadMap /> */}
         <Community />
       </StyledSection>
     </>

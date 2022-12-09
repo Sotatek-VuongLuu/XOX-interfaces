@@ -1,8 +1,9 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
+import { Box, Grid } from '@mui/material'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
+const Wrapper = styled(Box)`
   display: flex;
   justify-content: space-between;
   gap: 64px;
@@ -22,10 +23,14 @@ const Wrapper = styled.div`
     font-weight: 700;
     font-size: 36px;
     color: rgba(255, 255, 255, 0.87);
+
+    @media screen and (max-width: 900px) {
+      font-size: 20px;
+      line-height: 32px;
+    }
   }
 
   .ref_container {
-    width: 40%;
   }
 
   .list {
@@ -43,11 +48,18 @@ const Wrapper = styled.div`
       display: flex;
       align-items: center;
     }
+
+    @media screen and (max-width: 900px) {
+      grid-template-columns: 1fr;
+    }
   }
   .title_list_item {
     font-weight: 400;
     font-size: 18px;
     color: rgba(255, 255, 255, 0.87);
+    @media screen and (max-width: 900px) {
+      font-size: 16px;
+    }
   }
 
   .btn_join {
@@ -58,6 +70,16 @@ const Wrapper = styled.div`
     border: none;
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
     border-radius: 8px;
+
+    @media screen and (max-width: 900px) {
+      padding: 12px 30px;
+      font-size: 16px;
+    }
+  }
+
+  .lead_board_container {
+    display: flex;
+    justify-content: center;
   }
 `
 
@@ -68,37 +90,46 @@ const Paragraph = styled.p`
   font-weight: 400;
   line-height: 32px;
   margin: 24px 0px;
+
+  @media screen and (max-width: 900px) {
+    font-size: 16px;
+    line-height: 24px;
+  }
 `
 
 const FeatureReferal = () => {
   return (
-    <Wrapper>
-      {/* <div className="leader_board">!</div> */}
+    <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
+      <Grid container spacing={2}>
+        <Grid item xs={12} md={7}>
+          <div className="lead_board_container">
+            <img src="/images/leader_board.svg" alt="leader_board" />
+          </div>
+        </Grid>
+        <Grid item xs={12} md={5}>
+          <div className="ref_container">
+            <p className="title_ref">Gamified Referral Program</p>
+            <Paragraph className="description">
+              Built to give back, the XOX Gamified Referral Program rewards both "The Referee" & "The Referrer" Earn
+              Points that's are redeemable for BUSD/USDC after reaching different levels & milestones.
+            </Paragraph>
+            <div className="list">
+              {listTag.map(({ title }) => {
+                return (
+                  <p>
+                    <span>
+                      <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+                    </span>
+                    <span className="title_list_item">{title}</span>
+                  </p>
+                )
+              })}
+            </div>
 
-      <div>
-        <img src="/images/leader_board.svg" alt="leader_board" />
-      </div>
-      <div className="ref_container">
-        <p className="title_ref">Gamified Referral Program</p>
-        <Paragraph className="description">
-          Built to give back, the XOX Gamified Referral Program rewards both "The Referee" & "The Referrer" Earn Points
-          that's are redeemable for BUSD/USDC after reaching different levels & milestones.
-        </Paragraph>
-        <div className="list">
-          {listTag.map(({ title }) => {
-            return (
-              <p>
-                <span>
-                  <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
-                </span>
-                <span className="title_list_item">{title}</span>
-              </p>
-            )
-          })}
-        </div>
-
-        <button className="btn_join">Join Now</button>
-      </div>
+            <button className="btn_join">Join Now</button>
+          </div>
+        </Grid>
+      </Grid>
     </Wrapper>
   )
 }

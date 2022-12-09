@@ -1,4 +1,7 @@
+import { Box, Grid } from '@mui/material'
+import useWindowSize from 'hooks/useWindowSize'
 import styled, { keyframes } from 'styled-components'
+import EconomyMobile from './EconomyMobile'
 
 const floatingAnim = (x: string, y: string) => keyframes`
   from {
@@ -12,15 +15,10 @@ const floatingAnim = (x: string, y: string) => keyframes`
   }
 `
 
-const Wrapper = styled.div`
-  position: relative;
+const Wrapper = styled(Box)`
   margin-bottom: 100px;
 
   .paragraph {
-    z-index: 3;
-    position: absolute;
-    right: 31px;
-    width: 513px;
     .title {
       font-weight: 700;
       font-size: 36px;
@@ -71,26 +69,38 @@ const Wrapper = styled.div`
 `
 
 const FeatureEconomy = () => {
+  const { width } = useWindowSize()
   return (
-    <Wrapper>
-      <div className="paragraph">
-        <p className="title">Built and Available on every leading blockchain.</p>
-        <p className="description">
-          Creating A Truly Decentralized Multichain Ecosystem with Unlimited possibilities. Supporting Defi and Web3
-          global adoption for a better future.
-        </p>
-      </div>
+    <>
+      {width < 900 ? (
+        <EconomyMobile />
+      ) : (
+        <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
+          <Grid container spacing={2}>
+            <Grid item xs={12} md={8} direction="column-reverse">
+              <div className="main_card_content">
+                <img src="/images/chain_4.svg" alt="token-card" className="chain_4" />
 
-      <div className="main_card_content">
-        <img src="/images/chain_4.svg" alt="token-card" className="chain_4" />
-
-        <div className="card_container">
-          <img src="/images/chain_3.svg" alt="token-card" className="chain_3" />
-          <img src="/images/chain_2.svg" alt="token-card" className="chain_2" />
-        </div>
-        <img src="/images/chain_1.svg" alt="token-card" className="chain_1" />
-      </div>
-    </Wrapper>
+                <div className="card_container">
+                  <img src="/images/chain_3.svg" alt="token-card" className="chain_3" />
+                  <img src="/images/chain_2.svg" alt="token-card" className="chain_2" />
+                </div>
+                <img src="/images/chain_1.svg" alt="token-card" className="chain_1" />
+              </div>
+            </Grid>
+            <Grid item xs={12} md={4}>
+              <div className="paragraph">
+                <p className="title">Built and Available on every leading blockchain.</p>
+                <p className="description">
+                  Creating A Truly Decentralized Multichain Ecosystem with Unlimited possibilities. Supporting Defi and
+                  Web3 global adoption for a better future.
+                </p>
+              </div>
+            </Grid>
+          </Grid>
+        </Wrapper>
+      )}
+    </>
   )
 }
 

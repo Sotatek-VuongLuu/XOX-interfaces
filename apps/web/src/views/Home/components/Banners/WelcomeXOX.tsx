@@ -1,11 +1,30 @@
 /* eslint-disable react/button-has-type */
 import styled from 'styled-components'
 import Spline from '@splinetool/react-spline'
+import { Box, Grid } from '@mui/material'
+import useWindowSize from 'hooks/useWindowSize'
+import { useMemo } from 'react'
 
 const Wrapper = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
+  @media screen and (max-width: 900px) {
+    .title {
+      font-size: 24px;
+      line-height: 40px;
+    }
+    .feature {
+      font-size: 18px;
+      line-height: 22px;
+    }
+    .description {
+      font-size: 14px;
+      line-height: 24px;
+    }
+
+    .btn_read_doc {
+      padding: 12px 18px;
+      font-size: 16px;
+    }
+  }
 `
 
 const LeftContent = styled.div`
@@ -35,6 +54,16 @@ const LeftContent = styled.div`
           height: 100%;
           background-color: #191a28;
           border-radius: inherit;
+        }
+      }
+    }
+    @media screen and (max-width: 900px) {
+      .get_xox {
+        .boxed-child {
+          padding: 17px 22px;
+          span {
+            font-size: 16px;
+          }
         }
       }
     }
@@ -72,31 +101,78 @@ const Button = styled.button`
   font-weight: 700;
   font-size: 18px;
   color: #ffffff;
+
+  @media screen and (max-width: 900px) {
+    font-size: 16px;
+  }
 `
 
 const WelcomeXOX = (): JSX.Element => {
+  const { width } = useWindowSize()
+
+  const controlWidth = useMemo(() => {
+    let size = 600
+    if (width < 1380) {
+      size = 600
+    }
+
+    if (width < 632) {
+      size = 380
+    }
+
+    if (width <= 576) {
+      size = 342
+    }
+
+    if (width <= 374) {
+      size = 300
+    }
+
+    if (width < 334) {
+      size = 210
+    }
+    return size
+  }, [width])
+
+  // const el = document.getElementById('my-spline')
+  // el.addEventListener('wheel', function stopWheel(e) {
+  //   e.preventDefault()
+  // })
+
   return (
     <Wrapper>
-      <LeftContent>
-        <Title>XOX The Multichain Defi Apps & Solutions for Web3 Provider</Title>
-        <Feature>Revolutionary - Scalable - Multichain</Feature>
-        <Description>Swap, earn, and build on the leading decentralized Web3 crypto ecosystem.</Description>
-        <div className="btn_group">
-          <Button>Read Documentation</Button>
-          <div className="get_xox">
-            <div className="boxed-child">
-              <span>Get XOX</span>
-            </div>
-          </div>
-        </div>
-      </LeftContent>
+      <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
+        <Grid container spacing={2}>
+          <Grid xs={12} md={7}>
+            <LeftContent>
+              <Title className="title">XOX The Multichain Defi Apps & Solutions for Web3 Provider</Title>
+              <Feature className="feature">Revolutionary - Scalable - Multichain</Feature>
+              <Description className="description">
+                Swap, earn, and build on the leading decentralized Web3 crypto ecosystem.
+              </Description>
+              <div className="btn_group">
+                <Button className="btn_read_doc">Read Documentation</Button>
+                <div className="get_xox">
+                  <div className="boxed-child">
+                    <span>Get XOX</span>
+                  </div>
+                </div>
+              </div>
+            </LeftContent>
+          </Grid>
 
-      <Spline
-        scene="https://prod.spline.design/o7-ZQWkGS2tIZeP0/scene.splinecode"
-        height={600}
-        width={600}
-        onLoad={(e) => e.setZoom(0.7)}
-      />
+          <Grid xs={12} md={5} style={{ justifyContent: 'center', display: 'flex' }}>
+            <Spline
+              scene="https://prod.spline.design/o7-ZQWkGS2tIZeP0/scene.splinecode"
+              height={342}
+              width={342}
+              onLoad={(e) => e.setZoom(0.4)}
+              id="my-spline"
+              onWheel={(e) => console.log(e.target.id)}
+            />
+          </Grid>
+        </Grid>
+      </Box>
     </Wrapper>
   )
 }

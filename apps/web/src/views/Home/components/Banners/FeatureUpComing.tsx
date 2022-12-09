@@ -1,3 +1,4 @@
+import { Box, Grid } from '@mui/material'
 import styled from 'styled-components'
 import TeamMenber from './TeamMenber'
 
@@ -19,19 +20,25 @@ const Wrapper = styled.div`
     margin-bottom: 48px;
   }
 
-  .main_content {
-    display: flex;
-    justify-content: space-evenly;
-    gap: 24px;
+  @media screen and (max-width: 900px) {
+    .title {
+      font-size: 20px;
+      line-height: 32px;
+    }
+
+    .decoration {
+      font-size: 14px;
+      line-height: 24px;
+    }
   }
 `
 
 const WrapperItem = styled.div`
+  height: 380px;
   padding: 24px 22px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
   border-radius: 20px;
-  width: 300px;
 
   .title_item {
     font-weight: 700;
@@ -47,6 +54,33 @@ const WrapperItem = styled.div`
     font-size: 14px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.6);
+
+    height: 240px;
+    overflow: auto;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #d5c9ff;
+      border-radius: 10px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #bcaaff;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    .title_item {
+      font-size: 18px;
+      line-height: 22px;
+    }
   }
 `
 
@@ -68,11 +102,17 @@ const UpComing = () => {
         massive value to the Ecosystem overtime.
       </p>
 
-      <div className="main_content">
-        {listItem.map(({ title, describe }) => {
-          return <UpComingItem describe={describe} title={title} />
-        })}
-      </div>
+      <Box sx={{ flexGrow: 1, display: 'flex' }}>
+        <Grid container spacing={2}>
+          {listItem.map(({ title, describe }) => {
+            return (
+              <Grid item xs={12} md={3}>
+                <UpComingItem describe={describe} title={title} />
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Box>
     </Wrapper>
   )
 }

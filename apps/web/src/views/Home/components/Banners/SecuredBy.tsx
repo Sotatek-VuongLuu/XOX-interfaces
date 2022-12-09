@@ -1,3 +1,4 @@
+import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -8,6 +9,10 @@ const Wrapper = styled.div`
     line-height: 44px;
     color: rgba(255, 255, 255, 0.87);
     text-align: center;
+
+    @media screen and (max-width: 900px) {
+      font-size: 20px;
+    }
   }
 
   .description {
@@ -18,6 +23,10 @@ const Wrapper = styled.div`
     color: rgba(255, 255, 255, 0.6);
     margin-top: 16px;
     margin-bottom: 40px;
+
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+    }
   }
 
   .img {
@@ -26,13 +35,18 @@ const Wrapper = styled.div`
 `
 
 const SecuredBy = () => {
+  const { width } = useWindowSize()
   return (
     <Wrapper>
       <p className="title">Secured By</p>
       <p className="description">XOX has Industry Leading Security. Protected By The Best.</p>
 
       <p className="img">
-        <img src="/images/security.svg" alt="security" />
+        {width < 9000 ? (
+          <img src="/images/security_mobile.svg" alt="security" />
+        ) : (
+          <img src="/images/security.svg" alt="security" />
+        )}
       </p>
     </Wrapper>
   )

@@ -1,6 +1,19 @@
 import styled from 'styled-components'
 // eslint-disable-next-line import/no-cycle
-import SquareItem from './SquareItems'
+
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+import { spawn } from 'child_process'
+import React, { useState } from 'react'
+import Tippy from '@tippyjs/react'
+import 'tippy.js/dist/tippy.css' // optional
+import { Box, Grid } from '@mui/material'
+
+// eslint-disable-next-line import/no-cycle
+
+interface Iprops {
+  item: ISquareItem
+}
 
 export interface ISquareItem {
   icon: string
@@ -8,7 +21,129 @@ export interface ISquareItem {
   description: string
   link: string
 }
+
+const WrapperI = styled.div`
+  height: 100%;
+  background: #242424;
+  border-radius: 10px;
+  padding: 24px 22px 32px;
+
+  .main_container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    justify-content: space-between;
+
+    .get_xox {
+      padding: 1px;
+      width: fit-content;
+      border-radius: 8px;
+      background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+
+      .boxed-child {
+        width: 100%;
+        height: 100%;
+        background-color: #242424;
+        padding: 10px 20px;
+        border-radius: inherit;
+        span {
+          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-fill-color: transparent;
+          font-weight: 700;
+          font-size: 14px;
+          width: 100%;
+          height: 100%;
+          background-color: #191a28;
+          border-radius: inherit;
+        }
+      }
+    }
+
+    .expand {
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      font-weight: 400;
+      font-size: 16px;
+      width: 100%;
+      height: 100%;
+      background-color: #191a28;
+      border-radius: inherit;
+    }
+  }
+`
+
+const Title = styled.p`
+  font-weight: 700;
+  font-size: 20px;
+  color: rgba(255, 255, 255, 0.87);
+  line-height: 25px;
+
+  @media screen and (max-width: 900px) {
+    font-size: 18px;
+    line-height: 22px;
+    margin-top: 24px;
+  }
+`
+
+const Description = styled.p`
+  font-weight: 400;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.6);
+  margin: 16px 0 0;
+  line-height: 24px;
+  @media screen and (max-width: 900px) {
+    font-size: 14px;
+    line-height: 24px;
+  }
+`
+
+const Icon = styled.div`
+  background: linear-gradient(100.7deg, #6034ff 0%, #a35aff 100%);
+  width: 48px;
+  height: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 50%;
+`
+
+const SquareItem = ({ item }: Iprops) => {
+  const [isShowReadMore, setIsShow] = useState(item.description.length > 200)
+  return (
+    <WrapperI className="item">
+      <div className="main_container">
+        <div>
+          <Icon>
+            <img src={item.icon} alt="icon" />
+          </Icon>
+          <Title>{item.title}</Title>
+          <Description>
+            {isShowReadMore ? `${item.description.slice(0, 200)}...` : item.description}{' '}
+            {item.description.length > 200 ? (
+              <span onClick={() => setIsShow(!isShowReadMore)} style={{ cursor: 'pointer' }}>
+                {isShowReadMore ? <span className="expand">Read more</span> : <span className="expand">Read less</span>}
+              </span>
+            ) : null}
+          </Description>
+        </div>
+        <div className="get_xox">
+          <div className="boxed-child">
+            <span>Discover More</span>
+          </div>
+        </div>
+      </div>
+    </WrapperI>
+  )
+}
+
 const Wrapper = styled.div`
+  margin-bottom: 100px;
   .title {
     display: flex;
     justify-content: space-between;
@@ -29,29 +164,45 @@ const Wrapper = styled.div`
       width: 409px;
     }
   }
-`
 
-const MainContainer = styled.div`
-  display: flex;
-  justify-content: space-between;
+  @media screen and (max-width: 900px) {
+    .title {
+      flex-direction: column;
+      .heart {
+        font-size: 20px;
+        line-height: 32px;
+      }
+      .describe {
+        font-size: 14px;
+        line-height: 24px;
+        width: unset;
+      }
+    }
+  }
 `
 
 const FeatureSquare = () => {
   return (
     <Wrapper>
       <div className="title">
-        <span className="heart">The Heart of the XOX Ecosystem</span>
-        <span className="describe">
+        <p className="heart">The Heart of the XOX Ecosystem</p>
+        <p className="describe">
           Wide range of apps, utilities and solutions powering the protocol creating a True One-Stop Ecosystem for all
           your DeFi needs.
-        </span>
+        </p>
       </div>
 
-      <MainContainer>
-        {listSquare.map((item: ISquareItem) => {
-          return <SquareItem item={item} />
-        })}
-      </MainContainer>
+      <Box sx={{ flexGrow: 1, display: 'flex' }}>
+        <Grid container spacing={2}>
+          {listSquare.map((item: ISquareItem) => {
+            return (
+              <Grid item xs={12} md={4}>
+                <SquareItem item={item} />
+              </Grid>
+            )
+          })}
+        </Grid>
+      </Box>
     </Wrapper>
   )
 }

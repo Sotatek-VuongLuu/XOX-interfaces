@@ -1,9 +1,11 @@
+import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 interface IItemListCommunity {
   icon: string
   name: string
   des: string
+  iconMobile?: string
 }
 
 interface Iprops {
@@ -18,7 +20,7 @@ const Wrapper = styled.div`
   }
   .main {
     display: grid;
-    grid-template-columns: 580px 580px;
+    grid-template-columns: 1fr 1fr;
     column-gap: 48px;
     row-gap: 40px;
 
@@ -29,8 +31,6 @@ const Wrapper = styled.div`
       display: flex;
       justify-content: space-between;
       align-items: center;
-      gap: 24px;
-      width: 578px;
 
       .icon-container {
         width: 90px;
@@ -73,6 +73,26 @@ const Wrapper = styled.div`
         line-height: 24px;
       }
     }
+
+    @media screen and (max-width: 900px) {
+      column-gap: 24px;
+      row-gap: 23px;
+
+      .item_container {
+        padding: 24px 14px;
+        .icon-container {
+          width: 60px;
+          height: 60px;
+        }
+
+        .name_mobile {
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 17px;
+          color: #ffffff;
+        }
+      }
+    }
   }
 
   .title {
@@ -90,26 +110,54 @@ const Wrapper = styled.div`
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 48px;
   }
+
+  @media screen and (max-width: 900px) {
+    .title {
+      font-size: 20px;
+    }
+
+    .decoration {
+      font-size: 14px;
+    }
+
+    .wrapper_mobile {
+      width: 100%;
+      .name_mobile {
+        text-align: center;
+        margin-top: 16px;
+      }
+      .icon-container_moblie {
+        justify-content: center;
+        display: flex;
+      }
+    }
+  }
 `
 
 const CommunityItem = ({ item }: Iprops) => {
+  const { width } = useWindowSize()
   return (
     <div className="item_container">
-      <div>
-        <div className="icon-container">
-          <div className="icon">
-            <div className="overlay">
-              <img src={item.icon} alt="icon" />
+      <div className="wrapper_mobile">
+        <div className="icon-container_moblie">
+          <div className="icon-container">
+            <div className="icon">
+              <div className="overlay">
+                <img src={width < 900 ? item.iconMobile : item.icon} alt="icon" />
+              </div>
             </div>
           </div>
         </div>
+        {width < 900 && <div className="name_mobile">{item.name}</div>}
       </div>
-      <div>
-        <p className="name">{item.name}</p>
-        <ul>
-          <li className="des">{item.des}</li>
-        </ul>
-      </div>
+      {width > 900 && (
+        <div style={{ marginLeft: 24 }}>
+          <p className="name">{item.name}</p>
+          <ul>
+            <li className="des">{item.des}</li>
+          </ul>
+        </div>
+      )}
     </div>
   )
 }
@@ -135,31 +183,37 @@ const listCommunity = [
     icon: '/images/twitter.svg',
     name: 'Twitter',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    iconMobile: '/images/twitter_mobile.svg',
   },
   {
     icon: '/images/telegram.svg',
     name: 'Telegram Group',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    iconMobile: '/images/telegram_mobile.svg',
   },
   {
     icon: '/images/telegram.svg',
     name: 'Telegram Channel',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    iconMobile: '/images/telegram_mobile.svg',
   },
   {
     icon: '/images/discord.svg',
     name: 'Discord',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    iconMobile: '/images/discord_mobile.svg',
   },
   {
     icon: '/images/youtube.svg',
     name: 'Youtube',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    iconMobile: '/images/youtube_mobile.svg',
   },
   {
     icon: '/images/tiktok.svg',
     name: 'Tiktok',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    iconMobile: '/images/tiktok_mobile.svg',
   },
 ]
 
