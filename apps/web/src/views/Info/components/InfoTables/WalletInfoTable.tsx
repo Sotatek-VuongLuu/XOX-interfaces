@@ -25,6 +25,7 @@ import InfoPieChart from '../InfoCharts/PieChart'
 import { SUGGESTED_BASES } from 'config/constants/exchange'
 import { CurrencyLogo } from 'components/Logo'
 import { ERC20Token } from '@pancakeswap/sdk'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -45,7 +46,7 @@ const Wrapper = styled.div`
   }
 `
 
-const ConnectButton = styled.button`
+const ConnectButton = styled(ConnectWalletButton)`
   width: 124px;
   height: 37px;
   border-radius: 4px;
