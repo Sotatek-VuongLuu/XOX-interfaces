@@ -9,7 +9,7 @@ import { getMultiChainQueryEndPointWithStableSwap, MultiChainName } from '../../
  */
 const GLOBAL_TRANSACTIONS = gql`
   query overviewTransactions {
-    mints: mints(first: 33, orderBy: timestamp, orderDirection: desc) {
+    mints: mints(first: 100, orderBy: timestamp, orderDirection: desc) {
       id
       timestamp
       pair {
@@ -27,7 +27,7 @@ const GLOBAL_TRANSACTIONS = gql`
       amount1
       amountUSD
     }
-    swaps: swaps(first: 33, orderBy: timestamp, orderDirection: desc) {
+    swaps: swaps(first: 100, orderBy: timestamp, orderDirection: desc) {
       id
       timestamp
       pair {
@@ -47,7 +47,7 @@ const GLOBAL_TRANSACTIONS = gql`
       amount1Out
       amountUSD
     }
-    burns: burns(first: 33, orderBy: timestamp, orderDirection: desc) {
+    burns: burns(first: 100, orderBy: timestamp, orderDirection: desc) {
       id
       timestamp
       pair {
@@ -87,9 +87,11 @@ const fetchTopTransactions = async (chainName: MultiChainName): Promise<Transact
     const burns = data.burns.map(mapBurns)
     const swaps = data.swaps.map(mapSwaps)
 
-    return [...mints, ...burns, ...swaps].sort((a, b) => {
-      return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
-    })
+    return [...mints, ...burns, ...swaps]
+      .sort((a, b) => {
+        return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
+      })
+      .slice(0, 100)
   } catch {
     return undefined
   }

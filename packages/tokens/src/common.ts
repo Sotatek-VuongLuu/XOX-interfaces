@@ -123,6 +123,45 @@ export const BUSD_GOERLI = new ERC20Token(
   'https://www.paxos.com/busd/',
 )
 
+export const BNB_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0xB8c77482e45F1F44dE1745F52C74426C631bDD52', 18, 'ETH')
+
+export const MATIC_ETHEREUM = new ERC20Token(
+  ChainId.ETHEREUM,
+  '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0',
+  18,
+  'MATIC',
+)
+
+export const UNI_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0', 18, 'UNI')
+
+export const SUSHI_ETHEREUM = new ERC20Token(
+  ChainId.ETHEREUM,
+  '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2',
+  18,
+  'SUSHI',
+)
+
+export const USDT_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0xdac17f958d2ee523a2206206994597c13d831ec7', 18, 'USDT')
+
+export const LINK_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0x514910771af9ca656af840dff83e8264ecf986ca', 18, 'LINK')
+
+export const SHIB_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce', 18, 'SHIB')
+
+export const BTCB_BSC = new ERC20Token(
+  ChainId.BSC,
+  '0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c',
+  18,
+  'BTCB',
+  'Binance BTC',
+  'https://bitcoin.org/',
+)
+export const ETH_BSC = new ERC20Token(ChainId.BSC, '0x2170Ed0880ac9A755fd29B2688956BD959F933F8', 18, 'ETH')
+export const DOGE_BSC = new ERC20Token(ChainId.BSC, '0xbA2aE424d960c26247Dd6c32edC70B295c744C43', 18, 'DOGE')
+export const MATIC_BSC = new ERC20Token(ChainId.BSC, '0xcc42724c6683b7e57334c4e856f4c9965ed682bd', 18, 'MATIC')
+export const CAKE_BSC = new ERC20Token(ChainId.BSC, '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82', 18, 'CAKE')
+export const LINK_BSC = new ERC20Token(ChainId.BSC, '0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd', 18, 'LINK')
+export const ADA_BSC = new ERC20Token(ChainId.BSC, '0x3EE2200Efb3400fAbB9AacF31297cBdD1d435D47', 18, 'ADA')
+
 export const BUSD: Record<ChainId, ERC20Token> = {
   [ChainId.ETHEREUM]: BUSD_ETH,
   [ChainId.RINKEBY]: BUSD_RINKEBY,

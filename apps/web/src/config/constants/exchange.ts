@@ -1,6 +1,20 @@
 import { ChainId, JSBI, Percent, Token, WNATIVE } from '@pancakeswap/sdk'
 import { BigNumber } from '@ethersproject/bignumber'
-import { bscTokens, bscTestnetTokens, USDC, USDT, BUSD, WBTC_ETH } from '@pancakeswap/tokens'
+import {
+  bscTokens,
+  bscTestnetTokens,
+  USDC,
+  USDT,
+  BUSD,
+  WBTC_ETH,
+  BNB_ETHEREUM,
+  MATIC_ETHEREUM,
+  UNI_ETHEREUM,
+  SUSHI_ETHEREUM,
+  USDT_ETHEREUM,
+  SHIB_ETHEREUM,
+  MATIC_BSC,
+} from '@pancakeswap/tokens'
 import { ChainMap, ChainTokenList } from './types'
 
 export const ROUTER_ADDRESS: ChainMap<string> = {
@@ -51,10 +65,27 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
-  [ChainId.ETHEREUM]: [USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WNATIVE[ChainId.ETHEREUM], WBTC_ETH],
+  [ChainId.ETHEREUM]: [
+    WBTC_ETH[ChainId.ETHEREUM],
+    BNB_ETHEREUM,
+    MATIC_ETHEREUM,
+    UNI_ETHEREUM,
+    SUSHI_ETHEREUM,
+    USDT_ETHEREUM,
+    SHIB_ETHEREUM,
+  ],
   [ChainId.RINKEBY]: [USDC[ChainId.RINKEBY], WNATIVE[ChainId.RINKEBY], BUSD[ChainId.RINKEBY]],
   [ChainId.GOERLI]: [USDC[ChainId.GOERLI], WNATIVE[ChainId.GOERLI], BUSD[ChainId.GOERLI]],
-  [ChainId.BSC]: [bscTokens.busd, bscTokens.cake, bscTokens.btcb],
+  [ChainId.BSC]: [
+    bscTokens.btcb,
+    bscTokens.eth,
+    bscTokens.busd,
+    bscTokens.doge,
+    MATIC_BSC,
+    bscTokens.cake,
+    bscTokens.link,
+    bscTokens.ada,
+  ],
   [ChainId.BSC_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.cake, bscTestnetTokens.busd],
 }
 

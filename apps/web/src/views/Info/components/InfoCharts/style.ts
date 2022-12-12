@@ -31,6 +31,7 @@ export const TitleChart = styled.div`
     font-size: 14px;
     color: #ffffff;
     border: none;
+    cursor: pointer;
   }
 `
 
@@ -46,6 +47,13 @@ export const ChartContent = styled.div`
     font-weight: 700;
     font-size: 16px;
     color: #ffffff;
+    display: flex;
+    align-items: center;
+
+    img,
+    svg {
+      margin-right: 10px;
+    }
   }
 
   .liquidity {
@@ -73,8 +81,13 @@ export const ChartContent = styled.div`
     span {
       font-weight: 700;
       font-size: 14px;
-      color: #9072ff;
       margin-left: 24px;
+      color: rgba(255, 255, 255, 0.6);
+      cursor: pointer;
+    }
+
+    span.active {
+      color: #9072ff;
     }
   }
 `

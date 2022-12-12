@@ -9,16 +9,19 @@ export type LineChartProps = {
   data: any[]
   setHoverValue: Dispatch<SetStateAction<number | undefined>> // used for value on hover
   setHoverDate: Dispatch<SetStateAction<string | undefined>> // used for label of value
+  minYAxis?: number
+  maxYAxis?: number
 } & React.HTMLAttributes<HTMLDivElement>
 
 /**
  * Note: remember that it needs to be mounted inside the container with fixed height
  */
-const LineChart = ({ data, setHoverValue, setHoverDate }: LineChartProps) => {
+const LineChart = ({ data, setHoverValue, setHoverDate, minYAxis, maxYAxis }: LineChartProps) => {
   const {
     currentLanguage: { locale },
   } = useTranslation()
   const { theme } = useTheme()
+
   if (!data || data.length === 0) {
     return <LineChartLoader />
   }
@@ -61,9 +64,10 @@ const LineChart = ({ data, setHoverValue, setHoverDate }: LineChartProps) => {
           axisLine={false}
           tickLine={false}
           fontSize="12px"
-          tickFormatter={(val) => `$${formatAmount(val)}`}
+          domain={[minYAxis, maxYAxis]}
+          tickFormatter={(val) => `$${val}`}
           orientation="left"
-          tick={{ dx: -20, fill: theme.colors.textSubtle }}
+          tick={{ dx: -15, fill: theme.colors.textSubtle }}
         />
         <Tooltip
           cursor={{ stroke: theme.colors.secondary }}
