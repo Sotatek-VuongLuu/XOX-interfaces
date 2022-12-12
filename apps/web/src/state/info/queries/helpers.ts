@@ -80,6 +80,7 @@ type PoolOrTokenFetchFn = (
 ) => Promise<{ data?: ChartEntry[]; error: boolean }>
 
 type OverviewFetchFn = (chianName: MultiChainName, skip: number) => Promise<{ data?: ChartEntry[]; error: boolean }>
+type OverviewFetchFnCustom = (id: string, days: number) => Promise<{ data?: any[]; error: boolean }>
 
 // Common helper function to retrieve chart data
 // Used for both Pool and Token charts
@@ -117,8 +118,6 @@ export const fetchChartData = async (
     }),
   )
 
-  console.warn(formattedDayDatas)
-
   const availableDays = Object.keys(formattedDayDatas).map((dayOrdinal) => parseInt(dayOrdinal, 10))
 
   const firstAvailableDayData = formattedDayDatas[availableDays[0]]
@@ -137,6 +136,65 @@ export const fetchChartData = async (
       }
     } else {
       latestLiquidityUSD = formattedDayDatas[dayOrdinal].liquidityUSD
+    }
+  }
+
+  return {
+    data: Object.values(formattedDayDatas),
+    error: false,
+  }
+}
+
+export const fetchChartDataCustom = async (
+  id: string,
+  days: number,
+  chainName: MultiChainName,
+  getEntityDayDatas: OverviewFetchFnCustom,
+): Promise<{ data?: any[]; error: boolean }> => {
+  let chartEntries = []
+  let error = false
+  let skip = 0
+  let allFound = false
+
+  while (!allFound) {
+    // eslint-disable-next-line no-await-in-loop
+    const { data, error: fetchError } = await getEntityDayDatas(id, days)
+    skip += 1000
+    allFound = data?.length < 1000
+    error = fetchError
+    if (data) {
+      chartEntries = chartEntries.concat(data)
+    }
+  }
+
+  if (error || chartEntries.length === 0) {
+    return {
+      error: true,
+    }
+  }
+
+  const formattedDayDatas = fromPairs(
+    chartEntries.map((dayData) => {
+      // At this stage we track unix day ordinal for each data point to check for empty days later
+      const dayOrdinal = parseInt((dayData.date / ONE_DAY_UNIX).toFixed(0))
+      return [dayOrdinal, dayData]
+    }),
+  )
+
+  const availableDays = Object.keys(formattedDayDatas).map((dayOrdinal) => parseInt(dayOrdinal, 10))
+
+  const firstAvailableDayData = formattedDayDatas[availableDays[0]]
+  // fill in empty days ( there will be no day datas if no trades made that day )
+  let timestamp = firstAvailableDayData?.date ?? multiChainStartTime[chainName]
+  const endTimestamp = getUnixTime(new Date())
+  while (timestamp < endTimestamp - ONE_DAY_UNIX) {
+    timestamp += ONE_DAY_UNIX
+    const dayOrdinal = parseInt((timestamp / ONE_DAY_UNIX).toFixed(0), 10)
+    if (!Object.keys(formattedDayDatas).includes(dayOrdinal.toString())) {
+      formattedDayDatas[dayOrdinal] = {
+        date: timestamp,
+        priceUSD: 0,
+      }
     }
   }
 
@@ -180,7 +238,6 @@ export const fetchChartDataWithAddress = async (
       return [dayOrdinal, dayData]
     }),
   )
-  console.warn(formattedDayDatas)
 
   const availableDays = Object.keys(formattedDayDatas).map((dayOrdinal) => parseInt(dayOrdinal, 10))
 

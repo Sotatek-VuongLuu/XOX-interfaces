@@ -45,6 +45,20 @@ export const FooterMainContent = styled.div`
     top: 0px;
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
   }
+
+  @media screen and (max-width: 560px) {
+    grid-template-columns: 1fr 1fr;
+    gap: 40px 20px;
+    padding: 40px 24px;
+
+    & > div:first-child, & > div:last-child {
+      grid-column: 1 / 2 span;
+    }
+
+    br {
+      display: none;
+    }
+  }
 `;
 
 export const StyledListItem = styled.li`
@@ -58,6 +72,15 @@ export const StyledListItem = styled.li`
   color: rgba(255, 255, 255, 0.87);
   display: flex;
   align-items: center;
+
+  & a {
+    font-family: "Inter";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.87);
+  }
 
   & .iconx {
     width: 20px;

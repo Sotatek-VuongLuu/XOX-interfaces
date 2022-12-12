@@ -43,18 +43,18 @@ export const useProtocolDataSWR = (): ProtocolData | undefined => {
   return protocolData ?? undefined
 }
 
-export const useProtocolChartDataSWR = (): ChartEntry[] | undefined => {
+export const useProtocolChartDataSWR = (id: string, filter: any): any[] | undefined => {
   const chainName = useGetChainName()
-  const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
-  const { data: chartData } = useSWRImmutable([`info/protocol/updateProtocolChartData/${type}`, chainName], () =>
-    fetchGlobalChartData(chainName),
-  )
+  const [chartData, setChartData] = useState<any>()
+  fetchGlobalChartData(id, filter, chainName).then((result) => setChartData(result.data))
+
   return chartData ?? undefined
 }
 
 export const useProtocolTransactionsSWR = (): Transaction[] | undefined => {
   const chainName = useGetChainName()
-  const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
+  // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
+  const type = 'swap'
   const { data: transactions } = useSWRImmutable(
     [`info/protocol/updateProtocolTransactionsData/${type}`, chainName],
     () => fetchTopTransactions(chainName),

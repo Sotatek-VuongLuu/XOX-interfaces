@@ -39,6 +39,14 @@ yarn build
 # start the application after build
 yarn start
 ```
+
+### Deploy fe: 
+- ls
+- cd LoopX-frontend
+- git pull
+- pm2 ls
+- pm2 restart ui (nếu chứ có service ui thì run pm2 start yarn --name ui -- dev)
+
 </details>
 
 ## `apps/aptos`

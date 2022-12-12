@@ -2,7 +2,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Card, Flex } from '@pancakeswap/uikit'
 import Page from 'components/Layout/Page'
-import { useEffect, useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { checkIsStableSwap } from 'state/info/constant'
 import {
   useAllPoolDataSWR,
@@ -20,13 +20,20 @@ import LineChart from 'views/Info/components/InfoCharts/LineChart'
 import TransactionTable from 'views/Info/components/InfoTables/TransactionsTable'
 import HoverableChart from '../components/InfoCharts/HoverableChart'
 import WalletInfoTable from 'views/Info/components/InfoTables/WalletInfoTable'
+import axios from 'axios'
+import { SUGGESTED_BASES } from 'config/constants/exchange'
+import { tokens } from 'tokens'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+import useNativeCurrency from 'hooks/useNativeCurrency'
 
 export const ChartCardsContainer = styled(Flex)`
   justify-content: space-between;
   flex-direction: column;
   width: 100%;
   padding: 0;
-  gap: 1em;
+  background: #242424;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 
   & > * {
     width: 100%;
@@ -52,10 +59,15 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
     t,
     currentLanguage: { locale },
   } = useTranslation()
-
+  const native = useNativeCurrency()
+  const [coinGeckoIds, setCoinGeckoIds] = useState<string | undefined>()
+  const [coinGeckoId, setCoinGeckoId] = useState<string | undefined>()
+  const [filter, setFilter] = useState<any>({ days: 1 })
   const protocolData = useProtocolDataSWR()
-  const chartData = useProtocolChartDataSWR()
+  const [chartData, setChardData] = useState<Array<any> | undefined>()
+  const [currencyDatas, setCurrencyDatas] = useState<Array<any> | undefined>()
   const transactions = useProtocolTransactionsSWR()
+  const { chainId } = useActiveChainId()
 
   const currentDate = useMemo(
     () => new Date().toLocaleString(locale, { month: 'short', year: 'numeric', day: 'numeric' }),
@@ -70,24 +82,66 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       .filter((token) => token.name !== 'unknown')
   }, [allTokens])
 
-  const allPoolData = useAllPoolDataSWR()
+  useEffect(() => {
+    console.log(protocolData, 'protocolData')
+  }, [protocolData])
+
+  // const allPoolData = useAllPoolDataSWR()
   // const allPoolData = useAllPoolData()
-  const poolDatas = useMemo(() => {
-    return Object.values(allPoolData)
-      .map((pool) => pool.data)
-      .filter((pool) => pool.token1.name !== 'unknown' && pool.token0.name !== 'unknown')
-  }, [allPoolData])
 
-  const somePoolsAreLoading = useMemo(() => {
-    return poolDatas.some((pool) => !pool?.token0Price)
-  }, [poolDatas])
+  // const somePoolsAreLoading = useMemo(() => {
+  //   return poolDatas.some((pool) => !pool?.token0Price)
+  // }, [poolDatas])
 
-  const isStableSwap = checkIsStableSwap()
-  const chainName = useGetChainName()
+  // const isStableSwap = checkIsStableSwap()
+  // const chainName = useGetChainName()
 
-  useEffect(()=> {
-    console.log('transactions: ', transactions)
-  }, [transactions])
+  useEffect(() => {
+    const ids = SUGGESTED_BASES[chainId]
+      .concat([native])
+      .map((token: any) => {
+        const [t] = tokens.filter((t) => t.symbol.toLowerCase() === token.symbol.toLowerCase())
+
+        return t?.id
+      })
+      .filter((e: any) => e !== undefined)
+
+    setCoinGeckoIds(ids.join(','))
+
+    const [token] = tokens.filter((t) => t.symbol.toLowerCase() === native.symbol.toLowerCase())
+
+    setCoinGeckoId(token?.id)
+  }, [])
+
+  useEffect(() => {
+    if (!coinGeckoId) return
+    try {
+      axios
+        .get(`https://api.coingecko.com/api/v3/coins/${coinGeckoId}/market_chart`, {
+          params: { vs_currency: 'usd', days: filter.days },
+        })
+        .then((result) => {
+          const data = result.data.prices.map((d) => {
+            return {
+              date: d[0],
+              priceUSD: d[1],
+            }
+          })
+          setChardData(data)
+        })
+    } catch (error) {
+      console.warn(error)
+    }
+  }, [filter, coinGeckoId])
+
+  useEffect(() => {
+    if (!coinGeckoIds) return
+    axios
+      .get('https://api.coingecko.com/api/v3/coins/markets', { params: { vs_currency: 'usd', ids: coinGeckoIds } })
+      .then((result) => {
+        setCurrencyDatas(result.data)
+      })
+  }, [coinGeckoIds])
 
   return (
     <Page>
@@ -103,16 +157,17 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             {t('PancakeSwap Info & Analytics')}
           </Heading> */}
         <ChartCardsContainer>
-          <Card>
-            <HoverableChart
-              chartData={chartData}
-              protocolData={protocolData}
-              currentDate={currentDate}
-              valueProperty="volumeUSD"
-              title={t('Volume 24H')}
-              ChartComponent={LineChart}
-            />
-          </Card>
+          <HoverableChart
+            chartData={chartData}
+            valueProperty="priceUSD"
+            ChartComponent={LineChart}
+            filter={filter}
+            setFilter={setFilter}
+            currencyDatas={currencyDatas}
+            setCoinGeckoId={setCoinGeckoId}
+            chainId={chainId}
+            native={native}
+          />
         </ChartCardsContainer>
         {/* <Heading scale="lg" mt="40px" mb="16px">
             {t('Top Tokens')}
@@ -122,7 +177,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             {t('Top Pairs')}
           </Heading>
           <PoolTable poolDatas={poolDatas} loading={somePoolsAreLoading} /> */}
-        <WalletInfoTable />
+        <WalletInfoTable currencyDatas={currencyDatas} native={native} />
         <TransactionTable transactions={transactions} />
       </PageContainer>
     </Page>

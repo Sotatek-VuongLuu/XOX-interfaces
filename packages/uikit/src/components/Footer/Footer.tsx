@@ -30,45 +30,54 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   buyCakeLabel,
   ...props
 }) => {
-  const isMounted = useIsMounted();
   return (
     <Flex
       data-theme="dark"
-      p={["40px 16px", null, "0"]}
+      p={["0", null, "0"]}
       position="relative"
       {...props}
       flexDirection="column"
       alignItems="center"
     >
       <FooterMainContent>
-        <ImagBGFooter src="/images/bg_footer.svg" alt="icon_bg" />
-        <StyledIconMobileContainer display={["block", null, "none"]}>
-          <LogoWithTextIcon width="130px" />
-        </StyledIconMobileContainer>
-        <Flex order={[2, null, 1]} flexDirection={["column", null, "column"]} mb={["0", null, "0"]}>
-          <Box display={["none", null, "block"]}>
-            <LogoWithTextIcon width="160px" />
-          </Box>
-          <Text
-            fontSize="14px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="400"
-            lineHeight="24px"
-            color="rgba(255, 255, 255, 0.87)"
-            marginBottom="24px"
-            marginTop="24px"
-          >
-            Lorem ipsum dolor amet, consectetur adipiscing elit. Eget nisl nunc quam ac sed turpis volutpat. Cursus sed
-            massa non nisi, placerat.
-          </Text>
+        <div>
+          <ImagBGFooter src="/images/bg_footer.svg" alt="icon_bg" />
+          <Flex order={[2, null, 1]} flexDirection={["column", null, "column"]} mb={["0", null, "0"]}>
+            <Box display={["block", null, "block"]}>
+              <LogoWithTextIcon width="160px" />
+            </Box>
+            <Text
+              fontSize="14px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="400"
+              lineHeight="24px"
+              color="rgba(255, 255, 255, 0.87)"
+              marginBottom="24px"
+              marginTop="24px"
+            >
+              Lorem ipsum dolor amet, consectetur adipiscing elit. Eget nisl nunc quam ac sed turpis volutpat. Cursus
+              sed massa non nisi, placerat.
+            </Text>
 
-          <Flex order={[2, null, 1]} flexDirection={["row", null, "row"]} alignItems="flex-start" mb={["0", null, "0"]}>
-            <StyledSocialLinks order={[2]} pb={["0", null, "0"]} mb={["0", null, "0"]} />
+            <Flex
+              order={[2, null, 1]}
+              flexDirection={["row", null, "row"]}
+              alignItems="flex-start"
+              mb={["0", null, "0"]}
+            >
+              <StyledSocialLinks order={[2]} pb={["0", null, "0"]} mb={["0", null, "0"]} />
+            </Flex>
           </Flex>
-        </Flex>
-        {items?.map((item) => (
-          <Flex order={[2, null, 1]} flexDirection={["column", null, "column"]} mb={["42px", null, "36px"]}>
+        </div>
+
+        {items?.map((item, index) => (
+          <Flex
+            key={item.label}
+            order={[2, null, 1]}
+            flexDirection={["column", null, "column"]}
+            mb={["0", null, "36px"]}
+          >
             <SubTitleStyle>{item.label}</SubTitleStyle>
             <StyledList key={item.label}>
               {item.items?.map(({ label, href, isHighlighted = false, label2, icon }) => (
@@ -83,7 +92,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
                       color={isHighlighted ? vars.colors.warning : "text"}
                       bold={false}
                     >
-                      {label}
+                      {`${label} `}
                       {label2 && (
                         <>
                           <br />
@@ -93,7 +102,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
                     </Link>
                   ) : (
                     <>
-                      <StyledText>{label}</StyledText>
+                      <StyledText>{`${label} `}</StyledText>
                       {label2 && (
                         <StyledText>
                           <br />
@@ -110,10 +119,10 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
       </FooterMainContent>
       <Flex
         order={[2, null, 1]}
-        flexDirection={["row", null, "row"]}
+        flexDirection={["column", null, "row"]}
         justifyContent="space-between"
         width="100%"
-        p={["25px 119px", null, null]}
+        p={["24px", null, null]}
         background="rgba(255, 255, 255, 0.1)"
       >
         <Text
@@ -123,11 +132,12 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           fontWeight="500"
           lineHeight="17px"
           color="rgba(255, 255, 255, 0.87)"
+          marginBottom="20px"
         >
           © 2022 XOX. All rights reserved
         </Text>
         <StyleStaticPage>
-          <li>
+          <li style={{ paddingLeft: "0" }}>
             <a href="#">Terms & Conditions</a>
           </li>
           <li>|</li>
