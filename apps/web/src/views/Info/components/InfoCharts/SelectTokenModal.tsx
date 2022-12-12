@@ -13,7 +13,7 @@ const ModalWrapper = styled.div`
   height: 100vh;
   top: 0;
   left: 0;
-  background: rgba(0, 0, 0, 0.04);
+  background: rgba(0, 0, 0, 0.4);
   z-index: 1000;
 
   & > div {
@@ -139,7 +139,7 @@ const SelectCoinModal = ({ isOpen, setOpen, selectedCurrency, setSelectedCurrenc
   useEffect(() => {
     const tokens = SUGGESTED_BASES[chainId].filter((s: any) => {
       // return s.symbol.toLowerCase().includes(searchToken.toLowerCase()) || s.name.toLowerCase().includes(searchToken.toLowerCase())
-      return s.symbol.toLowerCase().includes(searchToken.toLowerCase())
+      return s?.symbol?.toLowerCase()?.includes(searchToken.toLowerCase())
     })
 
     setListToken(tokens)
