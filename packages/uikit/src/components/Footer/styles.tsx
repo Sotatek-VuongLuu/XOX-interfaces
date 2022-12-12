@@ -46,12 +46,13 @@ export const FooterMainContent = styled.div`
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
   }
 
-  @media screen and (max-width: 560px) {
+  @media screen and (max-width: 900px) {
     grid-template-columns: 1fr 1fr;
     gap: 40px 20px;
     padding: 40px 24px;
 
-    & > div:first-child, & > div:last-child {
+    & > div:first-child,
+    & > div:last-child {
       grid-column: 1 / 2 span;
     }
 

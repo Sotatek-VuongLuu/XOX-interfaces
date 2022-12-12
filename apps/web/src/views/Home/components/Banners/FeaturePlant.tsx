@@ -112,7 +112,7 @@ const FeaturePlant = () => {
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12} md={6}>
           <LeftContent>
             <Title>XOX Dapp - An All-IN-One Solution.</Title>
             <Paragraph style={{ margin: '24px 0' }}>

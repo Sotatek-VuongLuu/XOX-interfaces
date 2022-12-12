@@ -7,6 +7,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import SwiperCore, { Autoplay } from 'swiper'
 import { useState } from 'react'
+import useWindowSize from 'hooks/useWindowSize'
 
 SwiperCore.use([Autoplay])
 
@@ -17,12 +18,20 @@ const Wrapper = styled.div`
     overflow: hidden;
   }
 
+  .swiper-wrapper {
+    transition-timing-function: linear;
+  }
+
   .title {
     text-align: center;
     font-weight: 700;
     font-size: 36px;
     color: rgba(255, 255, 255, 0.87);
     margin-bottom: 16px;
+
+    @media screen and (max-width: 900px) {
+      font-size: 20px;
+    }
   }
 
   .decoration {
@@ -31,6 +40,10 @@ const Wrapper = styled.div`
     font-size: 16px;
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 48px;
+
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+    }
   }
 
   .btn_see_all {
@@ -66,11 +79,24 @@ const Wrapper = styled.div`
         border-radius: inherit;
       }
     }
+
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+
+      .boxed-child {
+        padding: 12px 30px;
+
+        span {
+          font-size: 16px;
+        }
+      }
+    }
   }
 `
 
 const Partners = () => {
   const [isShowMore, setIsShowMore] = useState(false)
+  const { width } = useWindowSize()
 
   const handleChangeShowMore = () => {
     setIsShowMore(!isShowMore)
@@ -79,37 +105,92 @@ const Partners = () => {
     <Wrapper>
       <div className="title">Strategic Partners</div>
       <p className="decoration">Backed by the Best to Deliver the Best.</p>
-      <div className="main">
+
+      <Swiper
+        speed={1000}
+        loop={true}
+        slidesPerView={width < 900 ? 4 : 10}
+        freeMode={true}
+        spaceBetween={10}
+        watchSlidesProgress={true}
+        autoplay={{
+          delay: 1,
+          disableOnInteraction: false,
+          waitForTransition: false,
+        }}
+        // modules={[Autoplay]}
+        allowTouchMove={true}
+      >
+        {listPartners.map(({ icon }) => {
+          return (
+            <SwiperSlide>
+              <img src={icon} alt="icon" />
+            </SwiperSlide>
+          )
+        })}
+      </Swiper>
+
+      <Swiper
+        speed={1000}
+        loop={true}
+        slidesPerView={width < 900 ? 4 : 10}
+        freeMode={true}
+        spaceBetween={10}
+        watchSlidesProgress={true}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: false,
+          waitForTransition: false,
+          reverseDirection: true,
+        }}
+        // modules={[Autoplay]}
+        allowTouchMove={true}
+      >
+        {listPartners.map(({ icon }) => {
+          return (
+            <SwiperSlide>
+              <img src={icon} alt="icon" />
+            </SwiperSlide>
+          )
+        })}
+      </Swiper>
+
+      <Swiper
+        speed={1000}
+        loop={true}
+        slidesPerView={width < 900 ? 4 : 10}
+        freeMode={true}
+        spaceBetween={10}
+        watchSlidesProgress={true}
+        autoplay={{
+          delay: 2,
+          disableOnInteraction: false,
+          waitForTransition: false,
+        }}
+        // modules={[Autoplay]}
+        allowTouchMove={true}
+      >
+        {listPartners.map(({ icon }) => {
+          return (
+            <SwiperSlide>
+              <img src={icon} alt="icon" />
+            </SwiperSlide>
+          )
+        })}
+      </Swiper>
+
+      {isShowMore ? (
         <Swiper
+          speed={1000}
           loop={true}
-          slidesPerView={15}
+          slidesPerView={width < 900 ? 4 : 10}
           freeMode={true}
-          watchSlidesProgress
+          spaceBetween={5}
+          watchSlidesProgress={true}
           autoplay={{
-            delay: 0,
+            delay: 1,
             disableOnInteraction: false,
-          }}
-          // modules={[Autoplay]}
-          allowTouchMove={true}
-        >
-          {listPartners.map(({ icon }) => {
-            return (
-              <SwiperSlide>
-                <img src={icon} alt="icon" />
-              </SwiperSlide>
-            )
-          })}
-        </Swiper>
-      </div>
-      <div className="main">
-        <Swiper
-          loop={true}
-          slidesPerView={15}
-          freeMode={true}
-          watchSlidesProgress
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
+            waitForTransition: false,
             reverseDirection: true,
           }}
           // modules={[Autoplay]}
@@ -123,54 +204,6 @@ const Partners = () => {
             )
           })}
         </Swiper>
-      </div>
-      <div className="main">
-        <Swiper
-          loop={true}
-          slidesPerView={15}
-          freeMode={true}
-          watchSlidesProgress
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
-          }}
-          // modules={[Autoplay]}
-          allowTouchMove={true}
-        >
-          {listPartners.map(({ icon }) => {
-            return (
-              <SwiperSlide>
-                <img src={icon} alt="icon" />
-              </SwiperSlide>
-            )
-          })}
-        </Swiper>
-      </div>
-
-      {isShowMore ? (
-        <div className="main">
-          <Swiper
-            speed={1500}
-            loop={true}
-            slidesPerView={15}
-            freeMode={true}
-            watchSlidesProgress
-            autoplay={{
-              delay: 0,
-              disableOnInteraction: false,
-            }}
-            // modules={[Autoplay]}
-            allowTouchMove={true}
-          >
-            {listPartners.map(({ icon }) => {
-              return (
-                <SwiperSlide>
-                  <img src={icon} alt="icon" />
-                </SwiperSlide>
-              )
-            })}
-          </Swiper>
-        </div>
       ) : null}
 
       <div className="btn_see_all">

@@ -37,6 +37,7 @@ const WrapperI = styled.div`
     .get_xox {
       padding: 1px;
       width: fit-content;
+      margin-top: 40px;
       border-radius: 8px;
       background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
 
@@ -111,10 +112,11 @@ const Icon = styled.div`
   justify-content: center;
   align-items: center;
   border-radius: 50%;
+  margin-bottom: 32px;
 `
 
 const SquareItem = ({ item }: Iprops) => {
-  const [isShowReadMore, setIsShow] = useState(item.description.length > 200)
+  const [isShowReadMore, setIsShow] = useState(item.description.length > 450)
   return (
     <WrapperI className="item">
       <div className="main_container">
@@ -124,8 +126,9 @@ const SquareItem = ({ item }: Iprops) => {
           </Icon>
           <Title>{item.title}</Title>
           <Description>
-            {isShowReadMore ? `${item.description.slice(0, 200)}...` : item.description}{' '}
-            {item.description.length > 200 ? (
+            {/* {item.description} */}
+            {isShowReadMore ? `${item.description.slice(0, 450)}...` : item.description}{' '}
+            {item.description.length > 450 ? (
               <span onClick={() => setIsShow(!isShowReadMore)} style={{ cursor: 'pointer' }}>
                 {isShowReadMore ? <span className="expand">Read more</span> : <span className="expand">Read less</span>}
               </span>

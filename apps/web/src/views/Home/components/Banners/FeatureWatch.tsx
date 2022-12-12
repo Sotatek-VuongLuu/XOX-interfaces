@@ -1,7 +1,12 @@
 import { Box, Grid } from '@mui/material'
 import styled from 'styled-components'
 
-const LeftContent = styled.div``
+const LeftContent = styled.div`
+  @media screen and (max-width: 900px) {
+    display: flex;
+    justify-content: center;
+  }
+`
 
 const RightContent = styled.div`
   .list {
@@ -54,12 +59,14 @@ const Paragraph = styled.p`
 
 const FeatureWatch = () => {
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex' }}>
+    <Box sx={{ flexGrow: 1, display: 'flex', marginBottom: '100px' }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={7}>
-          <LeftContent></LeftContent>
+        <Grid item xs={12} md={6}>
+          <LeftContent>
+            <img src="/images/xoxs.svg" alt="xoxs" />
+          </LeftContent>
         </Grid>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} md={6}>
           <RightContent>
             <Title>Meet XOXS. Our Hybrid Multichain Stable Coin.</Title>
             <Paragraph style={{ margin: '24px 0' }}>

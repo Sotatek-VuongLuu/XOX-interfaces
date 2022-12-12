@@ -1,4 +1,7 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Box, Grid } from '@mui/material'
+import { useState } from 'react'
 import styled from 'styled-components'
 import TeamMenber from './TeamMenber'
 
@@ -34,7 +37,7 @@ const Wrapper = styled.div`
 `
 
 const WrapperItem = styled.div`
-  height: 380px;
+  height: 100%;
   padding: 24px 22px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
@@ -55,25 +58,29 @@ const WrapperItem = styled.div`
     line-height: 24px;
     color: rgba(255, 255, 255, 0.6);
 
-    height: 240px;
-    overflow: auto;
+    // height: 240px;
+    // overflow: hidden;
 
-    &::-webkit-scrollbar {
-      width: 5px;
-    }
+    // &:hover {
+    //   overflow: auto;
+    // }
 
-    &::-webkit-scrollbar-track {
-      border-radius: 10px;
-    }
+    // &::-webkit-scrollbar {
+    //   width: 5px;
+    // }
 
-    &::-webkit-scrollbar-thumb {
-      background: #d5c9ff;
-      border-radius: 10px;
-    }
+    // &::-webkit-scrollbar-track {
+    //   border-radius: 10px;
+    // }
 
-    &::-webkit-scrollbar-thumb:hover {
-      background: #bcaaff;
-    }
+    // &::-webkit-scrollbar-thumb {
+    //   background: #d5c9ff;
+    //   border-radius: 10px;
+    // }
+
+    // &::-webkit-scrollbar-thumb:hover {
+    //   background: #bcaaff;
+    // }
   }
 
   @media screen and (max-width: 900px) {
@@ -85,10 +92,19 @@ const WrapperItem = styled.div`
 `
 
 const UpComingItem = ({ title, describe }) => {
+  const [isShowReadMore, setIsShow] = useState(describe.length > 450)
+
   return (
     <WrapperItem>
       <p className="title_item">{title}</p>
-      <p className="describe">{describe}</p>
+      <p className="describe">
+        {isShowReadMore ? `${describe.slice(0, 450)}...` : describe}{' '}
+        {describe.length > 450 ? (
+          <span onClick={() => setIsShow(!isShowReadMore)} style={{ cursor: 'pointer' }}>
+            {isShowReadMore ? <span className="expand"> Read more</span> : <span className="expand">Read less</span>}
+          </span>
+        ) : null}
+      </p>
     </WrapperItem>
   )
 }

@@ -1,4 +1,16 @@
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
+
+export const floatingAnim = (x: string, y: string) => keyframes`
+  from {
+    transform: translate(0,  0px);
+  }
+  50% {
+    transform: translate(${x}, ${y});
+  }
+  to {
+    transform: translate(0, 0px);
+  }
+`
 
 const Wrapper = styled.div`
   .title_container {
@@ -30,8 +42,28 @@ const Wrapper = styled.div`
     .mt {
       margin-top: 80px;
     }
+
+    .eth {
+      animation: ${floatingAnim('5px', '10px')} 3s ease-in-out infinite;
+      animation-delay: 0.66s;
+    }
+    .poly {
+      animation: ${floatingAnim('-5px', '5px')} 3s ease-in-out infinite;
+      animation-delay: 0.66s;
+    }
+    .bsc {
+      animation: ${floatingAnim('2px', '10px')} 3s ease-in-out infinite;
+      animation-delay: 0.66s;
+    }
+    .sol {
+      animation: ${floatingAnim('5px', '10px')} 3s ease-in-out infinite;
+      animation-delay: 0.66s;
+    }
   }
 `
+
+// animation: ${floatingAnim('5px', '10px')} 3s ease-in-out infinite;
+//       animation-delay: 0.66s;
 
 const EconomyMobile = () => {
   return (
@@ -46,13 +78,13 @@ const EconomyMobile = () => {
       <div className="chain_container">
         <div className="main">
           <div className="couple mt">
-            <img src="/images/eth_mobile.svg" alt="eth_mobile" />
-            <img src="/images/poly_mobile.svg" alt="poly_mobile" />
+            <img src="/images/eth_mobile.svg" alt="eth_mobile" className="eth" />
+            <img src="/images/poly_mobile.svg" alt="poly_mobile" className="poly" />
           </div>
 
           <div className="couple">
-            <img src="/images/bsc_mobile.svg" alt="poly_mobile" />
-            <img src="/images/sol_mobile.svg" alt="poly_mobile" />
+            <img src="/images/bsc_mobile.svg" alt="poly_mobile" className="bsc" />
+            <img src="/images/sol_mobile.svg" alt="poly_mobile" className="sol" />
           </div>
         </div>
       </div>

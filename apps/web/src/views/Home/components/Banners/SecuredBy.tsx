@@ -2,7 +2,7 @@ import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  margin-bottom: 80px;
+  margin-bottom: 43px;
   .title {
     font-weight: 700;
     font-size: 36px;

@@ -36,7 +36,7 @@ const Wrapper = styled(Box)`
   .list {
     margin-bottom: 24px;
     display: grid;
-    grid-template-columns: 200px 200px;
+    grid-template-columns: 1fr 1fr;
     column-gap: 40px;
     row-gap: 16px;
 
@@ -78,8 +78,10 @@ const Wrapper = styled(Box)`
   }
 
   .lead_board_container {
-    display: flex;
-    justify-content: center;
+    @media screen and (max-width: 900px) {
+      display: flex;
+      justify-content: center;
+    }
   }
 `
 

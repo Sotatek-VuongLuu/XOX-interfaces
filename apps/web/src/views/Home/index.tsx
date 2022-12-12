@@ -19,10 +19,10 @@ import FeatureSquare from './components/Banners/FeatureSquare'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
-  padding: 20px 14px;
+  padding: 0px 14px;
 
   ${({ theme }) => theme.mediaQueries.xxl} {
-    padding: 48px 130px;
+    padding: 0px 130px;
   }
 `
 
@@ -36,7 +36,16 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         }
       `}</style>
       <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
+        innerProps={{
+          style: {
+            margin: '0',
+            width: '100%',
+            height: '88vh',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          },
+        }}
         containerProps={{
           id: 'home',
         }}
