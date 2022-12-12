@@ -86,7 +86,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <Partners />
         <SecuredBy />
         <UpComing />
-        {/* <RoadMap /> */}
+        <RoadMap />
         <Community />
       </StyledSection>
     </>

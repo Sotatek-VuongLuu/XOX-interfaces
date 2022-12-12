@@ -1,6 +1,8 @@
+import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 // eslint-disable-next-line import/no-cycle
 import RoadMapItem from './RoadMapItem'
+import RoadMapMobile from './RoadMapMobile'
 
 export interface IRoadMapItem {
   year: string
@@ -19,6 +21,7 @@ const Wrapper = styled.div`
     margin-top: 48px;
     height: 570px;
     display: flex;
+    justify-content: center;
 
     .timeline-item:nth-child(even) {
       align-self: flex-start;
@@ -91,6 +94,10 @@ const Description = styled.p`
   font-size: 16px;
   color: rgba(255, 255, 255, 0.87);
   text-align: center;
+
+  @media screen and (max-width: 900px) {
+    font-size: 14px;
+  }
 `
 
 const Title = styled.div`
@@ -99,24 +106,34 @@ const Title = styled.div`
   color: rgba(255, 255, 255, 0.87);
   text-align: center;
   margin-bottom: 16px;
+
+  @media screen and (max-width: 900px) {
+    font-size: 20px;
+    line-height: 32px;
+  }
 `
 
 const RoadMap = () => {
+  const { width } = useWindowSize()
   return (
     <Wrapper>
       <Title>Road map</Title>
       <Description>Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.</Description>
 
-      <div className="main">
-        {listRoadMap.map((item: IRoadMapItem, index) => {
-          return <RoadMapItem item={item} index={index + 1} />
-        })}
-      </div>
+      {width < 1550 ? (
+        <RoadMapMobile />
+      ) : (
+        <div className="main">
+          {listRoadMap.map((item: IRoadMapItem, index) => {
+            return <RoadMapItem item={item} index={index + 1} />
+          })}
+        </div>
+      )}
     </Wrapper>
   )
 }
 
-const listRoadMap = [
+export const listRoadMap = [
   {
     year: '2022',
     describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
