@@ -11,8 +11,7 @@ export const TableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   background-color: ${({ theme }) => theme.card.background};
-  border-radius: ${({ theme }) => theme.radii.card};
-  border: 1px solid ${({ theme }) => theme.colors.cardBorder};
+  border-radius: 10px;
 `
 
 export const PageButtons = styled.div`

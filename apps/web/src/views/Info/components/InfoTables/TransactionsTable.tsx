@@ -3,18 +3,8 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { ChainId } from '@pancakeswap/sdk'
 import truncateHash from '@pancakeswap/utils/truncateHash'
-import {
-  ArrowBackIcon,
-  ArrowForwardIcon,
-  Box,
-  Flex,
-  LinkExternal,
-  Skeleton,
-  Text,
-  Button,
-} from '@pancakeswap/uikit'
-import { ITEMS_PER_INFO_TABLE_PAGE } from 'config/constants/info'
-import { formatDistanceToNowStrict } from 'date-fns'
+import { Box, Flex, LinkExternal, Skeleton, Text, Button, Link, Select, Input } from '@pancakeswap/uikit'
+import { formatISO9075 } from 'date-fns'
 import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { useGetChainName } from 'state/info/hooks'
 import { Transaction, TransactionType } from 'state/info/types'
@@ -22,7 +12,7 @@ import styled from 'styled-components'
 import { getBlockExploreLink } from 'utils'
 
 import { formatAmount } from 'utils/formatInfoNumbers'
-import { Arrow, Break, ClickableColumnHeader, PageButtons, TableWrapper } from './shared'
+import { Arrow, Break, ClickableColumnHeader } from './shared'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -31,6 +21,7 @@ const Wrapper = styled.div`
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 24px;
+  margin-bottom: 50px;
 
   & .heading {
     position: relative;
@@ -42,7 +33,7 @@ const Wrapper = styled.div`
     bottom: -8px;
     left: 0;
     width: 40px;
-    height: 2px;
+    height: 4px;
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
   }
 
@@ -69,8 +60,7 @@ const ResponsiveGrid = styled.div`
   display: grid;
   grid-gap: 35px;
   align-items: center;
-  grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 1fr 0.6fr;
-  padding: 0 24px;
+  grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 0.8fr 0.4fr;
   @media screen and (max-width: 940px) {
     grid-template-columns: 2fr repeat(4, 1fr);
     & > *:nth-child(5) {
@@ -106,6 +96,107 @@ const ResponsiveGrid = styled.div`
   }
 `
 
+export const CustomTableWrapper = styled(Flex)`
+  width: 100%;
+  padding-top: 24px;
+  flex-direction: column;
+  gap: 24px;
+`
+
+export const PageButtons = styled(Flex)`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+
+  & .page {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.87);
+    width: 37px;
+    height: 37px;
+    border: none;
+    outline: none;
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+  }
+
+  & .page.current {
+    color: #9072ff;
+    background: rgba(110, 70, 255, 0.1);
+  }
+
+  & div[class*='Select__DropDownContainer'] {
+    width: 132px;
+    height: 37px;
+    background: transparent;
+  }
+
+  & div[class*='Select__DropDownHeader'] {
+    height: 37px;
+    border-radius: 4px;
+    border: 1px solid #444444;
+    background: transparent;
+
+    & > div {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      color: rgba(255, 255, 255, 0.87);
+    }
+  }
+
+  & div[class*='Select__DropDownListContainer'] {
+    // bottom: 100%;
+    border-radius: 0;
+    z-index: 10000;
+  }
+
+  & li[class*='Select__ListItem'] > div {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  & li[class*='Select__ListItem']:hover {
+    background-color: #9072ff;
+  }
+
+  & .go-page {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.87);
+    min-width: 74px;
+    padding: 0 10px;
+  }
+
+  & input {
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.87);
+    width: 70px;
+    height: 37px;
+    border: 1px solid #444444;
+    border-radius: 4px;
+    background: transparent;
+  }
+`
+
 const SORT_FIELD = {
   amountUSD: 'amountUSD',
   timestamp: 'timestamp',
@@ -134,7 +225,10 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
   )
 }
 
-const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction }>> = ({ transaction }) => {
+const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction; index: number }>> = ({
+  transaction,
+  index,
+}) => {
   const { t } = useTranslation()
   const abs0 = Math.abs(transaction.amountToken0)
   const abs1 = Math.abs(transaction.amountToken1)
@@ -143,10 +237,28 @@ const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction }>> =
   const chainName = useGetChainName()
   return (
     <ResponsiveGrid>
+      <Text
+        fontSize="16px"
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight="19px"
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        {index + 1}
+      </Text>
       <LinkExternal
+        color="#9072FF"
         href={getBlockExploreLink(transaction.hash, 'transaction', chainName === 'ETH' && ChainId.ETHEREUM)}
       >
-        <Text>
+        <Text
+          fontSize="16px"
+          fontFamily="Inter"
+          fontStyle="normal"
+          fontWeight="400"
+          lineHeight="19px"
+          color="rgba(255, 255, 255, 0.87)"
+        >
           {transaction.type === TransactionType.MINT
             ? t('Add %token0% and %token1%', { token0: transaction.token0Symbol, token1: transaction.token1Symbol })
             : transaction.type === TransactionType.SWAP
@@ -154,17 +266,63 @@ const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction }>> =
             : t('Remove %token0% and %token1%', { token0: transaction.token0Symbol, token1: transaction.token1Symbol })}
         </Text>
       </LinkExternal>
-      <Text>${formatAmount(transaction.amountUSD)}</Text>
-      <Text>
-        <Text>{`${formatAmount(abs0)} ${transaction.token0Symbol}`}</Text>
+      <Text
+        fontSize="16px"
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight="19px"
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        {formatISO9075(parseInt(transaction.timestamp, 10) * 1000)}
       </Text>
-      <Text>
-        <Text>{`${formatAmount(abs1)} ${transaction.token1Symbol}`}</Text>
+      <Text
+        fontSize="16px"
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight="19px"
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        ${formatAmount(transaction.amountUSD)}
       </Text>
-      <LinkExternal href={getBlockExploreLink(transaction.sender, 'address', chainName === 'ETH' && ChainId.ETHEREUM)}>
-        {truncateHash(transaction.sender)}
-      </LinkExternal>
-      <Text>{formatDistanceToNowStrict(parseInt(transaction.timestamp, 10) * 1000)}</Text>
+      <Text
+        fontSize="16px"
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight="19px"
+        color="rgba(255, 255, 255, 0.87)"
+      >{`${formatAmount(abs0)} ${transaction.token0Symbol}`}</Text>
+      <Text
+        fontSize="16px"
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight="19px"
+        color="rgba(255, 255, 255, 0.87)"
+      >{`${formatAmount(abs1)} ${transaction.token1Symbol}`}</Text>
+      <Text
+        fontSize="16px"
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight="19px"
+        color="rgba(255, 255, 255, 0.87)"
+      >{`${formatAmount(abs1)} Stable coin`}</Text>
+      <Link
+        width="100%"
+        fontSize="16px"
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight="19px"
+        color="#3D8AFF"
+        style={{ justifySelf: 'right' }}
+        href={getBlockExploreLink(transaction.sender, 'address', chainName === 'ETH' && ChainId.ETHEREUM)}
+      >
+        {truncateHash(transaction.sender, 4, 5)}
+      </Link>
     </ResponsiveGrid>
   )
 }
@@ -176,6 +334,8 @@ const TransactionTable: React.FC<
 > = ({ transactions }) => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
   const [sortDirection, setSortDirection] = useState<boolean>(true)
+  const [perPage, setPerPage] = useState(10)
+  const [tempPage, setTempPage] = useState('1')
 
   const { t } = useTranslation()
 
@@ -203,9 +363,9 @@ const TransactionTable: React.FC<
           .filter((x) => {
             return txFilter === undefined || x.type === txFilter
           })
-          .slice(ITEMS_PER_INFO_TABLE_PAGE * (page - 1), page * ITEMS_PER_INFO_TABLE_PAGE)
+          .slice(perPage * (page - 1), page * perPage)
       : []
-  }, [transactions, page, sortField, sortDirection, txFilter])
+  }, [transactions, page, sortField, sortDirection, txFilter, perPage])
 
   // Update maxPage based on amount of items & applied filtering
   useEffect(() => {
@@ -213,13 +373,13 @@ const TransactionTable: React.FC<
       const filteredTransactions = transactions.filter((tx) => {
         return txFilter === undefined || tx.type === txFilter
       })
-      if (filteredTransactions.length % ITEMS_PER_INFO_TABLE_PAGE === 0) {
-        setMaxPage(Math.floor(filteredTransactions.length / ITEMS_PER_INFO_TABLE_PAGE))
+      if (filteredTransactions.length % perPage === 0) {
+        setMaxPage(Math.floor(filteredTransactions.length / perPage))
       } else {
-        setMaxPage(Math.floor(filteredTransactions.length / ITEMS_PER_INFO_TABLE_PAGE) + 1)
+        setMaxPage(Math.floor(filteredTransactions.length / perPage) + 1)
       }
     }
-  }, [transactions, txFilter])
+  }, [transactions, txFilter, perPage])
 
   const handleFilter = useCallback(
     (newFilter: TransactionType) => {
@@ -237,6 +397,21 @@ const TransactionTable: React.FC<
       setSortDirection(sortField !== newField ? true : !sortDirection)
     },
     [sortDirection, sortField],
+  )
+
+  const setPagePagination = useCallback(
+    (p: number) => {
+      if (p < 1) {
+        setPage(1)
+        return
+      }
+      if (p > maxPage) {
+        setPage(maxPage)
+        return
+      }
+      setPage(p)
+    },
+    [maxPage],
   )
 
   const IconSort = useMemo(() => {
@@ -275,6 +450,14 @@ const TransactionTable: React.FC<
       </svg>
     )
   }, [])
+
+  useEffect(() => {
+    setTempPage(page.toString())
+  }, [page])
+
+  useEffect(() => {
+    setPage(1)
+  }, [perPage])
 
   return (
     <Wrapper>
@@ -323,13 +506,12 @@ const TransactionTable: React.FC<
             fontWeight="400"
             lineHeight="17px"
             color="rgba(255, 255, 255, 0.6)"
-            marginRight="5px"
           >
             Total: 100 transactions
           </Text>
         </Flex>
       </Flex>
-      <TableWrapper>
+      <CustomTableWrapper>
         <ResponsiveGrid>
           <Text
             fontSize="16px"
@@ -417,6 +599,7 @@ const TransactionTable: React.FC<
             fontWeight="700"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
+            style={{ justifySelf: 'right' }}
           >
             Maker
           </Text>
@@ -430,8 +613,7 @@ const TransactionTable: React.FC<
                 return (
                   // eslint-disable-next-line react/no-array-index-key
                   <Fragment key={index}>
-                    <DataRow transaction={transaction} />
-                    <Break />
+                    <DataRow transaction={transaction} index={index} />
                   </Fragment>
                 )
               }
@@ -445,20 +627,140 @@ const TransactionTable: React.FC<
             <PageButtons>
               <Arrow
                 onClick={() => {
-                  setPage(page === 1 ? page : page - 1)
+                  setPagePagination(page === 1 ? page : page - 1)
                 }}
               >
-                <ArrowBackIcon color={page === 1 ? 'textDisabled' : 'primary'} />
+                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
+                  <path
+                    d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
+                    stroke={page === 1 ? 'white' : '#9072FF'}
+                    strokeOpacity={page === 1 ? '0.38' : '1'}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </Arrow>
 
-              <Text>{t('Page %page% of %maxPage%', { page, maxPage })}</Text>
+              <Flex>
+                {maxPage <= 7 ? (
+                  [...Array(maxPage)].map((_, i) => (
+                    <button
+                      type="button"
+                      key={_}
+                      onClick={() => setPagePagination(i + 1)}
+                      className={`page ${page === i + 1 ? 'current' : ''}`}
+                    >
+                      {i + 1}
+                    </button>
+                  ))
+                ) : (
+                  <>
+                    {page - 2 <= 1 ? (
+                      [...Array(page - 1)].map((_, i) => (
+                        <button type="button" key={_} onClick={() => setPagePagination(i + 1)} className="page">
+                          {i + 1}
+                        </button>
+                      ))
+                    ) : (
+                      <>
+                        <button type="button" className="page" onClick={() => setPagePagination(1)}>
+                          1
+                        </button>
+                        <button type="button" className="page" onClick={() => setPagePagination(page - 3)}>
+                          ...
+                        </button>
+                        <button type="button" className="page" onClick={() => setPagePagination(page - 2)}>
+                          {page - 2}
+                        </button>
+                        <button type="button" className="page" onClick={() => setPagePagination(page - 1)}>
+                          {page - 1}
+                        </button>
+                      </>
+                    )}
+                    <button type="button" className="page current">
+                      {page}
+                    </button>
+                    {page + 2 >= maxPage - 1 ? (
+                      [...Array(maxPage - page)].map((_, i) => (
+                        <button type="button" key={_} className="page" onClick={() => setPagePagination(page + i + 1)}>
+                          {page + i + 1}
+                        </button>
+                      ))
+                    ) : (
+                      <>
+                        <button type="button" className="page" onClick={() => setPagePagination(page + 1)}>
+                          {page + 1}
+                        </button>
+                        <button type="button" className="page" onClick={() => setPagePagination(page + 2)}>
+                          {page + 2}
+                        </button>
+                        <button type="button" className="page" onClick={() => setPagePagination(page + 3)}>
+                          ...
+                        </button>
+                        <button type="button" className="page" onClick={() => setPagePagination(maxPage)}>
+                          {maxPage}
+                        </button>
+                      </>
+                    )}
+                  </>
+                )}
+              </Flex>
+
               <Arrow
                 onClick={() => {
-                  setPage(page === maxPage ? page : page + 1)
+                  setPagePagination(page === maxPage ? page : page + 1)
                 }}
               >
-                <ArrowForwardIcon color={page === maxPage ? 'textDisabled' : 'primary'} />
+                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
+                  <path
+                    d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
+                    stroke={page === maxPage ? 'white' : '#9072FF'}
+                    strokeOpacity={page === maxPage ? '0.38' : '1'}
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
               </Arrow>
+              <Select
+                options={[
+                  {
+                    value: 10,
+                    label: '10/Page',
+                  },
+                  {
+                    value: 20,
+                    label: '20/Page',
+                  },
+                  {
+                    value: 50,
+                    label: '50/Page',
+                  },
+                  {
+                    value: 100,
+                    label: '100/Page',
+                  },
+                ]}
+                onOptionChange={(option: any) => setPerPage(option.value)}
+                className="select-page"
+              />
+              <Text className="go-page">Go to page</Text>
+              <Input
+                value={tempPage}
+                onChange={(e) => setTempPage(e.target.value)}
+                onKeyUp={(e) => {
+                  if (e.key === 'Enter') {
+                    const p = parseInt(tempPage) || 1
+                    if (p >= maxPage) {
+                      setPagePagination(maxPage)
+                      setTempPage(maxPage.toString())
+                    } else {
+                      setPagePagination(p)
+                    }
+                  }
+                }}
+              />
             </PageButtons>
           </>
         ) : (
@@ -468,7 +770,7 @@ const TransactionTable: React.FC<
             <Box />
           </>
         )}
-      </TableWrapper>
+      </CustomTableWrapper>
     </Wrapper>
   )
 }
