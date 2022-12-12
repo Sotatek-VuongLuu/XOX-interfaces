@@ -143,7 +143,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       .catch((err) => {
         console.log(err)
       })
-  }, [coinGeckoIds])
+  }, [coinGeckoIds, coinGeckoId])
 
   return (
     <Page>
