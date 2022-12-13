@@ -1,3 +1,4 @@
+import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 const BGLeft = styled.img`
@@ -22,11 +23,15 @@ const BGXOX = styled.img`
 `
 
 const BGPartner = () => {
+  const { width } = useWindowSize()
   return (
     <>
       <BGLeft src="/images/pl.svg" />
       <BGRight src="/images/pr.svg" />
-      <BGXOX src="/images/xox_1.svg" />
+
+      {/* <img src="/images/xox_mobile.svg" alt="xox_mobile" /> */}
+
+      {width > 900 && <BGXOX src="/images/xox_1.svg" />}
     </>
   )
 }

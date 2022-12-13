@@ -64,17 +64,9 @@ const WrapperI = styled.div`
     }
 
     .expand {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      text-fill-color: transparent;
-      font-weight: 400;
-      font-size: 16px;
-      width: 100%;
-      height: 100%;
-      background-color: #191a28;
-      border-radius: inherit;
+      color: #9072ff;
+      font-size: 14px;
+      font-weight: 600;
     }
   }
 `
@@ -98,10 +90,6 @@ const Description = styled.p`
   color: rgba(255, 255, 255, 0.6);
   margin: 16px 0 0;
   line-height: 24px;
-  @media screen and (max-width: 900px) {
-    font-size: 14px;
-    line-height: 24px;
-  }
 `
 
 const Icon = styled.div`

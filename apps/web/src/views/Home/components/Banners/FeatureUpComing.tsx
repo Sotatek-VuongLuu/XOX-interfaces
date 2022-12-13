@@ -83,6 +83,12 @@ const WrapperItem = styled.div`
     // }
   }
 
+  .expand {
+    color: #9072ff;
+    font-size: 14px;
+    font-weight: 600;
+  }
+
   @media screen and (max-width: 900px) {
     .title_item {
       font-size: 18px;

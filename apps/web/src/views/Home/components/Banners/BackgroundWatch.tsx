@@ -1,3 +1,4 @@
+import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 const BallLeft = styled.img`
@@ -14,6 +15,7 @@ const BallRight = styled.img`
 `
 
 const BackgroudWatch = (): JSX.Element => {
+  const { width } = useWindowSize()
   return (
     <>
       <BallLeft src="/images/bg_meet_xox.svg" alt="ball_left" />

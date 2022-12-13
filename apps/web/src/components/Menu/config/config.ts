@@ -1,4 +1,15 @@
-import { MenuItemsType, SwapIcon, SwapFillIcon, EarnFillIcon, EarnIcon, DropdownMenuItems } from '@pancakeswap/uikit'
+import {
+  MenuItemsType,
+  SwapIcon,
+  SwapFillIcon,
+  EarnFillIcon,
+  EarnIcon,
+  DropdownMenuItems,
+  CompanyIcon,
+  WhitepaperIcon,
+  Tokenomics,
+  TokenomicsFill,
+} from '@pancakeswap/uikit'
 import { ContextApi } from '@pancakeswap/localization'
 import { SUPPORT_ONLY_BSC } from 'config/constants/supportChains'
 
@@ -80,22 +91,22 @@ export const configLanding: (
     {
       label: t('Tokenomics'),
       href: '/',
-      icon: EarnIcon,
-      fillIcon: EarnFillIcon,
+      icon: Tokenomics,
+      fillIcon: TokenomicsFill,
       image: '/images/decorations/pe2.png',
       items: [],
     },
     {
       label: t('Whitepaper'),
       href: '#',
-      icon: SwapIcon,
+      icon: WhitepaperIcon,
       fillIcon: SwapFillIcon,
       showItemsOnMobile: false,
       items: [],
     },
     {
       label: t('Company'),
-      icon: SwapIcon,
+      icon: CompanyIcon,
       fillIcon: SwapFillIcon,
       href: '#',
       showItemsOnMobile: false,

@@ -168,4 +168,8 @@ export { default as BraveIcon } from "./Icons/Brave";
 export { default as BloctoIcon } from "./Icons/Blocto";
 export { default as MartianWalletIcon } from "./Icons/MartianWallet";
 export { default as PetraWalletIcon } from "./Icons/PetraWallet";
+export { default as CompanyIcon } from "./Icons/Company";
+export { default as WhitepaperIcon } from "./Icons/Whitepaper";
+export { default as TokenomicsFill } from "./Icons/TokenomicsFill";
+export { default as Tokenomics } from "./Icons/Tokenomics";
 export type { SvgProps } from "./types";

@@ -13,6 +13,7 @@ const StyledBottomNav = styled(Flex)`
     padding-bottom: 45px;
   }
   z-index: 20;
+  border-radius: 20px 20px 0px 0px;
 `;
 
 export default StyledBottomNav;
