@@ -13,6 +13,7 @@ import { getBlockExploreLink } from 'utils'
 
 import { formatAmount } from 'utils/formatInfoNumbers'
 import { Arrow, Break, ClickableColumnHeader } from './shared'
+import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -225,10 +226,9 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
   )
 }
 
-const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction; index: number }>> = ({
-  transaction,
-  index,
-}) => {
+const DataRow: React.FC<
+  React.PropsWithChildren<{ transaction: Transaction; index: number; page: number; perPage: number }>
+> = ({ transaction, index, page, perPage }) => {
   const { t } = useTranslation()
   const abs0 = Math.abs(transaction.amountToken0)
   const abs1 = Math.abs(transaction.amountToken1)
@@ -245,7 +245,7 @@ const DataRow: React.FC<React.PropsWithChildren<{ transaction: Transaction; inde
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
       >
-        {index + 1}
+        {index + 1 + (page - 1) * perPage}
       </Text>
       <LinkExternal
         color="#9072FF"
@@ -372,7 +372,7 @@ const TransactionTable: React.FC<
     if (transactions) {
       const filteredTransactions = transactions.filter((tx) => {
         return txFilter === undefined || tx.type === txFilter
-      })
+      }).slice(0, 100)
       if (filteredTransactions.length % perPage === 0) {
         setMaxPage(Math.floor(filteredTransactions.length / perPage))
       } else {
@@ -613,7 +613,7 @@ const TransactionTable: React.FC<
                 return (
                   // eslint-disable-next-line react/no-array-index-key
                   <Fragment key={index}>
-                    <DataRow transaction={transaction} index={index} />
+                    <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
                   </Fragment>
                 )
               }

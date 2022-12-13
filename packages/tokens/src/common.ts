@@ -123,7 +123,7 @@ export const BUSD_GOERLI = new ERC20Token(
   'https://www.paxos.com/busd/',
 )
 
-export const BNB_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0xB8c77482e45F1F44dE1745F52C74426C631bDD52', 18, 'ETH')
+export const BNB_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0xB8c77482e45F1F44dE1745F52C74426C631bDD52', 18, 'BNB')
 
 export const MATIC_ETHEREUM = new ERC20Token(
   ChainId.ETHEREUM,
@@ -132,7 +132,7 @@ export const MATIC_ETHEREUM = new ERC20Token(
   'MATIC',
 )
 
-export const UNI_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0', 18, 'UNI')
+export const UNI_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984', 18, 'UNI')
 
 export const SUSHI_ETHEREUM = new ERC20Token(
   ChainId.ETHEREUM,

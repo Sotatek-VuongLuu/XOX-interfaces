@@ -100,7 +100,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
     const ids = SUGGESTED_BASES[chainId]
       .concat([native])
       .map((token: any) => {
-        const [t] = tokens.filter((t) => t.symbol.toLowerCase() === token.symbol.toLowerCase())
+        const [t] = tokens.filter((t) => t.symbol.toLowerCase() === token?.symbol?.toLowerCase())
 
         return t?.id
       })
@@ -115,23 +115,22 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!coinGeckoId) return
-    try {
-      axios
-        .get(`https://api.coingecko.com/api/v3/coins/${coinGeckoId}/market_chart`, {
-          params: { vs_currency: 'usd', days: filter.days },
+    axios
+      .get(`https://api.coingecko.com/api/v3/coins/${coinGeckoId}/market_chart`, {
+        params: { vs_currency: 'usd', days: filter.days },
+      })
+      .then((result) => {
+        const data = result.data.prices.map((d) => {
+          return {
+            date: d[0],
+            priceUSD: d[1],
+          }
         })
-        .then((result) => {
-          const data = result.data.prices.map((d) => {
-            return {
-              date: d[0],
-              priceUSD: d[1],
-            }
-          })
-          setChardData(data)
-        })
-    } catch (error) {
-      console.warn(error)
-    }
+        setChardData(data)
+      })
+      .catch((err) => {
+        console.log(err)
+      })
   }, [filter, coinGeckoId])
 
   useEffect(() => {
@@ -141,7 +140,10 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       .then((result) => {
         setCurrencyDatas(result.data)
       })
-  }, [coinGeckoIds])
+      .catch((err) => {
+        console.log(err)
+      })
+  }, [coinGeckoIds, coinGeckoId])
 
   return (
     <Page>

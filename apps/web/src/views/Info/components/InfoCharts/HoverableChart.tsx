@@ -115,8 +115,34 @@ const HoverableChart = ({
               <div className="liquidity">
                 <p>Current price: ${currencyData.current_price} </p>
                 <p>
-                  Price change (in last 24 hours): <img src="/images/up.svg" alt="up" />{' '}
-                  <span>{currencyData.price_change_24h}%</span>
+                  Price change (in last 24 hours):{' '}
+                  {currencyData.price_change_percentage_24h > 0 ? (
+                    <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M6.80361 11.2498C6.80361 11.6916 6.44544 12.0498 6.00361 12.0498C5.56179 12.0498 5.20361 11.6916 5.20361 11.2498V3.67776L1.81588 7.06549C1.50346 7.37791 0.996929 7.37791 0.68451 7.06549C0.37209 6.75307 0.37209 6.24654 0.68451 5.93412L5.43451 1.18412C5.74693 0.871699 6.25346 0.871699 6.56588 1.18412L11.3159 5.93412C11.6283 6.24654 11.6283 6.75307 11.3159 7.06549C11.0035 7.37791 10.4969 7.37791 10.1845 7.06549L6.80361 3.68459V11.2498Z"
+                        fill="#6BB372"
+                      />
+                    </svg>
+                  ) : currencyData.price_change_percentage_24h < 0 ? (
+                    <svg
+                      width="12"
+                      height="13"
+                      viewBox="0 0 12 13"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      transform="rotate(180)"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M6.80361 11.2498C6.80361 11.6916 6.44544 12.0498 6.00361 12.0498C5.56179 12.0498 5.20361 11.6916 5.20361 11.2498V3.67776L1.81588 7.06549C1.50346 7.37791 0.996929 7.37791 0.68451 7.06549C0.37209 6.75307 0.37209 6.24654 0.68451 5.93412L5.43451 1.18412C5.74693 0.871699 6.25346 0.871699 6.56588 1.18412L11.3159 5.93412C11.6283 6.24654 11.6283 6.75307 11.3159 7.06549C11.0035 7.37791 10.4969 7.37791 10.1845 7.06549L6.80361 3.68459V11.2498Z"
+                        fill="#FF0000"
+                      />
+                    </svg>
+                  ) : null}{' '}
+                  <span>{currencyData.price_change_percentage_24h.toFixed(2)}%</span>
                 </p>
               </div>
               <div className="volume">
@@ -124,7 +150,34 @@ const HoverableChart = ({
                   Volume 24h <img src="/images/up.svg" alt="up" /> <span>$45.56</span>
                 </p>
                 <p>
-                  Volume 24h <img src="/images/up.svg" alt="up" /> <span>${currencyData.total_volume}</span>
+                  Volume 24h{' '}
+                  {currencyData.price_change_percentage_24h > 0 ? (
+                    <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M6.80361 11.2498C6.80361 11.6916 6.44544 12.0498 6.00361 12.0498C5.56179 12.0498 5.20361 11.6916 5.20361 11.2498V3.67776L1.81588 7.06549C1.50346 7.37791 0.996929 7.37791 0.68451 7.06549C0.37209 6.75307 0.37209 6.24654 0.68451 5.93412L5.43451 1.18412C5.74693 0.871699 6.25346 0.871699 6.56588 1.18412L11.3159 5.93412C11.6283 6.24654 11.6283 6.75307 11.3159 7.06549C11.0035 7.37791 10.4969 7.37791 10.1845 7.06549L6.80361 3.68459V11.2498Z"
+                        fill="#6BB372"
+                      />
+                    </svg>
+                  ) : currencyData.price_change_percentage_24h < 0 ? (
+                    <svg
+                      width="12"
+                      height="13"
+                      viewBox="0 0 12 13"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      transform="rotate(180)"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M6.80361 11.2498C6.80361 11.6916 6.44544 12.0498 6.00361 12.0498C5.56179 12.0498 5.20361 11.6916 5.20361 11.2498V3.67776L1.81588 7.06549C1.50346 7.37791 0.996929 7.37791 0.68451 7.06549C0.37209 6.75307 0.37209 6.24654 0.68451 5.93412L5.43451 1.18412C5.74693 0.871699 6.25346 0.871699 6.56588 1.18412L11.3159 5.93412C11.6283 6.24654 11.6283 6.75307 11.3159 7.06549C11.0035 7.37791 10.4969 7.37791 10.1845 7.06549L6.80361 3.68459V11.2498Z"
+                        fill="#FF0000"
+                      />
+                    </svg>
+                  ) : null}{' '}
+                  <span>${formatAmount(currencyData.total_volume)}</span>
                 </p>
               </div>
             </>
@@ -150,7 +203,7 @@ const HoverableChart = ({
               7d
             </span>
             <span onClick={() => setFilter({ days: 1 })} className={filter.days === 1 ? 'active' : ''}>
-              1d
+              24h
             </span>
           </div>
         </p>
