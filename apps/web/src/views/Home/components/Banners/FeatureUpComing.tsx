@@ -33,6 +33,8 @@ const Wrapper = styled.div`
       font-size: 14px;
       line-height: 24px;
     }
+
+    margin-bottom: 64px;
   }
 `
 
@@ -56,7 +58,7 @@ const WrapperItem = styled.div`
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.87);
 
     // height: 240px;
     // overflow: hidden;

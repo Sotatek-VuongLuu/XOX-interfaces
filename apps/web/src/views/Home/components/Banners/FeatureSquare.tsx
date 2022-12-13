@@ -157,6 +157,8 @@ const Wrapper = styled.div`
   }
 
   @media screen and (max-width: 900px) {
+    margin-bottom: 70px;
+    // margin-top: 32px;
     .title {
       flex-direction: column;
       .heart {

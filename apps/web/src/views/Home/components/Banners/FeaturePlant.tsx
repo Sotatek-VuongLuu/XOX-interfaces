@@ -135,7 +135,7 @@ const FeaturePlant = () => {
             </div>
           </LeftContent>
         </Grid>
-        <Grid item xs={12} md={5} style={{ height: 400 }}>
+        <Grid item xs={12} md={5} style={{ height: 366 }}>
           <RightContent>
             <Watch>
               <img src="/images/x3.svg" alt="x3" className="x3" />

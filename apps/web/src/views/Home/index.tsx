@@ -19,7 +19,7 @@ import FeatureSquare from './components/Banners/FeatureSquare'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
-  padding: 0px 14px;
+  padding: 0px 21px;
 
   ${({ theme }) => theme.mediaQueries.xxl} {
     padding: 0px 130px;

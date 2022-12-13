@@ -1,3 +1,5 @@
+/* eslint-disable @next/next/no-img-element */
+/* eslint-disable no-nested-ternary */
 /* eslint-disable import/no-cycle */
 import styled from 'styled-components'
 import { listRoadMap } from './RoadMap'
@@ -14,7 +16,7 @@ const Wrapper = styled.div`
     }
     .title {
       font-weight: 700;
-      font-size: 24px;
+      font-size: 20px;
       color: rgba(255, 255, 255, 0.87);
       margin-bottom: 16px;
     }
@@ -56,53 +58,47 @@ const Wrapper = styled.div`
       width: 36px;
       background: linear-gradient(-120deg, #000000 0%, #290c46 38.1%, #9072ff 100%);
       position: absolute;
-      left: 7%;
+      left: 6%;
       top: 4%;
     }
   }
 
   .child_1_th {
-    margin-left: -10px;
-    .title_content {
-      margin-top: 10px;
-    }
-    &::before {
-      top: 8%;
-      left: 11%;
-    }
+    margin-left: -9px;
   }
 
   .child_2_th {
-    margin-left: -10px;
-    .title_content {
-      margin-top: 10px;
-    }
-    &::before {
-      top: 8%;
-      left: 11%;
-    }
+    margin-left: -9px;
   }
 
   .child_3_th {
-    margin-left: -16px;
+    margin-left: -16.5px;
+
     .title_content {
-      margin-top: 20px;
+      margin-top: 7px;
     }
     &::before {
-      top: 10%;
-      left: 12.5%;
+      top: 7%;
+      left: 10.5%;
     }
+  }
+
+  .child_4_th {
+    margin-left: -9px;
+  }
+  .child_5_th {
+    margin-left: -9px;
   }
 `
 
 const LineDash = styled.div`
   height: 100%;
-  border-left: 4px dashed #9072ff;
+  border-left: 2.7px dashed #9072ff;
 `
 
 const LineNotDash = styled.div`
   height: 100%;
-  border-left: 4px solid #9072ff;
+  border-left: 2.7px solid #9072ff;
 `
 
 const RoadMapMobile = () => {
@@ -114,11 +110,11 @@ const RoadMapMobile = () => {
             <div className={`item_container child_${index + 1}_th`}>
               <div className="line_milestone">
                 {item.status === 'done' ? (
-                  <img src="/images/mile_stone_done.svg" alt="milestone" />
+                  <img src="/images/done_mobile.svg" alt="milestone" />
                 ) : item.status === 'processing' ? (
-                  <img src="/images/mile_stone_now.svg" alt="milestone" />
+                  <img src="/images/now_done_mobile.svg" alt="milestone" />
                 ) : (
-                  <img src="/images/milestone.svg" alt="milestone" />
+                  <img src="/images/not_done_mobile.svg" alt="milestone" />
                 )}
 
                 {item.status === 'done' ? <LineDash className="line_status" /> : <LineNotDash />}

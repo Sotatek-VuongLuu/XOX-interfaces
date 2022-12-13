@@ -31,6 +31,7 @@ const Wrapper = styled.div`
 
     @media screen and (max-width: 900px) {
       font-size: 20px;
+      margin-top: 32px;
     }
   }
 
@@ -51,6 +52,10 @@ const Wrapper = styled.div`
     justify-content: center;
     margin-top: 50px;
     margin-bottom: 100px;
+
+    @media screen and (max-width: 900px) {
+      margin: 56px 0px 64px;
+    }
   }
 
   .get_xox {
@@ -82,10 +87,8 @@ const Wrapper = styled.div`
 
     @media screen and (max-width: 900px) {
       font-size: 14px;
-
       .boxed-child {
         padding: 12px 30px;
-
         span {
           font-size: 16px;
         }

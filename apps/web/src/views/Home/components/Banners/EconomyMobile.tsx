@@ -13,6 +13,7 @@ export const floatingAnim = (x: string, y: string) => keyframes`
 `
 
 const Wrapper = styled.div`
+  padding-bottom: 15px;
   .title_container {
     .title {
       font-weight: 700;

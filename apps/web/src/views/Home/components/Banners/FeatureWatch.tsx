@@ -57,9 +57,17 @@ const Paragraph = styled.p`
   }
 `
 
+const Wrapper = styled(Box)`
+  margin-bottom: 100px;
+
+  @media screen and (max-width: 900px) {
+    margin-bottom: 40px;
+  }
+`
+
 const FeatureWatch = () => {
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex', marginBottom: '100px' }}>
+    <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <LeftContent>
@@ -91,7 +99,7 @@ const FeatureWatch = () => {
           </RightContent>
         </Grid>
       </Grid>
-    </Box>
+    </Wrapper>
   )
 }
 

@@ -83,6 +83,10 @@ const Wrapper = styled(Box)`
       justify-content: center;
     }
   }
+
+  @media screen and (max-width: 900px) {
+    margin-top: 64px;
+  }
 `
 
 const Paragraph = styled.p`
