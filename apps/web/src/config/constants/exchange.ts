@@ -14,6 +14,23 @@ import {
   USDT_ETHEREUM,
   SHIB_ETHEREUM,
   MATIC_BSC,
+  LINK_ETHEREUM,
+  WBTC_GOERLI,
+  BNB_GOERLI,
+  MATIC_GOERLI,
+  UNI_GOERLI,
+  SUSHI_GOERLI,
+  USDT_GOERLI,
+  LINK_GOERLI,
+  SHIB_GOERLI,
+  BTCB_BSC_TESTNET,
+  ETH_BSC_TESTNET,
+  BUSD_BSC_TESTNET,
+  DOGE_BSC_TESTNET,
+  MATIC_BSC_TESTNET,
+  CAKE_BSC_TESTNET,
+  LINK_BSC_TESTNET,
+  ADA_BSC_TESTNET,
 } from '@pancakeswap/tokens'
 import { ChainMap, ChainTokenList } from './types'
 
@@ -66,16 +83,26 @@ export const CUSTOM_BASES: { [chainId in ChainId]?: { [tokenAddress: string]: To
 // used for display in the default list when adding liquidity
 export const SUGGESTED_BASES: ChainTokenList = {
   [ChainId.ETHEREUM]: [
-    WBTC_ETH[ChainId.ETHEREUM],
+    WBTC_ETH,
     BNB_ETHEREUM,
     MATIC_ETHEREUM,
     UNI_ETHEREUM,
     SUSHI_ETHEREUM,
     USDT_ETHEREUM,
+    LINK_ETHEREUM,
     SHIB_ETHEREUM,
   ],
   [ChainId.RINKEBY]: [USDC[ChainId.RINKEBY], WNATIVE[ChainId.RINKEBY], BUSD[ChainId.RINKEBY]],
-  [ChainId.GOERLI]: [USDC[ChainId.GOERLI], WNATIVE[ChainId.GOERLI], BUSD[ChainId.GOERLI]],
+  [ChainId.GOERLI]: [
+    WBTC_GOERLI,
+    BNB_GOERLI,
+    MATIC_GOERLI,
+    UNI_GOERLI,
+    SUSHI_GOERLI,
+    USDT_GOERLI,
+    LINK_GOERLI,
+    SHIB_GOERLI,
+  ],
   [ChainId.BSC]: [
     bscTokens.btcb,
     bscTokens.eth,
@@ -86,7 +113,16 @@ export const SUGGESTED_BASES: ChainTokenList = {
     bscTokens.link,
     bscTokens.ada,
   ],
-  [ChainId.BSC_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.cake, bscTestnetTokens.busd],
+  [ChainId.BSC_TESTNET]: [
+    BTCB_BSC_TESTNET,
+    ETH_BSC_TESTNET,
+    BUSD_BSC_TESTNET,
+    DOGE_BSC_TESTNET,
+    MATIC_BSC_TESTNET,
+    CAKE_BSC_TESTNET,
+    LINK_BSC_TESTNET,
+    ADA_BSC_TESTNET,
+  ],
 }
 
 // used to construct the list of all pairs we consider by default in the frontend

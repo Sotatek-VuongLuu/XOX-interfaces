@@ -43,15 +43,22 @@ function Balance({ balance }: { balance: CurrencyAmount<Currency> }) {
 }
 
 const MenuItem = styled(RowBetween)<{ disabled: boolean; selected: boolean }>`
-  padding: 4px 20px;
+  padding: 16px;
+  border-radius: 8px;
   height: 56px;
   display: grid;
-  grid-template-columns: auto minmax(auto, 1fr) minmax(0, 72px);
+  grid-template-columns: auto minmax(auto, 1fr);
   grid-gap: 8px;
   cursor: ${({ disabled }) => !disabled && 'pointer'};
   pointer-events: ${({ disabled }) => disabled && 'none'};
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.87);
   :hover {
-    background-color: ${({ theme, disabled }) => !disabled && theme.colors.background};
+    background-color: ${({ disabled }) => !disabled && '#9072ff'};
   }
   opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
 `
@@ -89,13 +96,13 @@ function CurrencyRow({
       <CurrencyLogo currency={currency} size="24px" />
       <Column>
         <Text bold>{currency.symbol}</Text>
-        <Text color="textSubtle" small ellipsis maxWidth="200px">
+        {/* <Text color="textSubtle" small ellipsis maxWidth="200px">
           {!isOnSelectedList && customAdded && `${t('Added by user')} •`} {currency.name}
-        </Text>
+        </Text> */}
       </Column>
-      <RowFixed style={{ justifySelf: 'flex-end' }}>
+      {/* <RowFixed style={{ justifySelf: 'flex-end' }}>
         {balance ? <Balance balance={balance} /> : account ? <CircleLoader /> : null}
-      </RowFixed>
+      </RowFixed> */}
     </MenuItem>
   )
 }
@@ -182,6 +189,7 @@ export default function CurrencyList({
           />
         )
       }
+
       return (
         <CurrencyRow
           style={style}
@@ -214,8 +222,9 @@ export default function CurrencyList({
       width="100%"
       itemData={itemData}
       itemCount={itemData.length}
-      itemSize={56}
+      itemSize={62}
       itemKey={itemKey}
+      className="curency-list"
     >
       {Row}
     </FixedSizeList>

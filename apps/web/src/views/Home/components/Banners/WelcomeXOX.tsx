@@ -42,7 +42,7 @@ const LeftContent = styled.div`
         background-color: black;
         padding: 16px 40px;
         border-radius: inherit;
-        span {
+        a {
           background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -61,7 +61,7 @@ const LeftContent = styled.div`
       .get_xox {
         .boxed-child {
           padding: 17px 22px;
-          span {
+          a {
             font-size: 16px;
           }
         }
@@ -160,7 +160,7 @@ const WelcomeXOX = (): JSX.Element => {
                 <Button className="btn_read_doc">Read Documentation</Button>
                 <div className="get_xox">
                   <div className="boxed-child">
-                    <span>Get XOX</span>
+                    <a href="/swap">Get XOX</a>
                   </div>
                 </div>
               </div>

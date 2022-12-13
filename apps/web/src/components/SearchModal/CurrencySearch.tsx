@@ -19,8 +19,30 @@ import CurrencyList from './CurrencyList'
 import { createFilterToken, useSortedTokensByQuery } from './filtering'
 import useTokenComparator from './sorting'
 import { getSwapSound } from './swapSound'
-
+import styled from 'styled-components'
 import ImportRow from './ImportRow'
+
+const InputWrapper = styled.div`
+  position: relative;
+  width: 100%;
+
+  & input {
+    width: 100%;
+    height: 54px;
+    background: #303030;
+    border-radius: 8px;
+    padding-left: 52px;
+    outline: none;
+    box-shadow: none !important;
+  }
+
+  & svg {
+    position: absolute;
+    transform: translateY(-50%);
+    left: 16px;
+    top: 50%;
+  }
+`
 
 interface CurrencySearchProps {
   selectedCurrency?: Currency | null
@@ -95,6 +117,7 @@ function CurrencySearch({
   const [invertSearchOrder] = useState<boolean>(false)
 
   const allTokens = useAllTokens()
+  console.log(allTokens, 'allTokens')
 
   // if they input an address, use it
   const searchToken = useToken(debouncedQuery)
@@ -186,9 +209,9 @@ function CurrencySearch({
     }
 
     return Boolean(filteredSortedTokens?.length) || hasFilteredInactiveTokens ? (
-      <Box margin="24px -24px">
+      <Box>
         <CurrencyList
-          height={isMobile ? (showCommonBases ? height || 250 : height ? height + 80 : 350) : 390}
+          height={isMobile ? (showCommonBases ? height || 250 : height ? height + 80 : 350) : 310}
           showNative={showNative}
           currencies={filteredSortedTokens}
           inactiveCurrencies={filteredInactiveTokens}
@@ -232,27 +255,44 @@ function CurrencySearch({
     <>
       <AutoColumn gap="16px">
         <Row>
-          <Input
-            id="token-search-input"
-            placeholder={t('Search name or paste address')}
-            scale="lg"
-            autoComplete="off"
-            value={searchQuery}
-            ref={inputRef as RefObject<HTMLInputElement>}
-            onChange={handleInput}
-            onKeyDown={handleEnter}
-          />
+          <InputWrapper>
+            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+              <path
+                d="M10.0833 17.4167C14.1334 17.4167 17.4167 14.1334 17.4167 10.0833C17.4167 6.03325 14.1334 2.75 10.0833 2.75C6.03325 2.75 2.75 6.03325 2.75 10.0833C2.75 14.1334 6.03325 17.4167 10.0833 17.4167Z"
+                stroke="#8E8E8E"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+              <path
+                d="M19.25 19.2502L15.2625 15.2627"
+                stroke="#8E8E8E"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+            <Input
+              id="token-search-input"
+              placeholder={t('Search name or paste address')}
+              autoComplete="off"
+              value={searchQuery}
+              ref={inputRef as RefObject<HTMLInputElement>}
+              onChange={handleInput}
+              onKeyDown={handleEnter}
+            />
+          </InputWrapper>
         </Row>
-        {showCommonBases && (
+        {/* {showCommonBases && (
           <CommonBases
             chainId={chainId}
             onSelect={handleCurrencySelect}
             selectedCurrency={selectedCurrency}
             commonBasesType={commonBasesType}
           />
-        )}
+        )} */}
+        {getCurrencyListRows()}
       </AutoColumn>
-      {getCurrencyListRows()}
     </>
   )
 }

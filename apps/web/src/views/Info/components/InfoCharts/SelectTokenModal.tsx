@@ -1,11 +1,12 @@
-import { Button, CloseIcon, Flex, Image, Input } from '@pancakeswap/uikit'
-import ImportToken from 'components/SearchModal/ImportToken'
+import { Button, CloseIcon, Flex, Image, Input, LinkExternal, TrustWalletIcon } from '@pancakeswap/uikit'
 import { forwardRef, useCallback, useEffect, useImperativeHandle, useState } from 'react'
 import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 import { CurrencyLogo } from 'components/Logo'
 import { SUGGESTED_BASES } from 'config/constants/exchange'
+import axios from 'axios'
 import { Token } from '@pancakeswap/sdk'
+import { isAddress } from '@ethersproject/address'
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -35,6 +36,13 @@ const ModalWrapper = styled.div`
       cursor: pointer;
     }
 
+    & > .back-btn {
+      position: absolute;
+      top: 17px;
+      left: 17px;
+      cursor: pointer;
+    }
+
     & h2 {
       font-family: 'Inter';
       font-style: normal;
@@ -43,13 +51,139 @@ const ModalWrapper = styled.div`
       line-height: 24px;
       color: rgba(255, 255, 255, 0.87);
       text-align: center;
-      margin-top: 16px;
     }
 
     & .input-token {
       position: relative;
+    }
+
+    & .input-import-token input {
+      padding-left: 16px;
+    }
+
+    .warn {
+      padding: 16px;
+      width: 100%;
+      background: rgba(255, 200, 92, 0.1);
+      border-radius: 8px;
+      display: flex;
+      flex-direction: row;
       margin-bottom: 16px;
-      margin-top: 16px;
+
+      svg {
+        min-width: 20.17px;
+      }
+
+      div {
+        margin-left: 13px;
+        display: flex;
+        flex-direction: column;
+      }
+
+      div p {
+        margin-bottom: 4px;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        color: #ffbd3c;
+      }
+
+      h3 {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 16px;
+        line-height: 19px;
+        color: #ffbd3c;
+      }
+    }
+
+    .token-info {
+      display: flex;
+      flex-direction: column;
+
+      div {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        margin-bottom: 16px;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: rgba(255, 255, 255, 0.87);
+      }
+
+      div:first-child img {
+        margin-right: 8px;
+      }
+
+      div:first-child {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 16px;
+        line-height: 19px;
+        color: #9072ff;
+      }
+
+      div:last-child {
+        justify-content: space-between;
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: rgba(255, 255, 255, 0.87);
+      }
+
+      div:last-child a {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: #9072ff;
+      }
+    }
+
+    .btns {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+      align-items: center;
+
+      div {
+        display: flex;
+        flex-direction: row;
+      }
+
+      div input {
+        margin: 0 8px 0 0;
+        height: 18px;
+      }
+
+      div label {
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 19px;
+        color: rgba(255, 255, 255, 0.87);
+        white-space: nowrap;
+      }
+
+      button {
+        width: 113px;
+      }
+
+      button:disabled {
+        background: rgba(255, 255, 255, 0.05);
+        color: rgba(255, 255, 255, 0.38);
+      }
     }
 
     & input {
@@ -60,6 +194,8 @@ const ModalWrapper = styled.div`
       padding-left: 52px;
       outline: none;
       box-shadow: none !important;
+      margin-bottom: 16px;
+      margin-top: 16px;
     }
 
     & .input-token svg {
@@ -104,11 +240,16 @@ const BaseWrapper = styled.div<{ disable?: boolean }>`
   cursor: pointer;
 `
 
-const SelectCoinModal = ({ isOpen, setOpen, selectedCurrency, setSelectedCurrency, native, chainId }, ref) => {
+const SelectTokenModal = (
+  { isOpen, setOpen, selectedCurrency, setSelectedCurrency, native, chainId, setCoinGeckoId },
+  ref,
+) => {
   const [importToken, setImportToken] = useState()
-  const [searchToken, setSearchToken] = useState('')
+  const [searchAdress, setSearchAdress] = useState('')
   const [listToken, setListToken] = useState([])
-  const [isImportTokenModalOpen, setImportTokenModalOpen] = useState(false)
+  const [isImportTokenModalOpen, setImportTokenModalOpen] = useState(true)
+  const [understand, setUnderstand] = useState(false)
+  const [tokenInfo, setTokenInfo] = useState<any>()
 
   const modalElement = document.getElementById('portal-root')
 
@@ -119,6 +260,26 @@ const SelectCoinModal = ({ isOpen, setOpen, selectedCurrency, setSelectedCurrenc
       close: () => setOpen(false),
     }),
     [close],
+  )
+
+  const handleSearchToken = useCallback(
+    (e) => {
+      setSearchAdress(e.target.value)
+
+      if (!isAddress(e.target.value)) return
+
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API}/tokens/${chainId}/${e.target.value}`)
+        .then((result) => {
+          setTokenInfo(result.data)
+          setCoinGeckoId(result.data.coingekcoId)
+          console.log(result.data, 'result.data')
+        })
+        .catch((error) => {
+          console.warn(error)
+        })
+    },
+    [chainId],
   )
 
   const handleEscape = useCallback((event) => {
@@ -139,14 +300,17 @@ const SelectCoinModal = ({ isOpen, setOpen, selectedCurrency, setSelectedCurrenc
   useEffect(() => {
     const tokens = SUGGESTED_BASES[chainId].filter((s: any) => {
       // return s.symbol.toLowerCase().includes(searchToken.toLowerCase()) || s.name.toLowerCase().includes(searchToken.toLowerCase())
-      return s?.symbol?.toLowerCase()?.includes(searchToken.toLowerCase())
+      return (
+        s?.symbol?.toLowerCase()?.includes(searchAdress.toLowerCase()) ||
+        s?.address?.toLowerCase()?.includes(searchAdress.toLowerCase())
+      )
     })
 
     setListToken(tokens)
-  }, [searchToken])
+  }, [searchAdress])
 
-  useEffect(()=> {
-    setImportTokenModalOpen(false)
+  useEffect(() => {
+    setImportTokenModalOpen(true)
   }, [isOpen])
 
   return createPortal(
@@ -172,39 +336,23 @@ const SelectCoinModal = ({ isOpen, setOpen, selectedCurrency, setSelectedCurrenc
                 <path
                   d="M6.09619 11.9961H18.0962"
                   stroke="#8E8E8E"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M12.0962 18L6.09619 12L12.0962 6"
                   stroke="#8E8E8E"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
             </div>
 
             <h2>Import Token</h2>
-            <Flex className="input-token">
-              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-                <path
-                  d="M10.0833 17.4167C14.1334 17.4167 17.4167 14.1334 17.4167 10.0833C17.4167 6.03325 14.1334 2.75 10.0833 2.75C6.03325 2.75 2.75 6.03325 2.75 10.0833C2.75 14.1334 6.03325 17.4167 10.0833 17.4167Z"
-                  stroke="#8E8E8E"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-                <path
-                  d="M19.25 19.2502L15.2625 15.2627"
-                  stroke="#8E8E8E"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                />
-              </svg>
-              <Input placeholder="Search name or paste address" />
+            <Flex className="input-import-token">
+              <Input placeholder="Search name or paste address" value={searchAdress} onChange={handleSearchToken} />
             </Flex>
             <div className="warn">
               <svg xmlns="http://www.w3.org/2000/svg" width="22" height="18" viewBox="0 0 22 18" fill="none">
@@ -215,21 +363,63 @@ const SelectCoinModal = ({ isOpen, setOpen, selectedCurrency, setSelectedCurrenc
                 <path d="M11.9167 13.1253H10.0834V14.9587H11.9167V13.1253Z" fill="#FFBD3C" />
                 <path d="M11.9167 7.62533H10.0834V12.2087H11.9167V7.62533Z" fill="#FFBD3C" />
               </svg>
-              <h3>Title</h3>
-              <p>
-                Amet minim mollit non deserunt ullamco est sit aliqua dolor do amet sint. Velit officia consequat duis
-                enim velit mollit. Exercitation veniam consequat sunt nostrud amet.
-              </p>
-            </div>
-            <div className="token-info">
               <div>
-                <h3>Via CoinGecko</h3>
-                <span>NXD Next</span>
+                <h3>Title</h3>
+                <p>
+                  Anyone can create a BEP20 token on BNB Smart Chain with any name, including creating fake versions of
+                  existing tokens and tokens that claim to represent projects that do not have a token.
+                  <br />
+                  <br />
+                  If you purchase an arbitrary token, you may be unable to sell it back.
+                </p>
               </div>
             </div>
-            <Button width="100%" height="43px" onClick={handleImportTokenBtnClicked}>
-              Import
-            </Button>
+            {tokenInfo && (
+              <div className="token-info">
+                <div>
+                  <img src="/images/coinmaketcap.png" />
+                  <h3>Via CoinGecko</h3>
+                </div>
+                <div>
+                  <span>{tokenInfo.symbol?.toUpperCase()}</span>
+                </div>
+                <div>
+                  <span>
+                    {tokenInfo.address
+                      ? `${tokenInfo.address.substring(0, 4)}...${tokenInfo.address.substring(
+                          tokenInfo.address.length - 4,
+                        )}`
+                      : null}
+                  </span>
+                  <LinkExternal
+                    href={
+                      chainId === 1
+                        ? `https://etherscan.io/address/${tokenInfo.address}`
+                        : chainId === 56
+                        ? `https://bscscan.com/address/${tokenInfo.address}`
+                        : '#'
+                    }
+                    color="#9072FF"
+                  >
+                    View on {chainId === 1 ? 'EtherScan' : chainId === 56 ? 'BscScan' : null}
+                  </LinkExternal>
+                </div>
+              </div>
+            )}
+            <div className="btns">
+              <div>
+                <input
+                  id="understand"
+                  type="checkbox"
+                  checked={understand}
+                  onChange={() => setUnderstand(!understand)}
+                />
+                <label htmlFor="understand">I understand</label>
+              </div>
+              <Button width="100%" height="43px" disabled={!understand} onClick={handleImportTokenBtnClicked}>
+                Import
+              </Button>
+            </div>
           </div>
         ) : (
           <div>
@@ -249,27 +439,27 @@ const SelectCoinModal = ({ isOpen, setOpen, selectedCurrency, setSelectedCurrenc
                 <path
                   d="M10.0833 17.4167C14.1334 17.4167 17.4167 14.1334 17.4167 10.0833C17.4167 6.03325 14.1334 2.75 10.0833 2.75C6.03325 2.75 2.75 6.03325 2.75 10.0833C2.75 14.1334 6.03325 17.4167 10.0833 17.4167Z"
                   stroke="#8E8E8E"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
                 <path
                   d="M19.25 19.2502L15.2625 15.2627"
                   stroke="#8E8E8E"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
                 />
               </svg>
               <Input
                 placeholder="Search name or paste address"
-                value={searchToken}
-                onChange={(e) => setSearchToken(e.target.value)}
+                value={searchAdress}
+                onChange={(e) => setSearchAdress(e.target.value)}
               />
             </Flex>
             <Flex flexDirection="column" className="token-list">
-              {(native.symbol.toLowerCase().includes(searchToken.toLowerCase()) ||
-                native.name.toLowerCase().includes(searchToken.toLowerCase())) && (
+              {(native.symbol.toLowerCase().includes(searchAdress.toLowerCase()) ||
+                native.name.toLowerCase().includes(searchAdress.toLowerCase())) && (
                 <BaseWrapper
                   onClick={() => {
                     if (!selectedCurrency || !selectedCurrency.isNative) {
@@ -315,4 +505,4 @@ const SelectCoinModal = ({ isOpen, setOpen, selectedCurrency, setSelectedCurrenc
   )
 }
 
-export default forwardRef(SelectCoinModal)
+export default forwardRef(SelectTokenModal)
