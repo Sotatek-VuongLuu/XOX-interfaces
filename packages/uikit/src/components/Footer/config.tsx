@@ -1,6 +1,6 @@
 import { Language } from "../LangSelector/types";
 import { FooterLinkType } from "./types";
-import { TwitterIcon, TelegramIcon, FacebookIcon, DiscordIcon } from "../Svg";
+import { TwitterIcon, TelegramIcon, FacebookIcon, DiscordIcon, TelegramGroup, YoutubeIcon, TiktokIcon } from "../Svg";
 
 export const footerLinks: FooterLinkType[] = [
   {
@@ -80,12 +80,12 @@ export const socials = [
   {
     label: "Twitter",
     icon: TwitterIcon,
-    href: "https://twitter.com/pancakeswap",
+    // href: "https://twitter.com/pancakeswap",
   },
   {
-    label: "Facebook",
-    icon: FacebookIcon,
-    href: "https://reddit.com/r/pancakeswap",
+    label: "Telegram Group",
+    icon: TelegramGroup,
+    // href: "https://reddit.com/r/pancakeswap",
   },
   {
     label: "Telegram",
@@ -93,39 +93,29 @@ export const socials = [
     items: [
       {
         label: "English",
-        href: "https://t.me/pancakeswap",
+        // href: "https://t.me/pancakeswap",
       },
       {
         label: "Announcements",
-        href: "https://t.me/PancakeSwapAnn",
+        // href: "https://t.me/PancakeSwapAnn",
       },
     ],
   },
   {
     label: "Discord",
     icon: DiscordIcon,
-    href: "https://discord.gg/pancakeswap",
+    // href: "https://discord.gg/pancakeswap",
   },
-  // {
-  //   label: "Reddit",
-  //   icon: RedditIcon,
-  //   href: "https://reddit.com/r/pancakeswap",
-  // },
-  // {
-  //   label: "Instagram",
-  //   icon: InstagramIcon,
-  //   href: "https://instagram.com/pancakeswap_official",
-  // },
-  // {
-  //   label: "Github",
-  //   icon: GithubIcon,
-  //   href: "https://github.com/pancakeswap/",
-  // },
-  // {
-  //   label: "Medium",
-  //   icon: MediumIcon,
-  //   href: "https://medium.com/pancakeswap",
-  // },
+  {
+    label: "Youtube",
+    icon: YoutubeIcon,
+    // href: "https://discord.gg/pancakeswap",
+  },
+  {
+    label: "Tiktok",
+    icon: TiktokIcon,
+    // href: "https://discord.gg/pancakeswap",
+  },
 ];
 
 export const langs: Language[] = [...Array(20)].map((_, i) => ({

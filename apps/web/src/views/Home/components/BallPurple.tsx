@@ -8,6 +8,10 @@ interface Iprops {
 const StyledImage = styled.img`
   position: absolute;
   z-index: -1;
+
+  @media screen and (max-width: 900px) {
+    top: 40%;
+  }
 `
 
 const BallPurple = ({ src }: Iprops): JSX.Element => {

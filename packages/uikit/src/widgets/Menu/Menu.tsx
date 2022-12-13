@@ -91,6 +91,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   const { isMobile } = useMatchBreakpoints();
   const isMounted = useIsMounted();
   const [showMenu, setShowMenu] = useState(true);
+  const [windowSize, setWindowSize] = useState(0);
   const refPrevOffset = useRef(typeof window === "undefined" ? 0 : window.pageYOffset);
 
   const topBannerHeight = isMobile ? TOP_BANNER_HEIGHT_MOBILE : TOP_BANNER_HEIGHT;
@@ -131,6 +132,15 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
 
   const subLinksWithoutMobile = subLinks?.filter((subLink) => !subLink.isMobileOnly);
   const subLinksMobileOnly = subLinks?.filter((subLink) => subLink.isMobileOnly);
+
+  useEffect(() => {
+    function handleResize() {
+      setWindowSize(window.innerWidth);
+    }
+    window.addEventListener("resize", handleResize);
+    handleResize();
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <MenuContext.Provider value={{ linkComponent }}>
@@ -199,6 +209,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
         isDark={isDark}
         toggleTheme={toggleTheme}
         langs={langs}
+        windowSize={windowSize}
         setLang={setLang}
         currentLang={currentLang}
         cakePriceUsd={cakePriceUsd}

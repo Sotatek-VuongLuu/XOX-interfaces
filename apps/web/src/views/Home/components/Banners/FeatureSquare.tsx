@@ -75,7 +75,7 @@ const Title = styled.p`
   font-weight: 700;
   font-size: 20px;
   color: rgba(255, 255, 255, 0.87);
-  line-height: 25px;
+  line-height: 32px;
 
   @media screen and (max-width: 900px) {
     font-size: 18px;
@@ -87,7 +87,7 @@ const Title = styled.p`
 const Description = styled.p`
   font-weight: 400;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.87);
   margin: 16px 0 0;
   line-height: 24px;
 `

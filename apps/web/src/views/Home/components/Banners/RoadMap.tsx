@@ -34,7 +34,7 @@ const Wrapper = styled.div`
       }
 
       .line_status {
-        bottom: -25%;
+        bottom: -29%;
       }
     }
 
@@ -53,13 +53,13 @@ const Wrapper = styled.div`
     }
     .timeline-item-5 {
       .milestone {
-        top: -36% !important;
+        top: -37% !important;
       }
     }
 
     .timeline-item-4 {
       .milestone {
-        bottom: -28% !important;
+        bottom: -33% !important;
       }
     }
 
@@ -72,7 +72,7 @@ const Wrapper = styled.div`
 
     .timeline-item-1 {
       .line_status {
-        top: -33.3% !important;
+        top: -34.3% !important;
       }
       .milestone {
         top: -42% !important;
@@ -82,7 +82,7 @@ const Wrapper = styled.div`
 
     .timeline-item-2 {
       .milestone {
-        bottom: -33% !important;
+        bottom: -37% !important;
         left: -18% !important;
       }
     }
@@ -92,7 +92,7 @@ const Wrapper = styled.div`
 const Description = styled.p`
   font-weight: 400;
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.6);
   text-align: center;
 
   @media screen and (max-width: 900px) {

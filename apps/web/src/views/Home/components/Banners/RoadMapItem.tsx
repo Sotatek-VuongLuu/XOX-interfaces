@@ -16,7 +16,7 @@ const ContainerItem = styled.div`
 
   .title {
     font-weight: 700;
-    font-size: 24px;
+    font-size: 20px;
     color: rgba(255, 255, 255, 0.87);
     margin-bottom: 16px;
   }

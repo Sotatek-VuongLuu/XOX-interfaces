@@ -172,4 +172,9 @@ export { default as CompanyIcon } from "./Icons/Company";
 export { default as WhitepaperIcon } from "./Icons/Whitepaper";
 export { default as TokenomicsFill } from "./Icons/TokenomicsFill";
 export { default as Tokenomics } from "./Icons/Tokenomics";
+export { default as TelegramGroup } from "./Icons/TelegramGroup";
+export { default as YoutubeIcon } from "./Icons/Youtube";
+export { default as TiktokIcon } from "./Icons/Tiktok";
+
+// TelegramGroup TiktokIcon
 export type { SvgProps } from "./types";

@@ -10,6 +10,12 @@ const GlobalStyle = createGlobalStyle`
   * {
     font-family: 'Inter', sans-serif;
   }
+
+  .grid_welcome_container {
+    margin-left: 0px !important;
+  }
+
+
   body {
     background-color: black;
 

@@ -22,16 +22,47 @@ const BGXOX = styled.img`
   top: 23%;
 `
 
+const BGXOXMobile = styled.img`
+  position: absolute;
+  z-index: -2;
+  right: 0;
+  top: 14.1%;
+  mix-blend-mode: multiply;
+`
+
+const BGMobile = styled.img`
+  position: absolute;
+  z-index: -2;
+  right: 0;
+  top: 13.6%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(143, 0, 255, 0.3) 0%, rgba(82, 0, 255, 0) 100%);
+`
+
+const BGMobileTow = styled.img`
+  position: absolute;
+  z-index: -2;
+  left: 0;
+  top: 55%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(143, 0, 255, 0.3) 0%, rgba(82, 0, 255, 0) 100%);
+`
+
 const BGPartner = () => {
   const { width } = useWindowSize()
   return (
     <>
-      <BGLeft src="/images/pl.svg" />
-      <BGRight src="/images/pr.svg" />
-
-      {/* <img src="/images/xox_mobile.svg" alt="xox_mobile" /> */}
-
-      {width > 900 && <BGXOX src="/images/xox_1.svg" />}
+      {width > 900 ? (
+        <>
+          <BGLeft src="/images/pl.svg" />
+          <BGRight src="/images/pr.svg" />
+          <BGXOX src="/images/xox_1.svg" />
+        </>
+      ) : (
+        <>
+          <BGMobile src="/images/bg_mobile.svg" alt="bg_mobile" />
+          <BGXOXMobile src="/images/xox_mobile_2.svg" alt="xox_mobile" />
+          <BGMobileTow src="/images/bg_mobile_2.svg" alt="bg_mobile" />
+        </>
+      )}
     </>
   )
 }

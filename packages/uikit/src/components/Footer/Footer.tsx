@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { vars } from "@pancakeswap/ui/css/vars.css";
-import { useIsMounted } from "@pancakeswap/hooks";
+import { useIsMounted, useIsWindowVisible } from "@pancakeswap/hooks";
 import React from "react";
 import { Box, Flex } from "../Box";
 import { Link } from "../Link";
@@ -14,6 +14,7 @@ import {
   SubTitleStyle,
   StyleStaticPage,
   ImagBGFooter,
+  ImagBGFooterTow,
 } from "./styles";
 import { Text } from "@pancakeswap/uikit";
 import { LogoWithTextIcon } from "../Svg";
@@ -28,6 +29,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   setLang,
   cakePriceUsd,
   buyCakeLabel,
+  windowSize,
   ...props
 }) => {
   return (
@@ -39,9 +41,13 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
       flexDirection="column"
       alignItems="center"
     >
+      {windowSize > 900 ? (
+        <ImagBGFooter src="/images/bg_footer.svg" alt="icon_bg" />
+      ) : (
+        <ImagBGFooterTow src="/images/xox_footer_mobile.svg" alt="icon_bg" />
+      )}
       <FooterMainContent>
         <div>
-          <ImagBGFooter src="/images/bg_footer.svg" alt="icon_bg" />
           <Flex order={[2, null, 1]} flexDirection={["column", null, "column"]} mb={["0", null, "0"]}>
             <Box display={["block", null, "block"]}>
               <LogoWithTextIcon width="160px" />
@@ -129,7 +135,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           fontSize="14px"
           fontFamily="Inter"
           fontStyle="normal"
-          fontWeight="500"
+          fontWeight="400"
           lineHeight="17px"
           color="rgba(255, 255, 255, 0.87)"
           marginBottom="20px"

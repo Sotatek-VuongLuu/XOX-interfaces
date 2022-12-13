@@ -107,6 +107,12 @@ const Button = styled.button`
   }
 `
 
+const GridLeft = styled(Grid)`
+  @media screen and (max-width: 900px) {
+    margin-bottom: 66px;
+  }
+`
+
 const WelcomeXOX = (): JSX.Element => {
   const { width } = useWindowSize()
 
@@ -142,8 +148,8 @@ const WelcomeXOX = (): JSX.Element => {
   return (
     <Wrapper>
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
-        <Grid container spacing={2}>
-          <Grid xs={12} md={7}>
+        <Grid container spacing={2} className="grid_welcome_container">
+          <GridLeft xs={12} md={7}>
             <LeftContent>
               <Title className="title">XOX The Multichain Defi Apps & Solutions for Web3 Provider</Title>
               <Feature className="feature">Revolutionary - Scalable - Multichain</Feature>
@@ -159,7 +165,7 @@ const WelcomeXOX = (): JSX.Element => {
                 </div>
               </div>
             </LeftContent>
-          </Grid>
+          </GridLeft>
 
           <Grid xs={12} md={5} style={{ justifyContent: 'center', display: 'flex' }}>
             <Spline

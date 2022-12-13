@@ -148,4 +148,12 @@ export const ImagBGFooter = styled.img`
   position: absolute;
   right: 0;
   top: 40px;
+  z-index: 1;
+`;
+
+export const ImagBGFooterTow = styled.img`
+  position: absolute;
+  right: 0;
+  bottom: 130px;
+  z-index: 1;
 `;
