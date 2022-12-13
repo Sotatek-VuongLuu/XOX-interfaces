@@ -17,22 +17,36 @@ const ButtonWrapper = styled.div`
 `
 
 const BaseWrapper = styled.div<{ disable?: boolean }>`
-  border: 1px solid ${({ theme, disable }) => (disable ? 'transparent' : theme.colors.dropdown)};
-  border-radius: 10px;
+  height: 62px;
+  border-radius: 8px;
+  padding: 16px;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 20px;
+  line-height: 24px;
+  color: rgba(255, 255, 255, 0.87);
   display: flex;
-  padding: 6px;
+  flex-direction: row;
   align-items: center;
+
+  &:hover,
+  &.active {
+    background: #9072ff;
+  }
   :hover {
     cursor: ${({ disable }) => !disable && 'pointer'};
-    background-color: ${({ theme, disable }) => !disable && theme.colors.background};
+    background-color: ${({ theme, disable }) => !disable && '#9072ff'};
   }
   background-color: ${({ theme, disable }) => disable && theme.colors.dropdown};
   opacity: ${({ disable }) => disable && '0.4'};
 `
 
 const RowWrapper = styled.div`
-  white-space: nowrap;
-  overflow-x: auto;
+  display: flex;
+  flex-direction: column;
+  height: 310px;
+  overflow-y: auto;
   scroll-snap-type: x mandatory;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
@@ -40,6 +54,11 @@ const RowWrapper = styled.div`
     display: none;
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
+  }
+  &:hover::-webkit-scrollbar {
+    display: block;
+    -ms-overflow-style: 5px; /* IE and Edge */
+    scrollbar-width: 5px; /* Firefox */
   }
 `
 

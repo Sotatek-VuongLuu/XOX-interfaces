@@ -18,6 +18,7 @@ import { isAddress } from '../utils'
 import { useBytes32TokenContract, useTokenContract } from './useContract'
 import useNativeCurrency from './useNativeCurrency'
 import { useActiveChainId } from './useActiveChainId'
+import { SUGGESTED_BASES } from 'config/constants/exchange'
 
 const mapWithoutUrls = (tokenMap: TokenAddressMap<ChainId>, chainId: number) =>
   Object.keys(tokenMap[chainId] || {}).reduce<{ [address: string]: ERC20Token }>((newMap, address) => {
@@ -31,6 +32,7 @@ const mapWithoutUrls = (tokenMap: TokenAddressMap<ChainId>, chainId: number) =>
 export function useAllTokens(): { [address: string]: ERC20Token } {
   const { chainId } = useActiveChainId()
   const tokenMap = useAtomValue(combinedTokenMapFromActiveUrlsAtom)
+  console.log(tokenMap, 'tokenMap')
   const userAddedTokens = useUserAddedTokens()
   return useMemo(() => {
     return (
@@ -43,7 +45,7 @@ export function useAllTokens(): { [address: string]: ERC20Token } {
           },
           // must make a copy because reduce modifies the map, and we do not
           // want to make a copy in every iteration
-          mapWithoutUrls(tokenMap, chainId),
+          SUGGESTED_BASES[chainId],
         )
     )
   }, [userAddedTokens, tokenMap, chainId])

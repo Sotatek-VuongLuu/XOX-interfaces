@@ -92,14 +92,13 @@ export default function ImportRow({
             <Text fontSize={isMobile ? '10px' : '14px'} mr="4px" color="textSubtle">
               {t('via')} {list.name}
             </Text>
-            <ListLogo logoURI={list.logoURI} size="12px" />
           </RowFixed>
         )}
       </AutoColumn>
       {!isActive && !isAdded ? (
         <Button
-          scale={isMobile ? 'sm' : 'md'}
-          width="fit-content"
+          height="43px"
+          width="86px"
           onClick={() => {
             if (setImportToken) {
               setImportToken(token)

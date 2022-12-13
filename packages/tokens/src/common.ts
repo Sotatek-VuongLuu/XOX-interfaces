@@ -124,28 +124,31 @@ export const BUSD_GOERLI = new ERC20Token(
 )
 
 export const BNB_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0xB8c77482e45F1F44dE1745F52C74426C631bDD52', 18, 'BNB')
-
 export const MATIC_ETHEREUM = new ERC20Token(
   ChainId.ETHEREUM,
   '0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0',
   18,
   'MATIC',
 )
-
 export const UNI_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984', 18, 'UNI')
-
 export const SUSHI_ETHEREUM = new ERC20Token(
   ChainId.ETHEREUM,
   '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2',
   18,
   'SUSHI',
 )
-
 export const USDT_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0xdac17f958d2ee523a2206206994597c13d831ec7', 18, 'USDT')
-
 export const LINK_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0x514910771af9ca656af840dff83e8264ecf986ca', 18, 'LINK')
-
 export const SHIB_ETHEREUM = new ERC20Token(ChainId.ETHEREUM, '0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce', 18, 'SHIB')
+
+export const WBTC_GOERLI = new ERC20Token(ChainId.GOERLI, '0x2a924bcD60450C7a354413d8b2c906A3173F9208', 18, 'WBTC')
+export const BNB_GOERLI = new ERC20Token(ChainId.GOERLI, '0x013cB3419Dd78A3A24dF6F9151514752228C6960', 18, 'BNB')
+export const MATIC_GOERLI = new ERC20Token(ChainId.GOERLI, '0xB4BdF7ADdeE19c35ecCa122C852103FAE0b3fe0B', 18, 'MATIC')
+export const UNI_GOERLI = new ERC20Token(ChainId.GOERLI, '0x1bC4803310B723B4f0A2c27411315432b7db52Df', 18, 'UNI')
+export const SUSHI_GOERLI = new ERC20Token(ChainId.GOERLI, '0x28362Cd5D11a8ce0371B4768Cd8EDF8a943CC2A9', 18, 'SUSHI')
+export const USDT_GOERLI = new ERC20Token(ChainId.GOERLI, '0x3AaE157946233E96D3057b2bACC0880b28c7957E', 18, 'USDT')
+export const LINK_GOERLI = new ERC20Token(ChainId.GOERLI, '0xCfc1B83B17084e744423Db6314B7e811729c6514', 18, 'LINK')
+export const SHIB_GOERLI = new ERC20Token(ChainId.GOERLI, '0x5f933e0F9D17A4B28F229a2882e2E18dcef266c7', 18, 'SHIB')
 
 export const BTCB_BSC = new ERC20Token(
   ChainId.BSC,
@@ -161,6 +164,58 @@ export const MATIC_BSC = new ERC20Token(ChainId.BSC, '0xcc42724c6683b7e57334c4e8
 export const CAKE_BSC = new ERC20Token(ChainId.BSC, '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82', 18, 'CAKE')
 export const LINK_BSC = new ERC20Token(ChainId.BSC, '0xf8a0bf9cf54bb92f17374d9e9a321e6a111a51bd', 18, 'LINK')
 export const ADA_BSC = new ERC20Token(ChainId.BSC, '0x3EE2200Efb3400fAbB9AacF31297cBdD1d435D47', 18, 'ADA')
+
+export const BTCB_BSC_TESTNET = new ERC20Token(
+  ChainId.BSC_TESTNET,
+  '0xa3961366f8A7A5772C22A00788f1824d233B26ed',
+  18,
+  'BTCB',
+  'Binance BTC',
+  'https://bitcoin.org/',
+)
+export const ETH_BSC_TESTNET = new ERC20Token(
+  ChainId.BSC_TESTNET,
+  '0x65eCB72aDEb9b5da68aA7DdD4A334546E7Cd36e2',
+  18,
+  'ETH',
+)
+export const BUSD_BSC_TESTNET = new ERC20Token(
+  ChainId.BSC_TESTNET,
+  '0x4CB105D50AB9D7bA8D603c31B8ED23356AB44741',
+  18,
+  'BUSD',
+)
+export const DOGE_BSC_TESTNET = new ERC20Token(
+  ChainId.BSC_TESTNET,
+  '0xbB5a2336330C07c3b2B532210A1E5B93d747fb93',
+  18,
+  'DOGE',
+)
+export const MATIC_BSC_TESTNET = new ERC20Token(
+  ChainId.BSC_TESTNET,
+  '0x897f93Cc7E82cC78F076C32aA45c723f84959A0D',
+  18,
+  'MATIC',
+)
+export const CAKE_BSC_TESTNET = new ERC20Token(
+  ChainId.BSC_TESTNET,
+  '0x638666506b6875a8755884090c41Dee985aC1F6D',
+  18,
+  'CAKE',
+)
+export const LINK_BSC_TESTNET = new ERC20Token(
+  ChainId.BSC_TESTNET,
+  '0x07bbDcd736cFc0406a3CeD96B9F2289ACBCc4c76',
+  18,
+  'LINK',
+)
+export const ADA_BSC_TESTNET = new ERC20Token(
+  ChainId.BSC_TESTNET,
+  '0x624bcfBb991cCef8e790E58eD973D8e24cc66eCc',
+  18,
+  'ADA',
+)
+// export const XOX_BSC_TESTNET = new ERC20Token(ChainId.BSC_TESTNET, '0x798bb5B1CD7ed74654EBfD5D58a24d3D9Cc67847', 18, 'XOX')
 
 export const BUSD: Record<ChainId, ERC20Token> = {
   [ChainId.ETHEREUM]: BUSD_ETH,

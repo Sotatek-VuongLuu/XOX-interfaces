@@ -23,18 +23,83 @@ import Manage from './Manage'
 import ImportList from './ImportList'
 import { CurrencyModalView } from './types'
 
-const Footer = styled.div`
-  width: 100%;
-  background-color: ${({ theme }) => theme.colors.backgroundAlt};
-  text-align: center;
-`
+// const Footer = styled.div`
+//   width: 100%;
+//   background-color: ${({ theme }) => theme.colors.backgroundAlt};
+//   text-align: center;
+// `
+
 const StyledModalContainer = styled(ModalContainer)`
-  width: 100%;
-  min-width: 320px;
-  max-width: 420px !important;
+  width: 448px;
+  border-radius: 20px;
   min-height: calc(var(--vh, 1vh) * 90);
+  position: relative;
+  background: #242424;
   ${({ theme }) => theme.mediaQueries.md} {
     min-height: auto;
+  }
+
+  & div[class*='ModalHeader'] {
+    padding-top: 32px;
+    padding-bottom: 0;
+    border: none;
+    & > div {
+      display: block;
+    }
+
+    h2 {
+      text-align: center;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 24px;
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    button {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: 0;
+      padding: 0;
+      width: 20px;
+      height: 20px;
+    }
+  }
+
+  & div[class*='ModalBody'] {
+    padding: 16px 27px 32px 27px;
+
+    & .curency-list {
+      button {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+        color: #ffffff;
+      }
+
+      &::-webkit-scrollbar-track {
+        -webkit-box-shadow: inset 0 0 6px #242424;
+        background-color: #242424;
+      }
+
+      &::-webkit-scrollbar {
+        display: block;
+        -ms-overflow-style: none; /* IE and Edge */
+        scrollbar-width: 5px; /* Firefox */
+      }
+
+      &::-webkit-scrollbar-thumb {
+        background-color: #444444;
+        border: 2px solid #242424;
+      }
+
+      // &:hover::-webkit-scrollbar {
+      //   opacity: 1;
+      //   display: block;
+      //   -ms-overflow-style: none; /* IE and Edge */
+      //   scrollbar-width: 5px; /* Firefox */
+      // }
+    }
   }
 `
 
@@ -152,7 +217,7 @@ export default function CurrencySearchModal({
         ) : (
           ''
         )}
-        {modalView === CurrencyModalView.search && (
+        {/* {modalView === CurrencyModalView.search && (
           <Footer>
             <Button
               scale="sm"
@@ -163,7 +228,7 @@ export default function CurrencySearchModal({
               {t('Manage Tokens')}
             </Button>
           </Footer>
-        )}
+        )} */}
       </StyledModalBody>
     </StyledModalContainer>
   )
