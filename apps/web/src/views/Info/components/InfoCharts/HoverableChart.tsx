@@ -43,7 +43,6 @@ const HoverableChart = ({
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>(native)
   const [dateHover, setDateHover] = useState<string | undefined>()
   const [currencyData, setCurrencyData] = useState<any>()
-  const modal = useRef()
 
   // Getting latest data to display on top of chart when not hovered
   useEffect(() => {

@@ -27,11 +27,12 @@ import { parseUnits } from '@ethersproject/units'
 import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 // import { ChainLogo } from 'components/Logo/ChainLogo'
 import { getBlockExploreLink, getBlockExploreName } from 'utils'
-import { useAppDispatch } from 'state'
+import { AppState, useAppDispatch } from 'state'
 import { updateOpenFormReferral } from 'state/user/actions'
 import styled from 'styled-components'
 import ProfileUserMenuItem from './ProfileUserMenuItem'
 import WalletModal, { WalletView } from './WalletModal'
+import { useSelector } from 'react-redux'
 // import WalletUserMenuItem from './WalletUserMenuItem'
 // import WalletInfo from './WalletInfo'
 
@@ -45,8 +46,6 @@ const TextBox = styled.div`
   line-height: 19px;
   color: rgba(255, 255, 255, 0.87);
 `
-
-const ProfileInfo = styled.div``
 
 const UserMenuStyle = styled.div`
   padding: 8px 14px;
@@ -87,6 +86,20 @@ const UserMenu = () => {
   const [userMenuVariable, setUserMenuVariable] = useState<UserMenuVariant>('default')
   const bnbBalance = useBalance({ addressOrName: account, chainId: ChainId.BSC })
 
+  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
+
+  const setOpenFormReferral = () => {
+    dispatch(updateOpenFormReferral({ openFormReferral: true }))
+  }
+
+  // const onClickWalletMenu = (): void => {
+  //   if (isWrongNetwork) {
+  //     onPresentWrongNetworkModal()
+  //   } else {
+  //     onPresentWalletModal()
+  //   }
+  // }
+
   useEffect(() => {
     if (hasPendingTransactions) {
       setUserMenuText(t('%num% Pending', { num: pendingNumber }))
@@ -97,25 +110,30 @@ const UserMenu = () => {
     }
   }, [hasPendingTransactions, pendingNumber, t])
 
-  // const onClickWalletMenu = (): void => {
-  //   if (isWrongNetwork) {
-  //     onPresentWrongNetworkModal()
-  //   } else {
-  //     onPresentWalletModal()
-  //   }
-  // }
-
-  const openFormReferral = () => {
-    dispatch(updateOpenFormReferral({ openFormReferral: true }))
+  const renderAvataImage = () => {
+    if (userProfile?.avatar) {
+      console.log(userProfile, userProfile.avatar, 'userProfile.avatar')
+      return <img src={userProfile.avatar} width="100%" height="100%" alt="" style={{ borderRadius: '50%' }} />
+    } else {
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="48" fill="#8E8E8E" />
+          <path
+            d="M50 86C37.5 86 26.45 79.6 20 70C20.15 60 40 54.5 50 54.5C60 54.5 79.85 60 80 70C76.6944 74.922 72.2293 78.9558 66.9978 81.7459C61.7663 84.536 55.929 85.9969 50 86ZM50 15C53.9782 15 57.7936 16.5804 60.6066 19.3934C63.4197 22.2064 65 26.0218 65 30C65 33.9782 63.4197 37.7936 60.6066 40.6066C57.7936 43.4197 53.9782 45 50 45C46.0218 45 42.2064 43.4197 39.3934 40.6066C36.5803 37.7936 35 33.9782 35 30C35 26.0218 36.5803 22.2064 39.3934 19.3934C42.2064 16.5804 46.0218 15 50 15ZM50 0C43.4339 0 36.9321 1.29329 30.8658 3.80602C24.7995 6.31876 19.2876 10.0017 14.6447 14.6447C5.26784 24.0215 0 36.7392 0 50C0 63.2608 5.26784 75.9785 14.6447 85.3553C19.2876 89.9983 24.7995 93.6812 30.8658 96.194C36.9321 98.7067 43.4339 100 50 100C63.2608 100 75.9785 94.7322 85.3553 85.3553C94.7322 75.9785 100 63.2608 100 50C100 22.35 77.5 0 50 0Z"
+            fill="#444444"
+          />
+        </svg>
+      )
+    }
   }
 
   const UserMenuItems = () => {
     return (
       <UserMenuStyle>
-        <ProfileInfo>
+        <div>
           <Flex flexDirection="row">
             <Flex width="45px" height="45px" minWidth="45px" mr="8px">
-              <img src="" width="100%" height="100%" alt="" />
+              {renderAvataImage()}
             </Flex>
             <Flex flexDirection="column" width="100%">
               <Flex flexDirection="row" justifyContent="space-between" mb="8px">
@@ -127,13 +145,13 @@ const UserMenu = () => {
                   lineHeight="19px"
                   color="rgba(255, 255, 255)"
                 >
-                  @thanh.le
+                  {userProfile.username && `@${userProfile.username}`}
                 </Text>
                 {/* eslint-disable-next-line */}
                 <div
                   style={{ cursor: 'pointer', borderRadius: '50%', overflow: 'hidden' }}
-                  onClick={openFormReferral}
-                  onKeyDown={openFormReferral}
+                  onClick={setOpenFormReferral}
+                  onKeyDown={setOpenFormReferral}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
                     <path
@@ -152,7 +170,7 @@ const UserMenu = () => {
                 color="rgba(255, 255, 255)"
                 marginBottom="6px"
               >
-                thanh.le@sotatek.com
+                {userProfile.email}
               </Text>
               <Text
                 fontSize="12px"
@@ -163,11 +181,11 @@ const UserMenu = () => {
                 color="rgba(255, 255, 255)"
                 marginBottom="8px"
               >
-                +84123456789
+                {userProfile.telegram}
               </Text>
             </Flex>
           </Flex>
-        </ProfileInfo>
+        </div>
 
         <UserMenuDivider />
 
@@ -181,7 +199,7 @@ const UserMenu = () => {
             lineHeight="17px"
             color="rgba(255, 255, 255, 0.87)"
           >
-            Referral Code: 123456
+            Referral Code: {userProfile.referralCode}
           </Text>
         </Flex>
 

@@ -15,19 +15,17 @@ import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Script from 'next/script'
-import { Fragment } from 'react'
+import { Fragment, useRef } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
-import { persistor, useStore, useAppDispatch, AppState } from 'state'
+import { persistor, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
 import TransactionsDetailModal from 'components/TransactionDetailModal'
-import FormReferralModal from '@pancakeswap/ui-wallets/src/FormReferralModal'
-import { useSelector } from 'react-redux'
-import { updateOpenFormReferral } from 'state/user/actions'
 import { Blocklist, Updaters } from '..'
 import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
+import FormReferralModal from 'components/Menu/UserMenu/FormReferralModal'
 
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
@@ -135,14 +133,7 @@ type AppPropsWithLayout = AppProps & {
 const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? SentryErrorBoundary : Fragment
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
-  const dispatch = useAppDispatch()
-  const openFormReferral = useSelector<AppState, AppState['user']['openFormReferral']>(
-    (state) => state.user.openFormReferral,
-  )
-
-  const setOpenFormReferral = (open: boolean) => {
-    dispatch(updateOpenFormReferral({ openFormReferral: open }))
-  }
+  const modal = useRef(null)
 
   if (Component.pure) {
     return <Component {...pageProps} />
@@ -165,8 +156,8 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <FixedSubgraphHealthIndicator />
       <NetworkModal pageSupportedChains={Component.chains} />
       <TransactionsDetailModal />
-      <FormReferralModal setOpenForm={setOpenFormReferral} openForm={openFormReferral} />
       {isShowScrollToTopButton && <ScrollToTopButtonV2 />}
+      <FormReferralModal ref={modal} />
     </ProductionErrorBoundary>
   )
 }
