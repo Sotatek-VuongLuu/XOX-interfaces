@@ -112,7 +112,6 @@ const UserMenu = () => {
 
   const renderAvataImage = () => {
     if (userProfile?.avatar) {
-      console.log(userProfile, userProfile.avatar, 'userProfile.avatar')
       return <img src={userProfile.avatar} width="100%" height="100%" alt="" style={{ borderRadius: '50%' }} />
     } else {
       return (
@@ -176,7 +175,7 @@ const UserMenu = () => {
                 color="rgba(255, 255, 255)"
                 marginBottom="6px"
               >
-                {userProfile.email}
+                {userProfile?.email}
               </Text>
               <Text
                 fontSize="12px"
@@ -187,7 +186,7 @@ const UserMenu = () => {
                 color="rgba(255, 255, 255)"
                 marginBottom="8px"
               >
-                {userProfile.telegram}
+                {userProfile?.telegram}
               </Text>
             </Flex>
           </Flex>
@@ -205,7 +204,7 @@ const UserMenu = () => {
             lineHeight="17px"
             color="rgba(255, 255, 255, 0.87)"
           >
-            Referral Code: {userProfile.referralCode}
+            Referral Code: {userProfile?.referralCode}
           </Text>
         </Flex>
 

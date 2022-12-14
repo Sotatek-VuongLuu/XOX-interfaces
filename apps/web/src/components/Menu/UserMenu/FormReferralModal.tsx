@@ -266,7 +266,6 @@ const FormReferralModal = ({ ref }) => {
         />
       )
     } else if (userProfile?.avatar) {
-      console.log(userProfile, userProfile.avatar, 'userProfile.avatar')
       return <img src={userProfile.avatar} width="100px" height="100px" alt="" style={{ borderRadius: '50%' }} />
     } else {
       return (
@@ -476,7 +475,7 @@ const FormReferralModal = ({ ref }) => {
                 </Button>
               )}
               <Button width="100%" mt="8px" onClick={onSubmitForm} style={{ height: '43px' }}>
-                Submit
+                Save
               </Button>
             </div>
           </FormWrapper>
