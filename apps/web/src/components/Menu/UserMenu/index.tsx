@@ -145,7 +145,7 @@ const UserMenu = () => {
                   lineHeight="19px"
                   color="rgba(255, 255, 255)"
                 >
-                  {userProfile.username && `@${userProfile.username}`}
+                  {userProfile?.username && `@${userProfile?.username}`}
                 </Text>
                 {/* eslint-disable-next-line */}
                 <div

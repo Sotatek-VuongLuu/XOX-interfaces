@@ -18,7 +18,7 @@ export interface UserMenuProps extends Omit<FlexProps, "children"> {
   avatarClassName?: string;
   variant?: Variant;
   disabled?: boolean;
-  children?: (exposedProps: { isOpen: boolean }) => ReactElement;
+  children?: (exposedProps: { isOpen: boolean, setIsOpen: any }) => ReactElement;
   placement?: Placement;
   recalculatePopover?: boolean;
 }

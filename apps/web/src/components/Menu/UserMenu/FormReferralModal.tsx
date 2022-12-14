@@ -285,15 +285,15 @@ const FormReferralModal = ({ ref }) => {
       .then((result) => {
         dispatch(updateUserProfile({ userProfile: result.data }))
         if (result.data) setEditForm(true)
-        console.log(result, 'result')
+        else dispatch(updateOpenFormReferral({ openFormReferral: true }))
       })
       .catch((error) => console.warn(error))
   }, [openFormReferral, account])
 
   useEffect(() => {
-    setUsername(userProfile.username)
-    setEmail(userProfile.email)
-    setTelegram(userProfile.telegram)
+    setUsername(userProfile?.username)
+    setEmail(userProfile?.email)
+    setTelegram(userProfile?.telegram)
   }, [userProfile])
 
   useEffect(() => {
