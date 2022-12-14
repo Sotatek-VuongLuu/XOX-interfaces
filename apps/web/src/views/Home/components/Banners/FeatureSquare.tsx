@@ -8,6 +8,7 @@ import React, { useState } from 'react'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css' // optional
 import { Box, Grid } from '@mui/material'
+import { useRouter } from 'next/router'
 
 // eslint-disable-next-line import/no-cycle
 
@@ -40,6 +41,7 @@ const WrapperI = styled.div`
       margin-top: 40px;
       border-radius: 8px;
       background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      cursor: pointer;
 
       .boxed-child {
         width: 100%;
@@ -105,6 +107,7 @@ const Icon = styled.div`
 
 const SquareItem = ({ item }: Iprops) => {
   const [isShowReadMore, setIsShow] = useState(item.description.length > 450)
+  const route = useRouter()
   return (
     <WrapperI className="item">
       <div className="main_container">
@@ -123,7 +126,7 @@ const SquareItem = ({ item }: Iprops) => {
             ) : null}
           </Description>
         </div>
-        <div className="get_xox">
+        <div className="get_xox" onClick={() => route.push(item.link)}>
           <div className="boxed-child">
             <span>Discover More</span>
           </div>
@@ -206,21 +209,21 @@ const listSquare = [
     title: 'Revolutionary Multichain DEX',
     description:
       'Not just swap for free, but get dual cash back for doing so. Our multi token ecosystem & revolutionary referral program is designed to reward you twice on every transaction you perform in our DEX, receiving XOXS Stable Coins & BUSD or USDC not just from your transactions but from every user transactions using your Referral Code.',
-    link: '',
+    link: '/swap',
   },
   {
     icon: '/images/wallet.svg',
     title: 'Add liquidity & Earn rewards',
     description:
       'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
-    link: '',
+    link: '/liquidity',
   },
   {
     icon: '/images/refferal.svg',
     title: 'First Ever Gamified Referral Program With Dual BUSD/USDC Rewards',
     description:
       'The XOX Gamified Referral Program is designed to give you cash-back like BUSD/USDC rewards from every transaction that you or any other user applying your referral code perform in our DEX. To make it fun and interactive we have designed a level system based on points where the more points you get the more you earn. Basically you just need to earn points, level up, reach milestones and claim your rewards on BUSD or USDC.',
-    link: '',
+    link: '/referral',
   },
 ]
 

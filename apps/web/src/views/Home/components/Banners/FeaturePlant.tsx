@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Box, Grid } from '@mui/material'
+import useWindowSize from 'hooks/useWindowSize'
 import styled, { keyframes } from 'styled-components'
 
 const floatingAnim = (x: string, y: string) => keyframes`
@@ -97,6 +98,10 @@ const Watch = styled.div`
     z-index: -2;
     animation: ${floatingAnim('5px', '10px')} 3s ease-in-out infinite;
     animation-delay: 0.33s;
+
+    @media screen and (max-width: 900px) {
+      left: 0;
+    }
   }
   .x1 {
     position: absolute;
@@ -109,6 +114,7 @@ const Watch = styled.div`
 `
 
 const FeaturePlant = () => {
+  const { width } = useWindowSize()
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2}>
@@ -135,12 +141,22 @@ const FeaturePlant = () => {
             </div>
           </LeftContent>
         </Grid>
-        <Grid item xs={12} md={5} style={{ height: 366 }}>
+        <Grid item xs={12} md={5} style={{ height: 285 }}>
           <RightContent>
             <Watch>
-              <img src="/images/x3.svg" alt="x3" className="x3" />
-              <img src="/images/x2.svg" alt="x2" className="x2" />
-              <img src="/images/x1.svg" alt="x1" className="x1" />
+              {width > 900 ? (
+                <>
+                  <img src="/images/x3.svg" alt="x3" className="x3" />
+                  <img src="/images/x2.svg" alt="x2" className="x2" />
+                  <img src="/images/x1.svg" alt="x1" className="x1" />
+                </>
+              ) : (
+                <>
+                  <img src="/images/xox_plant_mobile_2.svg" alt="x3" className="x3" />
+                  <img src="/images/xox_plant_mobile_3.svg" alt="x2" className="x2" />
+                  <img src="/images/xox_plant_mobile_1.svg" alt="x1" className="x1" />
+                </>
+              )}
             </Watch>
           </RightContent>
         </Grid>

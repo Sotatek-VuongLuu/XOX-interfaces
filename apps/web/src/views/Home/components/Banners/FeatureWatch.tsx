@@ -1,4 +1,5 @@
 import { Box, Grid } from '@mui/material'
+import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 const LeftContent = styled.div`
@@ -65,13 +66,22 @@ const Wrapper = styled(Box)`
   }
 `
 
+const Main = styled(Grid)`
+  @media screen and (max-width: 900px) {
+    flex-direction: column-reverse !important;
+    justify-content: center;
+    align-items: center;
+  }
+`
+
 const FeatureWatch = () => {
+  const { width } = useWindowSize()
   return (
-    <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
-      <Grid container spacing={2}>
+    <Wrapper>
+      <Main container spacing={2}>
         <Grid item xs={12} md={6}>
           <LeftContent>
-            <img src="/images/xoxs.svg" alt="xoxs" />
+            {width > 900 ? <img src="/images/xoxs.svg" alt="xoxs" /> : <img src="/images/xoxs_mobile.svg" alt="xoxs" />}
           </LeftContent>
         </Grid>
         <Grid item xs={12} md={6}>
@@ -98,7 +108,7 @@ const FeatureWatch = () => {
             </div>
           </RightContent>
         </Grid>
-      </Grid>
+      </Main>
     </Wrapper>
   )
 }

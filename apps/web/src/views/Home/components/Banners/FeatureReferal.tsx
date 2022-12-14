@@ -1,6 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
 import { Box, Grid } from '@mui/material'
+import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
 const Wrapper = styled(Box)`
@@ -70,6 +71,7 @@ const Wrapper = styled(Box)`
     border: none;
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
     border-radius: 8px;
+    cursor: pointer;
 
     @media screen and (max-width: 900px) {
       padding: 12px 30px;
@@ -104,6 +106,7 @@ const Paragraph = styled.p`
 `
 
 const FeatureReferal = () => {
+  const route = useRouter()
   return (
     <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2}>
@@ -132,7 +135,9 @@ const FeatureReferal = () => {
               })}
             </div>
 
-            <button className="btn_join">Join Now</button>
+            <button className="btn_join" onClick={() => route.push('/referral')}>
+              Join Now
+            </button>
           </div>
         </Grid>
       </Grid>

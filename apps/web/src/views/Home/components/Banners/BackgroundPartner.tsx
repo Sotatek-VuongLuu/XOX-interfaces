@@ -13,13 +13,15 @@ const BGRight = styled.img`
   z-index: -1;
   right: 0;
   top: 10%;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(143, 0, 255, 0.3) 0%, rgba(82, 0, 255, 0) 100%);
 `
 
 const BGXOX = styled.img`
   position: absolute;
-  z-index: -2;
+  z-index: -1;
   right: 0;
   top: 23%;
+  mix-blend-mode: multiply;
 `
 
 const BGXOXMobile = styled.img`

@@ -4,20 +4,23 @@ import styled from 'styled-components'
 const BallLeft = styled.img`
   position: absolute;
   left: 0;
-  top: 22%;
+  top: 16%;
   z-index: -1;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(5, 0, 255, 0.3) 0%, rgba(66, 0, 255, 0) 100%);
 `
 const BallRight = styled.img`
   position: absolute;
   right: 0;
   top: 16%;
   z-index: -1;
+  background: radial-gradient(50% 50% at 50% 50%, rgba(5, 0, 255, 0.3) 0%, rgba(66, 0, 255, 0) 100%);
 `
 const BallMoon = styled.img`
   position: absolute;
   left: 0;
-  top: 40%;
-  z-index: -2;
+  top: 56%;
+  z-index: -1;
+  mix-blend-mode: overlay;
 `
 
 const BGMobile = styled.img`

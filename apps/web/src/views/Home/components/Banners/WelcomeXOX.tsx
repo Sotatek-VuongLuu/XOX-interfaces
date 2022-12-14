@@ -1,9 +1,12 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
 import styled from 'styled-components'
 import Spline from '@splinetool/react-spline'
 import { Box, Grid } from '@mui/material'
 import useWindowSize from 'hooks/useWindowSize'
 import { useMemo } from 'react'
+import { useRouter } from 'next/router'
 
 const Wrapper = styled.div`
   @media screen and (max-width: 900px) {
@@ -35,6 +38,7 @@ const LeftContent = styled.div`
       padding: 1px;
       border-radius: 8px;
       background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      cursor: pointer;
 
       .boxed-child {
         width: 100%;
@@ -42,7 +46,7 @@ const LeftContent = styled.div`
         background-color: black;
         padding: 16px 40px;
         border-radius: inherit;
-        a {
+        span {
           background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
@@ -101,6 +105,7 @@ const Button = styled.button`
   font-weight: 700;
   font-size: 18px;
   color: #ffffff;
+  cursor: pointer;
 
   @media screen and (max-width: 900px) {
     font-size: 16px;
@@ -115,6 +120,8 @@ const GridLeft = styled(Grid)`
 
 const WelcomeXOX = (): JSX.Element => {
   const { width } = useWindowSize()
+
+  const route = useRouter()
 
   const controlWidth = useMemo(() => {
     let size = 600
@@ -157,10 +164,12 @@ const WelcomeXOX = (): JSX.Element => {
                 Swap, earn, and build on the leading decentralized Web3 crypto ecosystem.
               </Description>
               <div className="btn_group">
-                <Button className="btn_read_doc">Read Documentation</Button>
-                <div className="get_xox">
+                <Button className="btn_read_doc" onClick={() => window.open('')}>
+                  Read Documentation
+                </Button>
+                <div className="get_xox" onClick={() => route.push('/swap')}>
                   <div className="boxed-child">
-                    <a href="/swap">Get XOX</a>
+                    <span>Get XOX</span>
                   </div>
                 </div>
               </div>
