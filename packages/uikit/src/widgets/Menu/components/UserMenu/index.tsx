@@ -41,7 +41,8 @@ const Menu = styled.div<{ isOpen: boolean }>`
   z-index: 1001;
 
   ${({ isOpen }) =>
-    !isOpen && `
+    !isOpen &&
+    `
     pointer-events: none;
     visibility: hidden;
   `}
@@ -131,7 +132,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         </StyledUserMenu>
         {!disabled && (
           <Menu style={styles.popper} ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
-            <Box>{children?.({ isOpen })}</Box>
+            <Box>{children?.({ isOpen, setIsOpen })}</Box>
           </Menu>
         )}
       </Flex>

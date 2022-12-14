@@ -20,7 +20,8 @@ const ModalStyle = styled.div`
 `
 
 const FormWrapper = styled.div`
-  width: 464px;
+  width: calc(100vw - 30px);
+  max-width: 464px;
   z-index: 1;
   background: #242424;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
@@ -101,7 +102,8 @@ const FormInput = styled.input`
   color: rgba(255, 255, 255, 0.87);
 
   padding: 12px 14px;
-  width: 416px;
+  width: 100%;
+  max-width: 416px;
   height: 43px;
   border: 1px solid #444444;
   border-radius: 6px;
@@ -189,7 +191,8 @@ const FormReferralModal = ({ ref }) => {
   }, [])
 
   const validateEmail = useCallback(() => {
-    if (!email) return false
+    if (!email) return true
+
     return email.match(
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
     )
@@ -200,7 +203,7 @@ const FormReferralModal = ({ ref }) => {
     if (errorMessages.avatar) error.avatar = errorMessages.avatar
     if (!username) error.username = 'This field is required.'
 
-    if (validateEmail()) {
+    if (!validateEmail()) {
       error.email = 'Invalid email address.'
     }
 

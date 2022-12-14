@@ -127,7 +127,7 @@ const UserMenu = () => {
     }
   }
 
-  const UserMenuItems = () => {
+  const UserMenuItems = ({ setOpen }) => {
     return (
       <UserMenuStyle>
         <div>
@@ -150,8 +150,14 @@ const UserMenu = () => {
                 {/* eslint-disable-next-line */}
                 <div
                   style={{ cursor: 'pointer', borderRadius: '50%', overflow: 'hidden' }}
-                  onClick={setOpenFormReferral}
-                  onKeyDown={setOpenFormReferral}
+                  onClick={() => {
+                    setOpenFormReferral()
+                    setOpen(false)
+                  }}
+                  onKeyDown={() => {
+                    setOpenFormReferral()
+                    setOpen(false)
+                  }}
                 >
                   <svg xmlns="http://www.w3.org/2000/svg" width="15" height="15" viewBox="0 0 15 15" fill="none">
                     <path
@@ -263,7 +269,7 @@ const UserMenu = () => {
   if (account) {
     return (
       <UIKitUserMenu account={account} avatarSrc={avatarSrc} text={userMenuText} variant={userMenuVariable}>
-        {({ isOpen }) => (isOpen ? <UserMenuItems /> : null)}
+        {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )
   }
@@ -271,7 +277,7 @@ const UserMenu = () => {
   if (isWrongNetwork) {
     return (
       <UIKitUserMenu text={t('Network')} variant="danger">
-        {({ isOpen }) => (isOpen ? <UserMenuItems /> : null)}
+        {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )
   }
