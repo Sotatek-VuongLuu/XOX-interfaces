@@ -7,6 +7,7 @@ import { createPortal } from 'react-dom'
 import { useSelector } from 'react-redux'
 import { AppState, useAppDispatch } from 'state'
 import { updateOpenFormReferral, updateUserProfile } from 'state/user/actions'
+import { useRouter } from 'next/router'
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -138,6 +139,7 @@ const SuccessModal = styled.div`
 
 const FormReferralModal = ({ ref }) => {
   const dispatch = useAppDispatch()
+  const router = useRouter()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [telegram, setTelegram] = useState('')
@@ -285,7 +287,7 @@ const FormReferralModal = ({ ref }) => {
       .then((result) => {
         dispatch(updateUserProfile({ userProfile: result.data }))
         if (result.data) setEditForm(true)
-        else dispatch(updateOpenFormReferral({ openFormReferral: true }))
+        else if (router.asPath != '/') dispatch(updateOpenFormReferral({ openFormReferral: true }))
       })
       .catch((error) => console.warn(error))
   }, [openFormReferral, account])
