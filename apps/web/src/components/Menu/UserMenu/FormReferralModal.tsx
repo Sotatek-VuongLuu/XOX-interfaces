@@ -302,6 +302,10 @@ const FormReferralModal = ({ ref }) => {
     setProfileSuccess(false)
   }, [openFormReferral])
 
+  useEffect(() => {
+    dispatch(updateOpenFormReferral({ openFormReferral: false }))
+  }, [])
+
   return createPortal(
     openFormReferral ? (
       <ModalStyle>
