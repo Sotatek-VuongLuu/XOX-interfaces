@@ -274,7 +274,7 @@ const FormReferralModal = ({ ref }) => {
         </svg>
       )
     }
-  }, [avatar, userProfile.avatar])
+  }, [avatar, userProfile?.avatar])
 
   useEffect(() => {
     axios
