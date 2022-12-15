@@ -12,7 +12,7 @@ import useWindowSize from 'hooks/useWindowSize'
 SwiperCore.use([Autoplay])
 
 const translateinfinite = keyframes`
-100% { transform:translateX(calc(-180px * 10))}
+100% { transform:translateX(calc(-80px * 10))}
 
 `
 
@@ -99,45 +99,88 @@ const Wrapper = styled.div`
       }
     }
   }
+`
 
-  section {
-    div.container {
-      transition: all 0.3s ease;
+const SliderWrapper = styled.div`
+  margin-bottom: 24px;
+  
+  div.container {
+    transition: all 0.3s ease;
+  }
+  div.container h1 {
+    margin: 15px 0 0 0;
+  }
+  div.container h3 {
+    margin: 0 0 25px 0;
+  }
+  @media (max-width: 992px) {
+     {
+      padding: 0 20px 0 20px;
     }
   }
-
-  .highway-slider {
+  .slide-option {
+    margin: 0 0 50px 0;
+  }
+  .slide-option .no-marg {
+    margin: 0 0 0 0;
+  }
+  div.highway-slider {
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 150px;
-    div.highway-barrier {
-      overflow: hidden;
-      position: relative;
-    }
-    ul.highway-lane {
-      display: flex;
-      height: 100%;
-      li.highway-car {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: transparent;
-        color: #343434;
-      }
+    height: 80px;
+  }
+  div.highway-slider div.highway-barrier {
+    overflow: hidden;
+    position: relative;
+  }
+  div.highway-slider ul.highway-lane {
+    display: flex;
+    height: 100%;
+  }
+  div.highway-slider ul.highway-lane li.highway-car {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(20, 1fr)
+    gap: 64px;
+    justify-content: center;
+    align-items: center;
+    color: #343434;
+  }
+  @keyframes translateinfinitetl {
+    100% {
+      transform: translateX(calc(-144px * 10));
     }
   }
-
-  #infinite div.highway-barrier {
-    background: transparent;
-    ul.highway-lane {
-      width: 1200px;
-      li.highway-car {
-        width: 50px;
-        animation: ${translateinfinite} 7s linear infinite;
-      }
+  @keyframes translateinfinitetr {
+    0% {
+      transform: translateX(calc(-144px * 10));
     }
+    100% {
+      transform: translateX(calc(0));
+    }
+  }
+  #infinite div.highway-barrier {
+    box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3);
+  }
+  #infinite div.highway-barrier ul.highway-lane {
+    width: calc(144px * 20);
+  }
+  #infinite.infinitetl div.highway-barrier ul.highway-lane li.highway-car {
+    width: 80px;
+    animation: translateinfinitetl 10s linear infinite;
+  }
+  #infinite.infinitetr div.highway-barrier ul.highway-lane li.highway-car {
+    width: 80px;
+    animation: translateinfinitetr 10s linear infinite;
+  }
+  #infinite.infinitetl.speed-20 div.highway-barrier ul.highway-lane li.highway-car {
+    width: 80px;
+    animation: translateinfinitetl 20s linear infinite;
+  }
+  #infinite.infinitetr.speed-20 div.highway-barrier ul.highway-lane li.highway-car {
+    width: 80px;
+    animation: translateinfinitetr 20s linear infinite;
   }
 `
 
@@ -153,11 +196,18 @@ const Partners = () => {
       <div className="title">Strategic Partners</div>
       <p className="decoration">Backed by the Best to Deliver the Best.</p>
 
-      <section className="slide-option">
-        <div id="infinite" className="highway-slider">
+      <SliderWrapper>
+        <div id="infinite" className="infinitetl highway-slider">
           <div className="container highway-barrier">
             <ul className="highway-lane">
-              {Array.from(listPartners).map(({ icon }) => {
+              {listPartners.map(({ icon }) => {
+                return (
+                  <li className="highway-car" key={icon}>
+                    <img src={icon} alt="icon" />
+                  </li>
+                )
+              })}
+              {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
                     <img src={icon} alt="icon" />
@@ -167,7 +217,76 @@ const Partners = () => {
             </ul>
           </div>
         </div>
-      </section>
+      </SliderWrapper>
+
+      <SliderWrapper>
+        <div id="infinite" className="infinitetr speed-20 highway-slider">
+          <div className="container highway-barrier">
+            <ul className="highway-lane">
+              {listPartners.map(({ icon }) => {
+                return (
+                  <li className="highway-car" key={icon}>
+                    <img src={icon} alt="icon" />
+                  </li>
+                )
+              })}
+              {listPartners.map(({ icon }) => {
+                return (
+                  <li className="highway-car" key={icon}>
+                    <img src={icon} alt="icon" />
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
+      </SliderWrapper>
+
+      <SliderWrapper>
+        <div id="infinite" className="infinitetl speed-20 highway-slider">
+          <div className="container highway-barrier">
+            <ul className="highway-lane">
+              {listPartners.map(({ icon }) => {
+                return (
+                  <li className="highway-car" key={icon}>
+                    <img src={icon} alt="icon" />
+                  </li>
+                )
+              })}
+              {listPartners.map(({ icon }) => {
+                return (
+                  <li className="highway-car" key={icon}>
+                    <img src={icon} alt="icon" />
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
+      </SliderWrapper>
+
+      <SliderWrapper>
+        <div id="infinite" className="infinitetr highway-slider">
+          <div className="container highway-barrier">
+            <ul className="highway-lane">
+              {listPartners.map(({ icon }) => {
+                return (
+                  <li className="highway-car" key={icon}>
+                    <img src={icon} alt="icon" />
+                  </li>
+                )
+              })}
+              {listPartners.map(({ icon }) => {
+                return (
+                  <li className="highway-car" key={icon}>
+                    <img src={icon} alt="icon" />
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
+      </SliderWrapper>
 
       <div className="btn_see_all">
         <div className="get_xox" onClick={handleChangeShowMore}>
