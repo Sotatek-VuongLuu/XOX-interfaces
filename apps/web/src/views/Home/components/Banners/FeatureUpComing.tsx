@@ -130,7 +130,7 @@ const UpComing = () => {
         <Grid container spacing={2}>
           {listItem.map(({ title, describe }) => {
             return (
-              <Grid item xs={12} md={3}>
+              <Grid item xs={12} md={3} key={title}>
                 <UpComingItem describe={describe} title={title} />
               </Grid>
             )

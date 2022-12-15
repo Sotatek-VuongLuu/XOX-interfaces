@@ -38,6 +38,7 @@ const Wrapper = styled.div`
         border-radius: 50%;
         background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
         padding: 1px;
+        cursor: pointer;
       }
       .icon {
         width: 100%;
@@ -122,6 +123,7 @@ const Wrapper = styled.div`
 
     .wrapper_mobile {
       width: 100%;
+      cursor: pointer;
       .name_mobile {
         text-align: center;
         margin-top: 16px;
@@ -170,7 +172,7 @@ const Community = () => {
       <div className="main_container">
         <div className="main">
           {listCommunity.map((item: IItemListCommunity) => {
-            return <CommunityItem item={item} />
+            return <CommunityItem item={item} key={item.name} />
           })}
         </div>
       </div>
@@ -186,10 +188,10 @@ const listCommunity = [
     iconMobile: '/images/twitter_mobile.svg',
   },
   {
-    icon: '/images/telegram.svg',
+    icon: '/images/telegram_group.svg',
     name: 'Telegram Group',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
-    iconMobile: '/images/telegram_mobile.svg',
+    iconMobile: '/images/telegram_group_mobile.svg',
   },
   {
     icon: '/images/telegram.svg',

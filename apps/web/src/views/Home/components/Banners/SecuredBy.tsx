@@ -30,7 +30,12 @@ const Wrapper = styled.div`
   }
 
   .img {
-    text-align: center;
+    display: flex;
+    justify-content: center;
+
+    img {
+      cursor: pointer;
+    }
   }
 `
 
@@ -42,10 +47,18 @@ const SecuredBy = () => {
       <p className="description">XOX has Industry Leading Security. Protected By The Best.</p>
 
       <p className="img">
-        {width < 9000 ? (
-          <img src="/images/security_mobile.svg" alt="security" />
+        {width < 900 ? (
+          <>
+            <img src="/images/s1_mobile.svg" alt="security" />
+            <img src="/images/s2_mobile.svg" alt="security" />
+            <img src="/images/s3_mobile.svg" alt="security" />
+          </>
         ) : (
-          <img src="/images/security.svg" alt="security" />
+          <>
+            <img src="/images/s1.svg" alt="security" style={{ cursor: 'pointer' }} />
+            <img src="/images/s2.svg" alt="security" />
+            <img src="/images/s3.svg" alt="security" />
+          </>
         )}
       </p>
     </Wrapper>

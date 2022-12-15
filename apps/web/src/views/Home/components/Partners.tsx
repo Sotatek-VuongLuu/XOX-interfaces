@@ -117,17 +117,41 @@ const Partners = () => {
         spaceBetween={10}
         watchSlidesProgress={true}
         autoplay={{
-          delay: 1,
-          disableOnInteraction: false,
+          delay: 0,
+          disableOnInteraction: true,
           waitForTransition: false,
           reverseDirection: true,
         }}
         // modules={[Autoplay]}
-        allowTouchMove={true}
+        // allowTouchMove={true}
       >
         {listPartners.map(({ icon }) => {
           return (
-            <SwiperSlide>
+            <SwiperSlide key={icon}>
+              <img src={icon} alt="icon" />
+            </SwiperSlide>
+          )
+        })}
+      </Swiper>
+
+      <Swiper
+        speed={1000}
+        loop={true}
+        slidesPerView={width < 900 ? 4 : 10}
+        freeMode={true}
+        spaceBetween={10}
+        watchSlidesProgress={true}
+        autoplay={{
+          delay: 0,
+          disableOnInteraction: true,
+          waitForTransition: true,
+        }}
+        // modules={[Autoplay]}
+        // allowTouchMove={true}
+      >
+        {listPartners.map(({ icon }) => {
+          return (
+            <SwiperSlide key={icon}>
               <img src={icon} alt="icon" />
             </SwiperSlide>
           )
@@ -145,38 +169,14 @@ const Partners = () => {
           delay: 0,
           disableOnInteraction: false,
           waitForTransition: false,
-        }}
-        // modules={[Autoplay]}
-        allowTouchMove={true}
-      >
-        {listPartners.map(({ icon }) => {
-          return (
-            <SwiperSlide>
-              <img src={icon} alt="icon" />
-            </SwiperSlide>
-          )
-        })}
-      </Swiper>
-
-      <Swiper
-        speed={1000}
-        loop={true}
-        slidesPerView={width < 900 ? 4 : 10}
-        freeMode={true}
-        spaceBetween={10}
-        watchSlidesProgress={true}
-        autoplay={{
-          delay: 2,
-          disableOnInteraction: false,
-          waitForTransition: false,
           reverseDirection: true,
         }}
         // modules={[Autoplay]}
-        allowTouchMove={true}
+        // allowTouchMove={true}
       >
         {listPartners.map(({ icon }) => {
           return (
-            <SwiperSlide>
+            <SwiperSlide key={icon}>
               <img src={icon} alt="icon" />
             </SwiperSlide>
           )
@@ -188,20 +188,20 @@ const Partners = () => {
           speed={1000}
           loop={true}
           slidesPerView={width < 900 ? 4 : 10}
-          freeMode={true}
+          // freeMode={true}
           spaceBetween={5}
           watchSlidesProgress={true}
           autoplay={{
-            delay: 1,
+            delay: 0,
             disableOnInteraction: false,
             waitForTransition: false,
           }}
           // modules={[Autoplay]}
-          allowTouchMove={true}
+          // allowTouchMove={true}
         >
           {listPartners.map(({ icon }) => {
             return (
-              <SwiperSlide>
+              <SwiperSlide key={icon}>
                 <img src={icon} alt="icon" />
               </SwiperSlide>
             )

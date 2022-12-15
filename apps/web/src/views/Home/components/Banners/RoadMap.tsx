@@ -125,7 +125,7 @@ const RoadMap = () => {
       ) : (
         <div className="main">
           {listRoadMap.map((item: IRoadMapItem, index) => {
-            return <RoadMapItem item={item} index={index + 1} />
+            return <RoadMapItem item={item} index={index + 1} key={`${item.year}_${item.quater}`} />
           })}
         </div>
       )}

@@ -38,7 +38,7 @@ const ScrollToTopButtonV2 = () => {
   }, []);
 
   return (
-    <FixedContainer style={{ display: visible ? "inline" : "none" }}>
+    <FixedContainer style={{ display: visible ? "inline" : "none", zIndex: 99 }}>
       <Button
         width={48}
         height={48}

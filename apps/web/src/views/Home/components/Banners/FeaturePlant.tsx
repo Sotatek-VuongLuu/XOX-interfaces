@@ -130,7 +130,7 @@ const FeaturePlant = () => {
             <div className="list">
               {listTag.map(({ title }) => {
                 return (
-                  <p>
+                  <p key={title}>
                     <span>
                       <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
                     </span>

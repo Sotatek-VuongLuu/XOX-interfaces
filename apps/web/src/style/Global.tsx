@@ -12,7 +12,9 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .grid_welcome_container {
-    margin-left: 0px !important;
+    @media screen and (min-width: 901) {
+      margin-left: 0px !important;
+    }
   }
 
 

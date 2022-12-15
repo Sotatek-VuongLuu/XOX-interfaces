@@ -5,20 +5,20 @@
 <rect width="55.7624" height="22.8972" rx="11.4486" transform="matrix(0.486569 -0.873642 -0.873642 -0.486569 45.9363 132.835)" fill="url(#paint3_linear_6626_12016)"/>
 <defs>
 <linearGradient id="paint0_linear_6626_12016" x1="30.4353" y1="0.132289" x2="30.3775" y2="23.4171" gradientUnits="userSpaceOnUse">
-<stop stop-color="#CB60FF"/>
-<stop offset="1" stop-color="#5B3C7E"/>
+<stop stopColor="#CB60FF"/>
+<stop offset="1" stopColor="#5B3C7E"/>
 </linearGradient>
 <linearGradient id="paint1_linear_6626_12016" x1="114.388" y1="64.6301" x2="114.33" y2="87.9149" gradientUnits="userSpaceOnUse">
-<stop stop-color="#CB60FF"/>
-<stop offset="1" stop-color="#5B3C7E"/>
+<stop stopColor="#CB60FF"/>
+<stop offset="1" stopColor="#5B3C7E"/>
 </linearGradient>
 <linearGradient id="paint2_linear_6626_12016" x1="46.4579" y1="27.0459" x2="46.4" y2="50.3307" gradientUnits="userSpaceOnUse">
-<stop stop-color="#CB60FF"/>
-<stop offset="1" stop-color="#5B3C7E"/>
+<stop stopColor="#CB60FF"/>
+<stop offset="1" stopColor="#5B3C7E"/>
 </linearGradient>
 <linearGradient id="paint3_linear_6626_12016" x1="30.4353" y1="0.132289" x2="30.3775" y2="23.4171" gradientUnits="userSpaceOnUse">
-<stop stop-color="#CB60FF"/>
-<stop offset="1" stop-color="#5B3C7E"/>
+<stop stopColor="#CB60FF"/>
+<stop offset="1" stopColor="#5B3C7E"/>
 </linearGradient>
 </defs>
 </svg>

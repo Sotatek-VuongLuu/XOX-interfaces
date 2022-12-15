@@ -40,8 +40,8 @@ const Logo: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
           y2="27.6538"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#6473FF" />
-          <stop offset="1" stop-color="#A35AFF" />
+          <stop stopColor="#6473FF" />
+          <stop offset="1" stopColor="#A35AFF" />
         </linearGradient>
         <linearGradient
           id="paint1_linear_6431_13490"
@@ -51,8 +51,8 @@ const Logo: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
           y2="27.6535"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#6473FF" />
-          <stop offset="1" stop-color="#A35AFF" />
+          <stop stopColor="#6473FF" />
+          <stop offset="1" stopColor="#A35AFF" />
         </linearGradient>
         <linearGradient
           id="paint2_linear_6431_13490"
@@ -62,8 +62,8 @@ const Logo: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
           y2="4.24836"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#6473FF" />
-          <stop offset="1" stop-color="#A35AFF" />
+          <stop stopColor="#6473FF" />
+          <stop offset="1" stopColor="#A35AFF" />
         </linearGradient>
         <linearGradient
           id="paint3_linear_6431_13490"
@@ -73,8 +73,8 @@ const Logo: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
           y2="4.24903"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#6473FF" />
-          <stop offset="1" stop-color="#A35AFF" />
+          <stop stopColor="#6473FF" />
+          <stop offset="1" stopColor="#A35AFF" />
         </linearGradient>
         <linearGradient
           id="paint4_linear_6431_13490"
@@ -84,8 +84,8 @@ const Logo: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
           y2="27.6535"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#6473FF" />
-          <stop offset="1" stop-color="#A35AFF" />
+          <stop stopColor="#6473FF" />
+          <stop offset="1" stopColor="#A35AFF" />
         </linearGradient>
         <linearGradient
           id="paint5_linear_6431_13490"
@@ -95,8 +95,8 @@ const Logo: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
           y2="4.24903"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#6473FF" />
-          <stop offset="1" stop-color="#A35AFF" />
+          <stop stopColor="#6473FF" />
+          <stop offset="1" stopColor="#A35AFF" />
         </linearGradient>
       </defs>
     </svg>

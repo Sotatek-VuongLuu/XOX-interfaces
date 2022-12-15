@@ -90,16 +90,6 @@ export const socials = [
   {
     label: "Telegram",
     icon: TelegramIcon,
-    items: [
-      {
-        label: "English",
-        // href: "https://t.me/pancakeswap",
-      },
-      {
-        label: "Announcements",
-        // href: "https://t.me/PancakeSwapAnn",
-      },
-    ],
   },
   {
     label: "Discord",

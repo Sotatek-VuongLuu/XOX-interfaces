@@ -286,8 +286,8 @@ export default function Pool() {
                   y2="516.001"
                   gradientUnits="userSpaceOnUse"
                 >
-                  <stop stop-color="#6437FF" />
-                  <stop offset="0.442708" stop-color="#9F59FF" stop-opacity="0" />
+                  <stop stopColor="#6437FF" />
+                  <stop offset="0.442708" stopColor="#9F59FF" stop-opacity="0" />
                 </linearGradient>
               </defs>
             </svg>

@@ -192,7 +192,7 @@ const FeatureSquare = () => {
         <Grid container spacing={2}>
           {listSquare.map((item: ISquareItem) => {
             return (
-              <Grid item xs={12} md={4}>
+              <Grid item xs={12} md={4} key={item.title}>
                 <SquareItem item={item} />
               </Grid>
             )

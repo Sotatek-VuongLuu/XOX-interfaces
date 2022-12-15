@@ -97,7 +97,7 @@ const FeatureWatch = () => {
             <div className="list">
               {listTag.map(({ title }) => {
                 return (
-                  <div className="main_content">
+                  <div className="main_content" key={title}>
                     <div className="img-container">
                       <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
                     </div>

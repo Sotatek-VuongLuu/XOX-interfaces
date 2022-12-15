@@ -7,6 +7,7 @@ import { Box, Grid } from '@mui/material'
 import useWindowSize from 'hooks/useWindowSize'
 import { useMemo } from 'react'
 import { useRouter } from 'next/router'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
 
 const Wrapper = styled.div`
   @media screen and (max-width: 900px) {
@@ -113,6 +114,10 @@ const Button = styled.button`
 `
 
 const GridLeft = styled(Grid)`
+  @media screen and (min-width: 901px) {
+    align-items: center;
+    display: flex;
+  }
   @media screen and (max-width: 900px) {
     margin-bottom: 66px;
   }
@@ -120,6 +125,8 @@ const GridLeft = styled(Grid)`
 
 const WelcomeXOX = (): JSX.Element => {
   const { width } = useWindowSize()
+
+  const { isMobile } = useMatchBreakpoints()
 
   const route = useRouter()
 
@@ -156,7 +163,7 @@ const WelcomeXOX = (): JSX.Element => {
     <Wrapper>
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
         <Grid container spacing={2} className="grid_welcome_container">
-          <GridLeft xs={12} md={7}>
+          <GridLeft item xs={12} md={7}>
             <LeftContent>
               <Title className="title">XOX The Multichain Defi Apps & Solutions for Web3 Provider</Title>
               <Feature className="feature">Revolutionary - Scalable - Multichain</Feature>
@@ -176,15 +183,26 @@ const WelcomeXOX = (): JSX.Element => {
             </LeftContent>
           </GridLeft>
 
-          <Grid xs={12} md={5} style={{ justifyContent: 'center', display: 'flex' }}>
-            <Spline
-              scene="https://prod.spline.design/o7-ZQWkGS2tIZeP0/scene.splinecode"
-              height={342}
-              width={342}
-              onLoad={(e) => e.setZoom(0.4)}
-              id="my-spline"
-              onWheel={(e) => console.log(e.target.id)}
-            />
+          <Grid item xs={12} md={5} style={{ justifyContent: 'center', display: 'flex' }}>
+            {isMobile ? (
+              <Spline
+                scene="https://prod.spline.design/o7-ZQWkGS2tIZeP0/scene.splinecode"
+                height={342}
+                width={342}
+                onLoad={(e) => e.setZoom(0.4)}
+                id="my-spline"
+                onWheel={(e) => console.log(e.target.id)}
+              />
+            ) : (
+              <Spline
+                scene="https://prod.spline.design/o7-ZQWkGS2tIZeP0/scene.splinecode"
+                height={570}
+                width={570}
+                onLoad={(e) => e.setZoom(0.7)}
+                id="my-spline"
+                onWheel={(e) => console.log(e.target.id)}
+              />
+            )}
           </Grid>
         </Grid>
       </Box>
