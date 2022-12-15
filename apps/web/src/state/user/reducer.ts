@@ -37,7 +37,8 @@ import {
   updateUserLimitOrderAcceptedWarning,
   setZapDisabled,
   updateOpenFormReferral,
-  getUserProfile
+  updateUserProfile,
+  UserProfile,
 } from './actions'
 import { GAS_PRICE_GWEI } from '../types'
 
@@ -91,7 +92,7 @@ export interface UserState {
   watchlistTokens: string[]
   watchlistPools: string[]
   hideTimestampPhishingWarningBanner: number
-  user: any
+  userProfile: UserProfile
 }
 
 function pairKey(token0Address: string, token1Address: string) {
@@ -125,7 +126,7 @@ export const initialState: UserState = {
   watchlistTokens: [],
   watchlistPools: [],
   hideTimestampPhishingWarningBanner: null,
-  user: undefined,
+  userProfile: undefined,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -148,8 +149,8 @@ export default createReducer(initialState, (builder) =>
     .addCase(updateUserExpertMode, (state, action) => {
       state.userExpertMode = action.payload.userExpertMode
     })
-    .addCase(getUserProfile, (state) => {
-      return state.user
+    .addCase(updateUserProfile, (state, action) => {
+      state.userProfile = action.payload.userProfile
     })
     .addCase(updateOpenFormReferral, (state, action) => {
       state.openFormReferral = action.payload.openFormReferral

@@ -1,6 +1,13 @@
 import styled from 'styled-components'
-import { useState, useCallback } from 'react'
-import { Button, Flex, Text } from '@pancakeswap/uikit'
+import { useState, useCallback, useEffect, useImperativeHandle } from 'react'
+import { Button, Text } from '@pancakeswap/uikit'
+import axios from 'axios'
+import { useSigner, useAccount } from 'wagmi'
+import { createPortal } from 'react-dom'
+import { useSelector } from 'react-redux'
+import { AppState, useAppDispatch } from 'state'
+import { updateOpenFormReferral, updateUserProfile } from 'state/user/actions'
+import { useRouter } from 'next/router'
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -14,7 +21,8 @@ const ModalStyle = styled.div`
 `
 
 const FormWrapper = styled.div`
-  width: 464px;
+  width: calc(100vw - 48px);
+  max-width: 464px;
   z-index: 1;
   background: #242424;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
@@ -26,27 +34,33 @@ const FormWrapper = styled.div`
     flex-direction: column;
     margin-bottom: 16px;
 
-    .form__error-message {
+    .form__error-message,
+    .form__error-message-avata {
       font-family: 'Inter';
       font-style: normal;
       font-weight: 400;
       font-size: 14px;
       line-height: 17px;
-      text-align: center;
       color: #f44336;
       margin-top: 8px;
     }
+
+    .form__error-message-avata {
+      text-align: center;
+    }
   }
 
-  & > div.avata {
+  & > div.avatar {
     display: grid;
     place-content: center;
     margin-bottom: 24px;
-    cursor: pointer;
 
     label {
       position: relative;
       width: fit-content;
+      display: block;
+      margin: auto;
+      cursor: pointer;
 
       img {
         width: 100px;
@@ -89,7 +103,8 @@ const FormInput = styled.input`
   color: rgba(255, 255, 255, 0.87);
 
   padding: 12px 14px;
-  width: 416px;
+  width: 100%;
+  max-width: 416px;
   height: 43px;
   border: 1px solid #444444;
   border-radius: 6px;
@@ -120,22 +135,44 @@ const SuccessModal = styled.div`
     border: none;
     padding: 0;
   }
+
+  & > button:disabled {
+    color: rgba(66, 66, 66, 0.38);
+    background-color: #eeeeee;
+  }
 `
 
-interface Props {
-  openForm: boolean
-  setOpenForm: (b: boolean) => void
-}
-
-const FormReferralModal = ({ openForm, setOpenForm }: Props) => {
+const FormReferralModal = ({ ref }) => {
+  const dispatch = useAppDispatch()
+  const router = useRouter()
   const [username, setUsername] = useState('')
   const [email, setEmail] = useState('')
   const [telegram, setTelegram] = useState('')
-  const [avata, setAvata] = useState('')
+  const [avatar, setAvata] = useState<any>()
   const [isSubmiting, setSubmitting] = useState(false)
   const [errorMessages, setErrorMessages] = useState<any>({})
   const [profileSuccess, setProfileSuccess] = useState<boolean>(false)
-  const [editForm, setEditForm] = useState<boolean>(true)
+  const [editForm, setEditForm] = useState<boolean>(false)
+  const { data: signer } = useSigner()
+  const { address: account } = useAccount()
+  const [isSaveable, setSaveable] = useState(false)
+
+  const modalElement = document.getElementById('modal-root')
+
+  const { openFormReferral, userProfile } = useSelector<AppState, AppState['user']>((state) => state.user)
+
+  const setOpenFormReferral = (open: boolean) => {
+    dispatch(updateOpenFormReferral({ openFormReferral: open }))
+  }
+
+  useImperativeHandle(
+    ref,
+    () => ({
+      open: () => setOpenFormReferral(true),
+      close: () => setOpenFormReferral(false),
+    }),
+    [close],
+  )
 
   const onChangeAvata = useCallback(
     (e: any) => {
@@ -143,47 +180,186 @@ const FormReferralModal = ({ openForm, setOpenForm }: Props) => {
       setAvata(img)
 
       const error = { ...errorMessages }
-      delete error.avata
+      delete error.avatar
 
-      if (img && img.type != 'image/jpeg' && img.type != 'image/jpg' && img.type != 'image/png') {
-        error.avata = 'File format is not supported, please try again. Supported formats: JPEG, PNG.'
-        setErrorMessages(error)
-        return
-      }
-      if (img && img.size / 1024 / 1024 > 5) {
-        error.avata =
+      if (
+        img &&
+        (img.size / 1024 / 1024 > 5 || (img.type != 'image/jpeg' && img.type != 'image/jpg' && img.type != 'image/png'))
+      ) {
+        error.avatar =
           'Error: Your image could not be uploaded. Images should be less than or equal to 5 MB and saved as PNG, JPG, JPEG files.'
-        setErrorMessages(error)
-        return
       }
+      setErrorMessages(error)
     },
     [errorMessages],
   )
 
   const onCloseBtnClicked = useCallback(() => {
-    setOpenForm(false)
+    setOpenFormReferral(false)
   }, [])
 
+  const validateEmail = useCallback(() => {
+    if (!email) return true
+
+    return email.match(
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    )
+  }, [email])
+
   const isValid = useCallback(() => {
-    const error: any = { avata: errorMessages.avata }
-    if (!username) error.username = 'This field is required.'
+    const error: any = {}
+    if (errorMessages.username === 'This username already exists.') error.username = errorMessages.username
+    if (errorMessages.avatar) error.avatar = errorMessages.avatar
+    setUsername(username?.trim())
+
+    if (!username.replaceAll(' ', '')) error.username = 'This field is required.'
+
+    if (!validateEmail()) {
+      error.email = 'Invalid email address.'
+    }
 
     setErrorMessages(error)
-    setSubmitting(false)
     return Object.keys(error).length === 0
-  }, [errorMessages, username])
+  }, [errorMessages, username, validateEmail])
 
-  const onSubmitForm = useCallback(() => {
+  const onSubmitForm = useCallback(async () => {
     setSubmitting(true)
 
     if (!isValid()) {
       setSubmitting(false)
       return
     }
-  }, [isValid])
+    let avataURL = ''
 
-  return (
-    openForm && (
+    if (avatar) {
+      const result: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/upload/signed-url`).catch((error) => {
+        console.warn(error)
+      })
+      const data = result?.data
+      if (data) {
+        avataURL = data.signedUrl.split(/[?]+/)[0]
+        await axios.put(data.signedUrl, { data: avatar }).catch((error) => {
+          console.warn(error)
+        })
+      }
+    }
+
+    const dataSubmit: any = {}
+    if (username && username != userProfile?.username) dataSubmit.username = username
+    if (email && email != userProfile?.email) dataSubmit.email = email
+    if (telegram && telegram != userProfile?.telegram) dataSubmit.telegram = telegram
+    if (avatar) dataSubmit.avatar = avataURL
+    if (Object.keys(dataSubmit).length > 0) {
+      signer?.signMessage(JSON.stringify(dataSubmit)).then((res) => {
+        axios
+          .post(`${process.env.NEXT_PUBLIC_API}/users/${account}`, {
+            ...dataSubmit,
+            signature: res,
+          })
+          .then((response) => {
+            dispatch(updateUserProfile({ userProfile: response.data }))
+            setProfileSuccess(true)
+          })
+          .catch((error) => {
+            console.warn(error)
+          })
+      })
+    }
+    setSubmitting(false)
+  }, [isValid, username, email, telegram, avatar])
+
+  const renderAvataImage = useCallback(() => {
+    if (avatar) {
+      return (
+        <img
+          src={URL.createObjectURL(avatar as any)}
+          width="100px"
+          height="100px"
+          alt=""
+          style={{ borderRadius: '50%' }}
+        />
+      )
+    } else if (userProfile?.avatar) {
+      return <img src={userProfile.avatar} width="100px" height="100px" alt="" style={{ borderRadius: '50%' }} />
+    } else {
+      return (
+        <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
+          <circle cx="50" cy="50" r="48" fill="#8E8E8E" />
+          <path
+            d="M50 86C37.5 86 26.45 79.6 20 70C20.15 60 40 54.5 50 54.5C60 54.5 79.85 60 80 70C76.6944 74.922 72.2293 78.9558 66.9978 81.7459C61.7663 84.536 55.929 85.9969 50 86ZM50 15C53.9782 15 57.7936 16.5804 60.6066 19.3934C63.4197 22.2064 65 26.0218 65 30C65 33.9782 63.4197 37.7936 60.6066 40.6066C57.7936 43.4197 53.9782 45 50 45C46.0218 45 42.2064 43.4197 39.3934 40.6066C36.5803 37.7936 35 33.9782 35 30C35 26.0218 36.5803 22.2064 39.3934 19.3934C42.2064 16.5804 46.0218 15 50 15ZM50 0C43.4339 0 36.9321 1.29329 30.8658 3.80602C24.7995 6.31876 19.2876 10.0017 14.6447 14.6447C5.26784 24.0215 0 36.7392 0 50C0 63.2608 5.26784 75.9785 14.6447 85.3553C19.2876 89.9983 24.7995 93.6812 30.8658 96.194C36.9321 98.7067 43.4339 100 50 100C63.2608 100 75.9785 94.7322 85.3553 85.3553C94.7322 75.9785 100 63.2608 100 50C100 22.35 77.5 0 50 0Z"
+            fill="#444444"
+          />
+        </svg>
+      )
+    }
+  }, [avatar, userProfile?.avatar])
+
+  useEffect(() => {
+    const saveable =
+      avatar ||
+      (username != undefined && username != userProfile?.username && /^[0-9A-Za-z\s]*$/.test(username)) ||
+      (email && email != userProfile?.email) ||
+      (telegram && telegram != userProfile?.telegram)
+    setSaveable(saveable)
+  }, [username, email, telegram, avatar])
+
+  useEffect(() => {
+    const getData = setTimeout(() => {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API}/users/${username?.trim()}/existed`)
+        .then((response) => {
+          const error = { ...errorMessages }
+          if (username && username != userProfile?.username && response.data) {
+            error.username = 'This username already exists.'
+          } else {
+            delete error.username
+          }
+          setErrorMessages(error)
+        })
+        .catch((error) => console.warn(error))
+    }, 500)
+
+    return () => clearTimeout(getData)
+  }, [username])
+
+  useEffect(() => {
+    if (!account) {
+      dispatch(updateUserProfile({ userProfile: undefined }))
+      return
+    }
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API}/users/${account}`)
+      .then((result) => {
+        dispatch(updateUserProfile({ userProfile: result.data }))
+        if (result.data) setEditForm(true)
+        else if (router.asPath != '/') {
+          setEditForm(false)
+          dispatch(updateOpenFormReferral({ openFormReferral: true }))
+        }
+      })
+      .catch((error) => console.warn(error))
+  }, [openFormReferral, account])
+
+  useEffect(() => {
+    setUsername(userProfile?.username || '')
+    setEmail(userProfile?.email || '')
+    setTelegram(userProfile?.telegram || '')
+  }, [userProfile])
+
+  useEffect(() => {
+    setProfileSuccess(false)
+  }, [openFormReferral])
+
+  useEffect(() => {
+    if (!account) dispatch(updateOpenFormReferral({ openFormReferral: false }))
+  }, [account])
+
+  useEffect(() => {
+    dispatch(updateOpenFormReferral({ openFormReferral: false }))
+  }, [])
+
+  return createPortal(
+    openFormReferral ? (
       <ModalStyle>
         {profileSuccess ? (
           <SuccessModal>
@@ -212,7 +388,7 @@ const FormReferralModal = ({ openForm, setOpenForm }: Props) => {
             >
               You have set your profile successfully.
             </Text>
-            <img src="images/image45.png" style={{ margin: 'auto', display: 'block' }} />
+            <img src="/images/image45.png" style={{ margin: 'auto', display: 'block' }} />
             <button onClick={onCloseBtnClicked}>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
@@ -266,19 +442,9 @@ const FormReferralModal = ({ openForm, setOpenForm }: Props) => {
             >
               Set up your profile by filling in all the fields below.
             </Text>
-            <div className="avata">
-              <label htmlFor="avata">
-                {avata ? (
-                  <img src={URL.createObjectURL(avata as any)} />
-                ) : (
-                  <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
-                    <circle cx="50" cy="50" r="48" fill="#8E8E8E" />
-                    <path
-                      d="M50 86C37.5 86 26.45 79.6 20 70C20.15 60 40 54.5 50 54.5C60 54.5 79.85 60 80 70C76.6944 74.922 72.2293 78.9558 66.9978 81.7459C61.7663 84.536 55.929 85.9969 50 86ZM50 15C53.9782 15 57.7936 16.5804 60.6066 19.3934C63.4197 22.2064 65 26.0218 65 30C65 33.9782 63.4197 37.7936 60.6066 40.6066C57.7936 43.4197 53.9782 45 50 45C46.0218 45 42.2064 43.4197 39.3934 40.6066C36.5803 37.7936 35 33.9782 35 30C35 26.0218 36.5803 22.2064 39.3934 19.3934C42.2064 16.5804 46.0218 15 50 15ZM50 0C43.4339 0 36.9321 1.29329 30.8658 3.80602C24.7995 6.31876 19.2876 10.0017 14.6447 14.6447C5.26784 24.0215 0 36.7392 0 50C0 63.2608 5.26784 75.9785 14.6447 85.3553C19.2876 89.9983 24.7995 93.6812 30.8658 96.194C36.9321 98.7067 43.4339 100 50 100C63.2608 100 75.9785 94.7322 85.3553 85.3553C94.7322 75.9785 100 63.2608 100 50C100 22.35 77.5 0 50 0Z"
-                      fill="#444444"
-                    />
-                  </svg>
-                )}
+            <div className="avatar">
+              <label htmlFor="avatar" style={{ height: '100px' }}>
+                {renderAvataImage()}
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
                   <circle cx="12.5" cy="12.5" r="12.5" fill="url(#paint0_linear_6060_13564)" />
                   <path
@@ -306,15 +472,15 @@ const FormReferralModal = ({ openForm, setOpenForm }: Props) => {
               </label>
               <input
                 type="file"
-                id="avata"
-                defaultValue={avata}
+                id="avatar"
+                defaultValue={avatar}
                 onChange={onChangeAvata}
                 accept="image/png, image/jpeg"
                 style={{ display: 'none' }}
               />
-              {errorMessages.avata && (
-                <span className="form__error-message" style={{ marginTop: '24px' }}>
-                  {errorMessages.avata}
+              {errorMessages.avatar && (
+                <span className="form__error-message-avata" style={{ marginTop: '24px' }}>
+                  {errorMessages.avatar}
                 </span>
               )}
             </div>
@@ -347,7 +513,10 @@ const FormReferralModal = ({ openForm, setOpenForm }: Props) => {
               />
               {errorMessages.telegram && <span className="form__error-message">{errorMessages.telegram}</span>}
             </div>
-            <div className="btns" style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px' }}>
+            <div
+              className="btns"
+              style={{ display: 'grid', gridTemplateColumns: editForm ? '1fr 1fr' : '1fr', gap: '16px' }}
+            >
               {editForm && (
                 <Button
                   width="100%"
@@ -358,14 +527,21 @@ const FormReferralModal = ({ openForm, setOpenForm }: Props) => {
                   Cancel
                 </Button>
               )}
-              <Button width="100%" mt="8px" onClick={onSubmitForm} style={{ height: '43px' }}>
-                Submit
+              <Button
+                width="100%"
+                mt="8px"
+                onClick={onSubmitForm}
+                style={{ height: '43px' }}
+                disabled={!isSaveable || isSubmiting}
+              >
+                Save
               </Button>
             </div>
           </FormWrapper>
         )}
       </ModalStyle>
-    )
+    ) : null,
+    modalElement,
   )
 }
 

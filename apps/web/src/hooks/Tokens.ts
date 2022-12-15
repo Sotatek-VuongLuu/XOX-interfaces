@@ -131,7 +131,7 @@ export function useToken(tokenAddress?: string): ERC20Token | undefined | null {
 
   const tokenContract = useTokenContract(address || undefined, false)
   const tokenContractBytes32 = useBytes32TokenContract(address || undefined, false)
-  const token: ERC20Token | undefined = address ? tokens[address] : undefined
+  const token: ERC20Token | undefined = address ? tokens?.[address] : undefined
 
   const tokenName = useSingleCallResult(token ? undefined : tokenContract, 'name', undefined, NEVER_RELOAD)
   const tokenNameBytes32 = useSingleCallResult(

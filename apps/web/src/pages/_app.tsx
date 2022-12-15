@@ -15,19 +15,17 @@ import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
 import Script from 'next/script'
-import { Fragment } from 'react'
+import { Fragment, useRef } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
-import { persistor, useStore, useAppDispatch, AppState } from 'state'
+import { persistor, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
 import TransactionsDetailModal from 'components/TransactionDetailModal'
-import FormReferralModal from '@pancakeswap/ui-wallets/src/FormReferralModal'
-import { useSelector } from 'react-redux'
-import { updateOpenFormReferral } from 'state/user/actions'
 import { Blocklist, Updaters } from '..'
 import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
+import FormReferralModal from 'components/Menu/UserMenu/FormReferralModal'
 
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
@@ -37,24 +35,24 @@ BigNumber.config({
   DECIMAL_PLACES: 80,
 })
 
-function GlobalHooks() {
-  usePollBlockNumber()
-  useEagerConnect()
-  useUserAgent()
-  useAccountEventListener()
-  useSentryUser()
-  useThemeCookie()
-  return null
-}
+// function GlobalHooks() {
+//   usePollBlockNumber()
+//   useEagerConnect()
+//   useUserAgent()
+//   useAccountEventListener()
+//   useSentryUser()
+//   useThemeCookie()
+//   return null
+// }
 
-function MPGlobalHooks() {
-  usePollBlockNumber()
-  useEagerConnectMP()
-  useUserAgent()
-  useAccountEventListener()
-  useSentryUser()
-  return null
-}
+// function MPGlobalHooks() {
+//   usePollBlockNumber()
+//   useEagerConnectMP()
+//   useUserAgent()
+//   useAccountEventListener()
+//   useSentryUser()
+//   return null
+// }
 
 function MyApp(props: AppProps<{ initialReduxState: any }>) {
   const { pageProps, Component } = props
@@ -80,24 +78,24 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="🥞 PancakeSwap - A next evolution DeFi exchange on BNB Smart Chain (BSC)" />
         <title>XOX</title>
-        {(Component as NextPageWithLayout).mp && (
+        {/* {(Component as NextPageWithLayout).mp && (
           // eslint-disable-next-line @next/next/no-sync-scripts
           <script src="https://public.bnbstatic.com/static/js/mp-webview-sdk/webview-v1.0.0.min.js" id="mp-webview" />
-        )}
+        )} */}
       </Head>
       <Providers store={store}>
         <Blocklist>
-          {(Component as NextPageWithLayout).mp ? <MPGlobalHooks /> : <GlobalHooks />}
+          {/* {(Component as NextPageWithLayout).mp ? <MPGlobalHooks /> : <GlobalHooks />} */}
           <ResetCSS />
           <GlobalStyle />
           <GlobalCheckClaimStatus excludeLocations={[]} />
           <PersistGate loading={null} persistor={persistor}>
-            <Updaters />
+            {/* <Updaters /> */}
             <App {...props} />
           </PersistGate>
         </Blocklist>
       </Providers>
-      <Script
+      {/* <Script
         strategy="afterInteractive"
         id="google-tag"
         dangerouslySetInnerHTML={{
@@ -109,7 +107,7 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
             })(window,document,'script','dataLayer', '${process.env.NEXT_PUBLIC_GTAG}');
           `,
         }}
-      />
+      /> */}
     </>
   )
 }
@@ -135,14 +133,7 @@ type AppPropsWithLayout = AppProps & {
 const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? SentryErrorBoundary : Fragment
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
-  const dispatch = useAppDispatch()
-  const openFormReferral = useSelector<AppState, AppState['user']['openFormReferral']>(
-    (state) => state.user.openFormReferral,
-  )
-
-  const setOpenFormReferral = (open: boolean) => {
-    dispatch(updateOpenFormReferral({ openFormReferral: open }))
-  }
+  const modal = useRef(null)
 
   if (Component.pure) {
     return <Component {...pageProps} />
@@ -165,8 +156,8 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <FixedSubgraphHealthIndicator />
       <NetworkModal pageSupportedChains={Component.chains} />
       <TransactionsDetailModal />
-      <FormReferralModal setOpenForm={setOpenFormReferral} openForm={openFormReferral} />
       {isShowScrollToTopButton && <ScrollToTopButtonV2 />}
+      <FormReferralModal ref={modal} />
     </ProductionErrorBoundary>
   )
 }

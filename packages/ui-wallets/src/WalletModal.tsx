@@ -126,7 +126,7 @@ function MobileModal<T>({
   })
 
   return (
-    <AtomBox width="full">
+    <AtomBox width="full" display="flex" flexDirection="column" style={{ padding: '32px 24px' }}>
       {error ? (
         <AtomBox
           display="flex"
@@ -142,40 +142,45 @@ function MobileModal<T>({
           </div>
         </AtomBox>
       ) : (
-        <Text
-          fontSize="16px"
-          fontFamily="Inter"
-          fontStyle="normal"
-          fontWeight="400"
-          lineHeight="24px"
-          color="rgba(255, 255, 255, 0.6)"
-          textAlign="center"
-        >
-          Start by connecting with one of these wallets below.
-        </Text>
-      )}
-      <AtomBox flex={1} py="16px" style={{ maxHeight: '230px' }} overflow="auto">
-        <WalletSelect
-          displayCount={MOBILE_DEFAULT_DISPLAY_COUNT}
-          wallets={walletsToShow}
-          onClick={(wallet) => {
-            connectWallet(wallet)
-            if (wallet.deepLink && wallet.installed === false) {
-              window.open(wallet.deepLink)
-            }
-          }}
-        />
-      </AtomBox>
-      <AtomBox p="24px" borderTop="1">
-        <AtomBox>
-          <Text textAlign="center" color="textSubtle" as="p" mb="24px">
-            {t('Haven’t got a crypto wallet yet?')}
+        <AtomBox px="32px">
+          <Heading
+            as="h4"
+            fontSize="20px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="24px"
+            color="rgba(255, 255, 255, 0.87)"
+            textAlign="center"
+            mb="8px"
+          >
+            Connect Wallet
+          </Heading>
+          <Text
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="400"
+            lineHeight="24px"
+            color="rgba(255, 255, 255, 0.6)"
+            textAlign="center"
+            mb="40px"
+            style={{ width: '239px' }}
+          >
+            Start by connecting with one of these wallets below.
           </Text>
         </AtomBox>
-        <Button as="a" href={docLink} variant="subtle" width="100%" external>
-          {docText}
-        </Button>
-      </AtomBox>
+      )}
+      <WalletSelect
+        displayCount={MOBILE_DEFAULT_DISPLAY_COUNT}
+        wallets={walletsToShow}
+        onClick={(wallet) => {
+          connectWallet(wallet)
+          if (wallet.deepLink && wallet.installed === false) {
+            window.open(wallet.deepLink)
+          }
+        }}
+      />
     </AtomBox>
   )
 }
@@ -197,7 +202,6 @@ function WalletSelect<T>({
     <AtomBox
       display="grid"
       gap="24px"
-      style={{ gridTemplateColumns: '150px 150px' }}
       className={walletSelectWrapperClass}
     >
       {walletsToShow.map((wallet) => {
@@ -228,24 +232,6 @@ function WalletSelect<T>({
               ) : (
                 <Icon width={24} height={24} color="textSubtle" />
               )}
-              {/* <AtomBox
-                bgc="dropdown"
-                display="flex"
-                position="relative"
-                justifyContent="center"
-                alignItems="center"
-                className={walletIconClass}
-                style={{ borderRadius: '13px' }}
-              >
-                {isImage ? (
-                  <Image src={Icon as string} width={60} height={60} />
-                ) : (
-                  <Icon width={24} height={24} color="textSubtle" />
-                )}
-                {wallet.id === selected?.id && (
-                  <AtomBox position="absolute" inset="0" bgc="secondary" opacity="0.5" borderRadius="12px" />
-                )}
-              </AtomBox> */}
             </AtomBox>
             <Text
               fontSize="18px"
@@ -380,35 +366,6 @@ function DesktopModal<T>({
           }}
         />
       </AtomBox>
-      {/* <AtomBox
-        flex={1}
-        mx="24px"
-        display={{
-          xs: 'none',
-          sm: 'flex',
-        }}
-        justifyContent="center"
-        flexDirection="column"
-        alignItems="center"
-      >
-        <AtomBox display="flex" flexDirection="column" alignItems="center" style={{ gap: '24px' }} textAlign="center">
-          {!selected && <Intro docLink={docLink} docText={docText} />}
-          {selected && selected.installed !== false && (
-            <>
-              {typeof selected.icon === 'string' && <Image src={selected.icon} width={108} height={108} />}
-              <Heading as="h1" fontSize="20px" color="secondary">
-                {t('Opening')} {selected.title}
-              </Heading>
-              {error ? (
-                <ErrorContent message={error} onRetry={() => connectToWallet(selected)} />
-              ) : (
-                <Text>{t('Please confirm in %wallet%', { wallet: selected.title })}</Text>
-              )}
-            </>
-          )}
-          {selected && selected.installed === false && <NotInstalled qrCode={qrCode} wallet={selected} />}
-        </AtomBox>
-      </AtomBox> */}
     </>
   )
 }

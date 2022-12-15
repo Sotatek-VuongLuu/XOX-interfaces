@@ -72,7 +72,14 @@ export default function Swap() {
           />
         )} */}
         <Flex flexDirection="column" position="relative">
-          <svg xmlns="http://www.w3.org/2000/svg" width="591" height="548" viewBox="0 0 591 548" fill="none">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="591"
+            height="548"
+            viewBox="0 0 591 548"
+            fill="none"
+            style={{ maxWidth: '100vw' }}
+          >
             <g filter="url(#filter0_d_5810_3573)">
               <path
                 d="M570.777 45.4999L531.696 17.8377C530.007 16.6421 527.988 16 525.919 16H65.0849C63.0154 16 60.9968 16.6421 59.3076 17.8377L20.2262 45.4999C17.5777 47.3745 16.0035 50.3447 16.0034 53.5894L16.0002 499.511V522C16.0002 527.523 20.4773 532 26.0002 532H61.9007H529.096H564.997C570.52 532 574.997 527.523 574.997 522V499.511L575 53.6622C575 50.4175 573.426 47.3745 570.777 45.4999Z"

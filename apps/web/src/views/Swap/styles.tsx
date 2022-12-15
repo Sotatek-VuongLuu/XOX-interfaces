@@ -9,8 +9,10 @@ export const StyledSwapContainer = styled(Flex)<{ $isChartExpanded: boolean }>`
   left: 16px;
   padding: 0 28px;
   width: 559px;
+  max-width: 100vw;
 `
 
 export const StyledInputCurrencyWrapper = styled(Box)`
   width: 503px;
+  max-width: 100vw;
 `

@@ -57,21 +57,9 @@ const config = {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'static-nft.pancakeswap.com',
+        hostname: 'https://stg-loopx-static.s3.ap-southeast-1.amazonaws.com',
       },
     ],
-  },
-  async rewrites() {
-    return [
-      {
-        source: '/info/token/:address',
-        destination: '/info/tokens/:address',
-      },
-      {
-        source: '/info/pool/:address',
-        destination: '/info/pools/:address',
-      },
-    ]
   },
   async headers() {
     return [

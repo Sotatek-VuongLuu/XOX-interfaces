@@ -56,9 +56,15 @@ export const CopyAddress: React.FC<React.PropsWithChildren<CopyAddressProps>> = 
   return (
     <Box position="relative" {...props}>
       <Wrapper>
-        <Address title={account}>
-          <input type="text" readOnly value={`${account.substring(0, 8)}...${account.substring(account.length - 4)}`} />
-        </Address>
+        {account && (
+          <Address title={account}>
+            <input
+              type="text"
+              readOnly
+              value={`${account.substring(0, 8)}...${account.substring(account.length - 4)}`}
+            />
+          </Address>
+        )}
         <Flex>
           <CopyButton
             width="24px"

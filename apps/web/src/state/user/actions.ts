@@ -1,9 +1,20 @@
-import { createAction } from '@reduxjs/toolkit'
+import { createAction, createAsyncThunk } from '@reduxjs/toolkit'
 import { SerializedWrappedToken } from '@pancakeswap/token-lists'
 
 export interface SerializedPair {
   token0: SerializedWrappedToken
   token1: SerializedWrappedToken
+}
+
+export interface UserProfile {
+  address?: string
+  username: string
+  email?: string | null
+  telegram?: string | null
+  avatar?: string | null
+  referralCode?: string
+  createdAt?: string;
+  updatedAt?: string;
 }
 
 export enum FarmStakedOnly {
@@ -24,41 +35,7 @@ export enum ChartViewMode {
 
 export const updateUserExpertMode = createAction<{ userExpertMode: boolean }>('user/updateUserExpertMode')
 export const updateOpenFormReferral = createAction<{ openFormReferral: boolean }>('user/updateOpenFormReferral')
-export const getUserProfile = createAction('user/getUserProfile')
-// export const fetchUserProfile = createAsyncThunk<
-//   { sousId: number; allowance: any; stakingTokenBalance: any; stakedBalance: any; pendingReward: any }[],
-//   string
-// >('pool/fetchUserProfile', async (_, { rejectWithValue }) => {
-//   try {
-//     return 1
-//   } catch (e) {
-//     return rejectWithValue(e)
-//   }
-// })
-// export const createUserProfile = createAsyncThunk<
-//   { sousId: number; allowance: any; stakingTokenBalance: any; stakedBalance: any; pendingReward: any }[],
-//   string
-// >('pool/fetchUserProfile', async (_, { rejectWithValue }) => {
-//   try {
-//     // const [allowances, stakingTokenBalances, stakedBalances, pendingRewards] = await Promise.all([
-//     //   fetchPoolsAllowance(account),
-//     //   fetchUserBalances(account),
-//     //   fetchUserStakeBalances(account),
-//     //   fetchUserPendingRewards(account),
-//     // ])
-
-//     // const userData = poolsConfig.map((pool) => ({
-//     //   sousId: pool.sousId,
-//     //   allowance: allowances[pool.sousId],
-//     //   stakingTokenBalance: stakingTokenBalances[pool.sousId],
-//     //   stakedBalance: stakedBalances[pool.sousId],
-//     //   pendingReward: pendingRewards[pool.sousId],
-//     // }))
-//     return 1
-//   } catch (e) {
-//     return rejectWithValue(e)
-//   }
-// })
+export const updateUserProfile = createAction<{ userProfile: UserProfile }>('user/updateUserProfile')
 export const updateUserSingleHopOnly = createAction<{ userSingleHopOnly: boolean }>('user/updateUserSingleHopOnly')
 export const updateUserSlippageTolerance = createAction<{ userSlippageTolerance: number }>(
   'user/updateUserSlippageTolerance',

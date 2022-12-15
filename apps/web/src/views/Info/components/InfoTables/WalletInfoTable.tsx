@@ -1,6 +1,6 @@
 // TODO PCS refactor ternaries
 /* eslint-disable no-nested-ternary */
-import { useTranslation } from '@pancakeswap/localization'
+// import { useTranslation } from '@pancakeswap/localization'
 // import { ChainId } from '@pancakeswap/sdk'
 import { useAccount, useProvider, useBalance } from 'wagmi'
 // import { fetchBalance } from '@wagmi/core'
@@ -132,7 +132,6 @@ const SORT_FIELD = {
 const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyDatas, native }) => {
   const [tokensBalance, setTokensBalance] = useState<any>([])
 
-  const { t } = useTranslation()
   const { address: account } = useAccount()
   const { chainId } = useActiveChainId()
   const provider = useProvider({ chainId })
@@ -140,24 +139,14 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const [dataChart, setDataChart] = useState<any>([])
   const [totalAsset, setTotalAsset] = useState<number>(0)
 
-  const data = [
-    { name: 'Group A', value: 40 },
-    { name: 'Group B', value: 30 },
-    { name: 'Group C', value: 10 },
-    { name: 'Group D', value: 20 },
-  ]
-
   const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 
   const tokenRateUSD = useCallback(
     (symbol) => {
       if (!currencyDatas) return
-
-      const [currencyData] = currencyDatas.filter((data) => data.symbol.toLowerCase() === symbol.toLowerCase())
-
+      const currencyData = currencyDatas.find((data) => data?.symbol?.toLowerCase() === symbol.toLowerCase())
       if (!currencyData) return
-
-      return currencyData.current_price
+      return currencyData.price
     },
     [currencyDatas],
   )
