@@ -1,6 +1,6 @@
 // TODO PCS refactor ternaries
 /* eslint-disable no-nested-ternary */
-import { useTranslation } from '@pancakeswap/localization'
+// import { useTranslation } from '@pancakeswap/localization'
 // import { ChainId } from '@pancakeswap/sdk'
 import { useAccount, useProvider, useBalance } from 'wagmi'
 // import { fetchBalance } from '@wagmi/core'
@@ -144,12 +144,9 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const tokenRateUSD = useCallback(
     (symbol) => {
       if (!currencyDatas) return
-
-      const [currencyData] = currencyDatas.filter((data) => data.symbol.toLowerCase() === symbol.toLowerCase())
-
+      const currencyData = currencyDatas.find((data) => data?.symbol?.toLowerCase() === symbol.toLowerCase())
       if (!currencyData) return
-
-      return currencyData.current_price
+      return currencyData.price
     },
     [currencyDatas],
   )

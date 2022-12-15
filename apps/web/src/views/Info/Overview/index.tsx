@@ -45,8 +45,8 @@ export const PageContainer = styled(Flex)`
 
 const Overview: React.FC<React.PropsWithChildren> = () => {
   const native = useNativeCurrency()
-  const [coinmarketcapSymbols, setCoinmarketcapSymbols] = useState<string | undefined>()
-  const [coinGeckoId, setCoinGeckoId] = useState<string | undefined>()
+  const [coinmarketcapIds, setCoinmarketcapIds] = useState<string | undefined>()
+  const [coinmarketcapId, setCoinmarketcapId] = useState<number | undefined>()
   const [filter, setFilter] = useState('1D')
   const protocolData = useProtocolDataSWR()
   const [chartData, setChardData] = useState<Array<any> | undefined>()
@@ -69,26 +69,39 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   // const chainName = useGetChainName()
 
   useEffect(() => {
-    const symbols = SUGGESTED_BASES[chainId].concat([native]).map((token: any) => token.symbol)
-    setCoinmarketcapSymbols(symbols.join(','))
+    const platform = chainId === 1 || chainId === 5 ? 'ethereum' : 'bnb'
 
-    const [token] = tokens.filter((t) => t.symbol.toLowerCase() === native.symbol.toLowerCase())
+    const ids = SUGGESTED_BASES[chainId]
+      .concat([native])
+      .map((token: any) => {
+        const [filterToken] = tokens.filter((t) => {
+          return t.symbol.toLowerCase() === token.symbol.toLowerCase() && (t.platform ? t.platform.slug === platform : true)
+        })
 
-    setCoinGeckoId(token?.id)
+        return filterToken?.id
+      })
+      .filter((t) => t != undefined)
+    setCoinmarketcapIds(ids.join(','))
+
+    const [token] = tokens.filter(
+      (t) =>
+        t.symbol.toLowerCase() === native.symbol.toLowerCase() && (t.platform ? t.platform.slug === platform : true),
+    )
+
+    setCoinmarketcapId(token?.id)
   }, [])
 
   useEffect(() => {
-    if (!coinGeckoId) return
+    if (!coinmarketcapId) return
 
     axios
       .get(`https://api.coinmarketcap.com/data-api/v3/cryptocurrency/detail/chart`, {
-        params: { id: 1, range: '1D' },
+        params: { id: coinmarketcapId, range: '1D' },
       })
       .then((result) => {
         // if(result.status.error_code !== 0) return;
         const points = result.data?.data?.points
         if (!points) return
-        console.log(points, 'setChardData')
         const pointKeys = Object.keys(points)
         const data = pointKeys.map((key) => {
           return {
@@ -96,34 +109,40 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             priceUSD: points[key]?.v?.[0],
           }
         })
-        const lastValue = points[pointKeys.length - 1]
         setChardData(data)
       })
       .catch((err) => {
         console.log(err)
       })
-  }, [filter, coinGeckoId])
+  }, [filter, coinmarketcapId])
 
   useEffect(() => {
-    if (!coinmarketcapSymbols) return
+    if (!coinmarketcapIds) return
 
     axios
       .get('https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/latest', {
-        params: { symbol: coinmarketcapSymbols },
+        headers: {
+          'X-CMC_PRO_API_KEY': 'ee2ba456-b196-47c5-8f75-230733dc6d1f',
+        },
+        params: { id: coinmarketcapIds },
       })
       .then((response) => {
         const data = response.data?.data
         if (!data) return
-
         const result = Object.keys(data).map((key) => {
-          return data[key]
+          return {
+            symbol: data[key]?.symbol,
+            price: data[key]?.quote?.USD?.price,
+            percent_change_24h: data[key]?.quote?.USD?.percent_change_24h,
+            volume_24h: data[key]?.quote?.USD?.volume_24h,
+          }
         })
         setCurrencyDatas(result)
       })
       .catch((err) => {
         console.log(err)
       })
-  }, [coinmarketcapSymbols, coinGeckoId])
+  }, [coinmarketcapIds, coinmarketcapId])
 
   return (
     <Page>
@@ -136,7 +155,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             filter={filter}
             setFilter={setFilter}
             currencyDatas={currencyDatas}
-            setCoinGeckoId={setCoinGeckoId}
+            setCoinmarketcapId={setCoinmarketcapId}
             chainId={chainId}
             native={native}
           />

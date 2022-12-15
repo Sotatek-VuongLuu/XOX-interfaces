@@ -22,8 +22,8 @@ interface HoverableChartProps {
   ChartComponent: typeof BarChart | typeof LineChart
   filter: any
   setFilter: (n: any) => void
-  currencyDatas: any;
-  setCoinGeckoId: (id: string) => void
+  currencyDatas: any
+  setCoinmarketcapId: (id: number) => void
   chainId: number
   native: NativeCurrency
 }
@@ -35,7 +35,7 @@ const HoverableChart = ({
   ChartComponent,
   filter,
   setFilter,
-  setCoinGeckoId,
+  setCoinmarketcapId,
   native,
   chainId,
 }: HoverableChartProps) => {
@@ -84,14 +84,15 @@ const HoverableChart = ({
       return element.symbol.toLowerCase() === selectedCurrency.symbol.toLowerCase()
     })
 
-    if (token) setCoinGeckoId(token.id)
+    if (token) setCoinmarketcapId(token?.id)
+  }, [selectedCurrency])
 
+  useEffect(() => {
     if (!currencyDatas) return
-    const [dataCurrency] = currencyDatas.filter(
-      (data) => data.symbol.toLowerCase() === selectedCurrency.symbol.toLowerCase(),
+    const dataCurrency = currencyDatas.find(
+      (data) => data?.symbol?.toLowerCase() === selectedCurrency.symbol.toLowerCase(),
     )
-
-    if (dataCurrency) setCurrencyData(currencyData?.quote?.USD)
+    if (dataCurrency) setCurrencyData(dataCurrency)
   }, [selectedCurrency, currencyDatas])
 
   return (
@@ -112,10 +113,9 @@ const HoverableChart = ({
             <CurrencyLogo currency={selectedCurrency} size="30px" />
             {selectedCurrency.symbol}
           </div>
-          {currencyData && (
             <>
               <div className="liquidity">
-                <p>Current price: ${currencyData?.price} </p>
+                <p>Current price: ${formatAmount(currencyData?.price)} </p>
                 <p>
                   Price change (in last 24 hours):{' '}
                   {currencyData?.percent_change_24h > 0 ? (
@@ -156,11 +156,10 @@ const HoverableChart = ({
               </div>
               <div className="volume">
                 <p>
-                  Volume 24h <span>${formatAmount(currencyData?.volume_24h)}</span>
+                  Volume 24h {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}
                 </p>
               </div>
             </>
-          )}
         </div>
 
         <p className="filter">

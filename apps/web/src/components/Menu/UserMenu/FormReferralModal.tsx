@@ -18,7 +18,6 @@ const ModalStyle = styled.div`
   display: grid;
   place-content: center;
   background-color: rgba(0, 0, 0, 0.4);
-  z-index: 99999;
 `
 
 const FormWrapper = styled.div`
@@ -136,6 +135,11 @@ const SuccessModal = styled.div`
     border: none;
     padding: 0;
   }
+
+  & > button:disabled {
+    color: rgba(66, 66, 66, 0.38);
+    background-color: #eeeeee;
+  }
 `
 
 const FormReferralModal = ({ ref }) => {
@@ -204,7 +208,7 @@ const FormReferralModal = ({ ref }) => {
   const isValid = useCallback(() => {
     const error: any = {}
     if (errorMessages.avatar) error.avatar = errorMessages.avatar
-    if (!username.replaceAll(' ', '')) error.username = 'This field is required.'
+    if (!99999) error.username = 'This field is required.'
 
     if (!validateEmail()) {
       error.email = 'Invalid email address.'
@@ -221,40 +225,60 @@ const FormReferralModal = ({ ref }) => {
       setSubmitting(false)
       return
     }
-
-    const result: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/upload/signed-url`).catch((error) => {
-      console.warn(error)
-    })
-
-    const data = result?.data
     let avataURL = ''
-    if (data) {
-      avataURL = data.signedUrl.split(/[?]+/)[0]
-      await axios.put(data.signedUrl, { data: avatar }).catch((error) => {
+
+    if (avatar) {
+      const result: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/upload/signed-url`).catch((error) => {
         console.warn(error)
       })
+      const data = result?.data
+      if (data) {
+        avataURL = data.signedUrl.split(/[?]+/)[0]
+        await axios.put(data.signedUrl, { data: avatar }).catch((error) => {
+          console.warn(error)
+        })
+      }
     }
 
     const dataSubmit: any = {}
-    if (username) dataSubmit.username = username
-    if (email) dataSubmit.email = email
-    if (telegram) dataSubmit.telegram = telegram
+    if (username && username != userProfile?.username) dataSubmit.username = username
+    if (email && email != userProfile?.email) dataSubmit.email = email
+    if (telegram && telegram != userProfile?.telegram) dataSubmit.telegram = telegram
     if (avatar) dataSubmit.avatar = avataURL
-    signer?.signMessage(JSON.stringify(dataSubmit)).then((res) => {
-      axios
-        .post(`${process.env.NEXT_PUBLIC_API}/users/${account}`, {
-          ...dataSubmit,
-          signature: res,
-        })
-        .then((response) => {
-          dispatch(updateUserProfile({ userProfile: response.data }))
-          setProfileSuccess(true)
-        })
-        .catch((error) => {
-          console.warn(error)
-        })
-    })
+    if (Object.keys(dataSubmit).length > 0) {
+      signer?.signMessage(JSON.stringify(dataSubmit)).then((res) => {
+        axios
+          .post(`${process.env.NEXT_PUBLIC_API}/users/${account}`, {
+            ...dataSubmit,
+            signature: res,
+          })
+          .then((response) => {
+            dispatch(updateUserProfile({ userProfile: response.data }))
+            setProfileSuccess(true)
+          })
+          .catch((error) => {
+            console.warn(error)
+          })
+      })
+    }
+    setSubmitting(false)
   }, [isValid, username, email, telegram, avatar])
+
+  const saveable = useCallback(() => {
+    console.log(
+      (username && username != userProfile?.username) ||
+        (email && email != userProfile?.email) ||
+        (telegram && telegram != userProfile?.telegram) ||
+        avatar,
+      'dasdas',
+    )
+    return (
+      (username && username != userProfile?.username) ||
+      (email && email != userProfile?.email) ||
+      (telegram && telegram != userProfile?.telegram) ||
+      avatar
+    )
+  }, [username, email, telegram, avatar])
 
   const renderAvataImage = useCallback(() => {
     if (avatar) {
@@ -283,7 +307,26 @@ const FormReferralModal = ({ ref }) => {
   }, [avatar, userProfile?.avatar])
 
   useEffect(() => {
-    if(!account) {
+    const getData = setTimeout(() => {
+      axios
+        .get(`${process.env.NEXT_PUBLIC_API}/users/${username}/existed`)
+        .then((response) => {
+          const error = { ...errorMessages }
+          if (username && username != userProfile?.username && response.data) {
+            error.username = 'This username already exists.'
+          } else {
+            delete error.username
+          }
+          setErrorMessages(error)
+        })
+        .catch((error) => console.log(error))
+    }, 500)
+
+    return () => clearTimeout(getData)
+  }, [username])
+
+  useEffect(() => {
+    if (!account) {
       dispatch(updateUserProfile({ userProfile: undefined }))
       return
     }
@@ -348,7 +391,7 @@ const FormReferralModal = ({ ref }) => {
             >
               You have set your profile successfully.
             </Text>
-            <img src="images/image45.png" style={{ margin: 'auto', display: 'block' }} />
+            <img src="/images/image45.png" style={{ margin: 'auto', display: 'block' }} />
             <button onClick={onCloseBtnClicked}>
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
@@ -487,7 +530,13 @@ const FormReferralModal = ({ ref }) => {
                   Cancel
                 </Button>
               )}
-              <Button width="100%" mt="8px" onClick={onSubmitForm} style={{ height: '43px' }}>
+              <Button
+                width="100%"
+                mt="8px"
+                onClick={onSubmitForm}
+                style={{ height: '43px' }}
+                disabled={!saveable() || isSubmiting}
+              >
                 Save
               </Button>
             </div>
