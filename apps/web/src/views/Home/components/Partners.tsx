@@ -210,37 +210,6 @@ const listPartners = [
   {
     icon: '/images/l111.svg',
   },
-  {
-    icon: '/images/l1.svg',
-  },
-  {
-    icon: '/images/l2.svg',
-  },
-  {
-    icon: '/images/l3.svg',
-  },
-
-  {
-    icon: '/images/l4.svg',
-  },
-  {
-    icon: '/images/l5.svg',
-  },
-  {
-    icon: '/images/l6.svg',
-  },
-  {
-    icon: '/images/l7.svg',
-  },
-  {
-    icon: '/images/l9.svg',
-  },
-  {
-    icon: '/images/l14.svg',
-  },
-  {
-    icon: '/images/l111.svg',
-  },
 ]
 
 export default Partners
