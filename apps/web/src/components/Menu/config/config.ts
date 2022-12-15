@@ -63,6 +63,14 @@ const config: (
       items: [],
     },
     {
+      label: 'Stable Coin',
+      icon: SwapIcon,
+      fillIcon: SwapFillIcon,
+      href: '/stable-coin',
+      showItemsOnMobile: false,
+      items: [],
+    },
+    {
       label: t('Farming'),
       href: '/pools',
       icon: EarnIcon,

@@ -18,7 +18,6 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
 import { useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
-import { usePendingTransactions } from 'state/transactions/hooks'
 import { useAccount, useBalance, useProvider } from 'wagmi'
 import { parseUnits } from '@ethersproject/units'
 import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
@@ -70,7 +69,6 @@ const UserMenu = () => {
   const { address: account } = useAccount()
   const { chainId, isWrongNetwork } = useActiveChainId()
   const { logout } = useAuth()
-  const { hasPendingTransactions, pendingNumber } = usePendingTransactions()
   const { profile } = useProfile()
   const avatarSrc = profile?.nft?.image?.thumbnail
   const [userMenuText, setUserMenuText] = useState<string>('')
@@ -94,16 +92,6 @@ const UserMenu = () => {
   const setOpenFormReferral = () => {
     dispatch(updateOpenFormReferral({ openFormReferral: true }))
   }
-
-  useEffect(() => {
-    if (hasPendingTransactions) {
-      setUserMenuText(t('%num% Pending', { num: pendingNumber }))
-      setUserMenuVariable('pending')
-    } else {
-      setUserMenuText('')
-      setUserMenuVariable('default')
-    }
-  }, [hasPendingTransactions, pendingNumber, t])
 
   const renderAvataImage = () => {
     if (userProfile?.avatar) {

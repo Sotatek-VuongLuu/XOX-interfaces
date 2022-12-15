@@ -155,6 +155,7 @@ const FormReferralModal = ({ ref }) => {
   const [editForm, setEditForm] = useState<boolean>(false)
   const { data: signer } = useSigner()
   const { address: account } = useAccount()
+  const [isSaveable, setSaveable] = useState(false)
 
   const modalElement = document.getElementById('modal-root')
 
@@ -207,8 +208,11 @@ const FormReferralModal = ({ ref }) => {
 
   const isValid = useCallback(() => {
     const error: any = {}
+    if (errorMessages.username === 'This username already exists.') error.username = errorMessages.username
     if (errorMessages.avatar) error.avatar = errorMessages.avatar
-    if (!99999) error.username = 'This field is required.'
+    setUsername(username?.trim())
+
+    if (!username.replaceAll(' ', '')) error.username = 'This field is required.'
 
     if (!validateEmail()) {
       error.email = 'Invalid email address.'
@@ -264,22 +268,6 @@ const FormReferralModal = ({ ref }) => {
     setSubmitting(false)
   }, [isValid, username, email, telegram, avatar])
 
-  const saveable = useCallback(() => {
-    console.log(
-      (username && username != userProfile?.username) ||
-        (email && email != userProfile?.email) ||
-        (telegram && telegram != userProfile?.telegram) ||
-        avatar,
-      'dasdas',
-    )
-    return (
-      (username && username != userProfile?.username) ||
-      (email && email != userProfile?.email) ||
-      (telegram && telegram != userProfile?.telegram) ||
-      avatar
-    )
-  }, [username, email, telegram, avatar])
-
   const renderAvataImage = useCallback(() => {
     if (avatar) {
       return (
@@ -307,9 +295,18 @@ const FormReferralModal = ({ ref }) => {
   }, [avatar, userProfile?.avatar])
 
   useEffect(() => {
+    const saveable =
+      avatar ||
+      (username != undefined && username != userProfile?.username && /^[0-9A-Za-z\s]*$/.test(username)) ||
+      (email && email != userProfile?.email) ||
+      (telegram && telegram != userProfile?.telegram)
+    setSaveable(saveable)
+  }, [username, email, telegram, avatar])
+
+  useEffect(() => {
     const getData = setTimeout(() => {
       axios
-        .get(`${process.env.NEXT_PUBLIC_API}/users/${username}/existed`)
+        .get(`${process.env.NEXT_PUBLIC_API}/users/${username?.trim()}/existed`)
         .then((response) => {
           const error = { ...errorMessages }
           if (username && username != userProfile?.username && response.data) {
@@ -319,7 +316,7 @@ const FormReferralModal = ({ ref }) => {
           }
           setErrorMessages(error)
         })
-        .catch((error) => console.log(error))
+        .catch((error) => console.warn(error))
     }, 500)
 
     return () => clearTimeout(getData)
@@ -535,7 +532,7 @@ const FormReferralModal = ({ ref }) => {
                 mt="8px"
                 onClick={onSubmitForm}
                 style={{ height: '43px' }}
-                disabled={!saveable() || isSubmiting}
+                disabled={!isSaveable || isSubmiting}
               >
                 Save
               </Button>

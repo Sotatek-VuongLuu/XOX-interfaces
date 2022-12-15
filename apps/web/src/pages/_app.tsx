@@ -35,24 +35,24 @@ BigNumber.config({
   DECIMAL_PLACES: 80,
 })
 
-function GlobalHooks() {
-  usePollBlockNumber()
-  useEagerConnect()
-  useUserAgent()
-  useAccountEventListener()
-  useSentryUser()
-  useThemeCookie()
-  return null
-}
+// function GlobalHooks() {
+//   usePollBlockNumber()
+//   useEagerConnect()
+//   useUserAgent()
+//   useAccountEventListener()
+//   useSentryUser()
+//   useThemeCookie()
+//   return null
+// }
 
-function MPGlobalHooks() {
-  usePollBlockNumber()
-  useEagerConnectMP()
-  useUserAgent()
-  useAccountEventListener()
-  useSentryUser()
-  return null
-}
+// function MPGlobalHooks() {
+//   usePollBlockNumber()
+//   useEagerConnectMP()
+//   useUserAgent()
+//   useAccountEventListener()
+//   useSentryUser()
+//   return null
+// }
 
 function MyApp(props: AppProps<{ initialReduxState: any }>) {
   const { pageProps, Component } = props
@@ -78,19 +78,19 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="🥞 PancakeSwap - A next evolution DeFi exchange on BNB Smart Chain (BSC)" />
         <title>XOX</title>
-        {(Component as NextPageWithLayout).mp && (
+        {/* {(Component as NextPageWithLayout).mp && (
           // eslint-disable-next-line @next/next/no-sync-scripts
           <script src="https://public.bnbstatic.com/static/js/mp-webview-sdk/webview-v1.0.0.min.js" id="mp-webview" />
-        )}
+        )} */}
       </Head>
       <Providers store={store}>
         <Blocklist>
-          {(Component as NextPageWithLayout).mp ? <MPGlobalHooks /> : <GlobalHooks />}
+          {/* {(Component as NextPageWithLayout).mp ? <MPGlobalHooks /> : <GlobalHooks />} */}
           <ResetCSS />
           <GlobalStyle />
           <GlobalCheckClaimStatus excludeLocations={[]} />
           <PersistGate loading={null} persistor={persistor}>
-            <Updaters />
+            {/* <Updaters /> */}
             <App {...props} />
           </PersistGate>
         </Blocklist>
