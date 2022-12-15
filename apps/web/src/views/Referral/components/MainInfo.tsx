@@ -3,7 +3,10 @@
 import { Box, Grid } from '@mui/material'
 import { useState } from 'react'
 import styled from 'styled-components'
+import HowToJoin from './HowToJoin'
 import LeaderBoardItem from './LearderBoardItem'
+import PlatformStat from './PlatformStats'
+import TotalEarned from './TotalEarned'
 
 export interface IItemLeaderBoard {
   name: string
@@ -107,21 +110,6 @@ const WrapperRight = styled.div`
     line-height: 17px;
     position: relative;
 
-    .img_container_chart_bg {
-      display: flex;
-      justify-content: center;
-      position: absolute;
-      background: radial-gradient(50% 50% at 50% 50%, rgba(5, 0, 255, 0.5) 0%, rgba(66, 0, 255, 0) 100%);
-      top: 20px;
-      left: 20%;
-      z-index: 1;
-    }
-
-    .total {
-      position: absolute;
-      z-index: 3;
-    }
-
     .filter {
       display: flex;
       align-items: center;
@@ -143,42 +131,6 @@ const WrapperRight = styled.div`
         font-size: 14px;
         line-height: 17px;
         color: #ffffff;
-      }
-    }
-
-    .img_container {
-      display: flex;
-      justify-content: center;
-    }
-
-    .main_info_container {
-      .info {
-        margin-top: 90px;
-        .title {
-          font-weight: 700;
-          font-size: 16px;
-          line-height: 19px;
-          text-align: center;
-          color: rgba(255, 255, 255, 0.87);
-          margin-top: 32px;
-        }
-
-        .amount {
-          font-weight: 700;
-          font-size: 36px;
-          line-height: 44px;
-          text-align: center;
-          color: rgba(255, 255, 255, 0.87);
-          margin: 22px 0px;
-        }
-
-        .guide {
-          font-weight: 400;
-          font-size: 16px;
-          line-height: 19px;
-          text-align: center;
-          color: rgba(255, 255, 255, 0.6);
-        }
       }
     }
   }
@@ -252,40 +204,23 @@ const MainInfo = () => {
         <Grid item xs={12} md={7}>
           <WrapperRight>
             <div className="container">
-              <div className="img_container_chart_bg">
-                <img src="/images/ref_chart_bg.svg" alt="ref_chart_bg" className="ref_chart_bg" />
-              </div>
-
-              <div className="total">
-                <div className="filter">
-                  {Array.from(subTab).map((item, index) => {
-                    return (
-                      <div
-                        key={item}
-                        onClick={() => setSubTabIndex(index)}
-                        className={subTabIndex === index ? 'subTab_item_active' : 'subTab_item'}
-                      >
-                        {item}
-                      </div>
-                    )
-                  })}
-                </div>
-
-                <div className="main_info_container">
-                  <div className="info">
-                    <div className="img_container">
-                      <img src="/images/ref_xox.svg" alt="ref_xox" className="ref_xox" />
+              <div className="filter">
+                {Array.from(subTab).map((item, index) => {
+                  return (
+                    <div
+                      key={item}
+                      onClick={() => setSubTabIndex(index)}
+                      className={subTabIndex === index ? 'subTab_item_active' : 'subTab_item'}
+                    >
+                      {item}
                     </div>
-                    <p className="title">Total Earned By Referrals</p>
-                    <p className="amount">10,000,000$</p>
-
-                    <p className="guide" style={{ width: 400 }}>
-                      This number represents the total value in $ earned so far by all referral users since day one till
-                      today. Start Earning Now.
-                    </p>
-                  </div>
-                </div>
+                  )
+                })}
               </div>
+
+              {subTabIndex === 0 && <TotalEarned />}
+              {subTabIndex === 1 && <PlatformStat />}
+              {subTabIndex === 2 && <HowToJoin />}
             </div>
           </WrapperRight>
         </Grid>

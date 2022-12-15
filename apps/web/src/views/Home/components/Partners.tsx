@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/jsx-boolean-value */
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import 'swiper/css'
 import SwiperCore, { Autoplay } from 'swiper'
@@ -10,6 +10,11 @@ import { useState } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
 
 SwiperCore.use([Autoplay])
+
+const translateinfinite = keyframes`
+100% { transform:translateX(calc(-180px * 10))}
+
+`
 
 const Wrapper = styled.div`
   .main {
@@ -75,7 +80,6 @@ const Wrapper = styled.div`
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
-        text-fill-color: transparent;
         font-weight: 700;
         font-size: 18px;
         width: 100%;
@@ -95,6 +99,46 @@ const Wrapper = styled.div`
       }
     }
   }
+
+  section {
+    div.container {
+      transition: all 0.3s ease;
+    }
+  }
+
+  .highway-slider {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 150px;
+    div.highway-barrier {
+      overflow: hidden;
+      position: relative;
+    }
+    ul.highway-lane {
+      display: flex;
+      height: 100%;
+      li.highway-car {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: transparent;
+        color: #343434;
+      }
+    }
+  }
+
+  #infinite div.highway-barrier {
+    background: transparent;
+    ul.highway-lane {
+      width: 1200px;
+      li.highway-car {
+        width: 50px;
+        animation: ${translateinfinite} 7s linear infinite;
+      }
+    }
+  }
 `
 
 const Partners = () => {
@@ -109,105 +153,21 @@ const Partners = () => {
       <div className="title">Strategic Partners</div>
       <p className="decoration">Backed by the Best to Deliver the Best.</p>
 
-      <Swiper
-        speed={1000}
-        loop={true}
-        slidesPerView={width < 900 ? 4 : 10}
-        freeMode={true}
-        spaceBetween={10}
-        watchSlidesProgress={true}
-        autoplay={{
-          delay: 0,
-          disableOnInteraction: true,
-          waitForTransition: false,
-          reverseDirection: true,
-        }}
-        // modules={[Autoplay]}
-        // allowTouchMove={true}
-      >
-        {listPartners.map(({ icon }) => {
-          return (
-            <SwiperSlide key={icon}>
-              <img src={icon} alt="icon" />
-            </SwiperSlide>
-          )
-        })}
-      </Swiper>
-
-      <Swiper
-        speed={1000}
-        loop={true}
-        slidesPerView={width < 900 ? 4 : 10}
-        freeMode={true}
-        spaceBetween={10}
-        watchSlidesProgress={true}
-        autoplay={{
-          delay: 0,
-          disableOnInteraction: true,
-          waitForTransition: true,
-        }}
-        // modules={[Autoplay]}
-        // allowTouchMove={true}
-      >
-        {listPartners.map(({ icon }) => {
-          return (
-            <SwiperSlide key={icon}>
-              <img src={icon} alt="icon" />
-            </SwiperSlide>
-          )
-        })}
-      </Swiper>
-
-      <Swiper
-        speed={1000}
-        loop={true}
-        slidesPerView={width < 900 ? 4 : 10}
-        freeMode={true}
-        spaceBetween={10}
-        watchSlidesProgress={true}
-        autoplay={{
-          delay: 0,
-          disableOnInteraction: false,
-          waitForTransition: false,
-          reverseDirection: true,
-        }}
-        // modules={[Autoplay]}
-        // allowTouchMove={true}
-      >
-        {listPartners.map(({ icon }) => {
-          return (
-            <SwiperSlide key={icon}>
-              <img src={icon} alt="icon" />
-            </SwiperSlide>
-          )
-        })}
-      </Swiper>
-
-      {isShowMore ? (
-        <Swiper
-          speed={1000}
-          loop={true}
-          slidesPerView={width < 900 ? 4 : 10}
-          // freeMode={true}
-          spaceBetween={5}
-          watchSlidesProgress={true}
-          autoplay={{
-            delay: 0,
-            disableOnInteraction: false,
-            waitForTransition: false,
-          }}
-          // modules={[Autoplay]}
-          // allowTouchMove={true}
-        >
-          {listPartners.map(({ icon }) => {
-            return (
-              <SwiperSlide key={icon}>
-                <img src={icon} alt="icon" />
-              </SwiperSlide>
-            )
-          })}
-        </Swiper>
-      ) : null}
+      <section className="slide-option">
+        <div id="infinite" className="highway-slider">
+          <div className="container highway-barrier">
+            <ul className="highway-lane">
+              {Array.from(listPartners).map(({ icon }) => {
+                return (
+                  <li className="highway-car" key={icon}>
+                    <img src={icon} alt="icon" />
+                  </li>
+                )
+              })}
+            </ul>
+          </div>
+        </div>
+      </section>
 
       <div className="btn_see_all">
         <div className="get_xox" onClick={handleChangeShowMore}>
@@ -219,6 +179,37 @@ const Partners = () => {
 }
 
 const listPartners = [
+  {
+    icon: '/images/l1.svg',
+  },
+  {
+    icon: '/images/l2.svg',
+  },
+  {
+    icon: '/images/l3.svg',
+  },
+
+  {
+    icon: '/images/l4.svg',
+  },
+  {
+    icon: '/images/l5.svg',
+  },
+  {
+    icon: '/images/l6.svg',
+  },
+  {
+    icon: '/images/l7.svg',
+  },
+  {
+    icon: '/images/l9.svg',
+  },
+  {
+    icon: '/images/l14.svg',
+  },
+  {
+    icon: '/images/l111.svg',
+  },
   {
     icon: '/images/l1.svg',
   },
