@@ -132,20 +132,12 @@ const SORT_FIELD = {
 const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyDatas, native }) => {
   const [tokensBalance, setTokensBalance] = useState<any>([])
 
-  const { t } = useTranslation()
   const { address: account } = useAccount()
   const { chainId } = useActiveChainId()
   const provider = useProvider({ chainId })
   const [balanceNative, setBalanceNative] = useState<any>()
   const [dataChart, setDataChart] = useState<any>([])
   const [totalAsset, setTotalAsset] = useState<number>(0)
-
-  const data = [
-    { name: 'Group A', value: 40 },
-    { name: 'Group B', value: 30 },
-    { name: 'Group C', value: 10 },
-    { name: 'Group D', value: 20 },
-  ]
 
   const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 

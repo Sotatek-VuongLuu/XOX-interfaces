@@ -8,8 +8,6 @@ import {
   LinkExternal,
   CopyAddress,
   LogoutIcon,
-  // RefreshIcon,
-  useModal,
   UserMenu as UIKitUserMenu,
   UserMenuDivider,
   UserMenuVariant,
@@ -18,23 +16,20 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
-// import NextLink from 'next/link'
 import { useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
 import { usePendingTransactions } from 'state/transactions/hooks'
-import { useAccount, useBalance } from 'wagmi'
+import { useAccount, useBalance, useProvider } from 'wagmi'
 import { parseUnits } from '@ethersproject/units'
 import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
-// import { ChainLogo } from 'components/Logo/ChainLogo'
 import { getBlockExploreLink, getBlockExploreName } from 'utils'
 import { AppState, useAppDispatch } from 'state'
 import { updateOpenFormReferral } from 'state/user/actions'
 import styled from 'styled-components'
-import ProfileUserMenuItem from './ProfileUserMenuItem'
-import WalletModal, { WalletView } from './WalletModal'
 import { useSelector } from 'react-redux'
-// import WalletUserMenuItem from './WalletUserMenuItem'
-// import WalletInfo from './WalletInfo'
+import { useGetChainName } from 'state/info/hooks'
+import useNativeCurrency from 'hooks/useNativeCurrency'
+import { getDefaultProvider } from '@ethersproject/providers'
 
 export const LOW_NATIVE_BALANCE = parseUnits('0.002', 'ether')
 
@@ -76,29 +71,29 @@ const UserMenu = () => {
   const { chainId, isWrongNetwork } = useActiveChainId()
   const { logout } = useAuth()
   const { hasPendingTransactions, pendingNumber } = usePendingTransactions()
-  const { isInitialized, isLoading, profile } = useProfile()
-  const [onPresentWalletModal] = useModal(<WalletModal initialView={WalletView.WALLET_INFO} />)
-  const [onPresentTransactionModal] = useModal(<WalletModal initialView={WalletView.TRANSACTIONS} />)
-  const [onPresentWrongNetworkModal] = useModal(<WalletModal initialView={WalletView.WRONG_NETWORK} />)
-  const hasProfile = isInitialized && !!profile
+  const { profile } = useProfile()
   const avatarSrc = profile?.nft?.image?.thumbnail
   const [userMenuText, setUserMenuText] = useState<string>('')
   const [userMenuVariable, setUserMenuVariable] = useState<UserMenuVariant>('default')
   const bnbBalance = useBalance({ addressOrName: account, chainId: ChainId.BSC })
+  const chainName = useGetChainName()
+  const native = useNativeCurrency()
+  const provider = useProvider({ chainId })
+  const [balanceNative, setBalanceNative] = useState<any>()
+
+  useEffect(() => {
+    if (!account || !chainId) return
+    const currentProvider = chainId === 1 ? getDefaultProvider() : provider
+    currentProvider.getBalance(account).then((balance) => {
+      setBalanceNative(balance)
+    })
+  }, [account, chainId, provider])
 
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
 
   const setOpenFormReferral = () => {
     dispatch(updateOpenFormReferral({ openFormReferral: true }))
   }
-
-  // const onClickWalletMenu = (): void => {
-  //   if (isWrongNetwork) {
-  //     onPresentWrongNetworkModal()
-  //   } else {
-  //     onPresentWalletModal()
-  //   }
-  // }
 
   useEffect(() => {
     if (hasPendingTransactions) {
@@ -222,26 +217,24 @@ const UserMenu = () => {
           >
             {/* <ChainLogo chainId={ChainId.BSC} /> */}
             <Flex width="24px" height="24px">
-              <img src="images/chains/56.png" alt="BNB" />
+              <img src={`images/chains/${chainId}.png`} alt="BNB" />
             </Flex>
             <Text color="white" ml="4px" fontSize="12px" lineHeight="15px">
-              BNB Smart Chain
+              {chainName} Smart Chain
             </Text>
           </Flex>
-          <LinkExternal
-            href={getBlockExploreLink(account, 'address', ChainId.BSC)}
-            className="link-bnb"
-            color="#9072FF"
-          >
-            {getBlockExploreName(ChainId.BSC)}
+          <LinkExternal href={getBlockExploreLink(account, 'address', chainId)} className="link-bnb" color="#9072FF">
+            {getBlockExploreName(chainId)}
           </LinkExternal>
         </Flex>
         <Flex alignItems="center" justifyContent="space-between" width="100%" mt="8px">
-          <Text color="rgba(255, 255, 255, 0.87)">BNB {t('Balance')}</Text>
+          <Text color="rgba(255, 255, 255, 0.87)">
+            {native.symbol} {t('Balance')}
+          </Text>
           {!bnbBalance.isFetched ? (
             <Skeleton height="22px" width="60px" />
           ) : (
-            <Text color="rgba(255, 255, 255, 0.87)">{formatBigNumber(bnbBalance.data.value, 6)}</Text>
+            <Text color="rgba(255, 255, 255, 0.87)">{balanceNative.toString()}</Text>
           )}
         </Flex>
         <Flex alignItems="center" justifyContent="space-between" width="100%" mb="12px" mt="8px">
@@ -267,7 +260,12 @@ const UserMenu = () => {
 
   if (account) {
     return (
-      <UIKitUserMenu account={account} avatarSrc={avatarSrc} text={userMenuText} variant={userMenuVariable}>
+      <UIKitUserMenu
+        account={account}
+        avatarSrc={userProfile?.avatar || avatarSrc}
+        text={userMenuText}
+        variant={userMenuVariable}
+      >
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )

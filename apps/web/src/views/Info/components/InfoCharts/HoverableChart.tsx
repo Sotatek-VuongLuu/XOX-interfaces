@@ -22,7 +22,7 @@ interface HoverableChartProps {
   ChartComponent: typeof BarChart | typeof LineChart
   filter: any
   setFilter: (n: any) => void
-  currencyDatas: Array<any>
+  currencyDatas: any;
   setCoinGeckoId: (id: string) => void
   chainId: number
   native: NativeCurrency
@@ -73,10 +73,7 @@ const HoverableChart = ({
   }, [chartData, valueProperty])
 
   const [onPresentCurrencyModal] = useModal(
-    <CurrencySearchModal
-      onCurrencySelect={setSelectedCurrency}
-      selectedCurrency={selectedCurrency}
-    />,
+    <CurrencySearchModal onCurrencySelect={setSelectedCurrency} selectedCurrency={selectedCurrency} />,
     true,
     true,
     'selectCurrencyModal',
@@ -94,7 +91,7 @@ const HoverableChart = ({
       (data) => data.symbol.toLowerCase() === selectedCurrency.symbol.toLowerCase(),
     )
 
-    if (dataCurrency) setCurrencyData(dataCurrency)
+    if (dataCurrency) setCurrencyData(currencyData?.quote?.USD)
   }, [selectedCurrency, currencyDatas])
 
   return (
@@ -118,10 +115,10 @@ const HoverableChart = ({
           {currencyData && (
             <>
               <div className="liquidity">
-                <p>Current price: ${currencyData.current_price} </p>
+                <p>Current price: ${currencyData?.price} </p>
                 <p>
                   Price change (in last 24 hours):{' '}
-                  {currencyData.price_change_percentage_24h > 0 ? (
+                  {currencyData?.percent_change_24h > 0 ? (
                     <>
                       <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
@@ -131,9 +128,9 @@ const HoverableChart = ({
                           fill="#6BB372"
                         />
                       </svg>
-                      <span style={{ color: '#6BB372' }}>{currencyData.price_change_percentage_24h.toFixed(2)}%</span>
+                      <span style={{ color: '#6BB372' }}>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
                     </>
-                  ) : currencyData.price_change_percentage_24h < 0 ? (
+                  ) : currencyData?.percent_change_24h < 0 ? (
                     <>
                       <svg
                         width="12"
@@ -150,19 +147,16 @@ const HoverableChart = ({
                           fill="#FF0000"
                         />
                       </svg>
-                      <span style={{ color: '#FF0000' }}>{currencyData.price_change_percentage_24h.toFixed(2)}%</span>
+                      <span style={{ color: '#FF0000' }}>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
                     </>
                   ) : (
-                    <span>{currencyData.price_change_percentage_24h.toFixed(2)}%</span>
+                    <span>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
                   )}
                 </p>
               </div>
               <div className="volume">
                 <p>
-                  Volume 24h <span>$45.56</span>
-                </p>
-                <p>
-                  Volume 24h <span>${formatAmount(currencyData.total_volume)}</span>
+                  Volume 24h <span>${formatAmount(currencyData?.volume_24h)}</span>
                 </p>
               </div>
             </>
@@ -172,23 +166,23 @@ const HoverableChart = ({
         <p className="filter">
           <div />
           <div>
-            <span onClick={() => setFilter({ days: 'max' })} className={filter.days === 'max' ? 'active' : ''}>
+            <span onClick={() => setFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
               All
             </span>
-            <span onClick={() => setFilter({ days: 365 })} className={filter.days === 365 ? 'active' : ''}>
-              1y
+            <span onClick={() => setFilter('1Y')} className={filter === 'Y' ? 'active' : ''}>
+              1Y
             </span>
-            <span onClick={() => setFilter({ days: 90 })} className={filter.days === 90 ? 'active' : ''}>
+            <span onClick={() => setFilter('3M')} className={filter === '3M' ? 'active' : ''}>
               3M
             </span>
-            <span onClick={() => setFilter({ days: 30 })} className={filter.days === 30 ? 'active' : ''}>
+            <span onClick={() => setFilter('1M')} className={filter === '1M' ? 'active' : ''}>
               1M
             </span>
-            <span onClick={() => setFilter({ days: 7 })} className={filter.days === 7 ? 'active' : ''}>
-              7d
+            <span onClick={() => setFilter('7D')} className={filter === '7D' ? 'active' : ''}>
+              7D
             </span>
-            <span onClick={() => setFilter({ days: 1 })} className={filter.days === 1 ? 'active' : ''}>
-              24h
+            <span onClick={() => setFilter('1D')} className={filter === '1D' ? 'active' : ''}>
+              24H
             </span>
           </div>
         </p>

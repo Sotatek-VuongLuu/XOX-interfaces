@@ -18,10 +18,11 @@ const ModalStyle = styled.div`
   display: grid;
   place-content: center;
   background-color: rgba(0, 0, 0, 0.4);
+  z-index: 99999;
 `
 
 const FormWrapper = styled.div`
-  width: calc(100vw - 30px);
+  width: calc(100vw - 48px);
   max-width: 464px;
   z-index: 1;
   background: #242424;
@@ -203,7 +204,7 @@ const FormReferralModal = ({ ref }) => {
   const isValid = useCallback(() => {
     const error: any = {}
     if (errorMessages.avatar) error.avatar = errorMessages.avatar
-    if (!username) error.username = 'This field is required.'
+    if (!username.replaceAll(' ', '')) error.username = 'This field is required.'
 
     if (!validateEmail()) {
       error.email = 'Invalid email address.'
@@ -221,10 +222,11 @@ const FormReferralModal = ({ ref }) => {
       return
     }
 
-    const { data }: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/upload/signed-url`).catch((error) => {
+    const result: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/upload/signed-url`).catch((error) => {
       console.warn(error)
     })
 
+    const data = result?.data
     let avataURL = ''
     if (data) {
       avataURL = data.signedUrl.split(/[?]+/)[0]
@@ -281,25 +283,36 @@ const FormReferralModal = ({ ref }) => {
   }, [avatar, userProfile?.avatar])
 
   useEffect(() => {
+    if(!account) {
+      dispatch(updateUserProfile({ userProfile: undefined }))
+      return
+    }
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/users/${account}`)
       .then((result) => {
         dispatch(updateUserProfile({ userProfile: result.data }))
         if (result.data) setEditForm(true)
-        else if (router.asPath != '/') dispatch(updateOpenFormReferral({ openFormReferral: true }))
+        else if (router.asPath != '/') {
+          setEditForm(false)
+          dispatch(updateOpenFormReferral({ openFormReferral: true }))
+        }
       })
       .catch((error) => console.warn(error))
   }, [openFormReferral, account])
 
   useEffect(() => {
-    setUsername(userProfile?.username)
-    setEmail(userProfile?.email)
-    setTelegram(userProfile?.telegram)
+    setUsername(userProfile?.username || '')
+    setEmail(userProfile?.email || '')
+    setTelegram(userProfile?.telegram || '')
   }, [userProfile])
 
   useEffect(() => {
     setProfileSuccess(false)
   }, [openFormReferral])
+
+  useEffect(() => {
+    if (!account) dispatch(updateOpenFormReferral({ openFormReferral: false }))
+  }, [account])
 
   useEffect(() => {
     dispatch(updateOpenFormReferral({ openFormReferral: false }))
