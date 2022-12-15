@@ -234,7 +234,7 @@ const UserMenu = () => {
           {!bnbBalance.isFetched ? (
             <Skeleton height="22px" width="60px" />
           ) : (
-            <Text color="rgba(255, 255, 255, 0.87)">{balanceNative.toString()}</Text>
+            <Text color="rgba(255, 255, 255, 0.87)">{balanceNative?.toString()}</Text>
           )}
         </Flex>
         <Flex alignItems="center" justifyContent="space-between" width="100%" mb="12px" mt="8px">
