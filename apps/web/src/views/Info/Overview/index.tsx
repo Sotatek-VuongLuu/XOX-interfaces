@@ -69,26 +69,51 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   // const chainName = useGetChainName()
 
   useEffect(() => {
-    const platform = chainId === 1 || chainId === 5 ? 'ethereum' : 'bnb'
-
-    const ids = SUGGESTED_BASES[chainId]
+    if (chainId === 1 || chainId === 56) {
+      const ids = SUGGESTED_BASES[chainId]
       .concat([native])
       .map((token: any) => {
-        const [filterToken] = tokens.filter((t) => {
-          return t.symbol.toLowerCase() === token.symbol.toLowerCase() && (t.platform ? t.platform.slug === platform : true)
+          const [filterToken] = tokens.filter((t) => {
+            return (
+              t.symbol.toLowerCase() === token.symbol.toLowerCase() &&
+              (t.platform ? t.platform.token_address.toLowerCase() === token.address.toLowerCase() : true)
+            )
+          })
+
+          return filterToken?.id
         })
+        .filter((t) => t != undefined)
+      setCoinmarketcapIds(ids.join(','))
 
-        return filterToken?.id
-      })
-      .filter((t) => t != undefined)
-    setCoinmarketcapIds(ids.join(','))
+      const [token] = tokens.filter(
+        (t) =>
+          t.symbol.toLowerCase() === native.symbol.toLowerCase() &&
+          (t.platform ? t.platform.token_address.toLowerCase() === token.address.toLowerCase() : true),
+      )
+      setCoinmarketcapId(token?.id)
+    } else {
+      const ids = SUGGESTED_BASES[chainId]
+        .concat([native])
+        .map((token: any) => {
+          const [filterToken] = tokens.filter((t) => {
+            return (
+              t.symbol.toLowerCase() === token.symbol.toLowerCase() &&
+              (t.platform ? t.platform.symbol.toLowerCase() === token.symbol.toLowerCase() : true)
+            )
+          })
 
-    const [token] = tokens.filter(
-      (t) =>
-        t.symbol.toLowerCase() === native.symbol.toLowerCase() && (t.platform ? t.platform.slug === platform : true),
-    )
+          return filterToken?.id
+        })
+        .filter((t) => t != undefined)
+      setCoinmarketcapIds(ids.join(','))
 
-    setCoinmarketcapId(token?.id)
+      const [token] = tokens.filter(
+        (t) =>
+          t.symbol.toLowerCase() === native.symbol.toLowerCase() &&
+          (t.platform ? t.platform.symbol.toLowerCase() === token.symbol.toLowerCase() : true),
+      )
+      setCoinmarketcapId(token?.id)
+    }
   }, [])
 
   useEffect(() => {
