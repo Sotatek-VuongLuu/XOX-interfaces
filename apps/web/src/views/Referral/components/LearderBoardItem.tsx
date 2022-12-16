@@ -13,7 +13,7 @@ const Wrapper = styled(Box)`
   .item_ranking {
     display: flex;
     align-items: center;
-    gap: 16px;
+
     .ranking_top {
       width: 60px;
       height: 60px;
@@ -23,11 +23,13 @@ const Wrapper = styled(Box)`
       justify-content: center;
       align-items: center;
       min-width: 60px;
+      margin-right: 16px;
 
       @media screen and (max-width: 900px) {
         width: 40px;
         height: 40px;
         min-width: 40px;
+        margin-right: 8px;
       }
     }
 
@@ -44,6 +46,7 @@ const Wrapper = styled(Box)`
       line-height: 24px;
       color: #ffffff;
       min-width: 60px;
+      margin-right: 16px;
 
       @media screen and (max-width: 900px) {
         width: 40px;
@@ -51,6 +54,7 @@ const Wrapper = styled(Box)`
         min-width: 40px;
         font-size: 14px;
         line-height: 17px;
+        margin-right: 8px;
       }
     }
 
