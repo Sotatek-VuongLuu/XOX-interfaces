@@ -29,6 +29,10 @@ const Wrapper = styled.div`
       font-size: 16px;
     }
   }
+
+  @media screen and (max-width: 530px) {
+    margin-top: 50px;
+  }
 `
 
 const LeftContent = styled.div`
@@ -67,7 +71,18 @@ const LeftContent = styled.div`
       .get_xox {
         .boxed-child {
           padding: 15px 20px;
-          a {
+          span {
+            font-size: 15px;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 530px) {
+      .get_xox {
+        .boxed-child {
+          padding: 12px;
+          span {
             font-size: 15px;
           }
         }

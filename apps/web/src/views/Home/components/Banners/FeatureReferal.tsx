@@ -66,7 +66,7 @@ const Wrapper = styled(Box)`
     }
 
     @media screen and (max-width: 900px) {
-      grid-template-columns: 1fr;
+      grid-template-columns: 0.75fr 1fr;
     }
   }
   .title_list_item {
