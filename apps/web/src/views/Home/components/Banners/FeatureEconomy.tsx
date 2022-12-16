@@ -36,10 +36,12 @@ const Wrapper = styled(Box)`
   }
 
   .main_card_content {
-    display: flex;
+    display: grid;
     gap: 32px;
     width: fit-content;
+    grid-template-columns: 1fr 1fr 1fr;
     position: relative;
+    align-items: center;
 
     .chain_4 {
       margin-top: -217px;
@@ -62,9 +64,11 @@ const Wrapper = styled(Box)`
   .card_container {
     display: flex;
     flex-direction: column;
-    gap: 32px;
     animation: ${floatingAnim('6px', '5px')} 3s ease-in-out infinite;
     animation-delay: 0.33s;
+    .chain_3 {
+      margin-bottom: 32px;
+    }
   }
 `
 

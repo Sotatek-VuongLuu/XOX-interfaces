@@ -32,16 +32,20 @@ const Wrapper = styled.div`
     }
   }
   .main {
-    display: flex;
-    justify-content: center;
+    display: grid;
     gap: 19px;
+    grid-template-columns: 1fr 1fr;
+    position: relative;
+    align-items: center;
+
     .couple {
-      display: flex;
-      flex-direction: column;
+      display: grid;
       gap: 19px;
+      grid-template-columns: 1fr;
     }
     .mt {
       margin-top: 80px;
+      justify-self: flex-end;
     }
 
     .eth {
@@ -63,9 +67,6 @@ const Wrapper = styled.div`
   }
 `
 
-// animation: ${floatingAnim('5px', '10px')} 3s ease-in-out infinite;
-//       animation-delay: 0.66s;
-
 const EconomyMobile = () => {
   return (
     <Wrapper>
@@ -79,13 +80,13 @@ const EconomyMobile = () => {
       <div className="chain_container">
         <div className="main">
           <div className="couple mt">
-            <img src="/images/eth_mobile.svg" alt="eth_mobile" className="eth" />
-            <img src="/images/poly_mobile.svg" alt="poly_mobile" className="poly" />
+            <img src="/images/ethers_chain.svg" alt="eth_mobile" className="eth" />
+            <img src="/images/polygon_chain.svg" alt="poly_mobile" className="poly" />
           </div>
 
           <div className="couple">
             <img src="/images/bsc_mobile.svg" alt="poly_mobile" className="bsc" />
-            <img src="/images/sol_mobile.svg" alt="poly_mobile" className="sol" />
+            <img src="/images/solana_chain.svg" alt="poly_mobile" className="sol" />
           </div>
         </div>
       </div>

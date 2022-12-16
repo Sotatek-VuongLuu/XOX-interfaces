@@ -7,6 +7,8 @@ import { listRoadMap } from './RoadMap'
 const Wrapper = styled.div`
   margin: 40px auto 0;
   .item_container {
+    height: 250px;
+    overflow: hidden;
     display: flex;
     position: relative;
     .line_milestone {
@@ -117,7 +119,7 @@ const RoadMapMobile = () => {
                   <img src="/images/not_done_mobile.svg" alt="milestone" />
                 )}
 
-                {item.status === 'done' ? <LineDash className="line_status" /> : <LineNotDash />}
+                {item.status === 'done' ? <img src="/images/line_dash.svg" alt="milestone" /> : <LineNotDash />}
               </div>
 
               <div className="title_content">

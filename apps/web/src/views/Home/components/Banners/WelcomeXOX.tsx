@@ -33,8 +33,9 @@ const Wrapper = styled.div`
 
 const LeftContent = styled.div`
   .btn_group {
-    display: flex;
-    gap: 24px;
+    display: grid;
+    gap: 19px;
+    grid-template-columns: auto auto 1fr;
     .get_xox {
       padding: 1px;
       border-radius: 8px;
@@ -65,9 +66,9 @@ const LeftContent = styled.div`
     @media screen and (max-width: 900px) {
       .get_xox {
         .boxed-child {
-          padding: 17px 22px;
+          padding: 15px 20px;
           a {
-            font-size: 16px;
+            font-size: 15px;
           }
         }
       }
@@ -104,6 +105,7 @@ const Button = styled.button`
   border: none;
   padding: 16px 40px;
   font-weight: 700;
+  height: 100%;
   font-size: 18px;
   color: #ffffff;
   cursor: pointer;

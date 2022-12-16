@@ -61,7 +61,7 @@ const BGPartner = () => {
       ) : (
         <>
           <BGMobile src="/images/bg_mobile.svg" alt="bg_mobile" />
-          <BGXOXMobile src="/images/xox_mobile_2.svg" alt="xox_mobile" />
+          <BGXOXMobile src="/images/xox_mobile_change.svg" alt="xox_mobile" />
           <BGMobileTow src="/images/bg_mobile_2.svg" alt="bg_mobile" />
         </>
       )}

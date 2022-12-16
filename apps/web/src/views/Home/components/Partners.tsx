@@ -8,6 +8,7 @@ import 'swiper/css'
 import SwiperCore, { Autoplay } from 'swiper'
 import { useState } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
 
 SwiperCore.use([Autoplay])
 
@@ -188,6 +189,8 @@ const Partners = () => {
   const [isShowMore, setIsShowMore] = useState(false)
   const { width } = useWindowSize()
 
+  const { isMobile } = useMatchBreakpoints()
+
   const handleChangeShowMore = () => {
     setIsShowMore(!isShowMore)
   }
@@ -214,12 +217,21 @@ const Partners = () => {
                   </li>
                 )
               })}
+
+              {isMobile &&
+                listPartners.map(({ icon }) => {
+                  return (
+                    <li className="highway-car" key={icon}>
+                      <img src={icon} alt="icon" />
+                    </li>
+                  )
+                })}
             </ul>
           </div>
         </div>
       </SliderWrapper>
 
-      <SliderWrapper>
+      {/* <SliderWrapper>
         <div id="infinite" className="infinitetr speed-20 highway-slider">
           <div className="container highway-barrier">
             <ul className="highway-lane">
@@ -240,9 +252,9 @@ const Partners = () => {
             </ul>
           </div>
         </div>
-      </SliderWrapper>
+      </SliderWrapper> */}
 
-      <SliderWrapper>
+      {/* <SliderWrapper>
         <div id="infinite" className="infinitetl speed-20 highway-slider">
           <div className="container highway-barrier">
             <ul className="highway-lane">
@@ -263,9 +275,9 @@ const Partners = () => {
             </ul>
           </div>
         </div>
-      </SliderWrapper>
+      </SliderWrapper> */}
 
-      <SliderWrapper>
+      {/* <SliderWrapper>
         <div id="infinite" className="infinitetr highway-slider">
           <div className="container highway-barrier">
             <ul className="highway-lane">
@@ -286,13 +298,13 @@ const Partners = () => {
             </ul>
           </div>
         </div>
-      </SliderWrapper>
+      </SliderWrapper> */}
 
-      <div className="btn_see_all">
+      {/* <div className="btn_see_all">
         <div className="get_xox" onClick={handleChangeShowMore}>
           <div className="boxed-child">{isShowMore ? <span>See Less</span> : <span>See All</span>}</div>
         </div>
-      </div>
+      </div> */}
     </Wrapper>
   )
 }

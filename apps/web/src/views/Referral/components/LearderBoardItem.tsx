@@ -1,4 +1,5 @@
 import { Avatar, Box } from '@mui/material'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 import { IItemLeaderBoard } from './MainInfo'
@@ -14,36 +15,50 @@ const Wrapper = styled(Box)`
     align-items: center;
     gap: 16px;
     .ranking_top {
-      width: 52px;
-      height: 52px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background: #ffffff;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-width: 52px;
+      min-width: 60px;
+
+      @media screen and (max-width: 900px) {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+      }
     }
 
     .ranking {
-      width: 52px;
-      height: 52px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: center;
       align-items: center;
       font-weight: 700;
-      font-size: 12px;
-      line-height: 15px;
+      font-size: 20px;
+      line-height: 24px;
       color: #ffffff;
-      min-width: 52px;
+      min-width: 60px;
+
+      @media screen and (max-width: 900px) {
+        width: 40px;
+        height: 40px;
+        min-width: 40px;
+        font-size: 14px;
+        line-height: 17px;
+      }
     }
 
     .user_info {
       display: flex;
       justify-content: space-between;
       width: 100%;
-      padding: 6px 40px 6px 6px;
+      padding: 10px 40px 10px 10px;
       border-radius: 60px;
       align-items: center;
 
@@ -53,29 +68,48 @@ const Wrapper = styled(Box)`
 
         .ranking_name {
           font-weight: 700;
-          font-size: 14px;
-          line-height: 17px;
+          font-size: 20px;
+          line-height: 24px;
           color: #424242;
           margin-left: 8px;
+
+          @media screen and (max-width: 900px) {
+            font-size: 14px;
+            line-height: 17px;
+          }
         }
         .name {
           font-weight: 700;
-          font-size: 14px;
-          line-height: 17px;
+          font-size: 20px;
+          line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
           margin-left: 8px;
+
+          @media screen and (max-width: 900px) {
+            font-size: 14px;
+            line-height: 17px;
+          }
         }
       }
 
       .point {
         font-weight: 700;
-        font-size: 14px;
-        line-height: 17px;
+        font-size: 20px;
+        line-height: 24px;
         text-align: right;
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
+
+        @media screen and (max-width: 900px) {
+          font-size: 14px;
+          line-height: 17px;
+        }
+      }
+
+      @media screen and (max-width: 900px) {
+        padding: 8px 12px 8px 8px;
       }
     }
 
@@ -93,13 +127,19 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
   const { item, mb = true } = props
   const ranking: Array<number> = [1, 2, 3]
 
+  const { isMobile } = useMatchBreakpoints()
+
   const renderRanking = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
     (rank: number) => {
       if (ranking.includes(rank)) {
         return (
           <div className="ranking_top">
-            <img src={`/images/ranking_${rank}.svg`} alt="ranking" />
+            {isMobile ? (
+              <img src={`/images/r_mb_${rank}.svg`} alt="ranking" />
+            ) : (
+              <img src={`/images/r${rank}.svg`} alt="ranking" />
+            )}
           </div>
         )
       }
@@ -117,7 +157,7 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
 
         <div className={`${ranking.includes(item.rank) ? `bg_white` : `bg_rba`} user_info`}>
           <div className="user_avatar_name">
-            <Avatar alt="Remy Sharp" src={item.avatar} />
+            <Avatar alt="Remy Sharp" src={item.avatar} sx={{ height: isMobile ? 24 : 40, width: isMobile ? 24 : 40 }} />
             <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>{item.name}</p>
           </div>
 
