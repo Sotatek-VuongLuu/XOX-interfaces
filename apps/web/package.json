@@ -67,8 +67,6 @@
     "@tippyjs/react": "^4.2.6",
     "@vanilla-extract/next-plugin": "^2.1.1",
     "ajv": "^6.12.3",
-    "antd": "^5.0.2",
-    "apexcharts": "^3.36.3",
     "bignumber.js": "^9.0.0",
     "canvas-confetti": "^1.5.1",
     "cids": "^1.0.0",

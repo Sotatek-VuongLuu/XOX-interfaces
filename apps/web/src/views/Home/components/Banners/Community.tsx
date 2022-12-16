@@ -182,7 +182,7 @@ const Community = () => {
 
 const listCommunity = [
   {
-    icon: '/images/twitter.svg',
+    icon: '/images/pc_twitter.svg',
     name: 'Twitter',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
     iconMobile: '/images/twitter_mob.svg',
@@ -194,25 +194,25 @@ const listCommunity = [
     iconMobile: '/images/group_tele_mb.svg',
   },
   {
-    icon: '/images/telegram.svg',
+    icon: '/images/pc_telegram.svg',
     name: 'Telegram Channel',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
     iconMobile: '/images/telegram_mb.svg',
   },
   {
-    icon: '/images/discord.svg',
+    icon: '/images/pc_discord.svg',
     name: 'Discord',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
     iconMobile: '/images/discord_mb.svg',
   },
   {
-    icon: '/images/youtube.svg',
+    icon: '/images/pc_youtube.svg',
     name: 'Youtube',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
     iconMobile: '/images/youtube_mb.svg',
   },
   {
-    icon: '/images/tiktok.svg',
+    icon: '/images/pc_tiktok.svg',
     name: 'Tiktok',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
     iconMobile: '/images/tiktok_mb.svg',
