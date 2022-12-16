@@ -69,51 +69,50 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   // const chainName = useGetChainName()
 
   useEffect(() => {
-    if (chainId === 1 || chainId === 56) {
-      const ids = SUGGESTED_BASES[chainId]
+    const ids = SUGGESTED_BASES[chainId]
       .concat([native])
       .map((token: any) => {
-          const [filterToken] = tokens.filter((t) => {
-            return (
-              t.symbol.toLowerCase() === token.symbol.toLowerCase() &&
-              (t.platform ? t.platform.token_address.toLowerCase() === token.address.toLowerCase() : true)
-            )
-          })
-
-          return filterToken?.id
+        const [filterToken] = tokens.filter((t) => {
+          return (
+            t.symbol.toLowerCase() === token.symbol.toLowerCase() &&
+            (t.platform ? t.platform.token_address.toLowerCase() === token.address.toLowerCase() : true)
+          )
         })
-        .filter((t) => t != undefined)
-      setCoinmarketcapIds(ids.join(','))
 
-      const [token] = tokens.filter(
-        (t) =>
-          t.symbol.toLowerCase() === native.symbol.toLowerCase() &&
-          (t.platform ? t.platform.token_address.toLowerCase() === token.address.toLowerCase() : true),
-      )
-      setCoinmarketcapId(token?.id)
-    } else {
-      const ids = SUGGESTED_BASES[chainId]
-        .concat([native])
-        .map((token: any) => {
-          const [filterToken] = tokens.filter((t) => {
-            return (
-              t.symbol.toLowerCase() === token.symbol.toLowerCase() &&
-              (t.platform ? t.platform.symbol.toLowerCase() === token.symbol.toLowerCase() : true)
-            )
-          })
+        return filterToken?.id
+      })
+      .filter((t) => t !== undefined)
+    setCoinmarketcapIds(ids.join(','))
 
-          return filterToken?.id
-        })
-        .filter((t) => t != undefined)
-      setCoinmarketcapIds(ids.join(','))
+    const [token] = tokens.filter(
+      (t) =>
+        t.symbol.toLowerCase() === native.symbol.toLowerCase() &&
+        (t.platform ? t.platform.token_address.toLowerCase() === token.address.toLowerCase() : true),
+    )
+    setCoinmarketcapId(token?.id)
+    // } else {
+    //   const ids = SUGGESTED_BASES[chainId]
+    //     .concat([native])
+    //     .map((token: any) => {
+    //       const [filterToken] = tokens.filter((t) => {
+    //         return (
+    //           t.symbol.toLowerCase() === token.symbol.toLowerCase() &&
+    //           (t.platform ? t.platform.symbol.toLowerCase() === token.symbol.toLowerCase() : true)
+    //         )
+    //       })
 
-      const [token] = tokens.filter(
-        (t) =>
-          t.symbol.toLowerCase() === native.symbol.toLowerCase() &&
-          (t.platform ? t.platform.symbol.toLowerCase() === token.symbol.toLowerCase() : true),
-      )
-      setCoinmarketcapId(token?.id)
-    }
+    //       return filterToken?.id
+    //     })
+    //     .filter((t) => t != undefined)
+    //   setCoinmarketcapIds(ids.join(','))
+
+    //   const [token] = tokens.filter(
+    //     (t) =>
+    //       t.symbol.toLowerCase() === native.symbol.toLowerCase() &&
+    //       (t.platform ? t.platform.symbol.toLowerCase() === token.symbol.toLowerCase() : true),
+    //   )
+    //   setCoinmarketcapId(token?.id)
+    // }
   }, [])
 
   useEffect(() => {

@@ -9,6 +9,7 @@ import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
 import { usePhishingBannerManager } from 'state/user/hooks'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import styled from 'styled-components'
+import { useAccount } from 'wagmi'
 import UserMenu from './UserMenu'
 import { useMenuItems } from './hooks/useMenuItems'
 // import GlobalSettings from './GlobalSettings'
@@ -16,7 +17,6 @@ import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { SettingsMode } from './GlobalSettings/types'
 import { configLanding } from './config/config'
-import { useAccount } from 'wagmi'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;
@@ -93,10 +93,10 @@ const Menu = (props) => {
                   style={{ marginRight: '16px', cursor: 'pointer' }}
                 >
                   <circle cx="21.5" cy="22" r="21.5" fill="#303030" />
-                  <g clip-path="url(#clip0_7156_5352)">
+                  <g clipPath="url(#clip0_7156_5352)">
                     <path
-                      fill-rule="evenodd"
-                      clip-rule="evenodd"
+                      fillRule="evenodd"
+                      clipRule="evenodd"
                       d="M21 10.5C16.8579 10.5 13.5 13.8579 13.5 18V22.4208C13.5 22.4949 13.4781 22.5672 13.437 22.6289L10.8823 26.4609C10.633 26.8349 10.5 27.2742 10.5 27.7236C10.5 28.9809 11.5192 30 12.7764 30H29.2236C30.4809 30 31.5 28.9809 31.5 27.7236C31.5 27.2742 31.3669 26.8349 31.1176 26.4609L28.563 22.6289C28.5219 22.5672 28.5 22.4949 28.5 22.4208V18C28.5 13.8579 25.1421 10.5 21 10.5Z"
                       fill="#8E8E8E"
                     />

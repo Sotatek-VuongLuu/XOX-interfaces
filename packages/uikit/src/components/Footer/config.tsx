@@ -80,12 +80,12 @@ export const socials = [
   {
     label: "Twitter",
     icon: TwitterIcon,
-    // href: "https://twitter.com/pancakeswap",
+    href: "https://twitter.com",
   },
   {
     label: "Telegram Group",
     icon: TelegramGroup,
-    // href: "https://reddit.com/r/pancakeswap",
+    href: "https://reddit.com/r/",
   },
   {
     label: "Telegram",
@@ -94,17 +94,17 @@ export const socials = [
   {
     label: "Discord",
     icon: DiscordIcon,
-    // href: "https://discord.gg/pancakeswap",
+    href: "https://discord.gg/",
   },
   {
     label: "Youtube",
     icon: YoutubeIcon,
-    // href: "https://discord.gg/pancakeswap",
+    href: "https://discord.gg/",
   },
   {
     label: "Tiktok",
     icon: TiktokIcon,
-    // href: "https://discord.gg/pancakeswap",
+    href: "https://discord.gg/",
   },
 ];
 

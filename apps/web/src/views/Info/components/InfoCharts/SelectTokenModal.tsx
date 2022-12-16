@@ -259,7 +259,7 @@ const SelectTokenModal = (
       open: () => setOpen(true),
       close: () => setOpen(false),
     }),
-    [close],
+    [],
   )
 
   const handleSearchToken = useCallback(
@@ -318,19 +318,21 @@ const SelectTokenModal = (
       <ModalWrapper>
         {isImportTokenModalOpen ? (
           <div>
-            <div
+            <button
               className="close-btn"
               onClick={() => {
                 setOpen(false)
               }}
+              type="button"
             >
               <CloseIcon />
-            </div>
-            <div
+            </button>
+            <button
               className="back-btn"
               onClick={() => {
                 setImportTokenModalOpen(false)
               }}
+              type="button"
             >
               <svg xmlns="http://www.w3.org/2000/svg" width="25" height="24" viewBox="0 0 25 24" fill="none">
                 <path
@@ -348,7 +350,7 @@ const SelectTokenModal = (
                   strokeLinejoin="round"
                 />
               </svg>
-            </div>
+            </button>
 
             <h2>Import Token</h2>
             <Flex className="input-import-token">
@@ -377,7 +379,7 @@ const SelectTokenModal = (
             {tokenInfo && (
               <div className="token-info">
                 <div>
-                  <img src="/images/coinmaketcap.png" />
+                  <img src="/images/coinmaketcap.png" alt="" />
                   <h3>Via CoinGecko</h3>
                 </div>
                 <div>
@@ -414,7 +416,8 @@ const SelectTokenModal = (
                   checked={understand}
                   onChange={() => setUnderstand(!understand)}
                 />
-                <label htmlFor="understand">I understand</label>
+                {/* // eslint-disable-next-line jsx-a11y/label-has-associated-control */}
+                {/* <label htmlFor="understand">I understand</label> */}
               </div>
               <Button width="100%" height="43px" disabled={!understand} onClick={handleImportTokenBtnClicked}>
                 Import
@@ -423,15 +426,16 @@ const SelectTokenModal = (
           </div>
         ) : (
           <div>
-            <div
+            <button
               className="close-btn"
               onClick={() => {
                 setOpen(false)
                 console.log(isOpen)
               }}
+              type="button"
             >
               <CloseIcon />
-            </div>
+            </button>
 
             <h2>Select Token</h2>
             <Flex className="input-token">

@@ -17,7 +17,7 @@ import {
 } from 'config/constants/info'
 import Cookies from 'js-cookie'
 
-export type MultiChainName = 'BSC' | 'ETH' | 'Goerli' | 'BSC Testnet'
+export type MultiChainName = 'BSC' | 'ETH'
 
 export const multiChainQueryMainToken = {
   BSC: 'BNB',

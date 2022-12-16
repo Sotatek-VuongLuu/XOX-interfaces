@@ -4,6 +4,7 @@ import { Box, Grid } from '@mui/material'
 import { useState } from 'react'
 import styled from 'styled-components'
 import HowToJoin from './HowToJoin'
+// eslint-disable-next-line import/no-cycle
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'

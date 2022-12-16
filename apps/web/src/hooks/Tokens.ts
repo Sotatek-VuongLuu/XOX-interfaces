@@ -6,6 +6,7 @@ import { TokenAddressMap } from '@pancakeswap/token-lists'
 import { GELATO_NATIVE } from 'config/constants'
 import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
+import { SUGGESTED_BASES } from 'config/constants/exchange'
 import {
   combinedTokenMapFromActiveUrlsAtom,
   combinedTokenMapFromOfficialsUrlsAtom,
@@ -18,7 +19,6 @@ import { isAddress } from '../utils'
 import { useBytes32TokenContract, useTokenContract } from './useContract'
 import useNativeCurrency from './useNativeCurrency'
 import { useActiveChainId } from './useActiveChainId'
-import { SUGGESTED_BASES } from 'config/constants/exchange'
 
 const mapWithoutUrls = (tokenMap: TokenAddressMap<ChainId>, chainId: number) =>
   Object.keys(tokenMap[chainId] || {}).reduce<{ [address: string]: ERC20Token }>((newMap, address) => {

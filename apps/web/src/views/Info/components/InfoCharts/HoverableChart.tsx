@@ -1,20 +1,15 @@
 /* eslint-disable react/button-has-type */
-import { Box, Text, Skeleton, useModal } from '@pancakeswap/uikit'
+import { Box, useModal } from '@pancakeswap/uikit'
 import { fromUnixTime } from 'date-fns'
-import { useState, useMemo, memo, useEffect, useRef, useCallback } from 'react'
-import { ChartEntry, ProtocolData } from 'state/info/types'
-import styled from 'styled-components'
+import { useState, useMemo, memo, useEffect } from 'react'
 import { formatAmount } from 'utils/formatInfoNumbers'
-import BarChart from './BarChart'
-import LineChart from './LineChart'
-import { ChartContent, TitleChart } from './style'
-import SelectTokenModal from './SelectTokenModal'
-import { USDC, USDT, WBTC_ETH } from '@pancakeswap/tokens'
 import { Currency, NativeCurrency } from '@pancakeswap/sdk'
-import currencyId from 'utils/currencyId'
 import { tokens } from 'tokens'
 import { CurrencyLogo } from 'components/Logo'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
+import BarChart from './BarChart'
+import LineChart from './LineChart'
+import { ChartContent, TitleChart } from './style'
 
 interface HoverableChartProps {
   chartData: any[]
@@ -113,76 +108,74 @@ const HoverableChart = ({
             <CurrencyLogo currency={selectedCurrency} size="30px" />
             {selectedCurrency.symbol}
           </div>
-            <>
-              <div className="liquidity">
-                <p>Current price: ${formatAmount(currencyData?.price)} </p>
-                <p>
-                  Price change (in last 24 hours):{' '}
-                  {currencyData?.percent_change_24h > 0 ? (
-                    <>
-                      <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M6.80361 11.2498C6.80361 11.6916 6.44544 12.0498 6.00361 12.0498C5.56179 12.0498 5.20361 11.6916 5.20361 11.2498V3.67776L1.81588 7.06549C1.50346 7.37791 0.996929 7.37791 0.68451 7.06549C0.37209 6.75307 0.37209 6.24654 0.68451 5.93412L5.43451 1.18412C5.74693 0.871699 6.25346 0.871699 6.56588 1.18412L11.3159 5.93412C11.6283 6.24654 11.6283 6.75307 11.3159 7.06549C11.0035 7.37791 10.4969 7.37791 10.1845 7.06549L6.80361 3.68459V11.2498Z"
-                          fill="#6BB372"
-                        />
-                      </svg>
-                      <span style={{ color: '#6BB372' }}>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
-                    </>
-                  ) : currencyData?.percent_change_24h < 0 ? (
-                    <>
-                      <svg
-                        width="12"
-                        height="13"
-                        viewBox="0 0 12 13"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                        transform="rotate(180)"
-                      >
-                        <path
-                          fillRule="evenodd"
-                          clipRule="evenodd"
-                          d="M6.80361 11.2498C6.80361 11.6916 6.44544 12.0498 6.00361 12.0498C5.56179 12.0498 5.20361 11.6916 5.20361 11.2498V3.67776L1.81588 7.06549C1.50346 7.37791 0.996929 7.37791 0.68451 7.06549C0.37209 6.75307 0.37209 6.24654 0.68451 5.93412L5.43451 1.18412C5.74693 0.871699 6.25346 0.871699 6.56588 1.18412L11.3159 5.93412C11.6283 6.24654 11.6283 6.75307 11.3159 7.06549C11.0035 7.37791 10.4969 7.37791 10.1845 7.06549L6.80361 3.68459V11.2498Z"
-                          fill="#FF0000"
-                        />
-                      </svg>
-                      <span style={{ color: '#FF0000' }}>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
-                    </>
-                  ) : (
-                    <span>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
-                  )}
-                </p>
-              </div>
-              <div className="volume">
-                <p>
-                  Volume 24h {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}
-                </p>
-              </div>
-            </>
+          <>
+            <div className="liquidity">
+              <p>Current price: ${formatAmount(currencyData?.price)} </p>
+              <p>
+                Price change (in last 24 hours):{' '}
+                {currencyData?.percent_change_24h > 0 ? (
+                  <>
+                    <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M6.80361 11.2498C6.80361 11.6916 6.44544 12.0498 6.00361 12.0498C5.56179 12.0498 5.20361 11.6916 5.20361 11.2498V3.67776L1.81588 7.06549C1.50346 7.37791 0.996929 7.37791 0.68451 7.06549C0.37209 6.75307 0.37209 6.24654 0.68451 5.93412L5.43451 1.18412C5.74693 0.871699 6.25346 0.871699 6.56588 1.18412L11.3159 5.93412C11.6283 6.24654 11.6283 6.75307 11.3159 7.06549C11.0035 7.37791 10.4969 7.37791 10.1845 7.06549L6.80361 3.68459V11.2498Z"
+                        fill="#6BB372"
+                      />
+                    </svg>
+                    <span style={{ color: '#6BB372' }}>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
+                  </>
+                ) : currencyData?.percent_change_24h < 0 ? (
+                  <>
+                    <svg
+                      width="12"
+                      height="13"
+                      viewBox="0 0 12 13"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      transform="rotate(180)"
+                    >
+                      <path
+                        fillRule="evenodd"
+                        clipRule="evenodd"
+                        d="M6.80361 11.2498C6.80361 11.6916 6.44544 12.0498 6.00361 12.0498C5.56179 12.0498 5.20361 11.6916 5.20361 11.2498V3.67776L1.81588 7.06549C1.50346 7.37791 0.996929 7.37791 0.68451 7.06549C0.37209 6.75307 0.37209 6.24654 0.68451 5.93412L5.43451 1.18412C5.74693 0.871699 6.25346 0.871699 6.56588 1.18412L11.3159 5.93412C11.6283 6.24654 11.6283 6.75307 11.3159 7.06549C11.0035 7.37791 10.4969 7.37791 10.1845 7.06549L6.80361 3.68459V11.2498Z"
+                        fill="#FF0000"
+                      />
+                    </svg>
+                    <span style={{ color: '#FF0000' }}>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
+                  </>
+                ) : (
+                  <span>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
+                )}
+              </p>
+            </div>
+            <div className="volume">
+              <p>Volume 24h {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}</p>
+            </div>
+          </>
         </div>
 
         <p className="filter">
           <div />
           <div>
-            <span onClick={() => setFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
+            <button type="button" onClick={() => setFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
               All
-            </span>
-            <span onClick={() => setFilter('1Y')} className={filter === 'Y' ? 'active' : ''}>
+            </button>
+            <button type="button" onClick={() => setFilter('1Y')} className={filter === 'Y' ? 'active' : ''}>
               1Y
-            </span>
-            <span onClick={() => setFilter('3M')} className={filter === '3M' ? 'active' : ''}>
+            </button>
+            <button type="button" onClick={() => setFilter('3M')} className={filter === '3M' ? 'active' : ''}>
               3M
-            </span>
-            <span onClick={() => setFilter('1M')} className={filter === '1M' ? 'active' : ''}>
+            </button>
+            <button type="button" onClick={() => setFilter('1M')} className={filter === '1M' ? 'active' : ''}>
               1M
-            </span>
-            <span onClick={() => setFilter('7D')} className={filter === '7D' ? 'active' : ''}>
+            </button>
+            <button type="button" onClick={() => setFilter('7D')} className={filter === '7D' ? 'active' : ''}>
               7D
-            </span>
-            <span onClick={() => setFilter('1D')} className={filter === '1D' ? 'active' : ''}>
+            </button>
+            <button type="button" onClick={() => setFilter('1D')} className={filter === '1D' ? 'active' : ''}>
               24H
-            </span>
+            </button>
           </div>
         </p>
       </ChartContent>

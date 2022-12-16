@@ -2,6 +2,7 @@ import { Avatar, Box } from '@mui/material'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useCallback } from 'react'
 import styled from 'styled-components'
+// eslint-disable-next-line import/no-cycle
 import { IItemLeaderBoard } from './MainInfo'
 
 interface IProps {

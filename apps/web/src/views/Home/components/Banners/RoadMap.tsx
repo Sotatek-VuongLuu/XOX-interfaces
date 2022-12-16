@@ -2,6 +2,7 @@ import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 // eslint-disable-next-line import/no-cycle
 import RoadMapItem from './RoadMapItem'
+// eslint-disable-next-line import/no-cycle
 import RoadMapMobile from './RoadMapMobile'
 
 export interface IRoadMapItem {

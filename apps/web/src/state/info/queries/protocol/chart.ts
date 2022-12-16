@@ -2,11 +2,11 @@
 import { gql } from 'graphql-request'
 import { useEffect, useState } from 'react'
 import { ChartEntry } from 'state/info/types'
-import { fetchChartData, mapDayData, fetchChartDataCustom } from '../helpers'
+import axios from 'axios'
+import { fetchChartData, mapDayData } from '../helpers'
 import { PancakeDayDatasResponse } from '../types'
 import { MultiChainName, getMultiChainQueryEndPointWithStableSwap, multiChainStartTime } from '../../constant'
 import { useGetChainName } from '../../hooks'
-import axios from 'axios'
 
 /**
  * Data for displaying Liquidity and Volume charts on Overview page
