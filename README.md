@@ -42,10 +42,13 @@ yarn start
 
 ### Deploy fe: 
 - ls
-- cd LoopX-frontend
+- cd test/LoopX-frontend or test/clone-FE
 - git pull
+- yarn build 
 - pm2 ls
-- pm2 restart ui (nếu chứ có service ui thì run pm2 start yarn --name ui -- dev)
+- pm2 delete ui
+- pm2 start "yarn run start" --name  "ui"
+<!-- - pm2 restart ui (nếu chứ có service ui thì run pm2 start yarn --name ui -- dev) -->
 
 </details>
 
