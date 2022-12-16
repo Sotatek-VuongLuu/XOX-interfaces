@@ -3,6 +3,7 @@ import PageSection from 'components/PageSection'
 import styled from 'styled-components'
 import Banner from './components/Banner'
 import MainInfo from './components/MainInfo'
+import ReferralFriend from './components/ReferralFriend'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
@@ -17,9 +18,10 @@ export default function Refferal() {
   return (
     <>
       <Box padding="48px 130px">
-        <Box height="100vh">
+        <Box>
           <Banner />
           <MainInfo />
+          <ReferralFriend />
         </Box>
       </Box>
     </>

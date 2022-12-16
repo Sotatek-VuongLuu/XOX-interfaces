@@ -90,6 +90,15 @@ const Second = styled.div<IPropsTotal>`
         border-radius: 30px;
         height: 18px;
         width: ${({ percentPoint }) => `${percentPoint}%`};
+
+        span {
+          font-weight: 700;
+          font-size: 10px;
+          line-height: 12px;
+          text-align: center;
+          margin-left: 6px;
+          color: #ffffff;
+        }
       }
     }
   }
@@ -195,7 +204,11 @@ const MainInfo = () => {
               <div className="total_point">
                 <p className="title">Your current total points</p>
                 <div className="total_point_bar">
-                  <div className="current_point_bar" />
+                  <div className="current_point_bar">
+                    <span>
+                      {currentPoint}/{totalPoint}
+                    </span>
+                  </div>
                 </div>
               </div>
             </Second>
