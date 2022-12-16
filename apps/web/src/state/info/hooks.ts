@@ -215,9 +215,8 @@ export const useGetChainName = () => {
   const path = window.location.href
 
   const getChain = useCallback(() => {
-    if (path.includes('eth') || path.includes('chainId=1')) return 'ETH'
-    else if (path.includes('goerli') || path.includes('chainId=5')) return 'Goerli'
-    else if (path.includes('bsc') || path.includes('chainId=97')) return 'BSC Testnet'
+    if (path.includes('eth') || path.includes('chainId=1') || path.includes('goerli') || path.includes('chainId=5'))
+      return 'ETH'
     return 'BSC'
   }, [path])
   const [name, setName] = useState<MultiChainName | null>(getChain())

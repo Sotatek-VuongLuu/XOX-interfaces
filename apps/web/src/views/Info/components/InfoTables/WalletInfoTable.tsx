@@ -20,12 +20,12 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import { formatEther } from '@ethersproject/units'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { getDefaultProvider } from '@ethersproject/providers'
-import { TableWrapper } from './shared'
-import InfoPieChart from '../InfoCharts/PieChart'
 import { SUGGESTED_BASES } from 'config/constants/exchange'
 import { CurrencyLogo } from 'components/Logo'
 import { ERC20Token } from '@pancakeswap/sdk'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import { TableWrapper } from './shared'
+import InfoPieChart from '../InfoCharts/PieChart'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -143,9 +143,9 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
 
   const tokenRateUSD = useCallback(
     (symbol) => {
-      if (!currencyDatas) return
+      if (!currencyDatas) return 0
       const currencyData = currencyDatas.find((data) => data?.symbol?.toLowerCase() === symbol.toLowerCase())
-      if (!currencyData) return
+      if (!currencyData) return 0
       return currencyData.price
     },
     [currencyDatas],

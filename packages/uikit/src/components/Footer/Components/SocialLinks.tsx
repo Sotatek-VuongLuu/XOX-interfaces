@@ -15,19 +15,19 @@ const SocialLinks: React.FC<React.PropsWithChildren<FlexProps>> = ({ ...props })
       };
       const Icon = social.icon;
       const mr = index < socials.length - 1 ? "24px" : 0;
-      if (social.items) {
-        return (
-          <div style={{ marginRight: mr }} key={social.label} style={{ cursor: "pointer" }}>
-            <Dropdown key={social.label} position="top" target={<Icon {...iconProps} />}>
-              {social.items.map((item) => (
-                <Link external key={item.label} href={item.href} aria-label={item.label} color="textSubtle">
-                  {item.label}
-                </Link>
-              ))}
-            </Dropdown>
-          </div>
-        );
-      }
+      // if (social.items) {
+      //   return (
+      //     <div style={{ marginRight: mr }} key={social.label} style={{ cursor: "pointer" }}>
+      //       <Dropdown key={social.label} position="top" target={<Icon {...iconProps} />}>
+      //         {social.items.map((item) => (
+      //           <Link external key={item.label} href={item.href} aria-label={item.label} color="textSubtle">
+      //             {item.label}
+      //           </Link>
+      //         ))}
+      //       </Dropdown>
+      //     </div>
+      //   );
+      // }
       return (
         <Link
           external

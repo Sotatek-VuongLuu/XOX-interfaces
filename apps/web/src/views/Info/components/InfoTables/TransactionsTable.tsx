@@ -10,10 +10,8 @@ import { useGetChainName } from 'state/info/hooks'
 import { Transaction, TransactionType } from 'state/info/types'
 import styled from 'styled-components'
 import { getBlockExploreLink } from 'utils'
-
 import { formatAmount } from 'utils/formatInfoNumbers'
 import { Arrow, Break, ClickableColumnHeader } from './shared'
-import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
 
 const Wrapper = styled.div`
   width: 100%;

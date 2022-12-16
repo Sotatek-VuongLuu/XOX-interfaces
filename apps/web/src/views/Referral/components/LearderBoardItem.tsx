@@ -1,6 +1,7 @@
 import { Avatar, Box } from '@mui/material'
 import { useCallback } from 'react'
 import styled from 'styled-components'
+// eslint-disable-next-line import/no-cycle
 import { IItemLeaderBoard } from './MainInfo'
 
 interface IProps {
