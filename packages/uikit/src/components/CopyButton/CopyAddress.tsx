@@ -5,6 +5,7 @@ import { Box, Flex, FlexProps } from "../Box";
 interface CopyAddressProps extends FlexProps {
   account: string;
   tooltipMessage: string;
+  referralCode?: boolean;
 }
 
 const Wrapper = styled(Flex)`
@@ -13,19 +14,19 @@ const Wrapper = styled(Flex)`
 
 const Address = styled.div`
   position: relative;
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 17px;
+  display: block;
+  padding: 0;
 
   & > input {
     background: transparent;
     border: 0;
-    color: #3d8aff;
-    font-family: "Inter";
-    font-style: normal;
-    font-weight: 500;
-    font-size: 14px;
-    line-height: 17px;
-    display: block;
-    padding: 0;
-    width: 140px;
+    width: 90px;
+    display: none;
 
     &:focus {
       outline: 0;
@@ -51,21 +52,21 @@ const Address = styled.div`
 export const CopyAddress: React.FC<React.PropsWithChildren<CopyAddressProps>> = ({
   account,
   tooltipMessage,
+  referralCode = false,
   ...props
 }) => {
   return (
     <Box position="relative" {...props}>
       <Wrapper>
         {account && (
-          <Address title={account}>
-            <input
-              type="text"
-              readOnly
-              value={`${account.substring(0, 8)}...${account.substring(account.length - 4)}`}
-            />
+          <Address title={account} style={{ color: referralCode ? "rgba(255, 255, 255, 0.87)" : "#3d8aff" }}>
+            {referralCode
+              ? `Referral Code: ${account}`
+              : `${account.substring(0, 8)}...${account.substring(account.length - 4)}`}
+            <input type="text" readOnly value={account} />
           </Address>
         )}
-        <Flex>
+        <Flex ml="10px">
           <CopyButton
             width="24px"
             text={account}

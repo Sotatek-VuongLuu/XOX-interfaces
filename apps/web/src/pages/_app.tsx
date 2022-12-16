@@ -35,24 +35,24 @@ BigNumber.config({
   DECIMAL_PLACES: 80,
 })
 
-// function GlobalHooks() {
-//   usePollBlockNumber()
-//   useEagerConnect()
-//   useUserAgent()
-//   useAccountEventListener()
-//   useSentryUser()
-//   useThemeCookie()
-//   return null
-// }
+function GlobalHooks() {
+  usePollBlockNumber()
+  useEagerConnect()
+  useUserAgent()
+  useAccountEventListener()
+  useSentryUser()
+  useThemeCookie()
+  return null
+}
 
-// function MPGlobalHooks() {
-//   usePollBlockNumber()
-//   useEagerConnectMP()
-//   useUserAgent()
-//   useAccountEventListener()
-//   useSentryUser()
-//   return null
-// }
+function MPGlobalHooks() {
+  usePollBlockNumber()
+  useEagerConnectMP()
+  useUserAgent()
+  useAccountEventListener()
+  useSentryUser()
+  return null
+}
 
 function MyApp(props: AppProps<{ initialReduxState: any }>) {
   const { pageProps, Component } = props
@@ -85,12 +85,12 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
       </Head>
       <Providers store={store}>
         <Blocklist>
-          {/* {(Component as NextPageWithLayout).mp ? <MPGlobalHooks /> : <GlobalHooks />} */}
+          {(Component as NextPageWithLayout).mp ? <MPGlobalHooks /> : <GlobalHooks />}
           <ResetCSS />
           <GlobalStyle />
           <GlobalCheckClaimStatus excludeLocations={[]} />
           <PersistGate loading={null} persistor={persistor}>
-            {/* <Updaters /> */}
+            <Updaters />
             <App {...props} />
           </PersistGate>
         </Blocklist>

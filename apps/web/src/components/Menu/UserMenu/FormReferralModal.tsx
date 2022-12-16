@@ -325,6 +325,7 @@ const FormReferralModal = ({ ref }) => {
   useEffect(() => {
     if (!account) {
       dispatch(updateUserProfile({ userProfile: undefined }))
+      dispatch(updateOpenFormReferral({ openFormReferral: false }))
       return
     }
     axios
@@ -349,10 +350,6 @@ const FormReferralModal = ({ ref }) => {
   useEffect(() => {
     setProfileSuccess(false)
   }, [openFormReferral])
-
-  useEffect(() => {
-    if (!account) dispatch(updateOpenFormReferral({ openFormReferral: false }))
-  }, [account])
 
   useEffect(() => {
     dispatch(updateOpenFormReferral({ openFormReferral: false }))

@@ -23,7 +23,7 @@ export const LabelText = styled.div`
   font-size: 16px;
   line-height: 19px;
   color: rgba(255, 255, 255, 0.87);
-  margin-right: 30px;
+  margin-right: 26px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
     display: block;
@@ -119,7 +119,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         justifyContent="center"
         border="1px solid #444444"
         borderRadius="6px"
-        padding="9px 14px"
+        padding="6px 8px"
       >
         <StyledUserMenu
           onTouchStart={() => {
@@ -128,7 +128,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         >
           <MenuIcon className={avatarClassName} avatarSrc={avatarSrc} variant={variant} />
           <LabelText title={typeof text === "string" ? text || account : account}>{text || accountEllipsis}</LabelText>
-          {!disabled && <ChevronDownIcon color="text" width="24px" />}
+          {!disabled && <ChevronDownIcon color="text" width="24px" style={{ marginLeft: "6px" }} />}
         </StyledUserMenu>
         {!disabled && (
           <Menu style={styles.popper} ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>

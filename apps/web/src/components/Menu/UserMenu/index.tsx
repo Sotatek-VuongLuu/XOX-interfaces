@@ -127,7 +127,7 @@ const UserMenu = () => {
                   lineHeight="19px"
                   color="rgba(255, 255, 255)"
                 >
-                  {userProfile?.username && `@${userProfile?.username}`}
+                  {userProfile?.username}
                 </Text>
                 {/* eslint-disable-next-line */}
                 <div
@@ -187,7 +187,7 @@ const UserMenu = () => {
             lineHeight="17px"
             color="rgba(255, 255, 255, 0.87)"
           >
-            Referral Code: {userProfile?.referralCode}
+            <CopyAddress tooltipMessage={t('Copied')} account={userProfile?.referralCode} referralCode={true} />
           </Text>
         </Flex>
 
