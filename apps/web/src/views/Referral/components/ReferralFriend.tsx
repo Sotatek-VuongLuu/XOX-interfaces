@@ -1,11 +1,12 @@
 import { Avatar, Box, Grid, Paper } from '@mui/material'
-import React from 'react'
+import React, { useMemo } from 'react'
 import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
+import useWindowSize from 'hooks/useWindowSize'
 
 const WrapperLeft = styled(Box)`
   padding: 24px;
@@ -17,6 +18,11 @@ const WrapperLeft = styled(Box)`
     font-size: 20px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
+
+    @media screen and (max-width: 900px) {
+      font-size: 18px;
+      line-height: 24px;
+    }
   }
 `
 
@@ -121,6 +127,60 @@ const WrapperRight = styled(Box)`
   .swiper.swiper-initialized {
     padding-top: 16px;
   }
+
+  .claim_total {
+    display: flex;
+    justify-content: center;
+    button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      color: #ffffff;
+      padding: 10px 20px;
+    }
+    .unclaim_reward_container {
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      padding: 1px;
+      border-radius: 4px;
+      margin-right: 16px;
+
+      .unclaim_reward {
+        width: 100%;
+        height: 100%;
+        background: black;
+        border-radius: 4px;
+        div {
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 17px;
+          padding: 10px 20px;
+          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-fill-color: transparent;
+        }
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      flex-direction: column;
+      .unclaim_reward_container {
+        width: 100%;
+        margin-bottom: 16px;
+        .unclaim_reward {
+          div {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
 `
 
 const TableHeader = styled.div`
@@ -177,6 +237,8 @@ const TableBody = styled.div`
 `
 
 const ReferralFriend = () => {
+  const { width } = useWindowSize()
+
   function createData(avatar: string, name: string, point: number, code: number) {
     return { avatar, name, point, code }
   }
@@ -201,6 +263,25 @@ const ReferralFriend = () => {
       10293,
     ),
   ]
+
+  const controlWidth = useMemo(() => {
+    let slidesPerView = 5
+    if (width < 900) {
+      slidesPerView = 4
+    }
+
+    if (width < 698) {
+      slidesPerView = 3
+    }
+    if (width < 534) {
+      slidesPerView = 2
+    }
+
+    if (width < 414) {
+      slidesPerView = 1
+    }
+    return slidesPerView
+  }, [width])
 
   return (
     <Box sx={{ marginTop: '16px' }}>
@@ -242,14 +323,14 @@ const ReferralFriend = () => {
         <Grid item xs={12} md={8}>
           <WrapperRight sx={{ marginTop: '16px' }}>
             <Swiper
-              slidesPerView={5}
+              slidesPerView={controlWidth}
               modules={[Navigation, Pagination, A11y]}
               navigation
               scrollbar={{ draggable: true }}
             >
-              {listLever.map((item, index) => {
+              {listLever.map((item) => {
                 return (
-                  <SwiperSlide>
+                  <SwiperSlide key={item.icon}>
                     <div className="item" key={item.icon}>
                       <div>
                         <img src={item.icon} alt="icons" className="jewellery" />
@@ -266,6 +347,16 @@ const ReferralFriend = () => {
                 )
               })}
             </Swiper>
+
+            <div className="claim_total">
+              <div className="unclaim_reward_container">
+                <div className="unclaim_reward">
+                  <div>10,000$ Unclaimed Rewards</div>
+                </div>
+              </div>
+
+              <button type="button">Claim All</button>
+            </div>
           </WrapperRight>
         </Grid>
       </Grid>

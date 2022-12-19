@@ -1,5 +1,6 @@
 import { Avatar, Box } from '@mui/material'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import useWindowSize from 'hooks/useWindowSize'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 // eslint-disable-next-line import/no-cycle
@@ -50,11 +51,8 @@ const Wrapper = styled(Box)`
       margin-right: 16px;
 
       @media screen and (max-width: 900px) {
-        width: 40px;
-        height: 40px;
-        min-width: 40px;
-        font-size: 14px;
-        line-height: 17px;
+        font-size: 12px;
+        line-height: 15px;
         margin-right: 8px;
       }
     }
@@ -79,8 +77,8 @@ const Wrapper = styled(Box)`
           margin-left: 8px;
 
           @media screen and (max-width: 900px) {
-            font-size: 14px;
-            line-height: 17px;
+            font-size: 12px;
+            line-height: 15px;
           }
         }
         .name {
@@ -91,8 +89,8 @@ const Wrapper = styled(Box)`
           margin-left: 8px;
 
           @media screen and (max-width: 900px) {
-            font-size: 14px;
-            line-height: 17px;
+            font-size: 12px;
+            line-height: 15px;
           }
         }
       }
@@ -108,13 +106,13 @@ const Wrapper = styled(Box)`
         background-clip: text;
 
         @media screen and (max-width: 900px) {
-          font-size: 14px;
-          line-height: 17px;
+          font-size: 12px;
+          line-height: 15px;
         }
       }
 
       @media screen and (max-width: 900px) {
-        padding: 8px 12px 8px 8px;
+        padding: 6px 17px 6px 6px;
       }
     }
 
@@ -131,6 +129,7 @@ const Wrapper = styled(Box)`
 const LeaderBoardItem = (props: IProps): JSX.Element => {
   const { item, mb = true } = props
   const ranking: Array<number> = [1, 2, 3]
+  const { width } = useWindowSize()
 
   const { isMobile } = useMatchBreakpoints()
 
@@ -140,10 +139,10 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
       if (ranking.includes(rank)) {
         return (
           <div className="ranking_top">
-            {isMobile ? (
+            {width <= 900 ? (
               <img src={`/images/r_mb_${rank}.svg`} alt="ranking" />
             ) : (
-              <img src={`/images/r${rank}.svg`} alt="ranking" />
+              <img src={`/images/rank_ref_pc_${rank}.svg`} alt="ranking" />
             )}
           </div>
         )
@@ -162,7 +161,7 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
 
         <div className={`${ranking.includes(item.rank) ? `bg_white` : `bg_rba`} user_info`}>
           <div className="user_avatar_name">
-            <Avatar alt="Remy Sharp" src={item.avatar} sx={{ height: isMobile ? 24 : 30, width: isMobile ? 24 : 30 }} />
+            <Avatar alt="Remy Sharp" src={item.avatar} sx={{ height: 30, width: 30 }} />
             <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>{item.name}</p>
           </div>
 
