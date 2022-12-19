@@ -22,9 +22,9 @@ import { getDefaultProvider } from '@ethersproject/providers'
 import { SUGGESTED_BASES } from 'config/constants/exchange'
 import { CurrencyLogo } from 'components/Logo'
 import { ERC20Token } from '@pancakeswap/sdk'
+import { useAllTokens } from 'hooks/Tokens'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import InfoPieChart from '../InfoCharts/PieChart'
-import { useAllTokens } from 'hooks/Tokens'
 
 const Wrapper = styled.div`
   width: 100%;
