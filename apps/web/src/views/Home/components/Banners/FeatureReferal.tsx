@@ -6,6 +6,7 @@ import { useRouter } from 'next/router'
 import { useCallback, useState } from 'react'
 import styled from 'styled-components'
 import LeaderBoardItem from 'views/Referral/components/LearderBoardItem'
+import LeaderBoardItemLP from 'views/Referral/components/LearderBoardItemForLandingPage'
 
 export interface IItemLeaderBoard {
   name: string
@@ -231,7 +232,7 @@ const FeatureReferal = () => {
                   <div className="learder_board">
                     {Array.from(leaderBoardList).map((item: IItemLeaderBoard, index: number) => {
                       // eslint-disable-next-line react/no-array-index-key
-                      return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
+                      return <LeaderBoardItemLP item={item} key={`learder_item_${index}`} />
                     })}
                   </div>
                 </First>

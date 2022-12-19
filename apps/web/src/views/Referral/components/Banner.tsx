@@ -1,4 +1,6 @@
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, useMediaQuery } from '@mui/material'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 const WrapperLeft = styled.div`
@@ -21,6 +23,19 @@ const WrapperLeft = styled.div`
     font-size: 16px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.6);
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 22px;
+
+    .title {
+      font-size: 18px;
+      line-height: 24px;
+    }
+    .description {
+      font-weight: 400;
+      font-size: 16px;
+    }
   }
 `
 
@@ -56,9 +71,29 @@ const WrapperRight = styled.div`
       }
     }
   }
+
+  @media screen and (max-width: 900px) {
+    padding: 22px;
+
+    .my_code {
+      font-size: 18px;
+      line-height: 22px;
+    }
+    .code {
+      padding: 12px;
+      .content {
+        .code_number {
+          font-size: 16px;
+          line-height: 19px;
+        }
+      }
+    }
+  }
 `
 
 const Banner = () => {
+  const { isMobile } = useMatchBreakpoints()
+  const { width } = useWindowSize()
   return (
     <Box>
       <Grid container spacing={2}>
@@ -79,7 +114,11 @@ const Banner = () => {
               <div className="content">
                 <span className="code_number">1234</span>
                 <span>
-                  <img src="/images/CopySimple.svg" alt="CopySimple" />
+                  {width <= 900 ? (
+                    <img src="/images/CopySimple_mb.svg" alt="CopySimple" />
+                  ) : (
+                    <img src="/images/CopySimple.svg" alt="CopySimple" />
+                  )}
                 </span>
               </div>
             </div>
