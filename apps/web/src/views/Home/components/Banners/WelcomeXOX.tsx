@@ -192,7 +192,7 @@ const WelcomeXOX = (): JSX.Element => {
                 <Button className="btn_read_doc" onClick={() => window.open('')}>
                   Read Documentation
                 </Button>
-                <div className="get_xox" onClick={() => route.push('/swap')}>
+                <div className="get_xox" onClick={() => route.push('#')}>
                   <div className="boxed-child">
                     <span>Get XOX</span>
                   </div>

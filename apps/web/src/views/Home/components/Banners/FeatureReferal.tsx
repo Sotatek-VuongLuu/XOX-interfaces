@@ -261,7 +261,7 @@ const FeatureReferal = () => {
               })}
             </div>
 
-            <button className="btn_join" onClick={() => route.push('/referral')}>
+            <button className="btn_join" onClick={() => route.push('#')}>
               Join Now
             </button>
           </div>
