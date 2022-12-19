@@ -17,7 +17,6 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 // import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 // import { formatAmount } from 'utils/formatInfoNumbers'
 // import { defaultTokens } from './config'
-import { formatEther } from '@ethersproject/units'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { getDefaultProvider } from '@ethersproject/providers'
 import { SUGGESTED_BASES } from 'config/constants/exchange'
@@ -25,6 +24,7 @@ import { CurrencyLogo } from 'components/Logo'
 import { ERC20Token } from '@pancakeswap/sdk'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import InfoPieChart from '../InfoCharts/PieChart'
+import { useAllTokens } from 'hooks/Tokens'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -154,6 +154,13 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const [balanceNative, setBalanceNative] = useState<any>()
   const [dataChart, setDataChart] = useState<any>([])
   const [totalAsset, setTotalAsset] = useState<number>(0)
+  // const debouncedQuery = useDebounce(searchQuery, 200)
+  // const filteredTokens: Token[] = useMemo(() => {
+  //   const filterToken = createFilterToken(debouncedQuery)
+  //   return Object.values(allTokens).filter(filterToken)
+  // }, [allTokens, debouncedQuery])
+  // const filteredQueryTokens = useSortedTokensByQuery(filteredTokens, debouncedQuery)
+  const allTokens = useAllTokens()
 
   const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 
@@ -196,6 +203,10 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       console.warn(error)
     }
   }, [account, chainId, provider])
+
+  useEffect(() => {
+    console.log(allTokens, 'allTokens')
+  }, [allTokens])
 
   useEffect(() => {
     let total = 0

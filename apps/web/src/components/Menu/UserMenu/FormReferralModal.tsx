@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { useState, useCallback, useEffect, useImperativeHandle } from 'react'
+import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react'
 import { Button, Text } from '@pancakeswap/uikit'
 import axios from 'axios'
 import { useSigner, useAccount } from 'wagmi'
@@ -146,7 +146,7 @@ const SuccessModal = styled.div`
   }
 `
 
-const FormReferralModal = ({ ref }) => {
+const FormReferralModal = (_, ref) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const [username, setUsername] = useState('')
@@ -557,4 +557,4 @@ const FormReferralModal = ({ ref }) => {
   )
 }
 
-export default FormReferralModal
+export default forwardRef(FormReferralModal)
