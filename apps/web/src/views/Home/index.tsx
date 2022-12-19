@@ -21,6 +21,10 @@ const StyledSection = styled(PageSection)`
   padding-top: 16px;
   padding: 0px 21px;
 
+  ${({ theme }) => theme.mediaQueries.lg} {
+    padding: 0px 50px;
+  }
+
   ${({ theme }) => theme.mediaQueries.xxl} {
     padding: 0px 130px;
   }

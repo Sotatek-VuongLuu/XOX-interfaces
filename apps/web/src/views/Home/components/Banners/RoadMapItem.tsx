@@ -9,10 +9,8 @@ interface Iprops {
 }
 
 const ContainerItem = styled.div`
-  position: relative;
-  width: 278px;
+  width: 326px;
   height: fit-content;
-  // margin-bottom: 50px;
 
   .title {
     font-weight: 700;
@@ -49,7 +47,7 @@ const ContainerItem = styled.div`
 
   .milestone {
     position: absolute;
-    left: -14%;
+    left: 0;
     z-index: 9;
   }
 `
@@ -58,27 +56,35 @@ const Line = styled.div`
   width: 2px;
   height: 270px;
   position: absolute;
-  left: -10%;
+  left: 0;
+  transform: translateX(-50%);
 `
 
 const LineNotDone = styled.div`
-  height: 4px;
+  height: 8px;
   width: 100%;
-  left: -10%;
+  transform: translateY(50%);
+  left: 0;
   position: absolute;
-  background: #32095b;
+  background: #5F35EB;
 `
 
 const LineDash = styled.div`
   border: none;
   width: 100%;
-  height: 8px;
-  left: -10%;
+  height: 3px;
+  left: 0;
   position: absolute;
-  border-bottom: 4px dashed #9072ff;
+  background-image: linear-gradient(to left, #9072ff 50%, black 50%);
+  background-position: top;
+  background-size: 30px 3px;
+  background-repeat: repeat-x;
 `
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  position: relative;
+  height: 285px;
+`
 
 const RoadMapItem = ({ item, index }: Iprops) => {
   return (
@@ -93,7 +99,7 @@ const RoadMapItem = ({ item, index }: Iprops) => {
           <img src="/images/milestone.svg" alt="milestone" className="milestone" />
         )}
         <Line className="line" />
-        <div>
+        <div className="item__main-content">
           <div className="title">
             {item.year} <span className="time">{item.quater}</span>
           </div>
