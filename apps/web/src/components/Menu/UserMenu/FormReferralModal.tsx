@@ -373,7 +373,7 @@ const FormReferralModal = ({ ref }) => {
   }, [])
 
   return createPortal(
-    !openFormReferral ? (
+    openFormReferral ? (
       <ModalStyle>
         {profileSuccess ? (
           <SuccessModal>

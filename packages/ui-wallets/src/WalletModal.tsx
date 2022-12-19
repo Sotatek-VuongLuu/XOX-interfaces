@@ -205,7 +205,6 @@ function WalletSelect<T>({
   const { t } = useTranslation()
   const [showMore, setShowMore] = useState(false)
   const walletsToShow = showMore ? wallets : wallets.slice(0, displayCount)
-  const [selected] = useSelectedWallet()
   return (
     <AtomBox display="grid" gap="24px" className={walletSelectWrapperClass}>
       {walletsToShow.map((wallet) => {
