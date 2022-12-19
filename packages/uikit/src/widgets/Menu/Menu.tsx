@@ -67,6 +67,13 @@ const Inner = styled.div`
   transition: margin-top 0.2s, margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   transform: translate3d(0, 0, 0);
   max-width: 100%;
+  padding-left: 24px;
+  padding-right: 24px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding-left: 48px;
+    padding-right: 48px;
+  } ;
 `;
 
 const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({

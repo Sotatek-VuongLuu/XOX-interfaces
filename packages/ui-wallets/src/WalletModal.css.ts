@@ -59,7 +59,7 @@ export const desktopWalletSelectionClass = style(
 export const walletSelectWrapperClass = style(
   responsiveStyle({
     xs: {
-      gridTemplateColumns: '130px 130px',
+      gridTemplateColumns: '130px',
       columnGap: '24px',
       placeSelf: 'center',
     },

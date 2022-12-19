@@ -3,6 +3,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { AtomBox } from '@pancakeswap/ui/components/AtomBox'
 import {
   Button,
+  CloseIcon,
   Heading,
   Image,
   LinkExternal,
@@ -56,6 +57,7 @@ interface WalletModalV2Props<T = unknown> extends ModalV2Props {
   login: (connectorId: T) => Promise<any>
   docLink: string
   docText: string
+  onDismiss: () => void
 }
 
 export class WalletConnectorNotFoundError extends Error {}
@@ -107,10 +109,10 @@ const MOBILE_DEFAULT_DISPLAY_COUNT = 6
 function MobileModal<T>({
   wallets,
   connectWallet,
-  docLink,
-  docText,
+  onDismiss,
 }: Pick<WalletModalV2Props<T>, 'wallets' | 'docLink' | 'docText'> & {
-  connectWallet: (wallet: WalletConfigV2<T>) => void
+  connectWallet: (wallet: WalletConfigV2<T>) => void,
+  onDismiss: () => void
 }) {
   const { t } = useTranslation()
 
@@ -136,6 +138,9 @@ function MobileModal<T>({
           textAlign="center"
           p="24px"
         >
+          <div style={{ position: 'absolute', top: '11px', right: '11px', cursor: 'pointer' }} onClick={onDismiss}>
+            <CloseIcon />
+          </div>
           {selected && typeof selected.icon === 'string' && <Image src={selected.icon} width={108} height={108} />}
           <div style={{ maxWidth: '246px' }}>
             <ErrorMessage message={error} />
@@ -143,6 +148,9 @@ function MobileModal<T>({
         </AtomBox>
       ) : (
         <AtomBox px="32px">
+          <div style={{ position: 'absolute', top: '11px', right: '11px', cursor: 'pointer' }} onClick={onDismiss}>
+            <CloseIcon />
+          </div>
           <Heading
             as="h4"
             fontSize="20px"
@@ -293,10 +301,10 @@ function sortWallets<T>(wallets: WalletConfigV2<T>[], lastUsedWalletName: string
 function DesktopModal<T>({
   wallets: wallets_,
   connectWallet,
-  docLink,
-  docText,
+  onDismiss,
 }: Pick<WalletModalV2Props<T>, 'wallets' | 'docLink' | 'docText'> & {
   connectWallet: (wallet: WalletConfigV2<T>) => void
+  onDismiss: () => void
 }) {
   const wallets: WalletConfigV2<T>[] = wallets_.filter((w) => {
     return w.installed !== false || (!w.installed && (w.guide || w.downloadLink || w.qrCode))
@@ -322,6 +330,10 @@ function DesktopModal<T>({
         borderRadius="card"
         className={desktopWalletSelectionClass}
       >
+        <div style={{ position: 'absolute', top: '11px', right: '11px', cursor: 'pointer' }} onClick={onDismiss}>
+          <CloseIcon />
+        </div>
+
         <AtomBox px="64px">
           <Heading
             as="h4"
@@ -361,17 +373,42 @@ function DesktopModal<T>({
             }
           }}
         />
-        <AtomBox display="flex" flexDirection="column" alignItems="center" style={{ gap: '24px' }} textAlign="center">
+        <AtomBox
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          style={{ gap: '16px', paddingTop: '16px' }}
+          textAlign="center"
+        >
           {selected && selected.installed !== false && (
             <>
               {typeof selected.icon === 'string' && <Image src={selected.icon} width={108} height={108} />}
-              <Heading as="h1" fontSize="20px" color="secondary">
+              <Heading
+                as="h4"
+                fontSize="20px"
+                fontFamily="Inter"
+                fontStyle="normal"
+                fontWeight="700"
+                lineHeight="24px"
+                color="rgba(255, 255, 255, 0.87)"
+                textAlign="center"
+              >
                 {t('Opening')} {selected.title}
               </Heading>
               {error ? (
                 <ErrorContent message={error} onRetry={() => connectToWallet(selected)} />
               ) : (
-                <Text>{t('Please confirm in %wallet%', { wallet: selected.title })}</Text>
+                <Text
+                  fontSize="16px"
+                  fontFamily="Inter"
+                  fontStyle="normal"
+                  fontWeight="400"
+                  lineHeight="24px"
+                  color="rgba(255, 255, 255, 0.6)"
+                  textAlign="center"
+                >
+                  {t('Please confirm in %wallet%', { wallet: selected.title })}
+                </Text>
               )}
             </>
           )}
@@ -430,9 +467,21 @@ export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
       <ModalWrapper onDismiss={props.onDismiss} style={{ overflow: 'visible', border: 'none' }}>
         <AtomBox position="relative">
           {isMobile ? (
-            <MobileModal connectWallet={connectWallet} wallets={wallets} docLink={docLink} docText={docText} />
+            <MobileModal
+              connectWallet={connectWallet}
+              wallets={wallets}
+              docLink={docLink}
+              docText={docText}
+              onDismiss={props.onDismiss}
+            />
           ) : (
-            <DesktopModal connectWallet={connectWallet} wallets={wallets} docLink={docLink} docText={docText} />
+            <DesktopModal
+              connectWallet={connectWallet}
+              wallets={wallets}
+              docLink={docLink}
+              docText={docText}
+              onDismiss={props.onDismiss}
+            />
           )}
         </AtomBox>
       </ModalWrapper>

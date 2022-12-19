@@ -24,7 +24,7 @@ import { useAccount } from 'wagmi'
 import { bsc, mainnet } from '@pancakeswap/wagmi/chains'
 
 const NavWrapper = styled(Flex)`
-  padding: 28px 48px 24px;
+  padding: 28px 0 24px;
 `
 
 const MainContent = styled.div`

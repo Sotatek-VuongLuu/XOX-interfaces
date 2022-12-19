@@ -29,6 +29,9 @@ const FormWrapper = styled.div`
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
   padding: 32px 24px;
+  display: flex;
+  flex-direction: column;
+  flexGrow: 1;
 
   & > div {
     display: flex;
@@ -370,7 +373,7 @@ const FormReferralModal = ({ ref }) => {
   }, [])
 
   return createPortal(
-    openFormReferral ? (
+    !openFormReferral ? (
       <ModalStyle>
         {profileSuccess ? (
           <SuccessModal>
