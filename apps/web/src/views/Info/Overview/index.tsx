@@ -115,7 +115,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
     if (!coinmarketcapId) return
 
     axios
-      .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/v3/cryptocurrency/detail/chart`, {
+      .get(`${process.env.NEXT_PUBLIC_API}/data-api/v3/cryptocurrency/detail/chart`, {
         params: { id: coinmarketcapId, range: '1D' },
       })
       .then((result) => {
@@ -140,7 +140,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
     if (!coinmarketcapIds) return
 
     axios
-      .get(`${process.env.NEXT_PUBLIC_API}/v2/cryptocurrency/quotes/latest`, {
+      .get(`${process.env.NEXT_PUBLIC_API}/pro/v2/cryptocurrency/quotes/latest`, {
         params: { id: coinmarketcapIds },
       })
       .then((response) => {

@@ -419,11 +419,8 @@ function DesktopModal<T>({
 }
 
 export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
-  const { wallets: _wallets, login, docLink, docText, ...rest } = props
+  const { wallets, login, docLink, docText, ...rest } = props
 
-  const [lastUsedWalletName] = useAtom(lastUsedWalletNameAtom)
-
-  const wallets = useMemo(() => sortWallets(_wallets, lastUsedWalletName), [_wallets, lastUsedWalletName])
   const [, setSelected] = useSelectedWallet<T>()
   const [, setError] = useAtom(errorAtom)
   const { t } = useTranslation()
@@ -433,7 +430,7 @@ export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
       wallets
         .map((w) => w.icon)
         .filter((icon) => typeof icon === 'string')
-        .concat('https://cdn.pancakeswap.com/wallets/wallet_intro.png') as string[],
+        .concat('') as string[],
     [wallets],
   )
 
