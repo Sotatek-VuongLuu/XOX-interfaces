@@ -152,7 +152,6 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             price: data[key]?.quote?.USD?.price,
             percent_change_24h: data[key]?.quote?.USD?.percent_change_24h,
             volume_24h: data[key]?.quote?.USD?.volume_24h,
-            volume_24h: data[key]?.quote?.USD?.volume_24h,
           }
         })
         setCurrencyDatas(result)
