@@ -1,6 +1,6 @@
 import { Avatar, Box, Grid, Paper } from '@mui/material'
 import React, { useMemo } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y } from 'swiper'
 import 'swiper/css'
@@ -276,8 +276,10 @@ const ReferralFriend = () => {
     if (width < 534) {
       slidesPerView = 2
     }
-
-    if (width < 414) {
+    if (width < 376) {
+      slidesPerView = 2
+    }
+    if (width < 368) {
       slidesPerView = 1
     }
     return slidesPerView

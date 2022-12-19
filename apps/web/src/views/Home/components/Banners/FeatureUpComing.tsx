@@ -1,9 +1,24 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Box, Grid } from '@mui/material'
+import useWindowSize from 'hooks/useWindowSize'
 import { useState } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import TeamMenber from './TeamMenber'
+
+const spin180deg = keyframes`
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(180deg);
+  }
+`
+
+interface IPropsWI {
+  isShowReadMore?: boolean
+}
 
 const Wrapper = styled.div`
   margin-bottom: 100px;
@@ -38,53 +53,32 @@ const Wrapper = styled.div`
   }
 `
 
-const WrapperItem = styled.div`
+const WrapperItem = styled.div<IPropsWI>`
   height: 100%;
   padding: 24px 22px;
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
   border-radius: 20px;
 
-  .title_item {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 24px;
-    color: rgba(255, 255, 255, 0.87);
-    margin-bottom: 16px;
+  .container_title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    ${({ isShowReadMore }) => isShowReadMore && 'margin-bottom: 16px'};
+    .title_item {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 24px;
+      color: rgba(255, 255, 255, 0.87);
+    }
   }
-
   .describe {
     font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
-
-    // height: 240px;
-    // overflow: hidden;
-
-    // &:hover {
-    //   overflow: auto;
-    // }
-
-    // &::-webkit-scrollbar {
-    //   width: 5px;
-    // }
-
-    // &::-webkit-scrollbar-track {
-    //   border-radius: 10px;
-    // }
-
-    // &::-webkit-scrollbar-thumb {
-    //   background: #d5c9ff;
-    //   border-radius: 10px;
-    // }
-
-    // &::-webkit-scrollbar-thumb:hover {
-    //   background: #bcaaff;
-    // }
   }
-
   .expand {
     color: #9072ff;
     font-size: 14px;
@@ -100,19 +94,36 @@ const WrapperItem = styled.div`
 `
 
 const UpComingItem = ({ title, describe }) => {
-  const [isShowReadMore, setIsShow] = useState(describe.length > 450)
+  const [isShowReadMore, setIsShow] = useState(false)
+  const { width } = useWindowSize()
 
   return (
-    <WrapperItem>
-      <p className="title_item">{title}</p>
-      <p className="describe">
-        {isShowReadMore ? `${describe.slice(0, 450)}...` : describe}{' '}
-        {describe.length > 450 ? (
-          <span onClick={() => setIsShow(!isShowReadMore)} style={{ cursor: 'pointer' }}>
-            {isShowReadMore ? <span className="expand"> Read more</span> : <span className="expand">Read less</span>}
-          </span>
+    <WrapperItem isShowReadMore={isShowReadMore}>
+      <div className="container_title">
+        <div className="title_item">{title}</div>
+        {width <= 900 ? (
+          isShowReadMore ? (
+            <img
+              src="/images/up_coming.svg"
+              alt="down_coming"
+              className="up_coming"
+              onClick={() => setIsShow(!isShowReadMore)}
+            />
+          ) : (
+            <img src="/images/down_coming.svg" alt="down_coming" onClick={() => setIsShow(!isShowReadMore)} />
+          )
         ) : null}
-      </p>
+      </div>
+
+      {width <= 900 ? (
+        isShowReadMore ? (
+          <p className="describe">{describe}</p>
+        ) : null
+      ) : (
+        <p className="describe" style={{ marginTop: 16 }}>
+          {describe}
+        </p>
+      )}
     </WrapperItem>
   )
 }

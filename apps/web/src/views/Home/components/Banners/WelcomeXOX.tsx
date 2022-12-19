@@ -41,7 +41,7 @@ const LeftContent = styled.div`
     gap: 19px;
     grid-template-columns: auto auto 1fr;
     .get_xox {
-      padding: 1px;
+      padding: 2px;
       border-radius: 8px;
       background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
       cursor: pointer;
@@ -69,6 +69,7 @@ const LeftContent = styled.div`
     }
     @media screen and (max-width: 900px) {
       .get_xox {
+        padding: 1px;
         .boxed-child {
           padding: 15px 20px;
           span {
