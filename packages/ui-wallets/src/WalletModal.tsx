@@ -199,11 +199,7 @@ function WalletSelect<T>({
   const walletsToShow = showMore ? wallets : wallets.slice(0, displayCount)
   const [selected] = useSelectedWallet()
   return (
-    <AtomBox
-      display="grid"
-      gap="24px"
-      className={walletSelectWrapperClass}
-    >
+    <AtomBox display="grid" gap="24px" className={walletSelectWrapperClass}>
       {walletsToShow.map((wallet) => {
         const isImage = typeof wallet.icon === 'string'
         const Icon = wallet.icon
@@ -365,6 +361,22 @@ function DesktopModal<T>({
             }
           }}
         />
+        <AtomBox display="flex" flexDirection="column" alignItems="center" style={{ gap: '24px' }} textAlign="center">
+          {selected && selected.installed !== false && (
+            <>
+              {typeof selected.icon === 'string' && <Image src={selected.icon} width={108} height={108} />}
+              <Heading as="h1" fontSize="20px" color="secondary">
+                {t('Opening')} {selected.title}
+              </Heading>
+              {error ? (
+                <ErrorContent message={error} onRetry={() => connectToWallet(selected)} />
+              ) : (
+                <Text>{t('Please confirm in %wallet%', { wallet: selected.title })}</Text>
+              )}
+            </>
+          )}
+          {selected && selected.installed === false && <NotInstalled qrCode={qrCode} wallet={selected} />}
+        </AtomBox>
       </AtomBox>
     </>
   )
@@ -428,26 +440,21 @@ export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
   )
 }
 
-// const Intro = ({ docLink, docText }: { docLink: string; docText: string }) => {
-//   const { t } = useTranslation()
-//   return (
-//     <>
-//       <Heading as="h1" fontSize="20px" color="secondary">
-//         {t('Haven’t got a wallet yet?')}
-//       </Heading>
-//       <Image src="https://cdn.pancakeswap.com/wallets/wallet_intro.png" width={198} height={178} />
-//       <Button as={LinkExternal} color="backgroundAlt" variant="subtle" href={docLink}>
-//         {docText}
-//       </Button>
-//     </>
-//   )
-// }
-
 const NotInstalled = ({ wallet, qrCode }: { wallet: WalletConfigV2; qrCode?: string }) => {
   const { t } = useTranslation()
   return (
     <>
-      <Heading as="h1" fontSize="20px" color="secondary">
+      <Heading
+        as="h4"
+        fontSize="20px"
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="700"
+        lineHeight="24px"
+        color="rgba(255, 255, 255, 0.87)"
+        textAlign="center"
+        mt="16px"
+      >
         {t('%wallet% is not installed', { wallet: wallet.title })}
       </Heading>
       {qrCode && (
