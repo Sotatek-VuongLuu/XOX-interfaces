@@ -104,8 +104,11 @@ export const CustomTableWrapper = styled(Flex)`
   padding-top: 24px;
   flex-direction: column;
   gap: 24px;
-  min-width: 1600px;
   overflow: auto;
+
+  & > div {
+    min-width: 1600px;
+  }
 `
 
 export const PageButtons = styled(Flex)`

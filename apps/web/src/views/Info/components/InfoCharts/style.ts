@@ -77,16 +77,19 @@ export const ChartContent = styled.div`
   .filter {
     margin: 25px 0px;
     display: flex;
-    justify-content: space-between;
-    span {
+    justify-content: flex-end;
+    button {
       font-weight: 700;
       font-size: 14px;
-      margin-left: 24px;
+      margin-left: 8px;
       color: rgba(255, 255, 255, 0.6);
+      background: transparent;
+      border: none;
+      outline: none;
       cursor: pointer;
     }
 
-    span.active {
+    button.active {
       color: #9072ff;
     }
   }
