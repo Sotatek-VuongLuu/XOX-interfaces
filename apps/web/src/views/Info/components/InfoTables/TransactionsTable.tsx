@@ -15,12 +15,16 @@ import { Arrow, Break, ClickableColumnHeader } from './shared'
 
 const Wrapper = styled.div`
   width: 100%;
-  grid-column: 1 / span 2;
+  grid-column: 1;
   background: #242424;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 24px;
   margin-bottom: 50px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-column: 1 / span 2;
+  }
 
   & .heading {
     position: relative;
@@ -100,6 +104,8 @@ export const CustomTableWrapper = styled(Flex)`
   padding-top: 24px;
   flex-direction: column;
   gap: 24px;
+  min-width: 1600px;
+  overflow: auto;
 `
 
 export const PageButtons = styled(Flex)`
@@ -368,9 +374,11 @@ const TransactionTable: React.FC<
   // Update maxPage based on amount of items & applied filtering
   useEffect(() => {
     if (transactions) {
-      const filteredTransactions = transactions.filter((tx) => {
-        return txFilter === undefined || tx.type === txFilter
-      }).slice(0, 100)
+      const filteredTransactions = transactions
+        .filter((tx) => {
+          return txFilter === undefined || tx.type === txFilter
+        })
+        .slice(0, 100)
       if (filteredTransactions.length % perPage === 0) {
         setMaxPage(Math.floor(filteredTransactions.length / perPage))
       } else {

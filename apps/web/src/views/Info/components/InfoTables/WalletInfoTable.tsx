@@ -24,7 +24,6 @@ import { SUGGESTED_BASES } from 'config/constants/exchange'
 import { CurrencyLogo } from 'components/Logo'
 import { ERC20Token } from '@pancakeswap/sdk'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { TableWrapper } from './shared'
 import InfoPieChart from '../InfoCharts/PieChart'
 
 const Wrapper = styled.div`
@@ -121,6 +120,23 @@ const Address = styled.div`
   }
 `
 
+const TableWrapper = styled(Flex)`
+  width: 100%;
+  flex-direction: column;
+  gap: 16px;
+  background-color: ${({ theme }) => theme.card.background};
+  border-radius: 10px;
+  height: 100%;
+  width: 100%;
+  padding: 24px;
+  min-height: 525px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    width: 454px;
+    min-height: unset;
+  }
+`
+
 const SORT_FIELD = {
   amountUSD: 'amountUSD',
   timestamp: 'timestamp',
@@ -202,7 +218,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
 
   return (
     <Wrapper>
-      <TableWrapper style={{ height: '100%', padding: '24px', width: '454px' }}>
+      <TableWrapper>
         <Flex justifyContent="space-between" alignItems="flex-end">
           <Text
             fontSize="20px"
