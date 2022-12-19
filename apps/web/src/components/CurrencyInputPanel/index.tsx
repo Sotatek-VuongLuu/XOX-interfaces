@@ -141,8 +141,6 @@ export default function CurrencyInputPanel({
     />,
   )
 
-  console.log(currency, otherCurrency, showCommonBases, commonBasesType,)
-
   return (
     <Box position="relative" id={id}>
       <Flex alignItems="center" justifyContent="space-between">

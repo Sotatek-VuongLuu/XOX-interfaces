@@ -117,7 +117,6 @@ function CurrencySearch({
   const [invertSearchOrder] = useState<boolean>(false)
 
   const allTokens = useAllTokens()
-  console.log(allTokens, 'allTokens')
 
   // if they input an address, use it
   const searchToken = useToken(debouncedQuery)

@@ -5,7 +5,7 @@ import { useState } from 'react'
 import styled from 'styled-components'
 import HowToJoin from './HowToJoin'
 // eslint-disable-next-line import/no-cycle
-import LeaderBoardItem from './LearderBoardItem'
+import LearderBoardItemForLandingPage from './LearderBoardItemForLandingPage'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
 
@@ -43,9 +43,11 @@ const First = styled.div`
       cursor: pointer;
     }
 
-    .tab_item.active {
+    .tab_item_active {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
       border-radius: 4px;
+      padding: 10px 20px;
+      cursor: pointer;
     }
   }
 
@@ -107,32 +109,34 @@ const Second = styled.div<IPropsTotal>`
   }
 `
 
+const WrapperLeft = styled.div``
+
 const WrapperRight = styled.div`
   height: 100%;
-
   .container {
     width: 100%;
-    height: 594px;
+    height: 100%;
     background: #242424;
     border-radius: 10px;
-    padding: 24px 27px 46px 27px;
+    padding: 24px;
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
     position: relative;
 
     .filter {
-      display: grid;
-      grid-template-columns: auto auto auto 1fr;
-      gap: 10px;
+      display: flex;
       align-items: center;
       color: #ffffff;
-      position: relative;
-      z-index: 2;
 
-      .subTab_item.active {
+      .subTab_item_active {
+        padding: 10px 20px;
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
         border-radius: 4px;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+        color: #ffffff;
       }
 
       .subTab_item {
@@ -141,7 +145,6 @@ const WrapperRight = styled.div`
         font-size: 14px;
         line-height: 17px;
         color: #ffffff;
-        cursor: pointer;
       }
     }
   }
@@ -160,8 +163,8 @@ const MainInfo = () => {
   return (
     <Box sx={{ marginTop: '16px' }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <div>
+        <Grid item xs={12} md={5}>
+          <WrapperLeft>
             <First>
               <div className="tab_filter">
                 {filterTime.map((item, index) => {
@@ -170,7 +173,7 @@ const MainInfo = () => {
                     <div
                       key={item}
                       onClick={() => setTabLeaderBoard(index)}
-                      className={tabLeaderBoard === index ? 'tab_item active' : 'tab_item'}
+                      className={tabLeaderBoard === index ? 'tab_item_active' : 'tab_item'}
                     >
                       {item}
                     </div>
@@ -179,9 +182,9 @@ const MainInfo = () => {
               </div>
 
               <div className="learder_board">
-                {leaderBoardList.map((item: IItemLeaderBoard, index: number) => {
+                {Array.from(leaderBoardList).map((item: IItemLeaderBoard, index: number) => {
                   // eslint-disable-next-line react/no-array-index-key
-                  return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
+                  return <LearderBoardItemForLandingPage item={item} key={`learder_item_${index}`} />
                 })}
               </div>
 
@@ -191,7 +194,7 @@ const MainInfo = () => {
                 <div className="dot_item" />
               </div>
 
-              <LeaderBoardItem
+              <LearderBoardItemForLandingPage
                 item={{
                   name: 'Ha Anh Tuan',
                   point: '10293',
@@ -214,18 +217,18 @@ const MainInfo = () => {
                 </div>
               </div>
             </Second>
-          </div>
+          </WrapperLeft>
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={7}>
           <WrapperRight>
             <div className="container">
               <div className="filter">
-                {subTab.map((item, index) => {
+                {Array.from(subTab).map((item, index) => {
                   return (
                     <div
                       key={item}
                       onClick={() => setSubTabIndex(index)}
-                      className={subTabIndex === index ? 'subTab_item active' : 'subTab_item'}
+                      className={subTabIndex === index ? 'subTab_item_active' : 'subTab_item'}
                     >
                       {item}
                     </div>

@@ -215,7 +215,6 @@ export const useGetChainName = () => {
   const path = window.location.href
 
   const getChain = useCallback(() => {
-    console.log(path, 'pathpath')
     if (path.includes('eth') || path.includes('chainId=1') || path.includes('goerli') || path.includes('chainId=5'))
       return 'ETH'
     return 'BSC'

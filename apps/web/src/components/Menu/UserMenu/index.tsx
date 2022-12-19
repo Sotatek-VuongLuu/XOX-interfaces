@@ -95,7 +95,7 @@ const UserMenu = () => {
 
   const renderAvataImage = () => {
     if (userProfile?.avatar) {
-      return <img src={userProfile.avatar} width="100%" height="100%" alt="" style={{ borderRadius: '50%' }} />
+      return <img src={userProfile.avatar} width="100%" height="100%" alt="" style={{ borderRadius: '50%', objectFit: 'cover' }} />
     }
     return (
       <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 100 100" fill="none">
@@ -250,7 +250,7 @@ const UserMenu = () => {
     return (
       <UIKitUserMenu
         account={account}
-        avatarSrc={userProfile?.avatar || avatarSrc}
+        avatarSrc={avatarSrc}
         text={userMenuText}
         variant={userMenuVariable}
       >

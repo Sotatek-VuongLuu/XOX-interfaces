@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { useState, useCallback, useEffect, useImperativeHandle } from 'react'
+import React, { useState, useCallback, useEffect, useImperativeHandle } from 'react'
 import { Button, Text } from '@pancakeswap/uikit'
 import axios from 'axios'
 import { useSigner, useAccount } from 'wagmi'
@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { AppState, useAppDispatch } from 'state'
 import { updateOpenFormReferral, updateUserProfile } from 'state/user/actions'
 import { useRouter } from 'next/router'
+import { createReturn } from 'typescript'
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -174,6 +175,12 @@ const FormReferralModal = ({ ref }) => {
     [],
   )
 
+  const handleUsername = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (/^[0-9A-Za-z]*$/.test(e.target.value)) {
+      setUsername(e.target.value)
+    }
+  }, [])
+
   const onChangeAvata = useCallback(
     (e: any) => {
       const img = e.target.files[0]
@@ -202,9 +209,9 @@ const FormReferralModal = ({ ref }) => {
   const validateEmail = useCallback(() => {
     if (!email) return true
 
-    return email.match(
-      // eslint-disable-next-line no-useless-escape
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+    // eslint-disable-next-line no-useless-escape
+    return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+      email,
     )
   }, [email])
 
@@ -240,7 +247,11 @@ const FormReferralModal = ({ ref }) => {
       const data = result?.data
       if (data) {
         avataURL = data.signedUrl.split(/[?]+/)[0]
-        await axios.put(data.signedUrl, { data: avatar }).catch((error) => {
+        await axios.put(data.signedUrl, avatar, {
+          headers: {
+            'Content-Type': avatar.type
+          }
+        }).catch((error) => {
           console.warn(error)
         })
       }
@@ -260,6 +271,7 @@ const FormReferralModal = ({ ref }) => {
           })
           .then((response) => {
             dispatch(updateUserProfile({ userProfile: response.data }))
+            setAvata(undefined)
             setProfileSuccess(true)
           })
           .catch((error) => {
@@ -299,11 +311,11 @@ const FormReferralModal = ({ ref }) => {
   useEffect(() => {
     const saveable =
       avatar ||
-      (username !== undefined && username !== userProfile?.username && /^[0-9A-Za-z\s]*$/.test(username)) ||
+      (username !== undefined && username !== userProfile?.username) ||
       (email && email !== userProfile?.email) ||
       (telegram && telegram !== userProfile?.telegram)
     setSaveable(saveable)
-  }, [username, email, telegram, avatar])
+  }, [username, email, telegram, avatar, userProfile])
 
   useEffect(() => {
     const getData = setTimeout(() => {
@@ -387,7 +399,7 @@ const FormReferralModal = ({ ref }) => {
             >
               You have set your profile successfully.
             </Text>
-            <img src="/images/image45.png" style={{ margin: 'auto', display: 'block' }} alt="" />
+            <img src="/images/image45.png" style={{ margin: 'auto', display: 'block', cursor: 'pointer' }} alt="" />
             <button onClick={onCloseBtnClicked} type="button">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path
@@ -487,11 +499,7 @@ const FormReferralModal = ({ ref }) => {
               <FormLabel>
                 Username<span>*</span>
               </FormLabel>
-              <FormInput
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className={errorMessages.username ? 'error' : ''}
-              />
+              <FormInput value={username} onChange={handleUsername} className={errorMessages.username ? 'error' : ''} />
               {errorMessages.username && <span className="form__error-message">{errorMessages.username}</span>}
             </div>
             <div>

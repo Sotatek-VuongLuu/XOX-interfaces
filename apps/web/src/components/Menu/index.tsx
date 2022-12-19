@@ -32,7 +32,7 @@ const BTNLaunchApp = styled.button`
 const HamburgerButton = styled.div`
   margin-left: 11px;
 
-  @media (min-width: 980px) {
+  @media (min-width: 1200px) {
     display: none;
   }
 `

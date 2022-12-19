@@ -730,7 +730,6 @@ const getOverviewChartDataCustom = async (id: string, filter: any): Promise<{ da
         priceUSD: d[1],
       }
     })
-    console.log(data, 'data')
     return { data, error: false }
   } catch (error) {
     console.error('Failed to fetch overview chart data', error)

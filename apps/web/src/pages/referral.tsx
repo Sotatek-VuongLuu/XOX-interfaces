@@ -1,5 +1,5 @@
-import Refferal from 'views/Referral'
+import Referral from 'views/Referral'
 
-const RefferalPage = () => <Refferal />
+const ReferralPage = () => <Referral />
 
-export default RefferalPage
+export default ReferralPage

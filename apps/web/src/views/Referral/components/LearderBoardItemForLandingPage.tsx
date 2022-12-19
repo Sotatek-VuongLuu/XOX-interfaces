@@ -16,14 +16,14 @@ const Wrapper = styled(Box)`
     align-items: center;
 
     .ranking_top {
-      width: 42px;
-      height: 42px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background: #ffffff;
       display: flex;
       justify-content: center;
       align-items: center;
-      min-width: 42px;
+      min-width: 60px;
       margin-right: 16px;
 
       @media screen and (max-width: 900px) {
@@ -35,18 +35,18 @@ const Wrapper = styled(Box)`
     }
 
     .ranking {
-      width: 42px;
-      height: 42px;
+      width: 60px;
+      height: 60px;
       border-radius: 50%;
       background: rgba(255, 255, 255, 0.1);
       display: flex;
       justify-content: center;
       align-items: center;
       font-weight: 700;
-      font-size: 12px;
-      line-height: 15px;
+      font-size: 20px;
+      line-height: 24px;
       color: #ffffff;
-      min-width: 42px;
+      min-width: 60px;
       margin-right: 16px;
 
       @media screen and (max-width: 900px) {
@@ -63,7 +63,7 @@ const Wrapper = styled(Box)`
       display: flex;
       justify-content: space-between;
       width: 100%;
-      padding: 6px 17px 6px 6px;
+      padding: 10px 40px 10px 10px;
       border-radius: 60px;
       align-items: center;
 
@@ -73,8 +73,8 @@ const Wrapper = styled(Box)`
 
         .ranking_name {
           font-weight: 700;
-          font-size: 14px;
-          line-height: 17px;
+          font-size: 20px;
+          line-height: 24px;
           color: #424242;
           margin-left: 8px;
 
@@ -85,8 +85,8 @@ const Wrapper = styled(Box)`
         }
         .name {
           font-weight: 700;
-          font-size: 14px;
-          line-height: 17px;
+          font-size: 20px;
+          line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
           margin-left: 8px;
 
@@ -99,8 +99,8 @@ const Wrapper = styled(Box)`
 
       .point {
         font-weight: 700;
-        font-size: 14px;
-        line-height: 17px;
+        font-size: 20px;
+        line-height: 24px;
         text-align: right;
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
         -webkit-background-clip: text;
@@ -162,7 +162,7 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
 
         <div className={`${ranking.includes(item.rank) ? `bg_white` : `bg_rba`} user_info`}>
           <div className="user_avatar_name">
-            <Avatar alt="Remy Sharp" src={item.avatar} sx={{ height: isMobile ? 24 : 30, width: isMobile ? 24 : 30 }} />
+            <Avatar alt="Remy Sharp" src={item.avatar} sx={{ height: isMobile ? 24 : 40, width: isMobile ? 24 : 40 }} />
             <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>{item.name}</p>
           </div>
 

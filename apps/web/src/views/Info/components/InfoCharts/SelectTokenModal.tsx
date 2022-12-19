@@ -273,7 +273,6 @@ const SelectTokenModal = (
         .then((result) => {
           setTokenInfo(result.data)
           setCoinGeckoId(result.data.coingekcoId)
-          console.log(result.data, 'result.data')
         })
         .catch((error) => {
           console.warn(error)
@@ -430,7 +429,6 @@ const SelectTokenModal = (
               className="close-btn"
               onClick={() => {
                 setOpen(false)
-                console.log(isOpen)
               }}
               type="button"
             >

@@ -33,7 +33,6 @@ const getPoolChartData = async (
         address,
       },
     )
-    console.log('pairDayDatas', pairDayDatas)
    
     const data = pairDayDatas.map(mapPairDayData)
     return { data, error: false }

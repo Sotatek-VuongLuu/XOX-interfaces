@@ -1,20 +1,11 @@
-import {
-  Avatar,
-  Box,
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material'
-import Image from 'next/image'
+import { Avatar, Box, Grid, Paper } from '@mui/material'
 import React from 'react'
 import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination, A11y } from 'swiper'
 import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 
 const WrapperLeft = styled(Box)`
   padding: 24px;
@@ -30,13 +21,48 @@ const WrapperLeft = styled(Box)`
 `
 
 const WrapperRight = styled(Box)`
+  margin-top: 0 !important;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    width: 117px;
+    height: 157px;
+    left: 0px;
+    top: 16px;
+    background: linear-gradient(90deg, #121212 16.15%, rgba(18, 18, 18, 0) 100%);
+  }
+
+  &:after {
+    content: '';
+    position: absolute;
+    width: 117px;
+    height: 157px;
+    right: 0;
+    top: 16px;
+    background: linear-gradient(90deg, #121212 15.1%, rgba(18, 18, 18, 0) 100%);
+    transform: matrix(-1, 0, 0, 1, 0, 0);
+  }
+
   .item {
-    background: #242424;
+    position: relative;
+    background-size: 192px 172px;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 172px;
+    width: 192px;
+    background: url(/images/item.svg);
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+  }
+  .item > div {
     display: flex;
     flex-direction: column;
     align-items: center;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: -7px;
 
     .shadow {
       width: 110px;
@@ -50,6 +76,8 @@ const WrapperRight = styled(Box)`
       line-height: 15px;
       text-align: center;
       color: rgba(255, 255, 255, 0.87);
+      margin-top: 8px;
+      white-space: nowrap;
     }
 
     .btn {
@@ -59,7 +87,92 @@ const WrapperRight = styled(Box)`
       font-size: 14px;
       line-height: 17px;
       color: rgba(255, 255, 255, 0.38);
+      margin-top: 16px;
     }
+  }
+
+  .swiper-slide-active item {
+    background: url(/images/current_item.svg);
+  }
+
+  .swiper-button-next {
+    background-image: url(/images/next.svg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    border-radius: 50%;
+  }
+
+  .swiper-button-next::after {
+    display: none;
+  }
+
+  .swiper-button-prev {
+    background-image: url(/images/prev.svg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+  }
+
+  .swiper-button-prev::after {
+    display: none;
+  }
+
+  .swiper.swiper-initialized {
+    padding-top: 16px;
+  }
+`
+
+const TableHeader = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #444444;
+
+  div:last-child {
+    text-align: right;
+  }
+`
+const TableBody = styled.div`
+  & > div {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 16px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.87);
+    align-items: center;
+    margin-top: 16px;
+  }
+
+  & > div div:first-child {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 8px;
+    align-items: center;
+
+    img {
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
+    }
+  }
+
+  & > div div:nth-child(2) {
+    display: flex;
+    align-items: center;
+  }
+
+  & > div div:last-child {
+    text-align: right;
   }
 `
 
@@ -75,86 +188,79 @@ const ReferralFriend = () => {
       100,
       10293,
     ),
+    createData(
+      'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
+      'Kristin Watson',
+      100,
+      10293,
+    ),
+    createData(
+      'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
+      'Brooklyn Simmons',
+      100,
+      10293,
+    ),
   ]
 
   return (
     <Box sx={{ marginTop: '16px' }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} md={4}>
           <WrapperLeft>
             <p className="title">Referral friends</p>
 
-            <TableContainer component={Paper} sx={{ height: 190, background: 'transparent', boxShadow: 'unset' }}>
-              <Table sx={{ minWidth: 500 }} aria-label="simple table">
-                <TableHead>
-                  <TableRow
-                    sx={{
-                      '& td, & th': {
-                        borderBottom: '1px solid #444444',
-                        fontWeight: 700,
-                        fontSize: 14,
-                        color: ' rgba(255, 255, 255, 0.6)',
-                      },
-                    }}
-                  >
-                    <TableCell>User Name</TableCell>
-                    <TableCell align="left">Referral Code</TableCell>
-                    <TableCell align="right">Total Points</TableCell>
-                  </TableRow>
-                </TableHead>
-                <TableBody>
-                  {rows.map((row) => (
-                    <TableRow
-                      key={row.name}
-                      sx={{
-                        '& td, & th': {
-                          border: 0,
-                          fontWeight: 400,
-                          fontSize: 14,
-                          color: ' rgba(255, 255, 255, 0.87)',
-                          lineHeight: '14px',
-                        },
-                      }}
-                    >
-                      <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Avatar
-                          alt="Remy Sharp"
-                          src={row.avatar}
-                          sx={{ marginRight: '8px', height: '24px', width: '24px' }}
-                        />
+            <div>
+              <TableHeader>
+                <div>User Name</div>
+                <div>Referral Code</div>
+                <div>Total Points</div>
+              </TableHeader>
+              <TableBody>
+                {rows.map((row) => {
+                  return (
+                    <div key={row.name}>
+                      <div>
+                        <img src={row.avatar} alt={row.name} />
                         {row.name}
-                      </TableCell>
-                      <TableCell align="left">
+                      </div>
+                      <div>
                         {row.code}
                         <img
                           src="/images/copy_purple.svg"
                           alt="copy_purple"
                           style={{ marginBottom: '-2px', marginLeft: '8px' }}
                         />
-                      </TableCell>
-                      <TableCell align="right">{row.point} points</TableCell>
-                    </TableRow>
-                  ))}
-                </TableBody>
-              </Table>
-            </TableContainer>
+                      </div>
+                      <div>{row.point}</div>
+                    </div>
+                  )
+                })}
+              </TableBody>
+            </div>
           </WrapperLeft>
         </Grid>
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12} md={8}>
           <WrapperRight sx={{ marginTop: '16px' }}>
-            <Swiper spaceBetween={50} slidesPerView={4}>
-              {Array.from(listLever).map((item, index) => {
+            <Swiper
+              slidesPerView={5}
+              modules={[Navigation, Pagination, A11y]}
+              navigation
+              scrollbar={{ draggable: true }}
+            >
+              {listLever.map((item, index) => {
                 return (
                   <SwiperSlide>
                     <div className="item" key={item.icon}>
-                      <img src={item.icon} alt="icons" className="jewellery" />
+                      <div>
+                        <img src={item.icon} alt="icons" className="jewellery" />
 
-                      <div className="shadow" />
+                        <div className="shadow" />
 
-                      <p className="title">{item.point}</p>
-                      <button type="button" className="btn">
-                        Claim
-                      </button>
+                        <p className="title">{item.point}</p>
+                        <button type="button" className="btn">
+                          Claim
+                        </button>
+                      </div>
                     </div>
                   </SwiperSlide>
                 )

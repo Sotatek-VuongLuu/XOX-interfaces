@@ -54,10 +54,6 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const transactions = useProtocolTransactionsSWR()
   const { chainId } = useActiveChainId()
 
-  useEffect(() => {
-    console.log(protocolData, 'protocolData')
-  }, [protocolData])
-
   // const allPoolData = useAllPoolDataSWR()
   // const allPoolData = useAllPoolData()
 
@@ -136,7 +132,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
         setChardData(data)
       })
       .catch((err) => {
-        console.log(err)
+        console.warn(err)
       })
   }, [filter, coinmarketcapId])
 
@@ -164,7 +160,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
         setCurrencyDatas(result)
       })
       .catch((err) => {
-        console.log(err)
+        console.warn(err)
       })
   }, [coinmarketcapIds, coinmarketcapId])
 
