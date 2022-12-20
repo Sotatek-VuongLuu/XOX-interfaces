@@ -22,20 +22,23 @@ export const StyledMenuItemContainer = styled.div<StyledMenuItemProps>`
 
 const StyledMenuItem = styled.a<StyledMenuItemProps>`
   position: relative;
-  display: flex;
+  display: block;
   align-items: center;
-  background: ${({ theme, $isActive }) => ($isActive ? theme.colors.secondary : theme.colors.textSubtle)};
+  background: ${({ $isActive }) => ($isActive ? "linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)" : "#1d1d1d")};
   font-family: "Inter";
   font-style: normal;
   font-size: 16px;
   line-height: 19px;
   -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  -webkit-text-fill-color: ${({ $isActive }) => ($isActive ? "transparent" : "rgba(255, 255, 255, 0.6)")};
   background-clip: text;
-  text-fill-color: transparent;
+  text-fill-color: ${({ $isActive }) => ($isActive ? "transparent" : "rgba(255, 255, 255, 0.6)")};
   font-weight: ${({ $isActive }) => ($isActive ? "700" : "500")};
   opacity: ${({ $isDisabled }) => ($isDisabled ? 0.5 : 1)};
   pointer-events: ${({ $isDisabled }) => ($isDisabled ? "none" : "inherit")};
+  color: rgba(255, 255, 255, 0.6);
+  padding-top: 12px;
+  padding-bottom: 12px;
 
   ${({ $statusColor, theme }) =>
     $statusColor &&
@@ -53,16 +56,16 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   ${({ $variant }) =>
     $variant === "default"
       ? `
-    padding: 0 16px;
+    padding: 12px 16px;
     height: 48px;
   `
       : `
-    padding: 4px 4px 0px 4px;
+    padding: 12px 4px 12px 4px;
     height: 42px;
   `}
 
   &:hover {
-    background: ${({ theme }) => theme.colors.secondary};
+    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

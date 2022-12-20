@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   margin-bottom: 50px;
 
   & > div {
-    max-width: calc(100vw - 96px)
+    max-width: calc(100vw - 96px);
   }
 
   & > div:first-child {
@@ -37,11 +37,6 @@ const Wrapper = styled.div`
     & > div:first-child {
       margin-bottom: 28px;
     }
-  }
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    grid-column: 1 / span 2;
-    padding: 24px;
   }
 
   & .heading {
@@ -74,6 +69,29 @@ const Wrapper = styled.div`
     background: transparent;
     border: none;
     box-shadow: none;
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-column: 1 / span 2;
+    padding: 24px;
+
+    .btn-filter button {
+      margin-right: 0;
+      margin-left: 8px;
+    }
+
+    & > div:first-child {
+      display: flex;
+      flex-direction: row;
+
+      & > div {
+        align-items: flex-end;
+      }
+
+      & > div:first-child {
+        margin-bottom: 28px;
+      }
+    }
   }
 `
 
