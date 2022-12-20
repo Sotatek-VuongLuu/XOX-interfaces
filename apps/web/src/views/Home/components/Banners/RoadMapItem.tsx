@@ -29,8 +29,15 @@ const ContainerItem = styled.div`
   }
 
   .item_main_content {
-    display: flex;
-    gap: 15px;
+    & > div:nth-child(2) {
+      margin: 16px 0px;
+    }
+    .entry {
+      display: flex;
+      & > div:first-child {
+        margin-right: 15px;
+      }
+    }
   }
 
   .icon_stone {
@@ -61,12 +68,12 @@ const Line = styled.div`
 `
 
 const LineNotDone = styled.div`
-  height: 8px;
+  height: 4px;
   width: 100%;
   transform: translateY(50%);
   left: 0;
   position: absolute;
-  background: #5F35EB;
+  background: #5f35eb;
 `
 
 const LineDash = styled.div`
@@ -100,22 +107,19 @@ const RoadMapItem = ({ item, index }: Iprops) => {
         )}
         <Line className="line" />
         <div className="item__main-content">
-          <div className="title">
-            {item.year} <span className="time">{item.quater}</span>
-          </div>
+          <div className="title">{item.year}</div>
 
           <div className="item_main_content">
-            <div>
-              <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
-            </div>
-            <div className="describe">{item.describeOne}</div>
-          </div>
-
-          <div className="item_main_content margin_top">
-            <div>
-              <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
-            </div>
-            <div className="describe">{item.describeTow}</div>
+            {Array.from(item.describe).map((entry) => {
+              return (
+                <div className="entry" key={`${entry}_container`}>
+                  <div>
+                    <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+                  </div>
+                  <div className="describe">{entry}</div>
+                </div>
+              )
+            })}
           </div>
         </div>
       </ContainerItem>
