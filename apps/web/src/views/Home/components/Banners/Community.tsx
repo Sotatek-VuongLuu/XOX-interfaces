@@ -29,7 +29,7 @@ const Wrapper = styled.div`
       background: #242424;
       border-radius: 20px;
       display: flex;
-      justify-content: space-between;
+      /* justify-content: space-between; */
       align-items: center;
 
       .icon-container {
@@ -190,7 +190,7 @@ const listCommunity = [
   {
     icon: '/images/group_tele_pc.svg',
     name: 'Telegram Group',
-    des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    des: 'Ask general questions and chat with the worldwide community on Telegram.',
     iconMobile: '/images/group_tele_mb.svg',
   },
   {
@@ -202,7 +202,7 @@ const listCommunity = [
   {
     icon: '/images/pc_discord.svg',
     name: 'Discord',
-    des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    des: 'Ask general questions and chat with the worldwide community on Discord.',
     iconMobile: '/images/discord_mb.svg',
   },
   {

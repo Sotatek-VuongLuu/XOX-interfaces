@@ -7,10 +7,7 @@ import RoadMapMobile from './RoadMapMobile'
 
 export interface IRoadMapItem {
   year: string
-  describeOne: string
-  describeTow: string
-  quater: string
-  includeMonth?: number[]
+  describe: string[]
   status?: string
 }
 
@@ -119,7 +116,7 @@ const RoadMap = () => {
       ) : (
         <div className="main">
           {listRoadMap.map((item: IRoadMapItem, index) => {
-            return <RoadMapItem item={item} index={index + 1} key={`${item.year}_${item.quater}`} />
+            return <RoadMapItem item={item} index={index + 1} key={`${item.year}_parent_${index % 2}`} />
           })}
         </div>
       )}
@@ -129,38 +126,39 @@ const RoadMap = () => {
 
 export const listRoadMap = [
   {
-    year: '2022',
-    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
-    describeTow: 'Start contract for development',
-    quater: 'Q2',
+    year: 'Ready & Live',
+    describe: ['Website', 'XOX & XOXS Multi Chain Smart Contracts', 'Decentralized Dex'],
     status: 'done',
   },
   {
-    year: '2022',
-    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
-    describeTow: 'Start contract for development',
-    quater: 'Q3',
+    year: 'Ready & Live',
+    describe: ['Referral Program Dapp', 'XOXS Staking Dashboard', 'Multi Chain Assets Management Dapp'],
     status: 'done',
   },
   {
-    year: '2022',
-    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
-    describeTow: 'Start contract for development',
-    quater: 'Q4',
+    year: 'Under Development',
+    describe: [
+      'Bridge',
+      'Adding Features To Already Live Utilities',
+      'Decentralized Wallet Available On IOS, Android & Web',
+    ],
     status: 'processing',
   },
   {
-    year: '2023',
-    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
-    describeTow: 'Start contract for development',
-    quater: 'Q1',
+    year: 'Under Development',
+    describe: [
+      'Multichain Launchpad',
+      'Coin Listing/Ranking Site (Early Stage)',
+      'Advance Trading Station (Early Stage)',
+    ],
     status: 'todo',
   },
   {
-    year: '2023',
-    describeOne: 'Looking for & close deal with the very first investors & backers to get initial funds for project',
-    describeTow: 'Start contract for development',
-    quater: 'Q2',
+    year: 'Upcoming Developments',
+    describe: [
+      'Improve and fix bugs or issues on current live utilities. (Improvement Stage)',
+      'Planning & Researching Upcoming Potential Developments.',
+    ],
     status: 'todo',
   },
 ]

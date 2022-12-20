@@ -33,8 +33,15 @@ const Wrapper = styled.div`
     }
 
     .item_main_content {
-      display: flex;
-      gap: 15px;
+      & > div:nth-child(2) {
+        margin: 16px 0px;
+      }
+      .entry {
+        display: flex;
+        & > div:first-child {
+          margin-right: 15px;
+        }
+      }
     }
 
     .icon_stone {
@@ -81,7 +88,12 @@ const Wrapper = styled.div`
     }
     &::before {
       top: 7%;
-      left: 10.5%;
+      left: 9.5%;
+    }
+
+    .title_content {
+      margin-left: 33px;
+      margin-bottom: 40px;
     }
   }
 
@@ -91,11 +103,6 @@ const Wrapper = styled.div`
   .child_5_th {
     margin-left: -9px;
   }
-`
-
-const LineDash = styled.div`
-  height: 100%;
-  border-left: 2.7px dashed #9072ff;
 `
 
 const LineNotDash = styled.div`
@@ -109,7 +116,7 @@ const RoadMapMobile = () => {
       <div className="main_content">
         {listRoadMap.map((item, index) => {
           return (
-            <div className={`item_container child_${index + 1}_th`} key={`${item.year}_${item.quater}`}>
+            <div className={`item_container child_${index + 1}_th`} key={`${item.year}_parent_${index + 1}`}>
               <div className="line_milestone">
                 {item.status === 'done' ? (
                   <img src="/images/done_mobile.svg" alt="milestone" />
@@ -123,22 +130,19 @@ const RoadMapMobile = () => {
               </div>
 
               <div className="title_content">
-                <div className="title">
-                  {item.year} <span className="time">{item.quater}</span>
-                </div>
+                <div className="title">{item.year}</div>
 
                 <div className="item_main_content">
-                  <div>
-                    <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
-                  </div>
-                  <div className="describe">{item.describeOne}</div>
-                </div>
-
-                <div className="item_main_content margin_top">
-                  <div>
-                    <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
-                  </div>
-                  <div className="describe">{item.describeTow}</div>
+                  {Array.from(item.describe).map((entry) => {
+                    return (
+                      <div className="entry" key={entry}>
+                        <div>
+                          <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+                        </div>
+                        <div className="describe">{entry}</div>
+                      </div>
+                    )
+                  })}
                 </div>
               </div>
             </div>
