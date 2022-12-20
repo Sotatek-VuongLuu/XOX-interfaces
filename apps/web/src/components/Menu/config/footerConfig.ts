@@ -14,8 +14,8 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
         href: '/blog',
       },
       {
-        label: t('Contact Us'),
-        href: '/contact-us',
+        label: t('Partners'),
+        href: '/partner',
       },
     ],
   },
@@ -23,16 +23,16 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
     label: 'Support',
     items: [
       {
-        label: t('Help Center'),
-        href: '/help-center',
+        label: t('Docs'),
+        href: '/docs',
       },
       {
-        label: t('Safery Center'),
-        href: '/safety-center',
+        label: t('Terms & Privacy'),
+        href: '/terms-privacy',
       },
       {
-        label: t('Community-guidelines'),
-        href: '/community-guildlines',
+        label: t('Disclaimer'),
+        href: '/disclaimer',
       },
     ],
   },
