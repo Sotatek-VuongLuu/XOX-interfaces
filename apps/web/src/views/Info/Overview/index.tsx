@@ -2,8 +2,8 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Flex } from '@pancakeswap/uikit'
 import Page from 'components/Layout/Page'
-import { useEffect, useMemo, useState } from 'react'
-import { useAllTokenDataSWR, useProtocolDataSWR, useProtocolTransactionsSWR } from 'state/info/hooks'
+import { useEffect, useState } from 'react'
+import { useProtocolDataSWR, useProtocolTransactionsSWR } from 'state/info/hooks'
 import styled from 'styled-components'
 import LineChart from 'views/Info/components/InfoCharts/LineChart'
 import TransactionTable from 'views/Info/components/InfoTables/TransactionsTable'
@@ -14,6 +14,7 @@ import { SUGGESTED_BASES } from 'config/constants/exchange'
 import { tokens } from 'tokens'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useNativeCurrency from 'hooks/useNativeCurrency'
+import { useAllTokens } from 'hooks/Tokens'
 
 export const ChartCardsContainer = styled(Flex)`
   justify-content: space-between;
@@ -36,10 +37,14 @@ export const ChartCardsContainer = styled(Flex)`
 export const PageContainer = styled(Flex)`
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1em;
+  gap: 16px;
+  padding-left: 24px;
+  padding-right: 24px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     grid-template-columns: 5fr 2fr;
+    padding-left: 48px;
+    padding-right: 48px;
   } ;
 `
 
@@ -48,11 +53,11 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const [coinmarketcapIds, setCoinmarketcapIds] = useState<string | undefined>()
   const [coinmarketcapId, setCoinmarketcapId] = useState<number | undefined>()
   const [filter, setFilter] = useState('1D')
-  const protocolData = useProtocolDataSWR()
   const [chartData, setChardData] = useState<Array<any> | undefined>()
   const [currencyDatas, setCurrencyDatas] = useState<Array<any> | undefined>()
   const transactions = useProtocolTransactionsSWR()
   const { chainId } = useActiveChainId()
+  const allTokens = useAllTokens()
 
   // const allPoolData = useAllPoolDataSWR()
   // const allPoolData = useAllPoolData()
@@ -65,9 +70,9 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   // const chainName = useGetChainName()
 
   useEffect(() => {
-    const ids = SUGGESTED_BASES[chainId]
-      .concat([native])
-      .map((token: any) => {
+    console.log(allTokens, 'allTokens')
+    const ids = Object.keys(allTokens).map((key: any) => {
+        const token = allTokens[key]
         const [filterToken] = tokens.filter((t) => {
           return (
             t.symbol.toLowerCase() === token.symbol.toLowerCase() &&
@@ -109,7 +114,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
     //   )
     //   setCoinmarketcapId(token?.id)
     // }
-  }, [])
+  }, [allTokens])
 
   useEffect(() => {
     if (!coinmarketcapId) return
@@ -177,7 +182,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             native={native}
           />
         </ChartCardsContainer>
-        <WalletInfoTable currencyDatas={currencyDatas} native={native} />
+        <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} />
         <TransactionTable transactions={transactions} />
       </PageContainer>
     </Page>

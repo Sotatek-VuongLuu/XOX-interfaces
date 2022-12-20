@@ -14,7 +14,7 @@ export const Arrow = styled.div`
   &::before {
     content: "";
     transform: rotate(45deg);
-    background: ${({ theme }) => theme.tooltip.background};
+    background: #444444;
   }
 `;
 
@@ -22,10 +22,10 @@ export const StyledTooltip = styled(Motion.div)`
   padding: 16px;
   font-size: 16px;
   line-height: 130%;
-  border-radius: 16px;
+  border-radius: 2px;
   max-width: 320px;
   z-index: 101;
-  background: ${({ theme }) => theme.tooltip.background};
+  background: #444444;
   color: ${({ theme }) => theme.tooltip.text};
   box-shadow: ${({ theme }) => theme.tooltip.boxShadow};
 

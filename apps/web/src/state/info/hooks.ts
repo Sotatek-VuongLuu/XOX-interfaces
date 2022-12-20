@@ -55,6 +55,7 @@ export const useProtocolTransactionsSWR = (): Transaction[] | undefined => {
   const chainName = useGetChainName()
   // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const type = 'swap'
+  console.log(chainName, 'chainName')
   const { data: transactions } = useSWRImmutable(
     [`info/protocol/updateProtocolTransactionsData/${type}`, chainName],
     () => fetchTopTransactions(chainName),

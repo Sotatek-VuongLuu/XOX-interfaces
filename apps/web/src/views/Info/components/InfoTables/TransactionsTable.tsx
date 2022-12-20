@@ -19,11 +19,29 @@ const Wrapper = styled.div`
   background: #242424;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
-  padding: 24px;
+  padding: 18px;
   margin-bottom: 50px;
+
+  & > div {
+    max-width: calc(100vw - 96px)
+  }
+
+  & > div:first-child {
+    display: flex;
+    flex-direction: column;
+
+    & > div {
+      align-items: flex-start;
+    }
+
+    & > div:first-child {
+      margin-bottom: 28px;
+    }
+  }
 
   ${({ theme }) => theme.mediaQueries.md} {
     grid-column: 1 / span 2;
+    padding: 24px;
   }
 
   & .heading {
@@ -65,49 +83,33 @@ const ResponsiveGrid = styled.div`
   align-items: center;
   grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 0.8fr 0.4fr;
   @media screen and (max-width: 940px) {
-    grid-template-columns: 2fr repeat(4, 1fr);
-    & > *:nth-child(5) {
-      display: none;
-    }
+    grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 0.8fr 0.4fr;
   }
   @media screen and (max-width: 800px) {
-    grid-template-columns: 2fr repeat(2, 1fr);
-    & > *:nth-child(5) {
-      display: none;
-    }
-    & > *:nth-child(3) {
-      display: none;
-    }
-    & > *:nth-child(4) {
-      display: none;
-    }
+    grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 0.8fr 0.4fr;
   }
   @media screen and (max-width: 500px) {
-    grid-template-columns: 2fr 1fr;
-    & > *:nth-child(5) {
-      display: none;
-    }
-    & > *:nth-child(3) {
-      display: none;
-    }
-    & > *:nth-child(4) {
-      display: none;
-    }
-    & > *:nth-child(2) {
-      display: none;
-    }
+    grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 0.8fr 0.4fr;
   }
 `
 
 export const CustomTableWrapper = styled(Flex)`
-  width: 100%;
+  width: calc(100vw - 96px);
   padding-top: 24px;
   flex-direction: column;
   gap: 24px;
-  overflow: auto;
+  overflow: hidden;
+
+  &:hover {
+    overflow: auto;
+  }
 
   & > div {
     min-width: 1600px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    width: calc(100vw - 144px);
   }
 `
 
@@ -216,6 +218,8 @@ const SORT_FIELD = {
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
   const loadingRow = (
     <ResponsiveGrid>
+      <Skeleton />
+      <Skeleton />
       <Skeleton />
       <Skeleton />
       <Skeleton />
@@ -479,7 +483,6 @@ const TransactionTable: React.FC<
           fontWeight="700"
           lineHeight="24px"
           color="rgba(255, 255, 255, 0.87)"
-          marginRight="5px"
           height="24px"
         >
           Transactions History

@@ -38,10 +38,11 @@ export const TitleChart = styled.div`
 export const ChartContent = styled.div`
   margin-top: 32px;
   .container {
-    display: flex;
-    justify-content: space-between;
     margin-top: 24px;
-    align-items: center;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 16px;
+    width: 100%;
   }
   .token {
     font-weight: 700;
@@ -77,11 +78,11 @@ export const ChartContent = styled.div`
   .filter {
     margin: 25px 0px;
     display: flex;
-    justify-content: flex-end;
+    justify-content: flex-start;
     button {
       font-weight: 700;
       font-size: 14px;
-      margin-left: 8px;
+      margin-right: 8px;
       color: rgba(255, 255, 255, 0.6);
       background: transparent;
       border: none;
@@ -91,6 +92,22 @@ export const ChartContent = styled.div`
 
     button.active {
       color: #9072ff;
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .filter {
+      justify-content: flex-end;
+
+      button {
+        margin-left: 8px;
+      }
     }
   }
 `
