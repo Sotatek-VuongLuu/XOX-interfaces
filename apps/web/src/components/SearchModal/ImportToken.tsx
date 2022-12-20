@@ -38,7 +38,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
         return (
           <Input
             defaultValue={token.address}
-            readOnly={true}
+            readOnly
             style={{
               height: '54px',
               background: '#303030',
