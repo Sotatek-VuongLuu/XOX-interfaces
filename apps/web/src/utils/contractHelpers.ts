@@ -43,6 +43,7 @@ import {
   getNonBscVaultAddress,
   getCrossFarmingSenderAddress,
   getCrossFarmingReceiverAddress,
+  getContractTreasuryXOX,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -97,6 +98,7 @@ import nonBscVault from 'config/abi/nonBscVault.json'
 import crossFarmingSenderAbi from 'config/abi/crossFarmingSender.json'
 import crossFarmingReceiverAbi from 'config/abi/crossFarmingReceiver.json'
 import crossFarmingProxyAbi from 'config/abi/crossFarmingProxy.json'
+import treasuryAbi from 'config/abi/treasuryXOX.json'
 
 // Types
 import type {
@@ -395,4 +397,8 @@ export const getCrossFarmingProxyContract = (
   chainId?: number,
 ) => {
   return getContract({ abi: crossFarmingProxyAbi, address: proxyContractAddress, chainId, signer }) as CrossFarmingProxy
+}
+
+export const getTreasuryConTract = (signer?: Signer | Provider, chainId?: number) => {
+  return getContract({ abi: treasuryAbi, address: getContractTreasuryXOX(chainId), chainId, signer })
 }

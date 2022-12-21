@@ -1,6 +1,9 @@
 import { Box, Grid, useMediaQuery } from '@mui/material'
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import { useTranslation } from '@pancakeswap/localization'
+import { CopyAddress, CopyButton, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
 import styled from 'styled-components'
 
 const WrapperLeft = styled.div`
@@ -94,6 +97,9 @@ const WrapperRight = styled.div`
 const Banner = () => {
   const { isMobile } = useMatchBreakpoints()
   const { width } = useWindowSize()
+  const { t } = useTranslation()
+
+  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
   return (
     <Box>
       <Grid container spacing={2}>
@@ -112,12 +118,17 @@ const Banner = () => {
             <p className="my_code">My Referral Code</p>
             <div className="code">
               <div className="content">
-                <span className="code_number">1234</span>
+                <span className="code_number">{userProfile?.referralCode}</span>
                 <span>
                   {width <= 900 ? (
                     <img src="/images/CopySimple_mb.svg" alt="CopySimple" />
                   ) : (
-                    <img src="/images/CopySimple.svg" alt="CopySimple" />
+                    <CopyButton
+                      width="24px"
+                      text={userProfile?.referralCode}
+                      tooltipMessage={t('Copied')}
+                      button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
+                    />
                   )}
                 </span>
               </div>
