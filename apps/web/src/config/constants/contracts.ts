@@ -164,5 +164,13 @@ export default {
   treasuryXOX: {
     97: '0x2a924bcD60450C7a354413d8b2c906A3173F9208',
     5: '',
+    1: '',
+    56: '',
+  },
+  contractXOXToken: {
+    97: '0x798bb5B1CD7ed74654EBfD5D58a24d3D9Cc67847',
+    5: '0xfE92Ceb4217a830135a943463192206935764B36',
+    1: '',
+    56: '',
   },
 }
