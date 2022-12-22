@@ -5,25 +5,27 @@ import Banner from './components/Banner'
 import MainInfo from './components/MainInfo'
 import ReferralFriend from './components/ReferralFriend'
 
-const StyledSection = styled(PageSection)`
-  padding-top: 16px;
-  padding: 0px 21px;
+const Wrapper = styled(Box)`
+  padding: 48px 130px;
 
-  ${({ theme }) => theme.mediaQueries.xxl} {
-    padding: 0px 130px;
+  @media screen and (max-width: 1500px) {
+    padding: 48px;
+  }
+  @media screen and (max-width: 900px) {
+    padding: 48px 21px;
   }
 `
 
 export default function Refferal() {
   return (
     <>
-      <Box padding="48px 130px">
+      <Wrapper>
         <Box>
           <Banner />
           <MainInfo />
           <ReferralFriend />
         </Box>
-      </Box>
+      </Wrapper>
     </>
   )
 }

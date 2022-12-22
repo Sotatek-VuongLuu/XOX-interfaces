@@ -13,37 +13,38 @@ export const useMenuItems = (): ConfigMenuItemsType[] => {
   } = useTranslation()
   const { chainId } = useActiveChainId()
   const { isDark } = useTheme()
-  const menuItemsStatus = useMenuItemsStatus()
+  // const menuItemsStatus = useMenuItemsStatus()
 
   const menuItems = useMemo(() => {
     return config(t, isDark, languageCode, chainId)
   }, [t, isDark, languageCode, chainId])
 
-  return useMemo(() => {
-    if (menuItemsStatus && Object.keys(menuItemsStatus).length) {
-      return menuItems.map((item) => {
-        const innerItems = item.items.map((innerItem) => {
-          const itemStatus = menuItemsStatus[innerItem.href]
-          if (itemStatus) {
-            let itemMenuStatus
-            if (itemStatus === 'soon') {
-              itemMenuStatus = <LinkStatus>{ text: t('Soon'), color: 'warning' }
-            } else if (itemStatus === 'live') {
-              itemMenuStatus = <LinkStatus>{ text: t('Live'), color: 'failure' }
-            } else if (itemStatus === 'vote_now') {
-              itemMenuStatus = <LinkStatus>{ text: t('Vote Now'), color: 'success' }
-            } else if (itemStatus === 'pot_open') {
-              itemMenuStatus = <LinkStatus>{ text: t('Pot Open'), color: 'success' }
-            } else {
-              itemMenuStatus = <LinkStatus>{ text: t('New'), color: 'success' }
-            }
-            return { ...innerItem, status: itemMenuStatus }
-          }
-          return innerItem
-        })
-        return { ...item, items: innerItems }
-      })
-    }
-    return menuItems
-  }, [t, menuItems, menuItemsStatus])
+  // return useMemo(() => {
+  // if (menuItemsStatus && Object.keys(menuItemsStatus).length) {
+  //   return menuItems.map((item) => {
+  //     const innerItems = item.items.map((innerItem) => {
+  //       const itemStatus = menuItemsStatus[innerItem.href]
+  //       if (itemStatus) {
+  //         let itemMenuStatus
+  //         if (itemStatus === 'soon') {
+  //           itemMenuStatus = <LinkStatus>{ text: t('Soon'), color: 'warning' }
+  //         } else if (itemStatus === 'live') {
+  //           itemMenuStatus = <LinkStatus>{ text: t('Live'), color: 'failure' }
+  //         } else if (itemStatus === 'vote_now') {
+  //           itemMenuStatus = <LinkStatus>{ text: t('Vote Now'), color: 'success' }
+  //         } else if (itemStatus === 'pot_open') {
+  //           itemMenuStatus = <LinkStatus>{ text: t('Pot Open'), color: 'success' }
+  //         } else {
+  //           itemMenuStatus = <LinkStatus>{ text: t('New'), color: 'success' }
+  //         }
+  //         return { ...innerItem, status: itemMenuStatus }
+  //       }
+  //       return innerItem
+  //     })
+  //     return { ...item, items: innerItems }
+  //   })
+  //   // }
+  //   return menuItems
+  // }, [menuItems])
+  return menuItems
 }

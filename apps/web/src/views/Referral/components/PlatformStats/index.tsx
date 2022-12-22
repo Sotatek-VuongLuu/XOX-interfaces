@@ -32,12 +32,16 @@ const Wrapper = styled(Box)`
 
     .chart_container {
       display: flex;
-      gap: 20px;
+      & > div:first-child {
+        margin-right: 20px;
+      }
     }
 
     .info_volumn {
       display: flex;
-      gap: 16px;
+      & > div:nth-child(2) {
+        margin: 0 20px;
+      }
 
       .info_volumn_item {
         padding: 16px 17px;
@@ -62,6 +66,34 @@ const Wrapper = styled(Box)`
         }
       }
     }
+    @media screen and (max-width: 900px) {
+      flex-direction: column;
+      .chart_container {
+        width: 100%;
+        justify-content: space-between;
+      }
+      .info_volumn {
+        flex-direction: column;
+        width: 100%;
+        & > div:nth-child(2) {
+          margin: 16px 0px;
+        }
+        .info_volumn_item {
+          width: 100%;
+          display: grid;
+          grid-template-columns: auto;
+          height: fit-content;
+          .volumn {
+            font-size: 18px;
+            line-height: 22px;
+          }
+          .title {
+            font-size: 12px;
+            line-height: 15px;
+          }
+        }
+      }
+    }
   }
 
   .second {
@@ -72,7 +104,7 @@ const Wrapper = styled(Box)`
     .range_volumn {
       display: flex;
       justify-content: space-between;
-      margin: 19px 0 8px;
+      margin: 19px 0 5px;
       span {
         font-weight: 400;
         font-size: 10px;
@@ -89,12 +121,21 @@ const Wrapper = styled(Box)`
       font-size: 12px;
       line-height: 15px;
       color: rgba(255, 255, 255, 0.6);
-      margin-top: 5px;
+
       span {
         font-weight: 700;
         font-size: 20px;
         line-height: 24px;
         color: rgba(255, 255, 255, 0.87);
+      }
+
+      @media screen and (max-width: 900px) {
+        text-align: center;
+
+        span {
+          font-size: 18px;
+          line-height: 22px;
+        }
       }
     }
   }
@@ -142,7 +183,7 @@ const PlatformStat = (): JSX.Element => {
       </div>
 
       <div className="second">
-        <TableContainer component={Paper} sx={{ height: 190, background: '#303030' }}>
+        <TableContainer component={Paper} sx={{ height: 160, background: '#303030' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead>
               <TableRow

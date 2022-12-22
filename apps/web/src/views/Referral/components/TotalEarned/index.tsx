@@ -1,3 +1,4 @@
+import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -62,12 +63,34 @@ const Wrapper = styled.div`
     height: 485px;
     z-index: 0;
   }
+
+  @media screen and (max-width: 900px) {
+    .title {
+      font-size: 14px;
+      line-height: 17px;
+    }
+    .amount {
+      font-size: 24px;
+      line-height: 29px;
+    }
+    .guide {
+      font-size: 14px;
+      line-height: 17px;
+      width: 100%;
+    }
+  }
 `
 const TotalEarned = (): JSX.Element => {
+  const { width } = useWindowSize()
   return (
     <Wrapper>
       <div className="img_container">
-        <img src="/images/ref_xox.svg" alt="ref_xox" className="ref_xox" />
+        {/* ref_xox_mb */}
+        {width <= 900 ? (
+          <img src="/images/ref_xox_mb.svg" alt="ref_xox" className="ref_xox" />
+        ) : (
+          <img src="/images/ref_xox.svg" alt="ref_xox" className="ref_xox" />
+        )}
         <img src="/images/ref_chart_bg.svg" alt="ref_chart_bg" className="ref_chart_bg" />
       </div>
       <p className="title">Total Earned By Referrals</p>

@@ -21,6 +21,7 @@ import { persistor, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
 import TransactionsDetailModal from 'components/TransactionDetailModal'
 import FormReferralModal from 'components/Menu/UserMenu/FormReferralModal'
+import { useRouter } from 'next/router'
 import { Blocklist, Updaters } from '..'
 import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
@@ -135,6 +136,8 @@ const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? SentryEr
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const modal = useRef(null)
 
+  const route = useRouter()
+
   if (Component.pure) {
     return <Component {...pageProps} />
   }
@@ -157,7 +160,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <NetworkModal pageSupportedChains={Component.chains} />
       <TransactionsDetailModal />
       {isShowScrollToTopButton && <ScrollToTopButtonV2 />}
-      <FormReferralModal ref={modal} />
+      {route.pathname !== '/' && <FormReferralModal ref={modal} />}
     </ProductionErrorBoundary>
   )
 }

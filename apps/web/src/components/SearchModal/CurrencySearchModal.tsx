@@ -46,6 +46,13 @@ const StyledModalContainer = styled(ModalContainer)`
     & > div {
       display: block;
     }
+    & > div button {
+      left: 17px;
+
+      svg {
+        fill: #8E8E8E;
+      }
+    }
 
     h2 {
       text-align: center;
@@ -57,12 +64,16 @@ const StyledModalContainer = styled(ModalContainer)`
 
     button {
       position: absolute;
-      top: 16px;
-      right: 16px;
+      top: 17px;
+      right: 17px;
       background: 0;
       padding: 0;
       width: 20px;
       height: 20px;
+    }
+
+    button:hover {
+      background: none!important;
     }
   }
 

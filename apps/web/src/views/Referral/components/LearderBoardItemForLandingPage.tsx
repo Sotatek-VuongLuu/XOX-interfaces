@@ -1,5 +1,6 @@
 import { Avatar, Box } from '@mui/material'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import useWindowSize from 'hooks/useWindowSize'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 // eslint-disable-next-line import/no-cycle
@@ -128,10 +129,10 @@ const Wrapper = styled(Box)`
   }
 `
 
-const LeaderBoardItem = (props: IProps): JSX.Element => {
+const LeaderBoardItemLP = (props: IProps): JSX.Element => {
   const { item, mb = true } = props
   const ranking: Array<number> = [1, 2, 3]
-
+  const { width } = useWindowSize()
   const { isMobile } = useMatchBreakpoints()
 
   const renderRanking = useCallback(
@@ -140,7 +141,7 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
       if (ranking.includes(rank)) {
         return (
           <div className="ranking_top">
-            {isMobile ? (
+            {width <= 900 ? (
               <img src={`/images/r_mb_${rank}.svg`} alt="ranking" />
             ) : (
               <img src={`/images/r${rank}.svg`} alt="ranking" />
@@ -173,4 +174,4 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
   )
 }
 
-export default LeaderBoardItem
+export default LeaderBoardItemLP

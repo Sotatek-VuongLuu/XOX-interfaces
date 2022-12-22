@@ -17,10 +17,8 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 // import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 // import { formatAmount } from 'utils/formatInfoNumbers'
 // import { defaultTokens } from './config'
-import { formatEther } from '@ethersproject/units'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { getDefaultProvider } from '@ethersproject/providers'
-import { SUGGESTED_BASES } from 'config/constants/exchange'
 import { CurrencyLogo } from 'components/Logo'
 import { ERC20Token } from '@pancakeswap/sdk'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -128,12 +126,13 @@ const TableWrapper = styled(Flex)`
   border-radius: 10px;
   height: 100%;
   width: 100%;
-  padding: 24px;
-  min-height: 525px;
+  padding: 18px;
+  min-height: 454px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: 454px;
     min-height: unset;
+    padding: 24px;
   }
 `
 
@@ -145,7 +144,7 @@ const SORT_FIELD = {
   amountToken1: 'amountToken1',
 }
 
-const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyDatas, native }) => {
+const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyDatas, native, allTokens }) => {
   const [tokensBalance, setTokensBalance] = useState<any>([])
 
   const { address: account } = useAccount()
@@ -182,7 +181,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     try {
       getBalancesForEthereumAddress({
         // erc20 tokens you want to query!
-        contractAddresses: SUGGESTED_BASES[chainId].map((token) => token.address),
+        contractAddresses: Object.keys(allTokens).map((key) => allTokens[key].address),
         // ethereum address of the user you want to get the balances for
         ethereumAddress: account,
         // your ethers provider

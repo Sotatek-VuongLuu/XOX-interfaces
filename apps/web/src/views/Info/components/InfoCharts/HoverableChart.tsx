@@ -151,12 +151,12 @@ const HoverableChart = ({
             </div>
             <div className="volume">
               <p>Volume 24h {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}</p>
+              <p>Market cap: {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}</p>
             </div>
           </>
         </div>
 
-        <p className="filter">
-          <div />
+        <div className="filter">
           <div>
             <button type="button" onClick={() => setFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
               All
@@ -177,7 +177,7 @@ const HoverableChart = ({
               24H
             </button>
           </div>
-        </p>
+        </div>
       </ChartContent>
 
       {/* <Text bold color="secondary">

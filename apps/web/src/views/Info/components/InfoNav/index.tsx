@@ -24,26 +24,101 @@ import { useAccount } from 'wagmi'
 import { bsc, mainnet } from '@pancakeswap/wagmi/chains'
 
 const NavWrapper = styled(Flex)`
-  padding: 28px 0 24px;
+  padding: 28px 24px 24px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-template-columns: 5fr 2fr;
+    padding-left: 48px;
+    padding-right: 48px;
+  } ;
 `
 
 const MainContent = styled.div`
-  height: 200px;
+  height: 315px;
   width: 100%;
-  background: url('/images/bg.svg');
+  background: url('/images/bg_mobile_info.svg');
   background-repeat: no-repeat;
   background-size: cover;
   border-radius: 10px;
-  padding: 30px 24px;
+  padding: 20px 16px;
 
-  button {
-    font-family: 'Inter';
-    font-style: normal;
+  .get-xox {
     font-weight: 700;
-    font-size: 16px;
-    line-height: 19px;
+    font-size: 14px;
+    line-height: 17px;
     color: #ffffff;
     height: 43px;
+  }
+
+  .learn-more {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    width: 149px;
+    height: 43px;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    margin-left: 16px;
+    background: transparent;
+  }
+
+  .title {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    color: #ffbd3c;
+  }
+
+  .subtitle {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: 200px;
+    padding: 30px 24px;
+    background: url('/images/bg.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    .title {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 22px;
+      color: #ffbd3c;
+    }
+
+    .subtitle {
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 44px;
+      color: rgba(255, 255, 255, 0.87);
+    }
+
+    .get-xox {
+      font-family: 'Inter';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      height: 43px;
+    }
+
+    .learn-more {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      width: 149px;
+      height: 43px;
+      border: 1px solid #ffffff;
+      border-radius: 6px;
+      margin-left: 16px;
+      background: transparent;
+    }
   }
 `
 
@@ -66,29 +141,14 @@ const InfoNav: React.FC<{ isStableSwap: boolean }> = ({ isStableSwap }) => {
   return (
     <NavWrapper>
       <MainContent>
-        <Text
-          fontSize="18px"
-          fontFamily="Inter"
-          fontStyle="normal"
-          fontWeight="700"
-          lineHeight="22px"
-          color="#FFBD3C"
-          marginBottom="16px"
-        >
+        <Text className="title" marginBottom="16px">
           Swap to get XOX and XOXS
         </Text>
-        <Text
-          fontSize="36px"
-          fontFamily="Inter"
-          fontStyle="normal"
-          fontWeight="700"
-          lineHeight="44px"
-          color="rgba(255, 255, 255, 0.87)"
-          marginBottom="16px"
-        >
+        <Text className="subtitle" marginBottom="16px">
           Stake XOXS automatically to earn more
         </Text>
-        <Button>Get XOX</Button>
+        <Button className="get-xox">Get XOX</Button>
+        <Button className="learn-more">Learn More</Button>
       </MainContent>
       {/* <Flex>
         <Box>

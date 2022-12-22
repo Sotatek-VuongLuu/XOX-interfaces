@@ -1,9 +1,11 @@
+import useWindowSize from 'hooks/useWindowSize'
 import { Bar, BarChart, ResponsiveContainer, XAxis } from 'recharts'
 
 const ColumnChartRef = () => {
+  const { width } = useWindowSize()
   return (
     <ResponsiveContainer width="100%" height={121}>
-      <BarChart data={data} barSize={20}>
+      <BarChart data={data} barSize={width <= 900 ? 10 : 15}>
         <XAxis dataKey="name" />
         <Bar dataKey="uv" fill="#8884d8" radius={[20, 20, 20, 20]} />
       </BarChart>

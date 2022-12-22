@@ -20,6 +20,10 @@ interface IPropsTotal {
   percentPoint?: number
 }
 
+interface IPropsContainer {
+  subTabIndex?: number
+}
+
 const First = styled.div`
   width: 100%;
   height: 100%;
@@ -65,6 +69,19 @@ const First = styled.div`
       border-radius: 50%;
     }
   }
+
+  @media screen and (max-width: 900px) {
+    padding: 22px;
+
+    .tab_filter {
+      font-size: 12px;
+      line-height: 15px;
+
+      .tab_item {
+        padding: 10px;
+      }
+    }
+  }
 `
 
 const Second = styled.div<IPropsTotal>`
@@ -81,6 +98,11 @@ const Second = styled.div<IPropsTotal>`
       line-height: 24px;
       color: rgba(255, 255, 255, 0.87);
       margin-bottom: 27px;
+      @media screen and (max-width: 900px) {
+        font-size: 14px;
+        line-height: 17px;
+        margin-bottom: 16px;
+      }
     }
 
     .total_point_bar {
@@ -104,10 +126,16 @@ const Second = styled.div<IPropsTotal>`
         }
       }
     }
+
+    @media screen and (max-width: 900px) {
+      padding: 22px;
+      font-size: 14px;
+      line-height: 17px;
+    }
   }
 `
 
-const WrapperRight = styled.div`
+const WrapperRight = styled.div<IPropsContainer>`
   height: 100%;
 
   .container {
@@ -115,7 +143,7 @@ const WrapperRight = styled.div`
     height: 594px;
     background: #242424;
     border-radius: 10px;
-    padding: 24px 27px 46px 27px;
+    padding: 27px;
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
@@ -142,6 +170,19 @@ const WrapperRight = styled.div`
         line-height: 17px;
         color: #ffffff;
         cursor: pointer;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      padding: 22px;
+      overflow: hidden;
+      height: ${({ subTabIndex }) => (subTabIndex !== 1 ? '540px' : 'fit-content')};
+      .filter {
+        .subTab_item {
+          padding: 8px;
+          font-size: 12px;
+          line-height: 15px;
+        }
       }
     }
   }
@@ -217,7 +258,7 @@ const MainInfo = () => {
           </div>
         </Grid>
         <Grid item xs={12} md={8}>
-          <WrapperRight>
+          <WrapperRight subTabIndex={subTabIndex}>
             <div className="container">
               <div className="filter">
                 {subTab.map((item, index) => {

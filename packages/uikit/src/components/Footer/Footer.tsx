@@ -62,8 +62,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
               marginBottom="24px"
               marginTop="24px"
             >
-              Lorem ipsum dolor amet, consectetur adipiscing elit. Eget nisl nunc quam ac sed turpis volutpat. Cursus
-              sed massa non nisi, placerat.
+              Managed by XOX Labs. Building the economy of the Future.
             </Text>
 
             <Flex
