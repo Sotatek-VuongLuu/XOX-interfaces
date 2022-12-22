@@ -1,6 +1,6 @@
 import { ButtonProps, IconButton } from "../../components/Button";
 import { ArrowDownIcon, ArrowUpDownIcon } from "../../components/Svg";
-import { switchButtonClass, iconDownClass, iconUpDownClass } from "./SwapWidget.css";
+import { switchButtonClass, iconDownClass, iconUpDownClass, iconSwapClass } from "./SwapWidget.css";
 import { CurrencyInputPanel } from "./CurrencyInputPanel";
 import { CurrencyInputHeader, CurrencyInputHeaderSubTitle, CurrencyInputHeaderTitle } from "./CurrencyInputHeader";
 import { SwapPage } from "./Page";
@@ -9,10 +9,13 @@ import { SwapInfo, SwapInfoLabel } from "./SwapInfo";
 import { TradePrice } from "./TradePrice";
 
 const SwapSwitchButton = (props: ButtonProps) => (
-  <IconButton className={switchButtonClass} variant="light" scale="sm" {...props}>
-    <ArrowDownIcon className={iconDownClass} color="primary" />
-    <ArrowUpDownIcon className={iconUpDownClass} color="primary" />
-  </IconButton>
+  <span {...props}>
+     <ArrowDownIcon color="primary" className={iconSwapClass} />
+  </span>
+  // <IconButton className={iconDownClass} scale="sm" {...props}>
+  //   <ArrowDownIcon color="primary" className={iconSwapClass} />
+  //   {/* <ArrowUpDownIcon className={iconUpDownClass} color="primary" /> */}
+  // </IconButton>
 );
 
 const Swap = {

@@ -8,7 +8,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
 import AccessRisk from 'views/Swap/components/AccessRisk'
-
+import styled from 'styled-components'
 import CurrencyInputPanel from 'components/CurrencyInputPanel'
 import { CommonBasesType } from 'components/SearchModal/types'
 import { AutoRow } from 'components/Layout/Row'
@@ -37,6 +37,28 @@ import { useStableFarms } from '../StableSwap/hooks/useStableConfig'
 import { isAddress } from '../../../utils'
 import { SwapFeaturesContext } from '../SwapFeaturesContext'
 import { combinedTokenMapFromOfficialsUrlsAtom } from '../../../state/lists/hooks'
+
+const ReferralCode = styled.div`
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+`
+const ReferralInput = styled.input`
+  background:unset;
+  width:124px;
+  height:37px;
+  border:1px solid #444444;
+  padding 0 12px;
+  color:#FFFFFFDE;
+  border-radius:4px;
+`
+const PerPriceTitle = styled.div`
+  color:#9072FF;
+  font-weight:700;
+  font-size:16px;
+`
 
 export default function SwapForm() {
   const { isAccessTokenSupported } = useContext(SwapFeaturesContext)
@@ -207,7 +229,7 @@ export default function SwapForm() {
   return (
     <>
       <CurrencyInputHeader
-        title={t('Exchange')}
+        title={t('Swap')}
         subtitle={t('Trade tokens in a instant')}
         hasAmount={hasAmount}
         onRefreshPrice={onRefreshPrice}
@@ -262,11 +284,11 @@ export default function SwapForm() {
             commonBasesType={CommonBasesType.SWAP_LIMITORDER}
           />
 
-          {isAccessTokenSupported && (
+          {/* {isAccessTokenSupported && (
             <Box>
               <AccessRisk inputCurrency={currencies[Field.INPUT]} outputCurrency={currencies[Field.OUTPUT]} />
             </Box>
-          )}
+          )} */}
 
           {isExpertMode && recipient !== null && !showWrap ? (
             <>
@@ -282,23 +304,31 @@ export default function SwapForm() {
             </>
           ) : null}
 
-          {showWrap ? null : (
-            <SwapUI.Info
-              price={
-                Boolean(trade) && (
-                  <>
-                    <SwapUI.InfoLabel>{t('Price')}</SwapUI.InfoLabel>
-                    {isLoading ? (
-                      <Skeleton width="100%" ml="8px" height="24px" />
-                    ) : (
-                      <SwapUI.TradePrice price={trade?.executionPrice} />
-                    )}
-                  </>
-                )
-              }
-              allowedSlippage={allowedSlippage}
-            />
-          )}
+          {showWrap
+            ? null
+            : Boolean(trade) && (
+                <>
+                  <PerPriceTitle>{t('Price')}</PerPriceTitle>
+                  <SwapUI.Info
+                    price={
+                      Boolean(trade) && (
+                        <>
+                          {isLoading ? (
+                            <Skeleton width="100%" ml="8px" height="24px" />
+                          ) : (
+                            <SwapUI.TradePrice price={trade?.executionPrice} />
+                          )}
+                        </>
+                      )
+                    }
+                    allowedSlippage={allowedSlippage}
+                  />
+                </>
+              )}
+          <ReferralCode>
+            <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
+            <ReferralInput placeholder="123456" />
+          </ReferralCode>
         </AutoColumn>
         {hasStableSwapAlternative && (
           <AutoColumn>

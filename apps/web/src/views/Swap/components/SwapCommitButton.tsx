@@ -101,6 +101,7 @@ export default function SwapCommitButton({
 
   // Handlers
   const handleSwap = useCallback(() => {
+    console.log('handleSwap')
     if (priceImpactWithoutFee && !confirmPriceImpactWithoutFee(priceImpactWithoutFee, t)) {
       return
     }
@@ -113,6 +114,7 @@ export default function SwapCommitButton({
         setSwapState({ attemptingTxn: false, tradeToConfirm, swapErrorMessage: undefined, txHash: hash })
       })
       .catch((error) => {
+        console.log('error',error)
         setSwapState({
           attemptingTxn: false,
           tradeToConfirm,

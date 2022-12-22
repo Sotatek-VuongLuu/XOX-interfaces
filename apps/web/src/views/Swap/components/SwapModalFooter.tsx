@@ -16,7 +16,7 @@ const SwapModalFooterContainer = styled(AutoColumn)`
   padding: 16px;
   border-radius: ${({ theme }) => theme.radii.default};
   border: 1px solid ${({ theme }) => theme.colors.cardBorder};
-  background-color: ${({ theme }) => theme.colors.background};
+  background-color: ${({ theme }) => theme.colors.dark3};
 `
 
 export default function SwapModalFooter({
@@ -60,9 +60,10 @@ export default function SwapModalFooter({
             }}
           >
             {formatExecutionPrice(trade, showInverted)}
-            <StyledBalanceMaxMini onClick={() => setShowInverted(!showInverted)}>
+            {/* <StyledBalanceMaxMini onClick={() => setShowInverted(!showInverted)}>
               <AutoRenewIcon width="14px" />
-            </StyledBalanceMaxMini>
+            </StyledBalanceMaxMini> */}
+            <img onClick={() => setShowInverted(!showInverted)} src="/images/swap/circle-refresh.svg" alt="" style={{ cursor: "pointer" }} />
           </Text>
         </RowBetween>
 
