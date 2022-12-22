@@ -124,7 +124,7 @@ export default function SwapModalHeader({
           <Text color="secondary" bold style={{color:'#FFFFFFDE'}}>
             {t('Slippage Tolerance')}
           </Text>
-          <Text bold color="primary" ml="auto" textAlign="end">
+          <Text bold color="#9072FF" ml="auto" textAlign="end">
             {`${allowedSlippage / 100}%`}
           </Text>
         </RowFixed>

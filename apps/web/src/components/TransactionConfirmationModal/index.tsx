@@ -26,11 +26,17 @@ const Wrapper = styled.div`
   width: 100%;
 `
 const Section = styled(AutoColumn)`
-  padding: 24px;
 `
 
 const ConfirmedIcon = styled(ColumnCenter)`
-  padding: 24px 0;
+  padding: 0 0 24px 0;
+`
+const ButtonFooters = styled.div`
+  display:flex;
+  align-items:center;
+  justifi-content:center;
+  height:43px;
+
 `
 
 function ConfirmationPendingContent({ pendingText }: { pendingText: string }) {
@@ -41,7 +47,7 @@ function ConfirmationPendingContent({ pendingText }: { pendingText: string }) {
         <Spinner />
       </ConfirmedIcon>
       <AutoColumn gap="12px" justify="center">
-        <Text fontSize="20px">{t('Waiting For Confirmation')}</Text>
+        <Text fontSize="18px">{t('Waiting For Confirmation')}</Text>
         <AutoColumn gap="12px" justify="center">
           <Text bold small textAlign="center">
             {pendingText}
@@ -74,7 +80,8 @@ export function TransactionSubmittedContent({
     <Wrapper>
       <Section>
         <ConfirmedIcon>
-          <ArrowUpIcon strokeWidth={0.5} width="90px" color="primary" />
+          {/* <ArrowUpIcon strokeWidth={0.5} width="90px" color="primary" /> */}
+          <img src='/images/swap/transaction-submited.png' alt='' width='171px' height='160px' />
         </ConfirmedIcon>
         <AutoColumn gap="12px" justify="center">
           <Text fontSize="20px">{t('Transaction Submitted')}</Text>
@@ -85,22 +92,23 @@ export function TransactionSubmittedContent({
               })}
             </Link>
           )}
+          <ButtonFooters>
+          <Button onClick={onDismiss} width='200px' style={{height:'43px', background:'#313131', marginRight:'16px'}}>
+            {t('Close')}
+          </Button>
           {currencyToAdd && (
             <AddToWalletButton
               variant="tertiary"
-              mt="12px"
-              width="fit-content"
-              marginTextBetweenLogo="6px"
+              width="200px"
               textOptions={AddToWalletTextOptions.TEXT_WITH_ASSET}
               tokenAddress={token.address}
               tokenSymbol={currencyToAdd.symbol}
               tokenDecimals={token.decimals}
               tokenLogo={token instanceof WrappedTokenInfo ? token.logoURI : undefined}
+              style = {{fontSize:'15px', height:'43px'}}
             />
           )}
-          <Button onClick={onDismiss} mt="20px">
-            {t('Close')}
-          </Button>
+          </ButtonFooters>
         </AutoColumn>
       </Section>
     </Wrapper>
@@ -162,7 +170,6 @@ const TransactionConfirmationModal: React.FC<
   React.PropsWithChildren<InjectedModalProps & ConfirmationModalProps & ModalProps>
 > = ({ title, onDismiss, customOnDismiss, attemptingTxn, hash, pendingText, content, currencyToAdd, ...props }) => {
   const { chainId } = useActiveChainId()
-
   const handleDismiss = useCallback(() => {
     if (customOnDismiss) {
       customOnDismiss()
@@ -173,7 +180,7 @@ const TransactionConfirmationModal: React.FC<
   if (!chainId) return null
 
   return (
-    <Modal title={title} headerBackground="gradientCardHeader" {...props} onDismiss={handleDismiss}>
+    <Modal title={title} {...props} onDismiss={handleDismiss}>
       {attemptingTxn ? (
         <ConfirmationPendingContent pendingText={pendingText} />
       ) : hash ? (
