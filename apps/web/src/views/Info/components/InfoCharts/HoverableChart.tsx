@@ -161,7 +161,7 @@ const HoverableChart = ({
             <button type="button" onClick={() => setFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
               All
             </button>
-            <button type="button" onClick={() => setFilter('1Y')} className={filter === 'Y' ? 'active' : ''}>
+            <button type="button" onClick={() => setFilter('1Y')} className={filter === '1Y' ? 'active' : ''}>
               1Y
             </button>
             <button type="button" onClick={() => setFilter('3M')} className={filter === '3M' ? 'active' : ''}>
