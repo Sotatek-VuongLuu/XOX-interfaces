@@ -205,7 +205,7 @@ const UserMenu = () => {
           >
             {/* <ChainLogo chainId={ChainId.BSC} /> */}
             <Flex width="24px" height="24px">
-              <img src={`images/chains/${chainId}.png`} alt="BNB" />
+              <img src={`/images/chains/${chainId}.png`} alt="BNB" />
             </Flex>
             <Text color="white" ml="4px" fontSize="12px" lineHeight="15px">
               {chainName} Smart Chain
