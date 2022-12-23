@@ -1,5 +1,15 @@
 import { Currency, Pair } from '@pancakeswap/sdk'
-import { Button, ChevronDownIcon, Text, useModal, Flex, Box, NumericalInput, CopyButton } from '@pancakeswap/uikit'
+import {
+  Button,
+  ChevronDownIcon,
+  Text,
+  useModal,
+  Flex,
+  Box,
+  NumericalInput,
+  CopyButton,
+  useMatchBreakpoints,
+} from '@pancakeswap/uikit'
 import styled, { css } from 'styled-components'
 import { isAddress } from 'utils'
 import { useTranslation } from '@pancakeswap/localization'
@@ -54,7 +64,6 @@ const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm'
   padding: 0;
   position: absolute;
   z-index: 99;
-  top: 38%;
   right: 17px;
   background: unset;
 
@@ -92,7 +101,6 @@ const InputPanel = styled.div`
 const Container = styled.div<{ zapStyle?: ZapStyle; error?: boolean }>`
   border-radius: 10px;
   position: relative;
-  min-height: 103px;
   background-color: ${({ theme }) => theme.colors.input};
   box-shadow: ${({ theme, error }) => theme.shadows[error ? 'warning' : 'inset']};
   ${({ zapStyle }) =>
@@ -162,7 +170,7 @@ export default function CurrencyInputPanel({
   const { address: account } = useAccount()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const { t } = useTranslation()
-
+  const { isMobile } = useMatchBreakpoints()
   const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
   const tokenAddress = token ? isAddress(token.address) : null
 
@@ -182,7 +190,22 @@ export default function CurrencyInputPanel({
   )
   const isShowPercent = account && currency && selectedCurrencyBalance?.greaterThan(0) && !disabled && label !== 'To'
   const isShowDolar = !!currency && showBUSD && Number.isFinite(amountInDollar)
-
+  const checkHeightInput = () => {
+    let height
+    if (isMobile) {
+      if (account) {
+        height = '112px'
+      } 
+      else {
+        height = '52px'
+      }
+    } else if (isShowDolar && isShowPercent) {
+      height = '128px'
+    } else {
+      height = '103px'
+    }
+    return height
+  }
   return (
     <Box position="relative" id={id}>
       <Flex alignItems="center" justifyContent="space-between">
@@ -224,15 +247,7 @@ export default function CurrencyInputPanel({
               : ' -'}
           </TextBalance>
         )}
-        <Container
-          as="label"
-          zapStyle={zapStyle}
-          error={error}
-          style={isShowDolar && isShowPercent
-              ? { height: '128px' }
-              : { height: '103px' }
-          }
-        >
+        <Container as="label" zapStyle={zapStyle} error={error} style={{ height: checkHeightInput() }}>
           <LabelRow>
             <NumericalInput
               error={error}
@@ -243,11 +258,19 @@ export default function CurrencyInputPanel({
               onUserInput={(val) => {
                 onUserInput(val)
               }}
-              style={isShowPercent && isShowDolar ? { marginTop: '-70px' } : isShowPercent ? { marginTop: '-36px' } : isShowDolar? { marginTop: '-36px' }:{ marginTop: '-10px' }}
+              style={
+                isShowPercent && isShowDolar
+                  ? { marginTop: '-70px' }
+                  : isShowPercent
+                  ? { marginTop: '-36px' }
+                  : isShowDolar
+                  ? { marginTop: '-36px' }
+                  : { marginTop: '-10px' }
+              }
             />
           </LabelRow>
           {isShowDolar && (
-            <ForDolar style={isShowPercent?{bottom:'58px'}: {bottom:'30px'}}>
+            <ForDolar style={isShowPercent ? { bottom: '58px' } : { bottom: '30px' }}>
               <Flex justifyContent="flex-end" mr="1rem">
                 <Flex maxWidth="200px">
                   <Text fontSize="12px" color="textSubtle">
@@ -294,6 +317,7 @@ export default function CurrencyInputPanel({
             )}
           </InputRow>
           <CurrencySelectButton
+            style={isMobile && !account?{top:'23%'}:isShowPercent?{top:'23%'}: {top:'38%'}}
             className="open-currency-select-button"
             selected={!!currency}
             onClick={() => {

@@ -5,6 +5,8 @@ import { Currency } from '@pancakeswap/sdk'
 import { Flex, BottomDrawer, useMatchBreakpoints } from '@pancakeswap/uikit'
 import SwapNonTrade from 'components/Svg/SwapNonTrade'
 import SwapTrade from 'components/Svg/SwapTrade'
+import SwapTradeMobile from 'components/Svg/SwapTradeMobile'
+import SwapNonTradeMobile from 'components/Svg/SwapNonTradeMobile'
 import { AppBody } from 'components/App'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
@@ -21,9 +23,11 @@ import SwapTab, { SwapType } from './components/SwapTab'
 import { SwapFeaturesContext } from './SwapFeaturesContext'
 import { Card } from '@pancakeswap/uikit'
 import styled from 'styled-components'
+import { useAccount } from 'wagmi'
 
 export default function Swap() {
   const { isMobile } = useMatchBreakpoints()
+  const { address: account } = useAccount()
   const { isChartExpanded, isChartDisplayed, setIsChartDisplayed, setIsChartExpanded, isChartSupported } =
     useContext(SwapFeaturesContext)
 
@@ -87,8 +91,9 @@ export default function Swap() {
         )} */}
 
         <Flex flexDirection="column" position="relative">
-          {!trade ? <SwapNonTrade /> : <SwapTrade />}
-          <StyledSwapContainer $isChartExpanded={isChartExpanded}>
+          {isMobile && (!account ? <SwapNonTradeMobile /> : <SwapTradeMobile />)}
+          {!isMobile && (!trade ? <SwapNonTrade /> : <SwapTrade />)}
+          <StyledSwapContainer $isChartExpanded={isChartExpanded} style={isMobile?{left:0}:{}}>
             <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
               {/* <SwapTab>
                   {(swapTypeState) =>

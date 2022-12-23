@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useMemo, useContext } from 'react'
 import { Currency, CurrencyAmount, Percent, NATIVE } from '@pancakeswap/sdk'
-import { Button, ArrowDownIcon, Box, Skeleton, Swap as SwapUI, Message, MessageText } from '@pancakeswap/uikit'
+import { Button, ArrowDownIcon, Box, Skeleton, Swap as SwapUI, Message, MessageText, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -169,7 +169,7 @@ export default function SwapForm() {
 
   const maxAmountInput: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   const atMaxAmountInput = Boolean(maxAmountInput && parsedAmounts[Field.INPUT]?.equalTo(maxAmountInput))
-
+  const {isMobile} = useMatchBreakpoints()
   const handleInputSelect = useCallback(
     (newCurrencyInput) => {
       setApprovalSubmitted(false) // reset 2 step UI for approvals
@@ -234,7 +234,7 @@ export default function SwapForm() {
         hasAmount={hasAmount}
         onRefreshPrice={onRefreshPrice}
       />
-      <Wrapper id="swap-page" style={{ minHeight: '412px' }}>
+      <Wrapper id="swap-page" style={ isMobile? {minHeight:'350px'} : { minHeight: '412px' }}>
         <AutoColumn gap="sm">
           <CurrencyInputPanel
             label={independentField === Field.OUTPUT && !showWrap && trade ? t('From (estimated)') : t('From')}
