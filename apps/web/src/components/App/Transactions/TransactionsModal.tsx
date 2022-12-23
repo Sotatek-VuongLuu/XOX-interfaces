@@ -3,6 +3,7 @@ import { Modal, ModalBody, Text, Button, Flex, InjectedModalProps } from '@panca
 import { useTranslation } from '@pancakeswap/localization'
 import isEmpty from 'lodash/isEmpty'
 import groupBy from 'lodash/groupBy'
+import styled from 'styled-components'
 import { useAllSortedRecentTransactions } from 'state/transactions/hooks'
 import { TransactionDetails } from 'state/transactions/reducer'
 import { useAppDispatch } from 'state'
@@ -13,6 +14,27 @@ import { AutoRow } from '../../Layout/Row'
 import Transaction from './Transaction'
 import ConnectWalletButton from '../../ConnectWalletButton'
 
+const RecentButton = styled(Button)`
+  width: 98px;
+  height: 37px;
+  border-radius: 4px;
+  font-size: 14px;
+  font-weight: 700;
+`
+const NoTransaction = styled.div`
+  text-align:center;
+  &img {
+    max-width:158px;
+    max-height:160px;
+    width:100%;
+    height:100%;
+    margin-bottom:16px;
+  }
+`
+const NoTransactionText = styled(Text)`
+  margin-top:16px;
+  color:#FFFFFF99;
+`
 function renderTransactions(transactions: TransactionDetails[], chainId: number) {
   return (
     <Flex flexDirection="column">
@@ -37,16 +59,16 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
   }, [dispatch])
 
   return (
-    <Modal title={t('Recent Transactions')} headerBackground="gradientCardHeader" onDismiss={onDismiss}>
+    <Modal title={t('Recent Transactions')} onDismiss={onDismiss}>
       {account ? (
         <ModalBody>
           {hasTransactions ? (
             <>
               <AutoRow mb="1rem" style={{ justifyContent: 'space-between' }}>
                 <Text>{t('Recent Transactions')}</Text>
-                <Button variant="tertiary" scale="xs" onClick={clearAllTransactionsCallback}>
+                <RecentButton variant="tertiary" scale="xs" onClick={clearAllTransactionsCallback}>
                   {t('clear all')}
-                </Button>
+                </RecentButton>
               </AutoRow>
               {Object.entries(sortedRecentTransactions).map(([chainId, transactions]) => {
                 const chainIdNumber = Number(chainId)
@@ -59,7 +81,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
 
                 return (
                   <div key={`transactions#${chainIdNumber}`}>
-                    <Text fontSize="12px" color="textSubtle" mb="4px">
+                    <Text fontSize="12px" color="#FFFFFFDE" mb="4px">
                       {chains.find((c) => c.id === chainIdNumber)?.name ?? 'Unknown network'}
                     </Text>
                     {renderTransactions(pending, chainIdNumber)}
@@ -69,7 +91,10 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
               })}
             </>
           ) : (
-            <Text>{t('No recent transactions')}</Text>
+            <NoTransaction>
+              <img src="/images/swap/no-recent-transaction.png" alt="" />
+              <NoTransactionText>{t('No recent transactions')}</NoTransactionText>
+            </NoTransaction>
           )}
         </ModalBody>
       ) : (

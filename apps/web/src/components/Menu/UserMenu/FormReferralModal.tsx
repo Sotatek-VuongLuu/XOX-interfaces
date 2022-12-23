@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import React, { useState, useCallback, useEffect, useImperativeHandle } from 'react'
+import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react'
 import { Button, Text } from '@pancakeswap/uikit'
 import axios from 'axios'
 import { useSigner, useAccount } from 'wagmi'
@@ -31,7 +31,7 @@ const FormWrapper = styled.div`
   padding: 32px 24px;
   display: flex;
   flex-direction: column;
-  flexGrow: 1;
+  flexgrow: 1;
 
   & > div {
     display: flex;
@@ -146,7 +146,7 @@ const SuccessModal = styled.div`
   }
 `
 
-const FormReferralModal = ({ ref }) => {
+const FormReferralModal = (_, ref) => {
   const dispatch = useAppDispatch()
   const router = useRouter()
   const [username, setUsername] = useState('')
@@ -213,7 +213,7 @@ const FormReferralModal = ({ ref }) => {
     if (!email) return true
 
     // eslint-disable-next-line no-useless-escape
-    return /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
+    return /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/.test(
       email,
     )
   }, [email])
@@ -250,13 +250,15 @@ const FormReferralModal = ({ ref }) => {
       const data = result?.data
       if (data) {
         avataURL = data.signedUrl.split(/[?]+/)[0]
-        await axios.put(data.signedUrl, avatar, {
-          headers: {
-            'Content-Type': avatar.type
-          }
-        }).catch((error) => {
-          console.warn(error)
-        })
+        await axios
+          .put(data.signedUrl, avatar, {
+            headers: {
+              'Content-Type': avatar.type,
+            },
+          })
+          .catch((error) => {
+            console.warn(error)
+          })
       }
     }
 
@@ -555,4 +557,4 @@ const FormReferralModal = ({ ref }) => {
   )
 }
 
-export default FormReferralModal
+export default forwardRef(FormReferralModal)

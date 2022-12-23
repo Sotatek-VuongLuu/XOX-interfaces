@@ -3,9 +3,15 @@ import { escapeRegExp } from 'utils'
 import { Text, Button, Input, Flex, Box, QuestionHelper } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { useUserSlippageTolerance, useUserTransactionTTL } from 'state/user/hooks'
-import { styled } from '@mui/material'
+import styled from 'styled-components'
 
-
+const IconPercent = styled.span`
+  position:absolute;
+  color:#F4EEFF;
+  right:-5px;
+  top:50%;
+  transform:translate(-50%, -50%);
+`
 const SettingButton = styled(Button)`
   background:unset;
   border:1px solid #444444;
@@ -13,6 +19,20 @@ const SettingButton = styled(Button)`
   font-size:16px;
   min-height:43px;
   font-weight:400;
+  &.active {
+    border:1px solid #9072FF;
+  }
+`
+const SettingInput = styled(Input)`
+  border-radius:10px;
+  border:1px solid #444444;
+  background:unset;
+  min-height:43px;
+  width:62px;
+  padding: 0 0 0 12px;
+  &.active {
+    border:1px solid #9072FF;
+  }
 `
 enum SlippageError {
   InvalidInput = 'InvalidInput',
@@ -32,7 +52,6 @@ const SlippageTabs = () => {
   const [ttl, setTtl] = useUserTransactionTTL()
   const [slippageInput, setSlippageInput] = useState('')
   const [deadlineInput, setDeadlineInput] = useState('')
-  const [activeButton, setActiveButton] = useState(userSlippageTolerance)
 
   const { t } = useTranslation()
 
@@ -104,57 +123,44 @@ const SlippageTabs = () => {
         <Flex flexWrap="wrap">
           <SettingButton
             mt="4px"
-            mr="4px"
+            mr="16px"
             scale="sm"
             onClick={() => {
               setSlippageInput('')
               setUserSlippageTolerance(10)
-              setActiveButton(10)
             }}
-            variant={userSlippageTolerance === 10 ? 'primary' : 'tertiary'}
             className ={userSlippageTolerance=== 10 ?'active':''}
           >
             0.1%
           </SettingButton>
           <SettingButton
             mt="4px"
-            mr="4px"
+            mr="16px"
             scale="sm"
             onClick={() => {
               setSlippageInput('')
               setUserSlippageTolerance(50)
             }}
-            variant={userSlippageTolerance === 50 ? 'primary' : 'tertiary'}
+            className ={userSlippageTolerance=== 50 ?'active':''}
           >
             0.5%
           </SettingButton>
           <SettingButton
-            mr="4px"
+            mr="16px"
             mt="4px"
             scale="sm"
             onClick={() => {
               setSlippageInput('')
               setUserSlippageTolerance(100)
             }}
-            variant={userSlippageTolerance === 100 ? 'primary' : 'tertiary'}
+            className ={userSlippageTolerance=== 100 ?'active':''}
           >
             1.0%
           </SettingButton>
-          <SettingButton
-            mr="4px"
-            mt="4px"
-            scale="sm"
-            onClick={() => {
-              setSlippageInput('')
-              setUserSlippageTolerance(500)
-            }}
-            variant={userSlippageTolerance === 100 ? 'primary' : 'tertiary'}
-          >
-            5.0%
-          </SettingButton>
-          {/* <Flex alignItems="center">
+          
+          <Flex alignItems="center">
             <Box width="76px" mt="4px">
-              <Input
+              <SettingInput
                 scale="sm"
                 inputMode="decimal"
                 pattern="^[0-9]*[.,]?[0-9]{0,2}$"
@@ -169,16 +175,17 @@ const SlippageTabs = () => {
                   }
                 }}
                 isWarning={!slippageInputIsValid}
-                isSuccess={![10, 50, 100].includes(userSlippageTolerance)}
+                // isSuccess={![10, 50, 100].includes(userSlippageTolerance)}
+                className={![10, 50, 100].includes(userSlippageTolerance)?'active':''}
               />
             </Box>
-            <Text color="primary" bold ml="2px">
+            <Text color="#9072FF" bold ml="2px">
               %
             </Text>
-          </Flex> */}
+          </Flex>
         </Flex>
         {!!slippageError && (
-          <Text fontSize="14px" color={slippageError === SlippageError.InvalidInput ? 'red' : '#F3841E'} mt="8px">
+          <Text fontSize="14px" color={slippageError === SlippageError.InvalidInput ? '#F44336' : '#F3841E'} mt="16px">
             {slippageError === SlippageError.InvalidInput
               ? t('Enter a valid slippage percentage')
               : slippageError === SlippageError.RiskyLow
@@ -197,8 +204,8 @@ const SlippageTabs = () => {
           />
         </Flex>
         <Flex>
-          <Box width="52px" mt="4px">
-            <Input
+          <Box width="52px" mt="4px" style={{position:'relative'}}>
+            <SettingInput
               scale="sm"
               inputMode="numeric"
               pattern="^[0-9]+$"
@@ -214,6 +221,7 @@ const SlippageTabs = () => {
                 }
               }}
             />
+            <IconPercent>%</IconPercent>
           </Box>
         </Flex>
       </Flex>

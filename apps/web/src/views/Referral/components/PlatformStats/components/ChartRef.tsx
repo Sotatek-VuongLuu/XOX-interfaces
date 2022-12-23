@@ -13,8 +13,8 @@ function CustomLabel({ view, percent, name }) {
   return (
     <>
       <text
-        x={85}
-        y={85}
+        x={65}
+        y={65}
         fill=" rgba(255, 255, 255, 0.87)"
         className="recharts-text recharts-label"
         textAnchor="middle"
@@ -40,7 +40,7 @@ function CustomLabel({ view, percent, name }) {
   )
 }
 
-const ChartRef: React.FC<IProps> = ({ percent = 0, name = '', cx = 70, cy = 151 }) => {
+const ChartRef: React.FC<IProps> = ({ percent = 0, name = '', cx = 50, cy = 110 }) => {
   const COLORS = ['#cbc2ec', '#8e82ba', 'rgba(255, 255, 255, 0.1)']
   const data = [
     { name: 'Group A', value: percent - 2 },
@@ -49,15 +49,15 @@ const ChartRef: React.FC<IProps> = ({ percent = 0, name = '', cx = 70, cy = 151 
   ]
 
   return (
-    <PieChart width={170} height={150}>
+    <PieChart width={130} height={120}>
       <Pie
         data={data}
-        cx={80}
-        cy={80}
+        cx={60}
+        cy={60}
         startAngle={220}
         endAngle={-40}
-        innerRadius={60}
-        outerRadius={80}
+        innerRadius={45}
+        outerRadius={60}
         fill="#8884d8"
         dataKey="value"
         stroke="none"

@@ -161,15 +161,34 @@ export default function CurrencyList({
 
       if (index === breakIndex || !data) {
         return (
-          <FixedContentRow style={style}>
-            <LightGreyCard padding="8px 12px" borderRadius="8px">
+          <FixedContentRow
+            style={{
+              padding: 0,
+              ...style,
+            }}
+          >
+            <LightGreyCard
+              padding="8px 12px"
+              borderRadius="4px"
+              style={{
+                background: '#303030',
+              }}
+            >
               <RowBetween>
-                <Text small>{t('Expanded results from inactive Token Lists')}</Text>
+                <Text
+                  fontSize="14px"
+                  fontWeight="400"
+                  lineHeight="17px"
+                  color="rgba(255, 255, 255, 0.87)"
+                >
+                  Expanded results from inactive Token Lists
+                </Text>
                 <QuestionHelper
                   text={t(
                     "Tokens from inactive lists. Import specific tokens below or click 'Manage' to activate more lists.",
                   )}
                   ml="4px"
+                  placement="top"
                 />
               </RowBetween>
             </LightGreyCard>
