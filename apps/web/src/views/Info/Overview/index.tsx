@@ -121,7 +121,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
 
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/data-api/v3/cryptocurrency/detail/chart`, {
-        params: { id: coinmarketcapId, range: '1D' },
+        params: { id: coinmarketcapId, range: filter },
       })
       .then((result) => {
         // if(result.status.error_code !== 0) return;

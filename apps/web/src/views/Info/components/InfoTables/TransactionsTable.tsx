@@ -132,13 +132,13 @@ export const CustomTableWrapper = styled(Flex)`
 `
 
 export const PageButtons = styled(Flex)`
-  width: 100%;
+  // width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
-
+  padding: 3px;
   ${({ theme }) => theme.mediaQueries.md} {
-    justify-content: flex-start;
+    justify-content: flex-end;
   }
 
   & .page {
