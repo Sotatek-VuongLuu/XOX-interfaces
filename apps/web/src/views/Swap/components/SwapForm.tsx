@@ -58,6 +58,9 @@ const PerPriceTitle = styled.div`
   color:#9072FF;
   font-weight:700;
   font-size:16px;
+  @media (max-width: 574px) {
+    font-size: 14px;
+  }
 `
 
 export default function SwapForm() {
@@ -325,7 +328,7 @@ export default function SwapForm() {
                   />
                 </>
               )}
-          <ReferralCode>
+         <ReferralCode>
             <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
             <ReferralInput placeholder="123456" />
           </ReferralCode>

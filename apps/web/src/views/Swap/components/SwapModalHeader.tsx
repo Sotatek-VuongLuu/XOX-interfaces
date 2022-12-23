@@ -16,6 +16,11 @@ const RowPrice = styled(RowBetween)`
   background : ${({ theme }) => theme.colors.dark3};
   padding: 24px 17px;
   border-radius: 10px;
+  width:100%;
+  @media (max-width: 574px) {
+    padding: 16px;
+    margin-bottom:0;
+  }
 `
 export default function SwapModalHeader({
   trade,

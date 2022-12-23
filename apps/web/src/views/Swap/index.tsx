@@ -7,6 +7,7 @@ import SwapNonTrade from 'components/Svg/SwapNonTrade'
 import SwapTrade from 'components/Svg/SwapTrade'
 import SwapTradeMobile from 'components/Svg/SwapTradeMobile'
 import SwapNonTradeMobile from 'components/Svg/SwapNonTradeMobile'
+import SwapDefaultMobile from 'components/Svg/SwapDefaultMobile'
 import { AppBody } from 'components/App'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
@@ -91,7 +92,7 @@ export default function Swap() {
         )} */}
 
         <Flex flexDirection="column" position="relative">
-          {isMobile && (!account ? <SwapNonTradeMobile /> : <SwapTradeMobile />)}
+          {isMobile && (!account ? <SwapNonTradeMobile /> : !trade? <SwapDefaultMobile />: <SwapTradeMobile />)}
           {!isMobile && (!trade ? <SwapNonTrade /> : <SwapTrade />)}
           <StyledSwapContainer $isChartExpanded={isChartExpanded} style={isMobile?{left:0}:{}}>
             <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>

@@ -8,6 +8,10 @@ import { balanceMaxMiniClass } from "./SwapWidget.css";
 const PerLabel = styled.div`
   color: #ffffff;
   font-size: 16px;
+  margin-top: "8px";
+  @media (max-width: 574px) {
+    font-size: 14px;
+  }
 `;
 interface TradePriceProps {
   price?: Price<Currency, Currency>;
@@ -39,7 +43,7 @@ export function TradePrice({ price }: TradePriceProps) {
           "-"
         )}
       </Text>
-      {show && <PerLabel style={{ color: "#ffffff", marginTop: "8px" }}>{label}</PerLabel>}
+      {show && <PerLabel>{label}</PerLabel>}
     </>
   );
 }
