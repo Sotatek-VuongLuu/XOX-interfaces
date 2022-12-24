@@ -16,7 +16,7 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
 import { useAccount, useBalance, useProvider } from 'wagmi'
 import { parseUnits } from '@ethersproject/units'
@@ -26,7 +26,6 @@ import { AppState, useAppDispatch } from 'state'
 import { updateOpenFormReferral } from 'state/user/actions'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
-import { useGetChainName } from 'state/info/hooks'
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import { getDefaultProvider } from '@ethersproject/providers'
 
@@ -74,7 +73,6 @@ const UserMenu = () => {
   const [userMenuText, setUserMenuText] = useState<string>('')
   const [userMenuVariable, setUserMenuVariable] = useState<UserMenuVariant>('default')
   const bnbBalance = useBalance({ addressOrName: account, chainId: ChainId.BSC })
-  const chainName = useGetChainName()
   const native = useNativeCurrency()
   const provider = useProvider({ chainId })
   const [balanceNative, setBalanceNative] = useState<any>()
@@ -93,9 +91,30 @@ const UserMenu = () => {
     dispatch(updateOpenFormReferral({ openFormReferral: true }))
   }
 
+  const chainName = useCallback(() => {
+    switch (chainId) {
+      case 1:
+        return 'ETH'
+      case 5:
+        return 'Goerli'
+      case 56:
+        return 'BNB'
+      case 97:
+        return 'BNB Testnet'
+    }
+  }, [chainId])
+
   const renderAvataImage = () => {
     if (userProfile?.avatar) {
-      return <img src={userProfile.avatar} width="100%" height="100%" alt="" style={{ borderRadius: '50%', objectFit: 'cover' }} />
+      return (
+        <img
+          src={userProfile.avatar}
+          width="100%"
+          height="100%"
+          alt=""
+          style={{ borderRadius: '50%', objectFit: 'cover' }}
+        />
+      )
     }
     return (
       <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" viewBox="0 0 100 100" fill="none">
@@ -178,14 +197,7 @@ const UserMenu = () => {
 
         <Flex flexDirection="column" mb="12px" mt="12px">
           <CopyAddress tooltipMessage={t('Copied')} account={account} />
-          <Text
-            fontSize="14px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="500"
-            lineHeight="17px"
-            color="rgba(255, 255, 255, 0.87)"
-          >
+          <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
             {/* eslint-disable react/jsx-boolean-value */}
             <CopyAddress tooltipMessage={t('Copied')} account={userProfile?.referralCode} referralCode={true} />
           </Text>
@@ -208,7 +220,7 @@ const UserMenu = () => {
               <img src={`/images/chains/${chainId}.png`} alt="BNB" />
             </Flex>
             <Text color="white" ml="4px" fontSize="12px" lineHeight="15px">
-              {chainName} Smart Chain
+              {chainName()} Smart Chain
             </Text>
           </Flex>
           <LinkExternal href={getBlockExploreLink(account, 'address', chainId)} className="link-bnb" color="#9072FF">
@@ -216,21 +228,27 @@ const UserMenu = () => {
           </LinkExternal>
         </Flex>
         <Flex alignItems="center" justifyContent="space-between" width="100%" mt="8px">
-          <Text color="rgba(255, 255, 255, 0.87)">
+          <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
             {native.symbol} {t('Balance')}
           </Text>
           {!bnbBalance.isFetched ? (
             <Skeleton height="22px" width="60px" />
           ) : (
-            <Text color="rgba(255, 255, 255, 0.87)">{balanceNative?.toString()}</Text>
+            <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
+              {balanceNative?.toString()}
+            </Text>
           )}
         </Flex>
         <Flex alignItems="center" justifyContent="space-between" width="100%" mb="12px" mt="8px">
-          <Text color="rgba(255, 255, 255, 0.87)">XOX {t('Balance')}</Text>
+          <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
+            XOX {t('Balance')}
+          </Text>
           {!bnbBalance.isFetched ? (
             <Skeleton height="22px" width="60px" />
           ) : (
-            <Text color="rgba(255, 255, 255, 0.87)">{formatBigNumber(bnbBalance.data.value, 6)}</Text>
+            <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
+              {formatBigNumber(bnbBalance.data.value, 6)}
+            </Text>
           )}
         </Flex>
 
@@ -246,20 +264,15 @@ const UserMenu = () => {
     )
   }
 
-  if (account) {
+  if (account && userProfile) {
     return (
-      <UIKitUserMenu
-        account={account}
-        avatarSrc={avatarSrc}
-        text={userMenuText}
-        variant={userMenuVariable}
-      >
+      <UIKitUserMenu account={account} avatarSrc={avatarSrc} text={userMenuText} variant={userMenuVariable}>
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )
   }
 
-  if (isWrongNetwork) {
+  if (isWrongNetwork && userProfile) {
     return (
       <UIKitUserMenu text={t('Network')} variant="danger">
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
