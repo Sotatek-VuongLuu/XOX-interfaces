@@ -1,15 +1,13 @@
 import React from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 
-const RADIAN = Math.PI / 180
-
 export default function InfoPieChart({ data, colors, total }) {
   return (
     <ResponsiveContainer width="100%" height={220}>
       {total > 0 ? (
         <PieChart>
           <Pie
-            data={data}
+            data={[100, 100, 100, 100]}
             labelLine={false}
             // label={renderCustomizedLabel}
             outerRadius={95}

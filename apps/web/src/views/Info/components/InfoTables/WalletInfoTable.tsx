@@ -2,10 +2,10 @@
 /* eslint-disable no-nested-ternary */
 // import { useTranslation } from '@pancakeswap/localization'
 // import { ChainId } from '@pancakeswap/sdk'
-import { useAccount, useNetwork } from 'wagmi'
+import { useAccount, useProvider, useNetwork } from 'wagmi'
 // import { fetchBalance } from '@wagmi/core'
 // import truncateHash from '@pancakeswap/utils/truncateHash'
-import { Flex, Image, Text, CopyButton } from '@pancakeswap/uikit'
+import { Flex, Text, CopyButton } from '@pancakeswap/uikit'
 // import { ITEMS_PER_INFO_TABLE_PAGE } from 'config/constants/info'
 // import { formatDistanceToNowStrict } from 'date-fns'
 import { useCallback, useEffect, useState } from 'react'
@@ -14,7 +14,7 @@ import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 // import { getBlockExploreLink } from 'utils'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-// import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
+import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 // import { formatAmount } from 'utils/formatInfoNumbers'
 // import { defaultTokens } from './config'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
@@ -150,7 +150,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const { address: account } = useAccount()
   const { chainId } = useActiveChainId()
   const { chain } = useNetwork()
-  console.log(chain)
+  const provider = useProvider({ chainId })
   const [balanceNative, setBalanceNative] = useState<any>()
   const [dataChart, setDataChart] = useState<any>([])
   const [totalAsset, setTotalAsset] = useState<number>(0)
@@ -158,9 +158,17 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
 
   const tokenRateUSD = useCallback(
-    (symbol) => {
+    (symbol: string) => {
       if (!currencyDatas) return 0
-      const currencyData = currencyDatas.find((data) => data?.symbol?.toLowerCase() === symbol.toLowerCase())
+      if (symbol === native.symbol && chainId === 5) {
+        const currencyData = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === 'ETH')
+        return currencyData?.price || 0
+      }
+      if (symbol === native.symbol && chainId === 97) {
+        const currencyData = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === 'BNB')
+        return currencyData?.price || 0
+      }
+      const currencyData = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === symbol.toUpperCase())
       if (!currencyData) return 0
       return currencyData.price
     },
@@ -174,7 +182,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   useEffect(() => {
     if (!account || !chain || allTokens.length === 0) return
 
-    const currentProvider = getDefaultProvider(chain.network)
+    const currentProvider = chain.id === 1 || chain.id === 5 ? getDefaultProvider(chain.network) : provider
     currentProvider
       .getBalance(account)
       .then((balance) => {
@@ -185,7 +193,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       })
     getBalancesForEthereumAddress({
       // erc20 tokens you want to query!
-      contractAddresses: allTokens.map((token) => token.address),
+      contractAddresses: allTokens.map((token: any) => token.address),
       // ethereum address of the user you want to get the balances for
       ethereumAddress: account,
       // your ethers provider
@@ -195,6 +203,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     })
       .then((balance) => {
         setTokensBalance(balance.tokens)
+        console.log(balance.tokens)
       })
       .catch((error) => {
         console.warn(error)
@@ -203,7 +212,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
 
   useEffect(() => {
     let total = 0
-    const nativeBalance = balanceNative ? parseFloat(balanceNative.toString()) * tokenRateUSD(native.symbol) : 0
+    const nativeBalance = balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol) : 0
     const xoxBalance = 0
     const result = [nativeBalance, xoxBalance]
     let sum = 0
@@ -216,6 +225,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     })
     result.push(sum)
     total = nativeBalance + xoxBalance + result[2] + sum
+    console.log(total, result)
     setTotalAsset(total)
     setDataChart(result)
   }, [balanceNative, tokensBalance])
@@ -291,7 +301,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                       color="rgba(255, 255, 255, 0.87)"
                       marginRight="5px"
                     >
-                      {balanceNative ? balanceNative.toString() : 0}
+                      {balanceNative ? formatBigNumber(balanceNative) : 0}
                     </Text>
                     <Text
                       fontSize="14px"
@@ -313,7 +323,8 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                     lineHeight="15px"
                     color="rgba(255, 255, 255, 0.6)"
                   >
-                    ~${balanceNative ? balanceNative.toString() * tokenRateUSD(native.symbol) : 0} | ~0.70115 XOX
+                    ~${balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol) : 0} |
+                    ~0.70115 XOX
                   </Text>
                 </Flex>
               </Flex>
