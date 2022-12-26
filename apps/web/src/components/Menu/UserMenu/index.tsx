@@ -99,7 +99,7 @@ const UserMenu = () => {
         return 'Goerli'
       case 56:
         return 'BNB'
-      case 97:
+      default:
         return 'BNB Testnet'
     }
   }, [chainId])

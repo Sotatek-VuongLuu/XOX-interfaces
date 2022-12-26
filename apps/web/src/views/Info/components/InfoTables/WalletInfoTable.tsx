@@ -2,7 +2,7 @@
 /* eslint-disable no-nested-ternary */
 // import { useTranslation } from '@pancakeswap/localization'
 // import { ChainId } from '@pancakeswap/sdk'
-import { useAccount, useProvider, useBalance } from 'wagmi'
+import { useAccount, useNetwork } from 'wagmi'
 // import { fetchBalance } from '@wagmi/core'
 // import truncateHash from '@pancakeswap/utils/truncateHash'
 import { Flex, Image, Text, CopyButton } from '@pancakeswap/uikit'
@@ -14,7 +14,7 @@ import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 // import { getBlockExploreLink } from 'utils'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
+// import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 // import { formatAmount } from 'utils/formatInfoNumbers'
 // import { defaultTokens } from './config'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
@@ -23,7 +23,6 @@ import { CurrencyLogo } from 'components/Logo'
 import { ERC20Token } from '@pancakeswap/sdk'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import InfoPieChart from '../InfoCharts/PieChart'
-import { useNetwork } from 'wagmi'
 
 const Wrapper = styled.div`
   width: 100%;

@@ -646,7 +646,7 @@ const TransactionsTable: React.FC<
               if (transaction) {
                 return (
                   // eslint-disable-next-line react/no-array-index-key
-                  <Fragment key={index}>
+                  <Fragment key={transaction.hash}>
                     <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
                   </Fragment>
                 )
@@ -681,7 +681,7 @@ const TransactionsTable: React.FC<
                   [...Array(maxPage)].map((_, i) => (
                     <button
                       type="button"
-                      key={i}
+                      key={_}
                       onClick={() => setPagePagination(i + 1)}
                       className={`page ${page === i + 1 ? 'current' : ''}`}
                     >
@@ -692,7 +692,7 @@ const TransactionsTable: React.FC<
                   <>
                     {page - 2 <= 1 ? (
                       [...Array(page - 1)].map((_, i) => (
-                        <button type="button" key={i} onClick={() => setPagePagination(i + 1)} className="page">
+                        <button type="button" key={_} onClick={() => setPagePagination(i + 1)} className="page">
                           {i + 1}
                         </button>
                       ))
@@ -717,7 +717,7 @@ const TransactionsTable: React.FC<
                     </button>
                     {page + 2 >= maxPage - 1 ? (
                       [...Array(maxPage - page)].map((_, i) => (
-                        <button type="button" key={i} className="page" onClick={() => setPagePagination(page + i + 1)}>
+                        <button type="button" key={_} className="page" onClick={() => setPagePagination(page + i + 1)}>
                           {page + i + 1}
                         </button>
                       ))
