@@ -2,13 +2,14 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Box, Grid } from '@mui/material'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import HowToJoin from './HowToJoin'
 // eslint-disable-next-line import/no-cycle
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
+import { userPointHourDatas } from '../../../services/referral'
 
 export interface IItemLeaderBoard {
   name: string
@@ -201,6 +202,19 @@ const MainInfo = () => {
   const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily']
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
 
+
+  const getGrabDemo = async () => {
+    const chainId = 97;
+    const payload = {
+      date_gte : 1671620257,
+      date_lte : 1671620280
+    }
+    const result = await userPointHourDatas(chainId, payload);
+    console.log('result', result)
+  }
+  useEffect(() => {
+    getGrabDemo()
+  }, [])
   return (
     <Box sx={{ marginTop: '16px' }}>
       <Grid container spacing={2}>
