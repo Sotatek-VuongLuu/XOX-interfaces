@@ -1,5 +1,6 @@
 import { atoms } from '@pancakeswap/ui/css/atoms'
 import { responsiveStyle } from '@pancakeswap/ui/css/responsiveStyle'
+import { Flex } from '@pancakeswap/uikit'
 import { style, keyframes } from '@vanilla-extract/css'
 
 const promotedGradientKf = keyframes({
@@ -59,18 +60,25 @@ export const desktopWalletSelectionClass = style(
 export const walletSelectWrapperClass = style(
   responsiveStyle({
     xs: {
-      gridTemplateColumns: '130px',
-      columnGap: '24px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
       placeSelf: 'center',
+      width: '100%',
     },
     sm: {
-      columnGap: '16px',
-      gridTemplateColumns: '150px 150px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'space-between',
       placeSelf: 'center',
+      width: '100%',
     },
     lg: {
-      gridTemplateColumns: '150px 150px',
       placeSelf: 'center',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      width: '100%',
     },
   }),
 )

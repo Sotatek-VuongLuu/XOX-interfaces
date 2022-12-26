@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   margin-bottom: 50px;
 
   & > div {
-    max-width: calc(100vw - 96px)
+    max-width: calc(100vw - 96px);
   }
 
   & > div:first-child {
@@ -37,11 +37,6 @@ const Wrapper = styled.div`
     & > div:first-child {
       margin-bottom: 28px;
     }
-  }
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    grid-column: 1 / span 2;
-    padding: 24px;
   }
 
   & .heading {
@@ -75,6 +70,29 @@ const Wrapper = styled.div`
     border: none;
     box-shadow: none;
   }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-column: 1 / span 2;
+    padding: 24px;
+
+    .btn-filter button {
+      margin-right: 0;
+      margin-left: 8px;
+    }
+
+    & > div:first-child {
+      display: flex;
+      flex-direction: row;
+
+      & > div {
+        align-items: flex-end;
+      }
+
+      & > div:first-child {
+        margin-bottom: 28px;
+      }
+    }
+  }
 `
 
 const ResponsiveGrid = styled.div`
@@ -101,11 +119,11 @@ export const CustomTableWrapper = styled(Flex)`
   overflow: hidden;
 
   &:hover {
-    overflow: auto;
+    overflow-x: auto;
   }
 
   & > div {
-    min-width: 1600px;
+    min-width: 1200px;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -114,10 +132,14 @@ export const CustomTableWrapper = styled(Flex)`
 `
 
 export const PageButtons = styled(Flex)`
-  width: 100%;
+  // width: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  padding: 3px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    justify-content: flex-end;
+  }
 
   & .page {
     font-family: 'Inter';
@@ -163,7 +185,7 @@ export const PageButtons = styled(Flex)`
   }
 
   & div[class*='Select__DropDownListContainer'] {
-    // bottom: 100%;
+    bottom: 100%;
     border-radius: 0;
     z-index: 10000;
   }
@@ -338,7 +360,7 @@ const DataRow: React.FC<
   )
 }
 
-const TransactionTable: React.FC<
+const TransactionsTable: React.FC<
   React.PropsWithChildren<{
     transactions: Transaction[]
   }>
@@ -659,7 +681,7 @@ const TransactionTable: React.FC<
                   [...Array(maxPage)].map((_, i) => (
                     <button
                       type="button"
-                      key={_}
+                      key={i}
                       onClick={() => setPagePagination(i + 1)}
                       className={`page ${page === i + 1 ? 'current' : ''}`}
                     >
@@ -670,7 +692,7 @@ const TransactionTable: React.FC<
                   <>
                     {page - 2 <= 1 ? (
                       [...Array(page - 1)].map((_, i) => (
-                        <button type="button" key={_} onClick={() => setPagePagination(i + 1)} className="page">
+                        <button type="button" key={i} onClick={() => setPagePagination(i + 1)} className="page">
                           {i + 1}
                         </button>
                       ))
@@ -695,7 +717,7 @@ const TransactionTable: React.FC<
                     </button>
                     {page + 2 >= maxPage - 1 ? (
                       [...Array(maxPage - page)].map((_, i) => (
-                        <button type="button" key={_} className="page" onClick={() => setPagePagination(page + i + 1)}>
+                        <button type="button" key={i} className="page" onClick={() => setPagePagination(page + i + 1)}>
                           {page + i + 1}
                         </button>
                       ))
@@ -787,4 +809,4 @@ const TransactionTable: React.FC<
   )
 }
 
-export default TransactionTable
+export default TransactionsTable

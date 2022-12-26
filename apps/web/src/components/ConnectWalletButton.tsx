@@ -7,13 +7,21 @@ import useAuth from 'hooks/useAuth'
 // @ts-ignore
 // eslint-disable-next-line import/extensions
 import { useActiveHandle } from 'hooks/useEagerConnect.bmp.ts'
-import { useMemo, useState } from 'react'
-import { useConnect } from 'wagmi'
+import { useEffect, useMemo, useState } from 'react'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
+import { useAccount, useConnect } from 'wagmi'
 import Trans from './Trans'
 
-const ConnectWalletButton = ({ children, ...props }: ButtonProps) => {
+const ConnectWalletButton = ({
+  children,
+  ...props
+}: ButtonProps) => {
   const handleActive = useActiveHandle()
   const { login } = useAuth()
+  const { address: account } = useAccount()
+  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
+
   const {
     t,
     currentLanguage: { code },
@@ -31,6 +39,10 @@ const ConnectWalletButton = ({ children, ...props }: ButtonProps) => {
       setOpen(true)
     }
   }
+
+  useEffect(() => {
+    if (account && !userProfile) setOpen(false)
+  }, [account, userProfile])
 
   const wallets = useMemo(() => createWallets(chainId, connectAsync), [chainId, connectAsync])
 

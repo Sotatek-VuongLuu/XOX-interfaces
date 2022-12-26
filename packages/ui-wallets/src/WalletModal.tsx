@@ -206,7 +206,7 @@ function WalletSelect<T>({
   const [showMore, setShowMore] = useState(false)
   const walletsToShow = showMore ? wallets : wallets.slice(0, displayCount)
   return (
-    <AtomBox display="grid" gap="24px" className={walletSelectWrapperClass}>
+    <AtomBox className={walletSelectWrapperClass}>
       {walletsToShow.map((wallet) => {
         const isImage = typeof wallet.icon === 'string'
         const Icon = wallet.icon
@@ -225,6 +225,9 @@ function WalletSelect<T>({
               padding: '0',
               height: '142px',
               background: '#303030',
+              width: '150px',
+              maxWidth: '45%',
+              margin: '0 10px'
             }}
             flexDirection="column"
             onClick={() => onClick(wallet)}

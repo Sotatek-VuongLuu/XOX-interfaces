@@ -4,17 +4,6 @@ import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
 const RADIAN = Math.PI / 180
 
 export default function InfoPieChart({ data, colors, total }) {
-  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-    const x = 0
-    const y = 0
-
-    return (
-      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-        {`${(percent * 100).toFixed(0)}%`}
-      </text>
-    )
-  }
-
   return (
     <ResponsiveContainer width="100%" height={220}>
       {total > 0 ? (
