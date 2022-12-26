@@ -161,4 +161,16 @@ export default {
     56: '0x0726a8C8206b9eC0AfB788df5adb36a8AEDB13c2',
     97: '0xBab5d3B6bA24E185f216419f3ba07f03984bF983',
   },
+  treasuryXOX: {
+    97: '0x941AA91Ca6CecF64Aa9c032356a55c70Ff53B51F',
+    5: '0x78EE16dCdDd4F1d12503fe6559de88c2c0BefD2d',
+    1: '',
+    56: '',
+  },
+  contractXOXToken: {
+    97: '0x798bb5B1CD7ed74654EBfD5D58a24d3D9Cc67847',
+    5: '0xfE92Ceb4217a830135a943463192206935764B36',
+    1: '',
+    56: '',
+  },
 }
