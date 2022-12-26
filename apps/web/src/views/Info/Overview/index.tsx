@@ -10,11 +10,10 @@ import TransactionTable from 'views/Info/components/InfoTables/TransactionsTable
 import HoverableChart from '../components/InfoCharts/HoverableChart'
 import WalletInfoTable from 'views/Info/components/InfoTables/WalletInfoTable'
 import axios from 'axios'
-import { SUGGESTED_BASES } from 'config/constants/exchange'
-import { tokens } from 'tokens'
+import { SUGGESTED_BASES_ID } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useNativeCurrency from 'hooks/useNativeCurrency'
-import { useAllTokens } from 'hooks/Tokens'
+import { useAllCurrentTokens } from 'hooks/Tokens'
 
 export const ChartCardsContainer = styled(Flex)`
   justify-content: space-between;
@@ -50,14 +49,14 @@ export const PageContainer = styled(Flex)`
 
 const Overview: React.FC<React.PropsWithChildren> = () => {
   const native = useNativeCurrency()
-  const [coinmarketcapIds, setCoinmarketcapIds] = useState<string | undefined>()
+  const [coinmarketcapIds, setCoinmarketcapIds] = useState<any>()
   const [coinmarketcapId, setCoinmarketcapId] = useState<number | undefined>()
   const [filter, setFilter] = useState('1D')
   const [chartData, setChardData] = useState<Array<any> | undefined>()
   const [currencyDatas, setCurrencyDatas] = useState<Array<any> | undefined>()
   const transactions = useProtocolTransactionsSWR()
   const { chainId } = useActiveChainId()
-  const allTokens = useAllTokens()
+  const allTokens = useAllCurrentTokens()
 
   // const allPoolData = useAllPoolDataSWR()
   // const allPoolData = useAllPoolData()
@@ -70,50 +69,41 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   // const chainName = useGetChainName()
 
   useEffect(() => {
-    console.log(allTokens, 'allTokens')
-    const ids = Object.keys(allTokens).map((key: any) => {
+    const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds')) || SUGGESTED_BASES_ID
+    const tokenListNotHaveIds = Object.keys(allTokens)
+      .map((key: any) => {
         const token = allTokens[key]
-        const [filterToken] = tokens.filter((t) => {
-          return (
-            t.symbol.toLowerCase() === token.symbol.toLowerCase() &&
-            (t.platform ? t.platform.token_address.toLowerCase() === token.address.toLowerCase() : true)
-          )
-        })
-
-        return filterToken?.id
+        const { address } = token
+        if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[address.toUpperCase()]) {
+          return undefined
+        }
+        return token
       })
-      .filter((t) => t !== undefined)
-    setCoinmarketcapIds(ids.join(','))
-
-    const [token] = tokens.filter(
-      (t) =>
-        t.symbol.toLowerCase() === native.symbol.toLowerCase() &&
-        (t.platform ? t.platform.token_address.toLowerCase() === token.address.toLowerCase() : true),
-    )
-    setCoinmarketcapId(token?.id)
-    // } else {
-    //   const ids = SUGGESTED_BASES[chainId]
-    //     .concat([native])
-    //     .map((token: any) => {
-    //       const [filterToken] = tokens.filter((t) => {
-    //         return (
-    //           t.symbol.toLowerCase() === token.symbol.toLowerCase() &&
-    //           (t.platform ? t.platform.symbol.toLowerCase() === token.symbol.toLowerCase() : true)
-    //         )
-    //       })
-
-    //       return filterToken?.id
-    //     })
-    //     .filter((t) => t != undefined)
-    //   setCoinmarketcapIds(ids.join(','))
-
-    //   const [token] = tokens.filter(
-    //     (t) =>
-    //       t.symbol.toLowerCase() === native.symbol.toLowerCase() &&
-    //       (t.platform ? t.platform.symbol.toLowerCase() === token.symbol.toLowerCase() : true),
-    //   )
-    //   setCoinmarketcapId(token?.id)
-    // }
+      .filter((e) => e !== undefined)
+    Promise.all(
+      tokenListNotHaveIds.map(async (token: any) => {
+        return axios
+          .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/v2/cryptocurrency/info`, {
+            params: { address: token.address.toUpperCase() },
+          })
+          .then((response) => {
+            const tokenInfos = response.data.data
+            const tokenInfo = Object.keys(tokenInfos).map((key) => tokenInfos[key])?.[0]
+            const res = {}
+            res[token.address.toUpperCase()] = tokenInfo.id
+            return res
+          })
+          .catch(() => {
+            return {}
+          })
+      }),
+    ).then((values) => {
+      let tokenIds = { ..._tokenList }
+      values.forEach((value) => {
+        tokenIds = { ...tokenIds, ...value }
+      })
+      setCoinmarketcapIds(tokenIds)
+    })
   }, [allTokens])
 
   useEffect(() => {
@@ -142,17 +132,22 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   }, [filter, coinmarketcapId])
 
   useEffect(() => {
-    if (!coinmarketcapIds) return
+    if (!coinmarketcapIds || Object.keys(coinmarketcapIds).length === 0) return
+    localStorage.setItem('coinmarketcapIds', JSON.stringify(coinmarketcapIds))
 
+    const tempIds = Object.values(coinmarketcapIds)
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/v2/cryptocurrency/quotes/latest`, {
-        params: { id: coinmarketcapIds },
+        params: {
+          id: tempIds.filter((id, index) => tempIds.indexOf(id) === index).join(','),
+        },
       })
       .then((response) => {
         const data = response.data?.data
         if (!data) return
         const result = Object.keys(data).map((key) => {
           return {
+            id: data[key]?.id,
             symbol: data[key]?.symbol,
             price: data[key]?.quote?.USD?.price,
             percent_change_24h: data[key]?.quote?.USD?.percent_change_24h,
@@ -164,7 +159,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       .catch((err) => {
         console.warn(err)
       })
-  }, [coinmarketcapIds, coinmarketcapId])
+  }, [coinmarketcapIds])
 
   return (
     <Page>
