@@ -162,8 +162,8 @@ export default {
     97: '0xBab5d3B6bA24E185f216419f3ba07f03984bF983',
   },
   treasuryXOX: {
-    97: '0x2a924bcD60450C7a354413d8b2c906A3173F9208',
-    5: '',
+    97: '0x941AA91Ca6CecF64Aa9c032356a55c70Ff53B51F',
+    5: '0x78EE16dCdDd4F1d12503fe6559de88c2c0BefD2d',
     1: '',
     56: '',
   },

@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable no-restricted-globals */
 /* eslint-disable @typescript-eslint/no-array-constructor */
@@ -20,7 +22,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatEther, parseEther, parseUnits } from '@ethersproject/units'
 import { useModal } from '@pancakeswap/uikit'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
-import { getUerRank } from '../query'
+import ModalClaimSuccess from './Modal/ModalClaimSuccess'
 
 interface IDataClaim {
   point: number
@@ -190,14 +192,14 @@ const WrapperRight = styled(Box)<IPropsWR>`
 
     button:disabled,
     button[disabled] {
-      background-color: #cccccc;
-      color: #ded5d5;
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.38);
       cursor: not-allowed;
     }
 
     .unclaim_reward_container {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-      padding: 1px;
+      padding: 2px;
       border-radius: 4px;
       margin-right: 16px;
 
@@ -314,6 +316,7 @@ const Content = styled.div`
       line-height: 19px;
       color: #ffffff;
       padding: 12px;
+      cursor: pointer;
     }
     & > .cancel {
       background: #313131;
@@ -322,14 +325,40 @@ const Content = styled.div`
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
     }
   }
+
+  .noti {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.87);
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 24px;
+    span {
+      color: #9072ff;
+      font-weight: 700;
+    }
+  }
+  .noti_claim_success {
+    display: flex;
+    justify-content: center;
+  }
+
+  .x-close-icon {
+    position: absolute;
+    top: 11px;
+    right: 11px;
+    cursor: pointer;
+  }
 `
 
 const ReferralFriend = () => {
   const { width } = useWindowSize()
   const { account } = useActiveWeb3React()
-  const [first, setfirst] = useState(second)
   const contractTreasuryXOX = useTreasuryXOX()
-  const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState(false)
+  const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState<boolean>(false)
+  const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [dataClaim, setDataClaim] = useState<IDataClaim>({
     point: 0,
     dollar: 0,
@@ -391,6 +420,8 @@ const ReferralFriend = () => {
           gasLimit,
         })
         txClaimByLevel.wait(1)
+        setIsShowModalConfirmClaimByLevel(false)
+        setIsOpenSuccessModal(true)
       } else {
         return
       }
@@ -441,14 +472,6 @@ const ReferralFriend = () => {
     }
     return slidesPerView
   }, [width])
-
-  const handleGetUserRank = async () => {
-    const result = await getUerRank(97)
-  }
-
-  useEffect(() => {
-    handleGetUserRank()
-  }, [])
 
   return (
     <>
@@ -572,6 +595,23 @@ const ReferralFriend = () => {
           </div>
         </Content>
       </ModalConfirmClaim>
+
+      <ModalClaimSuccess open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Success">
+        <Content>
+          <div className="noti">
+            You have gotten <span>{dataClaim.dollar?.toLocaleString()}$.</span>
+          </div>
+          <div className="noti_claim_success">
+            <img src="/images/success_claim.png" alt="success_claim" />
+          </div>
+          <img
+            src="/images/close-one.svg"
+            alt="close-one"
+            className="x-close-icon"
+            onClick={() => setIsOpenSuccessModal(false)}
+          />
+        </Content>
+      </ModalClaimSuccess>
     </>
   )
 }
@@ -579,56 +619,56 @@ const ReferralFriend = () => {
 const listLever: IItemLevel[] = [
   {
     icon: '/images/lever_1.svg',
-    point: 1000,
+    point: 100,
     dollar: 10,
     lever: 1,
   },
   {
     icon: '/images/lever_2.svg',
-    point: 100,
-    dollar: 10,
+    point: 500,
+    dollar: 50,
     lever: 2,
   },
   {
     icon: '/images/lever_3.svg',
-    point: 100,
-    dollar: 10,
+    point: 1000,
+    dollar: 100,
     lever: 3,
   },
   {
     icon: '/images/lever_4.svg',
-    point: 100,
-    dollar: 10,
+    point: 5000,
+    dollar: 300,
     lever: 4,
   },
   {
     icon: '/images/lever_5.svg',
-    point: 100,
-    dollar: 10,
+    point: 10000,
+    dollar: 500,
     lever: 5,
   },
   {
     icon: '/images/lever_6.svg',
-    point: 100,
-    dollar: 10,
+    point: 50000,
+    dollar: 2000,
     lever: 6,
   },
   {
     icon: '/images/lever_7.svg',
-    point: 100,
-    dollar: 10,
+    point: 100000,
+    dollar: 5000,
     lever: 7,
   },
   {
     icon: '/images/lever_8.svg',
-    point: 100,
-    dollar: 10,
+    point: 500000,
+    dollar: 10000,
     lever: 8,
   },
   {
     icon: '/images/lever_9.svg',
-    point: 100,
-    dollar: 10,
+    point: 1000000,
+    dollar: 20000,
     lever: 9,
   },
 ]

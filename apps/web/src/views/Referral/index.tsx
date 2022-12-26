@@ -6,11 +6,8 @@ import MainInfo from './components/MainInfo'
 import ReferralFriend from './components/ReferralFriend'
 
 const Wrapper = styled(Box)`
-  padding: 48px 130px;
+  padding: 48px;
 
-  @media screen and (max-width: 1500px) {
-    padding: 48px;
-  }
   @media screen and (max-width: 900px) {
     padding: 48px 24px;
   }

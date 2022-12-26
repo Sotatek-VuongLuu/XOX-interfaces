@@ -24,8 +24,8 @@ const WrapperLeft = styled.div`
   .description {
     margin-top: 16px;
     font-weight: 400;
-    font-size: 16px;
-    line-height: 24px;
+    font-size: 20px;
+    line-height: 32px;
     color: rgba(255, 255, 255, 0.6);
   }
 
@@ -110,8 +110,7 @@ const Banner = () => {
             <p className="title">Invite Your Friends. Earn Money Together.</p>
 
             <p className="description">
-              Exercitation veniam consequat sunt nostrud amet. Amet minim mollit non deserunt ullamco est sit aliqua
-              dolor do amet sint. Velit officia consequat duis enim velit mollit.
+              Start Earning passive/active income with the XOX Multi-Chain Gamified Referral Program.
             </p>
           </WrapperLeft>
         </Grid>

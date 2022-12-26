@@ -1,5 +1,8 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
+import { formatUnits } from '@ethersproject/units'
+import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
+import axios from 'axios'
 import { Box, Grid } from '@mui/material'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useEffect, useState } from 'react'
@@ -9,7 +12,7 @@ import HowToJoin from './HowToJoin'
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
-import { userPointHourDatas } from '../../../services/referral'
+import { getUerRank, userPointHourDatas } from '../../../services/referral'
 
 export interface IItemLeaderBoard {
   name: string
@@ -27,7 +30,29 @@ interface IPropsContainer {
   subTabIndex?: number
 }
 
-const First = styled.div`
+interface IDataFormatUnit {
+  id: string
+  amount: string
+}
+
+// address: '0x400eE0C820144c8Bb559AcE1ad75e5C13e750334'
+// amount: '450000000000000000000'
+// avatar: null
+// id: '0x400ee0c820144c8bb559ace1ad75e5c13e750334'
+// point: 900
+// username: 'daovu'
+
+interface IDataRanksUser {
+  id: string
+  amount: never
+  point: number
+  avatar: string
+  username: string
+  level: number
+  address: string
+}
+
+const First = styled.div<IPropsTotal>`
   width: 100%;
   height: 100%;
   background: #242424;
@@ -64,7 +89,7 @@ const First = styled.div`
     display: flex;
     justify-content: center;
     gap: 3px;
-    margin-bottom: 18px;
+    margin-bottom: ${({ account }) => (account ? '18px' : '60px')};
 
     .dot_item {
       background: #9072ff;
@@ -188,12 +213,20 @@ const WrapperRight = styled.div<IPropsContainer>`
         }
       }
     }
+    @media screen and (max-width: 398px) {
+      .filter {
+        .subTab_item {
+          padding: 6px;
+        }
+      }
+    }
   }
 `
 
 const MainInfo = () => {
   const [tabLeaderBoard, setTabLeaderBoard] = useState(0)
   const [subTabIndex, setSubTabIndex] = useState(0)
+  const [listUserRanks, setListUserRanks] = useState([])
   const [leaderBoardList, setLeaderBoardList] = useState<Array<IItemLeaderBoard>>(listLeader)
   const { account } = useActiveWeb3React()
   const totalPoint = 100000
@@ -201,26 +234,58 @@ const MainInfo = () => {
   const percentPoint = (currentPoint / totalPoint) * 100
   const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily']
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
+  const { chainId } = useActiveWeb3React()
 
+  const handleGetUserRanks = async () => {
+    let result = []
+    const data = await getUerRank(chainId)
+    result = [...result, ...data.userPoints]
 
-  const getGrabDemo = async () => {
-    const chainId = 97;
-    const payload = {
-      date_gte : 1671620257,
-      date_lte : 1671620280
-    }
-    const result = await userPointHourDatas(chainId, payload);
-    console.log('result', result)
+    const dataUserFormatAmount: IDataFormatUnit[] = result.map((item) => {
+      return {
+        ...item,
+        id: item.id,
+        point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
+      }
+    })
+
+    // id: string
+    // amount: never
+    // point: number
+    // avatar: string
+    // username: string
+    // level: number
+    // address: string
+
+    const dataMapping = await Promise.all(
+      dataUserFormatAmount.map(async (item: IDataFormatUnit): Promise<any> => {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+          wallets: [`${item.id}`],
+        })
+        const dataMap = response?.data[0]
+        return {
+          ...item,
+          ...dataMap,
+          username: dataMap?.username ?? null,
+          avatar: dataMap?.avatar ?? null,
+        }
+      }),
+    )
+    setListUserRanks([...listUserRanks, ...dataMapping])
   }
+
+  console.log(`liss`, listUserRanks)
+
   useEffect(() => {
-    getGrabDemo()
-  }, [])
+    handleGetUserRanks()
+  }, [chainId])
+
   return (
     <Box sx={{ marginTop: '16px' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={4}>
           <div>
-            <First>
+            <First account={account}>
               <div className="tab_filter">
                 {filterTime.map((item, index) => {
                   return (

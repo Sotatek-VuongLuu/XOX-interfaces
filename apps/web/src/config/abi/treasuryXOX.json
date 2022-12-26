@@ -53,12 +53,25 @@
         "type": "uint256"
       }
     ],
-    "name": "SwapBUSDToXOX",
+    "name": "SwapUSDToXOX",
     "type": "event"
   },
   {
     "inputs": [],
     "name": "BASE_APY",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "TOTAL_BLOCK_IN_YEAR",
     "outputs": [
       {
         "internalType": "uint256",
@@ -77,19 +90,6 @@
         "internalType": "uint256",
         "name": "",
         "type": "uint256"
-      }
-    ],
-    "stateMutability": "view",
-    "type": "function"
-  },
-  {
-    "inputs": [],
-    "name": "busd",
-    "outputs": [
-      {
-        "internalType": "contract ERC20",
-        "name": "",
-        "type": "address"
       }
     ],
     "stateMutability": "view",
@@ -137,8 +137,33 @@
     "inputs": [
       {
         "internalType": "contract ERC20",
-        "name": "busd_",
+        "name": "usd_",
         "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "xoxs_",
+        "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalBlockYear_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "apy_",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "levelReward_",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "rewardByLevel_",
+        "type": "uint256[]"
       }
     ],
     "name": "initialize",
@@ -256,6 +281,37 @@
   {
     "inputs": [
       {
+        "internalType": "uint256",
+        "name": "apy_",
+        "type": "uint256"
+      }
+    ],
+    "name": "setApy",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256[]",
+        "name": "levelReward_",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "rewardByLevel_",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "setReward",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
         "internalType": "address",
         "name": "router_",
         "type": "address"
@@ -284,9 +340,22 @@
         "type": "uint256"
       }
     ],
-    "name": "swapBUSDtoXOX",
+    "name": "swapUSDtoXOX",
     "outputs": [],
     "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "usd",
+    "outputs": [
+      {
+        "internalType": "contract ERC20",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -318,6 +387,19 @@
         "internalType": "uint256",
         "name": "lastBLockUpdated",
         "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "xoxs",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
       }
     ],
     "stateMutability": "view",
