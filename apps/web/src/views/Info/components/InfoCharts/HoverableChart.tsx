@@ -6,10 +6,10 @@ import { formatAmount } from 'utils/formatInfoNumbers'
 import { Currency, NativeCurrency } from '@pancakeswap/sdk'
 import { CurrencyLogo } from 'components/Logo'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
+import { SUGGESTED_BASES_ID } from 'config/constants/exchange'
 import BarChart from './BarChart'
 import LineChart from './LineChart'
 import { ChartContent, TitleChart } from './style'
-import { SUGGESTED_BASES_ID } from 'config/constants/exchange'
 
 interface HoverableChartProps {
   chartData: any[]
@@ -77,8 +77,8 @@ const HoverableChart = ({
   useEffect(() => {
     const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds')) || SUGGESTED_BASES_ID
     if (selectedCurrency === native) {
-      if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList['ETH'])
-      else setCoinmarketcapId(_tokenList['BNB'])
+      if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList.ETH)
+      else setCoinmarketcapId(_tokenList.BNB)
     } else {
       setCoinmarketcapId(_tokenList[(selectedCurrency as any).address.toUpperCase()])
     }

@@ -76,7 +76,8 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
         const { address } = token
         if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[address.toUpperCase()]) {
           return undefined
-        } else return token
+        }
+        return token
       })
       .filter((e) => e !== undefined)
     Promise.all(
