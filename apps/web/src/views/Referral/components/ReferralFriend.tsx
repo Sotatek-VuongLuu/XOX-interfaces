@@ -5,7 +5,7 @@
 /* eslint-disable prefer-const */
 /* eslint-disable no-extra-boolean-cast */
 import { Avatar, Box, Grid, Paper } from '@mui/material'
-import React, { useMemo, useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y } from 'swiper'
@@ -20,6 +20,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { formatEther, parseEther, parseUnits } from '@ethersproject/units'
 import { useModal } from '@pancakeswap/uikit'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
+import { getUerRank } from '../query'
 
 interface IDataClaim {
   point: number
@@ -326,6 +327,7 @@ const Content = styled.div`
 const ReferralFriend = () => {
   const { width } = useWindowSize()
   const { account } = useActiveWeb3React()
+  const [first, setfirst] = useState(second)
   const contractTreasuryXOX = useTreasuryXOX()
   const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState(false)
   const [dataClaim, setDataClaim] = useState<IDataClaim>({
@@ -439,6 +441,14 @@ const ReferralFriend = () => {
     }
     return slidesPerView
   }, [width])
+
+  const handleGetUserRank = async () => {
+    const result = await getUerRank(97)
+  }
+
+  useEffect(() => {
+    handleGetUserRank()
+  }, [])
 
   return (
     <>
