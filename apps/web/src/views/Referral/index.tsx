@@ -12,7 +12,7 @@ const Wrapper = styled(Box)`
     padding: 48px;
   }
   @media screen and (max-width: 900px) {
-    padding: 48px 21px;
+    padding: 48px 24px;
   }
 `
 

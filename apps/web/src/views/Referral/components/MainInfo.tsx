@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { Box, Grid } from '@mui/material'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useState } from 'react'
 import styled from 'styled-components'
 import HowToJoin from './HowToJoin'
@@ -18,6 +19,7 @@ export interface IItemLeaderBoard {
 
 interface IPropsTotal {
   percentPoint?: number
+  account?: string
 }
 
 interface IPropsContainer {
@@ -111,7 +113,7 @@ const Second = styled.div<IPropsTotal>`
       padding: 3px;
 
       .current_point_bar {
-        background: linear-gradient(90deg, #fc6d40 0%, #fa9204 100%);
+        background: ${({ account }) => (account ? 'linear-gradient(90deg, #fc6d40 0%, #fa9204 100%)' : 'transparent')};
         border-radius: 30px;
         height: 18px;
         width: ${({ percentPoint }) => `${percentPoint}%`};
@@ -122,7 +124,7 @@ const Second = styled.div<IPropsTotal>`
           line-height: 12px;
           text-align: center;
           margin-left: 6px;
-          color: #ffffff;
+          color: ${({ account }) => (account ? '#ffffff' : 'transparent')};
         }
       }
     }
@@ -192,6 +194,7 @@ const MainInfo = () => {
   const [tabLeaderBoard, setTabLeaderBoard] = useState(0)
   const [subTabIndex, setSubTabIndex] = useState(0)
   const [leaderBoardList, setLeaderBoardList] = useState<Array<IItemLeaderBoard>>(listLeader)
+  const { account } = useActiveWeb3React()
   const totalPoint = 100000
   const currentPoint = 50000
   const percentPoint = (currentPoint / totalPoint) * 100
@@ -232,18 +235,20 @@ const MainInfo = () => {
                 <div className="dot_item" />
               </div>
 
-              <LeaderBoardItem
-                item={{
-                  name: 'Ha Anh Tuan',
-                  point: '10293',
-                  avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-                  rank: 100,
-                }}
-                mb={false}
-              />
+              {account && (
+                <LeaderBoardItem
+                  item={{
+                    name: 'Ha Anh Tuan',
+                    point: '10293',
+                    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
+                    rank: 100,
+                  }}
+                  mb={false}
+                />
+              )}
             </First>
 
-            <Second percentPoint={percentPoint}>
+            <Second percentPoint={percentPoint} account={account}>
               <div className="total_point">
                 <p className="title">Your current total points</p>
                 <div className="total_point_bar">

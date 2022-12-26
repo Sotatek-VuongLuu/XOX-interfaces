@@ -25,11 +25,23 @@ interface IDataClaim {
   point: number
   dollar: number
 }
+interface IItemLevel {
+  icon: string
+  point: number
+  dollar: number
+  lever: number
+}
+
+interface IPropsWR {
+  account?: string
+}
 
 const WrapperLeft = styled(Box)`
   padding: 24px;
   background: #242424;
   border-radius: 10px;
+  height: 225px;
+  position: relative;
 
   .title {
     font-weight: 700;
@@ -42,9 +54,21 @@ const WrapperLeft = styled(Box)`
       line-height: 24px;
     }
   }
+  .no-data {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.6);
+  }
 `
 
-const WrapperRight = styled(Box)`
+const WrapperRight = styled(Box)<IPropsWR>`
   margin-top: 0 !important;
   position: relative;
 
@@ -162,6 +186,14 @@ const WrapperRight = styled(Box)`
       color: #ffffff;
       padding: 10px 20px;
     }
+
+    button:disabled,
+    button[disabled] {
+      background-color: #cccccc;
+      color: #ded5d5;
+      cursor: not-allowed;
+    }
+
     .unclaim_reward_container {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
       padding: 1px;
@@ -295,11 +327,12 @@ const ReferralFriend = () => {
   const { width } = useWindowSize()
   const { account } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
-  const [isShowModalConfirmClaim, setIsShowModalConfirmClaim] = useState(false)
+  const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState(false)
   const [dataClaim, setDataClaim] = useState<IDataClaim>({
     point: 0,
     dollar: 0,
   })
+  const [level, setLevel] = useState<number | null>(null)
 
   function createData(avatar: string, name: string, point: number, code: number) {
     return { avatar, name, point, code }
@@ -348,8 +381,8 @@ const ReferralFriend = () => {
 
   const handleClaimLevel = async (_level: number) => {
     try {
+      if (!_level) return
       const amountByLevel = await handleCheckPendingRewardByLevel(_level)
-
       if (!!amountByLevel) {
         const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralByLevel(_level)
         const txClaimByLevel = await contractTreasuryXOX.claimReferralByLevel(_level, {
@@ -415,45 +448,50 @@ const ReferralFriend = () => {
             <WrapperLeft>
               <p className="title">Referral friends</p>
 
-              <div>
-                <TableHeader>
-                  <div>User Name</div>
-                  <div>Referral Code</div>
-                  <div>Total Points</div>
-                </TableHeader>
-                <TableBody>
-                  {rows.map((row) => {
-                    return (
-                      <div key={row.name}>
-                        <div>
-                          <img src={row.avatar} alt={row.name} />
-                          {row.name}
+              {account ? (
+                <div>
+                  <TableHeader>
+                    <div>User Name</div>
+                    <div>Referral Code</div>
+                    <div>Total Points</div>
+                  </TableHeader>
+                  <TableBody>
+                    {rows.map((row) => {
+                      return (
+                        <div key={row.name}>
+                          <div>
+                            <img src={row.avatar} alt={row.name} />
+                            {row.name}
+                          </div>
+                          <div>
+                            {row.code}
+                            <img
+                              src="/images/copy_purple.svg"
+                              alt="copy_purple"
+                              style={{ marginBottom: '-2px', marginLeft: '8px' }}
+                            />
+                          </div>
+                          <div>{row.point}</div>
                         </div>
-                        <div>
-                          {row.code}
-                          <img
-                            src="/images/copy_purple.svg"
-                            alt="copy_purple"
-                            style={{ marginBottom: '-2px', marginLeft: '8px' }}
-                          />
-                        </div>
-                        <div>{row.point}</div>
-                      </div>
-                    )
-                  })}
-                </TableBody>
-              </div>
+                      )
+                    })}
+                  </TableBody>
+                </div>
+              ) : (
+                <div className="no-data">No Data</div>
+              )}
             </WrapperLeft>
           </Grid>
+
           <Grid item xs={12} md={8}>
-            <WrapperRight sx={{ marginTop: '16px' }}>
+            <WrapperRight sx={{ marginTop: '16px' }} account={account}>
               <Swiper
                 slidesPerView={controlWidth}
                 modules={[Navigation, Pagination, A11y]}
                 navigation
                 scrollbar={{ draggable: true }}
               >
-                {listLever.map((item) => {
+                {listLever.map((item: IItemLevel) => {
                   return (
                     <SwiperSlide key={item.icon}>
                       <div className="item" key={item.icon}>
@@ -465,16 +503,20 @@ const ReferralFriend = () => {
                           <p className="title">
                             {item.point.toLocaleString()} points ~ {item.dollar.toLocaleString()}$
                           </p>
-                          <button
-                            type="button"
-                            className="btn"
-                            onClick={() => {
-                              setDataClaim({ ...dataClaim, point: item.point, dollar: item.dollar })
-                              setIsShowModalConfirmClaim(true)
-                            }}
-                          >
-                            Claim
-                          </button>
+
+                          {account && (
+                            <button
+                              type="button"
+                              className="btn"
+                              onClick={() => {
+                                setDataClaim({ ...dataClaim, point: item.point, dollar: item.dollar })
+                                setIsShowModalConfirmClaimByLevel(true)
+                                setLevel(item.lever)
+                              }}
+                            >
+                              Claim
+                            </button>
+                          )}
                         </div>
                       </div>
                     </SwiperSlide>
@@ -483,13 +525,15 @@ const ReferralFriend = () => {
               </Swiper>
 
               <div className="claim_total">
-                <div className="unclaim_reward_container">
-                  <div className="unclaim_reward">
-                    <div>10,000$ Unclaimed Rewards</div>
+                {account && (
+                  <div className="unclaim_reward_container">
+                    <div className="unclaim_reward">
+                      <div>10,000$ Unclaimed Rewards</div>
+                    </div>
                   </div>
-                </div>
+                )}
 
-                <button type="button" onClick={handleClaimAll}>
+                <button type="button" onClick={handleClaimAll} disabled={!account}>
                   Claim All
                 </button>
               </div>
@@ -499,8 +543,8 @@ const ReferralFriend = () => {
       </Box>
 
       <ModalConfirmClaim
-        open={isShowModalConfirmClaim}
-        handleClose={() => setIsShowModalConfirmClaim(false)}
+        open={isShowModalConfirmClaimByLevel}
+        handleClose={() => setIsShowModalConfirmClaimByLevel(false)}
         title="Claim"
       >
         <Content>
@@ -509,10 +553,10 @@ const ReferralFriend = () => {
             points"?
           </div>
           <div className="btn-group">
-            <button className="cancel" type="button">
+            <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>
               Cancel
             </button>
-            <button className="confirm" type="button">
+            <button className="confirm" type="button" onClick={() => handleClaimLevel(level)}>
               Confirm
             </button>
           </div>
@@ -522,7 +566,7 @@ const ReferralFriend = () => {
   )
 }
 
-const listLever = [
+const listLever: IItemLevel[] = [
   {
     icon: '/images/lever_1.svg',
     point: 1000,

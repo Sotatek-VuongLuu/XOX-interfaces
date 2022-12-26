@@ -1,6 +1,7 @@
 import { Box, Grid, useMediaQuery } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
 import { CopyAddress, CopyButton, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useWindowSize from 'hooks/useWindowSize'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
@@ -98,6 +99,7 @@ const Banner = () => {
   const { isMobile } = useMatchBreakpoints()
   const { width } = useWindowSize()
   const { t } = useTranslation()
+  const { account } = useActiveWeb3React()
 
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
   return (
@@ -113,24 +115,29 @@ const Banner = () => {
             </p>
           </WrapperLeft>
         </Grid>
+
         <Grid item xs={12} md={4}>
           <WrapperRight>
             <p className="my_code">My Referral Code</p>
             <div className="code">
               <div className="content">
-                <span className="code_number">{userProfile?.referralCode}</span>
-                <span>
-                  {width <= 900 ? (
-                    <img src="/images/CopySimple_mb.svg" alt="CopySimple" />
-                  ) : (
-                    <CopyButton
-                      width="24px"
-                      text={userProfile?.referralCode}
-                      tooltipMessage={t('Copied')}
-                      button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
-                    />
-                  )}
-                </span>
+                {account && (
+                  <>
+                    <span className="code_number">{userProfile?.referralCode}</span>
+                    <span>
+                      {width <= 900 ? (
+                        <img src="/images/CopySimple_mb.svg" alt="CopySimple" />
+                      ) : (
+                        <CopyButton
+                          width="24px"
+                          text={userProfile?.referralCode}
+                          tooltipMessage={t('Copied')}
+                          button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
+                        />
+                      )}
+                    </span>
+                  </>
+                )}
               </div>
             </div>
           </WrapperRight>
