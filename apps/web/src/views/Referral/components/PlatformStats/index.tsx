@@ -16,6 +16,7 @@ import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { BigNumber } from '@ethersproject/bignumber'
+import moment from 'moment'
 import styled from 'styled-components'
 import ChartRef from './components/ChartRef'
 import ColumnChartRef from './components/ColumnChartRef'
@@ -23,7 +24,7 @@ import ColumnChartRef from './components/ColumnChartRef'
 
 
 interface IVolumnDataItem {
-  volumn: number
+  volumn: string
   title: string
   svg: string
 }
@@ -174,7 +175,7 @@ const PlatformStat = (): JSX.Element => {
           idx + 1,
           mappingUser.avatar ?? 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
           mappingUser.username,
-          item.data, //moment(item.data).format('DD/MM/YYYY hh:mm:ss'),
+          moment(item.data).format('DD/MM/YYYY hh:mm:ss'),
           100,
           formatBigNumber(BigNumber.from(item.amount)),
         )
@@ -192,7 +193,7 @@ const PlatformStat = (): JSX.Element => {
       setMaxAmount(formatBigNumber(BigNumber.from(arr[arr.length-1].amount)))
       const data = arr.map((item: any) => {
           return createDataChartDay(
-            item.date, //moment(item.date * 1000).format('DD MMM'),
+            moment(item.date * 1000).format('DD MMM'),
             formatBigNumber(BigNumber.from(item.amount)),
           )
         })
