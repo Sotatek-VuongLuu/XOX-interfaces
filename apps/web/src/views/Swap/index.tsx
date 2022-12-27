@@ -25,10 +25,13 @@ import { SwapFeaturesContext } from './SwapFeaturesContext'
 import { Card } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import { useAccount } from 'wagmi'
+import { useRouterNormal } from 'hooks/useApproveCallback'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
 export default function Swap() {
   const { isMobile } = useMatchBreakpoints()
   const { address: account } = useAccount()
+  const { chainId } = useActiveWeb3React()
   const { isChartExpanded, isChartDisplayed, setIsChartDisplayed, setIsChartExpanded, isChartSupported } =
     useContext(SwapFeaturesContext)
 
@@ -47,7 +50,8 @@ export default function Swap() {
     [Field.INPUT]: inputCurrency ?? undefined,
     [Field.OUTPUT]: outputCurrency ?? undefined,
   }
-  const { v2Trade } = useDerivedSwapInfo(independentField, typedValue, inputCurrency, outputCurrency, recipient)
+  const isRouterNormal = useRouterNormal(inputCurrency, outputCurrency, chainId)
+  const { v2Trade } = useDerivedSwapInfo(independentField, typedValue, inputCurrency, outputCurrency, recipient, isRouterNormal)
 
   const {
     wrapType,
@@ -92,9 +96,9 @@ export default function Swap() {
         )} */}
 
         <Flex flexDirection="column" position="relative">
-          {isMobile && (!account ? <SwapNonTradeMobile /> : !trade? <SwapDefaultMobile />: <SwapTradeMobile />)}
+          {isMobile && (!account ? <SwapNonTradeMobile /> : !trade ? <SwapDefaultMobile /> : <SwapTradeMobile />)}
           {!isMobile && (!trade ? <SwapNonTrade /> : <SwapTrade />)}
-          <StyledSwapContainer $isChartExpanded={isChartExpanded} style={isMobile?{left:0}:{}}>
+          <StyledSwapContainer $isChartExpanded={isChartExpanded} style={isMobile ? { left: 0 } : {}}>
             <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
               {/* <SwapTab>
                   {(swapTypeState) =>

@@ -1400,7 +1400,7 @@ export const tokens = [
       name: 'Ethereum',
       symbol: 'ETH',
       slug: 'ethereum',
-      token_address: '0xdac17f958d2ee523a2206206994597c13d831ec7',
+      token_address: '0xdAC17F958D2ee523a2206206994597C13D831ec7',
     },
   },
   {
@@ -4796,7 +4796,7 @@ export const tokens = [
       name: 'Ethereum',
       symbol: 'ETH',
       slug: 'ethereum',
-      token_address: '0x514910771af9ca656af840dff83e8264ecf986ca',
+      token_address: '0x514910771AF9Ca656af840dff83E8264EcF986CA',
     },
   },
   {
@@ -27620,7 +27620,7 @@ export const tokens = [
       name: 'Ethereum',
       symbol: 'ETH',
       slug: 'ethereum',
-      token_address: '0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce',
+      token_address: '0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE',
     },
   },
   {
@@ -30290,7 +30290,7 @@ export const tokens = [
       name: 'Ethereum',
       symbol: 'ETH',
       slug: 'ethereum',
-      token_address: '0x6b3595068778dd592e39a122f4f5a5cf09c90fe2',
+      token_address: '0x6B3595068778DD592e39A122f4f5a5cF09C90fE2',
     },
   },
   {
@@ -32168,7 +32168,7 @@ export const tokens = [
       name: 'Ethereum',
       symbol: 'ETH',
       slug: 'ethereum',
-      token_address: '0x1f9840a85d5af5bf1d1762f925bdaddc4201f984',
+      token_address: '0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984',
     },
   },
   {
@@ -32600,7 +32600,7 @@ export const tokens = [
       name: 'BNB',
       symbol: 'BNB',
       slug: 'bnb',
-      token_address: '0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82',
+      token_address: '0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82',
     },
   },
   {

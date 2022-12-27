@@ -6,7 +6,7 @@ import { DEFAULT_INPUT_CURRENCY, DEFAULT_OUTPUT_CURRENCY } from 'config/constant
 import { multicallv2 } from 'utils/multicall'
 import IPancakePairABI from 'config/abi/IPancakePair.json'
 import { useDispatch, useSelector } from 'react-redux'
-import { useTradeExactIn, useTradeExactOut } from 'hooks/Trades'
+import { useTradeExactIn, useTradeExactOut, useTradeXOXExactIn, useTradeXOXExactOut } from 'hooks/Trades'
 import { useRouter } from 'next/router'
 import { useTranslation } from '@pancakeswap/localization'
 import { isAddress } from 'utils'
@@ -91,6 +91,7 @@ export function useDerivedSwapInfo(
   inputCurrency: Currency | undefined,
   outputCurrency: Currency | undefined,
   recipient: string,
+  isRouterNormal: boolean,
 ): {
   currencies: { [field in Field]?: Currency }
   currencyBalances: { [field in Field]?: CurrencyAmount<Currency> }
@@ -111,8 +112,8 @@ export function useDerivedSwapInfo(
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
 
-  const bestTradeExactIn = useTradeExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined)
-  const bestTradeExactOut = useTradeExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined)
+  const bestTradeExactIn = useTradeXOXExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined, isRouterNormal)
+  const bestTradeExactOut = useTradeXOXExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined, isRouterNormal)
 
   const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut
 

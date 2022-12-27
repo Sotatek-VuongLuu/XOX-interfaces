@@ -63,7 +63,7 @@ export default function SwapModalFooter({
             {/* <StyledBalanceMaxMini onClick={() => setShowInverted(!showInverted)}>
               <AutoRenewIcon width="14px" />
             </StyledBalanceMaxMini> */}
-            <img onClick={() => setShowInverted(!showInverted)} src="/images/swap/circle-refresh.svg" alt="" style={{ cursor: "pointer" }} />
+            {/* <img onClick={() => setShowInverted(!showInverted)} src="/images/swap/circle-refresh.svg" alt="" style={{ cursor: "pointer" }} /> */}
           </Text>
         </RowBetween>
 
