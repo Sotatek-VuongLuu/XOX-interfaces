@@ -43,6 +43,33 @@ const Wrapper = styled.div`
   }
 `
 
+const CoinListWrapper = styled(Flex)`
+  max-height: 146px;
+  overflow: auto;
+  padding-right: 6px;
+  width: calc(100% + 12px);
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding-right: 9px;
+    width: calc(100% + 15px);
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #444444;
+    transform: matrix(0, -1, -1, 0, 0, 0);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: none;
+    border-radius: 10px;
+  }
+`
+
 const ConnectButton = styled(ConnectWalletButton)`
   width: 124px;
   height: 37px;
@@ -155,7 +182,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const [dataChart, setDataChart] = useState<any>([])
   const [totalAsset, setTotalAsset] = useState<number>(0)
 
-  const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
+  const colors = ['#9072FF', '#5F35EB', '#89DDEF', '#90F0B1']
 
   const tokenRateUSD = useCallback(
     (symbol: string) => {
@@ -193,7 +220,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       })
     getBalancesForEthereumAddress({
       // erc20 tokens you want to query!
-      contractAddresses: allTokens.map((token: any) => token.address),
+      contractAddresses: Object.keys(allTokens),
       // ethereum address of the user you want to get the balances for
       ethereumAddress: account,
       // your ethers provider
@@ -203,7 +230,6 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     })
       .then((balance) => {
         setTokensBalance(balance.tokens)
-        console.log(balance.tokens)
       })
       .catch((error) => {
         console.warn(error)
@@ -214,18 +240,32 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     let total = 0
     const nativeBalance = balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol) : 0
     const xoxBalance = 0
-    const result = [nativeBalance, xoxBalance]
+    const result = [
+      {
+        name: native.symbol,
+        value: nativeBalance,
+      },
+      {
+        name: 'XOX',
+        value: xoxBalance,
+      },
+    ]
     let sum = 0
     tokensBalance.forEach((balance: any) => {
       if (balance.symbol.toLowerCase() === 'busd' || balance.symbol.toLowerCase() === 'usdc') {
-        result.push(balance.balance * tokenRateUSD(balance.symbol))
+        result.push({
+          name: balance.symbol,
+          value: balance.balance * tokenRateUSD(balance.symbol),
+        })
       } else {
         sum += balance.balance * tokenRateUSD(balance.symbol)
       }
     })
-    result.push(sum)
-    total = nativeBalance + xoxBalance + result[2] + sum
-    console.log(total, result)
+    result.push({
+      name: 'others',
+      value: sum,
+    })
+    total = nativeBalance + xoxBalance + result[2].value + sum
     setTotalAsset(total)
     setDataChart(result)
   }, [balanceNative, tokensBalance])
@@ -287,7 +327,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
           <Flex flexDirection="column">
             <InfoPieChart data={dataChart} colors={colors} total={totalAsset} />
 
-            <Flex style={{ maxHeight: '146px', overflow: 'auto' }} flexDirection="column">
+            <CoinListWrapper flexDirection="column">
               <Flex alignItems="center" p="16px" borderRadius="6px" background="#303030" mb="6px">
                 <CurrencyLogo currency={native} size="30px" />
                 <Flex flexDirection="column" ml="10px">
@@ -377,7 +417,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                   </Flex>
                 )
               })}
-            </Flex>
+            </CoinListWrapper>
           </Flex>
         ) : (
           <Flex height="100%" flexDirection="column" justifyContent="center" alignItems="center">

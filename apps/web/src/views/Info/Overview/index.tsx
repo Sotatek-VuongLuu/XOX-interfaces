@@ -2,7 +2,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Flex } from '@pancakeswap/uikit'
 import Page from 'components/Layout/Page'
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { useProtocolDataSWR, useProtocolTransactionsSWR } from 'state/info/hooks'
 import styled from 'styled-components'
 import LineChart from 'views/Info/components/InfoCharts/LineChart'
@@ -13,7 +13,7 @@ import axios from 'axios'
 import { SUGGESTED_BASES_ID } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useNativeCurrency from 'hooks/useNativeCurrency'
-import { useAllCurrentTokens } from 'hooks/Tokens'
+import { useAllTokens } from 'hooks/Tokens'
 
 export const ChartCardsContainer = styled(Flex)`
   justify-content: space-between;
@@ -51,12 +51,12 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const native = useNativeCurrency()
   const [coinmarketcapIds, setCoinmarketcapIds] = useState<any>()
   const [coinmarketcapId, setCoinmarketcapId] = useState<number | undefined>()
-  const [filter, setFilter] = useState('1D')
+  const [filter, setFilter] = useState('ALL')
   const [chartData, setChardData] = useState<Array<any> | undefined>()
   const [currencyDatas, setCurrencyDatas] = useState<Array<any> | undefined>()
   const transactions = useProtocolTransactionsSWR()
   const { chainId } = useActiveChainId()
-  const allTokens = useAllCurrentTokens()
+  const allTokens = useAllTokens()
 
   // const allPoolData = useAllPoolDataSWR()
   // const allPoolData = useAllPoolData()
@@ -67,6 +67,34 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
 
   // const isStableSwap = checkIsStableSwap()
   // const chainName = useGetChainName()
+
+  const loadChartData = useCallback(() => {
+    const tempIds = Object.values(coinmarketcapIds)
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/v2/cryptocurrency/quotes/latest`, {
+        params: {
+          id: tempIds.filter((id, index) => tempIds.indexOf(id) === index).join(','),
+        },
+      })
+      .then((response) => {
+        const data = response.data?.data
+        if (!data) return
+        const result = Object.keys(data).map((key) => {
+          return {
+            id: data[key]?.id,
+            symbol: data[key]?.symbol,
+            price: data[key]?.quote?.USD?.price,
+            percent_change_24h: data[key]?.quote?.USD?.percent_change_24h,
+            volume_24h: data[key]?.quote?.USD?.volume_24h,
+            market_cap: data[key]?.quote?.USD?.market_cap,
+          }
+        })
+        setCurrencyDatas(result)
+      })
+      .catch((err) => {
+        console.warn(err)
+      })
+  }, [coinmarketcapIds])
 
   useEffect(() => {
     const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds')) || SUGGESTED_BASES_ID
@@ -134,32 +162,11 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   useEffect(() => {
     if (!coinmarketcapIds || Object.keys(coinmarketcapIds).length === 0) return
     localStorage.setItem('coinmarketcapIds', JSON.stringify(coinmarketcapIds))
+    loadChartData()
+    const id = setInterval(loadChartData, 10000)
 
-    const tempIds = Object.values(coinmarketcapIds)
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/v2/cryptocurrency/quotes/latest`, {
-        params: {
-          id: tempIds.filter((id, index) => tempIds.indexOf(id) === index).join(','),
-        },
-      })
-      .then((response) => {
-        const data = response.data?.data
-        if (!data) return
-        const result = Object.keys(data).map((key) => {
-          return {
-            id: data[key]?.id,
-            symbol: data[key]?.symbol,
-            price: data[key]?.quote?.USD?.price,
-            percent_change_24h: data[key]?.quote?.USD?.percent_change_24h,
-            volume_24h: data[key]?.quote?.USD?.volume_24h,
-          }
-        })
-        setCurrencyDatas(result)
-      })
-      .catch((err) => {
-        console.warn(err)
-      })
-  }, [coinmarketcapIds])
+    return () => clearInterval(id)
+  }, [coinmarketcapIds, coinmarketcapId])
 
   return (
     <Page>

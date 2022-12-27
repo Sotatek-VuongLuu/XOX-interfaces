@@ -282,8 +282,10 @@ const FormReferralModal = (_, ref) => {
 
     const dataSubmit: any = {}
     if (username && username !== userProfile?.username) dataSubmit.username = username
-    if (email && email !== userProfile?.email) dataSubmit.email = email
-    if (telegram && telegram !== userProfile?.telegram) dataSubmit.telegram = telegram
+    if (!email) dataSubmit.email = null
+    else if (email !== userProfile?.email) dataSubmit.email = email
+    if (!telegram) dataSubmit.telegram = null
+    else if (telegram !== userProfile?.telegram) dataSubmit.telegram = telegram
     if (avatar) dataSubmit.avatar = avataURL
     if (Object.keys(dataSubmit).length > 0) {
       signer?.signMessage(JSON.stringify(dataSubmit)).then((res) => {
@@ -335,7 +337,9 @@ const FormReferralModal = (_, ref) => {
     const saveable =
       avatar ||
       (username !== undefined && username !== userProfile?.username) ||
+      !email ||
       (email && email !== userProfile?.email) ||
+      !telegram ||
       (telegram && telegram !== userProfile?.telegram)
     setSaveable(saveable)
   }, [username, email, telegram, avatar, userProfile])

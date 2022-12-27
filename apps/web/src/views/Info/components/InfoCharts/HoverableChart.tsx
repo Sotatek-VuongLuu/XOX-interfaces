@@ -75,6 +75,10 @@ const HoverableChart = ({
   )
 
   useEffect(() => {
+    setSelectedCurrency(native)
+  }, [native])
+
+  useEffect(() => {
     const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds')) || SUGGESTED_BASES_ID
     if (selectedCurrency === native) {
       if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList.ETH)
@@ -153,7 +157,7 @@ const HoverableChart = ({
             </div>
             <div className="volume">
               <p>Volume 24h {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}</p>
-              <p>Market cap: {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}</p>
+              <p>Market cap: {currencyData && <span>${formatAmount(currencyData?.market_cap)}</span>}</p>
             </div>
           </>
         </div>
