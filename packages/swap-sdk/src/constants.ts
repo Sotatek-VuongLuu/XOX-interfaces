@@ -19,6 +19,30 @@ export const FACTORY_ADDRESS_MAP: Record<number, string> = {
   [ChainId.BSC]: FACTORY_ADDRESS,
   [ChainId.BSC_TESTNET]: '0x6725f303b657a9451d8ba641348b6761a6cc7a17',
 }
+
+export const PAIR_XOX_BUSD: Record<number, string> = {
+  // [ChainId.ETHEREUM]: FACTORY_ADDRESS_ETH,
+  // [ChainId.RINKEBY]: FACTORY_ADDRESS_ETH,
+  [ChainId.GOERLI]: "0x4EDd411230B3C02f091C5EbF4fD993045e135509",
+  // [ChainId.BSC]: FACTORY_ADDRESS,
+  [ChainId.BSC_TESTNET]: '0x8B1C4fD225CC5C9eb8F81C3B4013222ded1763De',
+}
+
+export const XOX_ADDRESS: Record<number, string> = {
+  // [ChainId.ETHEREUM]: '',
+  // [ChainId.RINKEBY]: '',
+  [ChainId.GOERLI]: '0xa1c9512C24144e8F96d3c62886b8350E358f19E3',
+  // [ChainId.BSC]: '',
+  [ChainId.BSC_TESTNET]: '0x0046eB5589bC449AbA5DA3487C795B2AD383D02b',
+}
+
+export const USD_ADDRESS: Record<number, string> = {
+  [ChainId.ETHEREUM]: '',
+  [ChainId.RINKEBY]: '',
+  [ChainId.GOERLI]: '0x334F6F63231c538F870dbA7FaED67baeb11B9782',
+  [ChainId.BSC]: '',
+  [ChainId.BSC_TESTNET]: '0x0c3Dbe2081ccF00f6CB72d8541aA214Ac582C36D',
+}
 export const INIT_CODE_HASH = '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5'
 
 const INIT_CODE_HASH_ETH = '0x57224589c67f3f30a6b0d7a1b54cf3153ab84563bc609ef41dfb34f8b2974d2d'

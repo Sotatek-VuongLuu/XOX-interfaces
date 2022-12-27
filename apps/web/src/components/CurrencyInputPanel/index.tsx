@@ -239,7 +239,7 @@ export default function CurrencyInputPanel({
           <TextBalance
             onClick={!disabled && onMax}
             color="textSubtle"
-            fontSize="14px"
+            // fontSize="14px"
             style={{ display: 'inline', cursor: 'pointer' }}
           >
             {!hideBalance && !!currency

@@ -1,6 +1,15 @@
 import { useCallback, useEffect, useState, useMemo, useContext } from 'react'
 import { Currency, CurrencyAmount, Percent, NATIVE } from '@pancakeswap/sdk'
-import { Button, ArrowDownIcon, Box, Skeleton, Swap as SwapUI, Message, MessageText, useMatchBreakpoints } from '@pancakeswap/uikit'
+import {
+  Button,
+  ArrowDownIcon,
+  Box,
+  Skeleton,
+  Swap as SwapUI,
+  Message,
+  MessageText,
+  useMatchBreakpoints,
+} from '@pancakeswap/uikit'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -15,7 +24,7 @@ import { AutoRow } from 'components/Layout/Row'
 import { AutoColumn } from 'components/Layout/Column'
 
 import { useCurrency } from 'hooks/Tokens'
-import { ApprovalState, useApproveCallbackFromTrade } from 'hooks/useApproveCallback'
+import { ApprovalState, useApproveCallbackFromTrade, useRouterNormal } from 'hooks/useApproveCallback'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
 
 import { Field } from 'state/swap/actions'
@@ -38,6 +47,8 @@ import { isAddress } from '../../../utils'
 import { SwapFeaturesContext } from '../SwapFeaturesContext'
 import { combinedTokenMapFromOfficialsUrlsAtom } from '../../../state/lists/hooks'
 
+const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
+
 const ReferralCode = styled.div`
   width: 100%;
   display: flex;
@@ -55,9 +66,9 @@ const ReferralInput = styled.input`
   border-radius:4px;
 `
 const PerPriceTitle = styled.div`
-  color:#9072FF;
-  font-weight:700;
-  font-size:16px;
+  color: #9072ff;
+  font-weight: 700;
+  font-size: 16px;
   @media (max-width: 574px) {
     font-size: 14px;
   }
@@ -107,13 +118,15 @@ export default function SwapForm() {
     }),
     [inputCurrency, outputCurrency],
   )
+  // check RouterAddress
+  const isRouterNormal = useRouterNormal(inputCurrency, outputCurrency, chainId)
 
   const {
     v2Trade,
     currencyBalances,
     parsedAmount,
     inputError: swapInputError,
-  } = useDerivedSwapInfo(independentField, typedValue, inputCurrency, outputCurrency, recipient)
+  } = useDerivedSwapInfo(independentField, typedValue, inputCurrency, outputCurrency, recipient, isRouterNormal)
 
   const {
     wrapType,
@@ -158,7 +171,7 @@ export default function SwapForm() {
   }
 
   // check whether the user has approved the router on the input token
-  const [approval, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage, chainId)
+  const [approval, approveCallback] = useApproveCallbackFromTrade(trade, allowedSlippage, chainId, isRouterNormal)
 
   // check if user has gone through approval process, used to show two step buttons, reset on token change
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
@@ -172,7 +185,7 @@ export default function SwapForm() {
 
   const maxAmountInput: CurrencyAmount<Currency> | undefined = maxAmountSpend(currencyBalances[Field.INPUT])
   const atMaxAmountInput = Boolean(maxAmountInput && parsedAmounts[Field.INPUT]?.equalTo(maxAmountInput))
-  const {isMobile} = useMatchBreakpoints()
+  const { isMobile } = useMatchBreakpoints()
   const handleInputSelect = useCallback(
     (newCurrencyInput) => {
       setApprovalSubmitted(false) // reset 2 step UI for approvals
@@ -237,7 +250,7 @@ export default function SwapForm() {
         hasAmount={hasAmount}
         onRefreshPrice={onRefreshPrice}
       />
-      <Wrapper id="swap-page" style={ isMobile? {minHeight:'350px'} : { minHeight: '412px' }}>
+      <Wrapper id="swap-page" style={isMobile ? { minHeight: '350px' } : { minHeight: '412px' }}>
         <AutoColumn gap="sm">
           <CurrencyInputPanel
             label={independentField === Field.OUTPUT && !showWrap && trade ? t('From (estimated)') : t('From')}
@@ -319,6 +332,7 @@ export default function SwapForm() {
                           {isLoading ? (
                             <Skeleton width="100%" ml="8px" height="24px" />
                           ) : (
+                            // null
                             <SwapUI.TradePrice price={trade?.executionPrice} />
                           )}
                         </>
@@ -328,9 +342,9 @@ export default function SwapForm() {
                   />
                 </>
               )}
-         <ReferralCode>
+          <ReferralCode>
             <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
-            <ReferralInput placeholder="123456" />
+            <ReferralInput placeholder="0x32648D3c43f396a81fc696af89bA4B099b3E9C02" />
           </ReferralCode>
         </AutoColumn>
         {hasStableSwapAlternative && (
@@ -358,6 +372,8 @@ export default function SwapForm() {
             swapInputError={swapInputError}
             currencyBalances={currencyBalances}
             recipient={recipient}
+            referral={"0x32648D3c43f396a81fc696af89bA4B099b3E9C02"}
+            isRouterNormal={isRouterNormal}
             allowedSlippage={allowedSlippage}
             onUserInput={onUserInput}
           />

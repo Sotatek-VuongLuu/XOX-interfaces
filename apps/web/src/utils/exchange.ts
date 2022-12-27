@@ -1,5 +1,6 @@
 import { Currency, CurrencyAmount, Fraction, JSBI, Percent, Trade, TradeType } from '@pancakeswap/sdk'
 import IPancakeRouter02ABI from 'config/abi/IPancakeRouter02.json'
+import IXOXRouterABI from 'config/abi/IXOXRouter.json'
 import { IPancakeRouter02 } from 'config/abi/types/IPancakeRouter02'
 import {
   ALLOWED_PRICE_IMPACT_HIGH,
@@ -9,6 +10,7 @@ import {
   BLOCKED_PRICE_IMPACT_NON_EXPERT,
   INPUT_FRACTION_AFTER_FEE,
   ONE_HUNDRED_PERCENT,
+  ROUTER_XOX,
   ROUTER_ADDRESS,
 } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -36,6 +38,15 @@ export function useRouterContract() {
   return useContract<IPancakeRouter02>(ROUTER_ADDRESS[chainId], IPancakeRouter02ABI, true)
 }
 
+export function useRouterContractXOX(isRouterNormal = true) {
+  const { chainId } = useActiveChainId()
+  return useContract<IPancakeRouter02>(
+    isRouterNormal ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
+    isRouterNormal ? IPancakeRouter02ABI : IXOXRouterABI,
+    true,
+  )
+}
+
 // computes price breakdown for the trade
 export function computeTradePriceBreakdown(trade?: Trade<Currency, Currency, TradeType> | null): {
   priceImpactWithoutFee: Percent | undefined
@@ -51,7 +62,6 @@ export function computeTradePriceBreakdown(trade?: Trade<Currency, Currency, Tra
           ONE_HUNDRED_PERCENT,
         ),
       )
-
   // remove lp fees from price impact
   const priceImpactWithoutFeeFraction = trade && realizedLPFee ? trade.priceImpact.subtract(realizedLPFee) : undefined
 
