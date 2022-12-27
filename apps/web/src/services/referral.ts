@@ -52,3 +52,20 @@ export const getUserFriend = async (chainId: ChainId, account: string) => {
   )
   return response
 }
+
+export const getUserPointDaily = async (chainId: ChainId, payload: any) => {
+  const response = await request(
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
+    gql`
+      {
+        userPointDailies(where: { date_gte: 1671728400, date_lte: 1671814799 }) {
+          id
+          address
+          amount
+          date
+        }
+      }
+    `,
+  )
+  return response
+}
