@@ -59,8 +59,8 @@ import {
   getNonBscVaultContract,
   getCrossFarmingProxyContract,
   getIfoCreditAddressContract,
-  getTreasuryConTract,
-  getContractXOXToken,
+  // getTreasuryConTract,
+  // getContractXOXToken,
 } from 'utils/contractHelpers'
 import { useSigner } from 'wagmi'
 
@@ -387,14 +387,14 @@ export const useCrossFarmingProxy = (proxyContractAddress: string, withSignerIfP
   )
 }
 
-export const useTreasuryXOX = (withSignerIfPossible = true) => {
-  const { chainId } = useActiveChainId()
-  const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
-  return useMemo(() => getTreasuryConTract(providerOrSigner as any, chainId), [providerOrSigner, chainId])
-}
+// export const useTreasuryXOX = (withSignerIfPossible = true) => {
+//   const { chainId } = useActiveChainId()
+//   const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
+//   return useMemo(() => getTreasuryConTract(providerOrSigner as any, chainId), [providerOrSigner, chainId])
+// }
 
-export const useXOXTokenContract = (withSignerIfPossible = true) => {
-  const { chainId } = useActiveChainId()
-  const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
-  return useMemo(() => getContractXOXToken(providerOrSigner as any, chainId), [providerOrSigner, chainId])
-}
+// export const useXOXTokenContract = (withSignerIfPossible = true) => {
+//   const { chainId } = useActiveChainId()
+//   const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
+//   return useMemo(() => getContractXOXToken(providerOrSigner as any, chainId), [providerOrSigner, chainId])
+// }

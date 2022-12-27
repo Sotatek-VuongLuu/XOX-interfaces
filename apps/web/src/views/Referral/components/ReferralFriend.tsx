@@ -15,9 +15,10 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import useWindowSize from 'hooks/useWindowSize'
-import { getTreasuryConTract } from 'utils/contractHelpers'
+// import { getTreasuryConTract } from 'utils/contractHelpers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useCrossFarmingProxy, useTreasuryXOX, useXOXTokenContract } from 'hooks/useContract'
+// import { useCrossFarmingProxy, useTreasuryXOX, useXOXTokenContract } from 'hooks/useContract'
+import { useCrossFarmingProxy } from 'hooks/useContract'
 import { BigNumber } from '@ethersproject/bignumber'
 import { formatEther, parseEther, parseUnits } from '@ethersproject/units'
 import { useModal } from '@pancakeswap/uikit'
@@ -356,7 +357,7 @@ const Content = styled.div`
 const ReferralFriend = () => {
   const { width } = useWindowSize()
   const { account } = useActiveWeb3React()
-  const contractTreasuryXOX = useTreasuryXOX()
+  // const contractTreasuryXOX = useTreasuryXOX()
   const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState<boolean>(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [dataClaim, setDataClaim] = useState<IDataClaim>({
@@ -369,67 +370,67 @@ const ReferralFriend = () => {
     return { avatar, name, point, code }
   }
 
-  // eslint-disable-next-line consistent-return
-  const handleCheckPendingRewardAll = async () => {
-    try {
-      const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
-      return formatEther(txPendingReward._hex)
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(`error>>>>>`, error)
-    }
-  }
+  // // eslint-disable-next-line consistent-return
+  // const handleCheckPendingRewardAll = async () => {
+  //   try {
+  //     const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
+  //     return formatEther(txPendingReward._hex)
+  //   } catch (error) {
+  //     // eslint-disable-next-line no-console
+  //     console.log(`error>>>>>`, error)
+  //   }
+  // }
 
-  const handleClaimAll = async () => {
-    try {
-      const resultCheckingPending = await handleCheckPendingRewardAll()
-      if (!!resultCheckingPending) {
-        const params = []
-        const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
-        const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
-          gasLimit,
-        })
-        txClaimAll.wait(1)
-      } else {
-        return
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(`error>>>>>`, error)
-    }
-  }
+  // const handleClaimAll = async () => {
+  //   try {
+  //     const resultCheckingPending = await handleCheckPendingRewardAll()
+  //     if (!!resultCheckingPending) {
+  //       const params = []
+  //       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
+  //       const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
+  //         gasLimit,
+  //       })
+  //       txClaimAll.wait(1)
+  //     } else {
+  //       return
+  //     }
+  //   } catch (error) {
+  //     // eslint-disable-next-line no-console
+  //     console.log(`error>>>>>`, error)
+  //   }
+  // }
 
-  // eslint-disable-next-line consistent-return
-  const handleCheckPendingRewardByLevel = async (_level: number) => {
-    try {
-      const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, _level)
-      return formatEther(txPendingReward._hex)
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(`error>>>>>`, error)
-    }
-  }
+  // // eslint-disable-next-line consistent-return
+  // const handleCheckPendingRewardByLevel = async (_level: number) => {
+  //   try {
+  //     const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, _level)
+  //     return formatEther(txPendingReward._hex)
+  //   } catch (error) {
+  //     // eslint-disable-next-line no-console
+  //     console.log(`error>>>>>`, error)
+  //   }
+  // }
 
-  const handleClaimLevel = async (_level: number) => {
-    try {
-      if (!_level) return
-      const amountByLevel = await handleCheckPendingRewardByLevel(_level)
-      if (!!amountByLevel) {
-        const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralByLevel(_level)
-        const txClaimByLevel = await contractTreasuryXOX.claimReferralByLevel(_level, {
-          gasLimit,
-        })
-        txClaimByLevel.wait(1)
-        setIsShowModalConfirmClaimByLevel(false)
-        setIsOpenSuccessModal(true)
-      } else {
-        return
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(`error>>>>>`, error)
-    }
-  }
+  // const handleClaimLevel = async (_level: number) => {
+  //   try {
+  //     if (!_level) return
+  //     const amountByLevel = await handleCheckPendingRewardByLevel(_level)
+  //     if (!!amountByLevel) {
+  //       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralByLevel(_level)
+  //       const txClaimByLevel = await contractTreasuryXOX.claimReferralByLevel(_level, {
+  //         gasLimit,
+  //       })
+  //       txClaimByLevel.wait(1)
+  //       setIsShowModalConfirmClaimByLevel(false)
+  //       setIsOpenSuccessModal(true)
+  //     } else {
+  //       return
+  //     }
+  //   } catch (error) {
+  //     // eslint-disable-next-line no-console
+  //     console.log(`error>>>>>`, error)
+  //   }
+  // }
 
   const rows = [
     createData(
@@ -566,9 +567,9 @@ const ReferralFriend = () => {
                   </div>
                 )}
 
-                <button type="button" onClick={handleClaimAll} disabled={!account}>
+                {/* <button type="button" onClick={handleClaimAll} disabled={!account}>
                   Claim All
-                </button>
+                </button> */}
               </div>
             </WrapperRight>
           </Grid>
@@ -589,9 +590,9 @@ const ReferralFriend = () => {
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>
               Cancel
             </button>
-            <button className="confirm" type="button" onClick={() => handleClaimLevel(level)}>
+            {/* <button className="confirm" type="button" onClick={() => handleClaimLevel(level)}>
               Confirm
-            </button>
+            </button> */}
           </div>
         </Content>
       </ModalConfirmClaim>

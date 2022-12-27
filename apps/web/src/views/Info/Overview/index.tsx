@@ -165,6 +165,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
     loadChartData()
     const id = setInterval(loadChartData, 10000)
 
+    // eslint-disable-next-line consistent-return
     return () => clearInterval(id)
   }, [coinmarketcapIds, coinmarketcapId])
 

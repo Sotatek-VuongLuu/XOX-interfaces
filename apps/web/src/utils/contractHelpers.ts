@@ -151,8 +151,8 @@ import type {
   CrossFarmingSender,
   CrossFarmingReceiver,
   CrossFarmingProxy,
-  TreasuryXOX,
-  Erc20XOXToken,
+  // TreasuryXOX,
+  // Erc20XOXToken,
 } from 'config/abi/types'
 import { ChainId } from '@pancakeswap/sdk'
 
@@ -403,20 +403,20 @@ export const getCrossFarmingProxyContract = (
   return getContract({ abi: crossFarmingProxyAbi, address: proxyContractAddress, chainId, signer }) as CrossFarmingProxy
 }
 
-export const getTreasuryConTract = (signer?: Signer | Provider, chainId?: number) => {
-  return getContract({
-    abi: treasuryAbi,
-    address: getContractTreasuryXOX(chainId),
-    chainId,
-    signer,
-  }) as TreasuryXOX
-}
+// export const getTreasuryConTract = (signer?: Signer | Provider, chainId?: number) => {
+//   return getContract({
+//     abi: treasuryAbi,
+//     address: getContractTreasuryXOX(chainId),
+//     chainId,
+//     signer,
+//   }) as TreasuryXOX
+// }
 
-export const getContractXOXToken = (signer?: Signer | Provider, chainId?: number) => {
-  return getContract({
-    abi: xoxTokenAbi,
-    address: getXOXTokenAddress(chainId),
-    chainId,
-    signer,
-  }) as Erc20XOXToken
-}
+// export const getContractXOXToken = (signer?: Signer | Provider, chainId?: number) => {
+//   return getContract({
+//     abi: xoxTokenAbi,
+//     address: getXOXTokenAddress(chainId),
+//     chainId,
+//     signer,
+//   }) as Erc20XOXToken
+// }
