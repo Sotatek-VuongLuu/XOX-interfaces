@@ -29,3 +29,26 @@ export const getUerRank = async (chainId: ChainId) => {
 
   return response
 }
+
+export const getUserFriend = async (chainId: ChainId, account: string) => {
+  const response = await request(
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
+    gql`
+      query getUserFriends {
+        userInfos(where: { id: "${account?.toLocaleLowerCase()}" }) {
+          id
+          total_amount
+          total_claimed_amount
+          rank {
+            amount
+          }
+          friends {
+            ref_address
+            amount
+          }
+        }
+      }
+    `,
+  )
+  return response
+}

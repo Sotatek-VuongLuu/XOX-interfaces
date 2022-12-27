@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { formatUnits } from '@ethersproject/units'
@@ -34,13 +35,6 @@ interface IDataFormatUnit {
   id: string
   amount: string
 }
-
-// address: '0x400eE0C820144c8Bb559AcE1ad75e5C13e750334'
-// amount: '450000000000000000000'
-// avatar: null
-// id: '0x400ee0c820144c8bb559ace1ad75e5c13e750334'
-// point: 900
-// username: 'daovu'
 
 interface IDataRanksUser {
   id: string
@@ -227,7 +221,6 @@ const MainInfo = () => {
   const [tabLeaderBoard, setTabLeaderBoard] = useState(0)
   const [subTabIndex, setSubTabIndex] = useState(0)
   const [listUserRanks, setListUserRanks] = useState([])
-  const [leaderBoardList, setLeaderBoardList] = useState<Array<IItemLeaderBoard>>(listLeader)
   const { account } = useActiveWeb3React()
   const totalPoint = 100000
   const currentPoint = 50000
@@ -237,47 +230,42 @@ const MainInfo = () => {
   const { chainId } = useActiveWeb3React()
 
   const handleGetUserRanks = async () => {
-    let result = []
-    const data = await getUerRank(chainId)
-    result = [...result, ...data.userPoints]
+    try {
+      let result = []
+      const data = await getUerRank(chainId)
+      result = [...result, ...data.userPoints]
 
-    const dataUserFormatAmount: IDataFormatUnit[] = result.map((item) => {
-      return {
-        ...item,
-        id: item.id,
-        point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
-      }
-    })
-
-    // id: string
-    // amount: never
-    // point: number
-    // avatar: string
-    // username: string
-    // level: number
-    // address: string
-
-    const dataMapping = await Promise.all(
-      dataUserFormatAmount.map(async (item: IDataFormatUnit): Promise<any> => {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
-          wallets: [`${item.id}`],
-        })
-        const dataMap = response?.data[0]
+      const dataUserFormatAmount: IDataFormatUnit[] = result.map((item) => {
         return {
           ...item,
-          ...dataMap,
-          username: dataMap?.username ?? null,
-          avatar: dataMap?.avatar ?? null,
+          id: item.id,
+          point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
         }
-      }),
-    )
-    setListUserRanks([...listUserRanks, ...dataMapping])
+      })
+      const dataMapping = await Promise.all(
+        dataUserFormatAmount.map(async (item: IDataFormatUnit, index: number): Promise<any> => {
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+            wallets: [`${item.id}`],
+          })
+          const dataMap = response?.data[0]
+          return {
+            ...item,
+            ...dataMap,
+            rank: index + 1,
+            name: dataMap?.username ? dataMap?.username : item?.id,
+            avatar: dataMap?.avatar ?? null,
+          }
+        }),
+      )
+      setListUserRanks([...listUserRanks, ...dataMapping])
+    } catch (error) {
+      console.log(`error >>>`, error)
+    }
   }
-
-  console.log(`liss`, listUserRanks)
 
   useEffect(() => {
     handleGetUserRanks()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId])
 
   return (
@@ -302,7 +290,7 @@ const MainInfo = () => {
               </div>
 
               <div className="learder_board">
-                {leaderBoardList.map((item: IItemLeaderBoard, index: number) => {
+                {listUserRanks.map((item, index: number) => {
                   // eslint-disable-next-line react/no-array-index-key
                   return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
                 })}

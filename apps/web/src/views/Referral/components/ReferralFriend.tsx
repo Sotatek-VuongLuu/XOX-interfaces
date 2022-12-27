@@ -6,21 +6,23 @@
 /* eslint-disable no-else-return */
 /* eslint-disable prefer-const */
 /* eslint-disable no-extra-boolean-cast */
-import { Avatar, Box, Grid, Paper } from '@mui/material'
+import { Avatar, Box, Grid } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import useWindowSize from 'hooks/useWindowSize'
-import { getTreasuryConTract } from 'utils/contractHelpers'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useCrossFarmingProxy, useTreasuryXOX, useXOXTokenContract } from 'hooks/useContract'
-import { BigNumber } from '@ethersproject/bignumber'
-import { formatEther, parseEther, parseUnits } from '@ethersproject/units'
-import { useModal } from '@pancakeswap/uikit'
+import { useTreasuryXOX } from 'hooks/useContract'
+import { formatEther, formatUnits } from '@ethersproject/units'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
+import { getUserFriend } from 'services/referral'
+import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
+import axios from 'axios'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
 import ModalClaimSuccess from './Modal/ModalClaimSuccess'
 
@@ -217,7 +219,7 @@ const WrapperRight = styled(Box)<IPropsWR>`
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          text-fill-color: transparent;
+          /* text-fill-color: transparent; */
         }
       }
     }
@@ -355,7 +357,7 @@ const Content = styled.div`
 
 const ReferralFriend = () => {
   const { width } = useWindowSize()
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
   const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState<boolean>(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
@@ -364,7 +366,8 @@ const ReferralFriend = () => {
     dollar: 0,
   })
   const [level, setLevel] = useState<number | null>(null)
-
+  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
+  const [listFriends, setListFriends] = useState([])
   function createData(avatar: string, name: string, point: number, code: number) {
     return { avatar, name, point, code }
   }
@@ -473,6 +476,44 @@ const ReferralFriend = () => {
     return slidesPerView
   }, [width])
 
+  const dataFriend = async () => {
+    try {
+      const { userInfos } = await getUserFriend(chainId, account)
+      const dataUserFormatAmount = userInfos[0]?.friends?.map((item: any) => {
+        return {
+          ...item,
+          id: item?.ref_address,
+          point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
+        }
+      })
+
+      const dataMapping = await Promise.all(
+        dataUserFormatAmount.map(async (item: any): Promise<any> => {
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+            wallets: [`${item.id}`],
+          })
+          const dataMap = response?.data[0]
+          return {
+            ...item,
+            ...dataMap,
+            name: dataMap?.username ? dataMap?.username : item?.id,
+            avatar: dataMap?.avatar ?? null,
+          }
+        }),
+      )
+
+      setListFriends(dataMapping)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error >>>>`, error)
+    }
+  }
+
+  useEffect(() => {
+    dataFriend()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainId, account])
+
   return (
     <>
       <Box sx={{ marginTop: '16px' }}>
@@ -489,15 +530,19 @@ const ReferralFriend = () => {
                     <div>Total Points</div>
                   </TableHeader>
                   <TableBody>
-                    {rows.map((row) => {
+                    {listFriends.map((row) => {
                       return (
                         <div key={row.name}>
                           <div>
-                            <img src={row.avatar} alt={row.name} />
+                            {row.avatar ? (
+                              <img src={row.avatar} alt="avatar" />
+                            ) : (
+                              <img src="/images/default_avatar.jpg" alt="avatar" />
+                            )}
                             {row.name}
                           </div>
                           <div>
-                            {row.code}
+                            {userProfile?.referralCode}
                             <img
                               src="/images/copy_purple.svg"
                               alt="copy_purple"
