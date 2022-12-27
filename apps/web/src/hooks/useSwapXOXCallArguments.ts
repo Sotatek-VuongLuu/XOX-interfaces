@@ -4,7 +4,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useMemo } from 'react'
 import { BIPS_BASE } from 'config/constants/exchange'
 import { INITIAL_ALLOWED_SLIPPAGE } from 'config/constants'
-import { useRouterContractXOX, useRouterContract } from 'utils/exchange'
+import { useRouterContractXOX } from 'utils/exchange'
 import useTransactionDeadline from './useTransactionDeadline'
 
 const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
@@ -28,7 +28,7 @@ export function useSwapXOXCallArguments(
 ): SwapCall[] {
   const { account, chainId } = useActiveWeb3React()
   const recipient = recipientAddress === null ? account : recipientAddress
-  const ref = referralAddress ? referralAddress : ADDRESS_ZERO
+  const ref = referralAddress === null ? referralAddress : ADDRESS_ZERO
   const deadline = useTransactionDeadline()
   const contract = useRouterContractXOX(isRouterNormal)
 
@@ -40,42 +40,44 @@ export function useSwapXOXCallArguments(
     }
 
     const swapMethods = []
-    isRouterNormal
-      ? swapMethods.push(
+    if (isRouterNormal) {
+      swapMethods.push(
+        Router.swapCallParameters(trade, {
+          feeOnTransfer: false,
+          allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
+          recipient,
+          deadline: deadline.toNumber(),
+        }),
+      )
+      if (trade.tradeType === TradeType.EXACT_INPUT) {
+        swapMethods.push(
           Router.swapCallParameters(trade, {
-            feeOnTransfer: false,
+            feeOnTransfer: true,
             allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
             recipient,
             deadline: deadline.toNumber(),
           }),
         )
-      : swapMethods.push(
+      }
+    } else {
+      swapMethods.push(
+        RouterXOX.swapCallParameters(trade, {
+          feeOnTransfer: false,
+          allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
+          ref,
+          deadline: deadline.toNumber(),
+        }),
+      )
+      if (trade.tradeType === TradeType.EXACT_INPUT) {
+        swapMethods.push(
           RouterXOX.swapCallParameters(trade, {
-            feeOnTransfer: false,
+            feeOnTransfer: true,
             allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
             ref,
             deadline: deadline.toNumber(),
           }),
         )
-
-    if (trade.tradeType === TradeType.EXACT_INPUT) {
-      isRouterNormal
-        ? swapMethods.push(
-            Router.swapCallParameters(trade, {
-              feeOnTransfer: true,
-              allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
-              recipient,
-              deadline: deadline.toNumber(),
-            }),
-          )
-        : swapMethods.push(
-            RouterXOX.swapCallParameters(trade, {
-              feeOnTransfer: true,
-              allowedSlippage: new Percent(JSBI.BigInt(allowedSlippage), BIPS_BASE),
-              ref,
-              deadline: deadline.toNumber(),
-            }),
-          )
+      }
     }
 
     return swapMethods.map((parameters) => ({ parameters, contract }))

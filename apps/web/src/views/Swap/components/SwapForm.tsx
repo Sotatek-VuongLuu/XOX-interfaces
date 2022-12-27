@@ -372,7 +372,7 @@ export default function SwapForm() {
             swapInputError={swapInputError}
             currencyBalances={currencyBalances}
             recipient={recipient}
-            referral={"0x32648D3c43f396a81fc696af89bA4B099b3E9C02"}
+            referral={null}
             isRouterNormal={isRouterNormal}
             allowedSlippage={allowedSlippage}
             onUserInput={onUserInput}
