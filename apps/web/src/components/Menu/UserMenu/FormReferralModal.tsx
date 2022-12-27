@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux'
 import { AppState, useAppDispatch } from 'state'
 import { updateOpenFormReferral, updateUserProfile } from 'state/user/actions'
 import { useRouter } from 'next/router'
-import { createReturn } from 'typescript'
+import useAuth from 'hooks/useAuth'
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -19,12 +19,12 @@ const ModalStyle = styled.div`
   display: grid;
   place-content: center;
   background-color: rgba(0, 0, 0, 0.4);
+  z-index: 9999;
 `
 
 const FormWrapper = styled.div`
   width: calc(100vw - 48px);
   max-width: 464px;
-  z-index: 1;
   background: #242424;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
@@ -32,6 +32,23 @@ const FormWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flexgrow: 1;
+  position: relative;
+
+  & > button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    cursor: pointer;
+    background: none;
+    outline: none;
+    border: none;
+    padding: 0;
+  }
+
+  & > button:disabled {
+    color: rgba(66, 66, 66, 0.38);
+    background-color: #eeeeee;
+  }
 
   & > div {
     display: flex;
@@ -160,6 +177,7 @@ const FormReferralModal = (_, ref) => {
   const { data: signer } = useSigner()
   const { address: account } = useAccount()
   const [isSaveable, setSaveable] = useState(false)
+  const { logout } = useAuth()
 
   const modalElement = document.getElementById('modal-root')
 
@@ -264,8 +282,10 @@ const FormReferralModal = (_, ref) => {
 
     const dataSubmit: any = {}
     if (username && username !== userProfile?.username) dataSubmit.username = username
-    if (email && email !== userProfile?.email) dataSubmit.email = email
-    if (telegram && telegram !== userProfile?.telegram) dataSubmit.telegram = telegram
+    if (!email) dataSubmit.email = null
+    else if (email !== userProfile?.email) dataSubmit.email = email
+    if (!telegram) dataSubmit.telegram = null
+    else if (telegram !== userProfile?.telegram) dataSubmit.telegram = telegram
     if (avatar) dataSubmit.avatar = avataURL
     if (Object.keys(dataSubmit).length > 0) {
       signer?.signMessage(JSON.stringify(dataSubmit)).then((res) => {
@@ -317,7 +337,9 @@ const FormReferralModal = (_, ref) => {
     const saveable =
       avatar ||
       (username !== undefined && username !== userProfile?.username) ||
+      !email ||
       (email && email !== userProfile?.email) ||
+      !telegram ||
       (telegram && telegram !== userProfile?.telegram)
     setSaveable(saveable)
   }, [username, email, telegram, avatar, userProfile])
@@ -368,6 +390,8 @@ const FormReferralModal = (_, ref) => {
 
   useEffect(() => {
     setProfileSuccess(false)
+    setAvata(undefined)
+    setErrorMessages({})
   }, [openFormReferral])
 
   useEffect(() => {
@@ -458,6 +482,39 @@ const FormReferralModal = (_, ref) => {
             >
               Set up your profile by filling in all the fields below.
             </Text>
+            {!userProfile && (
+              <button
+                onClick={() => {
+                  logout()
+                  onCloseBtnClicked()
+                }}
+                type="button"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5229 6.47715 22 12 22Z"
+                    fill="#444444"
+                    stroke="#444444"
+                    strokeWidth="2"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M14.8285 9.17188L9.17163 14.8287"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M9.17163 9.17188L14.8285 14.8287"
+                    stroke="white"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            )}
             <div className="avatar">
               <label htmlFor="avatar" style={{ height: '100px' }}>
                 {renderAvataImage()}

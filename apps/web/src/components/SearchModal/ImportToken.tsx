@@ -71,7 +71,14 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
         return (
           <Grid key={token.address} gridTemplateRows="1fr 1fr 1fr" gridGap="16px">
             {list !== undefined ? (
-              <Text fontSize="16px" fontWeight="700" lineHeight="19px" color="#9072FF">
+              <Text
+                fontSize="16px"
+                fontWeight="700"
+                lineHeight="19px"
+                color="#9072FF"
+                style={{ display: 'flex', alignItems: 'center' }}
+              >
+                <img src="/images/coinmaketcap.png" alt="" style={{ marginRight: '8px' }} />
                 {t('Via')} {list.name}
               </Text>
             ) : (

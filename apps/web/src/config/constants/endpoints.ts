@@ -46,3 +46,10 @@ export const BLOCKS_CLIENT_WITH_CHAIN = {
   [ChainId.BSC]: BLOCKS_CLIENT,
   [ChainId.ETHEREUM]: BLOCKS_CLIENT_ETH,
 }
+
+export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
+  [ChainId.BSC]: '',
+  [ChainId.ETHEREUM]: '',
+  [ChainId.BSC_TESTNET]: 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2',
+  [ChainId.GOERLI]: '',
+}

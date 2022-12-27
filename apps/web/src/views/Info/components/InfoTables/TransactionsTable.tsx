@@ -5,7 +5,7 @@ import { ChainId } from '@pancakeswap/sdk'
 import truncateHash from '@pancakeswap/utils/truncateHash'
 import { Box, Flex, LinkExternal, Skeleton, Text, Button, Link, Select, Input } from '@pancakeswap/uikit'
 import { formatISO9075 } from 'date-fns'
-import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { useGetChainName } from 'state/info/hooks'
 import { Transaction, TransactionType } from 'state/info/types'
 import styled from 'styled-components'
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
   margin-bottom: 50px;
 
   & > div {
-    max-width: calc(100vw - 96px);
+    max-width: calc(100vw - 80px);
   }
 
   & > div:first-child {
@@ -75,6 +75,10 @@ const Wrapper = styled.div`
     grid-column: 1 / span 2;
     padding: 24px;
 
+    & > div {
+      max-width: calc(100vw - 96px);
+    }
+
     .btn-filter button {
       margin-right: 0;
       margin-left: 8px;
@@ -95,19 +99,32 @@ const Wrapper = styled.div`
   }
 `
 
-const ResponsiveGrid = styled.div`
+const Table = styled.div`
   display: grid;
-  grid-gap: 35px;
+  grid-gap: 16px 35px;
   align-items: center;
-  grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 0.8fr 0.4fr;
-  @media screen and (max-width: 940px) {
-    grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 0.8fr 0.4fr;
+  position: relative;
+  grid-template-columns: 0.15fr 1.4fr 1fr repeat(3, 0.7fr) 1fr 0.4fr;
+  .table-header {
+    margin-bottom: 16px;
   }
-  @media screen and (max-width: 800px) {
-    grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 0.8fr 0.4fr;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-gap: 24px 35px;
+
+    .table-header {
+      margin-bottom: 8px;
+    }
   }
-  @media screen and (max-width: 500px) {
-    grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 0.8fr 0.4fr;
+
+  &::before {
+    content: '';
+    display: block;
+    width: 100%;
+    height: 0px;
+    border: 1px solid #444444;
+    position: absolute;
+    top: 35px;
   }
 `
 
@@ -115,27 +132,67 @@ export const CustomTableWrapper = styled(Flex)`
   width: calc(100vw - 96px);
   padding-top: 24px;
   flex-direction: column;
-  gap: 24px;
-  overflow: hidden;
+  gap: 16px;
+  overflow-x: auto;
 
-  &:hover {
-    overflow: auto;
+  & > div:last-child {
+    margin-bottom: 16px;
   }
 
   & > div {
-    min-width: 1600px;
+    min-width: 1400px;
+  }
+
+  &::-webkit-scrollbar {
+    height: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #444444;
+    transform: matrix(0, -1, -1, 0, 0, 0);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: none;
+    border-radius: 10px;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    width: calc(100vw - 144px);
+    width: calc(100vw - 152px);
   }
 `
 
 export const PageButtons = styled(Flex)`
-  width: 100%;
+  // width: 100%;
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: flex-end;
+  justify-content: flex-start;
+  padding: 3px;
+
+  & > div:first-child {
+    margin-bottom: 13px;
+  }
+
+  & > div {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
+
+  ${({ theme }) => theme.mediaQueries.sm} {
+    flex-direction: row;
+    justify-content: flex-end;
+
+    & > div {
+      margin-top: 8px;
+    }
+
+    & > div:first-child {
+      margin-bottom: 0;
+    }
+  }
 
   & .page {
     font-family: 'Inter';
@@ -181,7 +238,6 @@ export const PageButtons = styled(Flex)`
   }
 
   & div[class*='Select__DropDownListContainer'] {
-    // bottom: 100%;
     border-radius: 0;
     z-index: 10000;
   }
@@ -226,16 +282,13 @@ export const PageButtons = styled(Flex)`
 `
 
 const SORT_FIELD = {
-  amountUSD: 'amountUSD',
   timestamp: 'timestamp',
-  sender: 'sender',
-  amountToken0: 'amountToken0',
-  amountToken1: 'amountToken1',
+  amountUSD: 'amountUSD',
 }
 
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
   const loadingRow = (
-    <ResponsiveGrid>
+    <>
       <Skeleton />
       <Skeleton />
       <Skeleton />
@@ -244,7 +297,7 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
       <Skeleton />
       <Skeleton />
       <Skeleton />
-    </ResponsiveGrid>
+    </>
   )
   return (
     <>
@@ -265,7 +318,7 @@ const DataRow: React.FC<
   const inputTokenSymbol = transaction.amountToken1 < 0 ? transaction.token0Symbol : transaction.token1Symbol
   const chainName = useGetChainName()
   return (
-    <ResponsiveGrid>
+    <>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -352,11 +405,11 @@ const DataRow: React.FC<
       >
         {truncateHash(transaction.sender, 4, 5)}
       </Link>
-    </ResponsiveGrid>
+    </>
   )
 }
 
-const TransactionTable: React.FC<
+const TransactionsTable: React.FC<
   React.PropsWithChildren<{
     transactions: Transaction[]
   }>
@@ -373,11 +426,18 @@ const TransactionTable: React.FC<
 
   const [txFilter, setTxFilter] = useState<TransactionType | undefined>(undefined)
 
+  const handleChangeTempPage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
+    if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
+  }, [])
+
   const sortedTransactions = useMemo(() => {
-    const toBeAbsList = [SORT_FIELD.amountToken0, SORT_FIELD.amountToken1]
+    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD]
     return transactions
       ? transactions
-          .slice()
+          .slice(0, 100)
+          .filter((x) => {
+            return txFilter === undefined || x.type === txFilter
+          })
           .sort((a, b) => {
             if (a && b) {
               const firstField = a[sortField as keyof Transaction]
@@ -388,9 +448,6 @@ const TransactionTable: React.FC<
               return first > second ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
             }
             return -1
-          })
-          .filter((x) => {
-            return txFilter === undefined || x.type === txFilter
           })
           .slice(perPage * (page - 1), page * perPage)
       : []
@@ -537,12 +594,12 @@ const TransactionTable: React.FC<
             lineHeight="17px"
             color="rgba(255, 255, 255, 0.6)"
           >
-            Total: 100 transactions
+            Total: {transactions ? (transactions.length > 100 ? 100 : transactions.length) : 0} transactions
           </Text>
         </Flex>
       </Flex>
       <CustomTableWrapper>
-        <ResponsiveGrid>
+        <Table>
           <Text
             fontSize="16px"
             fontFamily="Inter"
@@ -550,6 +607,7 @@ const TransactionTable: React.FC<
             fontWeight="700"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
+            className="table-header"
           >
             No
           </Text>
@@ -560,6 +618,7 @@ const TransactionTable: React.FC<
             fontWeight="700"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
+            className="table-header"
           >
             Action
           </Text>
@@ -570,7 +629,8 @@ const TransactionTable: React.FC<
             fontWeight="700"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
-            onClick={() => handleSort(SORT_FIELD.amountUSD)}
+            onClick={() => handleSort(SORT_FIELD.timestamp)}
+            className="table-header"
           >
             <Flex alignItems="center">
               <span style={{ marginRight: '12px' }}>Excution Time</span> {IconSort}
@@ -583,7 +643,8 @@ const TransactionTable: React.FC<
             fontWeight="700"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
-            onClick={() => handleSort(SORT_FIELD.amountToken0)}
+            onClick={() => handleSort(SORT_FIELD.amountUSD)}
+            className="table-header"
           >
             <Flex alignItems="center">
               <span style={{ marginRight: '12px' }}>Total Value</span> {IconSort}
@@ -596,6 +657,7 @@ const TransactionTable: React.FC<
             fontWeight="700"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
+            className="table-header"
           >
             Token Amount
           </Text>
@@ -606,6 +668,7 @@ const TransactionTable: React.FC<
             fontWeight="700"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
+            className="table-header"
           >
             Token Amount
           </Text>
@@ -617,6 +680,7 @@ const TransactionTable: React.FC<
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
             onClick={() => handleSort(SORT_FIELD.timestamp)}
+            className="table-header"
           >
             <Flex alignItems="center">
               <span style={{ marginRight: '12px' }}>Stable Coin Staked</span> {IconSort}
@@ -630,179 +694,186 @@ const TransactionTable: React.FC<
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
             style={{ justifySelf: 'right' }}
+            className="table-header"
           >
             Maker
           </Text>
-        </ResponsiveGrid>
-        <Break />
+          {/* <Break /> */}
 
-        {transactions ? (
-          <>
-            {sortedTransactions.map((transaction, index) => {
-              if (transaction) {
-                return (
-                  // eslint-disable-next-line react/no-array-index-key
-                  <Fragment key={index}>
-                    <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
-                  </Fragment>
-                )
-              }
-              return null
-            })}
-            {sortedTransactions.length === 0 ? (
-              <Flex justifyContent="center">
-                <Text>{t('No Transactions')}</Text>
-              </Flex>
-            ) : undefined}
-            <PageButtons>
-              <Arrow
-                onClick={() => {
-                  setPagePagination(page === 1 ? page : page - 1)
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
-                  <path
-                    d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
-                    stroke={page === 1 ? 'white' : '#9072FF'}
-                    strokeOpacity={page === 1 ? '0.38' : '1'}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </Arrow>
-
-              <Flex>
-                {maxPage <= 7 ? (
-                  [...Array(maxPage)].map((_, i) => (
-                    <button
-                      type="button"
-                      key={_}
-                      onClick={() => setPagePagination(i + 1)}
-                      className={`page ${page === i + 1 ? 'current' : ''}`}
-                    >
-                      {i + 1}
-                    </button>
-                  ))
-                ) : (
-                  <>
-                    {page - 2 <= 1 ? (
-                      [...Array(page - 1)].map((_, i) => (
-                        <button type="button" key={_} onClick={() => setPagePagination(i + 1)} className="page">
-                          {i + 1}
-                        </button>
-                      ))
-                    ) : (
-                      <>
-                        <button type="button" className="page" onClick={() => setPagePagination(1)}>
-                          1
-                        </button>
-                        <button type="button" className="page" onClick={() => setPagePagination(page - 3)}>
-                          ...
-                        </button>
-                        <button type="button" className="page" onClick={() => setPagePagination(page - 2)}>
-                          {page - 2}
-                        </button>
-                        <button type="button" className="page" onClick={() => setPagePagination(page - 1)}>
-                          {page - 1}
-                        </button>
-                      </>
-                    )}
-                    <button type="button" className="page current">
-                      {page}
-                    </button>
-                    {page + 2 >= maxPage - 1 ? (
-                      [...Array(maxPage - page)].map((_, i) => (
-                        <button type="button" key={_} className="page" onClick={() => setPagePagination(page + i + 1)}>
-                          {page + i + 1}
-                        </button>
-                      ))
-                    ) : (
-                      <>
-                        <button type="button" className="page" onClick={() => setPagePagination(page + 1)}>
-                          {page + 1}
-                        </button>
-                        <button type="button" className="page" onClick={() => setPagePagination(page + 2)}>
-                          {page + 2}
-                        </button>
-                        <button type="button" className="page" onClick={() => setPagePagination(page + 3)}>
-                          ...
-                        </button>
-                        <button type="button" className="page" onClick={() => setPagePagination(maxPage)}>
-                          {maxPage}
-                        </button>
-                      </>
-                    )}
-                  </>
-                )}
-              </Flex>
-
-              <Arrow
-                onClick={() => {
-                  setPagePagination(page === maxPage ? page : page + 1)
-                }}
-              >
-                <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
-                  <path
-                    d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                    stroke={page === maxPage ? 'white' : '#9072FF'}
-                    strokeOpacity={page === maxPage ? '0.38' : '1'}
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </Arrow>
-              <Select
-                options={[
-                  {
-                    value: 10,
-                    label: '10/Page',
-                  },
-                  {
-                    value: 20,
-                    label: '20/Page',
-                  },
-                  {
-                    value: 50,
-                    label: '50/Page',
-                  },
-                  {
-                    value: 100,
-                    label: '100/Page',
-                  },
-                ]}
-                onOptionChange={(option: any) => setPerPage(option.value)}
-                className="select-page"
-              />
-              <Text className="go-page">Go to page</Text>
-              <Input
-                value={tempPage}
-                onChange={(e) => setTempPage(e.target.value)}
-                onKeyUp={(e) => {
-                  if (e.key === 'Enter') {
-                    const p = parseInt(tempPage) || 1
-                    if (p >= maxPage) {
-                      setPagePagination(maxPage)
-                      setTempPage(maxPage.toString())
-                    } else {
-                      setPagePagination(p)
-                    }
-                  }
-                }}
-              />
-            </PageButtons>
-          </>
-        ) : (
-          <>
-            <TableLoader />
-            {/* spacer */}
-            <Box />
-          </>
-        )}
+          {transactions ? (
+            <>
+              {sortedTransactions.map((transaction, index) => {
+                if (transaction) {
+                  return (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <Fragment key={transaction.hash}>
+                      <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
+                    </Fragment>
+                  )
+                }
+                return null
+              })}
+              {sortedTransactions.length === 0 ? (
+                <Flex justifyContent="center">
+                  <Text>{t('No Transactions')}</Text>
+                </Flex>
+              ) : undefined}
+            </>
+          ) : (
+            <>
+              <TableLoader />
+              {/* spacer */}
+              <Box />
+            </>
+          )}
+        </Table>
       </CustomTableWrapper>
+      {transactions && (
+        <PageButtons>
+          <div>
+            <Arrow
+              onClick={() => {
+                setPagePagination(page === 1 ? page : page - 1)
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
+                <path
+                  d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
+                  stroke={page === 1 ? 'white' : '#9072FF'}
+                  strokeOpacity={page === 1 ? '0.38' : '1'}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Arrow>
+
+            <Flex>
+              {maxPage <= 7 ? (
+                [...Array(maxPage)].map((_, i) => (
+                  <button
+                    type="button"
+                    key={_}
+                    onClick={() => setPagePagination(i + 1)}
+                    className={`page ${page === i + 1 ? 'current' : ''}`}
+                  >
+                    {i + 1}
+                  </button>
+                ))
+              ) : (
+                <>
+                  {page - 2 <= 1 ? (
+                    [...Array(page - 1)].map((_, i) => (
+                      <button type="button" key={_} onClick={() => setPagePagination(i + 1)} className="page">
+                        {i + 1}
+                      </button>
+                    ))
+                  ) : (
+                    <>
+                      <button type="button" className="page" onClick={() => setPagePagination(1)}>
+                        1
+                      </button>
+                      <button type="button" className="page" onClick={() => setPagePagination(page - 3)}>
+                        ...
+                      </button>
+                      <button type="button" className="page" onClick={() => setPagePagination(page - 2)}>
+                        {page - 2}
+                      </button>
+                      <button type="button" className="page" onClick={() => setPagePagination(page - 1)}>
+                        {page - 1}
+                      </button>
+                    </>
+                  )}
+                  <button type="button" className="page current">
+                    {page}
+                  </button>
+                  {page + 2 >= maxPage - 1 ? (
+                    [...Array(maxPage - page)].map((_, i) => (
+                      <button type="button" key={_} className="page" onClick={() => setPagePagination(page + i + 1)}>
+                        {page + i + 1}
+                      </button>
+                    ))
+                  ) : (
+                    <>
+                      <button type="button" className="page" onClick={() => setPagePagination(page + 1)}>
+                        {page + 1}
+                      </button>
+                      <button type="button" className="page" onClick={() => setPagePagination(page + 2)}>
+                        {page + 2}
+                      </button>
+                      <button type="button" className="page" onClick={() => setPagePagination(page + 3)}>
+                        ...
+                      </button>
+                      <button type="button" className="page" onClick={() => setPagePagination(maxPage)}>
+                        {maxPage}
+                      </button>
+                    </>
+                  )}
+                </>
+              )}
+            </Flex>
+
+            <Arrow
+              onClick={() => {
+                setPagePagination(page === maxPage ? page : page + 1)
+              }}
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
+                <path
+                  d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
+                  stroke={page === maxPage ? 'white' : '#9072FF'}
+                  strokeOpacity={page === maxPage ? '0.38' : '1'}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </Arrow>
+          </div>
+          <div>
+            <Select
+              options={[
+                {
+                  value: 10,
+                  label: '10/Page',
+                },
+                {
+                  value: 20,
+                  label: '20/Page',
+                },
+                {
+                  value: 50,
+                  label: '50/Page',
+                },
+                {
+                  value: 100,
+                  label: '100/Page',
+                },
+              ]}
+              onOptionChange={(option: any) => setPerPage(option.value)}
+              className="select-page"
+            />
+            <Text className="go-page">Go to page</Text>
+            <Input
+              value={tempPage}
+              onChange={handleChangeTempPage}
+              onKeyUp={(e) => {
+                if (e.key === 'Enter') {
+                  const p = parseInt(tempPage) || 1
+                  if (p >= maxPage) {
+                    setPagePagination(maxPage)
+                    setTempPage(maxPage.toString())
+                  } else {
+                    setPagePagination(p)
+                  }
+                }
+              }}
+            />
+          </div>
+        </PageButtons>
+      )}
     </Wrapper>
   )
 }
 
-export default TransactionTable
+export default TransactionsTable

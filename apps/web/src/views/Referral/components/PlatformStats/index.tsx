@@ -164,7 +164,12 @@ const PlatformStat = (): JSX.Element => {
       <div className="first">
         <div className="chart_container">
           <ChartRef name="Claim" percent={25} />
-          <ChartRef name="Claim" percent={25} />
+          <ChartRef
+            name="UnClaimed"
+            percent={25}
+            cx={35}
+            color={['rgba(255, 189, 60, 0.5)', '#FFBD3C', 'rgba(255, 255, 255, 0.1)']}
+          />
         </div>
 
         <div className="info_volumn">

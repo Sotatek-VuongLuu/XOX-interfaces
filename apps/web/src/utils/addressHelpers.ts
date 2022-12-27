@@ -132,3 +132,11 @@ export const getCrossFarmingSenderAddress = (chainId?: number) => {
 export const getCrossFarmingReceiverAddress = (chainId?: number) => {
   return getAddress(addresses.crossFarmingReceiver, chainId)
 }
+
+export const getContractTreasuryXOX = (chainId?: number) => {
+  return getAddress(addresses.treasuryXOX, chainId)
+}
+
+export const getXOXTokenAddress = (chainId?: number) => {
+  return getAddress(addresses.contractXOXToken, chainId)
+}

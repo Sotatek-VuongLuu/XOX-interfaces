@@ -11,20 +11,12 @@
   "keywords": ["pancake", "default"],
   "tokens": [
     {
-      "name": "Wrapped BNB",
-      "symbol": "WBNB",
-      "address": "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c",
+      "name": "BTCB Token",
+      "symbol": "BTCB",
+      "address": "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/bnb.png"
-    },
-    {
-      "name": "BUSD Token",
-      "symbol": "BUSD",
-      "address": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
-      "chainId": 56,
-      "decimals": 18,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/busd.png"
+      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/wbtc.png"
     },
     {
       "name": "Ethereum Token",
@@ -35,20 +27,28 @@
       "logoURI": "https://pancakeswap.finance/images/tokens/0x2170Ed0880ac9A755fd29B2688956BD959F933F8.png"
     },
     {
-      "name": "BTCB Token",
-      "symbol": "BTCB",
-      "address": "0x7130d2A12B9BCbFAe4f2634d864A1Ee1Ce3Ead9c",
+      "name": "BUSD Token",
+      "symbol": "BUSD",
+      "address": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/wbtc.png"
+      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/busd.png"
     },
     {
-      "name": "Tether USD",
-      "symbol": "USDT",
-      "address": "0x55d398326f99059fF775485246999027B3197955",
+      "name": "Binance-Peg Dogecoin",
+      "symbol": "DOGE",
+      "address": "0xbA2aE424d960c26247Dd6c32edC70B295c744C43",
+      "chainId": 56,
+      "decimals": 8,
+      "logoURI": "https://pancakeswap.finance/images/tokens/0xbA2aE424d960c26247Dd6c32edC70B295c744C43.png"
+    },
+    {
+      "name": "MATIC",
+      "symbol": "MATIC",
+      "address": "0xcc42724c6683b7e57334c4e856f4c9965ed682bd",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/usdt.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png"
     },
     {
       "name": "PancakeSwap Token",
@@ -59,108 +59,94 @@
       "logoURI": "https://pancakeswap.finance/images/tokens/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82.png"
     },
     {
-      "name": "Venus",
-      "symbol": "XVS",
-      "address": "0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63",
+      "name": "Binance-Peg Chainlink Token",
+      "symbol": "LINK",
+      "address": "0xF8A0BF9cF54Bb92F17374d9e9A321E6a111a51bD",
+      "chainId": 56,
+      "decimals": 18,
+      "logoURI": "https://pancakeswap.finance/images/tokens/0xF8A0BF9cF54Bb92F17374d9e9A321E6a111a51bD.png"
+    },
+    {
+      "name": "Binance-Peg Cardano Token",
+      "symbol": "ADA",
+      "address": "0x3EE2200Efb3400fAbB9AacF31297cBdD1d435D47",
       "chainId": 56,
       "decimals": 18,
       "logoURI": "https://pancakeswap.finance/images/tokens/0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63.png"
     },
+
     {
-      "name": "VAI Stablecoin",
-      "symbol": "VAI",
-      "address": "0x4BD17003473389A42DAF6a0a729f6Fdb328BbBd7",
-      "chainId": 56,
+      "name": "BTCB Token",
+      "symbol": "BTCB",
+      "address": "0xa3961366f8A7A5772C22A00788f1824d233B26ed",
+      "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://pancakeswap.finance/images/tokens/0x4BD17003473389A42DAF6a0a729f6Fdb328BbBd7.png"
+      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/wbtc.png"
     },
     {
-      "name": "Alpaca",
-      "symbol": "ALPACA",
-      "address": "0x8F0528cE5eF7B51152A59745bEfDD91D97091d2F",
-      "chainId": 56,
+      "name": "Ethereum Token",
+      "symbol": "ETH",
+      "address": "0x65eCB72aDEb9b5da68aA7DdD4A334546E7Cd36e2",
+      "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://pancakeswap.finance/images/tokens/0x8F0528cE5eF7B51152A59745bEfDD91D97091d2F.png"
+      "logoURI": "https://pancakeswap.finance/images/tokens/0x2170Ed0880ac9A755fd29B2688956BD959F933F8.png"
     },
     {
-      "name": "Belt",
-      "symbol": "BELT",
-      "address": "0xE0e514c71282b6f4e823703a39374Cf58dc3eA4f",
-      "chainId": 56,
+      "name": "BUSD Token",
+      "symbol": "BUSD",
+      "address": "0x4CB105D50AB9D7bA8D603c31B8ED23356AB44741",
+      "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://pancakeswap.finance/images/tokens/0xE0e514c71282b6f4e823703a39374Cf58dc3eA4f.png"
+      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/busd.png"
     },
     {
-      "name": "TokoCrypto",
-      "symbol": "TKO",
-      "address": "0x9f589e3eabe42ebC94A44727b3f3531C0c877809",
-      "chainId": 56,
-      "decimals": 18,
-      "logoURI": "https://pancakeswap.finance/images/tokens/0x9f589e3eabe42ebC94A44727b3f3531C0c877809.png"
+      "name": "Binance-Peg Dogecoin",
+      "symbol": "DOGE",
+      "address": "0xbB5a2336330C07c3b2B532210A1E5B93d747fb93",
+      "chainId": 97,
+      "decimals": 8,
+      "logoURI": ""
     },
     {
-      "name": "Nerve Finance",
-      "symbol": "NRV",
-      "address": "0x42F6f551ae042cBe50C739158b4f0CAC0Edb9096",
-      "chainId": 56,
+      "name": "MATIC",
+      "symbol": "MATIC",
+      "address": "0x897f93Cc7E82cC78F076C32aA45c723f84959A0D",
+      "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://pancakeswap.finance/images/tokens/0x42F6f551ae042cBe50C739158b4f0CAC0Edb9096.png"
-    },
-    {
-      "name": "Ellipsis",
-      "symbol": "EPS",
-      "address": "0xA7f552078dcC247C2684336020c03648500C6d9F",
-      "chainId": 56,
-      "decimals": 18,
-      "logoURI": "https://pancakeswap.finance/images/tokens/0xA7f552078dcC247C2684336020c03648500C6d9F.png"
+      "logoURI": ""
     },
     {
       "name": "PancakeSwap Token",
       "symbol": "CAKE",
-      "address": "0xFa60D973F7642B748046464e165A65B7323b0DEE",
+      "address": "0x638666506b6875a8755884090c41Dee985aC1F6D",
       "chainId": 97,
       "decimals": 18,
       "logoURI": "https://pancakeswap.finance/images/tokens/0x0E09FaBB73Bd3Ade0a17ECC321fD13a19e81cE82.png"
     },
     {
-      "name": "BUSD Token",
-      "symbol": "BUSD",
-      "address": "0xaB1a4d4f1D656d2450692D237fdD6C7f9146e814",
+      "name": "Binance-Peg Chainlink Token",
+      "symbol": "LINK",
+      "address": "0x07bbDcd736cFc0406a3CeD96B9F2289ACBCc4c76",
       "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/busd.png"
+      "logoURI": ""
     },
     {
-      "name": "BUSD Token",
-      "symbol": "BUSD",
-      "address": "0x4e2442A6f7AeCE64Ca33d31756B5390860BF973E",
-      "chainId": 4,
+      "name": "Binance-Peg Cardano Token",
+      "symbol": "ADA",
+      "address": "0x624bcfBb991cCef8e790E58eD973D8e24cc66eCc",
+      "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/busd.png"
+      "logoURI": "https://pancakeswap.finance/images/tokens/0xcF6BB5389c92Bdda8a3747Ddb454cB7a64626C63.png"
     },
+
     {
-      "name": "Wrapped Ether",
-      "address": "0xc778417E063141139Fce010982780140Aa0cD5Ab",
-      "symbol": "WETH",
-      "decimals": 18,
-      "chainId": 4,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/weth.png"
-    },
-    {
-      "name": "Wrapped Ether",
-      "address": "0xB4FBF271143F4FBf7B91A5ded31805e42b2208d6",
-      "symbol": "WETH",
-      "decimals": 18,
-      "chainId": 5,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/weth.png"
-    },
-    {
-      "name": "Wrapped Ether",
-      "address": "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2",
-      "symbol": "WETH",
+      "name": "Wrapped BTC",
+      "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "symbol": "WBTC",
       "decimals": 18,
       "chainId": 1,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/weth.png"
+      "logoURI": ""
     },
     {
       "name": "USD Coin",
@@ -171,44 +157,117 @@
       "logoURI": "https://tokens.pancakeswap.finance/images/symbol/usdc.png"
     },
     {
-      "name": "Test USD Coin",
-      "address": "0x4DBCdF9B62e891a7cec5A2568C3F4FAF9E8Abe2b",
-      "symbol": "tUSDC",
-      "decimals": 6,
-      "chainId": 4,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/usdc.png"
-    },
-    {
-      "name": "Test USD Coin",
-      "address": "0x07865c6E87B9F70255377e024ace6630C1Eaa37F",
-      "symbol": "tUSDC",
-      "decimals": 6,
-      "chainId": 5,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/usdc.png"
-    },
-    {
-      "name": "Tether USD",
-      "address": "0xdAC17F958D2ee523a2206206994597C13D831ec7",
-      "symbol": "USDT",
-      "decimals": 6,
-      "chainId": 1,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/usdt.png"
-    },
-    {
-      "name": "Wrapped BNB",
-      "symbol": "WBNB",
-      "address": "0xae13d989daC2f0dEbFf460aC112a837C89BAa7cd",
-      "chainId": 97,
+      "name": "",
+      "address": "0xB8c77482e45F1F44dE1745F52C74426C631bDD52",
+      "symbol": "BNB",
       "decimals": 18,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/bnb.png"
+      "chainId": 1,
+      "logoURI": ""
     },
+    {
+      "name": "",
+      "address": "0x7D1AfA7B718fb893dB30A3aBc0Cfc608AaCfeBB0",
+      "symbol": "MATIC",
+      "decimals": 18,
+      "chainId": 1,
+      "logoURI": ""
+    },
+    {
+      "name": "",
+      "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+      "symbol": "UNI",
+      "decimals": 18,
+      "chainId": 1,
+      "logoURI": ""
+    },
+    {
+      "name": "",
+      "address": "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
+      "symbol": "SUSHI",
+      "decimals": 18,
+      "chainId": 1,
+      "logoURI": ""
+    },
+    {
+      "name": "",
+      "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+      "symbol": "LINK",
+      "decimals": 18,
+      "chainId": 1,
+      "logoURI": ""
+    },
+    {
+      "name": "",
+      "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+      "symbol": "SHIB",
+      "decimals": 18,
+      "chainId": 1,
+      "logoURI": ""
+    },
+
     {
       "name": "Wrapped BTC",
+      "address": "0x2a924bcD60450C7a354413d8b2c906A3173F9208",
       "symbol": "WBTC",
-      "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
+      "decimals": 18,
+      "chainId": 5,
+      "logoURI": ""
+    },
+    {
+      "name": "",
+      "address": "0x013cB3419Dd78A3A24dF6F9151514752228C6960",
+      "symbol": "BNB",
+      "decimals": 18,
+      "chainId": 5,
+      "logoURI": ""
+    },
+    {
+      "name": "USD Coin",
+      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "symbol": "USDC",
+      "decimals": 6,
       "chainId": 1,
-      "decimals": 8,
-      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/wbtc.png"
+      "logoURI": "https://tokens.pancakeswap.finance/images/symbol/usdc.png"
+    },
+    {
+      "name": "",
+      "address": "0xB4BdF7ADdeE19c35ecCa122C852103FAE0b3fe0B",
+      "symbol": "MATIC",
+      "decimals": 18,
+      "chainId": 5,
+      "logoURI": ""
+    },
+    {
+      "name": "",
+      "address": "0x1bC4803310B723B4f0A2c27411315432b7db52Df",
+      "symbol": "UNI",
+      "decimals": 18,
+      "chainId": 5,
+      "logoURI": ""
+    },
+    {
+      "name": "",
+      "address": "0x28362Cd5D11a8ce0371B4768Cd8EDF8a943CC2A9",
+      "symbol": "SUSHI",
+      "decimals": 18,
+      "chainId": 5,
+      "logoURI": ""
+    },
+    {
+      "name": "",
+      "address": "0xCfc1B83B17084e744423Db6314B7e811729c6514",
+      "symbol": "LINK",
+      "decimals": 18,
+      "chainId": 5,
+      "logoURI": ""
+    },
+    {
+      "name": "",
+      "address": "0x5f933e0F9D17A4B28F229a2882e2E18dcef266c7",
+      "symbol": "SHIB",
+      "decimals": 18,
+      "chainId": 5,
+      "logoURI": ""
     }
   ]
 }

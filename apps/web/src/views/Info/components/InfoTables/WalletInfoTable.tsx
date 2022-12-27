@@ -2,10 +2,10 @@
 /* eslint-disable no-nested-ternary */
 // import { useTranslation } from '@pancakeswap/localization'
 // import { ChainId } from '@pancakeswap/sdk'
-import { useAccount, useProvider, useBalance } from 'wagmi'
+import { useAccount, useProvider, useNetwork } from 'wagmi'
 // import { fetchBalance } from '@wagmi/core'
 // import truncateHash from '@pancakeswap/utils/truncateHash'
-import { Flex, Image, Text, CopyButton } from '@pancakeswap/uikit'
+import { Flex, Text, CopyButton } from '@pancakeswap/uikit'
 // import { ITEMS_PER_INFO_TABLE_PAGE } from 'config/constants/info'
 // import { formatDistanceToNowStrict } from 'date-fns'
 import { useCallback, useEffect, useState } from 'react'
@@ -14,7 +14,7 @@ import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 // import { getBlockExploreLink } from 'utils'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-// import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
+import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 // import { formatAmount } from 'utils/formatInfoNumbers'
 // import { defaultTokens } from './config'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
@@ -40,6 +40,33 @@ const Wrapper = styled.div`
     width: 40px;
     height: 4px;
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+  }
+`
+
+const CoinListWrapper = styled(Flex)`
+  max-height: 146px;
+  overflow: auto;
+  padding-right: 6px;
+  width: calc(100% + 12px);
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding-right: 9px;
+    width: calc(100% + 15px);
+  }
+
+  &::-webkit-scrollbar {
+    width: 6px;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #444444;
+    transform: matrix(0, -1, -1, 0, 0, 0);
+    border-radius: 10px;
+  }
+
+  &::-webkit-scrollbar-track {
+    box-shadow: none;
+    border-radius: 10px;
   }
 `
 
@@ -149,17 +176,26 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
 
   const { address: account } = useAccount()
   const { chainId } = useActiveChainId()
+  const { chain } = useNetwork()
   const provider = useProvider({ chainId })
   const [balanceNative, setBalanceNative] = useState<any>()
   const [dataChart, setDataChart] = useState<any>([])
   const [totalAsset, setTotalAsset] = useState<number>(0)
 
-  const colors = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042']
+  const colors = ['#9072FF', '#5F35EB', '#89DDEF', '#90F0B1']
 
   const tokenRateUSD = useCallback(
-    (symbol) => {
+    (symbol: string) => {
       if (!currencyDatas) return 0
-      const currencyData = currencyDatas.find((data) => data?.symbol?.toLowerCase() === symbol.toLowerCase())
+      if (symbol === native.symbol && chainId === 5) {
+        const currencyData = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === 'ETH')
+        return currencyData?.price || 0
+      }
+      if (symbol === native.symbol && chainId === 97) {
+        const currencyData = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === 'BNB')
+        return currencyData?.price || 0
+      }
+      const currencyData = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === symbol.toUpperCase())
       if (!currencyData) return 0
       return currencyData.price
     },
@@ -171,46 +207,65 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   }, [])
 
   useEffect(() => {
-    if (!account || !chainId) return
+    if (!account || !chain || allTokens.length === 0) return
 
-    const currentProvider = chainId === 1 ? getDefaultProvider() : provider
-
-    currentProvider.getBalance(account).then((balance) => {
-      setBalanceNative(balance)
+    const currentProvider = chain.id === 1 || chain.id === 5 ? getDefaultProvider(chain.network) : provider
+    currentProvider
+      .getBalance(account)
+      .then((balance) => {
+        setBalanceNative(balance)
+      })
+      .catch((error) => {
+        console.warn(error)
+      })
+    getBalancesForEthereumAddress({
+      // erc20 tokens you want to query!
+      contractAddresses: Object.keys(allTokens),
+      // ethereum address of the user you want to get the balances for
+      ethereumAddress: account,
+      // your ethers provider
+      providerOptions: {
+        ethersProvider: currentProvider,
+      },
     })
-    try {
-      getBalancesForEthereumAddress({
-        // erc20 tokens you want to query!
-        contractAddresses: Object.keys(allTokens).map((key) => allTokens[key].address),
-        // ethereum address of the user you want to get the balances for
-        ethereumAddress: account,
-        // your ethers provider
-        providerOptions: {
-          ethersProvider: chainId === 1 ? getDefaultProvider() : provider,
-        },
-      }).then((balance) => {
+      .then((balance) => {
         setTokensBalance(balance.tokens)
       })
-    } catch (error) {
-      console.warn(error)
-    }
-  }, [account, chainId, provider])
+      .catch((error) => {
+        console.warn(error)
+      })
+  }, [account, chain, allTokens])
 
   useEffect(() => {
     let total = 0
-    const nativeBalance = balanceNative ? parseFloat(balanceNative.toString()) * tokenRateUSD(native.symbol) : 0
+    const nativeBalance = balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol) : 0
     const xoxBalance = 0
-    const result = [nativeBalance, xoxBalance]
+    const result = [
+      {
+        name: native.symbol,
+        value: nativeBalance,
+      },
+      {
+        name: 'XOX',
+        value: xoxBalance,
+      },
+    ]
     let sum = 0
     tokensBalance.forEach((balance: any) => {
       if (balance.symbol.toLowerCase() === 'busd' || balance.symbol.toLowerCase() === 'usdc') {
-        result.push(balance.balance * tokenRateUSD(balance.symbol))
+        result.push({
+          name: balance.symbol,
+          value: balance.balance * tokenRateUSD(balance.symbol),
+        })
       } else {
         sum += balance.balance * tokenRateUSD(balance.symbol)
       }
     })
-    result.push(sum)
-    total = nativeBalance + xoxBalance + result[2] + sum
+    result.push({
+      name: 'others',
+      value: sum,
+    })
+    total = nativeBalance + xoxBalance + result[2].value + sum
     setTotalAsset(total)
     setDataChart(result)
   }, [balanceNative, tokensBalance])
@@ -272,7 +327,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
           <Flex flexDirection="column">
             <InfoPieChart data={dataChart} colors={colors} total={totalAsset} />
 
-            <Flex style={{ maxHeight: '146px', overflow: 'auto' }} flexDirection="column">
+            <CoinListWrapper flexDirection="column">
               <Flex alignItems="center" p="16px" borderRadius="6px" background="#303030" mb="6px">
                 <CurrencyLogo currency={native} size="30px" />
                 <Flex flexDirection="column" ml="10px">
@@ -286,7 +341,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                       color="rgba(255, 255, 255, 0.87)"
                       marginRight="5px"
                     >
-                      {balanceNative ? balanceNative.toString() : 0}
+                      {balanceNative ? formatBigNumber(balanceNative) : 0}
                     </Text>
                     <Text
                       fontSize="14px"
@@ -308,7 +363,8 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                     lineHeight="15px"
                     color="rgba(255, 255, 255, 0.6)"
                   >
-                    ~${balanceNative ? balanceNative.toString() * tokenRateUSD(native.symbol) : 0} | ~0.70115 XOX
+                    ~${balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol) : 0} |
+                    ~0.70115 XOX
                   </Text>
                 </Flex>
               </Flex>
@@ -333,7 +389,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                           color="rgba(255, 255, 255, 0.87)"
                           marginRight="5px"
                         >
-                          {balance.balance}
+                          {balance?.balance}
                         </Text>
                         <Text
                           fontSize="14px"
@@ -343,7 +399,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                           lineHeight="17px"
                           color="rgba(255, 255, 255, 0.6)"
                         >
-                          {balance.symbol}
+                          {balance?.symbol}
                         </Text>
                       </Flex>
                       {/* <Text color="rgba(255, 255, 255, 0.87)">{formatBigNumber(value, 6)}</Text> */}
@@ -355,13 +411,13 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                         lineHeight="15px"
                         color="rgba(255, 255, 255, 0.6)"
                       >
-                        ~${balance.balance * tokenRateUSD(balance.symbol)} | ~0.70115 XOX
+                        ~${balance?.balance * tokenRateUSD(balance.symbol)} | ~0.70115 XOX
                       </Text>
                     </Flex>
                   </Flex>
                 )
               })}
-            </Flex>
+            </CoinListWrapper>
           </Flex>
         ) : (
           <Flex height="100%" flexDirection="column" justifyContent="center" alignItems="center">
@@ -406,9 +462,15 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
           tokensBalance?.map((tokenBalance) => {
             const value = (tokenBalance as any)?.value
             const symbol = (tokenBalance as any)?.symbol
+            const address = (tokenBalance as any)?.contractAddress
             return (
               <Flex>
-                <Image width={30} height={30} src="alt" />
+                <Image
+                  width={30}
+                  height={30}
+                  src={`/images/tokens/${address}.png`}
+                  alt={`${address}.png`}
+                />
                 <Flex>
                   <>
                     {value} {symbol}

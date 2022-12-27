@@ -1,5 +1,13 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable react/no-unescaped-entities */
+/* eslint-disable no-restricted-globals */
+/* eslint-disable @typescript-eslint/no-array-constructor */
+/* eslint-disable no-else-return */
+/* eslint-disable prefer-const */
+/* eslint-disable no-extra-boolean-cast */
 import { Avatar, Box, Grid, Paper } from '@mui/material'
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y } from 'swiper'
@@ -7,11 +15,35 @@ import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import useWindowSize from 'hooks/useWindowSize'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { BigNumber } from '@ethersproject/bignumber'
+import { formatEther, parseEther, parseUnits } from '@ethersproject/units'
+import { useModal } from '@pancakeswap/uikit'
+import { useTreasuryXOX } from 'hooks/useContract'
+import ModalConfirmClaim from './Modal/ModalComfirmClaim'
+import ModalClaimSuccess from './Modal/ModalClaimSuccess'
+
+interface IDataClaim {
+  point: number
+  dollar: number
+}
+interface IItemLevel {
+  icon: string
+  point: number
+  dollar: number
+  lever: number
+}
+
+interface IPropsWR {
+  account?: string
+}
 
 const WrapperLeft = styled(Box)`
   padding: 24px;
   background: #242424;
   border-radius: 10px;
+  height: 225px;
+  position: relative;
 
   .title {
     font-weight: 700;
@@ -24,9 +56,21 @@ const WrapperLeft = styled(Box)`
       line-height: 24px;
     }
   }
+  .no-data {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.6);
+  }
 `
 
-const WrapperRight = styled(Box)`
+const WrapperRight = styled(Box)<IPropsWR>`
   margin-top: 0 !important;
   position: relative;
 
@@ -94,6 +138,7 @@ const WrapperRight = styled(Box)`
       line-height: 17px;
       color: rgba(255, 255, 255, 0.38);
       margin-top: 16px;
+      cursor: pointer;
     }
   }
 
@@ -143,9 +188,17 @@ const WrapperRight = styled(Box)`
       color: #ffffff;
       padding: 10px 20px;
     }
+
+    button:disabled,
+    button[disabled] {
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.38);
+      cursor: not-allowed;
+    }
+
     .unclaim_reward_container {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-      padding: 1px;
+      padding: 2px;
       border-radius: 4px;
       margin-right: 16px;
 
@@ -236,11 +289,145 @@ const TableBody = styled.div`
   }
 `
 
+const Content = styled.div`
+  .discription {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.87);
+    text-align: center;
+    padding: 24px 0px;
+
+    span {
+      font-weight: 700;
+    }
+  }
+
+  .btn-group {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    button {
+      border: none;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      padding: 12px;
+      cursor: pointer;
+    }
+    & > .cancel {
+      background: #313131;
+    }
+    & > .confirm {
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    }
+  }
+
+  .noti {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.87);
+    text-align: center;
+    margin-top: 8px;
+    margin-bottom: 24px;
+    span {
+      color: #9072ff;
+      font-weight: 700;
+    }
+  }
+  .noti_claim_success {
+    display: flex;
+    justify-content: center;
+  }
+
+  .x-close-icon {
+    position: absolute;
+    top: 11px;
+    right: 11px;
+    cursor: pointer;
+  }
+`
+
 const ReferralFriend = () => {
   const { width } = useWindowSize()
+  const { account } = useActiveWeb3React()
+  const contractTreasuryXOX = useTreasuryXOX()
+  const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState<boolean>(false)
+  const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
+  const [dataClaim, setDataClaim] = useState<IDataClaim>({
+    point: 0,
+    dollar: 0,
+  })
+  const [level, setLevel] = useState<number | null>(null)
 
   function createData(avatar: string, name: string, point: number, code: number) {
     return { avatar, name, point, code }
+  }
+
+  // eslint-disable-next-line consistent-return
+  const handleCheckPendingRewardAll = async () => {
+    try {
+      const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
+      return formatEther(txPendingReward._hex)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>>>`, error)
+    }
+  }
+
+  const handleClaimAll = async () => {
+    try {
+      const resultCheckingPending = await handleCheckPendingRewardAll()
+      if (!!resultCheckingPending) {
+        const params = []
+        const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
+        const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
+          gasLimit,
+        })
+        txClaimAll.wait(1)
+      } else {
+        return
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>>>`, error)
+    }
+  }
+
+  // eslint-disable-next-line consistent-return
+  const handleCheckPendingRewardByLevel = async (_level: number) => {
+    try {
+      const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, _level)
+      return formatEther(txPendingReward._hex)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>>>`, error)
+    }
+  }
+
+  const handleClaimLevel = async (_level: number) => {
+    try {
+      if (!_level) return
+      const amountByLevel = await handleCheckPendingRewardByLevel(_level)
+      if (!!amountByLevel) {
+        const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralByLevel(_level)
+        const txClaimByLevel = await contractTreasuryXOX.claimReferralByLevel(_level, {
+          gasLimit,
+        })
+        txClaimByLevel.wait(1)
+        setIsShowModalConfirmClaimByLevel(false)
+        setIsOpenSuccessModal(true)
+      } else {
+        return
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>>>`, error)
+    }
   }
 
   const rows = [
@@ -286,122 +473,202 @@ const ReferralFriend = () => {
   }, [width])
 
   return (
-    <Box sx={{ marginTop: '16px' }}>
-      <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
-          <WrapperLeft>
-            <p className="title">Referral friends</p>
+    <>
+      <Box sx={{ marginTop: '16px' }}>
+        <Grid container spacing={2}>
+          <Grid item xs={12} md={4}>
+            <WrapperLeft>
+              <p className="title">Referral friends</p>
 
-            <div>
-              <TableHeader>
-                <div>User Name</div>
-                <div>Referral Code</div>
-                <div>Total Points</div>
-              </TableHeader>
-              <TableBody>
-                {rows.map((row) => {
+              {account ? (
+                <div>
+                  <TableHeader>
+                    <div>User Name</div>
+                    <div>Referral Code</div>
+                    <div>Total Points</div>
+                  </TableHeader>
+                  <TableBody>
+                    {rows.map((row) => {
+                      return (
+                        <div key={row.name}>
+                          <div>
+                            <img src={row.avatar} alt={row.name} />
+                            {row.name}
+                          </div>
+                          <div>
+                            {row.code}
+                            <img
+                              src="/images/copy_purple.svg"
+                              alt="copy_purple"
+                              style={{ marginBottom: '-2px', marginLeft: '8px' }}
+                            />
+                          </div>
+                          <div>{row.point}</div>
+                        </div>
+                      )
+                    })}
+                  </TableBody>
+                </div>
+              ) : (
+                <div className="no-data">No Data</div>
+              )}
+            </WrapperLeft>
+          </Grid>
+
+          <Grid item xs={12} md={8}>
+            <WrapperRight sx={{ marginTop: '16px' }} account={account}>
+              <Swiper
+                slidesPerView={controlWidth}
+                modules={[Navigation, Pagination, A11y]}
+                navigation
+                scrollbar={{ draggable: true }}
+              >
+                {listLever.map((item: IItemLevel) => {
                   return (
-                    <div key={row.name}>
-                      <div>
-                        <img src={row.avatar} alt={row.name} />
-                        {row.name}
+                    <SwiperSlide key={item.icon}>
+                      <div className="item" key={item.icon}>
+                        <div>
+                          <img src={item.icon} alt="icons" className="jewellery" />
+
+                          <div className="shadow" />
+
+                          <p className="title">
+                            {item.point.toLocaleString()} points ~ {item.dollar.toLocaleString()}$
+                          </p>
+
+                          {account && (
+                            <button
+                              type="button"
+                              className="btn"
+                              onClick={() => {
+                                setDataClaim({ ...dataClaim, point: item.point, dollar: item.dollar })
+                                setIsShowModalConfirmClaimByLevel(true)
+                                setLevel(item.lever)
+                              }}
+                            >
+                              Claim
+                            </button>
+                          )}
+                        </div>
                       </div>
-                      <div>
-                        {row.code}
-                        <img
-                          src="/images/copy_purple.svg"
-                          alt="copy_purple"
-                          style={{ marginBottom: '-2px', marginLeft: '8px' }}
-                        />
-                      </div>
-                      <div>{row.point}</div>
-                    </div>
+                    </SwiperSlide>
                   )
                 })}
-              </TableBody>
-            </div>
-          </WrapperLeft>
-        </Grid>
-        <Grid item xs={12} md={8}>
-          <WrapperRight sx={{ marginTop: '16px' }}>
-            <Swiper
-              slidesPerView={controlWidth}
-              modules={[Navigation, Pagination, A11y]}
-              navigation
-              scrollbar={{ draggable: true }}
-            >
-              {listLever.map((item) => {
-                return (
-                  <SwiperSlide key={item.icon}>
-                    <div className="item" key={item.icon}>
-                      <div>
-                        <img src={item.icon} alt="icons" className="jewellery" />
+              </Swiper>
 
-                        <div className="shadow" />
-
-                        <p className="title">{item.point}</p>
-                        <button type="button" className="btn">
-                          Claim
-                        </button>
-                      </div>
+              <div className="claim_total">
+                {account && (
+                  <div className="unclaim_reward_container">
+                    <div className="unclaim_reward">
+                      <div>10,000$ Unclaimed Rewards</div>
                     </div>
-                  </SwiperSlide>
-                )
-              })}
-            </Swiper>
+                  </div>
+                )}
 
-            <div className="claim_total">
-              <div className="unclaim_reward_container">
-                <div className="unclaim_reward">
-                  <div>10,000$ Unclaimed Rewards</div>
-                </div>
+                <button type="button" onClick={handleClaimAll} disabled={!account}>
+                  Claim All
+                </button>
               </div>
-
-              <button type="button">Claim All</button>
-            </div>
-          </WrapperRight>
+            </WrapperRight>
+          </Grid>
         </Grid>
-      </Grid>
-    </Box>
+      </Box>
+
+      <ModalConfirmClaim
+        open={isShowModalConfirmClaimByLevel}
+        handleClose={() => setIsShowModalConfirmClaimByLevel(false)}
+        title="Claim"
+      >
+        <Content>
+          <div className="discription">
+            Receive {dataClaim.dollar?.toLocaleString()}$ at level "<span>{dataClaim.point?.toLocaleString()}</span>{' '}
+            points"?
+          </div>
+          <div className="btn-group">
+            <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>
+              Cancel
+            </button>
+            <button className="confirm" type="button" onClick={() => handleClaimLevel(level)}>
+              Confirm
+            </button>
+          </div>
+        </Content>
+      </ModalConfirmClaim>
+
+      <ModalClaimSuccess open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Success">
+        <Content>
+          <div className="noti">
+            You have gotten <span>{dataClaim.dollar?.toLocaleString()}$.</span>
+          </div>
+          <div className="noti_claim_success">
+            <img src="/images/success_claim.png" alt="success_claim" />
+          </div>
+          <img
+            src="/images/close-one.svg"
+            alt="close-one"
+            className="x-close-icon"
+            onClick={() => setIsOpenSuccessModal(false)}
+          />
+        </Content>
+      </ModalClaimSuccess>
+    </>
   )
 }
 
-const listLever = [
+const listLever: IItemLevel[] = [
   {
     icon: '/images/lever_1.svg',
-    point: '100 points ~ 10$',
+    point: 100,
+    dollar: 10,
+    lever: 1,
   },
   {
     icon: '/images/lever_2.svg',
-    point: '500 points ~ 50$',
+    point: 500,
+    dollar: 50,
+    lever: 2,
   },
   {
     icon: '/images/lever_3.svg',
-    point: '1,000 points ~ 100$',
+    point: 1000,
+    dollar: 100,
+    lever: 3,
   },
   {
     icon: '/images/lever_4.svg',
-    point: '5,000 points ~ 300$',
+    point: 5000,
+    dollar: 300,
+    lever: 4,
   },
   {
     icon: '/images/lever_5.svg',
-    point: '10,000 points ~ 1,000$',
+    point: 10000,
+    dollar: 500,
+    lever: 5,
   },
   {
     icon: '/images/lever_6.svg',
-    point: '50,000 points ~ 2,000$',
+    point: 50000,
+    dollar: 2000,
+    lever: 6,
   },
   {
     icon: '/images/lever_7.svg',
-    point: '100,000 points ~ 5,000$',
+    point: 100000,
+    dollar: 5000,
+    lever: 7,
   },
   {
     icon: '/images/lever_8.svg',
-    point: '100,000 points ~ 5,000$',
+    point: 500000,
+    dollar: 10000,
+    lever: 8,
   },
   {
     icon: '/images/lever_9.svg',
-    point: '100,000 points ~ 5,000$',
+    point: 1000000,
+    dollar: 20000,
+    lever: 9,
   },
 ]
 

@@ -4,9 +4,9 @@ import { fromUnixTime } from 'date-fns'
 import { useState, useMemo, memo, useEffect } from 'react'
 import { formatAmount } from 'utils/formatInfoNumbers'
 import { Currency, NativeCurrency } from '@pancakeswap/sdk'
-import { tokens } from 'tokens'
 import { CurrencyLogo } from 'components/Logo'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
+import { SUGGESTED_BASES_ID } from 'config/constants/exchange'
 import BarChart from './BarChart'
 import LineChart from './LineChart'
 import { ChartContent, TitleChart } from './style'
@@ -75,17 +75,23 @@ const HoverableChart = ({
   )
 
   useEffect(() => {
-    const token = tokens.find((element) => {
-      return element.symbol.toLowerCase() === selectedCurrency.symbol.toLowerCase()
-    })
+    setSelectedCurrency(native)
+  }, [native])
 
-    if (token) setCoinmarketcapId(token?.id)
+  useEffect(() => {
+    const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds')) || SUGGESTED_BASES_ID
+    if (selectedCurrency === native) {
+      if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList.ETH)
+      else setCoinmarketcapId(_tokenList.BNB)
+    } else {
+      setCoinmarketcapId(_tokenList[(selectedCurrency as any).address.toUpperCase()])
+    }
   }, [selectedCurrency])
 
   useEffect(() => {
     if (!currencyDatas) return
     const dataCurrency = currencyDatas.find(
-      (data) => data?.symbol?.toLowerCase() === selectedCurrency.symbol.toLowerCase(),
+      (data: any) => data?.symbol?.toLowerCase() === selectedCurrency.symbol.toLowerCase(),
     )
     if (dataCurrency) setCurrencyData(dataCurrency)
   }, [selectedCurrency, currencyDatas])
@@ -151,7 +157,7 @@ const HoverableChart = ({
             </div>
             <div className="volume">
               <p>Volume 24h {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}</p>
-              <p>Market cap: {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}</p>
+              <p>Market cap: {currencyData && <span>${formatAmount(currencyData?.market_cap)}</span>}</p>
             </div>
           </>
         </div>
@@ -161,7 +167,7 @@ const HoverableChart = ({
             <button type="button" onClick={() => setFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
               All
             </button>
-            <button type="button" onClick={() => setFilter('1Y')} className={filter === 'Y' ? 'active' : ''}>
+            <button type="button" onClick={() => setFilter('1Y')} className={filter === '1Y' ? 'active' : ''}>
               1Y
             </button>
             <button type="button" onClick={() => setFilter('3M')} className={filter === '3M' ? 'active' : ''}>
