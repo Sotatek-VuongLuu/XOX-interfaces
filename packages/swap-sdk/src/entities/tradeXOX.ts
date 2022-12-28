@@ -11,11 +11,14 @@ import {
   Percent,
   Price,
   Token,
+  _100,
 } from '@pancakeswap/swap-sdk-core'
 
 import { computePriceImpact, sortedInsert } from '../utils'
 import { Pair } from './pair'
 import { Route } from './route'
+import JSBI from 'jsbi'
+import { _90 } from 'entities'
 
 // minimal interface so the input output comparator may be shared across types
 interface InputOutput<TInput extends Currency, TOutput extends Currency> {
@@ -151,12 +154,18 @@ export class TradeXOX<TInput extends Currency, TOutput extends Currency, TTradeT
         const [outputAmount] = pair.getOutputAmountXOX(tokenAmounts[i])
         tokenAmounts[i + 1] = outputAmount
       }
+      const inputAmountXOX = CurrencyAmount.fromFractionalAmount(
+        route.input,
+        JSBI.divide(JSBI.multiply(amount.numerator, _90), _100),
+        amount.denominator
+      )
       this.inputAmount = CurrencyAmount.fromFractionalAmount(route.input, amount.numerator, amount.denominator)
       this.outputAmount = CurrencyAmount.fromFractionalAmount(
         route.output,
         tokenAmounts[tokenAmounts.length - 1].numerator,
         tokenAmounts[tokenAmounts.length - 1].denominator
       )
+      this.priceImpact = computePriceImpact(route.midPrice, inputAmountXOX, this.outputAmount)
     } else {
       invariant(amount.currency.equals(route.output), 'OUTPUT')
       tokenAmounts[tokenAmounts.length - 1] = amount.wrapped
@@ -171,6 +180,12 @@ export class TradeXOX<TInput extends Currency, TOutput extends Currency, TTradeT
         tokenAmounts[0].denominator
       )
       this.outputAmount = CurrencyAmount.fromFractionalAmount(route.output, amount.numerator, amount.denominator)
+      const outputAmountXOX = CurrencyAmount.fromFractionalAmount(
+        route.output,
+        JSBI.divide(JSBI.multiply(amount.numerator, _100), _90),
+        amount.denominator
+      )
+      this.priceImpact = computePriceImpact(route.midPrice, this.inputAmount, outputAmountXOX)
     }
     this.executionPrice = new Price(
       this.inputAmount.currency,
@@ -178,7 +193,6 @@ export class TradeXOX<TInput extends Currency, TOutput extends Currency, TTradeT
       this.inputAmount.quotient,
       this.outputAmount.quotient
     )
-    this.priceImpact = computePriceImpact(route.midPrice, this.inputAmount, this.outputAmount)
   }
 
   /**
@@ -238,7 +252,6 @@ export class TradeXOX<TInput extends Currency, TOutput extends Currency, TTradeT
     nextAmountIn: CurrencyAmount<Currency> = currencyAmountIn,
     bestTrades: TradeXOX<TInput, TOutput, TradeType.EXACT_INPUT>[] = []
   ): TradeXOX<TInput, TOutput, TradeType.EXACT_INPUT>[] {
-    
     invariant(pairs.length > 0, 'PAIRS')
     invariant(maxHops > 0, 'MAX_HOPS')
     invariant(currencyAmountIn === nextAmountIn || currentPairs.length > 0, 'INVALID_RECURSION')
@@ -254,7 +267,6 @@ export class TradeXOX<TInput extends Currency, TOutput extends Currency, TTradeT
       let amountOut: CurrencyAmount<Token>
       try {
         ;[amountOut] = pair.getOutputAmountXOX(amountIn)
-        
       } catch (error) {
         // input too low
         if ((error as InsufficientInputAmountError).isInsufficientInputAmountError) {
