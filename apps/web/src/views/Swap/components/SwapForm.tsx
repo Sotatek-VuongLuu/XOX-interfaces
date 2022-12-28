@@ -342,10 +342,12 @@ export default function SwapForm() {
                   />
                 </>
               )}
-          <ReferralCode>
-            <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
-            <ReferralInput placeholder="0x32648D3c43f396a81fc696af89bA4B099b3E9C02" />
-          </ReferralCode>
+              {inputCurrency?.symbol === 'XOX' && 
+                <ReferralCode>
+                <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
+                <ReferralInput placeholder="0x32648D3c43f396a81fc696af89bA4B099b3E9C02" />
+              </ReferralCode>}
+        
         </AutoColumn>
         {hasStableSwapAlternative && (
           <AutoColumn>

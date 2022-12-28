@@ -31,7 +31,7 @@ function TradeSummary({
     <AutoColumn style={{ padding: '0 16px' }}>
       <RowBetween>
         <RowFixed>
-          <Text fontSize="14px" color="textSubtle">
+          <Text fontSize="16px" color="textSubtle">
             {isExactIn ? t('Minimum received') : t('Maximum sold')}
           </Text>
           <QuestionHelper
@@ -43,7 +43,7 @@ function TradeSummary({
           />
         </RowFixed>
         <RowFixed>
-          <Text fontSize="14px">
+          <Text fontSize="16px">
             {isExactIn
               ? `${slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)} ${trade.outputAmount.currency.symbol}` ??
                 '-'
@@ -53,7 +53,7 @@ function TradeSummary({
       </RowBetween>
       <RowBetween>
         <RowFixed>
-          <Text fontSize="14px" color="textSubtle">
+          <Text fontSize="16px" color="textSubtle">
             {t('Price Impact')}
           </Text>
           <QuestionHelper
