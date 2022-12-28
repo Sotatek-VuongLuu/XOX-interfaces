@@ -391,7 +391,10 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
-      >{`${formatAmount(abs1)} Stable coin`}</Text>
+      >
+        -
+        {/* {`${formatAmount(abs1)} Stable coin`} */}
+      </Text>
       <Link
         width="100%"
         fontSize="16px"
@@ -401,6 +404,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="#3D8AFF"
         style={{ justifySelf: 'right' }}
+        target="_blank"
         href={getBlockExploreLink(transaction.sender, 'address', chainName === 'ETH' && ChainId.ETHEREUM)}
       >
         {truncateHash(transaction.sender, 4, 5)}
@@ -415,7 +419,9 @@ const TransactionsTable: React.FC<
   }>
 > = ({ transactions }) => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
-  const [sortDirection, setSortDirection] = useState<boolean>(true)
+  const [sortDirection, setSortDirection] = useState<boolean>(false)
+  const [iconSortField, setIconSortField] = useState<any>(null)
+  const [iconSortDirection, setIconSortDirection] = useState<any>(null)
   const [perPage, setPerPage] = useState(10)
   const [tempPage, setTempPage] = useState('1')
 
@@ -483,6 +489,8 @@ const TransactionsTable: React.FC<
     (newField: string) => {
       setSortField(newField)
       setSortDirection(sortField !== newField ? true : !sortDirection)
+      setIconSortField(newField === SORT_FIELD.timestamp ? null : !iconSortField);
+      setIconSortDirection(newField === SORT_FIELD.amountUSD ? null : !iconSortDirection);
     },
     [sortDirection, sortField],
   )
@@ -501,6 +509,42 @@ const TransactionsTable: React.FC<
     },
     [maxPage],
   )
+
+  const IconUp = <svg xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17" fill="none">
+    <path d="M4.66675 2.22168V8.33279V2.22168Z" fill="#8E8E8E" />
+    <path
+      d="M4.66675 2.22168V8.33279"
+      stroke="#8E8E8E"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M1 4.66667L4.66667 1L8.33333 4.66667"
+      stroke="#8E8E8E"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
+
+  const IconDown = <svg xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17" fill="none">
+    <path d="M8.33276 14.666V8.5549V14.666Z" fill="#8E8E8E" />
+    <path
+      d="M8.33276 14.666V8.55491"
+      stroke="#8E8E8E"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+    <path
+      d="M4.6665 12.222L8.33317 15.8887L11.9998 12.222"
+      stroke="#8E8E8E"
+      strokeWidth="1.6"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    />
+  </svg>
 
   const IconSort = useMemo(() => {
     return (
@@ -633,7 +677,7 @@ const TransactionsTable: React.FC<
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Excution Time</span> {IconSort}
+              <span style={{ marginRight: '12px' }}>Excution Time</span> { iconSortDirection === null ? IconSort : iconSortDirection ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
           <ClickableColumnHeader
@@ -647,7 +691,7 @@ const TransactionsTable: React.FC<
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Total Value</span> {IconSort}
+              <span style={{ marginRight: '12px' }}>Total Value</span> { iconSortField === null ? IconSort : iconSortField ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
           <Text
@@ -679,7 +723,7 @@ const TransactionsTable: React.FC<
             fontWeight="700"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
-            onClick={() => handleSort(SORT_FIELD.timestamp)}
+            // onClick={() => handleSort(SORT_FIELD.timestamp)}
             className="table-header"
           >
             <Flex alignItems="center">
@@ -706,7 +750,7 @@ const TransactionsTable: React.FC<
                 if (transaction) {
                   return (
                     // eslint-disable-next-line react/no-array-index-key
-                    <Fragment key={transaction.hash}>
+                    <Fragment key={index}>
                       <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
                     </Fragment>
                   )
