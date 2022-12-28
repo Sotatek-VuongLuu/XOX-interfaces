@@ -103,3 +103,37 @@ export const getUserPointWeekly = async (chainId: ChainId, payload?: any) => {
   )
   return response
 }
+
+export const userPoint = (chainId: number) =>{
+  const requests = `
+  {
+    analysisDatas {
+      id, 
+      number_of_referral,
+      total_amount,
+      total_claimed_amount
+    }
+  }
+  `
+  return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
+}
+export const userClaimedHistories = (chainId: number) => {
+  const requests = `{
+    userClaimedHistories{
+      id,
+      date,
+      amount
+    }
+  }`
+  return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
+}
+export const pointDataDays = (chainId: number) => {
+  const requests = `{
+    pointDataDays {
+      id, 
+      amount,
+      date
+    }
+  }`
+  return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
+}
