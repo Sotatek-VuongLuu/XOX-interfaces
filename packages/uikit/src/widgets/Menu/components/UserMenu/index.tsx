@@ -72,6 +72,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
   disabled,
   placement = "bottom-end",
   recalculatePopover,
+  uncloseWhenClick,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -132,7 +133,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         </StyledUserMenu>
         {!disabled && (
           <Menu style={styles.popper} ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
-            <Box onClick={() => setIsOpen(false)}>{children?.({ isOpen, setIsOpen })}</Box>
+            <Box onClick={() => !uncloseWhenClick && setIsOpen(false)}>{children?.({ isOpen, setIsOpen })}</Box>
           </Menu>
         )}
       </Flex>

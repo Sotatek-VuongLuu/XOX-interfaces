@@ -266,7 +266,13 @@ const UserMenu = () => {
 
   if (account && userProfile) {
     return (
-      <UIKitUserMenu account={account} avatarSrc={avatarSrc} text={userMenuText} variant={userMenuVariable}>
+      <UIKitUserMenu
+        account={account}
+        avatarSrc={avatarSrc}
+        text={userMenuText}
+        variant={userMenuVariable}
+        uncloseWhenClick
+      >
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )
@@ -274,7 +280,7 @@ const UserMenu = () => {
 
   if (isWrongNetwork && userProfile) {
     return (
-      <UIKitUserMenu text={t('Network')} variant="danger">
+      <UIKitUserMenu text={t('Network')} variant="danger" uncloseWhenClick>
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )
