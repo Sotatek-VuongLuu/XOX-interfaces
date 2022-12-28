@@ -1,25 +1,41 @@
 import React from 'react'
-import { PieChart, Pie, Cell, ResponsiveContainer } from 'recharts'
+import { PieChart, Pie, Cell, ResponsiveContainer, LabelList, Tooltip } from 'recharts'
+
+const RADIAN = Math.PI / 180
 
 export default function InfoPieChart({ data, colors, total }) {
+  const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
+    const radius = innerRadius + (outerRadius - innerRadius) * 0.5
+    const x = cx + radius * Math.cos(-midAngle * RADIAN)
+    const y = cy + radius * Math.sin(-midAngle * RADIAN)
+
+    return (
+      <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+        {`${(percent * 100).toFixed(0)}%`}
+      </text>
+    )
+  }
   return (
     <ResponsiveContainer width="100%" height={220}>
       {total > 0 ? (
-        <PieChart>
+        <PieChart
+          // onMouseEnter={renderCustomizedLabel}
+        >
           <Pie
-            data={[100, 100, 100, 100]}
-            labelLine={false}
-            // label={renderCustomizedLabel}
+            data={data}
             outerRadius={95}
             fill="#8884d8"
             dataKey="value"
             startAngle={90}
-            endAngle={450}
+            endAngle={-270}
+            onMouseEnter={renderCustomizedLabel}
+            // label={renderCustomizedLabel}
           >
             {data.map((_: any, index: number) => (
               <Cell key={colors[index % colors.length]} fill={colors[index % colors.length]} />
             ))}
           </Pie>
+          <Tooltip cursor={{ stroke: 'red', strokeWidth: 2 }} />
         </PieChart>
       ) : (
         <div

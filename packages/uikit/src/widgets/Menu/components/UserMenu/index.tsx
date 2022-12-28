@@ -132,7 +132,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
         </StyledUserMenu>
         {!disabled && (
           <Menu style={styles.popper} ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
-            <Box>{children?.({ isOpen, setIsOpen })}</Box>
+            <Box onClick={() => setIsOpen(false)}>{children?.({ isOpen, setIsOpen })}</Box>
           </Menu>
         )}
       </Flex>

@@ -147,8 +147,12 @@ const InfoNav: React.FC<{ isStableSwap: boolean }> = ({ isStableSwap }) => {
         <Text className="subtitle" marginBottom="16px">
           Stake XOXS automatically to earn more
         </Text>
-        <Button className="get-xox">Get XOX</Button>
-        <Button className="learn-more">Learn More</Button>
+        <a href="/swap">
+          <Button className="get-xox">Get XOX</Button>
+        </a>
+        <a href="/whitepaper">
+          <Button className="learn-more">Learn More</Button>
+        </a>
       </MainContent>
       {/* <Flex>
         <Box>

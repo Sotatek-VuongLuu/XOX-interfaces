@@ -24,10 +24,9 @@ const getDisabledStyles = ({ $isLoading, theme }: TransientButtonProps) => {
   return `
     &:disabled,
     &.pancake-button--disabled {
-      background: #eeeeee;
-      border-color: #eeeeee;
+      background: rgba(255, 255, 255, 0.05);
       box-shadow: none;
-      color: rgba(66, 66, 66, 0.38);
+      color: rgba(255, 255, 255, 0.38);
       cursor: not-allowed;
     }
   `;
@@ -63,7 +62,7 @@ const StyledButton = styled.button<BaseButtonProps>`
   height: 100%;
 
   &:hover:not(:disabled):not(.pancake-button--disabled):not(.pancake-button--disabled):not(:active) {
-    background: #5F35EB;
+    background: #5f35eb;
   }
 
   &:active:not(:disabled):not(.pancake-button--disabled):not(.pancake-button--disabled) {

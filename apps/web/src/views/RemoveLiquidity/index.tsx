@@ -48,7 +48,7 @@ import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { useTransactionAdder } from '../../state/transactions/hooks'
 import StyledInternalLink from '../../components/Links'
 import { calculateGasMargin } from '../../utils'
-import { calculateSlippageAmount, useRouterContract } from '../../utils/exchange'
+import { calculateSlippageAmount, useRouterContractXOX } from '../../utils/exchange'
 import { currencyId } from '../../utils/currencyId'
 import useDebouncedChangeHandler from '../../hooks/useDebouncedChangeHandler'
 import { useApproveCallback, ApprovalState } from '../../hooks/useApproveCallback'
@@ -240,7 +240,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   // tx sending
   const addTransaction = useTransactionAdder()
 
-  const routerContract = useRouterContract()
+  const routerContract = useRouterContractXOX(false)
 
   async function onZapOut() {
     if (!chainId || !library || !account || !estimateZapOutAmount) throw new Error('missing dependencies')

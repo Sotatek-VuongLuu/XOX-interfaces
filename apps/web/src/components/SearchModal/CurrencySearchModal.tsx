@@ -31,12 +31,17 @@ import { CurrencyModalView } from './types'
 
 const StyledModalContainer = styled(ModalContainer)`
   width: 448px;
-  border-radius: 20px;
-  min-height: calc(var(--vh, 1vh) * 90);
+  max-width: calc(100vw - 48px)!important;
+  max-height: calc(var(--vh, 1vh) * 90);
   position: relative;
   background: #242424;
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+
   ${({ theme }) => theme.mediaQueries.md} {
     min-height: auto;
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
   }
 
   & div[class*='ModalHeader'] {
@@ -50,7 +55,7 @@ const StyledModalContainer = styled(ModalContainer)`
       left: 17px;
 
       svg {
-        fill: #8E8E8E;
+        fill: #8e8e8e;
       }
     }
 
@@ -73,7 +78,7 @@ const StyledModalContainer = styled(ModalContainer)`
     }
 
     button:hover {
-      background: none!important;
+      background: none !important;
     }
   }
 
@@ -81,6 +86,14 @@ const StyledModalContainer = styled(ModalContainer)`
     padding: 16px 27px 32px 27px;
 
     & .curency-list {
+      width: calc(100% + 15px) !important;
+      padding-right: 15px;
+      height: 310px!important;
+
+      & div[class*='MenuItem'] {
+        width: calc(100% - 15px) !important;
+      }
+
       button {
         font-weight: 700;
         font-size: 14px;
@@ -95,21 +108,14 @@ const StyledModalContainer = styled(ModalContainer)`
 
       &::-webkit-scrollbar {
         display: block;
+        width: 6px;
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: 5px; /* Firefox */
       }
 
       &::-webkit-scrollbar-thumb {
         background-color: #444444;
-        border: 2px solid #242424;
       }
-
-      // &:hover::-webkit-scrollbar {
-      //   opacity: 1;
-      //   display: block;
-      //   -ms-overflow-style: none; /* IE and Edge */
-      //   scrollbar-width: 5px; /* Firefox */
-      // }
     }
   }
 `

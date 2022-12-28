@@ -24,6 +24,8 @@ import { AppState } from 'state'
 import { getUserFriend } from 'services/referral'
 import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
 import axios from 'axios'
+import { BigNumber } from '@ethersproject/bignumber'
+import { useModal } from '@pancakeswap/uikit'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
 import ModalClaimSuccess from './Modal/ModalClaimSuccess'
 

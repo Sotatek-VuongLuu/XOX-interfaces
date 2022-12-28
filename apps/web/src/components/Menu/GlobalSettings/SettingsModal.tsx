@@ -102,7 +102,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
   }
 
   return (
-    <Modal title={t('Settings')} headerBackground="gradientCardHeader" onDismiss={onDismiss}>
+    <Modal title={t('Settings')} onDismiss={onDismiss}>
       <ScrollableContainer>
         {mode === SettingsMode.GLOBAL && (
           <>
@@ -159,15 +159,15 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
         {mode === SettingsMode.SWAP_LIQUIDITY && (
           <>
             <Flex pt="3px" flexDirection="column">
-              <Text bold textTransform="uppercase" fontSize="18px" color="secondary" mb="24px">
+              <Text bold fontSize="18px">
                 {t('Swaps & Liquidity')}
               </Text>
-              <Flex justifyContent="space-between" alignItems="center" mb="24px">
+              <Flex justifyContent="space-between" alignItems="center" mb="26.5px">
                 {chainId === ChainId.BSC && <GasSettings />}
               </Flex>
               <TransactionSettings />
             </Flex>
-            {SUPPORT_ZAP.includes(chainId) && (
+            {/* {SUPPORT_ZAP.includes(chainId) && (
               <Flex justifyContent="space-between" alignItems="center" mb="24px">
                 <Flex alignItems="center">
                   <Text>{t('Zap (Beta)')}</Text>
@@ -198,8 +198,8 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                   }}
                 />
               </Flex>
-            )}
-            <Flex justifyContent="space-between" alignItems="center" mb="24px">
+            )} */}
+            {/* <Flex justifyContent="space-between" alignItems="center" mb="24px">
               <Flex alignItems="center">
                 <Text>{t('Expert Mode')}</Text>
                 <QuestionHelper
@@ -239,7 +239,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
                 />
               </Flex>
               <PancakeToggle checked={audioPlay} onChange={toggleSetAudioMode} scale="md" />
-            </Flex>
+            </Flex> */}
           </>
         )}
       </ScrollableContainer>
