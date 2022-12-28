@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -38,6 +39,11 @@ interface IItemLevel {
   point: number
   dollar: number
   lever: number
+  isReach: boolean
+}
+
+interface IProps {
+  userCurrentPoint: number
 }
 
 interface IPropsWR {
@@ -148,7 +154,7 @@ const WrapperRight = styled(Box)<IPropsWR>`
     }
   }
 
-  .swiper-slide-active item {
+  .current {
     background: url(/images/current_item.svg);
   }
 
@@ -358,7 +364,7 @@ const Content = styled.div`
   }
 `
 
-const ReferralFriend = () => {
+const ReferralFriend = ({ userCurrentPoint }: IProps) => {
   const { width } = useWindowSize()
   const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
@@ -371,6 +377,8 @@ const ReferralFriend = () => {
   const [level, setLevel] = useState<number | null>(null)
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
   const [listFriends, setListFriends] = useState([])
+  const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
+  const [currentLevelReach, setCurrentLevelReach] = useState<number | null>(null)
 
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async () => {
@@ -488,10 +496,29 @@ const ReferralFriend = () => {
     }
   }
 
+  const handleCheckReachLevel = (currentPoint: number) => {
+    const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
+      let reached = currentPoint >= item.point
+      return {
+        ...item,
+        isReach: reached,
+      }
+    })
+    setListLevelMustReach([...arrAddIsReach])
+    const findLastReach = arrAddIsReach.filter((item) => {
+      return item.isReach === true
+    })
+    const currentLever = findLastReach.pop()?.lever
+    setCurrentLevelReach(currentLever)
+  }
+
   useEffect(() => {
     dataFriend()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
+
+  useEffect(() => {
+    handleCheckReachLevel(userCurrentPoint)
+  }, [userCurrentPoint])
 
   return (
     <>
@@ -548,10 +575,13 @@ const ReferralFriend = () => {
                 navigation
                 scrollbar={{ draggable: true }}
               >
-                {listLever.map((item: IItemLevel) => {
+                {listLevelMustReach.map((item: IItemLevel) => {
                   return (
                     <SwiperSlide key={item.icon}>
-                      <div className="item" key={item.icon}>
+                      <div
+                        className={`item ${item.isReach && item.lever === currentLevelReach ? 'current' : ''}`}
+                        key={item.icon}
+                      >
                         <div>
                           <img src={item.icon} alt="icons" className="jewellery" />
 
@@ -640,61 +670,70 @@ const ReferralFriend = () => {
   )
 }
 
-const listLever: IItemLevel[] = [
+export default ReferralFriend
+
+export const listLever: IItemLevel[] = [
   {
     icon: '/images/lever_1.svg',
     point: 100,
     dollar: 10,
     lever: 1,
+    isReach: false,
   },
   {
     icon: '/images/lever_2.svg',
     point: 500,
     dollar: 50,
     lever: 2,
+    isReach: false,
   },
   {
     icon: '/images/lever_3.svg',
     point: 1000,
     dollar: 100,
     lever: 3,
+    isReach: false,
   },
   {
     icon: '/images/lever_4.svg',
     point: 5000,
     dollar: 300,
     lever: 4,
+    isReach: false,
   },
   {
     icon: '/images/lever_5.svg',
     point: 10000,
     dollar: 500,
     lever: 5,
+    isReach: false,
   },
   {
     icon: '/images/lever_6.svg',
     point: 50000,
     dollar: 2000,
     lever: 6,
+    isReach: false,
   },
   {
     icon: '/images/lever_7.svg',
     point: 100000,
     dollar: 5000,
     lever: 7,
+    isReach: false,
   },
   {
     icon: '/images/lever_8.svg',
     point: 500000,
     dollar: 10000,
     lever: 8,
+    isReach: false,
   },
   {
     icon: '/images/lever_9.svg',
     point: 1000000,
     dollar: 20000,
     lever: 9,
+    isReach: false,
   },
 ]
-
-export default ReferralFriend
