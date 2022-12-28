@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-unescaped-entities */
@@ -6,7 +7,7 @@
 /* eslint-disable no-else-return */
 /* eslint-disable prefer-const */
 /* eslint-disable no-extra-boolean-cast */
-import { Avatar, Box, Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -368,9 +369,6 @@ const ReferralFriend = () => {
   const [level, setLevel] = useState<number | null>(null)
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
   const [listFriends, setListFriends] = useState([])
-  function createData(avatar: string, name: string, point: number, code: number) {
-    return { avatar, name, point, code }
-  }
 
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async () => {
@@ -434,27 +432,6 @@ const ReferralFriend = () => {
     }
   }
 
-  const rows = [
-    createData(
-      'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-      'Ha Anh Tuan',
-      100,
-      10293,
-    ),
-    createData(
-      'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-      'Kristin Watson',
-      100,
-      10293,
-    ),
-    createData(
-      'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-      'Brooklyn Simmons',
-      100,
-      10293,
-    ),
-  ]
-
   const controlWidth = useMemo(() => {
     let slidesPerView = 5
     if (width < 900) {
@@ -488,7 +465,7 @@ const ReferralFriend = () => {
       })
 
       const dataMapping = await Promise.all(
-        dataUserFormatAmount.map(async (item: any): Promise<any> => {
+        dataUserFormatAmount?.map(async (item: any): Promise<any> => {
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
             wallets: [`${item.id}`],
           })

@@ -53,12 +53,46 @@ export const getUserFriend = async (chainId: ChainId, account: string) => {
   return response
 }
 
-export const getUserPointDaily = async (chainId: ChainId, payload: any) => {
+export const getUserPointDaily = async (chainId: ChainId, payload?: any) => {
   const response = await request(
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       {
-        userPointDailies(where: { date_gte: 1671728400, date_lte: 1671814799 }) {
+        userPointDailies(where: {date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} },orderDirection: desc) {
+          id
+          address
+          amount
+          date
+        }
+      }
+    `,
+  )
+  return response
+}
+
+export const getUserPointMonthly = async (chainId: ChainId, payload?: any) => {
+  const response = await request(
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
+    gql`
+      {
+        userPointMonthlies(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte}},orderDirection: desc) {
+          id
+          address
+          amount
+          date
+        }
+      }
+    `,
+  )
+  return response
+}
+
+export const getUserPointWeekly = async (chainId: ChainId, payload?: any) => {
+  const response = await request(
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
+    gql`
+      {
+        userPointWeeklies(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} }, orderDirection: desc) {
           id
           address
           amount
