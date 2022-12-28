@@ -9,13 +9,13 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useTreasuryXOX } from 'hooks/useContract'
 import HowToJoin from './HowToJoin'
 // eslint-disable-next-line import/no-cycle
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
 import { getUerRank, getUserPointDaily, getUserPointMonthly, getUserPointWeekly } from '../../../services/referral'
-import { useTreasuryXOX } from 'hooks/useContract'
 
 export interface IItemLeaderBoard {
   name: string
