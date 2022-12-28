@@ -11,14 +11,20 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material'
-import { height } from '@mui/system'
-import { useState } from 'react'
+import { userPoint, userClaimedHistories, pointDataDays } from 'services/referral'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
+import { BigNumber } from '@ethersproject/bignumber'
+import moment from 'moment'
 import styled from 'styled-components'
 import ChartRef from './components/ChartRef'
 import ColumnChartRef from './components/ColumnChartRef'
 
+
+
 interface IVolumnDataItem {
-  volumn: number
+  volumn: string
   title: string
   svg: string
 }
@@ -142,23 +148,82 @@ const Wrapper = styled(Box)`
 `
 
 const PlatformStat = (): JSX.Element => {
-  const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>(listData)
+  const chainId = 97
+  const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>([])
+  const [userClaimHistories, setUserClaimHistories] = useState([])
+  const [dataChart, setDataChart] = useState([])
+  const [minAmount, setMinAmount] = useState('')
+  const [middleAmount, setMiddleAmount] = useState('')
+  const [maxAmount, setMaxAmount] = useState('')
 
-  function createData(no: number, avatar: string, name: string, time: string, point: number, claim: number) {
+  const getUserPoint = async () => {
+    const result = await userPoint(chainId)
+    if (result) {
+      listData[0].volumn = result.analysisDatas[0]?.number_of_referral
+      listData[1].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_amount))
+      listData[2].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
+
+      setVolumnData(listData)
+    }
+  }
+  const getUserClaimedHistories = async () => {
+    const result = await userClaimedHistories(chainId)
+    if (result) {
+      const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
+        const mappingUser = await mapingHistories(item.id)
+        return createData(
+          idx + 1,
+          mappingUser.avatar ?? 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
+          mappingUser.username,
+          moment(item.data).format('DD/MM/YYYY hh:mm:ss'),
+          100,
+          formatBigNumber(BigNumber.from(item.amount)),
+        )
+      })
+      const lastResponse = await Promise.all(histories)
+      setUserClaimHistories(lastResponse)
+    }
+  }
+  const getPointDataDays = async () => {
+    const result = await pointDataDays(chainId)
+    if (result) {
+      const arr = result.pointDataDays;
+      setMinAmount(formatBigNumber(BigNumber.from(arr[0].amount)))
+      setMiddleAmount(formatBigNumber(BigNumber.from(arr[Math.floor(arr.length/2)].amount)))
+      setMaxAmount(formatBigNumber(BigNumber.from(arr[arr.length-1].amount)))
+      const data = arr.map((item: any) => {
+          return createDataChartDay(
+            moment(item.date * 1000).format('DD MMM'),
+            formatBigNumber(BigNumber.from(item.amount)),
+          )
+        })
+      setDataChart(data)
+    }
+  }
+  const mapingHistories = async (address: string) => {
+    const payload = {
+      wallets: [`${address}`],
+    }
+    const result: any = await axios
+      .post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, payload)
+      .catch((error) => {
+        console.warn(error)
+      })
+    const data = result?.data[0]
+    return data
+  }
+  function createData(no: number, avatar: string, name: string, time: string, point: number, claim: string) {
     return { no, avatar, name, time, point, claim }
   }
+  function createDataChartDay(name: string, uv: string) {
+    return { name, uv }
+  }
 
-  const rows = [
-    createData(
-      1,
-      'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-      'Ha Anh Tuan',
-      '24/11/2022 10:30:00',
-      10293,
-      100,
-    ),
-  ]
-
+  useEffect(() => {
+    getUserPoint()
+    getUserClaimedHistories()
+    getPointDataDays()
+  }, [])
   return (
     <Wrapper sx={{}}>
       <div className="first">
@@ -209,7 +274,7 @@ const PlatformStat = (): JSX.Element => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {userClaimHistories.map((row) => (
                 <TableRow
                   key={row.name}
                   sx={{
@@ -239,16 +304,16 @@ const PlatformStat = (): JSX.Element => {
 
       <div className="third">
         <div className="range_volumn">
-          <span className="min">123456</span>
-          <span className="middle">654321</span>
-          <span className="max">678910</span>
+        <span className="min">{minAmount}</span>
+          <span className="middle">{middleAmount}</span>
+          <span className="max">{maxAmount}</span>
         </div>
-        <ColumnChartRef />
+        <ColumnChartRef data={dataChart} />
       </div>
 
       <div className="fourth">
         <p className="noted">
-          <span>1234</span> Daily reward generated by users
+           Daily reward generated by users
         </p>
       </div>
     </Wrapper>
@@ -257,17 +322,17 @@ const PlatformStat = (): JSX.Element => {
 
 const listData = [
   {
-    volumn: 1234,
+    volumn: '',
     title: 'Number of Referral Participants',
     svg: '/images/claim_up.svg',
   },
   {
-    volumn: 124,
+    volumn: '',
     title: 'Total Money Unclaimed',
     svg: '/images/claim_down.svg',
   },
   {
-    volumn: 3211,
+    volumn: '',
     title: 'Total Money Claimed',
     svg: '/images/claim_up.svg',
   },

@@ -11,7 +11,7 @@ export const mobileFooterHeight = 73;
 export const ModalHeader = styled.div<{ background?: string }>`
   align-items: center;
   background: transparent;
-  border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
+  // border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
   display: flex;
   padding: 12px 24px;
 
@@ -22,6 +22,7 @@ export const ModalHeader = styled.div<{ background?: string }>`
 
 export const ModalTitle = styled(Flex)`
   align-items: center;
+  justify-content:center;
   flex: 1;
 `;
 

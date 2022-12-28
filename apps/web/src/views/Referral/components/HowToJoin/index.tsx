@@ -12,7 +12,7 @@ const Wrapper = styled.div`
     background-color: #ffffff;
     padding: 7px;
     border-radius: 20px;
-    margin-top: 40px;
+    margin-top: 70px;
     width: 654px;
     height: 373px;
     .player-wrapper {
@@ -31,6 +31,9 @@ const Wrapper = styled.div`
       overflow: hidden;
     }
 
+    @media screen and (max-width: 900px) {
+      margin-top: 40px;
+    }
     @media screen and (max-width: 742px) {
       width: 534px;
       height: 373px;

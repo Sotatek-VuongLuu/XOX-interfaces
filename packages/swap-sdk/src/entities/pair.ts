@@ -18,10 +18,12 @@ import { keccak256, pack } from '@ethersproject/solidity'
 import JSBI from 'jsbi'
 import invariant from 'tiny-invariant'
 
-import { FACTORY_ADDRESS_MAP, INIT_CODE_HASH_MAP } from '../constants'
+import { FACTORY_ADDRESS_MAP, INIT_CODE_HASH_MAP, XOX_ADDRESS, PAIR_XOX_BUSD, USD_ADDRESS } from '../constants'
 import { ERC20Token } from './token'
 
 let PAIR_ADDRESS_CACHE: { [key: string]: string } = {}
+
+export const _90 = JSBI.BigInt(90)
 
 const composeKey = (token0: ERC20Token, token1: ERC20Token) => `${token0.chainId}-${token0.address}-${token1.address}`
 
@@ -56,6 +58,10 @@ export class Pair {
   private readonly tokenAmounts: [CurrencyAmount<ERC20Token>, CurrencyAmount<ERC20Token>]
 
   public static getAddress(tokenA: ERC20Token, tokenB: ERC20Token): string {
+    if (tokenA.address == XOX_ADDRESS[tokenA.chainId] && tokenB.address == USD_ADDRESS[tokenB.chainId])
+      return PAIR_XOX_BUSD[tokenA.chainId]
+    if (tokenA.address == USD_ADDRESS[tokenA.chainId] && tokenB.address == XOX_ADDRESS[tokenB.chainId])
+      return PAIR_XOX_BUSD[tokenA.chainId]
     return computePairAddress({ factoryAddress: FACTORY_ADDRESS_MAP[tokenA.chainId], tokenA, tokenB })
   }
 
@@ -154,6 +160,44 @@ export class Pair {
     return [outputAmount, new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount))]
   }
 
+  public getOutputAmountXOX(inputAmount: CurrencyAmount<ERC20Token>): [CurrencyAmount<ERC20Token>, Pair] {
+    
+    invariant(this.involvesToken(inputAmount.currency), 'TOKEN')
+    if (JSBI.equal(this.reserve0.quotient, ZERO) || JSBI.equal(this.reserve1.quotient, ZERO)) {
+      throw new InsufficientReservesError()
+    }
+    const inputReserve = this.reserveOf(inputAmount.currency)
+    const outputReserve = this.reserveOf(inputAmount.currency.equals(this.token0) ? this.token1 : this.token0)
+
+    if (inputAmount.currency.equals(this.token0)) {
+      const inputAmountWithFee = JSBI.multiply(inputAmount.quotient, _9975)
+      const numerator = JSBI.multiply(inputAmountWithFee, outputReserve.quotient)
+      const denominator = JSBI.add(JSBI.multiply(inputReserve.quotient, _10000), inputAmountWithFee)
+
+      const outputAmount = CurrencyAmount.fromRawAmount(
+        inputAmount.currency.equals(this.token0) ? this.token1 : this.token0,
+        JSBI.divide(JSBI.multiply(JSBI.divide(numerator, denominator), _90), _100)
+      )
+      if (JSBI.equal(outputAmount.quotient, ZERO)) {
+        throw new InsufficientInputAmountError()
+      }
+      return [outputAmount, new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount))]
+    } else {
+      const inputAmountSwap = JSBI.divide(JSBI.multiply(inputAmount.quotient, _90), _100)
+      const inputAmountWithFee = JSBI.multiply(inputAmountSwap, _9975)
+      const numerator = JSBI.multiply(inputAmountWithFee, outputReserve.quotient)
+      const denominator = JSBI.add(JSBI.multiply(inputReserve.quotient, _10000), inputAmountWithFee)
+      const outputAmount = CurrencyAmount.fromRawAmount(
+        inputAmount.currency.equals(this.token0) ? this.token1 : this.token0,
+        JSBI.divide(numerator, denominator)
+      )
+      if (JSBI.equal(outputAmount.quotient, ZERO)) {
+        throw new InsufficientInputAmountError()
+      }
+      return [outputAmount, new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount))]
+    }
+  }
+
   public getInputAmount(outputAmount: CurrencyAmount<ERC20Token>): [CurrencyAmount<ERC20Token>, Pair] {
     invariant(this.involvesToken(outputAmount.currency), 'TOKEN')
     if (
@@ -173,6 +217,40 @@ export class Pair {
       JSBI.add(JSBI.divide(numerator, denominator), ONE)
     )
     return [inputAmount, new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount))]
+  }
+
+  public getInputAmountXOX(outputAmount: CurrencyAmount<ERC20Token>): [CurrencyAmount<ERC20Token>, Pair] {
+    invariant(this.involvesToken(outputAmount.currency), 'TOKEN')
+    if (
+      JSBI.equal(this.reserve0.quotient, ZERO) ||
+      JSBI.equal(this.reserve1.quotient, ZERO) ||
+      JSBI.greaterThanOrEqual(outputAmount.quotient, this.reserveOf(outputAmount.currency).quotient)
+    ) {
+      throw new InsufficientReservesError()
+    }
+
+    const outputReserve = this.reserveOf(outputAmount.currency)
+    const inputReserve = this.reserveOf(outputAmount.currency.equals(this.token0) ? this.token1 : this.token0)
+
+    if (outputAmount.currency.equals(this.token1)) {
+      const outputAmountSwap = JSBI.divide(JSBI.multiply(outputAmount.quotient, _100), _90)
+      const numerator = JSBI.multiply(JSBI.multiply(inputReserve.quotient, outputAmountSwap), _10000)
+      const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmountSwap), _9975)
+      const inputAmount = CurrencyAmount.fromRawAmount(
+        outputAmount.currency.equals(this.token0) ? this.token1 : this.token0,
+        JSBI.add(JSBI.divide(numerator, denominator), ONE)
+      )
+      return [inputAmount, new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount))]
+    } else {
+      const numerator = JSBI.multiply(JSBI.multiply(inputReserve.quotient, outputAmount.quotient), _10000)
+      const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmount.quotient), _9975)
+      const inputAmountSwap = JSBI.add(JSBI.divide(numerator, denominator), ONE)
+      const inputAmount = CurrencyAmount.fromRawAmount(
+        outputAmount.currency.equals(this.token0) ? this.token1 : this.token0,
+        JSBI.divide(JSBI.multiply(inputAmountSwap, _100), _90)
+      )
+      return [inputAmount, new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount))]
+    }
   }
 
   public getLiquidityMinted(

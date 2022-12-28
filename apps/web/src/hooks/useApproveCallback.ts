@@ -1,10 +1,10 @@
 import { MaxUint256 } from '@ethersproject/constants'
 import { TransactionResponse } from '@ethersproject/providers'
 import { useTranslation } from '@pancakeswap/localization'
-import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk'
+import { Currency, CurrencyAmount, Trade, TradeType, ERC20Token } from '@pancakeswap/sdk'
 import { useToast } from '@pancakeswap/uikit'
 import { useAccount } from 'wagmi'
-import { ROUTER_ADDRESS } from 'config/constants/exchange'
+import { ROUTER_ADDRESS, ROUTER_XOX, XOX_ADDRESS, USD_ADDRESS } from 'config/constants/exchange'
 import { useCallback, useMemo } from 'react'
 import { logError } from 'utils/sentry'
 import { Field } from '../state/swap/actions'
@@ -126,15 +126,39 @@ export function useApproveCallbackFromTrade(
   trade?: Trade<Currency, Currency, TradeType>,
   allowedSlippage = 0,
   chainId?: number,
+  isRouterNormal = true,
 ) {
   const amountToApprove = useMemo(
     () => (trade ? computeSlippageAdjustedAmounts(trade, allowedSlippage)[Field.INPUT] : undefined),
     [trade, allowedSlippage],
   )
-
-  return useApproveCallback(amountToApprove, ROUTER_ADDRESS[chainId])
+  const routerAddress = isRouterNormal ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId]
+  return useApproveCallback(amountToApprove, routerAddress)
 }
 
+export function useRouterNormal(
+  inputCurrency: Currency | undefined,
+  outputCurrency: Currency | undefined,
+  chainId?: number,
+): boolean {
+  if (
+    inputCurrency?.isToken &&
+    String(inputCurrency?.address).toLowerCase() === XOX_ADDRESS[chainId].toLowerCase() &&
+    outputCurrency?.isToken &&
+    String(outputCurrency?.address).toLowerCase() === USD_ADDRESS[chainId].toLowerCase()
+  )
+    return false
+
+  if (
+    outputCurrency?.isToken &&
+    outputCurrency?.address.toLowerCase() === XOX_ADDRESS[chainId].toLowerCase() &&
+    inputCurrency?.isToken &&
+    inputCurrency?.address.toLowerCase() === USD_ADDRESS[chainId].toLowerCase()
+  )
+    return false
+
+  return true
+}
 // Wraps useApproveCallback in the context of a Gelato Limit Orders
 export function useApproveCallbackFromInputCurrencyAmount(currencyAmountIn: CurrencyAmount<Currency> | undefined) {
   const gelatoLibrary = useGelatoLimitOrdersLib()
