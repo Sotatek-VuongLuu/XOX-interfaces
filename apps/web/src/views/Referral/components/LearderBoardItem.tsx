@@ -130,9 +130,6 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
   const { item, mb = true } = props
   const ranking: Array<number> = [1, 2, 3]
   const { width } = useWindowSize()
-
-  const { isMobile } = useMatchBreakpoints()
-
   const renderRanking = useCallback(
     // eslint-disable-next-line @typescript-eslint/no-shadow
     (rank: number) => {
@@ -162,7 +159,9 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
         <div className={`${ranking.includes(item.rank) ? `bg_white` : `bg_rba`} user_info`}>
           <div className="user_avatar_name">
             <Avatar alt="Remy Sharp" src={item.avatar} sx={{ height: 30, width: 30 }} />
-            <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>{item.name}</p>
+            <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>
+              {item.name ? item.name : item.address}
+            </p>
           </div>
 
           <div className="point">{item.point}</div>

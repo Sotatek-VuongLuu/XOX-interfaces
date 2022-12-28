@@ -1,3 +1,4 @@
+/* eslint-disable no-console */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { formatUnits } from '@ethersproject/units'
@@ -5,14 +6,16 @@ import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
 import axios from 'axios'
 import { Box, Grid } from '@mui/material'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import moment from 'moment'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useTreasuryXOX } from 'hooks/useContract'
 import HowToJoin from './HowToJoin'
 // eslint-disable-next-line import/no-cycle
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
-import { getUerRank, userPointHourDatas } from '../../../services/referral'
+import { getUerRank, getUserPointDaily, getUserPointMonthly, getUserPointWeekly } from '../../../services/referral'
 
 export interface IItemLeaderBoard {
   name: string
@@ -33,23 +36,6 @@ interface IPropsContainer {
 interface IDataFormatUnit {
   id: string
   amount: string
-}
-
-// address: '0x400eE0C820144c8Bb559AcE1ad75e5C13e750334'
-// amount: '450000000000000000000'
-// avatar: null
-// id: '0x400ee0c820144c8bb559ace1ad75e5c13e750334'
-// point: 900
-// username: 'daovu'
-
-interface IDataRanksUser {
-  id: string
-  amount: never
-  point: number
-  avatar: string
-  username: string
-  level: number
-  address: string
 }
 
 const First = styled.div<IPropsTotal>`
@@ -224,10 +210,14 @@ const WrapperRight = styled.div<IPropsContainer>`
 `
 
 const MainInfo = () => {
-  const [tabLeaderBoard, setTabLeaderBoard] = useState(0)
+  const yesterday = moment().subtract(1, 'days')
+  const startOfDay = yesterday.startOf('day').toString()
+  const endOfDay = yesterday.endOf('day').toString()
+  const startOfMonth = moment().startOf('month').toString()
+  const startOfWeek = moment().startOf('isoWeek').toString()
+  const [tabLeaderBoard, setTabLeaderBoard] = useState('All Time')
   const [subTabIndex, setSubTabIndex] = useState(0)
   const [listUserRanks, setListUserRanks] = useState([])
-  const [leaderBoardList, setLeaderBoardList] = useState<Array<IItemLeaderBoard>>(listLeader)
   const { account } = useActiveWeb3React()
   const totalPoint = 100000
   const currentPoint = 50000
@@ -235,49 +225,71 @@ const MainInfo = () => {
   const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily']
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
   const { chainId } = useActiveWeb3React()
+  const contractTreasuryXOX = useTreasuryXOX()
 
-  const handleGetUserRanks = async () => {
-    let result = []
-    const data = await getUerRank(chainId)
-    result = [...result, ...data.userPoints]
-
-    const dataUserFormatAmount: IDataFormatUnit[] = result.map((item) => {
-      return {
-        ...item,
-        id: item.id,
-        point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
-      }
-    })
-
-    // id: string
-    // amount: never
-    // point: number
-    // avatar: string
-    // username: string
-    // level: number
-    // address: string
-
-    const dataMapping = await Promise.all(
-      dataUserFormatAmount.map(async (item: IDataFormatUnit): Promise<any> => {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
-          wallets: [`${item.id}`],
-        })
-        const dataMap = response?.data[0]
-        return {
-          ...item,
-          ...dataMap,
-          username: dataMap?.username ?? null,
-          avatar: dataMap?.avatar ?? null,
-        }
-      }),
-    )
-    setListUserRanks([...listUserRanks, ...dataMapping])
+  const payloadPostForDaily = {
+    date_gte: moment(startOfDay).unix(),
+    date_lte: moment(endOfDay).unix(),
   }
 
-  console.log(`liss`, listUserRanks)
+  const payloadPostForMonth = {
+    date_gte: moment(startOfMonth).unix(),
+    date_lte: moment().unix(),
+  }
+
+  const payloadPostForWeek = {
+    date_gte: moment(startOfWeek).unix(),
+    date_lte: moment().unix(),
+  }
+
+  const handleGetUserRanks = async (typeFilter: string) => {
+    try {
+      let data = []
+      if (typeFilter === filterTime[0]) {
+        const res = await getUerRank(chainId)
+        data = res.userPoints
+      } else if (typeFilter === filterTime[3]) {
+        const res = await getUserPointDaily(chainId, payloadPostForDaily)
+        data = res.userPointDailies
+      } else if (typeFilter === filterTime[1]) {
+        const res = await getUserPointMonthly(chainId, payloadPostForMonth)
+        data = res.userPointMonthlies
+      } else {
+        const res = await getUserPointWeekly(chainId, payloadPostForWeek)
+        data = res.userPointWeeklies
+      }
+
+      const dataUserFormatAmount: IDataFormatUnit[] = data.map((item) => {
+        return {
+          ...item,
+          id: item.id,
+          point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
+        }
+      })
+      const dataMapping = await Promise.all(
+        dataUserFormatAmount.map(async (item: IDataFormatUnit, index: number): Promise<any> => {
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+            wallets: [`${item.id}`],
+          })
+          const dataMap = response?.data[0]
+          return {
+            ...item,
+            ...dataMap,
+            rank: index + 1,
+            name: dataMap?.username ?? null,
+            avatar: dataMap?.avatar ?? null,
+          }
+        }),
+      )
+      setListUserRanks(dataMapping)
+    } catch (error) {
+      console.log(`error >>>`, error)
+    }
+  }
 
   useEffect(() => {
-    handleGetUserRanks()
+    handleGetUserRanks(tabLeaderBoard)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId])
 
   return (
@@ -287,13 +299,17 @@ const MainInfo = () => {
           <div>
             <First account={account}>
               <div className="tab_filter">
-                {filterTime.map((item, index) => {
+                {filterTime.map((item) => {
                   return (
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                     <div
                       key={item}
-                      onClick={() => setTabLeaderBoard(index)}
-                      className={tabLeaderBoard === index ? 'tab_item active' : 'tab_item'}
+                      onClick={() => {
+                        setTabLeaderBoard(item)
+                        handleGetUserRanks(item)
+                        setListUserRanks([])
+                      }}
+                      className={tabLeaderBoard === item ? 'tab_item active' : 'tab_item'}
                     >
                       {item}
                     </div>
@@ -302,7 +318,7 @@ const MainInfo = () => {
               </div>
 
               <div className="learder_board">
-                {leaderBoardList.map((item: IItemLeaderBoard, index: number) => {
+                {listUserRanks?.map((item, index: number) => {
                   // eslint-disable-next-line react/no-array-index-key
                   return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
                 })}
@@ -368,38 +384,5 @@ const MainInfo = () => {
     </Box>
   )
 }
-
-const listLeader = [
-  {
-    name: 'Ha Anh Tuan',
-    point: '10293',
-    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-    rank: 1,
-  },
-  {
-    name: 'My Tam',
-    point: '10200',
-    avatar: 'https://danviet.mediacdn.vn/296231569849192448/2022/12/13/hen-uoc-tu-hu-vo-16709038452871766603715.jpg',
-    rank: 2,
-  },
-  {
-    name: 'Wade Warren',
-    point: '10110',
-    avatar: 'https://newsmd2fr.keeng.net/tiin/archive/images/296/202104/20210408/tinngan_115312_856826867_0.jpg',
-    rank: 3,
-  },
-  {
-    name: 'Wade Warren',
-    point: '9000',
-    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-    rank: 4,
-  },
-  {
-    name: 'Wade Warren',
-    point: '9000',
-    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-    rank: 5,
-  },
-]
 
 export default MainInfo
