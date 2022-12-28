@@ -1,6 +1,6 @@
 /* eslint-disable no-param-reassign */
 import { isTradeBetter } from 'utils/trades'
-import { Currency, CurrencyAmount, Pair, Token, Trade, TradeType } from '@pancakeswap/sdk'
+import { Currency, CurrencyAmount, Pair, Token, Trade, TradeType, TradeXOX } from '@pancakeswap/sdk'
 import flatMap from 'lodash/flatMap'
 import { useMemo } from 'react'
 
@@ -130,6 +130,60 @@ export function useTradeExactIn(
   }, [allowedPairs, currencyAmountIn, currencyOut, singleHopOnly])
 }
 
+export function useTradeXOXExactIn(
+  currencyAmountIn?: CurrencyAmount<Currency>,
+  currencyOut?: Currency,
+  isRouterNormal?: boolean,
+): Trade<Currency, Currency, TradeType> | null {
+  const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
+
+  const [singleHopOnly] = useUserSingleHopOnly()
+
+  return useMemo(() => {
+    if (currencyAmountIn && currencyOut && allowedPairs.length > 0) {
+      if (singleHopOnly) {
+        if (isRouterNormal)
+          return (
+            Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops: 1, maxNumResults: 1 })[0] ??
+            null
+          )
+        return (
+          TradeXOX.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops: 1, maxNumResults: 1 })[0] ??
+          null
+        )
+      }
+      // search through trades with varying hops, find best trade out of them
+      let bestTradeSoFar: Trade<Currency, Currency, TradeType> | null = null
+      for (let i = 1; i <= MAX_HOPS; i++) {
+        if (isRouterNormal) {
+          const currentTrade: Trade<Currency, Currency, TradeType> | null =
+            Trade.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, {
+              maxHops: i,
+              maxNumResults: 1,
+            })[0] ?? null
+          // if current trade is best yet, save it
+          if (isTradeBetter(bestTradeSoFar, currentTrade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
+            bestTradeSoFar = currentTrade
+          }
+        } else {
+          const currentTrade: Trade<Currency, Currency, TradeType> | null =
+            TradeXOX.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, {
+              maxHops: i,
+              maxNumResults: 1,
+            })[0] ?? null
+          // if current trade is best yet, save it
+          if (isTradeBetter(bestTradeSoFar, currentTrade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
+            bestTradeSoFar = currentTrade
+          }
+        }
+      }
+      return bestTradeSoFar
+    }
+
+    return null
+  }, [allowedPairs, currencyAmountIn, currencyOut, singleHopOnly])
+}
+
 /**
  * Returns the best trade for the token in to the exact amount of token out
  */
@@ -145,18 +199,77 @@ export function useTradeExactOut(
     if (currencyIn && currencyAmountOut && allowedPairs.length > 0) {
       if (singleHopOnly) {
         return (
-          Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops: 1, maxNumResults: 1 })[0] ??
-          null
+          Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, {
+            maxHops: 1,
+            maxNumResults: 1,
+          })[0] ?? null
         )
       }
       // search through trades with varying hops, find best trade out of them
       let bestTradeSoFar: Trade<Currency, Currency, TradeType> | null = null
       for (let i = 1; i <= MAX_HOPS; i++) {
         const currentTrade =
-          Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, { maxHops: i, maxNumResults: 1 })[0] ??
-          null
+          Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, {
+            maxHops: i,
+            maxNumResults: 1,
+          })[0] ?? null
         if (isTradeBetter(bestTradeSoFar, currentTrade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
           bestTradeSoFar = currentTrade
+        }
+      }
+      return bestTradeSoFar
+    }
+    return null
+  }, [currencyIn, currencyAmountOut, allowedPairs, singleHopOnly])
+}
+
+export function useTradeXOXExactOut(
+  currencyIn?: Currency,
+  currencyAmountOut?: CurrencyAmount<Currency>,
+  isRouterNormal?: boolean,
+): Trade<Currency, Currency, TradeType> | null {
+  const allowedPairs = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)
+
+  const [singleHopOnly] = useUserSingleHopOnly()
+
+  return useMemo(() => {
+    if (currencyIn && currencyAmountOut && allowedPairs.length > 0) {
+      if (singleHopOnly) {
+        if (isRouterNormal)
+          return (
+            Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, {
+              maxHops: 1,
+              maxNumResults: 1,
+            })[0] ?? null
+          )
+        return (
+          TradeXOX.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, {
+            maxHops: 1,
+            maxNumResults: 1,
+          })[0] ?? null
+        )
+      }
+      // search through trades with varying hops, find best trade out of them
+      let bestTradeSoFar: Trade<Currency, Currency, TradeType> | null = null
+      for (let i = 1; i <= MAX_HOPS; i++) {
+        if (isRouterNormal) {
+          const currentTrade =
+            Trade.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, {
+              maxHops: i,
+              maxNumResults: 1,
+            })[0] ?? null
+          if (isTradeBetter(bestTradeSoFar, currentTrade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
+            bestTradeSoFar = currentTrade
+          }
+        } else {
+          const currentTrade =
+            TradeXOX.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, {
+              maxHops: i,
+              maxNumResults: 1,
+            })[0] ?? null
+          if (isTradeBetter(bestTradeSoFar, currentTrade, BETTER_TRADE_LESS_HOPS_THRESHOLD)) {
+            bestTradeSoFar = currentTrade
+          }
         }
       }
       return bestTradeSoFar

@@ -61,7 +61,7 @@ export const StyledBalanceMaxMini = styled.button`
 `
 
 export const TruncatedText = styled(Text).attrs({ ellipsis: true })`
-  width: 220px;
+  // width: 220px;
 `
 
 const SwapCallbackErrorInner = styled.div`

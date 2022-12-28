@@ -11,13 +11,16 @@ export const switchButtonClass = style([
     boxShadow: "inset 0px -2px 0px rgba(0, 0, 0, 0.1)",
   }),
 ]);
+export const iconSwapClass = style({
+  cursor:'pointer',
+})
 
 export const iconDownClass = style({
   selectors: {
     [`${switchButtonClass}:hover &`]: {
       display: "none",
       fill: "white",
-    },
+    }
   },
 });
 
@@ -78,7 +81,7 @@ export const inputVariants = recipe({
     },
   },
   defaultVariants: {
-    align: "right",
+    align: "left",
     error: false,
   },
 });

@@ -103,7 +103,7 @@ const AddToWalletButton: React.FC<AddToWalletButtonProps & ButtonProps> = ({
       }}
     >
       {getWalletText(textOptions, tokenSymbol, t)}
-      {getWalletIcon(marginTextBetweenLogo, connector?.name)}
+      {/* {getWalletIcon(marginTextBetweenLogo, connector?.name)} */}
     </Button>
   )
 }
