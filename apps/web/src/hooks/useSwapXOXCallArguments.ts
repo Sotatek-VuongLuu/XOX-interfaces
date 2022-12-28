@@ -28,7 +28,7 @@ export function useSwapXOXCallArguments(
 ): SwapCall[] {
   const { account, chainId } = useActiveWeb3React()
   const recipient = recipientAddress === null ? account : recipientAddress
-  const ref = referralAddress === null ? referralAddress : ADDRESS_ZERO
+  const ref = referralAddress === null ? ADDRESS_ZERO : referralAddress
   const deadline = useTransactionDeadline()
   const contract = useRouterContractXOX(isRouterNormal)
 
