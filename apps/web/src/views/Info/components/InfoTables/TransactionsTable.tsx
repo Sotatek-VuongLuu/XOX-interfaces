@@ -392,7 +392,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
       >
-        -
+        --
         {/* {`${formatAmount(abs1)} Stable coin`} */}
       </Text>
       <Link
