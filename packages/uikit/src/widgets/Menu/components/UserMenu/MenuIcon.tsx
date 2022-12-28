@@ -7,19 +7,13 @@ import { Colors } from "../../../../theme/types";
 
 const MenuIconWrapper = styled.div<{ borderColor: keyof Colors }>`
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.background};
-  border-color: ${({ theme, borderColor }) => theme.colors[borderColor]};
-  border-radius: 50%;
   border-style: solid;
   border-width: 2px;
   display: flex;
   height: 24px;
   justify-content: center;
-  left: 0;
-  position: absolute;
-  top: 0;
   width: 24px;
-  z-index: 102;
+  border: none;
 `;
 
 const ProfileIcon = styled(Image)`

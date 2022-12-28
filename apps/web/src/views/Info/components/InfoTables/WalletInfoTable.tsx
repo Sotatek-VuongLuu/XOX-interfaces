@@ -157,7 +157,7 @@ const TableWrapper = styled(Flex)`
   min-height: 454px;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    width: 454px;
+    width: 100%;
     min-height: unset;
     padding: 24px;
   }

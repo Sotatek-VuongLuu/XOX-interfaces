@@ -215,60 +215,16 @@ export const PageButtons = styled(Flex)`
     background: rgba(110, 70, 255, 0.1);
   }
 
-  & div[class*='Select__DropDownContainer'] {
-    width: 132px;
-    height: 37px;
-    background: transparent;
-  }
-
-  & div[class*='Select__DropDownHeader'] {
-    height: 37px;
-    border-radius: 4px;
-    border: 1px solid #444444;
-    background: transparent;
-
-    & > div {
-      font-family: 'Inter';
-      font-style: normal;
-      font-weight: 400;
-      font-size: 14px;
-      line-height: 17px;
-      color: rgba(255, 255, 255, 0.87);
-    }
-  }
-
-  & div[class*='Select__DropDownListContainer'] {
-    border-radius: 0;
-    z-index: 10000;
-  }
-
-  & li[class*='Select__ListItem'] > div {
-    font-family: 'Inter';
-    font-style: normal;
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    color: rgba(255, 255, 255, 0.87);
-  }
-
-  & li[class*='Select__ListItem']:hover {
-    background-color: #9072ff;
-  }
-
   & .go-page {
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
     color: rgba(255, 255, 255, 0.87);
-    min-width: 74px;
+    min-width: 94px;
     padding: 0 10px;
   }
 
   & input {
-    font-family: 'Inter';
-    font-style: normal;
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
