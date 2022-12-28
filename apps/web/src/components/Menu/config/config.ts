@@ -55,6 +55,14 @@ const config: (
       items: [],
     },
     {
+      label: t('Bridge'),
+      href: '/bridge-token',
+      icon: SwapIcon,
+      fillIcon: SwapFillIcon,
+      showItemsOnMobile: false,
+      items: [],
+    },
+    {
       label: t('Liquidity'),
       icon: SwapIcon,
       fillIcon: SwapFillIcon,
