@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -226,6 +227,7 @@ const MainInfo = () => {
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
   const { chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
+  const [userCurrentPoint, setUserCurrentPoint] = useState<number>(0)
 
   const payloadPostForDaily = {
     date_gte: moment(startOfDay).unix(),
@@ -258,7 +260,6 @@ const MainInfo = () => {
         const res = await getUserPointWeekly(chainId, payloadPostForWeek)
         data = res.userPointWeeklies
       }
-
       const dataUserFormatAmount: IDataFormatUnit[] = data.map((item) => {
         return {
           ...item,
@@ -287,10 +288,25 @@ const MainInfo = () => {
     }
   }
 
+  const handleGetCurrentPoint = async () => {
+    try {
+      const infosUser: any[] = await contractTreasuryXOX.userInfo(account)
+
+      const dataParse: any[] = infosUser.map((item) => {
+        return formatUnits(item, MAPPING_DECIMAL_WITH_CHAIN[chainId])
+      })
+      setUserCurrentPoint(Number(dataParse[0]))
+    } catch (error) {
+      console.log(`error >>>`, error)
+    }
+  }
   useEffect(() => {
     handleGetUserRanks(tabLeaderBoard)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId])
+
+  useEffect(() => {
+    handleGetCurrentPoint()
+  }, [account])
 
   return (
     <Box sx={{ marginTop: '16px' }}>
