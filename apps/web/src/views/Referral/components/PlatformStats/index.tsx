@@ -45,15 +45,13 @@ const Wrapper = styled(Box)`
 
     .info_volumn {
       display: flex;
-      & > div:nth-child(2) {
-        margin: 0 20px;
-      }
-
+      width:100%;
+      justify-content:space-between;
       .info_volumn_item {
         padding: 16px 17px;
         background: #303030;
         border-radius: 6px;
-        width: 142px;
+        width: 150px;
         height: 126px;
 
         .volumn {
@@ -81,10 +79,9 @@ const Wrapper = styled(Box)`
       .info_volumn {
         flex-direction: column;
         width: 100%;
-        & > div:nth-child(2) {
-          margin: 16px 0px;
-        }
+       
         .info_volumn_item {
+          margin: 16px 0px;
           width: 100%;
           display: grid;
           grid-template-columns: auto;
@@ -147,7 +144,8 @@ const Wrapper = styled(Box)`
   }
 `
 
-const PlatformStat = (): JSX.Element => {
+const PlatformStat = (props : any): JSX.Element => {
+  const { listPoint } = props;
   const chainId = 97
   const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>([])
   const [userClaimHistories, setUserClaimHistories] = useState([])
@@ -176,7 +174,7 @@ const PlatformStat = (): JSX.Element => {
           mappingUser.avatar ?? 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
           mappingUser.username,
           moment(item.data).format('DD/MM/YYYY hh:mm:ss'),
-          100,
+          mapPoint(formatBigNumber(BigNumber.from(item.amount))),
           formatBigNumber(BigNumber.from(item.amount)),
         )
       })
@@ -200,6 +198,14 @@ const PlatformStat = (): JSX.Element => {
       setDataChart(data)
     }
   }
+  const mapPoint = (amount: string) => {
+    for(let i = 0; i <= listPoint.length; i++) {
+      if(Number(amount) <= listPoint[i].reward && Number(amount) < listPoint[i+1].reward) {
+        return listPoint[i].point
+      }
+    }
+    return ''
+  }
   const mapingHistories = async (address: string) => {
     const payload = {
       wallets: [`${address}`],
@@ -212,13 +218,13 @@ const PlatformStat = (): JSX.Element => {
     const data = result?.data[0]
     return data
   }
-  function createData(no: number, avatar: string, name: string, time: string, point: number, claim: string) {
+  function createData(no: number, avatar: string, name: string, time: string, point: string, claim: string) {
     return { no, avatar, name, time, point, claim }
   }
   function createDataChartDay(name: string, uv: string) {
     return { name, uv }
   }
-
+ 
   useEffect(() => {
     getUserPoint()
     getUserClaimedHistories()
@@ -227,7 +233,7 @@ const PlatformStat = (): JSX.Element => {
   return (
     <Wrapper sx={{}}>
       <div className="first">
-        <div className="chart_container">
+        {/* <div className="chart_container">
           <ChartRef name="Claim" percent={25} />
           <ChartRef
             name="UnClaimed"
@@ -235,7 +241,7 @@ const PlatformStat = (): JSX.Element => {
             cx={35}
             color={['rgba(255, 189, 60, 0.5)', '#FFBD3C', 'rgba(255, 255, 255, 0.1)']}
           />
-        </div>
+        </div> */}
 
         <div className="info_volumn">
           {Array.from(volumnData).map((item, index) => {
@@ -324,18 +330,28 @@ const listData = [
   {
     volumn: '',
     title: 'Number of Referral Participants',
-    svg: '/images/claim_up.svg',
+    svg: '/images/referral/icon-user.svg',
   },
   {
     volumn: '',
     title: 'Total Money Unclaimed',
-    svg: '/images/claim_down.svg',
+    svg: '/images/referral/icon-unclaimed-money.svg',
   },
   {
     volumn: '',
     title: 'Total Money Claimed',
-    svg: '/images/claim_up.svg',
+    svg: '/images/referral/icon-total-claim-money.svg',
   },
+  {
+    volumn: '0',
+    title: 'Number of referral transactions',
+    svg: '/images/referral/icon-number-of-referral.svg',
+  },
+  {
+    volumn: '0',
+    title: 'Total reward earned',
+    svg: '/images/referral/icon-reward-earn.svg',
+  }
 ]
 
 export default PlatformStat

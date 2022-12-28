@@ -219,6 +219,7 @@ const MainInfo = () => {
   const [tabLeaderBoard, setTabLeaderBoard] = useState('All Time')
   const [subTabIndex, setSubTabIndex] = useState(0)
   const [listUserRanks, setListUserRanks] = useState([])
+  const [listPoint, setListPoint] = useState([])
   const { account } = useActiveWeb3React()
   const totalPoint = 100000
   const currentPoint = 50000
@@ -287,6 +288,14 @@ const MainInfo = () => {
       console.log(`error >>>`, error)
     }
   }
+  const getListPointConfig = async () =>{
+    const res : any = await axios.get(`${process.env.NEXT_PUBLIC_API}/point/config`).catch((error) => {
+      console.warn(error)
+    })
+    if(res && res.data) {
+      setListPoint(res.data)
+    }
+  }
 
   const handleGetCurrentPoint = async () => {
     try {
@@ -301,6 +310,7 @@ const MainInfo = () => {
     }
   }
   useEffect(() => {
+    getListPointConfig()
     handleGetUserRanks(tabLeaderBoard)
   }, [chainId])
 
@@ -391,7 +401,7 @@ const MainInfo = () => {
               </div>
 
               {subTabIndex === 0 && <TotalEarned />}
-              {subTabIndex === 1 && <PlatformStat />}
+              {subTabIndex === 1 && <PlatformStat listPoint={listPoint} />}
               {subTabIndex === 2 && <HowToJoin />}
             </div>
           </WrapperRight>
