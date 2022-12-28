@@ -156,6 +156,14 @@ const WrapperRight = styled(Box)<IPropsWR>`
 
   .current {
     background: url(/images/current_item.svg);
+    & > div {
+      .btn {
+        background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
   }
 
   .swiper-button-next {

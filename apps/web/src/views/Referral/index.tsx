@@ -78,8 +78,6 @@ export default function Refferal() {
     fetchMyAPI()
   }, [account])
 
-  console.log(`cur`, currentLevelReach)
-
   return (
     <>
       <Wrapper>
