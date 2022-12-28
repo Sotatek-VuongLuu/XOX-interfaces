@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -9,7 +10,6 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { useTreasuryXOX } from 'hooks/useContract'
 import HowToJoin from './HowToJoin'
 // eslint-disable-next-line import/no-cycle
 import LeaderBoardItem from './LearderBoardItem'
@@ -24,6 +24,14 @@ export interface IItemLeaderBoard {
   rank: number
 }
 
+interface IItemLevel {
+  icon: string
+  point: number
+  dollar: number
+  lever: number
+  isReach?: boolean
+}
+
 interface IPropsTotal {
   percentPoint?: number
   account?: string
@@ -36,6 +44,12 @@ interface IPropsContainer {
 interface IDataFormatUnit {
   id: string
   amount: string
+}
+
+interface IProps {
+  userCurrentPoint: number
+  currentLevelReach: number
+  listLever: IItemLevel[]
 }
 
 const First = styled.div<IPropsTotal>`
@@ -209,7 +223,7 @@ const WrapperRight = styled.div<IPropsContainer>`
   }
 `
 
-const MainInfo = () => {
+const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) => {
   const yesterday = moment().subtract(1, 'days')
   const startOfDay = yesterday.startOf('day').toString()
   const endOfDay = yesterday.endOf('day').toString()
@@ -218,14 +232,13 @@ const MainInfo = () => {
   const [tabLeaderBoard, setTabLeaderBoard] = useState('All Time')
   const [subTabIndex, setSubTabIndex] = useState(0)
   const [listUserRanks, setListUserRanks] = useState([])
-  const { account } = useActiveWeb3React()
-  const totalPoint = 100000
-  const currentPoint = 50000
+  const [listPoint, setListPoint] = useState([])
+  const { account, chainId } = useActiveWeb3React()
+  const totalPoint = listLever[currentLevelReach]?.point
+  const currentPoint = userCurrentPoint
   const percentPoint = (currentPoint / totalPoint) * 100
   const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily']
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
-  const { chainId } = useActiveWeb3React()
-  const contractTreasuryXOX = useTreasuryXOX()
 
   const payloadPostForDaily = {
     date_gte: moment(startOfDay).unix(),
@@ -258,7 +271,6 @@ const MainInfo = () => {
         const res = await getUserPointWeekly(chainId, payloadPostForWeek)
         data = res.userPointWeeklies
       }
-
       const dataUserFormatAmount: IDataFormatUnit[] = data.map((item) => {
         return {
           ...item,
@@ -286,10 +298,18 @@ const MainInfo = () => {
       console.log(`error >>>`, error)
     }
   }
+  const getListPointConfig = async () => {
+    const res: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/point/config`).catch((error) => {
+      console.warn(error)
+    })
+    if (res && res.data) {
+      setListPoint(res.data)
+    }
+  }
 
   useEffect(() => {
+    getListPointConfig()
     handleGetUserRanks(tabLeaderBoard)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId])
 
   return (
@@ -349,7 +369,7 @@ const MainInfo = () => {
                 <div className="total_point_bar">
                   <div className="current_point_bar">
                     <span>
-                      {currentPoint}/{totalPoint}
+                      {userCurrentPoint}/{listLever[currentLevelReach]?.point}
                     </span>
                   </div>
                 </div>
@@ -375,7 +395,7 @@ const MainInfo = () => {
               </div>
 
               {subTabIndex === 0 && <TotalEarned />}
-              {subTabIndex === 1 && <PlatformStat />}
+              {subTabIndex === 1 && <PlatformStat listPoint={listPoint} />}
               {subTabIndex === 2 && <HowToJoin />}
             </div>
           </WrapperRight>
