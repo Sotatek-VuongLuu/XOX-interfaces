@@ -1,7 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Button, Text, useModal } from '@pancakeswap/uikit'
 import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk'
-
+import axios from 'axios'
 import { GreyCard } from 'components/Card'
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -105,7 +105,6 @@ export default function SwapCommitButton({
 
   // Handlers
   const handleSwap = useCallback(() => {
-    console.log('handleSwap')
     if (priceImpactWithoutFee && !confirmPriceImpactWithoutFee(priceImpactWithoutFee, t)) {
       return
     }
@@ -172,7 +171,13 @@ export default function SwapCommitButton({
     'confirmSwapModal',
   )
   // End Modals
-
+  const getUserByReferral = async (ref: string) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/users?ref=${ref}`)
+    if (response && response.data && response.data.address) {
+      return response.data.address
+    }
+    return ''
+  }
   const onSwapHandler = useCallback(() => {
     if (isExpertMode) {
       handleSwap()
@@ -201,7 +206,12 @@ export default function SwapCommitButton({
 
   // warnings on slippage
   const priceImpactSeverity = warningSeverity(priceImpactWithoutFee)
-
+  useEffect(() => {
+    if (referral) {
+      //TODO VUONG
+      getUserByReferral(referral)
+    }
+  }, [referral])
   if (swapIsUnsupported) {
     return (
       <Button width="100%" disabled>
