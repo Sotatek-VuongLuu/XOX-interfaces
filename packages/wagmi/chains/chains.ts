@@ -1,4 +1,3 @@
-import { rinkeby, mainnet, goerli } from 'wagmi/chains'
 import { Chain } from 'wagmi'
 
 export const avalandche: Chain = {
@@ -114,5 +113,39 @@ export const bscTest: Chain = {
   },
   testnet: true,
 }
+export const mainnet: Chain = {
+  id: 1,
+  name: 'Etherium',
+  network: 'Etherium mainnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Etherium',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: 'https://eth-mainnet.g.alchemy.com/v2/OUbNK0UxmBbmI2_G7a1Ytrw1kGA1-wXm',
+    default: 'https://eth-mainnet.g.alchemy.com/v2/OUbNK0UxmBbmI2_G7a1Ytrw1kGA1-wXm',
+  },
+  blockExplorers: {
+    default: { name: 'etherscan', url: 'https://etherscan.io/' },
+  },
+}
 
-export { rinkeby, mainnet, goerli }
+export const goerli: Chain = {
+  id: 5,
+  name: 'Goerli',
+  network: 'goerli testnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Etherium',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: 'https://eth-goerli.g.alchemy.com/v2/ihTj-Za_e4vpSsy3R65jobkf6vo7ZoND',
+    default: 'https://eth-goerli.g.alchemy.com/v2/ihTj-Za_e4vpSsy3R65jobkf6vo7ZoND',
+  },
+  blockExplorers: {
+    default: { name: 'goerliscan', url: 'https://goerli.etherscan.io/' },
+  },
+  testnet: true,
+}

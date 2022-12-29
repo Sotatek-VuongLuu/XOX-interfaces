@@ -6,7 +6,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useProvider } from 'wagmi'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 
-const REFRESH_BLOCK_INTERVAL = 6000
+const REFRESH_BLOCK_INTERVAL = 60000
 
 export const usePollBlockNumber = () => {
   const { cache, mutate } = useSWRConfig()
