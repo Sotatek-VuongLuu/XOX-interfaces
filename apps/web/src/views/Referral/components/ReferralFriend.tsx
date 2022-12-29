@@ -1,3 +1,5 @@
+/* eslint-disable consistent-return */
+/* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -41,10 +43,13 @@ interface IItemLevel {
   dollar: number
   lever: number
   isReach: boolean
+  isClaimed?: boolean
 }
 
 interface IProps {
-  userCurrentPoint: number
+  listLevelMustReach: IItemLevel[]
+  isClaimAll: boolean
+  currentLevelReach: number
 }
 
 interface IPropsWR {
@@ -152,6 +157,11 @@ const WrapperRight = styled(Box)<IPropsWR>`
       color: rgba(255, 255, 255, 0.38);
       margin-top: 16px;
       cursor: pointer;
+    }
+
+    button:disabled,
+    button[disabled] {
+      cursor: not-allowed;
     }
   }
 
@@ -373,7 +383,7 @@ const Content = styled.div`
   }
 `
 
-const ReferralFriend = ({ userCurrentPoint }: IProps) => {
+const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: IProps) => {
   const { width } = useWindowSize()
   const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
@@ -386,44 +396,15 @@ const ReferralFriend = ({ userCurrentPoint }: IProps) => {
   const [level, setLevel] = useState<number | null>(null)
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
   const [listFriends, setListFriends] = useState([])
-  const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
-  const [currentLevelReach, setCurrentLevelReach] = useState<number | null>(null)
-
-  // eslint-disable-next-line consistent-return
-  const handleCheckPendingRewardAll = async () => {
-    try {
-      const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
-      return formatEther(txPendingReward._hex)
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(`error>>>>>`, error)
-    }
-  }
 
   const handleClaimAll = async () => {
     try {
-      const resultCheckingPending = await handleCheckPendingRewardAll()
-      if (!!resultCheckingPending) {
-        const params = []
-        const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
-        const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
-          gasLimit,
-        })
-        txClaimAll.wait(1)
-      } else {
-        return
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(`error>>>>>`, error)
-    }
-  }
-
-  // eslint-disable-next-line consistent-return
-  const handleCheckPendingRewardByLevel = async (_level: number) => {
-    try {
-      const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, _level)
-      return formatEther(txPendingReward._hex)
+      const params = []
+      const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
+      const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
+        gasLimit,
+      })
+      txClaimAll.wait(1)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
@@ -433,18 +414,13 @@ const ReferralFriend = ({ userCurrentPoint }: IProps) => {
   const handleClaimLevel = async (_level: number) => {
     try {
       if (!_level) return
-      const amountByLevel = await handleCheckPendingRewardByLevel(_level)
-      if (!!amountByLevel) {
-        const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralByLevel(_level)
-        const txClaimByLevel = await contractTreasuryXOX.claimReferralByLevel(_level, {
-          gasLimit,
-        })
-        txClaimByLevel.wait(1)
-        setIsShowModalConfirmClaimByLevel(false)
-        setIsOpenSuccessModal(true)
-      } else {
-        return
-      }
+      const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralByLevel(_level)
+      const txClaimByLevel = await contractTreasuryXOX.claimReferralByLevel(_level, {
+        gasLimit,
+      })
+      txClaimByLevel.wait(1)
+      setIsShowModalConfirmClaimByLevel(false)
+      setIsOpenSuccessModal(true)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
@@ -504,29 +480,10 @@ const ReferralFriend = ({ userCurrentPoint }: IProps) => {
       console.log(`error >>>>`, error)
     }
   }
-  const handleCheckReachLevel = (currentPoint: number) => {
-    const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
-      let reached = currentPoint >= item.point
-      return {
-        ...item,
-        isReach: reached,
-      }
-    })
-    setListLevelMustReach([...arrAddIsReach])
-    const findLastReach = arrAddIsReach.filter((item) => {
-      return item.isReach === true
-    })
-    const currentLever = findLastReach.pop()?.lever
-    setCurrentLevelReach(currentLever)
-  }
 
   useEffect(() => {
     dataFriend()
   }, [chainId, account])
-
-  useEffect(() => {
-    handleCheckReachLevel(userCurrentPoint)
-  }, [userCurrentPoint])
 
   return (
     <>
@@ -603,13 +560,14 @@ const ReferralFriend = ({ userCurrentPoint }: IProps) => {
                             <button
                               type="button"
                               className="btn"
+                              disabled={!item.isReach || item?.isClaimed}
                               onClick={() => {
                                 setDataClaim({ ...dataClaim, point: item.point, dollar: item.dollar })
                                 setIsShowModalConfirmClaimByLevel(true)
                                 setLevel(item.lever)
                               }}
                             >
-                              Claim
+                              {item?.isClaimed ? <span>Claimed</span> : <span>Claim</span>}
                             </button>
                           )}
                         </div>
@@ -628,8 +586,8 @@ const ReferralFriend = ({ userCurrentPoint }: IProps) => {
                   </div>
                 )}
 
-                <button type="button" onClick={handleClaimAll} disabled={!account}>
-                  Claim All
+                <button type="button" onClick={handleClaimAll} disabled={!account || isClaimAll}>
+                  {isClaimAll ? <span> Claimed All</span> : <span>Claim All</span>}
                 </button>
               </div>
             </WrapperRight>

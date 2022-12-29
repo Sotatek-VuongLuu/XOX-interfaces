@@ -241,6 +241,8 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
   const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily']
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
 
+  console.log(`currentLevelReach`, currentLevelReach)
+
   const payloadPostForDaily = {
     date_gte: moment(startOfDay).unix(),
     date_lte: moment(endOfDay).unix(),
@@ -370,7 +372,10 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
                 <div className="total_point_bar">
                   <div className="current_point_bar">
                     <span>
-                      {userCurrentPoint}/{listLever[currentLevelReach]?.point}
+                      {userCurrentPoint}/
+                      {currentLevelReach === 9
+                        ? listLever[currentLevelReach - 1]?.point
+                        : listLever[currentLevelReach]?.point}
                     </span>
                   </div>
                 </div>
