@@ -2,7 +2,7 @@ import { ENDPOINT_GRAPHQL_WITH_CHAIN } from 'config/constants/endpoints'
 import { GraphQLClient, request, gql } from 'graphql-request'
 import { ChainId } from '@pancakeswap/sdk'
 
-export const userPointHourDatas = (chainId: number, payload: any) => {
+export const userPointHourDatas = (chainId: ChainId, payload: any) => {
   const requests = `{
     userPointHourDatas(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} }){
       id,
@@ -104,20 +104,22 @@ export const getUserPointWeekly = async (chainId: ChainId, payload?: any) => {
   return response
 }
 
-export const userPoint = (chainId: number) => {
+export const userPoint = (chainId: ChainId) => {
   const requests = `
   {
     analysisDatas {
       id, 
       number_of_referral,
       total_amount,
-      total_claimed_amount
+      total_claimed_amount,
+      total_transactions,
+      total_reward
     }
   }
   `
   return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
 }
-export const userClaimedHistories = (chainId: number) => {
+export const userClaimedHistories = (chainId: ChainId) => {
   const requests = `{
     userClaimedHistories{
       id,
@@ -127,7 +129,7 @@ export const userClaimedHistories = (chainId: number) => {
   }`
   return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
 }
-export const pointDataDays = (chainId: number) => {
+export const pointDataDays = (chainId: ChainId) => {
   const requests = `{
     pointDataDays {
       id, 
