@@ -47,7 +47,9 @@ interface IItemLevel {
 }
 
 interface IProps {
-  userCurrentPoint: number
+  listLevelMustReach: IItemLevel[]
+  isClaimAll: boolean
+  currentLevelReach: number
 }
 
 interface IPropsWR {
@@ -381,7 +383,7 @@ const Content = styled.div`
   }
 `
 
-const ReferralFriend = ({ userCurrentPoint }: IProps) => {
+const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: IProps) => {
   const { width } = useWindowSize()
   const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
@@ -394,20 +396,6 @@ const ReferralFriend = ({ userCurrentPoint }: IProps) => {
   const [level, setLevel] = useState<number | null>(null)
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
   const [listFriends, setListFriends] = useState([])
-  const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
-  const [currentLevelReach, setCurrentLevelReach] = useState<number | null>(null)
-  const [isClaimAll, setIsClaimAll] = useState<boolean>(false)
-
-  // eslint-disable-next-line consistent-return
-  const handleCheckPendingRewardAll = async () => {
-    try {
-      const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
-      setIsClaimAll(!Number(formatEther(txPendingReward._hex)))
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(`error>>>>>`, error)
-    }
-  }
 
   const handleClaimAll = async () => {
     try {
@@ -492,56 +480,10 @@ const ReferralFriend = ({ userCurrentPoint }: IProps) => {
       console.log(`error >>>>`, error)
     }
   }
-  const handleCheckReachLevel = async (currentPoint: number) => {
-    const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
-      let reached = currentPoint >= item.point
-      return {
-        ...item,
-        isReach: reached,
-      }
-    })
-
-    const findLastReach = arrAddIsReach.filter((item) => {
-      return item.isReach === true
-    })
-    const currentLever = findLastReach.pop()?.lever
-    setCurrentLevelReach(currentLever)
-
-    const arrCheckClaimed: IItemLevel[] = await Promise.all(
-      arrAddIsReach?.map(async (item: IItemLevel): Promise<any> => {
-        try {
-          if (item.isReach) {
-            const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, item.lever)
-            if (Number(formatEther(txPendingReward._hex))) {
-              return {
-                ...item,
-                isClaimed: false,
-              }
-            } else {
-              return {
-                ...item,
-                isClaimed: true,
-              }
-            }
-          } else {
-            return item
-          }
-        } catch (error) {
-          console.log(`error >>>>`, error)
-        }
-      }),
-    )
-    setListLevelMustReach([...arrCheckClaimed])
-    handleCheckPendingRewardAll()
-  }
 
   useEffect(() => {
     dataFriend()
   }, [chainId, account])
-
-  useEffect(() => {
-    handleCheckReachLevel(userCurrentPoint)
-  }, [userCurrentPoint, account, chainId])
 
   return (
     <>

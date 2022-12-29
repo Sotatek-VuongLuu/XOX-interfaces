@@ -241,6 +241,8 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
   const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily']
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
 
+  console.log(`currentLevelReach`, currentLevelReach)
+
   const payloadPostForDaily = {
     date_gte: moment(startOfDay).unix(),
     date_lte: moment(endOfDay).unix(),

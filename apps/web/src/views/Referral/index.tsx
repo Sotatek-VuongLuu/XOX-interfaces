@@ -1,7 +1,9 @@
+/* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { formatUnits } from '@ethersproject/units'
+import { formatEther, formatUnits } from '@ethersproject/units'
 import { Box } from '@mui/material'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTreasuryXOX } from 'hooks/useContract'
@@ -28,11 +30,12 @@ const Wrapper = styled(Box)`
 `
 
 export default function Refferal() {
-  const { account, chainId } = useActiveWeb3React()
+  const { account, chainId } = useWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
   const [userCurrentPoint, setUserCurrentPoint] = useState<number>(0)
   const [currentLevelReach, setCurrentLevelReach] = useState<number>(0)
-  const [listLevelMustReach, _] = useState<IItemLevel[]>(listLever)
+  const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
+  const [isClaimAll, setIsClaimAll] = useState<boolean>(false)
 
   // eslint-disable-next-line consistent-return
   const handleGetCurrentPoint = async () => {
@@ -53,30 +56,66 @@ export default function Refferal() {
     }
   }
 
-  const handleCheckReachLevel = (currentPoint: number) => {
+  // eslint-disable-next-line consistent-return
+  const handleCheckPendingRewardAll = async () => {
+    try {
+      const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
+      setIsClaimAll(Number(formatEther(txPendingReward._hex)) === 0)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>>>`, error)
+    }
+  }
+
+  const handleCheckReachLevel = async (currentPoint: number) => {
     if (currentPoint < listLevelMustReach[0].point) {
       setCurrentLevelReach(0)
+    } else {
+      const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
+        const reached = currentPoint >= item.point
+        return {
+          ...item,
+          isReach: reached,
+        }
+      })
+
+      const findLastReach = arrAddIsReach.filter((item) => {
+        return item.isReach === true
+      })
+      const currentLever = findLastReach.pop()?.lever
+      setCurrentLevelReach(currentLever)
+
+      const arrCheckClaimed: IItemLevel[] = await Promise.all(
+        arrAddIsReach?.map(async (item: IItemLevel): Promise<any> => {
+          try {
+            if (item.isReach) {
+              const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, item.lever)
+              if (Number(formatEther(txPendingReward._hex)) === 0) {
+                return {
+                  ...item,
+                  isClaimed: true,
+                }
+              }
+              return {
+                ...item,
+                isClaimed: false,
+              }
+            }
+            return item
+          } catch (error) {
+            console.log(`error >>>>`, error)
+          }
+        }),
+      )
+      setListLevelMustReach([...arrCheckClaimed])
+      handleCheckPendingRewardAll()
     }
-    const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
-      const reached = currentPoint >= item.point
-      return {
-        ...item,
-        isReach: reached,
-      }
-    })
-    const findLastReach = arrAddIsReach.filter((item) => {
-      return item.isReach === true
-    })
-    const currentLever = findLastReach.pop()
-    setCurrentLevelReach(currentLever?.lever)
   }
 
   useEffect(() => {
     const fetchMyAPI = async () => {
       const currentPoint = await handleGetCurrentPoint()
-      if (currentPoint) {
-        await handleCheckReachLevel(currentPoint)
-      }
+      handleCheckReachLevel(currentPoint)
     }
     fetchMyAPI()
   }, [account, chainId])
@@ -87,7 +126,11 @@ export default function Refferal() {
         <Box>
           <Banner />
           <MainInfo userCurrentPoint={userCurrentPoint} currentLevelReach={currentLevelReach} listLever={listLever} />
-          <ReferralFriend userCurrentPoint={userCurrentPoint} />
+          <ReferralFriend
+            currentLevelReach={currentLevelReach}
+            isClaimAll={isClaimAll}
+            listLevelMustReach={listLevelMustReach}
+          />
         </Box>
       </Wrapper>
     </>
