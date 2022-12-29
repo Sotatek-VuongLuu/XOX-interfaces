@@ -96,6 +96,7 @@ export default function Swap() {
   const {
     wrapType,
     execute: onWrap,
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     inputError: wrapInputError,
   } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE

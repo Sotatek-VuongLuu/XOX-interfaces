@@ -9,7 +9,7 @@ const SwapbackgroundMobile = () => {
         <path
           d="M18 412.511V412.512V421.5C18 426.194 21.8056 430 26.5 430H43.3266H316.379H333.206C337.9 430 341.706 426.194 341.706 421.5V412.513V412.512L341.535 40.1596C341.534 37.403 340.196 34.8181 337.946 33.2255L317.936 19.0623C316.5 18.046 314.784 17.5002 313.025 17.5002H46.3342C44.5751 17.5002 42.8593 18.046 41.4234 19.0623L21.4183 33.2222C19.166 34.8164 17.8278 37.4046 17.829 40.164L18 412.511Z"
           stroke="url(#paint0_linear_7074_21655)"
-          stroke-width="3"
+          strokeWidth="3"
         />
       </g>
       <defs>
@@ -20,9 +20,9 @@ const SwapbackgroundMobile = () => {
           width="358.877"
           height="447.5"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -44,8 +44,8 @@ const SwapbackgroundMobile = () => {
           y2="317.577"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#6437FF" />
-          <stop offset="0.442708" stop-color="#9F59FF" stop-opacity="0" />
+          <stop stopColor="#6437FF" />
+          <stop offset="0.442708" stopColor="#9F59FF" stopOpacity="0" />
         </linearGradient>
       </defs>
     </svg>
