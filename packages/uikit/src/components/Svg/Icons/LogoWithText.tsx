@@ -1,12 +1,17 @@
 /* eslint-disable react/no-unknown-property */
-import { vars } from "@pancakeswap/ui/css/vars.css";
 import React from "react";
-import Svg from "../Svg";
 import { SvgProps } from "../types";
 
-const Logo: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
+const Logo: React.FC<React.PropsWithChildren<SvgProps>> = ({ className }) => {
   return (
-    <svg width="67" height="43" viewBox="0 0 67 43" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <svg
+      width="67"
+      height="43"
+      viewBox="0 0 67 43"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
       <path
         d="M31.5095 24.8043L41.5528 34.8475C42.4479 35.7426 42.9511 36.9568 42.9511 38.2227V38.224C42.9511 40.8603 40.814 42.9987 38.1764 42.9987H37.8811C36.6153 42.9987 35.4011 42.4955 34.506 41.6004L24.7566 31.8511C23.8616 30.956 23.3584 29.7418 23.3584 28.476V28.1807C23.3584 25.5444 25.4955 23.406 28.1331 23.406H28.1344C29.4003 23.406 30.6145 23.9092 31.5095 24.8043Z"
         fill="url(#paint0_linear_6431_13490)"

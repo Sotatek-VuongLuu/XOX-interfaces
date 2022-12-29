@@ -32,7 +32,7 @@ import { CurrencyModalView } from './types'
 const StyledModalContainer = styled(ModalContainer)`
   width: 448px;
   max-width: calc(100vw - 48px) !important;
-  max-height: calc(var(--vh, 1vh) * 90);
+  max-height: 90vh;
   position: relative;
   background: #242424;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
@@ -91,7 +91,7 @@ const StyledModalBody = styled(ModalBody)`
     padding-right: 15px;
     height: 310px !important;
 
-    & div[class*='MenuItem'] {
+    & > div > div {
       width: calc(100% - 15px) !important;
     }
 
@@ -118,13 +118,6 @@ const StyledModalBody = styled(ModalBody)`
       background-color: #444444;
     }
   }
-  // padding: 24px;
-  // overflow-y: auto;
-  // -ms-overflow-style: none;
-  // scrollbar-width: none;
-  // &::-webkit-scrollbar {
-  //   display: none;
-  // }
 `
 
 export interface CurrencySearchModalProps extends InjectedModalProps {
@@ -166,10 +159,10 @@ export default function CurrencySearchModal({
   const { t } = useTranslation()
 
   const config = {
-    [CurrencyModalView.search]: { title: t('Select a Token'), onBack: undefined },
+    [CurrencyModalView.search]: { title: t('Select Token'), onBack: undefined },
     [CurrencyModalView.manage]: { title: t('Manage'), onBack: () => setModalView(CurrencyModalView.search) },
     [CurrencyModalView.importToken]: {
-      title: t('Import Tokens'),
+      title: t('Import Token'),
       onBack: () =>
         setModalView(prevView && prevView !== CurrencyModalView.importToken ? prevView : CurrencyModalView.search),
     },

@@ -58,7 +58,7 @@ export const getUserPointDaily = async (chainId: ChainId, payload?: any) => {
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       {
-        userPointDailies(where: {date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} },orderDirection: desc) {
+        userPointDailies(where: {date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} },orderDirection: desc,orderBy: amount) {
           id
           address
           amount
@@ -75,7 +75,7 @@ export const getUserPointMonthly = async (chainId: ChainId, payload?: any) => {
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       {
-        userPointMonthlies(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte}},orderDirection: desc) {
+        userPointMonthlies(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte}},orderDirection: desc, orderBy: amount) {
           id
           address
           amount
@@ -92,7 +92,7 @@ export const getUserPointWeekly = async (chainId: ChainId, payload?: any) => {
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       {
-        userPointWeeklies(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} }, orderDirection: desc) {
+        userPointWeeklies(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} }, orderDirection: desc,orderBy: amount) {
           id
           address
           amount
@@ -104,7 +104,7 @@ export const getUserPointWeekly = async (chainId: ChainId, payload?: any) => {
   return response
 }
 
-export const userPoint = (chainId: number) =>{
+export const userPoint = (chainId: number) => {
   const requests = `
   {
     analysisDatas {

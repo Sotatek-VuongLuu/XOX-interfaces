@@ -12,10 +12,18 @@ const DropDownHeader = styled.div`
   justify-content: space-between;
   padding: 0px 16px;
   box-shadow: ${({ theme }) => theme.shadows.inset};
-  border: 1px solid ${({ theme }) => theme.colors.inputSecondary};
-  border-radius: 16px;
-  background: ${({ theme }) => theme.colors.input};
+  background: transparent;
   transition: border-radius 0.15s;
+  height: 37px;
+  border-radius: 4px;
+  border: 1px solid #444444;
+
+  & > div {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.87);
+  }
 `;
 
 const DropDownListContainer = styled.div`
@@ -23,13 +31,14 @@ const DropDownListContainer = styled.div`
   height: 0;
   position: absolute;
   overflow: hidden;
-  background: ${({ theme }) => theme.colors.input};
+  background: #303030;
   z-index: ${({ theme }) => theme.zIndices.dropdown};
   transition: transform 0.15s, opacity 0.15s;
   transform: scaleY(0);
   transform-origin: top;
   opacity: 0;
   width: 100%;
+  top: calc(100% + 1px);
 
   ${({ theme }) => theme.mediaQueries.sm} {
     min-width: 168px;
@@ -40,9 +49,9 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
   cursor: pointer;
   width: 100%;
   position: relative;
-  background: ${({ theme }) => theme.colors.input};
-  border-radius: 16px;
-  height: 40px;
+  background: transparent;
+  border-radius: 4px;
+  height: 37px;
   min-width: 136px;
   user-select: none;
   z-index: 20;
@@ -55,9 +64,8 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
     props.isOpen &&
     css`
       ${DropDownHeader} {
-        border-bottom: 1px solid ${({ theme }) => theme.colors.inputSecondary};
         box-shadow: ${({ theme }) => theme.tooltip.boxShadow};
-        border-radius: 16px 16px 0 0;
+        border-radius: 4px;
       }
 
       ${DropDownListContainer} {
@@ -66,8 +74,9 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
         opacity: 1;
         border: 1px solid ${({ theme }) => theme.colors.inputSecondary};
         border-top-width: 0;
-        border-radius: 0 0 16px 16px;
+        border-radius: 4px;
         box-shadow: ${({ theme }) => theme.tooltip.boxShadow};
+        padding: 6px 0;
       }
     `}
 
@@ -89,8 +98,16 @@ const DropDownList = styled.ul`
 const ListItem = styled.li`
   list-style: none;
   padding: 8px 16px;
+
+  & > div {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
   &:hover {
-    background: ${({ theme }) => theme.colors.inputSecondary};
+    background: #9072ff;
   }
 `;
 

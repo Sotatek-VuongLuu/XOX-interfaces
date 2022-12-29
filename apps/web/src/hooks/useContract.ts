@@ -61,6 +61,7 @@ import {
   getIfoCreditAddressContract,
   getTreasuryConTract,
   getContractXOXToken,
+  getContractXOXPool,
 } from 'utils/contractHelpers'
 import { useSigner } from 'wagmi'
 
@@ -397,4 +398,10 @@ export const useXOXTokenContract = (withSignerIfPossible = true) => {
   const { chainId } = useActiveChainId()
   const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
   return useMemo(() => getContractXOXToken(providerOrSigner as any, chainId), [providerOrSigner, chainId])
+}
+
+export const useXOXPoolContract = (withSignerIfPossible = true) => {
+  const { chainId } = useActiveChainId()
+  const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
+  return useMemo(() => getContractXOXPool(providerOrSigner as any, chainId), [providerOrSigner, chainId])
 }

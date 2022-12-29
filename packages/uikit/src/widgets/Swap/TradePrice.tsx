@@ -8,6 +8,7 @@ import { balanceMaxMiniClass } from "./SwapWidget.css";
 const PerLabel = styled.div`
   color: #ffffff;
   font-size: 16px;
+  font-weight:400;
   margin-top: "8px";
   @media (max-width: 574px) {
     font-size: 14px;
@@ -31,7 +32,7 @@ export function TradePrice({ price }: TradePriceProps) {
       <Text style={{ justifyContent: "space-between", alignItems: "center", display: "flex", width: "100%" }}>
         {show ? (
           <>
-            {formattedPrice ?? "-"}
+            <span style={{fontWeight:'700', fontSize:'18px'}}>{formattedPrice ?? "-"}</span>
             {/* <AtomBox className={balanceMaxMiniClass} onClick={() => setShowInverted(!showInverted)}>
               <AutoRenewIcon width="14px" />
             </AtomBox> */}

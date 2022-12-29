@@ -2,28 +2,21 @@
 /* eslint-disable import/order */
 import { useContext } from 'react'
 import { Currency } from '@pancakeswap/sdk'
-import { Flex, BottomDrawer, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Flex, useMatchBreakpoints } from '@pancakeswap/uikit'
 import SwapNonTrade from 'components/Svg/SwapNonTrade'
 import SwapTrade from 'components/Svg/SwapTrade'
 import SwapTradeMobile from 'components/Svg/SwapTradeMobile'
 import SwapNonTradeMobile from 'components/Svg/SwapNonTradeMobile'
 import SwapDefaultMobile from 'components/Svg/SwapDefaultMobile'
-import { AppBody } from 'components/App'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
-import { useIsTransactionUnsupported } from 'hooks/Trades'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
 import { useCurrency } from '../../hooks/Tokens'
 import { Field } from '../../state/swap/actions'
 import Page from '../Page'
-import PriceChartContainer from './components/Chart/PriceChartContainer'
 
 import SwapForm from './components/SwapForm'
-import StableSwapFormContainer from './StableSwap'
 import { StyledInputCurrencyWrapper, StyledSwapContainer } from './styles'
-import SwapTab, { SwapType } from './components/SwapTab'
 import { SwapFeaturesContext } from './SwapFeaturesContext'
-import { Card } from '@pancakeswap/uikit'
-import styled from 'styled-components'
 import { useAccount } from 'wagmi'
 import { useRouterNormal } from 'hooks/useApproveCallback'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -51,7 +44,14 @@ export default function Swap() {
     [Field.OUTPUT]: outputCurrency ?? undefined,
   }
   const isRouterNormal = useRouterNormal(inputCurrency, outputCurrency, chainId)
-  const { v2Trade } = useDerivedSwapInfo(independentField, typedValue, inputCurrency, outputCurrency, recipient, isRouterNormal)
+  const { v2Trade } = useDerivedSwapInfo(
+    independentField,
+    typedValue,
+    inputCurrency,
+    outputCurrency,
+    recipient,
+    isRouterNormal,
+  )
 
   const {
     wrapType,

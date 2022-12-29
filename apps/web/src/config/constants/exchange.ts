@@ -31,6 +31,8 @@ import {
   CAKE_BSC_TESTNET,
   LINK_BSC_TESTNET,
   ADA_BSC_TESTNET,
+  XOX_BSC_TESTNET,
+  XOX_GOERLI,
 } from '@pancakeswap/tokens'
 import { ChainMap, ChainTokenList } from './types'
 
@@ -126,6 +128,7 @@ export const SUGGESTED_BASES: ChainTokenList = {
     USDC_GOERLI,
     LINK_GOERLI,
     SHIB_GOERLI,
+    XOX_GOERLI
   ],
   [ChainId.BSC]: [
     bscTokens.btcb,
@@ -146,6 +149,7 @@ export const SUGGESTED_BASES: ChainTokenList = {
     CAKE_BSC_TESTNET,
     LINK_BSC_TESTNET,
     ADA_BSC_TESTNET,
+    XOX_BSC_TESTNET
   ],
 }
 

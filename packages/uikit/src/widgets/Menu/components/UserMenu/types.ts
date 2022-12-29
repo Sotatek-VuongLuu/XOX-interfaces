@@ -21,6 +21,7 @@ export interface UserMenuProps extends Omit<FlexProps, "children"> {
   children?: (exposedProps: { isOpen: boolean, setIsOpen: any }) => ReactElement;
   placement?: Placement;
   recalculatePopover?: boolean;
+  uncloseWhenClick?: boolean;
 }
 
 export interface UserMenuItemProps {
