@@ -13,16 +13,45 @@ export const ModalHeader = styled.div<{ background?: string }>`
   background: transparent;
   // border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
   display: flex;
-  padding: 12px 24px;
+  padding: 32px 24px 12px 24px;
+  border: none;
 
-  ${({ theme }) => theme.mediaQueries.md} {
-    background: ${({ background }) => background || "transparent"};
+  & > div {
+    display: block;
+  }
+  & > div button {
+    left: 17px;
+
+    svg {
+      fill: #8e8e8e;
+    }
+  }
+  h2 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  button {
+    position: absolute;
+    top: 17px;
+    right: 17px;
+    background: 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+  }
+
+  button:hover {
+    background: none !important;
   }
 `;
 
 export const ModalTitle = styled(Flex)`
   align-items: center;
-  justify-content:center;
+  justify-content: center;
   flex: 1;
 `;
 
@@ -31,6 +60,10 @@ export const ModalBody = styled(Flex)`
   overflow-y: auto;
   overflow-x: hidden;
   max-height: calc(90vh - ${mobileFooterHeight}px);
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(255, 255, 255, 0.87);
   ${({ theme }) => theme.mediaQueries.md} {
     display: flex;
     max-height: 90vh;
@@ -63,17 +96,17 @@ export const ModalContainer = styled(MotionBox)<{ $minWidth: string }>`
   z-index: ${({ theme }) => theme.zIndices.modal};
   position: absolute;
   min-width: ${({ $minWidth }) => $minWidth};
-  max-width: none !important;
   min-height: 300px;
   background: #242424;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
+  max-width: calc(100vw - 48px) !important;
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: auto;
     position: auto;
     bottom: auto;
-    border-radius: 32px;
+    border-radius: 24px;
     max-height: 100vh;
   }
 `;

@@ -79,6 +79,8 @@ export { default as LogoIcon } from "./Icons/Logo";
 export { default as LogoRoundIcon } from "./Icons/LogoRound";
 export { default as LogoutIcon } from "./Icons/Logout";
 export { default as LogoWithTextIcon } from "./Icons/LogoWithText";
+export { default as LogoMobileIcon } from "./Icons/LogoMobile";
+export { default as NotificationIcon } from "./Icons/Notification";
 export { default as MathWalletIcon } from "./Icons/MathWallet";
 export { default as MedalBronzeIcon } from "./Icons/MedalBronze";
 export { default as MedalGoldIcon } from "./Icons/MedalGold";

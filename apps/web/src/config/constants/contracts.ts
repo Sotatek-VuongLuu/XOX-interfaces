@@ -170,7 +170,13 @@ export default {
   contractXOXToken: {
     97: '0x798bb5B1CD7ed74654EBfD5D58a24d3D9Cc67847',
     5: '0xfE92Ceb4217a830135a943463192206935764B36',
-    1: '',
+    1: '', // TODO: change address
+    56: '',
+  },
+  contractXOXPool: {
+    97: '0x8b1c4fd225cc5c9eb8f81c3b4013222ded1763de',
+    5: '0x4EDd411230B3C02f091C5EbF4fD993045e135509',
+    1: '', // TODO: change address
     56: '',
   },
 }

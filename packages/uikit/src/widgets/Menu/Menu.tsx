@@ -6,9 +6,7 @@ import styled from "styled-components";
 import BottomNav from "../../components/BottomNav";
 import { Box } from "../../components/Box";
 import Flex from "../../components/Box/Flex";
-import CakePrice from "../../components/CakePrice/CakePrice";
 import Footer from "../../components/Footer";
-import LangSelector from "../../components/LangSelector/LangSelector";
 import MenuItems from "../../components/MenuItems/MenuItems";
 import { SubMenuItems } from "../../components/SubMenuItems";
 import { useMatchBreakpoints } from "../../contexts";
@@ -32,11 +30,15 @@ const StyledNav = styled.nav<IPropsNav>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: ${MENU_HEIGHT}px;
+  height: 66px;
   background-color: ${({ theme, isLanding }) => (isLanding ? "black" : theme.nav.background)};
   ${({ theme, isLanding }) => !isLanding && ` border-bottom: 1px solid ${theme.colors.cardBorder}`};
   transform: translate3d(0, 0, 0);
   padding: 14px 21px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: ${MENU_HEIGHT}px;
+  }
 `;
 
 const FixedContainer = styled.div<{ showMenu: boolean; height: number }>`

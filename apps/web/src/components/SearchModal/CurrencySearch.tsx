@@ -25,6 +25,7 @@ import ImportRow from './ImportRow'
 const InputWrapper = styled.div`
   position: relative;
   width: 100%;
+  max-height: 43px;
 
   & input {
     width: 100%;
@@ -226,7 +227,7 @@ function CurrencySearch({
         />
       </Box>
     ) : (
-      <Column style={{ padding: '20px', height: '100%' }}>
+      <Column style={{ padding: '20px', height: '100%' }} className="no-result">
         <Text color="textSubtle" textAlign="center" mb="20px">
           {t('No results found.')}
         </Text>

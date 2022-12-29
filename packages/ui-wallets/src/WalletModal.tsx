@@ -111,7 +111,7 @@ function MobileModal<T>({
   connectWallet,
   onDismiss,
 }: Pick<WalletModalV2Props<T>, 'wallets' | 'docLink' | 'docText'> & {
-  connectWallet: (wallet: WalletConfigV2<T>) => void,
+  connectWallet: (wallet: WalletConfigV2<T>) => void
   onDismiss: () => void
 }) {
   const { t } = useTranslation()
@@ -202,12 +202,10 @@ function WalletSelect<T>({
   onClick: (wallet: WalletConfigV2<T>) => void
   displayCount?: number
 }) {
-  const { t } = useTranslation()
-  const [showMore, setShowMore] = useState(false)
-  const walletsToShow = showMore ? wallets : wallets.slice(0, displayCount)
+  const [selected] = useSelectedWallet()
   return (
     <AtomBox className={walletSelectWrapperClass}>
-      {walletsToShow.map((wallet) => {
+      {wallets.map((wallet) => {
         const isImage = typeof wallet.icon === 'string'
         const Icon = wallet.icon
 
@@ -227,7 +225,7 @@ function WalletSelect<T>({
               background: '#303030',
               width: '150px',
               maxWidth: '45%',
-              margin: '0 10px'
+              margin: '0 10px',
             }}
             flexDirection="column"
             onClick={() => onClick(wallet)}
@@ -237,6 +235,15 @@ function WalletSelect<T>({
                 <Image src={Icon as string} width={60} height={60} />
               ) : (
                 <Icon width={24} height={24} color="textSubtle" />
+              )}
+              {wallet.id === selected?.id && (
+                <AtomBox
+                  position="absolute"
+                  inset="0"
+                  opacity="0.5"
+                  borderRadius="12px"
+                  style={{ backgroundColor: '#9A6AFF' }}
+                />
               )}
             </AtomBox>
             <Text
@@ -253,24 +260,6 @@ function WalletSelect<T>({
           </Button>
         )
       })}
-      {!showMore && wallets.length > displayCount && (
-        <AtomBox display="flex" justifyContent="center" alignItems="center" flexDirection="column">
-          <Button height="auto" variant="text" as={AtomBox} flexDirection="column" onClick={() => setShowMore(true)}>
-            <AtomBox
-              className={walletIconClass}
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              bgc="dropdown"
-            >
-              <MoreHorizontalIcon color="text" />
-            </AtomBox>
-            <Text fontSize="12px" textAlign="center" mt="4px">
-              {t('More')}
-            </Text>
-          </Button>
-        </AtomBox>
-      )}
     </AtomBox>
   )
 }

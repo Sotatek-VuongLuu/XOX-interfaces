@@ -812,7 +812,7 @@
   "No results found.": "No results found.",
   "Manage": "Manage",
   "Manage Tokens": "Manage Tokens",
-  "Import Tokens": "Import Tokens",
+  "Import Token": "Import Token",
   "Import List": "Import List",
   "Import at your own risk": "Import at your own risk",
   "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one.": "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one.",
