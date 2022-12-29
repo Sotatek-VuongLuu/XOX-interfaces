@@ -236,8 +236,8 @@ export default function SwapForm() {
   const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
 
   const hasAmount = Boolean(parsedAmount)
-  const handleChangeReferal =(value:string) =>{
-    setReferralCode(value);
+  const handleChangeReferal = (value: string) => {
+    setReferralCode(value)
   }
   const onRefreshPrice = useCallback(() => {
     if (hasAmount) {
@@ -344,16 +344,16 @@ export default function SwapForm() {
                   />
                 </>
               )}
-              {/* {inputCurrency?.symbol === 'XOX' && 
-                <ReferralCode>
-                <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
-                <ReferralInput onChange={(e)=> handleChangeReferal(e.target.value)} maxLength={8} placeholder="12345678" />
-              </ReferralCode>} */}
-               <ReferralCode>
-                <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
-                <ReferralInput onChange={(e)=> handleChangeReferal(e.target.value)} maxLength={8} placeholder="12345678" />
-              </ReferralCode>
-        
+          {inputCurrency?.symbol === 'XOX' && (
+            <ReferralCode>
+              <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
+              <ReferralInput
+                onChange={(e) => handleChangeReferal(e.target.value)}
+                maxLength={8}
+                placeholder="12345678"
+              />
+            </ReferralCode>
+          )}
         </AutoColumn>
         {hasStableSwapAlternative && (
           <AutoColumn>
