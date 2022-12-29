@@ -31,7 +31,7 @@ export default function Refferal() {
   const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
   const [userCurrentPoint, setUserCurrentPoint] = useState<number>(0)
-  const [currentLevelReach, setCurrentLevelReach] = useState(null)
+  const [currentLevelReach, setCurrentLevelReach] = useState<number>(0)
   const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
 
   // eslint-disable-next-line consistent-return
@@ -54,6 +54,9 @@ export default function Refferal() {
   }
 
   const handleCheckReachLevel = (currentPoint: number) => {
+    if (currentPoint < listLevelMustReach[0].point) {
+      setCurrentLevelReach(0)
+    }
     const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
       const reached = currentPoint >= item.point
       return {
@@ -70,13 +73,15 @@ export default function Refferal() {
 
   useEffect(() => {
     const fetchMyAPI = async () => {
-      const currentPoint = await handleGetCurrentPoint()
+      // const currentPoint = await handleGetCurrentPoint()
+      const currentPoint = 1000000
+
       if (currentPoint) {
         await handleCheckReachLevel(currentPoint)
       }
     }
     fetchMyAPI()
-  }, [account])
+  }, [account, chainId])
 
   return (
     <>
@@ -84,7 +89,7 @@ export default function Refferal() {
         <Box>
           <Banner />
           <MainInfo userCurrentPoint={userCurrentPoint} currentLevelReach={currentLevelReach} listLever={listLever} />
-          <ReferralFriend userCurrentPoint={userCurrentPoint} />
+          <ReferralFriend userCurrentPoint={1000000} />
         </Box>
       </Wrapper>
     </>
