@@ -38,6 +38,7 @@ const HoverableChart = ({
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>(native)
   const [dateHover, setDateHover] = useState<string | undefined>()
   const [currencyData, setCurrencyData] = useState<any>()
+  const [showX, setShowX] = useState<any>(true);
 
   // Getting latest data to display on top of chart when not hovered
   useEffect(() => {
@@ -95,6 +96,14 @@ const HoverableChart = ({
     )
     if (dataCurrency) setCurrencyData(dataCurrency)
   }, [selectedCurrency, currencyDatas])
+
+  const handleFilter = (value:string) => {
+    setShowX(false);
+    setTimeout(() => {
+      setShowX(true);
+    }, 500);
+    setFilter(value);
+  }
 
   return (
     <Box p={['16px', '16px', '24px']}>
@@ -164,22 +173,22 @@ const HoverableChart = ({
 
         <div className="filter">
           <div>
-            <button type="button" onClick={() => setFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
+            <button type="button" onClick={() => handleFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
               All
             </button>
-            <button type="button" onClick={() => setFilter('1Y')} className={filter === '1Y' ? 'active' : ''}>
+            <button type="button" onClick={() => handleFilter('1Y')} className={filter === '1Y' ? 'active' : ''}>
               1Y
             </button>
-            <button type="button" onClick={() => setFilter('3M')} className={filter === '3M' ? 'active' : ''}>
+            <button type="button" onClick={() => handleFilter('3M')} className={filter === '3M' ? 'active' : ''}>
               3M
             </button>
-            <button type="button" onClick={() => setFilter('1M')} className={filter === '1M' ? 'active' : ''}>
+            <button type="button" onClick={() => handleFilter('1M')} className={filter === '1M' ? 'active' : ''}>
               1M
             </button>
-            <button type="button" onClick={() => setFilter('7D')} className={filter === '7D' ? 'active' : ''}>
+            <button type="button" onClick={() => handleFilter('7D')} className={filter === '7D' ? 'active' : ''}>
               7D
             </button>
-            <button type="button" onClick={() => setFilter('1D')} className={filter === '1D' ? 'active' : ''}>
+            <button type="button" onClick={() => handleFilter('1D')} className={filter === '1D' ? 'active' : ''}>
               24H
             </button>
           </div>
@@ -197,13 +206,15 @@ const HoverableChart = ({
         <Skeleton width="128px" height="36px" />
       )}
       <Text>{dateHover ?? currentDate}</Text> */}
-      <Box height="250px">
+      <Box height="250px" className=''>
         <ChartComponent
           data={formattedData}
           setHoverValue={setHover}
           setHoverDate={setDateHover}
           minYAxis={minYAxis}
           maxYAxis={maxYAxis}
+          typeXAxis={filter}
+          showXAxis={showX}
         />
       </Box>
     </Box>
