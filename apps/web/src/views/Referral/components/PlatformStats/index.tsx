@@ -14,12 +14,14 @@ import {
 import { userPoint, userClaimedHistories, pointDataDays } from 'services/referral'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { BigNumber } from '@ethersproject/bignumber'
 import moment from 'moment'
 import styled from 'styled-components'
 import ChartRef from './components/ChartRef'
 import ColumnChartRef from './components/ColumnChartRef'
+
 
 
 
@@ -47,12 +49,13 @@ const Wrapper = styled(Box)`
       display: flex;
       width:100%;
       justify-content:space-between;
+      gap: 17px;
       .info_volumn_item {
         padding: 16px 17px;
         background: #303030;
         border-radius: 6px;
-        width: 150px;
-        height: 126px;
+        width: 100%;
+        // height: 126px;
 
         .volumn {
           font-weight: 700;
@@ -146,7 +149,7 @@ const Wrapper = styled(Box)`
 
 const PlatformStat = (props : any): JSX.Element => {
   const { listPoint } = props;
-  const chainId = 97
+  const {  chainId } = useActiveWeb3React()
   const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>([])
   const [userClaimHistories, setUserClaimHistories] = useState([])
   const [dataChart, setDataChart] = useState([])
@@ -157,10 +160,12 @@ const PlatformStat = (props : any): JSX.Element => {
   const getUserPoint = async () => {
     const result = await userPoint(chainId)
     if (result) {
+      const totalUnClaimed = Number(result.analysisDatas[0]?.total_reward) - Number(result.analysisDatas[0]?.total_claimed_amount);
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
-      listData[1].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_amount))
+      listData[1].volumn = formatBigNumber(BigNumber.from(totalUnClaimed.toString()))
       listData[2].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
-
+      listData[3].volumn = result.analysisDatas[0]?.total_transactions.toString()
+      listData[4].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_reward))
       setVolumnData(listData)
     }
   }
