@@ -64,6 +64,7 @@ const ReferralInput = styled.input`
   padding 0 12px;
   color:#FFFFFFDE;
   border-radius:4px;
+  text-transform:uppercase;
 `
 const PerPriceTitle = styled.div`
   color: #9072ff;
@@ -81,7 +82,7 @@ export default function SwapForm() {
   const stableFarms = useStableFarms()
   const warningSwapHandler = useWarningImport()
   const tokenMap = useAtomValue(combinedTokenMapFromOfficialsUrlsAtom)
-
+  const [referralCode, setReferralCode] = useState(null)
   const { account, chainId } = useActiveWeb3React()
 
   // for expert mode
@@ -235,13 +236,14 @@ export default function SwapForm() {
   const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
 
   const hasAmount = Boolean(parsedAmount)
-
+  const handleChangeReferal = (value: string) => {
+    setReferralCode(value)
+  }
   const onRefreshPrice = useCallback(() => {
     if (hasAmount) {
       refreshBlockNumber()
     }
   }, [hasAmount, refreshBlockNumber])
-
   return (
     <>
       <CurrencyInputHeader
@@ -342,12 +344,16 @@ export default function SwapForm() {
                   />
                 </>
               )}
-              {inputCurrency?.symbol === 'XOX' && 
-                <ReferralCode>
-                <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
-                <ReferralInput placeholder="0x32648D3c43f396a81fc696af89bA4B099b3E9C02" />
-              </ReferralCode>}
-        
+          {inputCurrency?.symbol === 'XOX' && (
+            <ReferralCode>
+              <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
+              <ReferralInput
+                onChange={(e) => handleChangeReferal(e.target.value)}
+                maxLength={8}
+                placeholder="12345678"
+              />
+            </ReferralCode>
+          )}
         </AutoColumn>
         {hasStableSwapAlternative && (
           <AutoColumn>
@@ -374,7 +380,7 @@ export default function SwapForm() {
             swapInputError={swapInputError}
             currencyBalances={currencyBalances}
             recipient={recipient}
-            referral={null}
+            referral={referralCode}
             isRouterNormal={isRouterNormal}
             allowedSlippage={allowedSlippage}
             onUserInput={onUserInput}
