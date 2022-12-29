@@ -208,7 +208,7 @@ export default function SwapCommitButton({
   const priceImpactSeverity = warningSeverity(priceImpactWithoutFee)
   useEffect(() => {
     if (referral) {
-      //TODO VUONG
+      // TODO VUONG
       getUserByReferral(referral)
     }
   }, [referral])

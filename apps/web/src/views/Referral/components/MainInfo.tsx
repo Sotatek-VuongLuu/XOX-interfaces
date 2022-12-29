@@ -44,6 +44,7 @@ interface IPropsContainer {
 interface IDataFormatUnit {
   id: string
   amount: string
+  address: string
 }
 
 interface IProps {
@@ -89,7 +90,7 @@ const First = styled.div<IPropsTotal>`
     display: flex;
     justify-content: center;
     gap: 3px;
-    margin-bottom: ${({ account }) => (account ? '18px' : '60px')};
+    margin-bottom: ${({ account }) => (account ? '18px' : '')};
 
     .dot_item {
       background: #9072ff;
@@ -281,7 +282,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
       const dataMapping = await Promise.all(
         dataUserFormatAmount.map(async (item: IDataFormatUnit, index: number): Promise<any> => {
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
-            wallets: [`${item.id}`],
+            wallets: [`${item.address}`],
           })
           const dataMap = response?.data[0]
           return {

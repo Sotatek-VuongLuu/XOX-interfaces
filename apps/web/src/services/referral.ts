@@ -22,6 +22,7 @@ export const getUerRank = async (chainId: ChainId) => {
         userPoints(first: 100, skip: 0, orderBy: amount, orderDirection: desc) {
           id
           amount
+          address
         }
       }
     `,

@@ -31,8 +31,8 @@ export default function Refferal() {
   const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
   const [userCurrentPoint, setUserCurrentPoint] = useState<number>(0)
-  const [currentLevelReach, setCurrentLevelReach] = useState(null)
-  const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
+  const [currentLevelReach, setCurrentLevelReach] = useState<number>(0)
+  const [listLevelMustReach, _] = useState<IItemLevel[]>(listLever)
 
   // eslint-disable-next-line consistent-return
   const handleGetCurrentPoint = async () => {
@@ -54,6 +54,9 @@ export default function Refferal() {
   }
 
   const handleCheckReachLevel = (currentPoint: number) => {
+    if (currentPoint < listLevelMustReach[0].point) {
+      setCurrentLevelReach(0)
+    }
     const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
       const reached = currentPoint >= item.point
       return {
@@ -76,7 +79,7 @@ export default function Refferal() {
       }
     }
     fetchMyAPI()
-  }, [account])
+  }, [account, chainId])
 
   return (
     <>
