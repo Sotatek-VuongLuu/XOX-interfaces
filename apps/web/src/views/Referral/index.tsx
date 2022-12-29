@@ -49,7 +49,7 @@ export default function Refferal() {
 
       return currentPoint
     } catch (error) {
-      console.log(`error >>>`, error)
+      console.warn(error)
     }
   }
 

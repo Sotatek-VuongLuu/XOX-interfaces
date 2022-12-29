@@ -231,7 +231,6 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     const baseTokenAddress = chainId === 1 || chainId === 5 ? USDC[chainId].address : BUSD[chainId].address
     Promise.all([contract.balanceOf(baseTokenAddress), contract.balanceOf(getXOXTokenAddress(chainId))])
       .then((balances) => {
-        console.log(balances, 'balances')
         const baseTokenPrice = parseFloat(formatBigNumber(balances[0]))
         const XoxPrice = parseFloat(formatBigNumber(balances[1]))
         if (baseTokenPrice === 0) return
@@ -457,8 +456,8 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                         lineHeight="15px"
                         color="rgba(255, 255, 255, 0.6)"
                       >
-                        ~${balance?.balance * tokenRateUSD(balance.symbol)} | ~
-                        {balance?.balance * tokenRateXOX(balance.symbol)} XOX
+                        ~${balance?.balance * tokenRateUSD(balance.symbol)}
+                        {balance?.symbol !== 'XOX' && <>| ~{balance?.balance * tokenRateXOX(balance.symbol)} XOX</>}
                       </Text>
                     </Flex>
                   </Flex>

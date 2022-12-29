@@ -92,6 +92,7 @@ function useSearchInactiveTokenLists(search: string | undefined, minResults = 10
         }
       }
     }
+    console.log([...exactMatches, ...rest], '[...exactMatches, ...rest].slice(0, minResults)')
     return [...exactMatches, ...rest].slice(0, minResults)
   }, [activeTokens, chainId, inactiveUrls, lists, minResults, search])
 }

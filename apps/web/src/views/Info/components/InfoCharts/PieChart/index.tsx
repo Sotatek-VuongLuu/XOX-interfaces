@@ -15,6 +15,7 @@ export default function InfoPieChart({ data, colors, total }) {
       </text>
     )
   }
+
   return (
     <ResponsiveContainer width="100%" height={220}>
       {total > 0 ? (

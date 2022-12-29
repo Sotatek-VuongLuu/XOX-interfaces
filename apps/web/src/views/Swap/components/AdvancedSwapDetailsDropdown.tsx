@@ -15,7 +15,7 @@ const AdvancedDetailsFooter = styled.div<{ show: boolean }>`
   transition: transform 300ms ease-in-out;
 `
 const AdvancedDetail = styled.div<{ show: boolean }>`
-margin-top: ${({ show }) => (show ? '26px' : 0)};
+// margin-top: ${({ show }) => (show ? '26px' : 0)};
 padding-bottom: 16px;
 width: 100%;
 border-radius: 20px;
