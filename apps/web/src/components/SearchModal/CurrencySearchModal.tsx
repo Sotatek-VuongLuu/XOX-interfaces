@@ -31,8 +31,8 @@ import { CurrencyModalView } from './types'
 
 const StyledModalContainer = styled(ModalContainer)`
   width: 448px;
-  max-width: calc(100vw - 48px)!important;
-  max-height: calc(var(--vh, 1vh) * 90);
+  max-width: calc(100vw - 48px) !important;
+  max-height: 90vh;
   position: relative;
   background: #242424;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
@@ -43,90 +43,80 @@ const StyledModalContainer = styled(ModalContainer)`
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     border-radius: 20px;
   }
+`
 
-  & div[class*='ModalHeader'] {
-    padding-top: 32px;
-    padding-bottom: 0;
-    border: none;
-    & > div {
-      display: block;
-    }
-    & > div button {
-      left: 17px;
+const StyledModalHeader = styled(ModalHeader)`
+  padding-top: 32px;
+  padding-bottom: 0;
+  border: none;
+  & > div {
+    display: block;
+  }
+  & > div button {
+    left: 17px;
 
-      svg {
-        fill: #8e8e8e;
-      }
-    }
-
-    h2 {
-      text-align: center;
-      font-weight: 700;
-      font-size: 20px;
-      line-height: 24px;
-      color: rgba(255, 255, 255, 0.87);
-    }
-
-    button {
-      position: absolute;
-      top: 17px;
-      right: 17px;
-      background: 0;
-      padding: 0;
-      width: 20px;
-      height: 20px;
-    }
-
-    button:hover {
-      background: none !important;
+    svg {
+      fill: #8e8e8e;
     }
   }
 
-  & div[class*='ModalBody'] {
-    padding: 16px 27px 32px 27px;
+  h2 {
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.87);
+  }
 
-    & .curency-list {
-      width: calc(100% + 15px) !important;
-      padding-right: 15px;
-      height: 310px!important;
+  button {
+    position: absolute;
+    top: 17px;
+    right: 17px;
+    background: 0;
+    padding: 0;
+    width: 20px;
+    height: 20px;
+  }
 
-      & div[class*='MenuItem'] {
-        width: calc(100% - 15px) !important;
-      }
-
-      button {
-        font-weight: 700;
-        font-size: 14px;
-        line-height: 17px;
-        color: #ffffff;
-      }
-
-      &::-webkit-scrollbar-track {
-        -webkit-box-shadow: inset 0 0 6px #242424;
-        background-color: #242424;
-      }
-
-      &::-webkit-scrollbar {
-        display: block;
-        width: 6px;
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: 5px; /* Firefox */
-      }
-
-      &::-webkit-scrollbar-thumb {
-        background-color: #444444;
-      }
-    }
+  button:hover {
+    background: none !important;
   }
 `
 
 const StyledModalBody = styled(ModalBody)`
-  padding: 24px;
-  overflow-y: auto;
-  -ms-overflow-style: none;
-  scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
+  padding: 16px 27px 32px 27px;
+
+  & .curency-list {
+    width: calc(100% + 15px) !important;
+    padding-right: 15px;
+    height: 310px !important;
+
+    & > div > div {
+      width: calc(100% - 15px) !important;
+    }
+
+    button {
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      color: #ffffff;
+    }
+
+    &::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px #242424;
+      background-color: #242424;
+    }
+
+    &::-webkit-scrollbar {
+      display: block;
+      width: 6px;
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: 5px; /* Firefox */
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background-color: #444444;
+    }
   }
 `
 
@@ -169,10 +159,10 @@ export default function CurrencySearchModal({
   const { t } = useTranslation()
 
   const config = {
-    [CurrencyModalView.search]: { title: t('Select a Token'), onBack: undefined },
+    [CurrencyModalView.search]: { title: t('Select Token'), onBack: undefined },
     [CurrencyModalView.manage]: { title: t('Manage'), onBack: () => setModalView(CurrencyModalView.search) },
     [CurrencyModalView.importToken]: {
-      title: t('Import Tokens'),
+      title: t('Import Token'),
       onBack: () =>
         setModalView(prevView && prevView !== CurrencyModalView.importToken ? prevView : CurrencyModalView.search),
     },
@@ -201,13 +191,13 @@ export default function CurrencySearchModal({
       }}
       ref={wrapperRef}
     >
-      <ModalHeader>
+      <StyledModalHeader>
         <ModalTitle>
           {config[modalView].onBack && <ModalBackButton onBack={config[modalView].onBack} />}
           <Heading>{config[modalView].title}</Heading>
         </ModalTitle>
         <ModalCloseButton onDismiss={onDismiss} />
-      </ModalHeader>
+      </StyledModalHeader>
       <StyledModalBody>
         {modalView === CurrencyModalView.search ? (
           <CurrencySearch

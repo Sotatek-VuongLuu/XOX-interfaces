@@ -25,6 +25,7 @@ import ImportRow from './ImportRow'
 const InputWrapper = styled.div`
   position: relative;
   width: 100%;
+  max-height: 43px;
 
   & input {
     width: 100%;
@@ -91,6 +92,7 @@ function useSearchInactiveTokenLists(search: string | undefined, minResults = 10
         }
       }
     }
+    console.log([...exactMatches, ...rest], '[...exactMatches, ...rest].slice(0, minResults)')
     return [...exactMatches, ...rest].slice(0, minResults)
   }, [activeTokens, chainId, inactiveUrls, lists, minResults, search])
 }
@@ -226,7 +228,7 @@ function CurrencySearch({
         />
       </Box>
     ) : (
-      <Column style={{ padding: '20px', height: '100%' }}>
+      <Column style={{ padding: '20px', height: '100%' }} className="no-result">
         <Text color="textSubtle" textAlign="center" mb="20px">
           {t('No results found.')}
         </Text>

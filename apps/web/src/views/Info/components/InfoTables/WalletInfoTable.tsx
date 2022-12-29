@@ -22,6 +22,9 @@ import { getDefaultProvider } from '@ethersproject/providers'
 import { CurrencyLogo } from 'components/Logo'
 import { ERC20Token } from '@pancakeswap/sdk'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import { useXOXPoolContract } from 'hooks/useContract'
+import { BUSD, USDC } from '@pancakeswap/tokens'
+import { getXOXTokenAddress } from 'utils/addressHelpers'
 import InfoPieChart from '../InfoCharts/PieChart'
 
 const Wrapper = styled.div`
@@ -157,7 +160,7 @@ const TableWrapper = styled(Flex)`
   min-height: 454px;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    width: 454px;
+    width: 100%;
     min-height: unset;
     padding: 24px;
   }
@@ -181,6 +184,10 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const [balanceNative, setBalanceNative] = useState<any>()
   const [dataChart, setDataChart] = useState<any>([])
   const [totalAsset, setTotalAsset] = useState<number>(0)
+  const [rateXOX, setRateXOX] = useState(0)
+  const contract = useXOXPoolContract()
+  const baseTokenSymbol = chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'
+  const baseToken = Object.values(allTokens).find((value: any) => value.symbol === baseTokenSymbol)
 
   const colors = ['#9072FF', '#5F35EB', '#89DDEF', '#90F0B1']
 
@@ -202,8 +209,46 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     [currencyDatas],
   )
 
-  const getToken = useCallback((token) => {
+  const tokenRateXOX = useCallback(
+    (symbol: string) => {
+      if (!currencyDatas || rateXOX === 0) return 0
+      if (symbol === native.symbol && chainId === 5) {
+        const currencyData = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === 'ETH')
+        return (currencyData?.price || 0) / rateXOX
+      }
+      if (symbol === native.symbol && chainId === 97) {
+        const currencyData = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === 'BNB')
+        return (currencyData?.price || 0) / rateXOX
+      }
+      const currencyData = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === symbol.toUpperCase())
+      if (!currencyData) return 0
+      return currencyData.price / rateXOX
+    },
+    [currencyDatas],
+  )
+
+  const getXOXPrice = () => {
+    const baseTokenAddress = chainId === 1 || chainId === 5 ? USDC[chainId].address : BUSD[chainId].address
+    Promise.all([contract.balanceOf(baseTokenAddress), contract.balanceOf(getXOXTokenAddress(chainId))])
+      .then((balances) => {
+        const baseTokenPrice = parseFloat(formatBigNumber(balances[0]))
+        const XoxPrice = parseFloat(formatBigNumber(balances[1]))
+        if (baseTokenPrice === 0) return
+        setRateXOX(XoxPrice / baseTokenPrice)
+      })
+      .catch((e) => console.warn(e))
+  }
+
+  const getToken = useCallback((token: any) => {
     return new ERC20Token(chainId, token.contractAddress, token.decimals, token.symbol)
+  }, [])
+
+  useEffect(() => {
+    getXOXPrice()
+    const id = setInterval(getXOXPrice, 10000)
+
+    // eslint-disable-next-line consistent-return
+    return () => clearInterval(id)
   }, [])
 
   useEffect(() => {
@@ -363,8 +408,8 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                     lineHeight="15px"
                     color="rgba(255, 255, 255, 0.6)"
                   >
-                    ~${balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol) : 0} |
-                    ~0.70115 XOX
+                    ~${balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol) : 0} | ~
+                    {balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateXOX(native.symbol) : 0} XOX
                   </Text>
                 </Flex>
               </Flex>
@@ -411,7 +456,8 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                         lineHeight="15px"
                         color="rgba(255, 255, 255, 0.6)"
                       >
-                        ~${balance?.balance * tokenRateUSD(balance.symbol)} | ~0.70115 XOX
+                        ~${balance?.balance * tokenRateUSD(balance.symbol)}
+                        {balance?.symbol !== 'XOX' && <>| ~{balance?.balance * tokenRateXOX(balance.symbol)} XOX</>}
                       </Text>
                     </Flex>
                   </Flex>

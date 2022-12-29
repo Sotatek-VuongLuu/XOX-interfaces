@@ -15,6 +15,13 @@ export const StyledUserMenu = styled(Flex)`
   position: relative;
 `;
 
+export const FlexWrapper = styled(Flex)`
+  height: 37px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: 43px;
+  }
+`;
+
 export const LabelText = styled.div`
   display: none;
   font-family: "Inter";
@@ -72,6 +79,7 @@ const UserMenu: React.FC<UserMenuProps> = ({
   disabled,
   placement = "bottom-end",
   recalculatePopover,
+  uncloseWhenClick,
   ...props
 }) => {
   const [isOpen, setIsOpen] = useState(false);
@@ -113,9 +121,8 @@ const UserMenu: React.FC<UserMenuProps> = ({
 
   return (
     <Flex alignItems="center" height="100%" ref={setTargetRef} {...props}>
-      <Flex
+      <FlexWrapper
         alignItems="center"
-        height="43px"
         justifyContent="center"
         border="1px solid #444444"
         borderRadius="6px"
@@ -132,10 +139,10 @@ const UserMenu: React.FC<UserMenuProps> = ({
         </StyledUserMenu>
         {!disabled && (
           <Menu style={styles.popper} ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
-            <Box onClick={() => setIsOpen(false)}>{children?.({ isOpen, setIsOpen })}</Box>
+            <Box onClick={() => !uncloseWhenClick && setIsOpen(false)}>{children?.({ isOpen, setIsOpen })}</Box>
           </Menu>
         )}
-      </Flex>
+      </FlexWrapper>
     </Flex>
   );
 };

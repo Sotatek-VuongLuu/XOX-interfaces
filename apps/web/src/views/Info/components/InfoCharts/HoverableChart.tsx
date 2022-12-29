@@ -21,6 +21,7 @@ interface HoverableChartProps {
   setCoinmarketcapId: (id: number) => void
   chainId: number
   native: NativeCurrency
+  allTokens: any
 }
 
 const HoverableChart = ({
@@ -33,11 +34,15 @@ const HoverableChart = ({
   setCoinmarketcapId,
   native,
   chainId,
+  allTokens,
 }: HoverableChartProps) => {
   const [hover, setHover] = useState<number | undefined>()
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>(native)
   const [dateHover, setDateHover] = useState<string | undefined>()
   const [currencyData, setCurrencyData] = useState<any>()
+
+  const baseToken = chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'
+  const inputCurrency = Object.values(allTokens).find((value: any) => value.symbol === baseToken)
 
   // Getting latest data to display on top of chart when not hovered
   useEffect(() => {
@@ -90,9 +95,13 @@ const HoverableChart = ({
 
   useEffect(() => {
     if (!currencyDatas) return
-    const dataCurrency = currencyDatas.find(
-      (data: any) => data?.symbol?.toLowerCase() === selectedCurrency.symbol.toLowerCase(),
-    )
+    const sym =
+      selectedCurrency === native
+        ? chainId === 1 || chainId === 5
+          ? 'ETH'
+          : 'BNB'
+        : selectedCurrency.symbol.toUpperCase()
+    const dataCurrency = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === sym)
     if (dataCurrency) setCurrencyData(dataCurrency)
   }, [selectedCurrency, currencyDatas])
 
@@ -103,9 +112,21 @@ const HoverableChart = ({
           <p className="title_chart">Token Price</p>
           <div className="line" />
         </div>
-        <button className="btn_select_token" onClick={onPresentCurrencyModal}>
-          Select Token
-        </button>
+        <div className="btns">
+          <a
+            className="btn-get-token"
+            href={`/swap?chainId=${chainId}&inputCurrency=${(inputCurrency as any)?.address}&outputCurrency=${
+              selectedCurrency === native ? native.symbol : (selectedCurrency as any).address
+            }`}
+          >
+            <div className="boxed-child">
+              <span>Get {selectedCurrency.symbol}</span>
+            </div>
+          </a>
+          <button className="btn_select_token" onClick={onPresentCurrencyModal}>
+            Select Token
+          </button>
+        </div>
       </TitleChart>
 
       <ChartContent>
@@ -156,8 +177,8 @@ const HoverableChart = ({
               </p>
             </div>
             <div className="volume">
-              <p>Volume 24h {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}</p>
               <p>Market cap: {currencyData && <span>${formatAmount(currencyData?.market_cap)}</span>}</p>
+              <p>Volume 24h {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}</p>
             </div>
           </>
         </div>

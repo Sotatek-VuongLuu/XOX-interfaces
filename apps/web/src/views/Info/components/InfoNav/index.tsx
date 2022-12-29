@@ -22,6 +22,8 @@ import { chains } from 'utils/wagmi'
 import { ChainLogo } from 'components/Logo/ChainLogo'
 import { useAccount } from 'wagmi'
 import { bsc, mainnet } from '@pancakeswap/wagmi/chains'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+import useNativeCurrency from 'hooks/useNativeCurrency'
 
 const NavWrapper = styled(Flex)`
   padding: 28px 24px 24px;
@@ -122,22 +124,20 @@ const MainContent = styled.div`
   }
 `
 
-const InfoNav: React.FC<{ isStableSwap: boolean }> = ({ isStableSwap }) => {
-  const { t } = useTranslation()
+const InfoNav: React.FC<{ allTokens: any }> = ({ allTokens }) => {
   const router = useRouter()
   const chainPath = useMultiChainPath()
-  const { address: account } = useAccount()
+  const { chainId } = useActiveChainId()
+  const native = useNativeCurrency()
+
+  const baseToken = chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'
 
   const isPairs = router.pathname === `/info${chainPath && `/[chainName]`}/pairs`
   const isTokens = router.pathname === `/info${chainPath && `/[chainName]`}/tokens`
-  const stableSwapQuery = isStableSwap ? '?type=stableSwap' : ''
-  let activeIndex = 0
-  if (isPairs) {
-    activeIndex = 1
-  }
-  if (isTokens) {
-    activeIndex = 2
-  }
+
+  const outputCurrency = Object.values(allTokens).find((value: any) => value.symbol === 'XOX')
+  const inputCurrency = Object.values(allTokens).find((value: any) => value.symbol === baseToken)
+
   return (
     <NavWrapper>
       <MainContent>
@@ -147,7 +147,11 @@ const InfoNav: React.FC<{ isStableSwap: boolean }> = ({ isStableSwap }) => {
         <Text className="subtitle" marginBottom="16px">
           Stake XOXS automatically to earn more
         </Text>
-        <a href="/swap">
+        <a
+          href={`/swap?chainId=${chainId}&outputCurrency=${(outputCurrency as any)?.address}&inputCurrency=${
+            (inputCurrency as any)?.address
+          }`}
+        >
           <Button className="get-xox">Get XOX</Button>
         </a>
         <a href="/whitepaper">

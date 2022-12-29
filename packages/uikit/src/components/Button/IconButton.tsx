@@ -6,6 +6,10 @@ import { BaseButtonProps } from "./types";
 const IconButton: PolymorphicComponent<BaseButtonProps, "button"> = styled(Button)<BaseButtonProps>`
   padding: 0;
   width: ${({ scale }) => (scale === "sm" ? "32px" : "48px")};
+  background:unset;
+  :hover {
+    background:unset;
+  }
 `;
 
 export default IconButton;

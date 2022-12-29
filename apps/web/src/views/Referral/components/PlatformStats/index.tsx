@@ -11,14 +11,22 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material'
-import { height } from '@mui/system'
-import { useState } from 'react'
+import { userPoint, userClaimedHistories, pointDataDays } from 'services/referral'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
+import { BigNumber } from '@ethersproject/bignumber'
+import moment from 'moment'
 import styled from 'styled-components'
 import ChartRef from './components/ChartRef'
 import ColumnChartRef from './components/ColumnChartRef'
 
+
+
+
 interface IVolumnDataItem {
-  volumn: number
+  volumn: string
   title: string
   svg: string
 }
@@ -39,16 +47,15 @@ const Wrapper = styled(Box)`
 
     .info_volumn {
       display: flex;
-      & > div:nth-child(2) {
-        margin: 0 20px;
-      }
-
+      width:100%;
+      justify-content:space-between;
+      gap: 17px;
       .info_volumn_item {
         padding: 16px 17px;
         background: #303030;
         border-radius: 6px;
-        width: 142px;
-        height: 126px;
+        width: 100%;
+        // height: 126px;
 
         .volumn {
           font-weight: 700;
@@ -75,10 +82,9 @@ const Wrapper = styled(Box)`
       .info_volumn {
         flex-direction: column;
         width: 100%;
-        & > div:nth-child(2) {
-          margin: 16px 0px;
-        }
+       
         .info_volumn_item {
+          margin: 16px 0px;
           width: 100%;
           display: grid;
           grid-template-columns: auto;
@@ -141,28 +147,98 @@ const Wrapper = styled(Box)`
   }
 `
 
-const PlatformStat = (): JSX.Element => {
-  const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>(listData)
+const PlatformStat = (props : any): JSX.Element => {
+  const { listPoint } = props;
+  const {  chainId } = useActiveWeb3React()
+  const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>([])
+  const [userClaimHistories, setUserClaimHistories] = useState([])
+  const [dataChart, setDataChart] = useState([])
+  const [minAmount, setMinAmount] = useState('')
+  const [middleAmount, setMiddleAmount] = useState('')
+  const [maxAmount, setMaxAmount] = useState('')
 
-  function createData(no: number, avatar: string, name: string, time: string, point: number, claim: number) {
+  const getUserPoint = async () => {
+    const result = await userPoint(chainId)
+    if (result) {
+      const totalUnClaimed = Number(result.analysisDatas[0]?.total_reward) - Number(result.analysisDatas[0]?.total_claimed_amount);
+      listData[0].volumn = result.analysisDatas[0]?.number_of_referral
+      listData[1].volumn = formatBigNumber(BigNumber.from(totalUnClaimed.toString()))
+      listData[2].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
+      listData[3].volumn = result.analysisDatas[0]?.total_transactions.toString()
+      listData[4].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_reward))
+      setVolumnData(listData)
+    }
+  }
+  const getUserClaimedHistories = async () => {
+    const result = await userClaimedHistories(chainId)
+    if (result) {
+      const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
+        const mappingUser = await mapingHistories(item.id)
+        return createData(
+          idx + 1,
+          mappingUser.avatar ?? 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
+          mappingUser.username,
+          moment(item.data).format('DD/MM/YYYY hh:mm:ss'),
+          mapPoint(formatBigNumber(BigNumber.from(item.amount))),
+          formatBigNumber(BigNumber.from(item.amount)),
+        )
+      })
+      const lastResponse = await Promise.all(histories)
+      setUserClaimHistories(lastResponse)
+    }
+  }
+  const getPointDataDays = async () => {
+    const result = await pointDataDays(chainId)
+    if (result) {
+      const arr = result.pointDataDays;
+      setMinAmount(formatBigNumber(BigNumber.from(arr[0].amount)))
+      setMiddleAmount(formatBigNumber(BigNumber.from(arr[Math.floor(arr.length/2)].amount)))
+      setMaxAmount(formatBigNumber(BigNumber.from(arr[arr.length-1].amount)))
+      const data = arr.map((item: any) => {
+          return createDataChartDay(
+            moment(item.date * 1000).format('DD MMM'),
+            formatBigNumber(BigNumber.from(item.amount)),
+          )
+        })
+      setDataChart(data)
+    }
+  }
+  const mapPoint = (amount: string) => {
+    for(let i = 0; i <= listPoint.length; i++) {
+      if(Number(amount) <= listPoint[i].reward && Number(amount) < listPoint[i+1].reward) {
+        return listPoint[i].point
+      }
+    }
+    return ''
+  }
+  const mapingHistories = async (address: string) => {
+    const payload = {
+      wallets: [`${address}`],
+    }
+    const result: any = await axios
+      .post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, payload)
+      .catch((error) => {
+        console.warn(error)
+      })
+    const data = result?.data[0]
+    return data
+  }
+  function createData(no: number, avatar: string, name: string, time: string, point: string, claim: string) {
     return { no, avatar, name, time, point, claim }
   }
-
-  const rows = [
-    createData(
-      1,
-      'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-      'Ha Anh Tuan',
-      '24/11/2022 10:30:00',
-      10293,
-      100,
-    ),
-  ]
-
+  function createDataChartDay(name: string, uv: string) {
+    return { name, uv }
+  }
+ 
+  useEffect(() => {
+    getUserPoint()
+    getUserClaimedHistories()
+    getPointDataDays()
+  }, [])
   return (
     <Wrapper sx={{}}>
       <div className="first">
-        <div className="chart_container">
+        {/* <div className="chart_container">
           <ChartRef name="Claim" percent={25} />
           <ChartRef
             name="UnClaimed"
@@ -170,7 +246,7 @@ const PlatformStat = (): JSX.Element => {
             cx={35}
             color={['rgba(255, 189, 60, 0.5)', '#FFBD3C', 'rgba(255, 255, 255, 0.1)']}
           />
-        </div>
+        </div> */}
 
         <div className="info_volumn">
           {Array.from(volumnData).map((item, index) => {
@@ -209,7 +285,7 @@ const PlatformStat = (): JSX.Element => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {rows.map((row) => (
+              {userClaimHistories.map((row) => (
                 <TableRow
                   key={row.name}
                   sx={{
@@ -239,16 +315,16 @@ const PlatformStat = (): JSX.Element => {
 
       <div className="third">
         <div className="range_volumn">
-          <span className="min">123456</span>
-          <span className="middle">654321</span>
-          <span className="max">678910</span>
+        <span className="min">{minAmount}</span>
+          <span className="middle">{middleAmount}</span>
+          <span className="max">{maxAmount}</span>
         </div>
-        <ColumnChartRef />
+        <ColumnChartRef data={dataChart} />
       </div>
 
       <div className="fourth">
         <p className="noted">
-          <span>1234</span> Daily reward generated by users
+           Daily reward generated by users
         </p>
       </div>
     </Wrapper>
@@ -257,20 +333,30 @@ const PlatformStat = (): JSX.Element => {
 
 const listData = [
   {
-    volumn: 1234,
+    volumn: '',
     title: 'Number of Referral Participants',
-    svg: '/images/claim_up.svg',
+    svg: '/images/referral/icon-user.svg',
   },
   {
-    volumn: 124,
+    volumn: '',
     title: 'Total Money Unclaimed',
-    svg: '/images/claim_down.svg',
+    svg: '/images/referral/icon-unclaimed-money.svg',
   },
   {
-    volumn: 3211,
+    volumn: '',
     title: 'Total Money Claimed',
-    svg: '/images/claim_up.svg',
+    svg: '/images/referral/icon-total-claim-money.svg',
   },
+  {
+    volumn: '0',
+    title: 'Number of referral transactions',
+    svg: '/images/referral/icon-number-of-referral.svg',
+  },
+  {
+    volumn: '0',
+    title: 'Total reward earned',
+    svg: '/images/referral/icon-reward-earn.svg',
+  }
 ]
 
 export default PlatformStat

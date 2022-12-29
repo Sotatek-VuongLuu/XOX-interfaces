@@ -1,17 +1,15 @@
 const PANCAKE_EXTENDED = 'https://tokens.pancakeswap.finance/pancakeswap-extended.json'
 const COINGECKO = 'https://tokens.pancakeswap.finance/coingecko.json'
-const CMC = 'https://tokens.pancakeswap.finance/cmc.json'
+const CMC = 'https://mocki.io/v1/8f0e3152-1229-4a10-958e-f91c82e607fa'
 
 // List of official tokens list
-export const OFFICIAL_LISTS = [PANCAKE_EXTENDED]
+export const OFFICIAL_LISTS = []
 
 export const UNSUPPORTED_LIST_URLS: string[] = []
 export const WARNING_LIST_URLS: string[] = []
 
 // lower index == higher priority for token import
-export const DEFAULT_LIST_OF_LISTS: string[] = [
-  CMC,
-]
+export const DEFAULT_LIST_OF_LISTS: string[] = [CMC]
 
 // default lists to be 'active' aka searched across
-export const DEFAULT_ACTIVE_LIST_URLS: string[] = [PANCAKE_EXTENDED]
+export const DEFAULT_ACTIVE_LIST_URLS: string[] = []

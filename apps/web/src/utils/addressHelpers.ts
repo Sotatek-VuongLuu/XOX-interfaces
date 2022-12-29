@@ -140,3 +140,7 @@ export const getContractTreasuryXOX = (chainId?: number) => {
 export const getXOXTokenAddress = (chainId?: number) => {
   return getAddress(addresses.contractXOXToken, chainId)
 }
+
+export const getXOXPoolAddress = (chainId?: number) => {
+  return getAddress(addresses.contractXOXPool, chainId)
+}

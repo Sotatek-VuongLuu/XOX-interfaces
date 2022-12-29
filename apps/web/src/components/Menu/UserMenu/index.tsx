@@ -11,6 +11,7 @@ import {
   UserMenu as UIKitUserMenu,
   UserMenuDivider,
   UserMenuVariant,
+  WalletFilledIcon,
 } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
@@ -38,6 +39,37 @@ const TextBox = styled.div`
   font-size: 16px;
   line-height: 19px;
   color: rgba(255, 255, 255, 0.87);
+`
+
+const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
+  height: 37px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: 43px;
+  }
+`
+
+
+const BoxWrapper = styled(Box)`
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(255, 255, 255, 0.87);
+  align-items: center;
+
+  button {
+    height: 37px;
+  }
+
+  svg circle{
+    fill: none;
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+  }
 `
 
 const UserMenuStyle = styled.div`
@@ -266,7 +298,13 @@ const UserMenu = () => {
 
   if (account && userProfile) {
     return (
-      <UIKitUserMenu account={account} avatarSrc={avatarSrc} text={userMenuText} variant={userMenuVariable}>
+      <UIKitUserMenu
+        account={account}
+        avatarSrc={avatarSrc}
+        text={userMenuText}
+        variant={userMenuVariable}
+        uncloseWhenClick
+      >
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )
@@ -274,18 +312,19 @@ const UserMenu = () => {
 
   if (isWrongNetwork && userProfile) {
     return (
-      <UIKitUserMenu text={t('Network')} variant="danger">
+      <UIKitUserMenu text={t('Network')} variant="danger" uncloseWhenClick>
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )
   }
 
   return (
-    <ConnectWalletButton scale="sm" height="43px">
-      <Box display={['block', , , 'block']}>
+    <ConnectWalletButtonWrapper scale="sm">
+      <BoxWrapper display={['flex', , , 'flex']}>
+        <WalletFilledIcon />
         <Trans>Connect</Trans>
-      </Box>
-    </ConnectWalletButton>
+      </BoxWrapper>
+    </ConnectWalletButtonWrapper>
   )
 }
 

@@ -1,19 +1,19 @@
 /* eslint-disable import/order */
-import { useTranslation } from '@pancakeswap/localization'
 import { Flex } from '@pancakeswap/uikit'
 import Page from 'components/Layout/Page'
 import { useCallback, useEffect, useState } from 'react'
-import { useProtocolDataSWR, useProtocolTransactionsSWR } from 'state/info/hooks'
+import { useProtocolTransactionsSWR } from 'state/info/hooks'
 import styled from 'styled-components'
 import LineChart from 'views/Info/components/InfoCharts/LineChart'
 import TransactionTable from 'views/Info/components/InfoTables/TransactionsTable'
-import HoverableChart from '../components/InfoCharts/HoverableChart'
 import WalletInfoTable from 'views/Info/components/InfoTables/WalletInfoTable'
 import axios from 'axios'
 import { SUGGESTED_BASES_ID } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import { useAllTokens } from 'hooks/Tokens'
+import HoverableChart from '../components/InfoCharts/HoverableChart'
+import InfoNav from '../components/InfoNav'
 
 export const ChartCardsContainer = styled(Flex)`
   justify-content: space-between;
@@ -69,6 +69,8 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   // const chainName = useGetChainName()
 
   const loadChartData = useCallback(() => {
+    if (!coinmarketcapIds || Object.keys(coinmarketcapIds).length === 0) return
+
     const tempIds = Object.values(coinmarketcapIds)
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/v2/cryptocurrency/quotes/latest`, {
@@ -78,6 +80,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       })
       .then((response) => {
         const data = response.data?.data
+        console.log(response, 'xxxx')
         if (!data) return
         const result = Object.keys(data).map((key) => {
           return {
@@ -163,14 +166,18 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
     if (!coinmarketcapIds || Object.keys(coinmarketcapIds).length === 0) return
     localStorage.setItem('coinmarketcapIds', JSON.stringify(coinmarketcapIds))
     loadChartData()
+  }, [coinmarketcapIds, coinmarketcapId])
+
+  useEffect(() => {
     const id = setInterval(loadChartData, 10000)
 
     // eslint-disable-next-line consistent-return
     return () => clearInterval(id)
-  }, [coinmarketcapIds, coinmarketcapId])
+  }, [currencyDatas])
 
   return (
     <Page>
+      <InfoNav allTokens={allTokens} />
       <PageContainer>
         <ChartCardsContainer>
           <HoverableChart
@@ -183,6 +190,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             setCoinmarketcapId={setCoinmarketcapId}
             chainId={chainId}
             native={native}
+            allTokens={allTokens}
           />
         </ChartCardsContainer>
         <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} />

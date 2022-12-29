@@ -812,7 +812,7 @@
   "No results found.": "No results found.",
   "Manage": "Manage",
   "Manage Tokens": "Manage Tokens",
-  "Import Tokens": "Import Tokens",
+  "Import Token": "Import Token",
   "Import List": "Import List",
   "Import at your own risk": "Import at your own risk",
   "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one.": "By adding this list you are implicitly trusting that the data is correct. Anyone can create a list, including creating fake versions of existing lists and lists that claim to represent projects that do not have one.",
@@ -2043,5 +2043,6 @@
   "bCAKE allows you to boost your yield in PancakeSwap Farms by up to 2x.": "bCAKE allows you to boost your yield in PancakeSwap Farms by up to 2x.",
   "vCAKE boosts your voting power to %totalScore% in the PancakeSwap voting governance.": "vCAKE boosts your voting power to %totalScore% in the PancakeSwap voting governance.",
   "Lock CAKE to enjoy the benefits of farm yield boosting, participating in IFOs, voting power boosts, and so much more!": "Lock CAKE to enjoy the benefits of farm yield boosting, participating in IFOs, voting power boosts, and so much more!",
-  "CAKE staking expired": "CAKE staking expired"
+  "CAKE staking expired": "CAKE staking expired",
+  "Referral Code":"Referral Code"
 }

@@ -1,3 +1,5 @@
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-unescaped-entities */
@@ -6,9 +8,9 @@
 /* eslint-disable no-else-return */
 /* eslint-disable prefer-const */
 /* eslint-disable no-extra-boolean-cast */
-import { Avatar, Box, Grid, Paper } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y } from 'swiper'
 import 'swiper/css'
@@ -16,10 +18,16 @@ import 'swiper/css/navigation'
 import 'swiper/css/pagination'
 import useWindowSize from 'hooks/useWindowSize'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { BigNumber } from '@ethersproject/bignumber'
-import { formatEther, parseEther, parseUnits } from '@ethersproject/units'
-import { useModal } from '@pancakeswap/uikit'
 import { useTreasuryXOX } from 'hooks/useContract'
+import { formatEther, formatUnits } from '@ethersproject/units'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
+import { getUserFriend } from 'services/referral'
+import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
+import axios from 'axios'
+import { BigNumber } from '@ethersproject/bignumber'
+import { useModal } from '@pancakeswap/uikit'
+import { shortenAddress } from 'utils/shortenAddress'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
 import ModalClaimSuccess from './Modal/ModalClaimSuccess'
 
@@ -32,6 +40,11 @@ interface IItemLevel {
   point: number
   dollar: number
   lever: number
+  isReach: boolean
+}
+
+interface IProps {
+  userCurrentPoint: number
 }
 
 interface IPropsWR {
@@ -142,8 +155,16 @@ const WrapperRight = styled(Box)<IPropsWR>`
     }
   }
 
-  .swiper-slide-active item {
+  .current {
     background: url(/images/current_item.svg);
+    & > div {
+      .btn {
+        background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
   }
 
   .swiper-button-next {
@@ -216,7 +237,7 @@ const WrapperRight = styled(Box)<IPropsWR>`
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
-          text-fill-color: transparent;
+          /* text-fill-color: transparent; */
         }
       }
     }
@@ -352,9 +373,9 @@ const Content = styled.div`
   }
 `
 
-const ReferralFriend = () => {
+const ReferralFriend = ({ userCurrentPoint }: IProps) => {
   const { width } = useWindowSize()
-  const { account } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
   const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState<boolean>(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
@@ -363,10 +384,10 @@ const ReferralFriend = () => {
     dollar: 0,
   })
   const [level, setLevel] = useState<number | null>(null)
-
-  function createData(avatar: string, name: string, point: number, code: number) {
-    return { avatar, name, point, code }
-  }
+  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
+  const [listFriends, setListFriends] = useState([])
+  const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
+  const [currentLevelReach, setCurrentLevelReach] = useState<number | null>(null)
 
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async () => {
@@ -430,27 +451,6 @@ const ReferralFriend = () => {
     }
   }
 
-  const rows = [
-    createData(
-      'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-      'Ha Anh Tuan',
-      100,
-      10293,
-    ),
-    createData(
-      'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-      'Kristin Watson',
-      100,
-      10293,
-    ),
-    createData(
-      'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-      'Brooklyn Simmons',
-      100,
-      10293,
-    ),
-  ]
-
   const controlWidth = useMemo(() => {
     let slidesPerView = 5
     if (width < 900) {
@@ -472,6 +472,62 @@ const ReferralFriend = () => {
     return slidesPerView
   }, [width])
 
+  const dataFriend = async () => {
+    try {
+      const { userInfos } = await getUserFriend(chainId, account)
+      const dataUserFormatAmount = userInfos[0]?.friends?.map((item: any) => {
+        return {
+          ...item,
+          id: item?.ref_address,
+          point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
+        }
+      })
+
+      const dataMapping = await Promise.all(
+        dataUserFormatAmount?.map(async (item: any): Promise<any> => {
+          const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+            wallets: [`${item.address}`],
+          })
+          const dataMap = response?.data[0]
+          return {
+            ...item,
+            ...dataMap,
+            name: dataMap?.username ?? null,
+            avatar: dataMap?.avatar ?? null,
+          }
+        }),
+      )
+
+      setListFriends(dataMapping)
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error >>>>`, error)
+    }
+  }
+  const handleCheckReachLevel = (currentPoint: number) => {
+    const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
+      let reached = currentPoint >= item.point
+      return {
+        ...item,
+        isReach: reached,
+      }
+    })
+    setListLevelMustReach([...arrAddIsReach])
+    const findLastReach = arrAddIsReach.filter((item) => {
+      return item.isReach === true
+    })
+    const currentLever = findLastReach.pop()?.lever
+    setCurrentLevelReach(currentLever)
+  }
+
+  useEffect(() => {
+    dataFriend()
+  }, [chainId, account])
+
+  useEffect(() => {
+    handleCheckReachLevel(userCurrentPoint)
+  }, [userCurrentPoint])
+
   return (
     <>
       <Box sx={{ marginTop: '16px' }}>
@@ -488,15 +544,19 @@ const ReferralFriend = () => {
                     <div>Total Points</div>
                   </TableHeader>
                   <TableBody>
-                    {rows.map((row) => {
+                    {listFriends.map((row) => {
                       return (
                         <div key={row.name}>
                           <div>
-                            <img src={row.avatar} alt={row.name} />
-                            {row.name}
+                            {row.avatar ? (
+                              <img src={row.avatar} alt="avatar" />
+                            ) : (
+                              <img src="/images/default_avatar.jpg" alt="avatar" />
+                            )}
+                            {row.name ? row.name : shortenAddress(row.ref_address)}
                           </div>
                           <div>
-                            {row.code}
+                            {userProfile?.referralCode}
                             <img
                               src="/images/copy_purple.svg"
                               alt="copy_purple"
@@ -523,10 +583,13 @@ const ReferralFriend = () => {
                 navigation
                 scrollbar={{ draggable: true }}
               >
-                {listLever.map((item: IItemLevel) => {
+                {listLevelMustReach.map((item: IItemLevel) => {
                   return (
                     <SwiperSlide key={item.icon}>
-                      <div className="item" key={item.icon}>
+                      <div
+                        className={`item ${item.isReach && item.lever === currentLevelReach ? 'current' : ''}`}
+                        key={item.icon}
+                      >
                         <div>
                           <img src={item.icon} alt="icons" className="jewellery" />
 
@@ -615,61 +678,70 @@ const ReferralFriend = () => {
   )
 }
 
-const listLever: IItemLevel[] = [
+export default ReferralFriend
+
+export const listLever: IItemLevel[] = [
   {
     icon: '/images/lever_1.svg',
     point: 100,
     dollar: 10,
     lever: 1,
+    isReach: false,
   },
   {
     icon: '/images/lever_2.svg',
     point: 500,
     dollar: 50,
     lever: 2,
+    isReach: false,
   },
   {
     icon: '/images/lever_3.svg',
     point: 1000,
     dollar: 100,
     lever: 3,
+    isReach: false,
   },
   {
     icon: '/images/lever_4.svg',
     point: 5000,
     dollar: 300,
     lever: 4,
+    isReach: false,
   },
   {
     icon: '/images/lever_5.svg',
     point: 10000,
     dollar: 500,
     lever: 5,
+    isReach: false,
   },
   {
     icon: '/images/lever_6.svg',
     point: 50000,
     dollar: 2000,
     lever: 6,
+    isReach: false,
   },
   {
     icon: '/images/lever_7.svg',
     point: 100000,
     dollar: 5000,
     lever: 7,
+    isReach: false,
   },
   {
     icon: '/images/lever_8.svg',
     point: 500000,
     dollar: 10000,
     lever: 8,
+    isReach: false,
   },
   {
     icon: '/images/lever_9.svg',
     point: 1000000,
     dollar: 20000,
     lever: 9,
+    isReach: false,
   },
 ]
-
-export default ReferralFriend

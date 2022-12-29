@@ -15,6 +15,10 @@ const TransactionState = styled.div<{ pending: boolean; success?: boolean }>`
   font-size: 0.825rem;
   color: ${({ theme }) => theme.colors.primary};
 `
+const TransactionText = styled(LinkExternal)`
+  color:#FFFFFFDE;
+  line-height:25px;
+`
 
 const IconWrapper = styled.div<{ pending: boolean; success?: boolean }>`
   color: ${({ pending, success, theme }) =>
@@ -30,7 +34,7 @@ export default function Transaction({ tx, chainId }: { tx: TransactionDetails; c
 
   return (
     <TransactionState pending={pending} success={success}>
-      <LinkExternal href={getBlockExploreLink(tx.hash, 'transaction', chainId)}>{summary ?? tx.hash}</LinkExternal>
+      <TransactionText href={getBlockExploreLink(tx.hash, 'transaction', chainId)}>{summary ?? tx.hash}</TransactionText>
       <IconWrapper pending={pending} success={success}>
         {pending ? <CircleLoader /> : success ? <CheckmarkIcon color="success" /> : <CloseIcon color="failure" />}
       </IconWrapper>

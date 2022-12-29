@@ -14,6 +14,7 @@ export interface IItemLeaderBoard {
   point: string
   avatar: string
   rank: number
+  address?: string
 }
 
 interface IPropsTotal {
@@ -200,6 +201,7 @@ const MainInfo = () => {
                   point: '10293',
                   avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
                   rank: 100,
+                  address: 'n',
                 }}
                 mb={false}
               />

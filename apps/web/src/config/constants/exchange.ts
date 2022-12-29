@@ -31,6 +31,8 @@ import {
   CAKE_BSC_TESTNET,
   LINK_BSC_TESTNET,
   ADA_BSC_TESTNET,
+  XOX_BSC_TESTNET,
+  XOX_GOERLI,
 } from '@pancakeswap/tokens'
 import { ChainMap, ChainTokenList } from './types'
 
@@ -42,6 +44,30 @@ export const ROUTER_ADDRESS: ChainMap<string> = {
   [ChainId.BSC]: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
   [ChainId.BSC_TESTNET]: '0xD99D1c33F9fC3444f8101754aBC46c52416550D1',
 }
+export const ROUTER_XOX: ChainMap<string> = {
+  [ChainId.ETHEREUM]: '',
+  [ChainId.RINKEBY]: '',
+  [ChainId.GOERLI]: '0x86832cFC1ae232776De307bFe944b09f0FCf6B99',
+  [ChainId.BSC]: '',
+  [ChainId.BSC_TESTNET]: '0x7e1765308f0153BE614dB9001ec7B527A1cA6D8e',
+}
+
+export const XOX_ADDRESS: ChainMap<string> = {
+  [ChainId.ETHEREUM]: '',
+  [ChainId.RINKEBY]: '',
+  [ChainId.GOERLI]: '0xa1c9512C24144e8F96d3c62886b8350E358f19E3',
+  [ChainId.BSC]: '',
+  [ChainId.BSC_TESTNET]: '0x0046eB5589bC449AbA5DA3487C795B2AD383D02b',
+}
+
+export const USD_ADDRESS: ChainMap<string> = {
+  [ChainId.ETHEREUM]: '',
+  [ChainId.RINKEBY]: '',
+  [ChainId.GOERLI]: '0x334F6F63231c538F870dbA7FaED67baeb11B9782',
+  [ChainId.BSC]: '',
+  [ChainId.BSC_TESTNET]: '0x0c3Dbe2081ccF00f6CB72d8541aA214Ac582C36D',
+}
+
 
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
@@ -57,7 +83,7 @@ export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
     bscTokens.eth,
     bscTokens.usdc,
   ],
-  [ChainId.BSC_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.cake, bscTestnetTokens.busd],
+  [ChainId.BSC_TESTNET]: [bscTestnetTokens.wbnb, bscTestnetTokens.cake, bscTestnetTokens.busd, bscTestnetTokens.xox],
 }
 
 /**
@@ -102,6 +128,7 @@ export const SUGGESTED_BASES: ChainTokenList = {
     USDC_GOERLI,
     LINK_GOERLI,
     SHIB_GOERLI,
+    XOX_GOERLI
   ],
   [ChainId.BSC]: [
     bscTokens.btcb,
@@ -122,6 +149,7 @@ export const SUGGESTED_BASES: ChainTokenList = {
     CAKE_BSC_TESTNET,
     LINK_BSC_TESTNET,
     ADA_BSC_TESTNET,
+    XOX_BSC_TESTNET
   ],
 }
 

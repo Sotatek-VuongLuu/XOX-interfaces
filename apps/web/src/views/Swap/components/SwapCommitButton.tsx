@@ -1,7 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Button, Text, useModal } from '@pancakeswap/uikit'
 import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk'
-
+import axios from 'axios'
 import { GreyCard } from 'components/Card'
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -19,6 +19,7 @@ import { BIG_INT_ZERO } from 'config/constants/exchange'
 import { computeTradePriceBreakdown, warningSeverity } from 'utils/exchange'
 import { useSwapCallback } from 'hooks/useSwapCallback'
 import { useSwapCallArguments } from 'hooks/useSwapCallArguments'
+import { useSwapXOXCallArguments } from 'hooks/useSwapXOXCallArguments'
 
 import ConfirmSwapModal from './ConfirmSwapModal'
 import ProgressSteps from './ProgressSteps'
@@ -49,6 +50,8 @@ interface SwapCommitButtonPropsType {
     OUTPUT?: CurrencyAmount<Currency>
   }
   recipient: string
+  referral?: string
+  isRouterNormal?: boolean
   allowedSlippage: number
   parsedIndepentFieldAmount: CurrencyAmount<Currency>
   onUserInput: (field: Field, typedValue: string) => void
@@ -70,6 +73,8 @@ export default function SwapCommitButton({
   swapInputError,
   currencyBalances,
   recipient,
+  referral,
+  isRouterNormal,
   allowedSlippage,
   parsedIndepentFieldAmount,
   onUserInput,
@@ -78,8 +83,7 @@ export default function SwapCommitButton({
   const [singleHopOnly] = useUserSingleHopOnly()
   const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade)
   // the callback to execute the swap
-
-  const swapCalls = useSwapCallArguments(trade, allowedSlippage, recipient)
+  const swapCalls = useSwapXOXCallArguments(trade, allowedSlippage, recipient, referral, isRouterNormal)
 
   const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(
     trade,
@@ -113,6 +117,7 @@ export default function SwapCommitButton({
         setSwapState({ attemptingTxn: false, tradeToConfirm, swapErrorMessage: undefined, txHash: hash })
       })
       .catch((error) => {
+        console.log('error', error)
         setSwapState({
           attemptingTxn: false,
           tradeToConfirm,
@@ -166,7 +171,13 @@ export default function SwapCommitButton({
     'confirmSwapModal',
   )
   // End Modals
-
+  const getUserByReferral = async (ref: string) => {
+    const response = await axios.get(`${process.env.NEXT_PUBLIC_API}/users?ref=${ref}`)
+    if (response && response.data && response.data.address) {
+      return response.data.address
+    }
+    return ''
+  }
   const onSwapHandler = useCallback(() => {
     if (isExpertMode) {
       handleSwap()
@@ -195,7 +206,12 @@ export default function SwapCommitButton({
 
   // warnings on slippage
   const priceImpactSeverity = warningSeverity(priceImpactWithoutFee)
-
+  useEffect(() => {
+    if (referral) {
+      // TODO VUONG
+      getUserByReferral(referral)
+    }
+  }, [referral])
   if (swapIsUnsupported) {
     return (
       <Button width="100%" disabled>

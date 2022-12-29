@@ -1,5 +1,5 @@
-const WhitePaper = () => {
-  return <>WhitePaper</>
+const Whitepaper = () => {
+  return <>Whitepaper</>
 }
 
-export default WhitePaper
+export default Whitepaper
