@@ -80,6 +80,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       })
       .then((response) => {
         const data = response.data?.data
+        console.log(response, 'xxxx')
         if (!data) return
         const result = Object.keys(data).map((key) => {
           return {

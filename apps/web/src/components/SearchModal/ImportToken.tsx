@@ -5,12 +5,22 @@ import { AutoColumn } from 'components/Layout/Column'
 import { useAddUserToken } from 'state/user/hooks'
 import { getBlockExploreLink, getBlockExploreName } from 'utils'
 import { useCombinedInactiveList } from 'state/lists/hooks'
-import { ListLogo } from 'components/Logo'
 import { useTranslation } from '@pancakeswap/localization'
 import { chains } from 'utils/wagmi'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 import truncateHash from '@pancakeswap/utils/truncateHash'
+import styled from 'styled-components'
+
+const CheckboxWrapper = styled(Checkbox)`
+  :checked {
+    background: #9072ff;
+  }
+  :after {
+    width: 75%;
+    height: 30%;
+  }
+`
 
 interface ImportProps {
   tokens: Token[]
@@ -103,6 +113,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
                   href={getBlockExploreLink(token.address, 'address', token.chainId)}
                   external
                   color="#9072FF"
+                  style={{ textDecoration: 'none' }}
                 >
                   {t('View on %site%', {
                     site: getBlockExploreName(token.chainId),
@@ -116,7 +127,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
 
       <Flex justifyContent="space-between" alignItems="center">
         <Flex alignItems="center" onClick={() => setConfirmed(!confirmed)}>
-          <Checkbox
+          <CheckboxWrapper
             name="confirmed"
             type="checkbox"
             checked={confirmed}
@@ -127,6 +138,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
               border: '1px solid #444444',
               borderRadius: '2px',
               margin: 0,
+              boxShadow: 'none',
             }}
           />
           <Text
