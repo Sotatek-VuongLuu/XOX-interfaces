@@ -12,9 +12,10 @@ const Wrapper = styled.div`
     background-color: #ffffff;
     padding: 7px;
     border-radius: 20px;
-    margin-top: 70px;
-    width: 654px;
-    height: 373px;
+    margin-top: 65px;
+    width: 660px;
+    height: 387px;
+
     .player-wrapper {
       position: relative;
       padding-top: 50%;
@@ -32,7 +33,9 @@ const Wrapper = styled.div`
     }
 
     @media screen and (max-width: 900px) {
-      margin-top: 40px;
+      margin-top: 55px;
+      width: 654px;
+      height: 373px;
     }
     @media screen and (max-width: 742px) {
       width: 534px;
@@ -58,8 +61,8 @@ const Wrapper = styled.div`
 const HowToJoin = (): JSX.Element => {
   const { width } = useWindowSize()
   const controlSize = useMemo(() => {
-    let w = 640
-    let h = 360
+    let w = 646
+    let h = 373
 
     if (width < 900) {
       w = 640

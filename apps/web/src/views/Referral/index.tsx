@@ -32,7 +32,7 @@ export default function Refferal() {
   const contractTreasuryXOX = useTreasuryXOX()
   const [userCurrentPoint, setUserCurrentPoint] = useState<number>(0)
   const [currentLevelReach, setCurrentLevelReach] = useState<number>(0)
-  const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
+  const [listLevelMustReach, _] = useState<IItemLevel[]>(listLever)
 
   // eslint-disable-next-line consistent-return
   const handleGetCurrentPoint = async () => {
@@ -73,9 +73,7 @@ export default function Refferal() {
 
   useEffect(() => {
     const fetchMyAPI = async () => {
-      // const currentPoint = await handleGetCurrentPoint()
-      const currentPoint = 1000000
-
+      const currentPoint = await handleGetCurrentPoint()
       if (currentPoint) {
         await handleCheckReachLevel(currentPoint)
       }
@@ -89,7 +87,7 @@ export default function Refferal() {
         <Box>
           <Banner />
           <MainInfo userCurrentPoint={userCurrentPoint} currentLevelReach={currentLevelReach} listLever={listLever} />
-          <ReferralFriend userCurrentPoint={1000000} />
+          <ReferralFriend userCurrentPoint={userCurrentPoint} />
         </Box>
       </Wrapper>
     </>

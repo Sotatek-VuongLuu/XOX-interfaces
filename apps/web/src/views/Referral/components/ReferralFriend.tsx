@@ -27,6 +27,7 @@ import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
 import axios from 'axios'
 import { BigNumber } from '@ethersproject/bignumber'
 import { useModal } from '@pancakeswap/uikit'
+import { shortenAddress } from 'utils/shortenAddress'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
 import ModalClaimSuccess from './Modal/ModalClaimSuccess'
 
@@ -485,13 +486,13 @@ const ReferralFriend = ({ userCurrentPoint }: IProps) => {
       const dataMapping = await Promise.all(
         dataUserFormatAmount?.map(async (item: any): Promise<any> => {
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
-            wallets: [`${item.id}`],
+            wallets: [`${item.address}`],
           })
           const dataMap = response?.data[0]
           return {
             ...item,
             ...dataMap,
-            name: dataMap?.username ? dataMap?.username : item?.id,
+            name: dataMap?.username ?? null,
             avatar: dataMap?.avatar ?? null,
           }
         }),
@@ -503,7 +504,6 @@ const ReferralFriend = ({ userCurrentPoint }: IProps) => {
       console.log(`error >>>>`, error)
     }
   }
-
   const handleCheckReachLevel = (currentPoint: number) => {
     const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
       let reached = currentPoint >= item.point
@@ -553,7 +553,7 @@ const ReferralFriend = ({ userCurrentPoint }: IProps) => {
                             ) : (
                               <img src="/images/default_avatar.jpg" alt="avatar" />
                             )}
-                            {row.name}
+                            {row.name ? row.name : shortenAddress(row.ref_address)}
                           </div>
                           <div>
                             {userProfile?.referralCode}
