@@ -236,8 +236,8 @@ export default function SwapForm() {
 
   const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
   const isShowReferralBox =
-    (inputCurrency.symbol === 'USDC' && outputCurrency.symbol === 'XOX') ||
-    (inputCurrency.symbol === 'BUSD' && outputCurrency.symbol === 'XOX')
+    (inputCurrency?.symbol === 'USDC' && outputCurrency?.symbol === 'XOX') ||
+    (inputCurrency?.symbol === 'BUSD' && outputCurrency?.symbol === 'XOX')
   const hasAmount = Boolean(parsedAmount)
   const handleChangeReferal = (value: string) => {
     setReferralCode(value)
