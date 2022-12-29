@@ -65,6 +65,7 @@ const ReferralInput = styled.input`
   color:#FFFFFFDE;
   border-radius:4px;
   text-transform:uppercase;
+  font-size:14px;
 `
 const PerPriceTitle = styled.div`
   color: #9072ff;
@@ -234,7 +235,9 @@ export default function SwapForm() {
   )
 
   const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
-
+  const isShowReferralBox =
+    (inputCurrency.symbol === 'USDC' && outputCurrency.symbol === 'XOX') ||
+    (inputCurrency.symbol === 'BUSD' && outputCurrency.symbol === 'XOX')
   const hasAmount = Boolean(parsedAmount)
   const handleChangeReferal = (value: string) => {
     setReferralCode(value)
@@ -344,14 +347,10 @@ export default function SwapForm() {
                   />
                 </>
               )}
-          {inputCurrency?.symbol === 'XOX' && (
+          {isShowReferralBox && (
             <ReferralCode>
               <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
-              <ReferralInput
-                onChange={(e) => handleChangeReferal(e.target.value)}
-                maxLength={8}
-                placeholder="12345678"
-              />
+              <ReferralInput onChange={(e) => handleChangeReferal(e.target.value)} maxLength={8} />
             </ReferralCode>
           )}
         </AutoColumn>
