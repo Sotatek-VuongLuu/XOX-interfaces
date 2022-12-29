@@ -103,7 +103,7 @@ export default function Swap() {
   const trade = showWrap ? undefined : v2Trade
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
-      <Flex width={['328px', , '100%']} height="100%" justifyContent="center" position="relative">
+      <Flex width={['328px', , '100%']} height="100%" justifyContent="center" alignItems="center" position="relative">
         {/* {!isMobile && isChartSupported && (
           <PriceChartContainer
             inputCurrencyId={inputCurrencyId}
