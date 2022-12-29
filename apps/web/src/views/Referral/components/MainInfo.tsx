@@ -370,7 +370,10 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
                 <div className="total_point_bar">
                   <div className="current_point_bar">
                     <span>
-                      {userCurrentPoint}/{listLever[currentLevelReach]?.point}
+                      {userCurrentPoint}/
+                      {currentLevelReach === 9
+                        ? listLever[currentLevelReach - 1]?.point
+                        : listLever[currentLevelReach]?.point}
                     </span>
                   </div>
                 </div>
