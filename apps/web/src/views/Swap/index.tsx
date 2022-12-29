@@ -20,6 +20,46 @@ import { SwapFeaturesContext } from './SwapFeaturesContext'
 import { useAccount } from 'wagmi'
 import { useRouterNormal } from 'hooks/useApproveCallback'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import styled from 'styled-components'
+import SwapbackgroundNone from 'components/Svg/SwapBackgroundDesktopNone'
+import SwapbackgroundDesktop from 'components/Svg/SwapBackgroundDesktop'
+import SwapbackgroundDesktopNone from 'components/Svg/SwapBackgroundDesktopNone'
+import SwapbackgroundMobile from 'components/Svg/SwapBackgroundMobile'
+import SwapbackgroundMobileNone from 'components/Svg/SwapBackgroundMobileNone'
+import SwapbackgroundMobileNone2 from 'components/Svg/SwapBackgroundMobileNone2'
+import SwapbackgroundDesktopNone2 from 'components/Svg/SwapBackgroundDesktopNone2'
+
+const SwapbackgroundNoneWrapper = styled.div`
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 0;
+`
+const SwapbackgroundNone2Wrapper = styled.div`
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+`
+
+const SwapbackgroundWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+`
+
+const Wrapper = styled(Flex)`
+  width: 100%;
+  max-width: 591px;
+  height: fit-content;
+  z-index: 0;
+  align-items: center;
+  justify-content: center;
+`
 
 export default function Swap() {
   const { isMobile } = useMatchBreakpoints()
@@ -95,9 +135,32 @@ export default function Swap() {
           />
         )} */}
 
-        <Flex flexDirection="column" position="relative">
-          {isMobile && (!account ? <SwapNonTradeMobile /> : !trade ? <SwapDefaultMobile /> : <SwapTradeMobile />)}
-          {!isMobile && (!trade ? <SwapNonTrade /> : <SwapTrade />)}
+        <Wrapper flex="column" position="relative">
+          {isMobile ? (
+            <>
+              <SwapbackgroundWrapper>
+                <SwapbackgroundMobile />
+              </SwapbackgroundWrapper>
+              <SwapbackgroundNoneWrapper>
+                <SwapbackgroundMobileNone />
+              </SwapbackgroundNoneWrapper>
+              <SwapbackgroundNone2Wrapper>
+                <SwapbackgroundMobileNone2 />
+              </SwapbackgroundNone2Wrapper>
+            </>
+          ) : (
+            <>
+              <SwapbackgroundWrapper>
+                <SwapbackgroundDesktop />
+              </SwapbackgroundWrapper>
+              <SwapbackgroundNoneWrapper>
+                <SwapbackgroundDesktopNone />
+              </SwapbackgroundNoneWrapper>
+              <SwapbackgroundNone2Wrapper>
+                <SwapbackgroundDesktopNone2 />
+              </SwapbackgroundNone2Wrapper>
+            </>
+          )}
           <StyledSwapContainer $isChartExpanded={isChartExpanded} style={isMobile ? { left: 0 } : {}}>
             <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
               {/* <SwapTab>
@@ -108,7 +171,7 @@ export default function Swap() {
               <SwapForm />
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
-        </Flex>
+        </Wrapper>
       </Flex>
     </Page>
   )

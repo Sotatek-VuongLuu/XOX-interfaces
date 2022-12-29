@@ -3,16 +3,16 @@ import styled from 'styled-components'
 
 export const StyledSwapContainer = styled(Flex)<{ $isChartExpanded: boolean }>`
   flex-shrink: 0;
-  height: fit-content;
-  position: absolute;
   top: 30px;
   left: 16px;
-  padding: 0 28px;
+  padding: 30px 0;
+  margin-top: 20px;
   width: 100%;
   max-width: 559px;
+  z-index: 2;
 
-  ${({ theme }) => theme.mediaQueries.xs} {
-    padding: 0 18px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding: 18px;
   }
 `
 
