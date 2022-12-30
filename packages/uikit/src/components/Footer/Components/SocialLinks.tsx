@@ -14,7 +14,7 @@ const SocialLinks: React.FC<React.PropsWithChildren<FlexProps>> = ({ ...props })
         style: { cursor: "pointer" },
       };
       const Icon = social.icon;
-      const mr = index < socials.length - 1 ? "24px" : 0;
+      const mr = index < socials.length - 1 ? "16px" : 0;
       // if (social.items) {
       //   return (
       //     <div style={{ marginRight: mr }} key={social.label} style={{ cursor: "pointer" }}>

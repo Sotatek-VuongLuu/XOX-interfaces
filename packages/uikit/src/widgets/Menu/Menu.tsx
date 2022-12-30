@@ -30,7 +30,7 @@ const StyledNav = styled.nav<IPropsNav>`
   justify-content: space-between;
   align-items: center;
   width: 100%;
-  height: 66px;
+  height: ${MENU_HEIGHT}px;
   background-color: ${({ theme, isLanding }) => (isLanding ? "black" : theme.nav.background)};
   ${({ theme, isLanding }) => !isLanding && ` border-bottom: 1px solid ${theme.colors.cardBorder}`};
   transform: translate3d(0, 0, 0);
