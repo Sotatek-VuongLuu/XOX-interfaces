@@ -115,11 +115,11 @@ export const bscTest: Chain = {
 }
 export const mainnet: Chain = {
   id: 1,
-  name: 'Etherium',
-  network: 'Etherium mainnet',
+  name: 'Ethereum',
+  network: 'Ethereum mainnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'Etherium',
+    name: 'Ethereum',
     symbol: 'ETH',
   },
   rpcUrls: {
