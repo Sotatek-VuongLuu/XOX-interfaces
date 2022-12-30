@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import styled, { keyframes } from "styled-components";
 import Flex from "../../../components/Box/Flex";
 import { LogoIcon, LogoMobileIcon, LogoWithTextIcon } from "../../../components/Svg";
+import { useMatchBreakpoints } from "../../../contexts";
 import { MenuContext } from "../context";
 
 interface Props {
@@ -16,18 +17,6 @@ const blink = keyframes`
 const StyledLink = styled("a")`
   display: flex;
   align-items: center;
-  .mobile-icon {
-    display: block;
-    ${({ theme }) => theme.mediaQueries.md} {
-      display: none;
-    }
-  }
-  .desktop-icon {
-    display: none;
-    ${({ theme }) => theme.mediaQueries.md} {
-      display: block;
-    }
-  }
   .eye {
     animation-delay: 20ms;
   }
@@ -44,11 +33,11 @@ const StyledLink = styled("a")`
 const Logo: React.FC<React.PropsWithChildren<Props>> = ({ href }) => {
   const { linkComponent } = useContext(MenuContext);
   const isAbsoluteUrl = href.startsWith("http");
+  const { isMobile } = useMatchBreakpoints();
   const innerLogo = (
     <>
       {/* <LogoIcon className="mobile-icon" /> */}
-      <LogoWithTextIcon className="desktop-icon" />
-      <LogoMobileIcon className="mobile-icon" />
+      {isMobile ? <LogoMobileIcon className="mobile-icon" /> : <LogoWithTextIcon className="desktop-icon" />}
     </>
   );
 
