@@ -53,6 +53,16 @@ interface IProps {
   listLever: IItemLevel[]
 }
 
+export interface IMappingFormat {
+  address: string
+  amount: string
+  avatar: string
+  id: string
+  point: number | null
+  rank: number | null
+  username: string
+}
+
 const First = styled.div<IPropsTotal>`
   width: 100%;
   height: 100%;
@@ -181,7 +191,7 @@ const WrapperRight = styled.div<IPropsContainer>`
     .filter {
       display: grid;
       grid-template-columns: auto auto auto 1fr;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
       color: #ffffff;
       position: relative;
@@ -217,7 +227,7 @@ const WrapperRight = styled.div<IPropsContainer>`
     @media screen and (max-width: 398px) {
       .filter {
         .subTab_item {
-          padding: 6px;
+          padding: 6px 5px;
         }
       }
     }
@@ -232,7 +242,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
   const startOfWeek = moment().startOf('isoWeek').toString()
   const [tabLeaderBoard, setTabLeaderBoard] = useState('All Time')
   const [subTabIndex, setSubTabIndex] = useState(0)
-  const [listUserRanks, setListUserRanks] = useState([])
+  const [listUserRanks, setListUserRanks] = useState<IMappingFormat[]>([])
   const [listPoint, setListPoint] = useState([])
   const { account, chainId } = useActiveWeb3React()
   const totalPoint = listLever[currentLevelReach]?.point
@@ -240,6 +250,17 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
   const percentPoint = (currentPoint / totalPoint) * 100
   const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily']
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
+  const [rankOfUser, setRankOfUser] = useState<IMappingFormat>({
+    address: '',
+    amount: '',
+    avatar: '',
+    id: '',
+    point: null,
+    rank: null,
+    username: '',
+  })
+
+  console.log(`currentLevelReach`, currentLevelReach)
 
   const payloadPostForDaily = {
     date_gte: moment(startOfDay).unix(),
@@ -279,7 +300,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
           point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
         }
       })
-      const dataMapping = await Promise.all(
+      const dataMapping: IMappingFormat[] = await Promise.all(
         dataUserFormatAmount.map(async (item: IDataFormatUnit, index: number): Promise<any> => {
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
             wallets: [`${item.address}`],
@@ -289,11 +310,17 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
             ...item,
             ...dataMap,
             rank: index + 1,
-            name: dataMap?.username ?? null,
+            username: dataMap?.username ?? null,
             avatar: dataMap?.avatar ?? null,
           }
         }),
       )
+      const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 100).filter((item: any) => {
+        return item.address === account.toLowerCase()
+      })
+      if (levelOfUSer.length !== 0) {
+        setRankOfUser(levelOfUSer[0])
+      }
       setListUserRanks(dataMapping)
     } catch (error) {
       console.log(`error >>>`, error)
@@ -339,29 +366,27 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
               </div>
 
               <div className="learder_board">
-                {listUserRanks?.map((item, index: number) => {
+                {listUserRanks?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
                   // eslint-disable-next-line react/no-array-index-key
                   return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
                 })}
               </div>
 
-              <div className="dot">
-                <div className="dot_item" />
-                <div className="dot_item" />
-                <div className="dot_item" />
-              </div>
-
-              {account && (
-                <LeaderBoardItem
-                  item={{
-                    name: 'Ha Anh Tuan',
-                    point: '10293',
-                    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-                    rank: 100,
-                  }}
-                  mb={false}
-                />
+              {rankOfUser.rank && rankOfUser.rank !== 6 ? null : (
+                <div className="dot">
+                  <div className="dot_item" />
+                  <div className="dot_item" />
+                  <div className="dot_item" />
+                </div>
               )}
+
+              {account ? (
+                rankOfUser.rank ? (
+                  [1, 2, 3, 4, 5].includes(rankOfUser.rank) ? null : (
+                    <LeaderBoardItem item={rankOfUser} mb={false} />
+                  )
+                ) : null
+              ) : null}
             </First>
 
             <Second percentPoint={percentPoint} account={account}>
@@ -370,7 +395,10 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
                 <div className="total_point_bar">
                   <div className="current_point_bar">
                     <span>
-                      {userCurrentPoint}/{listLever[currentLevelReach]?.point}
+                      {userCurrentPoint}/
+                      {currentLevelReach === 9
+                        ? listLever[currentLevelReach - 1]?.point
+                        : listLever[currentLevelReach]?.point}
                     </span>
                   </div>
                 </div>

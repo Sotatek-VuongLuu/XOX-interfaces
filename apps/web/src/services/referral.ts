@@ -59,7 +59,7 @@ export const getUserPointDaily = async (chainId: ChainId, payload?: any) => {
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       {
-        userPointDailies(where: {date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} },orderDirection: desc,orderBy: amount) {
+        userPointDailies(where: {date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} },orderDirection: desc,orderBy: amount,first: 100, skip: 0) {
           id
           address
           amount
@@ -76,7 +76,7 @@ export const getUserPointMonthly = async (chainId: ChainId, payload?: any) => {
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       {
-        userPointMonthlies(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte}},orderDirection: desc, orderBy: amount) {
+        userPointMonthlies(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte}},orderDirection: desc, orderBy: amount,first: 100, skip: 0) {
           id
           address
           amount
@@ -93,7 +93,7 @@ export const getUserPointWeekly = async (chainId: ChainId, payload?: any) => {
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       {
-        userPointWeeklies(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} }, orderDirection: desc,orderBy: amount) {
+        userPointWeeklies(where: { date_gte: ${payload.date_gte}, date_lte: ${payload.date_lte} }, orderDirection: desc,orderBy: amount,first: 100, skip: 0) {
           id
           address
           amount

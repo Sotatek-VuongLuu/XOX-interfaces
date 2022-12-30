@@ -129,7 +129,6 @@ const WrapperRight = styled.div`
       display: flex;
       align-items: center;
       color: #ffffff;
-
       .subTab_item_active {
         padding: 10px 20px;
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);

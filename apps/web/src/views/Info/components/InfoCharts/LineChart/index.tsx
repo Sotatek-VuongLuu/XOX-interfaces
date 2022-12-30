@@ -1,9 +1,11 @@
-import { Dispatch, SetStateAction } from 'react'
+import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
 import { ResponsiveContainer, XAxis, YAxis, Tooltip, AreaChart, Area, CartesianGrid } from 'recharts'
 import useTheme from 'hooks/useTheme'
 import { formatAmount } from 'utils/formatInfoNumbers'
 import { LineChartLoader } from 'views/Info/components/ChartLoaders'
 import { useTranslation } from '@pancakeswap/localization'
+
+const monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 
 export type LineChartProps = {
   data: any[]
@@ -11,12 +13,52 @@ export type LineChartProps = {
   setHoverDate: Dispatch<SetStateAction<string | undefined>> // used for label of value
   minYAxis?: number
   maxYAxis?: number
+  typeXAxis?: string
+  showXAxis?: boolean
 } & React.HTMLAttributes<HTMLDivElement>
 
 /**
  * Note: remember that it needs to be mounted inside the container with fixed height
  */
-const LineChart = ({ data, setHoverValue, setHoverDate, minYAxis, maxYAxis }: LineChartProps) => {
+const LineChart = ({ data, setHoverValue, setHoverDate, minYAxis, maxYAxis, typeXAxis, showXAxis }: LineChartProps) => {
+
+  const minGap = useMemo(() => {
+    return typeXAxis === '1M' ? 2 : 10;
+  }, [typeXAxis]);
+
+  let tmpRsFormat;
+  const formatDate = (time:any) => {
+    const date = new Date(time);
+    const year = date.getFullYear();
+    const monthIndex = date.getMonth();
+    const day = time.toLocaleDateString(undefined, { day: '2-digit' });
+    const hour = `${date.getHours()}:00`;
+    let resultFormat:any = '';
+    switch(typeXAxis) {
+      case '1Y':
+        resultFormat = (tmpRsFormat === monthNames[monthIndex]) ? '' : monthNames[monthIndex];
+        tmpRsFormat = monthNames[monthIndex]
+        break;
+      case '3M':
+        resultFormat = day;
+        break;
+      case '1M':
+        resultFormat = (tmpRsFormat === day) ? '' : day;
+        tmpRsFormat = day
+        break;
+      case '7D':
+        resultFormat = (tmpRsFormat === day) ? '' : day;
+        tmpRsFormat = day
+        break;
+      case '1D':
+        resultFormat = hour;
+        break;
+      default:
+        resultFormat = (tmpRsFormat === year) ? '' : year;
+        tmpRsFormat = year
+    }
+    return resultFormat;
+  }
   const {
     currentLanguage: { locale },
   } = useTranslation()
@@ -54,8 +96,9 @@ const LineChart = ({ data, setHoverValue, setHoverDate, minYAxis, maxYAxis }: Li
           dataKey="time"
           axisLine={false}
           tickLine={false}
-          tickFormatter={(time) => time.toLocaleDateString(undefined, { day: '2-digit' })}
-          minTickGap={10}
+          tickFormatter={(time) => formatDate(time)}
+          minTickGap={minGap}
+          fontSize={showXAxis ? "14px" : "0px"}
         />
         <YAxis
           dataKey="value"
