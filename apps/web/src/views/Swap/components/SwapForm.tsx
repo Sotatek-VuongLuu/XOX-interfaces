@@ -33,6 +33,7 @@ import { useExpertModeManager, useUserSlippageTolerance } from 'state/user/hooks
 
 import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
 import { currencyId } from 'utils/currencyId'
+import axios from 'axios'
 
 import { useAtomValue } from 'jotai'
 import CurrencyInputHeader from './CurrencyInputHeader'
@@ -46,7 +47,6 @@ import { useStableFarms } from '../StableSwap/hooks/useStableConfig'
 import { isAddress } from '../../../utils'
 import { SwapFeaturesContext } from '../SwapFeaturesContext'
 import { combinedTokenMapFromOfficialsUrlsAtom } from '../../../state/lists/hooks'
-import axios from 'axios'
 
 const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
