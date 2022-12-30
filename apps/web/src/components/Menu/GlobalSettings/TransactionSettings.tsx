@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { escapeRegExp } from 'utils'
-import { Text, Button, Input, Flex, Box, QuestionHelper } from '@pancakeswap/uikit'
+import { Text, Button, Input, Flex, Box, QuestionHelper, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { useUserSlippageTolerance, useUserTransactionTTL } from 'state/user/hooks'
 import styled from 'styled-components'
@@ -11,8 +11,11 @@ const IconPercent = styled.span`
   right:-5px;
   top:50%;
   transform:translate(-50%, -50%);
+  @media screen and (max-width: 425px) {
+    font-size:14px;
+  }
 `
-const SettingButton = styled(Button)`
+const SettingButton = styled(Button)`                                                           
   background:unset;
   border:1px solid #444444;
   padding:12px 11px;
@@ -21,6 +24,13 @@ const SettingButton = styled(Button)`
   font-weight:400;
   &.active {
     border:1px solid #9072FF;
+  }
+
+  @media screen and (max-width: 425px) {
+    padding:10px 9px;
+    font-size:14px;
+    min-height:37px;
+    margin-right:14px;
   }
 `
 const SettingInput = styled(Input)`
@@ -32,6 +42,20 @@ const SettingInput = styled(Input)`
   padding: 0 0 0 12px;
   &.active {
     border:1px solid #9072FF;
+  }
+
+  @media screen and (max-width: 375px) {
+    border-radius:6px;
+    padding:10px 9px;
+    font-size:14px;
+    width:49px;
+    min-height:37px;
+  }
+`
+const SettingBox = styled(Box)`
+  width:76px;
+  @media screen and (max-width: 375px) {
+    width:53px;
   }
 `
 enum SlippageError {
@@ -52,6 +76,7 @@ const SlippageTabs = () => {
   const [ttl, setTtl] = useUserTransactionTTL()
   const [slippageInput, setSlippageInput] = useState('')
   const [deadlineInput, setDeadlineInput] = useState('')
+  const { isMobile } = useMatchBreakpoints()
 
   const { t } = useTranslation()
 
@@ -159,7 +184,7 @@ const SlippageTabs = () => {
           </SettingButton>
           
           <Flex alignItems="center">
-            <Box width="76px" mt="4px">
+            <SettingBox mt="4px">
               <SettingInput
                 scale="sm"
                 inputMode="decimal"
@@ -178,7 +203,7 @@ const SlippageTabs = () => {
                 // isSuccess={![10, 50, 100].includes(userSlippageTolerance)}
                 className={![10, 50, 100].includes(userSlippageTolerance)?'active':''}
               />
-            </Box>
+            </SettingBox>
             <Text color="#9072FF" bold ml="2px">
               %
             </Text>
@@ -204,7 +229,7 @@ const SlippageTabs = () => {
           />
         </Flex>
         <Flex>
-          <Box width="52px" mt="4px" style={{position:'relative'}}>
+          <Box width= {isMobile? '45px' : '52px'} mt="4px" style={{position:'relative'}}>
             <SettingInput
               scale="sm"
               inputMode="numeric"
@@ -220,6 +245,7 @@ const SlippageTabs = () => {
                   parseCustomDeadline(event.target.value)
                 }
               }}
+              style={ isMobile? {marginLeft:'-10px'} :{}}
             />
             <IconPercent>%</IconPercent>
           </Box>
