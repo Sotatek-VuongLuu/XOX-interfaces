@@ -124,16 +124,12 @@ const Banner = () => {
                   <>
                     <span className="code_number">{userProfile?.referralCode}</span>
                     <span>
-                      {width <= 900 ? (
-                        <img src="/images/CopySimple_mb.svg" alt="CopySimple" />
-                      ) : (
-                        <CopyButton
+                    <CopyButton
                           width="24px"
                           text={userProfile?.referralCode}
                           tooltipMessage={t('Copied')}
                           button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
                         />
-                      )}
                     </span>
                   </>
                 )}
