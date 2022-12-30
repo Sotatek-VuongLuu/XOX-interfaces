@@ -46,6 +46,7 @@ import { useStableFarms } from '../StableSwap/hooks/useStableConfig'
 import { isAddress } from '../../../utils'
 import { SwapFeaturesContext } from '../SwapFeaturesContext'
 import { combinedTokenMapFromOfficialsUrlsAtom } from '../../../state/lists/hooks'
+import axios from 'axios'
 
 const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
@@ -240,7 +241,12 @@ export default function SwapForm() {
     (inputCurrency?.symbol === 'BUSD' && outputCurrency?.symbol === 'XOX')
   const hasAmount = Boolean(parsedAmount)
   const handleChangeReferal = (value: string) => {
-    setReferralCode(value)
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API}/users`, { params: { ref: value } })
+      .then((response) => {
+        if (response.data.address) setReferralCode(response.data.address)
+      })
+      .catch((error) => console.warn(error))
   }
   const onRefreshPrice = useCallback(() => {
     if (hasAmount) {

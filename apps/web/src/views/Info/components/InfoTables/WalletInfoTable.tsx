@@ -254,7 +254,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   useEffect(() => {
     if (!account || !chain || allTokens.length === 0) return
 
-    const currentProvider = chain.id === 1 || chain.id === 5 ? getDefaultProvider(chain.network) : provider
+    const currentProvider = chain.id === 1 || chain.id === 5 ? getDefaultProvider() : provider
     currentProvider
       .getBalance(account)
       .then((balance) => {
