@@ -181,7 +181,7 @@ const WrapperRight = styled.div<IPropsContainer>`
     .filter {
       display: grid;
       grid-template-columns: auto auto auto 1fr;
-      gap: 10px;
+      gap: 8px;
       align-items: center;
       color: #ffffff;
       position: relative;
@@ -217,7 +217,7 @@ const WrapperRight = styled.div<IPropsContainer>`
     @media screen and (max-width: 398px) {
       .filter {
         .subTab_item {
-          padding: 6px;
+          padding: 6px 5px;
         }
       }
     }
