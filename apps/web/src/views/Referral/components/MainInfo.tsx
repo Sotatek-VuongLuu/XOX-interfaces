@@ -372,7 +372,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
                 })}
               </div>
 
-              {rankOfUser.rank && rankOfUser.rank !== 6 && (
+              {rankOfUser.rank && rankOfUser.rank !== 6 ? null : (
                 <div className="dot">
                   <div className="dot_item" />
                   <div className="dot_item" />
