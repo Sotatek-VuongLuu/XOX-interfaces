@@ -72,7 +72,7 @@ export const USDC_RINKEBY = new ERC20Token(
 
 export const USDC_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0x07865c6E87B9F70255377e024ace6630C1Eaa37F',
+  '0x334F6F63231c538F870dbA7FaED67baeb11B9782',
   6,
   'tUSDC',
   'test USD Coin',
@@ -208,7 +208,7 @@ export const ETH_BSC_TESTNET = new ERC20Token(
 )
 export const BUSD_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x4CB105D50AB9D7bA8D603c31B8ED23356AB44741',
+  '0x0c3Dbe2081ccF00f6CB72d8541aA214Ac582C36D',
   18,
   'BUSD',
 )

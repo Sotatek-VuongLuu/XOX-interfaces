@@ -24,11 +24,7 @@ export const SwapPage = ({
   externalLinkUrl,
   ...props
 }: SwapPageProps) => (
-  <AtomBox
-    className={pageVariants({ removePadding, noMinHeight })}
-    {...props}
-    style={{ padding: 0, minHeight: "80vh" }}
-  >
+  <AtomBox className={pageVariants({ removePadding, noMinHeight })} {...props} style={{ padding: 0 }}>
     {children}
     <AtomBox display="flex" flexGrow={1} />
     <AtomBox display={["block", null, null, hideFooterOnDesktop ? "none" : "block"]} width="100%">

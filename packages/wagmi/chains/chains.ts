@@ -116,7 +116,7 @@ export const bscTest: Chain = {
 export const mainnet: Chain = {
   id: 1,
   name: 'Ethereum',
-  network: 'Ethereum mainnet',
+  network: 'mainnet',
   nativeCurrency: {
     decimals: 18,
     name: 'Ethereum',
@@ -134,7 +134,7 @@ export const mainnet: Chain = {
 export const goerli: Chain = {
   id: 5,
   name: 'Goerli',
-  network: 'goerli testnet',
+  network: 'goerli',
   nativeCurrency: {
     decimals: 18,
     name: 'Etherium',
