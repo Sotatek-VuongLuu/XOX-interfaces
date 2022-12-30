@@ -7,6 +7,7 @@ import { Currency, NativeCurrency } from '@pancakeswap/sdk'
 import { CurrencyLogo } from 'components/Logo'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
 import { SUGGESTED_BASES_ID } from 'config/constants/exchange'
+import { ResponsiveContainer } from 'recharts'
 import BarChart from './BarChart'
 import LineChart from './LineChart'
 import { ChartContent, TitleChart } from './style'
@@ -40,7 +41,7 @@ const HoverableChart = ({
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>(native)
   const [dateHover, setDateHover] = useState<string | undefined>()
   const [currencyData, setCurrencyData] = useState<any>()
-  const [showX, setShowX] = useState<any>(true);
+  const [showX, setShowX] = useState<any>(true)
 
   const baseToken = chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'
   const inputCurrency = Object.values(allTokens).find((value: any) => value.symbol === baseToken)
@@ -106,12 +107,12 @@ const HoverableChart = ({
     if (dataCurrency) setCurrencyData(dataCurrency)
   }, [selectedCurrency, currencyDatas])
 
-  const handleFilter = (value:string) => {
-    setShowX(false);
+  const handleFilter = (value: string) => {
+    setShowX(false)
     setTimeout(() => {
-      setShowX(true);
-    }, 500);
-    setFilter(value);
+      setShowX(true)
+    }, 500)
+    setFilter(value)
   }
 
   return (
@@ -227,16 +228,39 @@ const HoverableChart = ({
         <Skeleton width="128px" height="36px" />
       )}
       <Text>{dateHover ?? currentDate}</Text> */}
-      <Box height="250px" className=''>
-        <ChartComponent
-          data={formattedData}
-          setHoverValue={setHover}
-          setHoverDate={setDateHover}
-          minYAxis={minYAxis}
-          maxYAxis={maxYAxis}
-          typeXAxis={filter}
-          showXAxis={showX}
-        />
+      <Box height="250px" className=""  style={{position: 'relative', width: '100%', paddingBottom: '250px'}}>
+        <div
+          style={{
+            position: 'absolute',
+            left: 0,
+            right: 0,
+            bottom: 0,
+            top: 0,
+          }}
+        >
+          <ResponsiveContainer>
+            <ChartComponent
+              data={formattedData}
+              setHoverValue={setHover}
+              setHoverDate={setDateHover}
+              minYAxis={minYAxis}
+              maxYAxis={maxYAxis}
+              typeXAxis={filter}
+              showXAxis={showX}
+            />
+          </ResponsiveContainer>
+        </div>
+        {/* <ResponsiveContainer width="99%" aspect={3}>
+          <ChartComponent
+            data={formattedData}
+            setHoverValue={setHover}
+            setHoverDate={setDateHover}
+            minYAxis={minYAxis}
+            maxYAxis={maxYAxis}
+            typeXAxis={filter}
+            showXAxis={showX}
+          />
+        </ResponsiveContainer> */}
       </Box>
     </Box>
   )

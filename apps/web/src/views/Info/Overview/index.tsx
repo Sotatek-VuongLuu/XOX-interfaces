@@ -34,17 +34,26 @@ export const ChartCardsContainer = styled(Flex)`
 `
 
 export const PageContainer = styled(Flex)`
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 16px;
-  padding-left: 24px;
-  padding-right: 24px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+
+  & > div {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 16px;
+  }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    grid-template-columns: 5fr 2fr;
-    padding-left: 48px;
-    padding-right: 48px;
-  } ;
+    padding: 48px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xxl} {
+    padding: 48px;
+    & > div {
+      flex-direction: row;
+    }
+  }
 `
 
 const Overview: React.FC<React.PropsWithChildren> = () => {
@@ -178,22 +187,26 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
     <Page>
       <InfoNav allTokens={allTokens} />
       <PageContainer>
-        <ChartCardsContainer>
-          <HoverableChart
-            chartData={chartData}
-            valueProperty="priceUSD"
-            ChartComponent={LineChart}
-            filter={filter}
-            setFilter={setFilter}
-            currencyDatas={currencyDatas}
-            setCoinmarketcapId={setCoinmarketcapId}
-            chainId={chainId}
-            native={native}
-            allTokens={allTokens}
-          />
-        </ChartCardsContainer>
-        <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} />
-        <TransactionTable transactions={transactions} />
+        <div>
+          <ChartCardsContainer>
+            <HoverableChart
+              chartData={chartData}
+              valueProperty="priceUSD"
+              ChartComponent={LineChart}
+              filter={filter}
+              setFilter={setFilter}
+              currencyDatas={currencyDatas}
+              setCoinmarketcapId={setCoinmarketcapId}
+              chainId={chainId}
+              native={native}
+              allTokens={allTokens}
+            />
+          </ChartCardsContainer>
+          <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} />
+        </div>
+        <div>
+          <TransactionTable transactions={transactions} />
+        </div>
       </PageContainer>
     </Page>
   )
