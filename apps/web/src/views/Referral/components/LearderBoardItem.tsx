@@ -1,14 +1,13 @@
+/* eslint-disable import/no-cycle */
 import { Avatar, Box } from '@mui/material'
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
 import { useCallback } from 'react'
 import styled from 'styled-components'
 import { shortenAddress } from 'utils/shortenAddress'
-// eslint-disable-next-line import/no-cycle
-import { IItemLeaderBoard } from './MainInfoForLandingPage'
+import { IMappingFormat } from './MainInfo'
 
 interface IProps {
-  item: IItemLeaderBoard
+  item: IMappingFormat
   mb?: boolean
 }
 
@@ -146,7 +145,7 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
         )
       }
 
-      return <div className="ranking">{rank}</div>
+      return <div className="ranking">{rank <= 100 ? <span>{rank}</span> : <span>100+</span>}</div>
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
@@ -161,7 +160,7 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
           <div className="user_avatar_name">
             <Avatar alt="Remy Sharp" src={item.avatar} sx={{ height: 30, width: 30 }} />
             <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>
-              {item.name ? item.name : shortenAddress(item.address)}
+              {item.username ? item.username : shortenAddress(item.address)}
             </p>
           </div>
 
