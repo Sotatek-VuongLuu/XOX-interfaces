@@ -59,6 +59,28 @@ const LineChart = ({ data, setHoverValue, setHoverDate, minYAxis, maxYAxis, type
     }
     return resultFormat;
   }
+
+  const intToString = (num:any) =>  {
+    if (num < 1000) {
+        return num;
+    }
+    const si = [
+      {v: 1E3, s: "K"},
+      {v: 1E6, s: "M"},
+      {v: 1E9, s: "B"},
+      {v: 1E12, s: "T"},
+      {v: 1E15, s: "P"},
+      {v: 1E18, s: "E"}
+      ];
+    let index;
+    for (index = si.length - 1; index > 0; index--) {
+        if (num >= si[index].v) {
+            break;
+        }
+    }
+    return (num / si[index].v).toFixed(1).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, "$1") + si[index].s;
+  }
+
   const {
     currentLanguage: { locale },
   } = useTranslation()
@@ -108,9 +130,9 @@ const LineChart = ({ data, setHoverValue, setHoverDate, minYAxis, maxYAxis, type
           tickLine={false}
           fontSize="12px"
           domain={[minYAxis, maxYAxis]}
-          tickFormatter={(val) => `$${val}`}
+          tickFormatter={(val) => `$${intToString(val)}`}
           orientation="left"
-          tick={{ dx: -15, fill: theme.colors.textSubtle }}
+          tick={{ dx: -5, fill: theme.colors.textSubtle }}
         />
         <Tooltip
           cursor={{ stroke: theme.colors.secondary }}
