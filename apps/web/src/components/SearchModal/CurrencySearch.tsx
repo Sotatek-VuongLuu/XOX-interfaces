@@ -12,6 +12,8 @@ import { useAudioModeManager } from 'state/user/hooks'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import axios from 'axios'
+import { getContract, isAddress } from 'utils'
+import ERC20_ABI from 'config/abi/erc20.json'
 import { useAllTokens, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
 import Column, { AutoColumn } from '../Layout/Column'
 import Row from '../Layout/Row'
@@ -21,8 +23,6 @@ import { createFilterToken, useSortedTokensByQuery } from './filtering'
 import useTokenComparator from './sorting'
 import { getSwapSound } from './swapSound'
 import ImportRow from './ImportRow'
-import { getContract, isAddress } from 'utils'
-import ERC20_ABI from 'config/abi/erc20.json'
 
 const InputWrapper = styled.div`
   position: relative;
