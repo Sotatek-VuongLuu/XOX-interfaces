@@ -23,9 +23,9 @@ export const FACTORY_ADDRESS_MAP: Record<number, string> = {
 export const PAIR_XOX_BUSD: Record<number, string> = {
   // [ChainId.ETHEREUM]: FACTORY_ADDRESS_ETH,
   // [ChainId.RINKEBY]: FACTORY_ADDRESS_ETH,
-  [ChainId.GOERLI]: "0x4EDd411230B3C02f091C5EbF4fD993045e135509",
+  [ChainId.GOERLI]: "0x9D57DC19D30448a9d33B88721Aee1E35F999c5D0",
   // [ChainId.BSC]: FACTORY_ADDRESS,
-  [ChainId.BSC_TESTNET]: '0x8B1C4fD225CC5C9eb8F81C3B4013222ded1763De',
+  [ChainId.BSC_TESTNET]: '0xD316108c00b92DEe8247d99dA241426b436836c0',
 }
 
 export const XOX_ADDRESS: Record<number, string> = {
