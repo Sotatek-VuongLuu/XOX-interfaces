@@ -4,7 +4,7 @@ import styled from "styled-components";
 import { isMobile } from "react-device-detect";
 import { useActiveChainId, useLocalNetworkChain } from 'hooks/useActiveChainId'
 import { Modal } from '@pancakeswap/uikit'
-import { NETWORK_ICON, NETWORK_LABEL } from "../../constants/networks";
+import { NETWORK_ICON, NETWORK_LABEL } from "./networks";
 
 const ListNetWork = styled.div`
   button {
@@ -59,6 +59,7 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
     <Modal
       isOpen={isOpen}
       onDismiss={onDismiss}
+      title={null}
       maxWidth={isMobile ? 340 : 513}
     >
       <h3>Switch to</h3>

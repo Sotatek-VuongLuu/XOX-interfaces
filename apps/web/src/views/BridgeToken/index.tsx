@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 /* eslint-disable import/order */
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { Currency } from '@pancakeswap/sdk'
 import { Flex, BottomDrawer, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { AppBody } from 'components/App'
@@ -10,29 +10,120 @@ import { Field } from '../../state/swap/actions'
 import { useSwapState, useSingleTokenSwapInfo } from '../../state/swap/hooks'
 import Page from '../Page'
 import { useTranslation } from '@pancakeswap/localization'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 
-import StableSwapFormContainer from './StableSwap'
 import { StyledInputCurrencyWrapper, StyledSwapContainer, StyledHeader, StyledHeading1 } from './styles'
+import AmountInput from "./AmountInput";
+import { useActiveChainId, useLocalNetworkChain } from 'hooks/useActiveChainId'
+import { useCurrencyBalance } from 'state/wallet/hooks'
+import { useAccount } from 'wagmi'
+import { ChainId } from '@pancakeswap/sdk'
+import { TOKENS_SUPPORT } from "./tokensSupport";
 
-import { Card } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 
+export const getChainIdToByChainId = (chainId: any) => {
+  switch (chainId) {
+    case ChainId.RINKEBY:
+      return ChainId.BSC_TESTNET;
+    case ChainId.BSC_TESTNET:
+      return ChainId.RINKEBY;
+    default:
+      return chainId;
+  }
+};
+
 export default function BridgeToken() {
+  const { chainId } = useActiveChainId();
+  const { library } = useActiveWeb3React();
   const { isMobile } = useMatchBreakpoints();
+  const [amountInput, setAmountInput] = useState("");
+  const [defaultToken, setDefaultToken] = useState(TOKENS_SUPPORT[chainId][0]);
+  const [indexToken, setIndexToken] = useState(0);
+  const [isShowDropFrom, setIsShowDropFrom] = useState(false);
+  const [isShowDropTo, setIsShowDropTo] = useState(false);
   const { t } = useTranslation()
+  const [addressTokenInput, setAddressTokenInput] = useState(
+    TOKENS_SUPPORT[chainId][0].address
+  );
+  const [tokenB, setTokenB] = useState(
+    TOKENS_SUPPORT[getChainIdToByChainId(chainId)][0]
+  );
 
   // swap state & price data
   const {
     [Field.INPUT]: { currencyId: inputCurrencyId },
     [Field.OUTPUT]: { currencyId: outputCurrencyId },
   } = useSwapState()
+  const { address: account } = useAccount()
+  const balanceInput = useCurrencyBalance(
+    account ?? undefined,
+    TOKENS_SUPPORT[chainId][indexToken]
+  )
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
+
+  const [chainIdSupport, setChainIdSupport] = useState(chainId);
 
   const currencies: { [field in Field]?: Currency } = {
     [Field.INPUT]: inputCurrency ?? undefined,
     [Field.OUTPUT]: outputCurrency ?? undefined,
   }
+
+  // handle user type input
+  const handleUserInput = (value) => {
+    const decimalRegExp = new RegExp(
+      "^[+-]?([0-9]{0,20}([.][0-9]{0,18})?|[.][0-9]{0,18})$"
+    );
+    if (
+      !value ||
+      decimalRegExp.test(value) ||
+      amountInput.length > value.length
+    ) {
+      setAmountInput(value);
+    }
+  };
+
+  const switchToken = (index: any) => {
+    setDefaultToken(TOKENS_SUPPORT[chainId][index]);
+    setIndexToken(index);
+    setAddressTokenInput(TOKENS_SUPPORT[chainId][index].address);
+    setTokenB(TOKENS_SUPPORT[getChainIdToByChainId(chainId)][index]);
+  };
+
+  const handleShowDropFrom = () => {
+    setIsShowDropFrom(!isShowDropFrom);
+    setIsShowDropTo(false);
+  };
+
+  // handle switch network
+  const switchNetwork = (chainIdToSwitch: ChainId) => {
+    // cookie.set("chainId", chainIdToSwitch);
+    if (account) {
+      // TODO:Switch Network
+      //   if (chainIdToSwitch === ChainId.MAINNET) {
+      //     library?.send("wallet_switchEthereumChain", [
+      //       { chainId: "0x1" },
+      //       account,
+      //     ]);
+      //   } else if (chainIdToSwitch === ChainId.RINKEBY) {
+      //     library?.send("wallet_switchEthereumChain", [
+      //       { chainId: "0x4" },
+      //       account,
+      //     ]);
+      //   } else {
+      //     library?.send("wallet_addEthereumChain", [
+      //       NETWORK_PARAMS[chainIdToSwitch],
+      //       account,
+      //     ]);
+      //   }
+      // } else {
+      //   localStorage.setItem("chainId", chainIdToSwitch.toString());
+      //   dispatch(setChainIdDisconnect({ chainId: chainIdToSwitch }));
+    }
+    if (!account) setChainIdSupport(chainIdToSwitch);
+    setAmountInput("");
+  };
 
   return (
     <Page>
@@ -93,6 +184,19 @@ export default function BridgeToken() {
                 </svg>
                   </span>
                 </StyledHeader>
+                <AmountInput
+                  isTokenFrom
+                  inputChainId={chainIdSupport}
+                  balance={balanceInput ? balanceInput?.toExact() : "-"}
+                  amount={amountInput}
+                  handleUserInput={handleUserInput}
+                  handleBalanceMax={(balance) => setAmountInput(balance)}
+                  switchNetwork={switchNetwork}
+                  tokenSymbol={defaultToken.symbol}
+                  switchToken={switchToken}
+                  isShowDrop={isShowDropFrom}
+                  handleShowDrop={handleShowDropFrom}
+                />
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
         </Flex>

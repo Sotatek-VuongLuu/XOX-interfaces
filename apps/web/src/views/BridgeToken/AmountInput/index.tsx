@@ -4,7 +4,6 @@ import styled from "styled-components";
 import { NumericalInput } from '@pancakeswap/uikit';
 import SelectNetworkButton from "./SelectNetworkButton";
 import SelectTokenButton from "./SelectTokenButton";
-import NewTooltip from "../../../components/NewTooltip";
 
 const Wrapper = styled.div`
   border-radius: 8px;
@@ -149,8 +148,9 @@ const AmountInput: React.FC<Props> = ({
           <span
             className="balance"
             onClick={() => balance !== "-" && handleBalanceMax(balance)}
+            aria-hidden="true"
           >
-            <NewTooltip dataTip={balance} dataValue={`Balance: ${balance}`} />
+            Balance: ${balance}
           </span>
         )}
       </TextRow>
@@ -164,9 +164,7 @@ const AmountInput: React.FC<Props> = ({
           />
         ) : (
           <div className="tooltip">
-            {amount ? (
-              <NewTooltip dataTip={amount} dataValue={amount} />
-            ) : (
+            {amount || (
               <span>0.0</span>
             )}
           </div>
