@@ -9,9 +9,9 @@ import { FixedSizeList } from 'react-window'
 import { useAllLists, useInactiveListUrls } from 'state/lists/hooks'
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 import { useAudioModeManager } from 'state/user/hooks'
-import { isAddress } from 'utils'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
+import axios from 'axios'
 import { useAllTokens, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
 import Column, { AutoColumn } from '../Layout/Column'
 import Row from '../Layout/Row'
@@ -21,6 +21,8 @@ import { createFilterToken, useSortedTokensByQuery } from './filtering'
 import useTokenComparator from './sorting'
 import { getSwapSound } from './swapSound'
 import ImportRow from './ImportRow'
+import { getContract, isAddress } from 'utils'
+import ERC20_ABI from 'config/abi/erc20.json'
 
 const InputWrapper = styled.div`
   position: relative;
@@ -61,6 +63,7 @@ function useSearchInactiveTokenLists(search: string | undefined, minResults = 10
   const inactiveUrls = useInactiveListUrls()
   const { chainId } = useActiveChainId()
   const activeTokens = useAllTokens()
+
   return useMemo(() => {
     if (!search || search.trim().length === 0) return []
     const filterToken = createFilterToken(search)
@@ -92,7 +95,6 @@ function useSearchInactiveTokenLists(search: string | undefined, minResults = 10
         }
       }
     }
-    console.log([...exactMatches, ...rest], '[...exactMatches, ...rest].slice(0, minResults)')
     return [...exactMatches, ...rest].slice(0, minResults)
   }, [activeTokens, chainId, inactiveUrls, lists, minResults, search])
 }
@@ -119,7 +121,6 @@ function CurrencySearch({
   const [invertSearchOrder] = useState<boolean>(false)
 
   const allTokens = useAllTokens()
-  console.log(allTokens, 'allTokens')
 
   // if they input an address, use it
   const searchToken = useToken(debouncedQuery)
@@ -193,6 +194,31 @@ function CurrencySearch({
 
   // if no results on main list, show option to expand into inactive
   const filteredInactiveTokens = useSearchInactiveTokenLists(debouncedQuery)
+
+  useEffect(() => {
+    const searchAddress = isAddress(debouncedQuery)
+    if (chainId !== 1 || !searchAddress) return
+    const tokenContract = getContract(debouncedQuery, ERC20_ABI)
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/v2/cryptocurrency/info`, {
+        params: { address: debouncedQuery },
+      })
+      .then(async (response) => {
+        const tokenInfos = response.data.data
+        if (Object.keys(tokenInfos).length === 0) return
+        const tokenInfo = Object.values(tokenInfos)[0] as any
+        const token = {
+          name: tokenInfo.name,
+          symbol: tokenInfo.symbol,
+          address: debouncedQuery,
+          chainId: 1,
+          decimals: await tokenContract.decimals(),
+          logoURI: `https://s2.coinmarketcap.com/static/img/coins/64x64/${tokenInfo.id}.png`,
+        }
+        filteredInactiveTokens.push(new WrappedTokenInfo(token))
+      })
+      .catch((error) => console.warn(error))
+  }, [chainId, debouncedQuery])
 
   const hasFilteredInactiveTokens = Boolean(filteredInactiveTokens?.length)
 
