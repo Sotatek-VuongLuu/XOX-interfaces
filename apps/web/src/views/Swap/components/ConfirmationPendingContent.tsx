@@ -1,16 +1,18 @@
 import styled from 'styled-components'
 import { Text, Spinner } from '@pancakeswap/uikit'
+import { GridLoader } from 'react-spinners'
 import { useTranslation } from '@pancakeswap/localization'
 import { AutoColumn, ColumnCenter } from 'components/Layout/Column'
 import { Trade, Currency, TradeType } from '@pancakeswap/sdk'
 import { StableTrade } from '../StableSwap/hooks/useStableTradeExactIn'
+
 
 const Wrapper = styled.div`
   width: 100%;
 `
 
 const ConfirmedIcon = styled(ColumnCenter)`
-  padding: 24px 0;
+  padding: 5px 0 24px;
 `
 
 function ConfirmationPendingContent({ trade }: { trade: Trade<Currency, Currency, TradeType> | StableTrade }) {
@@ -27,7 +29,8 @@ function ConfirmationPendingContent({ trade }: { trade: Trade<Currency, Currency
   return (
     <Wrapper>
       <ConfirmedIcon>
-        <Spinner />
+        {/* <Spinner /> */}
+        <GridLoader color="#9072FF" style={{width:'51px', height:'51px'}} />
         {/* <img src='/images/swap/confirm-loading.svg' alt='' /> */}
       </ConfirmedIcon>
       
