@@ -1,6 +1,7 @@
 import { ENDPOINT_GRAPHQL_WITH_CHAIN } from 'config/constants/endpoints'
 import { GraphQLClient, request, gql } from 'graphql-request'
 import { ChainId } from '@pancakeswap/sdk'
+import axios from 'axios'
 
 export const userPointHourDatas = (chainId: ChainId, payload: any) => {
   const requests = `{

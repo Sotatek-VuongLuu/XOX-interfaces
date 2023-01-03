@@ -1,13 +1,16 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
+import { BigNumber } from '@ethersproject/bignumber'
 import { formatEther, formatUnits } from '@ethersproject/units'
 import { Box } from '@mui/material'
+import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTreasuryXOX } from 'hooks/useContract'
 import { useEffect, useState } from 'react'
+import { userPoint } from 'services/referral'
 import styled from 'styled-components'
 import Banner from './components/Banner'
 import MainInfo from './components/MainInfo'
@@ -36,6 +39,7 @@ export default function Refferal() {
   const [currentLevelReach, setCurrentLevelReach] = useState<number>(0)
   const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
   const [isClaimAll, setIsClaimAll] = useState<boolean>(false)
+  const [volumnTotalEarn, setVolumnTotalEarn] = useState<string>('')
 
   // eslint-disable-next-line consistent-return
   const handleGetCurrentPoint = async () => {
@@ -57,9 +61,10 @@ export default function Refferal() {
   }
 
   // eslint-disable-next-line consistent-return
-  const handleCheckPendingRewardAll = async () => {
+  const handleCheckPendingRewardAll = async (accountId: string) => {
     try {
-      const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
+      const txPendingReward = await contractTreasuryXOX.pendingRewardAll(accountId)
+      console.log(`Number(formatEther(txPendingReward._hex)`, Number(formatEther(txPendingReward._hex)))
       setIsClaimAll(Number(formatEther(txPendingReward._hex)) === 0)
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -108,7 +113,18 @@ export default function Refferal() {
         }),
       )
       setListLevelMustReach([...arrCheckClaimed])
-      handleCheckPendingRewardAll()
+    }
+  }
+
+  const getUserPoint = async () => {
+    try {
+      const result = await userPoint(chainId)
+      if (result) {
+        const volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
+        setVolumnTotalEarn(volumn)
+      }
+    } catch (error) {
+      console.log(`error >>>>`, error)
     }
   }
 
@@ -118,18 +134,35 @@ export default function Refferal() {
       handleCheckReachLevel(currentPoint)
     }
     fetchMyAPI()
+    getUserPoint()
   }, [account, chainId])
+
+  useEffect(() => {
+    getUserPoint()
+  }, [chainId])
+
+  useEffect(() => {
+    if (account) {
+      handleCheckPendingRewardAll(account)
+    }
+  }, [account])
 
   return (
     <>
       <Wrapper>
         <Box>
           <Banner />
-          <MainInfo userCurrentPoint={userCurrentPoint} currentLevelReach={currentLevelReach} listLever={listLever} />
+          <MainInfo
+            userCurrentPoint={userCurrentPoint}
+            currentLevelReach={currentLevelReach}
+            listLever={listLever}
+            volumnTotalEarn={volumnTotalEarn}
+          />
           <ReferralFriend
             currentLevelReach={currentLevelReach}
             isClaimAll={isClaimAll}
             listLevelMustReach={listLevelMustReach}
+            volumnTotalEarn={volumnTotalEarn}
           />
         </Box>
       </Wrapper>

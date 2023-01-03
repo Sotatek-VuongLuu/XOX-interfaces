@@ -1,8 +1,7 @@
-import { Box, Grid, useMediaQuery } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
-import { CopyAddress, CopyButton, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { CopyButton } from '@pancakeswap/uikit'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import useWindowSize from 'hooks/useWindowSize'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import styled from 'styled-components'
@@ -96,8 +95,6 @@ const WrapperRight = styled.div`
 `
 
 const Banner = () => {
-  const { isMobile } = useMatchBreakpoints()
-  const { width } = useWindowSize()
   const { t } = useTranslation()
   const { account } = useActiveWeb3React()
 
@@ -124,12 +121,12 @@ const Banner = () => {
                   <>
                     <span className="code_number">{userProfile?.referralCode}</span>
                     <span>
-                    <CopyButton
-                          width="24px"
-                          text={userProfile?.referralCode}
-                          tooltipMessage={t('Copied')}
-                          button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
-                        />
+                      <CopyButton
+                        width="24px"
+                        text={userProfile?.referralCode}
+                        tooltipMessage={t('Copied')}
+                        button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
+                      />
                     </span>
                   </>
                 )}
