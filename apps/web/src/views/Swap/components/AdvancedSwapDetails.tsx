@@ -1,6 +1,7 @@
 import { Trade, TradeType, Currency } from '@pancakeswap/sdk'
 import { Text, QuestionHelper } from '@pancakeswap/uikit'
 import { Field } from 'state/swap/actions'
+import styled from 'styled-components'
 import { useTranslation } from '@pancakeswap/localization'
 import { useUserSlippageTolerance } from 'state/user/hooks'
 import { computeSlippageAdjustedAmounts, computeTradePriceBreakdown } from 'utils/exchange'
@@ -9,6 +10,13 @@ import { TOTAL_FEE, LP_HOLDERS_FEE, TREASURY_FEE, BUYBACK_FEE } from 'config/con
 import { RowBetween, RowFixed } from 'components/Layout/Row'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import SwapRoute from './SwapRoute'
+
+
+const BottomText = styled(Text)`
+  @media screen and (max-width: 500px) {
+    font-size:12px;
+  }
+`
 
 function TradeSummary({
   trade,
@@ -31,9 +39,9 @@ function TradeSummary({
     <AutoColumn style={{ padding: '0 16px' }}>
       <RowBetween>
         <RowFixed>
-          <Text fontSize="16px" color="textSubtle">
+          <BottomText fontSize="16px" color="textSubtle">
             {isExactIn ? t('Minimum received') : t('Maximum sold')}
-          </Text>
+          </BottomText>
           <QuestionHelper
             text={t(
               'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.',
@@ -43,19 +51,19 @@ function TradeSummary({
           />
         </RowFixed>
         <RowFixed>
-          <Text fontSize="16px">
+          <BottomText fontSize="16px">
             {isExactIn
               ? `${slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)} ${trade.outputAmount.currency.symbol}` ??
                 '-'
               : `${slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4)} ${trade.inputAmount.currency.symbol}` ?? '-'}
-          </Text>
+          </BottomText>
         </RowFixed>
       </RowBetween>
       <RowBetween>
         <RowFixed>
-          <Text fontSize="16px" color="textSubtle">
+          <BottomText fontSize="16px" color="textSubtle">
             {t('Price Impact')}
-          </Text>
+          </BottomText>
           <QuestionHelper
             text={t('The difference between the market price and estimated price due to trade size.')}
             ml="4px"
@@ -67,9 +75,9 @@ function TradeSummary({
 
       <RowBetween>
         <RowFixed>
-          <Text fontSize="14px" color="textSubtle">
+          <BottomText fontSize="14px" color="textSubtle">
             {t('Liquidity Provider Fee')}
-          </Text>
+          </BottomText>
           <QuestionHelper
             text={
               <>
@@ -83,9 +91,9 @@ function TradeSummary({
             placement="top-start"
           />
         </RowFixed>
-        <Text fontSize="14px">
+        <BottomText fontSize="14px">
           {realizedLPFee ? `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol}` : '-'}
-        </Text>
+        </BottomText>
       </RowBetween>
     </AutoColumn>
   )

@@ -33,6 +33,7 @@ import { useExpertModeManager, useUserSlippageTolerance } from 'state/user/hooks
 
 import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
 import { currencyId } from 'utils/currencyId'
+import axios from 'axios'
 
 import { useAtomValue } from 'jotai'
 import CurrencyInputHeader from './CurrencyInputHeader'
@@ -240,7 +241,12 @@ export default function SwapForm() {
     (inputCurrency?.symbol === 'BUSD' && outputCurrency?.symbol === 'XOX')
   const hasAmount = Boolean(parsedAmount)
   const handleChangeReferal = (value: string) => {
-    setReferralCode(value)
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API}/users`, { params: { ref: value } })
+      .then((response) => {
+        if (response.data.address) setReferralCode(response.data.address)
+      })
+      .catch((error) => console.warn(error))
   }
   const onRefreshPrice = useCallback(() => {
     if (hasAmount) {

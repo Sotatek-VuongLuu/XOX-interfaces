@@ -28,6 +28,8 @@ import SwapbackgroundMobile from 'components/Svg/SwapBackgroundMobile'
 import SwapbackgroundMobileNone from 'components/Svg/SwapBackgroundMobileNone'
 import SwapbackgroundMobileNone2 from 'components/Svg/SwapBackgroundMobileNone2'
 import SwapbackgroundDesktopNone2 from 'components/Svg/SwapBackgroundDesktopNone2'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
+import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 
 const SwapbackgroundNoneWrapper = styled.div`
   position: absolute;
@@ -59,6 +61,18 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
+`
+
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: 0;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+  }
 `
 
 export default function Swap() {
@@ -103,7 +117,16 @@ export default function Swap() {
   const trade = showWrap ? undefined : v2Trade
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
-      <Flex width={['328px', , '100%']} height="100%" justifyContent="center" alignItems="center" position="relative">
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+      <Flex
+        width={['328px', , '100%']}
+        marginTop="100px"
+        marginBottom="100px"
+        height="100%"
+        justifyContent="center"
+        alignItems="center"
+        position="relative"
+      >
         {/* {!isMobile && isChartSupported && (
           <PriceChartContainer
             inputCurrencyId={inputCurrencyId}

@@ -31,6 +31,18 @@ const NoTransaction = styled.div`
     margin-bottom:16px;
   }
 `
+const ConnectBox = styled.div`
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    width:100%;
+    height:100%;
+    min-height:200px;
+    button {
+      width:100%;
+      max-width:268px;
+    }
+`
 const NoTransactionText = styled(Text)`
   margin-top:16px;
   color:#FFFFFF99;
@@ -98,7 +110,8 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
           )}
         </ModalBody>
       ) : (
-        <ConnectWalletButton />
+        <ConnectBox><ConnectWalletButton /></ConnectBox>
+        
       )}
     </Modal>
   )

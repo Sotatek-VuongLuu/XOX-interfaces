@@ -84,6 +84,12 @@ export const TitleChart = styled.div`
     }
   }
 
+  @media screen and (min-width: 1921px) {
+    .btn-get-token {
+      padding: 2px;
+    }
+  }
+
   @media screen and (max-width: 530px) {
     .title_chart {
       font-size: 16px;

@@ -117,6 +117,10 @@ const Overlay = styled.div`
   background-color: ${({ theme }) => theme.colors.backgroundAlt};
 `
 
+const NumericalInputWrapper = styled(NumericalInput)`
+  padding-right: 120px;
+`
+
 type ZapStyle = 'noZap' | 'zap'
 
 interface CurrencyInputPanelProps {
@@ -249,7 +253,7 @@ export default function CurrencyInputPanel({
         )}
         <Container as="label" zapStyle={zapStyle} error={error} style={{ height: checkHeightInput() }}>
           <LabelRow>
-            <NumericalInput
+            <NumericalInputWrapper
               error={error}
               disabled={disabled}
               className="token-amount-input"

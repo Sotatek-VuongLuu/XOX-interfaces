@@ -29,7 +29,7 @@ import InfoPieChart from '../InfoCharts/PieChart'
 
 const Wrapper = styled.div`
   width: 100%;
-  height: 100%;
+  margin-top: 16px;
 
   & .heading {
     position: relative;
@@ -43,6 +43,13 @@ const Wrapper = styled.div`
     width: 40px;
     height: 4px;
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+  }
+
+  ${({ theme }) => theme.mediaQueries.xxl} {
+    width: 454px;
+    min-width: 350px;
+    margin-left: 16px;
+    margin-top: 0;
   }
 `
 

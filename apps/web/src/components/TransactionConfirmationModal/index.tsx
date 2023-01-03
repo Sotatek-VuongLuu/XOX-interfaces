@@ -34,9 +34,26 @@ const ConfirmedIcon = styled(ColumnCenter)`
 const ButtonFooters = styled.div`
   display:flex;
   align-items:center;
-  justifi-content:center;
+  justify-content:center;
   height:43px;
-
+  width:100%;
+  button {
+    min-width:200px;
+  }
+  @media screen and (max-width: 500px) {
+    button {
+      min-width:unset;
+    }
+  }
+`
+const ConfirmImg = styled.div`
+  max-width: 171px;
+  max-height: 160px;
+  margin:0 auto;
+  img {
+    width:100%;
+    height:100%;
+  }
 `
 
 function ConfirmationPendingContent({ pendingText }: { pendingText: string }) {
@@ -81,7 +98,8 @@ export function TransactionSubmittedContent({
       <Section>
         <ConfirmedIcon>
           {/* <ArrowUpIcon strokeWidth={0.5} width="90px" color="primary" /> */}
-          <img src='/images/swap/transaction-submited.png' alt='' width='171px' height='160px' />
+          <ConfirmImg><img src='/images/swap/transaction-submited.png' alt='' /></ConfirmImg>
+         
         </ConfirmedIcon>
         <AutoColumn gap="12px" justify="center">
           <Text fontSize="20px">{t('Transaction Submitted')}</Text>
@@ -93,13 +111,13 @@ export function TransactionSubmittedContent({
             </Link>
           )}
           <ButtonFooters>
-          <Button onClick={onDismiss} width='200px' style={{height:'43px', background:'#313131', marginRight:'16px'}}>
+          <Button onClick={onDismiss} maxWidth='200px' style={{height:'43px', background:'#313131', marginRight:'16px'}}>
             {t('Close')}
           </Button>
           {currencyToAdd && (
             <AddToWalletButton
               variant="tertiary"
-              width="200px"
+              maxWidth='200px'
               textOptions={AddToWalletTextOptions.TEXT_WITH_ASSET}
               tokenAddress={token.address}
               tokenSymbol={currencyToAdd.symbol}

@@ -115,11 +115,11 @@ export const bscTest: Chain = {
 }
 export const mainnet: Chain = {
   id: 1,
-  name: 'Etherium',
-  network: 'Etherium mainnet',
+  name: 'Ethereum',
+  network: 'mainnet',
   nativeCurrency: {
     decimals: 18,
-    name: 'Etherium',
+    name: 'Ethereum',
     symbol: 'ETH',
   },
   rpcUrls: {
@@ -134,7 +134,7 @@ export const mainnet: Chain = {
 export const goerli: Chain = {
   id: 5,
   name: 'Goerli',
-  network: 'goerli testnet',
+  network: 'goerli',
   nativeCurrency: {
     decimals: 18,
     name: 'Etherium',

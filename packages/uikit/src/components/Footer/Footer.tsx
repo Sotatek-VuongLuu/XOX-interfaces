@@ -1,11 +1,9 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { vars } from "@pancakeswap/ui/css/vars.css";
-import { useIsMounted, useIsWindowVisible } from "@pancakeswap/hooks";
 import React from "react";
 import { Box, Flex } from "../Box";
 import { Link } from "../Link";
 import {
-  StyledIconMobileContainer,
   StyledList,
   StyledListItem,
   StyledSocialLinks,
@@ -50,7 +48,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
         <div>
           <Flex order={[2, null, 1]} flexDirection={["column", null, "column"]} mb={["0", null, "0"]}>
             <Box display={["block", null, "block"]}>
-              <LogoWithTextIcon width="160px" />
+              <LogoWithTextIcon />
             </Box>
             <Text
               fontSize="14px"

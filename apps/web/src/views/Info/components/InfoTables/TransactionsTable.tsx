@@ -71,7 +71,7 @@ const Wrapper = styled.div`
     box-shadow: none;
   }
 
-  ${({ theme }) => theme.mediaQueries.md} {
+  ${({ theme }) => theme.mediaQueries.xl} {
     grid-column: 1 / span 2;
     padding: 24px;
 
