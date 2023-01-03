@@ -11,7 +11,7 @@ import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 
 export const XOX_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x0046eB5589bC449AbA5DA3487C795B2AD383D02b',
+  '0x49bb145eD283d33783A5Fa166Ef9ee79Cd974c3C',
   18,
   'XOX',
   'XOX',
@@ -72,7 +72,7 @@ export const USDC_RINKEBY = new ERC20Token(
 
 export const USDC_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0x334F6F63231c538F870dbA7FaED67baeb11B9782',
+  '0xDCe94ECc218EA46242B515A3Ff69CDFA8d5c206F',
   6,
   'tUSDC',
   'test USD Coin',
@@ -116,7 +116,7 @@ export const BUSD_BSC = new ERC20Token(
 
 export const BUSD_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x0c3Dbe2081ccF00f6CB72d8541aA214Ac582C36D',
+  '0xc4d70b820D9D21D30C8118C91d287Eb6c659C849',
   18,
   'BUSD',
   'Binance USD',
@@ -175,7 +175,7 @@ export const UNI_GOERLI = new ERC20Token(ChainId.GOERLI, '0x1bC4803310B723B4f0A2
 export const SUSHI_GOERLI = new ERC20Token(ChainId.GOERLI, '0x28362Cd5D11a8ce0371B4768Cd8EDF8a943CC2A9', 18, 'SUSHI')
 export const LINK_GOERLI = new ERC20Token(ChainId.GOERLI, '0xCfc1B83B17084e744423Db6314B7e811729c6514', 18, 'LINK')
 export const SHIB_GOERLI = new ERC20Token(ChainId.GOERLI, '0x5f933e0F9D17A4B28F229a2882e2E18dcef266c7', 18, 'SHIB')
-export const XOX_GOERLI = new ERC20Token(ChainId.GOERLI, '0xa1c9512C24144e8F96d3c62886b8350E358f19E3', 18, 'XOX')
+export const XOX_GOERLI = new ERC20Token(ChainId.GOERLI, '0x7B11CED691A5014a57B14A82Ad623afeC3058C4F', 18, 'XOX')
 
 export const BTCB_BSC = new ERC20Token(
   ChainId.BSC,
@@ -208,7 +208,7 @@ export const ETH_BSC_TESTNET = new ERC20Token(
 )
 export const BUSD_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x0c3Dbe2081ccF00f6CB72d8541aA214Ac582C36D',
+  '0xc4d70b820D9D21D30C8118C91d287Eb6c659C849',
   18,
   'BUSD',
 )
@@ -244,7 +244,7 @@ export const ADA_BSC_TESTNET = new ERC20Token(
 )
 export const XOX_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x0046eB5589bC449AbA5DA3487C795B2AD383D02b',
+  '0x49bb145eD283d33783A5Fa166Ef9ee79Cd974c3C',
   18,
   'XOX',
 )

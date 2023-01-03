@@ -31,17 +31,17 @@ export const PAIR_XOX_BUSD: Record<number, string> = {
 export const XOX_ADDRESS: Record<number, string> = {
   // [ChainId.ETHEREUM]: '',
   // [ChainId.RINKEBY]: '',
-  [ChainId.GOERLI]: '0xa1c9512C24144e8F96d3c62886b8350E358f19E3',
+  [ChainId.GOERLI]: '0x7B11CED691A5014a57B14A82Ad623afeC3058C4F',
   // [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0x0046eB5589bC449AbA5DA3487C795B2AD383D02b',
+  [ChainId.BSC_TESTNET]: '0x49bb145eD283d33783A5Fa166Ef9ee79Cd974c3C',
 }
 
 export const USD_ADDRESS: Record<number, string> = {
   [ChainId.ETHEREUM]: '',
   [ChainId.RINKEBY]: '',
-  [ChainId.GOERLI]: '0x334F6F63231c538F870dbA7FaED67baeb11B9782',
+  [ChainId.GOERLI]: '0xDCe94ECc218EA46242B515A3Ff69CDFA8d5c206F',
   [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0x0c3Dbe2081ccF00f6CB72d8541aA214Ac582C36D',
+  [ChainId.BSC_TESTNET]: '0xc4d70b820D9D21D30C8118C91d287Eb6c659C849',
 }
 export const INIT_CODE_HASH = '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5'
 
