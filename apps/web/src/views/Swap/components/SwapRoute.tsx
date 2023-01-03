@@ -12,7 +12,7 @@ export default memo(function SwapRoute({ trade }: { trade: Trade<Currency, Curre
         return (
           <Fragment key={token.address}>
             <Flex alignItems="end">
-              <Text fontSize="14px" ml="0.125rem" mr="0.125rem">
+              <Text fontSize="16px" ml="0.125rem" mr="0.125rem">
                 {currency.symbol}
               </Text>
             </Flex>
