@@ -10,7 +10,7 @@ const PerLabel = styled.div`
   font-size: 16px;
   font-weight:400;
   margin-top: "8px";
-  @media (max-width: 574px) {
+  @media (max-width: 576px) {
     font-size: 14px;
   }
 `;

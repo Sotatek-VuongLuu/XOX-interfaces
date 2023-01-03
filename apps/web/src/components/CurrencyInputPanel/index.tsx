@@ -53,7 +53,7 @@ const PercentButton = styled(Button)`
 const TextBalance = styled.div`
   position:absolute;
   right:17px;
-  top 5px;
+  top 17px;
   z-index:99;
   font-size:14px;
   font-weight:400;
@@ -86,11 +86,10 @@ const LabelRow = styled.div`
   display: flex;
   flex-flow: row nowrap;
   align-items: center;
-  height: 100%;
   color: ${({ theme }) => theme.colors.text};
   font-size: 0.75rem;
   line-height: 1rem;
-  padding: 0.75rem 1rem 0 1rem;
+  padding: 15px 1rem 0 1rem;
 `
 const InputPanel = styled.div`
   display: flex;
@@ -101,7 +100,7 @@ const InputPanel = styled.div`
 const Container = styled.div<{ zapStyle?: ZapStyle; error?: boolean }>`
   border-radius: 10px;
   position: relative;
-  background-color: ${({ theme }) => theme.colors.input};
+  background-color: ${({ theme }) => theme.colors.dark3};
   box-shadow: ${({ theme, error }) => theme.shadows[error ? 'warning' : 'inset']};
   ${({ zapStyle }) =>
     !!zapStyle &&
@@ -119,6 +118,10 @@ const Overlay = styled.div`
 
 const NumericalInputWrapper = styled(NumericalInput)`
   padding-right: 120px;
+  font-size: 18px;
+  @media screen and (max-width: 576px) {
+    font-size: 16px;
+  }
 `
 
 type ZapStyle = 'noZap' | 'zap'
@@ -199,14 +202,16 @@ export default function CurrencyInputPanel({
     if (isMobile) {
       if (account) {
         height = '112px'
-      } 
-      else {
+        if (isShowPercent) {
+          height = '122px'
+        } 
+      }else {
         height = '52px'
       }
     } else if (isShowDolar && isShowPercent) {
       height = '128px'
     } else {
-      height = '103px'
+      height = '95px'
     }
     return height
   }
@@ -262,19 +267,19 @@ export default function CurrencyInputPanel({
               onUserInput={(val) => {
                 onUserInput(val)
               }}
-              style={
-                isShowPercent && isShowDolar
-                  ? { marginTop: '-70px' }
-                  : isShowPercent
-                  ? { marginTop: '-36px' }
-                  : isShowDolar
-                  ? { marginTop: '-36px' }
-                  : { marginTop: '-10px' }
-              }
+              // style={
+              //   isShowPercent && isShowDolar
+              //     ? { marginTop: '-70px' }
+              //     : isShowPercent
+              //     ? { marginTop: '-36px' }
+              //     : isShowDolar
+              //     ? { marginTop: '-36px' }
+              //     : { marginTop: '-10px' }
+              // }
             />
           </LabelRow>
           {isShowDolar && (
-            <ForDolar style={isShowPercent ? { bottom: '58px' } : { bottom: '30px' }}>
+            <ForDolar style={isShowPercent ? { bottom: '58px' } : { bottom: '22px' }}>
               <Flex justifyContent="flex-end" mr="1rem">
                 <Flex maxWidth="200px">
                   <Text fontSize="12px" color="textSubtle">
@@ -284,7 +289,7 @@ export default function CurrencyInputPanel({
               </Flex>
             </ForDolar>
           )}
-          <InputRow selected={disableCurrencySelect}>
+          <InputRow selected={disableCurrencySelect} style={{ paddingBottom: 15}}>
             {isShowPercent && (
               <Flex alignItems="center" justifyContent="start">
                 {showQuickInputButton &&
@@ -321,7 +326,8 @@ export default function CurrencyInputPanel({
             )}
           </InputRow>
           <CurrencySelectButton
-            style={isMobile && !account?{top:'23%'}:isShowPercent?{top:'23%'}: {top:'38%'}}
+            // style={isMobile && !account?{top:'23%'}:isShowPercent?{top:'60%'}: {top:'45%'}}
+            style={{bottom: (isMobile && isShowPercent) ? 50 : 15}}
             className="open-currency-select-button"
             selected={!!currency}
             onClick={() => {

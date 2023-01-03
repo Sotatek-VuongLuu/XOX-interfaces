@@ -15,13 +15,23 @@ const AdvancedDetailsFooter = styled.div<{ show: boolean }>`
   transition: transform 300ms ease-in-out;
 `
 const AdvancedDetail = styled.div<{ show: boolean }>`
-// margin-top: ${({ show }) => (show ? '26px' : 0)};
-padding-bottom: 16px;
-width: 100%;
-border-radius: 20px;
+  // margin-top: ${({ show }) => (show ? '26px' : 0)};
+  padding-bottom: 16px;
+  width: 100%;
+  border-radius: 20px;
 
-transform: ${({ show }) => (show ? 'translateY(0%)' : 'translateY(-100%)')};
-transition: transform 300ms ease-in-out;
+  transform: ${({ show }) => (show ? 'translateY(0%)' : 'translateY(-100%)')};
+  transition: transform 300ms ease-in-out;
+  @media(max-width: 576px){
+    div[font-size="16px"]{
+      font-size: 12px !important;
+      +div{
+        svg{
+          width: 14px;
+        }
+      }
+    }
+  }
 `
 
 export default function AdvancedSwapDetailsDropdown({ trade, ...rest }: AdvancedSwapDetailsProps) {

@@ -18,6 +18,12 @@ const BottomText = styled(Text)`
   }
 `
 
+const RowBetweenStyle = styled(RowBetween)`
+  @media screen and (max-width: 576px) {
+    margin-bottom: 8px;
+  }
+`
+
 function TradeSummary({
   trade,
   allowedSlippage,
@@ -37,7 +43,7 @@ function TradeSummary({
 
   return (
     <AutoColumn style={{ padding: '0 16px' }}>
-      <RowBetween>
+      <RowBetweenStyle>
         <RowFixed>
           <BottomText fontSize="16px" color="textSubtle">
             {isExactIn ? t('Minimum received') : t('Maximum sold')}
@@ -58,8 +64,8 @@ function TradeSummary({
               : `${slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4)} ${trade.inputAmount.currency.symbol}` ?? '-'}
           </BottomText>
         </RowFixed>
-      </RowBetween>
-      <RowBetween>
+      </RowBetweenStyle>
+      <RowBetweenStyle>
         <RowFixed>
           <BottomText fontSize="16px" color="textSubtle">
             {t('Price Impact')}
@@ -71,11 +77,11 @@ function TradeSummary({
           />
         </RowFixed>
         <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
-      </RowBetween>
+      </RowBetweenStyle>
 
-      <RowBetween>
+      <RowBetweenStyle>
         <RowFixed>
-          <BottomText fontSize="14px" color="textSubtle">
+          <BottomText fontSize="16px" color="textSubtle">
             {t('Liquidity Provider Fee')}
           </BottomText>
           <QuestionHelper
@@ -91,19 +97,20 @@ function TradeSummary({
             placement="top-start"
           />
         </RowFixed>
-        <BottomText fontSize="14px">
+        <BottomText fontSize="16px">
           {realizedLPFee ? `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol}` : '-'}
         </BottomText>
-      </RowBetween>
+      </RowBetweenStyle>
     </AutoColumn>
   )
 }
 
 export interface AdvancedSwapDetailsProps {
-  trade?: Trade<Currency, Currency, TradeType>
+  trade?: Trade<Currency, Currency, TradeType>;
+  showXOXSreceived?: boolean
 }
 
-export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
+export function AdvancedSwapDetails({ trade, showXOXSreceived }: AdvancedSwapDetailsProps) {
   const { t } = useTranslation()
   const [allowedSlippage] = useUserSlippageTolerance()
 
@@ -116,9 +123,9 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
           <TradeSummary trade={trade} allowedSlippage={allowedSlippage} />
           {showRoute && (
             <>
-              <RowBetween style={{ padding: '0 16px' }}>
+              <RowBetweenStyle style={{ padding: '0 16px' }}>
                 <span style={{ display: 'flex', alignItems: 'center' }}>
-                  <Text fontSize="14px" color="textSubtle">
+                  <Text fontSize="16px" color="textSubtle">
                     {t('Route')}
                   </Text>
                   <QuestionHelper
@@ -128,7 +135,12 @@ export function AdvancedSwapDetails({ trade }: AdvancedSwapDetailsProps) {
                   />
                 </span>
                 <SwapRoute trade={trade} />
-              </RowBetween>
+              </RowBetweenStyle>
+              {
+                showXOXSreceived && <RowBetweenStyle style={{ padding: '0 16px' }}>
+                  <Text fontSize="16px" color="textSubtle">XOXS received</Text>
+                </RowBetweenStyle>
+              }
             </>
           )}
         </>
