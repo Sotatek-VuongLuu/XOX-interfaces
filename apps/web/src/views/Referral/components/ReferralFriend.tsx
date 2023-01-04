@@ -501,6 +501,7 @@ const ReferralFriend = ({
       })
       txClaimAll.wait(1)
       setIsOpenLoadingClaimModal(false)
+      setIsOpenSuccessModal(true)
       getUserPoint()
       handleCheckReachLevel()
       handleCheckPendingRewardAll(account)
