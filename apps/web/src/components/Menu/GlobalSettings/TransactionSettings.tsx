@@ -44,7 +44,7 @@ const SettingInput = styled(Input)`
     border:1px solid #9072FF;
   }
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 425px) {
     border-radius:6px;
     padding:10px 9px;
     font-size:14px;
@@ -63,7 +63,7 @@ const MinsInput = styled(Input)`
     border:1px solid #9072FF;
   }
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 425px) {
     border-radius:6px;
     padding:10px 9px;
     font-size:14px;
@@ -73,7 +73,7 @@ const MinsInput = styled(Input)`
 `
 const SettingBox = styled(Box)`
   width:76px;
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 425px) {
     width:53px;
   }
 `
