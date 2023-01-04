@@ -19,7 +19,7 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
 import { useCallback, useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
-import { useAccount, useBalance, useProvider } from 'wagmi'
+import { useAccount, useBalance, useNetwork, useProvider } from 'wagmi'
 import { parseUnits } from '@ethersproject/units'
 import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { getBlockExploreLink, getBlockExploreName } from 'utils'
@@ -29,6 +29,8 @@ import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import { getDefaultProvider } from '@ethersproject/providers'
+import { XOX_ADDRESS } from 'config/constants/exchange'
+import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 
 export const LOW_NATIVE_BALANCE = parseUnits('0.002', 'ether')
 
@@ -49,7 +51,6 @@ const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
   }
 `
 
-
 const BoxWrapper = styled(Box)`
   font-weight: 700;
   font-size: 14px;
@@ -61,7 +62,7 @@ const BoxWrapper = styled(Box)`
     height: 37px;
   }
 
-  svg circle{
+  svg circle {
     fill: none;
   }
 
@@ -102,19 +103,34 @@ const UserMenu = () => {
   const { logout } = useAuth()
   const { profile } = useProfile()
   const avatarSrc = profile?.nft?.image?.thumbnail
-  const [userMenuText, setUserMenuText] = useState<string>('')
-  const [userMenuVariable, setUserMenuVariable] = useState<UserMenuVariant>('default')
-  const bnbBalance = useBalance({ addressOrName: account, chainId: ChainId.BSC })
   const native = useNativeCurrency()
-  const provider = useProvider({ chainId })
   const [balanceNative, setBalanceNative] = useState<any>()
+  const [balanceXOX, setBalanceXOX] = useState<any>()
+  const { chain } = useNetwork()
+  const provider = useProvider({ chainId })
 
   useEffect(() => {
     if (!account || !chainId) return
-    const currentProvider = chainId === 1 ? getDefaultProvider() : provider
+    const currentProvider = chainId === 1 || chainId === 5 ? getDefaultProvider(chain.network) : provider
     currentProvider.getBalance(account).then((balance) => {
       setBalanceNative(balance)
     })
+    getBalancesForEthereumAddress({
+      // erc20 tokens you want to query!
+      contractAddresses: [XOX_ADDRESS[chainId]],
+      // ethereum address of the user you want to get the balances for
+      ethereumAddress: account,
+      // your ethers provider
+      providerOptions: {
+        ethersProvider: currentProvider,
+      },
+    })
+      .then((balance) => {
+        setBalanceXOX(balance.tokens[0])
+      })
+      .catch((error) => {
+        console.warn(error)
+      })
   }, [account, chainId, provider])
 
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
@@ -263,11 +279,11 @@ const UserMenu = () => {
           <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
             {native.symbol} {t('Balance')}
           </Text>
-          {!bnbBalance.isFetched ? (
+          {!balanceNative ? (
             <Skeleton height="22px" width="60px" />
           ) : (
             <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
-              {balanceNative?.toString()}
+              {formatBigNumber(balanceNative, 6)}
             </Text>
           )}
         </Flex>
@@ -275,11 +291,11 @@ const UserMenu = () => {
           <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
             XOX {t('Balance')}
           </Text>
-          {!bnbBalance.isFetched ? (
+          {!balanceXOX ? (
             <Skeleton height="22px" width="60px" />
           ) : (
             <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
-              {formatBigNumber(bnbBalance.data.value, 6)}
+              {balanceXOX.balance}
             </Text>
           )}
         </Flex>
@@ -298,13 +314,7 @@ const UserMenu = () => {
 
   if (account && userProfile) {
     return (
-      <UIKitUserMenu
-        account={account}
-        avatarSrc={avatarSrc}
-        text={userMenuText}
-        variant={userMenuVariable}
-        uncloseWhenClick
-      >
+      <UIKitUserMenu account={account} avatarSrc={avatarSrc} text="" variant="default" uncloseWhenClick>
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )
