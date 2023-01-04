@@ -3,7 +3,7 @@ const COINGECKO = 'https://tokens.pancakeswap.finance/coingecko.json'
 const CMC = 'https://tokens.pancakeswap.finance/cmc.json'
 
 // List of official tokens list
-export const OFFICIAL_LISTS = []
+export const OFFICIAL_LISTS = [PANCAKE_EXTENDED]
 
 export const UNSUPPORTED_LIST_URLS: string[] = []
 export const WARNING_LIST_URLS: string[] = []

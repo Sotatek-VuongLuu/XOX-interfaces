@@ -138,7 +138,7 @@ function CurrencySearch({
 
   const filteredTokens: Token[] = useMemo(() => {
     const filterToken = createFilterToken(debouncedQuery)
-    return Object.values(allTokens).filter(filterToken)
+    return [...Object.values(allTokens), native as any].filter(filterToken)
   }, [allTokens, debouncedQuery])
 
   const filteredQueryTokens = useSortedTokensByQuery(filteredTokens, debouncedQuery)
@@ -235,12 +235,13 @@ function CurrencySearch({
         </Column>
       )
     }
+    console.log(filteredSortedTokens, filteredInactiveTokens, 'filteredInactiveTokens')
 
     return Boolean(filteredSortedTokens?.length) || hasFilteredInactiveTokens ? (
       <Box>
         <CurrencyList
-          height={isMobile ? (showCommonBases ? height || 250 : height ? height + 80 : 350) : 310}
-          showNative={showNative}
+          height={isMobile ? (height ? height + 80 : 350) : 310}
+          showNative={false}
           currencies={filteredSortedTokens}
           inactiveCurrencies={filteredInactiveTokens}
           breakIndex={
