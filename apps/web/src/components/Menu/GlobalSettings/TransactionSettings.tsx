@@ -34,17 +34,36 @@ const SettingButton = styled(Button)`
   }
 `
 const SettingInput = styled(Input)`
-  border-radius:10px;
+  border-radius:6px;
   border:1px solid #444444;
   background:unset;
   min-height:43px;
-  width:62px;
-  padding: 0 0 0 12px;
+  padding:0 9px;
+  width:60px;
   &.active {
     border:1px solid #9072FF;
   }
 
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 425px) {
+    border-radius:6px;
+    padding:10px 9px;
+    font-size:14px;
+    width:49px;
+    min-height:37px;
+  }
+`
+const MinsInput = styled(Input)`
+  border-radius:6px;
+  border:1px solid #444444;
+  background:unset;
+  min-height:43px;
+  width:62px;
+  padding: 0 0 0 20px;
+  &.active {
+    border:1px solid #9072FF;
+  }
+
+  @media screen and (max-width: 425px) {
     border-radius:6px;
     padding:10px 9px;
     font-size:14px;
@@ -54,7 +73,7 @@ const SettingInput = styled(Input)`
 `
 const SettingBox = styled(Box)`
   width:76px;
-  @media screen and (max-width: 375px) {
+  @media screen and (max-width: 425px) {
     width:53px;
   }
 `
@@ -136,7 +155,7 @@ const SlippageTabs = () => {
     <Flex flexDirection="column">
       <Flex flexDirection="column" mb="24px">
         <Flex mb="12px">
-          <Text>{t('Slippage Tolerance')}</Text>
+          <Text color='#FFFFFFDE'>{t('Slippage Tolerance')}</Text>
           <QuestionHelper
             text={t(
               'Setting a high slippage tolerance can help transactions succeed, but you may not get such a good price. Use with caution.',
@@ -221,7 +240,7 @@ const SlippageTabs = () => {
       </Flex>
       <Flex justifyContent="space-between" alignItems="center" mb="24px">
         <Flex alignItems="center">
-          <Text>{t('Tx deadline (mins)')}</Text>
+          <Text color='#FFFFFFDE'>{t('Tx deadline (mins)')}</Text>
           <QuestionHelper
             text={t('Your transaction will revert if it is left confirming for longer than this time.')}
             placement="top-start"
@@ -230,7 +249,7 @@ const SlippageTabs = () => {
         </Flex>
         <Flex>
           <Box width= {isMobile? '45px' : '52px'} mt="4px" style={{position:'relative'}}>
-            <SettingInput
+            <MinsInput
               scale="sm"
               inputMode="numeric"
               pattern="^[0-9]+$"
@@ -247,7 +266,6 @@ const SlippageTabs = () => {
               }}
               style={ isMobile? {marginLeft:'-10px'} :{}}
             />
-            <IconPercent>%</IconPercent>
           </Box>
         </Flex>
       </Flex>

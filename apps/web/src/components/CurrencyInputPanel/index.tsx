@@ -1,3 +1,4 @@
+import {useState} from 'react';
 import { Currency, Pair } from '@pancakeswap/sdk'
 import {
   Button,
@@ -179,7 +180,8 @@ export default function CurrencyInputPanel({
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpoints()
   const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
-  const tokenAddress = token ? isAddress(token.address) : null
+  const tokenAddress = token ? isAddress(token.address) : null;
+  const [activePercent, setActivePercent] = useState<any>(null);
 
   const amountInDollar = useBUSDCurrencyAmount(
     showBUSD ? currency : undefined,
@@ -298,12 +300,13 @@ export default function CurrencyInputPanel({
                     <PercentButton
                       key={`btn_quickCurrency${percent}`}
                       onClick={() => {
-                        onPercentInput(percent)
+                        onPercentInput(percent);
+                        setActivePercent(percent);
                       }}
                       scale="xs"
                       mr="5px"
                       variant="secondary"
-                      style={{ textTransform: 'uppercase' }}
+                      style={{ textTransform: 'uppercase',background: activePercent === percent ? '#9072ff' : 'none', color: activePercent === percent ? '#fff' : '#9072ff' }}
                     >
                       {percent}%
                     </PercentButton>
@@ -313,11 +316,12 @@ export default function CurrencyInputPanel({
                     onClick={(e) => {
                       e.stopPropagation()
                       e.preventDefault()
-                      onMax?.()
+                      onMax?.();
+                      setActivePercent(0);
                     }}
                     scale="xs"
                     variant="secondary"
-                    style={{ textTransform: 'uppercase' }}
+                    style={{ textTransform: 'uppercase', background: activePercent === 0 ? '#9072ff' : 'none', color: activePercent === 0 ? '#fff' : '#9072ff' }}
                   >
                     {t('Max')}
                   </PercentButton>

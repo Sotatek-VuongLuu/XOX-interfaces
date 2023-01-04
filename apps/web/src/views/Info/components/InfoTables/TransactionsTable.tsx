@@ -243,23 +243,26 @@ const SORT_FIELD = {
 }
 
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
-  const loadingRow = (
-    <>
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-      <Skeleton />
-    </>
-  )
+  const loadingRow = useCallback((key: number) => {
+    return (
+      <>
+        <Skeleton key={`${key}-1`} />
+        <Skeleton key={`${key}-2`} />
+        <Skeleton key={`${key}-3`} />
+        <Skeleton key={`${key}-4`} />
+        <Skeleton key={`${key}-5`} />
+        <Skeleton key={`${key}-6`} />
+        <Skeleton key={`${key}-7`} />
+        <Skeleton key={`${key}-8`} />
+      </>
+    )
+  }, [])
+
   return (
     <>
-      {loadingRow}
-      {loadingRow}
-      {loadingRow}
+      {loadingRow(1)}
+      {loadingRow(2)}
+      {loadingRow(3)}
     </>
   )
 }
@@ -282,12 +285,14 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-id`}
       >
         {index + 1 + (page - 1) * perPage}
       </Text>
       <LinkExternal
         color="#9072FF"
         href={getBlockExploreLink(transaction.hash, 'transaction', chainName === 'ETH' && ChainId.ETHEREUM)}
+        key={`${transaction.hash}-type`}
       >
         <Text
           fontSize="16px"
@@ -311,6 +316,7 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-time`}
       >
         {formatISO9075(parseInt(transaction.timestamp, 10) * 1000)}
       </Text>
@@ -331,6 +337,7 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-token0`}
       >{`${formatAmount(abs0)} ${transaction.token0Symbol}`}</Text>
       <Text
         fontSize="16px"
@@ -339,6 +346,7 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-token1`}
       >{`${formatAmount(abs1)} ${transaction.token1Symbol}`}</Text>
       <Text
         fontSize="16px"
@@ -347,6 +355,7 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
       >
         --
         {/* {`${formatAmount(abs1)} Stable coin`} */}
@@ -362,6 +371,7 @@ const DataRow: React.FC<
         style={{ justifySelf: 'right' }}
         target="_blank"
         href={getBlockExploreLink(transaction.sender, 'address', chainName === 'ETH' && ChainId.ETHEREUM)}
+        key={`${transaction.hash}-sender`}
       >
         {truncateHash(transaction.sender, 4, 5)}
       </Link>
@@ -445,8 +455,8 @@ const TransactionsTable: React.FC<
     (newField: string) => {
       setSortField(newField)
       setSortDirection(sortField !== newField ? true : !sortDirection)
-      setIconSortField(newField === SORT_FIELD.timestamp ? null : !iconSortField);
-      setIconSortDirection(newField === SORT_FIELD.amountUSD ? null : !iconSortDirection);
+      setIconSortField(newField === SORT_FIELD.timestamp ? null : !iconSortField)
+      setIconSortDirection(newField === SORT_FIELD.amountUSD ? null : !iconSortDirection)
     },
     [sortDirection, sortField],
   )
@@ -466,41 +476,45 @@ const TransactionsTable: React.FC<
     [maxPage],
   )
 
-  const IconUp = <svg xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17" fill="none">
-    <path d="M4.66675 2.22168V8.33279V2.22168Z" fill="#8E8E8E" />
-    <path
-      d="M4.66675 2.22168V8.33279"
-      stroke="#8E8E8E"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M1 4.66667L4.66667 1L8.33333 4.66667"
-      stroke="#8E8E8E"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
+  const IconUp = (
+    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17" fill="none">
+      <path d="M4.66675 2.22168V8.33279V2.22168Z" fill="#8E8E8E" />
+      <path
+        d="M4.66675 2.22168V8.33279"
+        stroke="#8E8E8E"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M1 4.66667L4.66667 1L8.33333 4.66667"
+        stroke="#8E8E8E"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
 
-  const IconDown = <svg xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17" fill="none">
-    <path d="M8.33276 14.666V8.5549V14.666Z" fill="#8E8E8E" />
-    <path
-      d="M8.33276 14.666V8.55491"
-      stroke="#8E8E8E"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-    <path
-      d="M4.6665 12.222L8.33317 15.8887L11.9998 12.222"
-      stroke="#8E8E8E"
-      strokeWidth="1.6"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    />
-  </svg>
+  const IconDown = (
+    <svg xmlns="http://www.w3.org/2000/svg" width="13" height="17" viewBox="0 0 13 17" fill="none">
+      <path d="M8.33276 14.666V8.5549V14.666Z" fill="#8E8E8E" />
+      <path
+        d="M8.33276 14.666V8.55491"
+        stroke="#8E8E8E"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <path
+        d="M4.6665 12.222L8.33317 15.8887L11.9998 12.222"
+        stroke="#8E8E8E"
+        strokeWidth="1.6"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  )
 
   const IconSort = useMemo(() => {
     return (
@@ -633,7 +647,8 @@ const TransactionsTable: React.FC<
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Excution Time</span> { iconSortDirection === null ? IconSort : iconSortDirection ? IconDown : IconUp}
+              <span style={{ marginRight: '12px' }}>Excution Time</span>{' '}
+              {iconSortDirection === null ? IconSort : iconSortDirection ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
           <ClickableColumnHeader
@@ -647,7 +662,8 @@ const TransactionsTable: React.FC<
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Total Value</span> { iconSortField === null ? IconSort : iconSortField ? IconDown : IconUp}
+              <span style={{ marginRight: '12px' }}>Total Value</span>{' '}
+              {iconSortField === null ? IconSort : iconSortField ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
           <Text

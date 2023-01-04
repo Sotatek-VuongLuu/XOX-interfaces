@@ -30,7 +30,6 @@ const SwapbackgroundMobile = () => {
             result="hardAlpha"
           />
           <feOffset />
-          <feGaussianBlur stdDeviation="8" />
           <feComposite in2="hardAlpha" operator="out" />
           <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" />
           <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7074_21655" />

@@ -161,6 +161,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
           return {
             date: key,
             priceUSD: points[key]?.v?.[0],
+            VolUSD: points[key]?.v?.[1],
           }
         })
         setChardData(data)

@@ -20,11 +20,10 @@ import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { getDefaultProvider } from '@ethersproject/providers'
 import { CurrencyLogo } from 'components/Logo'
-import { ERC20Token } from '@pancakeswap/sdk'
+import { ERC20Token, PAIR_XOX_BUSD } from '@pancakeswap/sdk'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { useXOXPoolContract } from 'hooks/useContract'
-import { BUSD, USDC } from '@pancakeswap/tokens'
-import { getXOXTokenAddress } from 'utils/addressHelpers'
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { useERC20 } from 'hooks/useContract'
 import InfoPieChart from '../InfoCharts/PieChart'
 
 const Wrapper = styled.div`
@@ -47,7 +46,7 @@ const Wrapper = styled.div`
 
   ${({ theme }) => theme.mediaQueries.xxl} {
     width: 454px;
-    min-width: 350px;
+    min-width: 454px;
     margin-left: 16px;
     margin-top: 0;
   }
@@ -192,14 +191,14 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const [dataChart, setDataChart] = useState<any>([])
   const [totalAsset, setTotalAsset] = useState<number>(0)
   const [rateXOX, setRateXOX] = useState(0)
-  const contract = useXOXPoolContract()
-  const baseTokenSymbol = chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'
-  const baseToken = Object.values(allTokens).find((value: any) => value.symbol === baseTokenSymbol)
+  const contractUSD = useERC20(USD_ADDRESS[chainId])
+  const contractXOX = useERC20(XOX_ADDRESS[chainId])
+  const baseToken = Object.values(allTokens).find((value: any) => value.symbol === USD_ADDRESS[chainId].symbol)
 
   const colors = ['#9072FF', '#5F35EB', '#89DDEF', '#90F0B1']
 
   const tokenRateUSD = useCallback(
-    (symbol: string) => {
+    (symbol: string): number => {
       if (!currencyDatas) return 0
       if (symbol === native.symbol && chainId === 5) {
         const currencyData = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === 'ETH')
@@ -235,8 +234,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   )
 
   const getXOXPrice = () => {
-    const baseTokenAddress = chainId === 1 || chainId === 5 ? USDC[chainId].address : BUSD[chainId].address
-    Promise.all([contract.balanceOf(baseTokenAddress), contract.balanceOf(getXOXTokenAddress(chainId))])
+    Promise.all([contractUSD.balanceOf(PAIR_XOX_BUSD[chainId]), contractXOX.balanceOf(PAIR_XOX_BUSD[chainId])])
       .then((balances) => {
         const baseTokenPrice = parseFloat(formatBigNumber(balances[0]))
         const XoxPrice = parseFloat(formatBigNumber(balances[1]))
@@ -249,6 +247,10 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const getToken = useCallback((token: any) => {
     return new ERC20Token(chainId, token.contractAddress, token.decimals, token.symbol)
   }, [])
+
+  const formatAmount = (number: number) => {
+    return parseInt((number * 100).toString()) / 100
+  }
 
   useEffect(() => {
     getXOXPrice()
@@ -393,7 +395,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                       color="rgba(255, 255, 255, 0.87)"
                       marginRight="5px"
                     >
-                      {balanceNative ? formatBigNumber(balanceNative) : 0}
+                      {balanceNative ? formatBigNumber(balanceNative, 6) : 0}
                     </Text>
                     <Text
                       fontSize="14px"
@@ -415,8 +417,15 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                     lineHeight="15px"
                     color="rgba(255, 255, 255, 0.6)"
                   >
-                    ~${balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol) : 0} | ~
-                    {balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateXOX(native.symbol) : 0} XOX
+                    ~$
+                    {balanceNative
+                      ? formatAmount(parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol))
+                      : 0}{' '}
+                    | ~
+                    {balanceNative
+                      ? formatAmount(parseFloat(formatBigNumber(balanceNative)) * tokenRateXOX(native.symbol))
+                      : 0}{' '}
+                    XOX
                   </Text>
                 </Flex>
               </Flex>
@@ -463,8 +472,10 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                         lineHeight="15px"
                         color="rgba(255, 255, 255, 0.6)"
                       >
-                        ~${balance?.balance * tokenRateUSD(balance.symbol)}
-                        {balance?.symbol !== 'XOX' && <>| ~{balance?.balance * tokenRateXOX(balance.symbol)} XOX</>}
+                        ~${formatAmount(balance?.balance * tokenRateUSD(balance.symbol))}
+                        {balance?.symbol !== 'XOX' && (
+                          <>| ~{formatAmount(balance?.balance * tokenRateXOX(balance.symbol))} XOX</>
+                        )}
                       </Text>
                     </Flex>
                   </Flex>

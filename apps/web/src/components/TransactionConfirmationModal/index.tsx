@@ -104,8 +104,8 @@ export function TransactionSubmittedContent({
         <AutoColumn gap="12px" justify="center">
           <Text fontSize="20px">{t('Transaction Submitted')}</Text>
           {chainId && hash && (
-            <Link external small href={getBlockExploreLink(hash, 'transaction', chainId)}>
-              {t('View on %site%', {
+            <Link external small href={getBlockExploreLink(hash, 'transaction', chainId)} style={{color: '#3D8AFF'}}>
+              {t('View on %site%', { 
                 site: getBlockExploreName(chainId),
               })}
             </Link>
@@ -173,7 +173,31 @@ export function TransactionErrorContent({
     </Wrapper>
   )
 }
+export function TransactionSwapErrorContent({
+  message,
+  onDismiss,
+}: {
+  message: ReactElement | string
+  onDismiss?: () => void
+}) {
+  const { t } = useTranslation()
+  return (
+    <Wrapper>
+      <AutoColumn justify="center">
+        <img src='/images/swap/icon-swap-error.svg' alt='' />
+        <Text color="failure" style={{ textAlign: 'center', width: '85%', marginTop:'24px', color:'#FFFFFF99', wordBreak: 'break-word' }}>
+          {message}
+        </Text>
+      </AutoColumn>
 
+      {onDismiss ? (
+        <Flex justifyContent="center" pt="24px">
+          <Button onClick={onDismiss}>{t('Dismiss')}</Button>
+        </Flex>
+      ) : null}
+    </Wrapper>
+  )
+}
 interface ConfirmationModalProps {
   title: string
   customOnDismiss?: () => void
