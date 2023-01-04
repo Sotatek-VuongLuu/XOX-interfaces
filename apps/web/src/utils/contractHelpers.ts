@@ -45,6 +45,7 @@ import {
   getCrossFarmingReceiverAddress,
   getContractTreasuryXOX,
   getXOXTokenAddress,
+  getXOXPoolAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -426,7 +427,7 @@ export const getContractXOXToken = (signer?: Signer | Provider, chainId?: number
 export const getContractXOXPool = (signer?: Signer | Provider, chainId?: number) => {
   return getContract({
     abi: xoxPoolAbi,
-    address: getXOXTokenAddress(chainId),
+    address: getXOXPoolAddress(chainId),
     chainId,
     signer,
   }) as Erc20XOXPool
