@@ -47,14 +47,11 @@ export default function Refferal() {
     let currentPoint
     try {
       const infosUser: any[] = await contractTreasuryXOX.userInfo(account)
-
       const dataParse: any[] = infosUser.map((item) => {
         return formatUnits(item, MAPPING_DECIMAL_WITH_CHAIN[chainId])
       })
-      setUserCurrentPoint(Number(dataParse[0]) * 2)
-
-      currentPoint = Number(dataParse[0]) * 2
-
+      setUserCurrentPoint(Number(dataParse[0]))
+      currentPoint = Number(dataParse[0])
       return currentPoint
     } catch (error) {
       console.warn(error)
@@ -65,7 +62,7 @@ export default function Refferal() {
   const handleCheckPendingRewardAll = async (accountId: string) => {
     try {
       const txPendingReward = await contractTreasuryXOX.pendingRewardAll(accountId)
-      setIsClaimAll(Number(formatEther(txPendingReward._hex)) === 0)
+      setIsClaimAll(Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])) === 0)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
@@ -95,7 +92,7 @@ export default function Refferal() {
           try {
             if (item.isReach) {
               const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, item.lever)
-              if (Number(formatEther(txPendingReward._hex)) === 0) {
+              if (Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])) === 0) {
                 return {
                   ...item,
                   isClaimed: true,

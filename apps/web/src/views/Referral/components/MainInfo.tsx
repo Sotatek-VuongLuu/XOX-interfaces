@@ -296,7 +296,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         return {
           ...item,
           id: item.id,
-          point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
+          point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])),
         }
       })
 
