@@ -104,8 +104,8 @@ export function TransactionSubmittedContent({
         <AutoColumn gap="12px" justify="center">
           <Text fontSize="20px">{t('Transaction Submitted')}</Text>
           {chainId && hash && (
-            <Link external small href={getBlockExploreLink(hash, 'transaction', chainId)}>
-              {t('View on %site%', {
+            <Link external small href={getBlockExploreLink(hash, 'transaction', chainId)} style={{color: '#3D8AFF'}}>
+              {t('View on %site%', { 
                 site: getBlockExploreName(chainId),
               })}
             </Link>
