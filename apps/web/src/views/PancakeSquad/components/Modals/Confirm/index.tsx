@@ -63,7 +63,7 @@ const ConfirmModal: React.FC<React.PropsWithChildren<ConfirmModalProps>> = ({
         </IconButton>
       </ModalHeader>
       <ModalBody py="24px" maxWidth="375px" width="100%">
-        <Flex flexDirection="column" alignItems="center">
+        <Flex flexDirection="column" alignItems="center" style={{overflow: 'hidden'}}>
           {isLoading || !txHash ? (
             <Box px="16px">
               <Flex mb="16px" alignItems="center">
