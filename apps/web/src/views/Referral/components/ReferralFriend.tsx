@@ -680,7 +680,7 @@ const ReferralFriend = ({
                 {account && (
                   <div className="unclaim_reward_container">
                     <div className="unclaim_reward">
-                      <div>{Number(totalUnClaimed) < 0 ? 0 : Number(totalUnClaimed)}$ Unclaimed Rewards</div>
+                      <div>{Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)}$ Unclaimed Rewards</div>
                     </div>
                   </div>
                 )}
