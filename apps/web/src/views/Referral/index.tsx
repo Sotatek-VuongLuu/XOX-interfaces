@@ -40,6 +40,7 @@ export default function Refferal() {
   const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
   const [isClaimAll, setIsClaimAll] = useState<boolean>(false)
   const [volumnTotalEarn, setVolumnTotalEarn] = useState<string>('')
+  const [volumnTotalUnClaim, setVolumnTotalUnClaim] = useState<string>('')
 
   // eslint-disable-next-line consistent-return
   const handleGetCurrentPoint = async () => {
@@ -64,7 +65,6 @@ export default function Refferal() {
   const handleCheckPendingRewardAll = async (accountId: string) => {
     try {
       const txPendingReward = await contractTreasuryXOX.pendingRewardAll(accountId)
-      console.log(`Number(formatEther(txPendingReward._hex)`, Number(formatEther(txPendingReward._hex)))
       setIsClaimAll(Number(formatEther(txPendingReward._hex)) === 0)
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -120,12 +120,21 @@ export default function Refferal() {
     try {
       const result = await userPoint(chainId)
       if (result) {
+        const totalUnClaimed =
+          Number(result.analysisDatas[0]?.total_reward) - Number(result.analysisDatas[0]?.total_claimed_amount)
         const volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
+        const volumnUnClaim = formatBigNumber(BigNumber.from(totalUnClaimed.toString()))
         setVolumnTotalEarn(volumn)
+        setVolumnTotalUnClaim(volumnUnClaim)
       }
     } catch (error) {
       console.log(`error >>>>`, error)
     }
+  }
+
+  const handleReCallGetCurrentPoint = async () => {
+    const currentPoint = await handleGetCurrentPoint()
+    handleCheckReachLevel(currentPoint)
   }
 
   useEffect(() => {
@@ -163,6 +172,10 @@ export default function Refferal() {
             isClaimAll={isClaimAll}
             listLevelMustReach={listLevelMustReach}
             volumnTotalEarn={volumnTotalEarn}
+            getUserPoint={getUserPoint}
+            handleCheckReachLevel={handleReCallGetCurrentPoint}
+            handleCheckPendingRewardAll={handleCheckPendingRewardAll}
+            totalUnClaimed={volumnTotalUnClaim}
           />
         </Box>
       </Wrapper>

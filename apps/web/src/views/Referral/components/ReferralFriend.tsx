@@ -51,11 +51,16 @@ interface IProps {
   listLevelMustReach: IItemLevel[]
   isClaimAll: boolean
   currentLevelReach: number
-  volumnTotalEarn
+  volumnTotalEarn: string
+  getUserPoint: () => void
+  handleCheckReachLevel: () => void
+  handleCheckPendingRewardAll: (account: string) => void
+  totalUnClaimed: string
 }
 
 interface IPropsWR {
   account?: string
+  isClaimAll?: boolean
 }
 
 const WrapperLeft = styled(Box)`
@@ -172,6 +177,14 @@ const WrapperRight = styled(Box)<IPropsWR>`
     & > div {
       .btn {
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      button:disabled,
+      button[disabled] {
+        cursor: not-allowed;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.384) 0%, rgba(255, 255, 255, 0.384) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -383,15 +396,70 @@ const Content = styled.div`
     right: 11px;
     cursor: pointer;
   }
+
+  .xox_loading {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0;
+  }
+
+  .reject_xox {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0;
+  }
+  .noti_claim_pending_h1 {
+    text-align: center;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.87);
+    margin-bottom: 16px;
+  }
+  .noti_claim_pending_h2 {
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .btn_dismiss_container {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    .btn_dismiss {
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      border-radius: 6px;
+      padding: 12px 30px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+  }
 `
 
-const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach, volumnTotalEarn }: IProps) => {
+const ReferralFriend = ({
+  listLevelMustReach,
+  isClaimAll,
+  currentLevelReach,
+  volumnTotalEarn,
+  getUserPoint,
+  handleCheckReachLevel,
+  handleCheckPendingRewardAll,
+  totalUnClaimed,
+}: IProps) => {
   const { width } = useWindowSize()
   const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
   const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState<boolean>(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
+  const [modalReject, setModalReject] = useState<boolean>(false)
   const [dataClaim, setDataClaim] = useState<IDataClaim>({
     point: 0,
     dollar: 0,
@@ -403,31 +471,49 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach, vol
 
   const handleClaimAll = async () => {
     try {
+      setIsOpenLoadingClaimModal(true)
       const params = []
       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
       const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
         gasLimit,
       })
       txClaimAll.wait(1)
-    } catch (error) {
+      setIsOpenLoadingClaimModal(false)
+      getUserPoint()
+      handleCheckReachLevel()
+      handleCheckPendingRewardAll(account)
+    } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
+      setIsOpenLoadingClaimModal(false)
+      if (error && error?.code === 'ACTION_REJECTED') {
+        setModalReject(true)
+      }
     }
   }
 
   const handleClaimLevel = async (_level: number) => {
     try {
       if (!_level) return
+      setIsShowModalConfirmClaimByLevel(false)
+      setIsOpenLoadingClaimModal(true)
       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralByLevel(_level)
       const txClaimByLevel = await contractTreasuryXOX.claimReferralByLevel(_level, {
         gasLimit,
       })
       txClaimByLevel.wait(1)
-      setIsShowModalConfirmClaimByLevel(false)
+      setIsOpenLoadingClaimModal(false)
       setIsOpenSuccessModal(true)
-    } catch (error) {
+      getUserPoint()
+      handleCheckReachLevel()
+      handleCheckPendingRewardAll(account)
+    } catch (error: any) {
       // eslint-disable-next-line no-console
+      setIsOpenLoadingClaimModal(false)
       console.log(`error>>>>>`, error)
+      if (error && error?.code === 'ACTION_REJECTED') {
+        setModalReject(true)
+      }
     }
   }
 
@@ -436,7 +522,6 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach, vol
     if (width < 900) {
       slidesPerView = 4
     }
-
     if (width < 698) {
       slidesPerView = 3
     }
@@ -468,37 +553,27 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach, vol
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
             wallets: [`${item.ref_address}`],
           })
+          const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/users/${item.ref_address}`)
           const dataMap = response?.data[0]
           return {
             ...item,
             ...dataMap,
             name: dataMap?.username ?? null,
             avatar: dataMap?.avatar ?? null,
+            refCode: data?.referralCode,
           }
         }),
       )
-
       setListFriends(dataMapping)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error >>>>`, error)
     }
   }
-  const handleGetUserProfile = () => {
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API}/users/${account}`)
-      .then((response) => {
-        console.log(` response`, response.data)
-      })
-      .catch((error) => {
-        console.warn(error)
-      })
-  }
 
   useEffect(() => {
     if (account) {
       dataFriend()
-      handleGetUserProfile()
     }
   }, [chainId, account])
 
@@ -530,10 +605,10 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach, vol
                             {row.name ? row.name : shortenAddress(row.ref_address)}
                           </div>
                           <div>
-                            {userProfile?.referralCode}
+                            {row?.refCode}
                             <CopyButton
                               width="24px"
-                              text={userProfile?.referralCode}
+                              text={row?.refCode}
                               tooltipMessage={t('Copied')}
                               button={
                                 <img
@@ -557,7 +632,7 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach, vol
           </Grid>
 
           <Grid item xs={12} md={8}>
-            <WrapperRight sx={{ marginTop: '16px' }} account={account}>
+            <WrapperRight sx={{ marginTop: '16px' }} account={account} isClaimAll={isClaimAll}>
               <Swiper
                 slidesPerView={controlWidth}
                 modules={[Navigation, Pagination, A11y]}
@@ -605,7 +680,7 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach, vol
                 {account && (
                   <div className="unclaim_reward_container">
                     <div className="unclaim_reward">
-                      <div>{Number(volumnTotalEarn)}$ Unclaimed Rewards</div>
+                      <div>{Number(totalUnClaimed) < 0 ? 0 : Number(totalUnClaimed)}$ Unclaimed Rewards</div>
                     </div>
                   </div>
                 )}
@@ -633,7 +708,13 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach, vol
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>
               Cancel
             </button>
-            <button className="confirm" type="button" onClick={() => handleClaimLevel(level)}>
+            <button
+              className="confirm"
+              type="button"
+              onClick={() => {
+                handleClaimLevel(level)
+              }}
+            >
               Confirm
             </button>
           </div>
@@ -663,8 +744,9 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach, vol
         title="Claim Confirm"
       >
         <Content>
-          <div>
-            <img src="/images/xox_loading.svg" alt="xox_loading" className="xox_loading" />
+          <div className="noti_claim_pending_h1" style={{ marginTop: '16px' }}>
+            {/* <img src="/images/xox_loading.svg" alt="xox_loading" /> */}
+            Processing...!
           </div>
           <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
           <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
@@ -673,6 +755,25 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach, vol
             alt="close-one"
             className="x-close-icon"
             onClick={() => setIsOpenLoadingClaimModal(false)}
+          />
+        </Content>
+      </ModalBase>
+      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Claim Confirm">
+        <Content>
+          <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
+            <img src="/images/reject_xox.png" alt="reject_xox" />
+          </div>
+          <div className="noti_claim_pending_h2">Transaction rejected.</div>
+          <div className="btn_dismiss_container">
+            <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
+              Dismiss
+            </button>
+          </div>
+          <img
+            src="/images/close-one.svg"
+            alt="close-one"
+            className="x-close-icon"
+            onClick={() => setModalReject(false)}
           />
         </Content>
       </ModalBase>
