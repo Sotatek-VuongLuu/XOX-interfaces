@@ -208,7 +208,7 @@ const SlippageTabs = () => {
                 scale="sm"
                 inputMode="decimal"
                 pattern="^[0-9]*[.,]?[0-9]{0,2}$"
-                placeholder='5.00'
+                placeholder={(userSlippageTolerance / 100).toFixed(2)}
                 value={slippageInput}
                 onBlur={() => {
                   parseCustomSlippage((userSlippageTolerance / 100).toFixed(2))
