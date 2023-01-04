@@ -96,15 +96,14 @@ export const ModalContainer = styled(MotionBox)<{ $minWidth: string }>`
   z-index: ${({ theme }) => theme.zIndices.modal};
   position: absolute;
   min-width: ${({ $minWidth }) => $minWidth};
-  min-height: 300px;
   background: #242424;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 24px;
   max-width: calc(100vw - 48px) !important;
+  padding-bottom: 32px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: auto;
-    position: auto;
     bottom: auto;
     border-radius: 24px;
     max-height: 100vh;

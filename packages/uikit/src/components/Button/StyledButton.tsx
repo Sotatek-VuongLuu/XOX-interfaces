@@ -57,7 +57,7 @@ const StyledButton = styled.button<BaseButtonProps>`
   line-height: 1;
   opacity: ${getOpacity};
   outline: 0;
-  background: linear-gradient(100.7deg, #6034ff 0%, #a35aff 100%);
+  background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
   border-radius: 6px;
   height: 100%;
 

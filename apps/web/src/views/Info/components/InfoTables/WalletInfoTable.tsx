@@ -473,6 +473,11 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                         color="rgba(255, 255, 255, 0.6)"
                       >
                         ~${formatAmount(balance?.balance * tokenRateUSD(balance.symbol))}
+                        {/* {tokenRateXOX(balance.symbol)} && 
+                        {balance &&
+                          (balance.symbol === 'XOX'
+                            ? balance?.balance * tokenRateXOX(balance.symbol)
+                            : '' */}
                         {balance?.symbol !== 'XOX' && (
                           <>| ~{formatAmount(balance?.balance * tokenRateXOX(balance.symbol))} XOX</>
                         )}
