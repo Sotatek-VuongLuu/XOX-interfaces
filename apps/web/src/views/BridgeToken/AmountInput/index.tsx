@@ -7,7 +7,7 @@ import SelectTokenButton from "./SelectTokenButton";
 
 const Wrapper = styled.div`
   border-radius: 8px;
-  background: #ccc;
+  background: ${({ theme }) => theme.colors.dark3};
   padding: 12px;
 
   @media screen and (min-width: 576px) {

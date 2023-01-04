@@ -19,8 +19,26 @@ import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useAccount } from 'wagmi'
 import { ChainId } from '@pancakeswap/sdk'
 import { TOKENS_SUPPORT } from "./tokensSupport";
+import Reminder from './Reminder'
 
 import styled from 'styled-components'
+
+
+const Divider = styled.div`
+  padding: 0 12px;
+  margin: -5px 0;
+  text-align: center;
+
+  @media screen and (min-width: 576px) {
+    padding: 0 25px;
+    margin: 10px 0;
+  }
+`;
+
+const SwitchSwapButton = styled.div`
+  display: inline-block;
+  margin: 0 auto;
+`;
 
 export const getChainIdToByChainId = (chainId: any) => {
   switch (chainId) {
@@ -35,19 +53,21 @@ export const getChainIdToByChainId = (chainId: any) => {
 
 export default function BridgeToken() {
   const { chainId } = useActiveChainId();
-  const { library } = useActiveWeb3React();
   const { isMobile } = useMatchBreakpoints();
   const [amountInput, setAmountInput] = useState("");
-  const [defaultToken, setDefaultToken] = useState(TOKENS_SUPPORT[chainId][0]);
+  const [defaultToken, setDefaultToken] = useState(TOKENS_SUPPORT?.[chainId]?.[0]);
   const [indexToken, setIndexToken] = useState(0);
   const [isShowDropFrom, setIsShowDropFrom] = useState(false);
   const [isShowDropTo, setIsShowDropTo] = useState(false);
+  const [minAmount, setMinAmount] = useState<number>(0);
+  const [maxAmount, setMaxAmount] = useState<number>(0);
   const { t } = useTranslation()
   const [addressTokenInput, setAddressTokenInput] = useState(
-    TOKENS_SUPPORT[chainId][0].address
+    TOKENS_SUPPORT[chainId]?.[0].address
   );
+  const [amountTo, setAmountTo] = useState<string>("");
   const [tokenB, setTokenB] = useState(
-    TOKENS_SUPPORT[getChainIdToByChainId(chainId)][0]
+    TOKENS_SUPPORT[getChainIdToByChainId(chainId)]?.[0]
   );
 
   // swap state & price data
@@ -58,7 +78,7 @@ export default function BridgeToken() {
   const { address: account } = useAccount()
   const balanceInput = useCurrencyBalance(
     account ?? undefined,
-    TOKENS_SUPPORT[chainId][indexToken]
+    TOKENS_SUPPORT[chainId]?.[indexToken]
   )
   const inputCurrency = useCurrency(inputCurrencyId)
   const outputCurrency = useCurrency(outputCurrencyId)
@@ -96,6 +116,11 @@ export default function BridgeToken() {
     setIsShowDropTo(false);
   };
 
+  const handleShowDropTo = () => {
+    setIsShowDropTo(!isShowDropTo);
+    setIsShowDropFrom(false);
+  };
+
   // handle switch network
   const switchNetwork = (chainIdToSwitch: ChainId) => {
     // cookie.set("chainId", chainIdToSwitch);
@@ -123,6 +148,7 @@ export default function BridgeToken() {
     }
     if (!account) setChainIdSupport(chainIdToSwitch);
     setAmountInput("");
+    return null;
   };
 
   return (
@@ -153,50 +179,114 @@ export default function BridgeToken() {
           </svg>
           <StyledSwapContainer>
             <StyledInputCurrencyWrapper>
-                <StyledHeader>
-                  <div>
-                    <StyledHeading1>{t('Swap')}</StyledHeading1>
-                    <p>{t('Trade tokens in an instant')} </p>
-                  </div>
-                  <span>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M2.90918 3.36365V7H6.54556"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M2 12C2 17.5229 6.47715 22 12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C8.299 2 5.06755 4.01056 3.33839 6.99905"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M12.0026 6L12.002 12.0044L16.2417 16.2441"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                </svg>
-                  </span>
-                </StyledHeader>
-                <AmountInput
-                  isTokenFrom
-                  inputChainId={chainIdSupport}
-                  balance={balanceInput ? balanceInput?.toExact() : "-"}
-                  amount={amountInput}
-                  handleUserInput={handleUserInput}
-                  handleBalanceMax={(balance) => setAmountInput(balance)}
-                  switchNetwork={switchNetwork}
-                  tokenSymbol={defaultToken.symbol}
-                  switchToken={switchToken}
-                  isShowDrop={isShowDropFrom}
-                  handleShowDrop={handleShowDropFrom}
+              <StyledHeader>
+                <div>
+                  <StyledHeading1>{t('Swap')}</StyledHeading1>
+                  <p>{t('Trade tokens in an instant')} </p>
+                </div>
+                <span>
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <path
+                    d="M2.90918 3.36365V7H6.54556"
+                    stroke="#8E8E8E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M2 12C2 17.5229 6.47715 22 12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C8.299 2 5.06755 4.01056 3.33839 6.99905"
+                    stroke="#8E8E8E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M12.0026 6L12.002 12.0044L16.2417 16.2441"
+                    stroke="#8E8E8E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+              </svg>
+                </span>
+              </StyledHeader>
+              <AmountInput
+                isTokenFrom
+                inputChainId={chainIdSupport}
+                balance={balanceInput ? balanceInput?.toExact() : "-"}
+                amount={amountInput}
+                handleUserInput={handleUserInput}
+                handleBalanceMax={(balance) => setAmountInput(balance)}
+                switchNetwork={switchNetwork}
+                tokenSymbol={defaultToken?.symbol}
+                switchToken={switchToken}
+                isShowDrop={isShowDropFrom}
+                handleShowDrop={handleShowDropFrom}
+              />
+              <Divider>
+                <div
+                  onClick={() => {
+                    switchNetwork();
+                  }}
+                  aria-hidden="true"
+                >
+                  <svg width="31" height="30" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="15.5" cy="15" r="15" fill="#303030"/>
+                    <path d="M15.5042 20.9498V9" stroke="#8E8E8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M21.5 15L15.5 21L9.5 15" stroke="#8E8E8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </div>
+              </Divider>
+              <AmountInput
+                isTokenFrom={false}
+                inputChainId={getChainIdToByChainId(chainIdSupport)}
+                amount={amountTo}
+                switchNetwork={switchNetwork}
+                tokenSymbol={tokenB?.symbol}
+                switchToken={switchToken}
+                isShowDrop={isShowDropTo}
+                handleShowDrop={handleShowDropTo}
+              />
+              {/* {account && (
+                <AddressInput
+                  address={addressTo}
+                  handleAddressTo={handleAddressTo}
+                  messageAddress={messageAddress}
                 />
+              )}
+              {!account ? (
+                <ButtonConnect onClick={toggleWalletModal}>
+                  {i18n._(t`Connect Wallet`)}
+                </ButtonConnect>
+              ) : (
+                <SwapButton
+                  disabled={
+                    (messageButton !== "Swap" &&
+                      messageButton !==
+                        `Approve ${TOKENS_SUPPORT[chainId][indexToken].symbol}`) ||
+                    messageAddress !== "" ||
+                    amountTo === ""
+                  }
+                  onClick={handleSwapButtonClick}
+                >
+                  <span>{messageButton}</span>
+                  {approvalState === ApprovalState.PENDING && (
+                    <Loader stroke="white" />
+                  )}
+                </SwapButton>
+              )} */}
+              <Reminder
+                chainId={chainId}
+                tokenInput={defaultToken}
+                tokenOutput={tokenB}
+                amount={amountInput}
+                // eslint-disable-next-line @typescript-eslint/no-shadow
+                onBridgeTokenFeeChange={(minAmount, maxAmount) => {
+                  setMinAmount(Number(minAmount));
+                  setMaxAmount(Number(maxAmount));
+                }}
+                setAmountTo={setAmountTo}
+              />
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
         </Flex>

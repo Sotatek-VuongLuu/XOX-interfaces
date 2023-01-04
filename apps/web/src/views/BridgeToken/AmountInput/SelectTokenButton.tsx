@@ -40,8 +40,11 @@ const Wrapper = styled.div`
   cursor: pointer;
   width: 111px;
   ${({ theme }) =>
-    `background: #f5f5f5;
-    border: 1px solid #ccc`};
+    `background: none;
+  border: 1px solid ${theme.colors.hr}`};
+  .flex{
+    display: flex;
+  }
   .nested {
     width: 100%;
     align-items: center;
@@ -175,16 +178,14 @@ const SelectTokenButton: React.FC<Props> = ({
       <FullyContainer>
         <Wrapper onClick={() => handleShowDrop()}>
           <div className="flex nested" style={{ zIndex: 8 }}>
-            <ImageWrapper>
-              <Image
+              <img
                 className="rounded-full"
-                src={`/images/tokens/${tokenSymbol?.toLowerCase()}-square.jpg`}
-                alt="TokenStand Logo"
-                layout="fill"
-                objectFit="contain"
+                src="/images/logo_xox_bridge.svg"
+                alt="XOX Logo"
+                width={24}
+                height={24}
               />
-            </ImageWrapper>
-            <span>{tokenSymbol}</span>
+            <span>XOX</span>
             {isShowDrop ? <ChevronUpIconStyled /> : <ChevronDownIconStyled />}
           </div>
         </Wrapper>

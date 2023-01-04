@@ -22,8 +22,8 @@ const Wrapper = styled.button`
   width: 118px;
   margin-left: 10px;
   ${({ theme }) =>
-    `background: #f5f5f5;
-    border: 1px solid #ccc`};
+    `background: none;
+    border: 1px solid ${theme.colors.hr}`};
 
   @media screen and (min-width: 576px) {
     padding: 10px 12px;
@@ -89,12 +89,12 @@ const SelectNetworkButton: React.FC<Props> = ({
       </ImageWrapper>
       <span>{NETWORK_LABEL_BRIDGE[inputChainId]}</span>
       <ChevronDownIconStyled />
-      <SwitchNetworkModal
+      {/* <SwitchNetworkModal
         switchNetwork={switchNetwork}
         currentChainId={inputChainId}
         isOpen={isOpen}
         onDismiss={() => setIsOpen(false)}
-      />
+      /> */}
     </Wrapper>
   );
 };
