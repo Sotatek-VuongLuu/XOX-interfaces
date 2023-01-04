@@ -51,6 +51,7 @@ interface IProps {
   userCurrentPoint: number
   currentLevelReach: number
   listLever: IItemLevel[]
+  volumnTotalEarn: string
 }
 
 export interface IMappingFormat {
@@ -234,7 +235,7 @@ const WrapperRight = styled.div<IPropsContainer>`
   }
 `
 
-const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) => {
+const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalEarn }: IProps) => {
   const yesterday = moment().subtract(1, 'days')
   const startOfDay = yesterday.startOf('day').toString()
   const endOfDay = yesterday.endOf('day').toString()
@@ -259,9 +260,6 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
     rank: null,
     username: '',
   })
-
-  console.log(`currentLevelReach`, currentLevelReach)
-
   const payloadPostForDaily = {
     date_gte: moment(startOfDay).unix(),
     date_lte: moment(endOfDay).unix(),
@@ -293,6 +291,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
         const res = await getUserPointWeekly(chainId, payloadPostForWeek)
         data = res.userPointWeeklies
       }
+
       const dataUserFormatAmount: IDataFormatUnit[] = data.map((item) => {
         return {
           ...item,
@@ -300,6 +299,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
           point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
         }
       })
+
       const dataMapping: IMappingFormat[] = await Promise.all(
         dataUserFormatAmount.map(async (item: IDataFormatUnit, index: number): Promise<any> => {
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
@@ -315,13 +315,14 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
           }
         }),
       )
+
+      setListUserRanks([...dataMapping])
       const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 100).filter((item: any) => {
         return item.address === account.toLowerCase()
       })
       if (levelOfUSer.length !== 0) {
         setRankOfUser(levelOfUSer[0])
       }
-      setListUserRanks(dataMapping)
     } catch (error) {
       console.log(`error >>>`, error)
     }
@@ -337,7 +338,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
 
   useEffect(() => {
     getListPointConfig()
-    handleGetUserRanks(tabLeaderBoard)
+    handleGetUserRanks('All Time')
   }, [chainId])
 
   return (
@@ -423,7 +424,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever }: IProps) =>
                 })}
               </div>
 
-              {subTabIndex === 0 && <TotalEarned />}
+              {subTabIndex === 0 && <TotalEarned volumnTotalEarn={volumnTotalEarn} />}
               {subTabIndex === 1 && <PlatformStat listPoint={listPoint} />}
               {subTabIndex === 2 && <HowToJoin />}
             </div>

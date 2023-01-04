@@ -28,10 +28,11 @@ import { getUserFriend } from 'services/referral'
 import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
 import axios from 'axios'
 import { BigNumber } from '@ethersproject/bignumber'
-import { useModal } from '@pancakeswap/uikit'
+import { CopyButton, useModal } from '@pancakeswap/uikit'
+import { useTranslation } from '@pancakeswap/localization'
 import { shortenAddress } from 'utils/shortenAddress'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
-import ModalClaimSuccess from './Modal/ModalClaimSuccess'
+import ModalBase from './Modal/ModalBase'
 
 interface IDataClaim {
   point: number
@@ -50,10 +51,16 @@ interface IProps {
   listLevelMustReach: IItemLevel[]
   isClaimAll: boolean
   currentLevelReach: number
+  volumnTotalEarn: string
+  getUserPoint: () => void
+  handleCheckReachLevel: () => void
+  handleCheckPendingRewardAll: (account: string) => void
+  totalUnClaimed: string
 }
 
 interface IPropsWR {
   account?: string
+  isClaimAll?: boolean
 }
 
 const WrapperLeft = styled(Box)`
@@ -170,6 +177,14 @@ const WrapperRight = styled(Box)<IPropsWR>`
     & > div {
       .btn {
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      button:disabled,
+      button[disabled] {
+        cursor: not-allowed;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.384) 0%, rgba(255, 255, 255, 0.384) 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -381,14 +396,70 @@ const Content = styled.div`
     right: 11px;
     cursor: pointer;
   }
+
+  .xox_loading {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0;
+  }
+
+  .reject_xox {
+    display: flex;
+    justify-content: center;
+    margin: 24px 0;
+  }
+  .noti_claim_pending_h1 {
+    text-align: center;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 22px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.87);
+    margin-bottom: 16px;
+  }
+  .noti_claim_pending_h2 {
+    text-align: center;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .btn_dismiss_container {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+    .btn_dismiss {
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      border-radius: 6px;
+      padding: 12px 30px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      border: none;
+      cursor: pointer;
+    }
+  }
 `
 
-const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: IProps) => {
+const ReferralFriend = ({
+  listLevelMustReach,
+  isClaimAll,
+  currentLevelReach,
+  volumnTotalEarn,
+  getUserPoint,
+  handleCheckReachLevel,
+  handleCheckPendingRewardAll,
+  totalUnClaimed,
+}: IProps) => {
   const { width } = useWindowSize()
   const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
   const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState<boolean>(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
+  const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
+  const [modalReject, setModalReject] = useState<boolean>(false)
   const [dataClaim, setDataClaim] = useState<IDataClaim>({
     point: 0,
     dollar: 0,
@@ -396,34 +467,53 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: I
   const [level, setLevel] = useState<number | null>(null)
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
   const [listFriends, setListFriends] = useState([])
+  const { t } = useTranslation()
 
   const handleClaimAll = async () => {
     try {
+      setIsOpenLoadingClaimModal(true)
       const params = []
       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
       const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
         gasLimit,
       })
       txClaimAll.wait(1)
-    } catch (error) {
+      setIsOpenLoadingClaimModal(false)
+      getUserPoint()
+      handleCheckReachLevel()
+      handleCheckPendingRewardAll(account)
+    } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
+      setIsOpenLoadingClaimModal(false)
+      if (error && error?.code === 'ACTION_REJECTED') {
+        setModalReject(true)
+      }
     }
   }
 
   const handleClaimLevel = async (_level: number) => {
     try {
       if (!_level) return
+      setIsShowModalConfirmClaimByLevel(false)
+      setIsOpenLoadingClaimModal(true)
       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralByLevel(_level)
       const txClaimByLevel = await contractTreasuryXOX.claimReferralByLevel(_level, {
         gasLimit,
       })
       txClaimByLevel.wait(1)
-      setIsShowModalConfirmClaimByLevel(false)
+      setIsOpenLoadingClaimModal(false)
       setIsOpenSuccessModal(true)
-    } catch (error) {
+      getUserPoint()
+      handleCheckReachLevel()
+      handleCheckPendingRewardAll(account)
+    } catch (error: any) {
       // eslint-disable-next-line no-console
+      setIsOpenLoadingClaimModal(false)
       console.log(`error>>>>>`, error)
+      if (error && error?.code === 'ACTION_REJECTED') {
+        setModalReject(true)
+      }
     }
   }
 
@@ -432,7 +522,6 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: I
     if (width < 900) {
       slidesPerView = 4
     }
-
     if (width < 698) {
       slidesPerView = 3
     }
@@ -462,18 +551,19 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: I
       const dataMapping = await Promise.all(
         dataUserFormatAmount?.map(async (item: any): Promise<any> => {
           const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
-            wallets: [`${item.address}`],
+            wallets: [`${item.ref_address}`],
           })
+          const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/users/${item.ref_address}`)
           const dataMap = response?.data[0]
           return {
             ...item,
             ...dataMap,
             name: dataMap?.username ?? null,
             avatar: dataMap?.avatar ?? null,
+            refCode: data?.referralCode,
           }
         }),
       )
-
       setListFriends(dataMapping)
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -482,7 +572,9 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: I
   }
 
   useEffect(() => {
-    dataFriend()
+    if (account) {
+      dataFriend()
+    }
   }, [chainId, account])
 
   return (
@@ -493,7 +585,7 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: I
             <WrapperLeft>
               <p className="title">Referral friends</p>
 
-              {account ? (
+              {account && listFriends.length !== 0 ? (
                 <div>
                   <TableHeader>
                     <div>User Name</div>
@@ -513,11 +605,18 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: I
                             {row.name ? row.name : shortenAddress(row.ref_address)}
                           </div>
                           <div>
-                            {userProfile?.referralCode}
-                            <img
-                              src="/images/copy_purple.svg"
-                              alt="copy_purple"
-                              style={{ marginBottom: '-2px', marginLeft: '8px' }}
+                            {row?.refCode}
+                            <CopyButton
+                              width="24px"
+                              text={row?.refCode}
+                              tooltipMessage={t('Copied')}
+                              button={
+                                <img
+                                  src="/images/copy_purple.svg"
+                                  alt="copy_purple"
+                                  style={{ marginBottom: '-2px', marginLeft: '8px' }}
+                                />
+                              }
                             />
                           </div>
                           <div>{row.point}</div>
@@ -533,7 +632,7 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: I
           </Grid>
 
           <Grid item xs={12} md={8}>
-            <WrapperRight sx={{ marginTop: '16px' }} account={account}>
+            <WrapperRight sx={{ marginTop: '16px' }} account={account} isClaimAll={isClaimAll}>
               <Swiper
                 slidesPerView={controlWidth}
                 modules={[Navigation, Pagination, A11y]}
@@ -581,13 +680,13 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: I
                 {account && (
                   <div className="unclaim_reward_container">
                     <div className="unclaim_reward">
-                      <div>10,000$ Unclaimed Rewards</div>
+                      <div>{Number(totalUnClaimed) < 0 ? 0 : Number(totalUnClaimed)}$ Unclaimed Rewards</div>
                     </div>
                   </div>
                 )}
 
                 <button type="button" onClick={handleClaimAll} disabled={!account || isClaimAll}>
-                  {isClaimAll ? <span> Claimed All</span> : <span>Claim All</span>}
+                  <span>Claim All</span>
                 </button>
               </div>
             </WrapperRight>
@@ -609,14 +708,20 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: I
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>
               Cancel
             </button>
-            <button className="confirm" type="button" onClick={() => handleClaimLevel(level)}>
+            <button
+              className="confirm"
+              type="button"
+              onClick={() => {
+                handleClaimLevel(level)
+              }}
+            >
               Confirm
             </button>
           </div>
         </Content>
       </ModalConfirmClaim>
 
-      <ModalClaimSuccess open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Success">
+      <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Success">
         <Content>
           <div className="noti">
             You have gotten <span>{dataClaim.dollar?.toLocaleString()}$.</span>
@@ -631,7 +736,47 @@ const ReferralFriend = ({ listLevelMustReach, isClaimAll, currentLevelReach }: I
             onClick={() => setIsOpenSuccessModal(false)}
           />
         </Content>
-      </ModalClaimSuccess>
+      </ModalBase>
+
+      <ModalBase
+        open={isOpenLoadingClaimModal}
+        handleClose={() => setIsOpenLoadingClaimModal(false)}
+        title="Claim Confirm"
+      >
+        <Content>
+          <div className="noti_claim_pending_h1" style={{ marginTop: '16px' }}>
+            {/* <img src="/images/xox_loading.svg" alt="xox_loading" /> */}
+            Processing...!
+          </div>
+          <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
+          <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
+          <img
+            src="/images/close-one.svg"
+            alt="close-one"
+            className="x-close-icon"
+            onClick={() => setIsOpenLoadingClaimModal(false)}
+          />
+        </Content>
+      </ModalBase>
+      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Claim Confirm">
+        <Content>
+          <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
+            <img src="/images/reject_xox.png" alt="reject_xox" />
+          </div>
+          <div className="noti_claim_pending_h2">Transaction rejected.</div>
+          <div className="btn_dismiss_container">
+            <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
+              Dismiss
+            </button>
+          </div>
+          <img
+            src="/images/close-one.svg"
+            alt="close-one"
+            className="x-close-icon"
+            onClick={() => setModalReject(false)}
+          />
+        </Content>
+      </ModalBase>
     </>
   )
 }

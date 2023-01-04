@@ -1,11 +1,15 @@
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
+interface IProps {
+  volumnTotalEarn?: string
+}
+
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding-top: 83px;
+  padding-top: 65px;
 
   .title {
     font-weight: 700;
@@ -80,7 +84,7 @@ const Wrapper = styled.div`
     }
   }
 `
-const TotalEarned = (): JSX.Element => {
+const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
   const { width } = useWindowSize()
   return (
     <Wrapper>
@@ -94,7 +98,7 @@ const TotalEarned = (): JSX.Element => {
         <img src="/images/ref_chart_bg.svg" alt="ref_chart_bg" className="ref_chart_bg" />
       </div>
       <p className="title">Total Earned By Referrals</p>
-      <p className="amount">10,000,000$</p>
+      <p className="amount">{Number(volumnTotalEarn)}$</p>
 
       <p className="guide">
         This number represents the total value in $ earned so far by all referral users since day one till today. Start
