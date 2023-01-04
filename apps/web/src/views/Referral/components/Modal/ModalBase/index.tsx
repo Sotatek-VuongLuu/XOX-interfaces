@@ -8,7 +8,7 @@ interface IProps {
   title: string
 }
 
-const ModalClaimSuccess: React.FC<React.PropsWithChildren<IProps>> = ({ open, handleClose, children, title }) => {
+const ModalBase: React.FC<React.PropsWithChildren<IProps>> = ({ open, handleClose, children, title }) => {
   const style = {
     position: 'absolute',
     top: '50%',
@@ -41,4 +41,4 @@ const ModalClaimSuccess: React.FC<React.PropsWithChildren<IProps>> = ({ open, ha
   )
 }
 
-export default ModalClaimSuccess
+export default ModalBase

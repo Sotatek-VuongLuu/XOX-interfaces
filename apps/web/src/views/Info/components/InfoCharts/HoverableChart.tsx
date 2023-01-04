@@ -68,6 +68,8 @@ const HoverableChart = ({
         return {
           time: fromUnixTime(day.date),
           value: day[valueProperty],
+          vol: day.VolUSD,
+          month: fromUnixTime(day.date).getMonth(),
         }
       })
     }
@@ -228,7 +230,7 @@ const HoverableChart = ({
         <Skeleton width="128px" height="36px" />
       )}
       <Text>{dateHover ?? currentDate}</Text> */}
-      <Box height="250px" className=""  style={{position: 'relative', width: '100%', paddingBottom: '250px'}}>
+      <Box height="250px" className="" style={{ position: 'relative', width: '100%', paddingBottom: '250px' }}>
         <div
           style={{
             position: 'absolute',
@@ -247,6 +249,7 @@ const HoverableChart = ({
               maxYAxis={maxYAxis}
               typeXAxis={filter}
               showXAxis={showX}
+              hoverableChart
             />
           </ResponsiveContainer>
         </div>

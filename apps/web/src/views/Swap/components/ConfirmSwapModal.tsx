@@ -1,7 +1,7 @@
 import { useCallback, memo } from 'react'
 import { Trade, Currency, TradeType, CurrencyAmount } from '@pancakeswap/sdk'
 import { InjectedModalProps, LinkExternal, Text } from '@pancakeswap/uikit'
-import { TransactionErrorContent, TransactionSubmittedContent } from 'components/TransactionConfirmationModal'
+import { TransactionErrorContent, TransactionSubmittedContent, TransactionSwapErrorContent } from 'components/TransactionConfirmationModal'
 import { useTranslation } from '@pancakeswap/localization'
 import { Field } from 'state/swap/actions'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -38,7 +38,7 @@ const SwapTransactionErrorContent = ({ onDismiss, message, openSettingModal }) =
           </Text>
           <LinkExternal
             href="https://docs.pancakeswap.finance/products/pancakeswap-exchange/trade-guide"
-            style={{ width: '100%', justifyContent: 'center' }}
+            style={{ width: '100%', justifyContent: 'center', color:  '#9072ff'}}
           >
             {t('What are the potential issues with the token?')}
           </LinkExternal>
@@ -46,7 +46,7 @@ const SwapTransactionErrorContent = ({ onDismiss, message, openSettingModal }) =
       }
     />
   ) : (
-    <TransactionErrorContent message={message} onDismiss={onDismiss} />
+    <TransactionSwapErrorContent message='Transaction rejected.' onDismiss={onDismiss} />
   )
 }
 

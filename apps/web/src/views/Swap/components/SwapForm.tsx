@@ -393,7 +393,7 @@ export default function SwapForm() {
         </Box>
       </Wrapper>
       {!swapIsUnsupported ? (
-        trade && <AdvancedSwapDetailsDropdown trade={trade} />
+        trade && <AdvancedSwapDetailsDropdown trade={trade} showXOXSreceived={isShowReferralBox} />
       ) : (
         <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
       )}

@@ -94,7 +94,7 @@
     {
       "name": "BUSD Token",
       "symbol": "BUSD",
-      "address": "0x0c3Dbe2081ccF00f6CB72d8541aA214Ac582C36D",
+      "address": "0xc4d70b820D9D21D30C8118C91d287Eb6c659C849",
       "chainId": 97,
       "decimals": 18,
       "logoURI": "https://tokens.pancakeswap.finance/images/symbol/busd.png"
@@ -141,7 +141,7 @@
     },
     {
       "name": "XOX",
-      "address": "0x0046eB5589bC449AbA5DA3487C795B2AD383D02b",
+      "address": "0x49bb145eD283d33783A5Fa166Ef9ee79Cd974c3C",
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 97,
@@ -279,7 +279,7 @@
     },
     {
       "name": "XOX",
-      "address": "0xa1c9512C24144e8F96d3c62886b8350E358f19E3",
+      "address": "0x7B11CED691A5014a57B14A82Ad623afeC3058C4F",
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 5,
