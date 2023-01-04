@@ -235,7 +235,6 @@ function CurrencySearch({
         </Column>
       )
     }
-    console.log(filteredSortedTokens, filteredInactiveTokens, 'filteredInactiveTokens')
 
     return Boolean(filteredSortedTokens?.length) || hasFilteredInactiveTokens ? (
       <Box>
