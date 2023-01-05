@@ -30,9 +30,9 @@ import styled from 'styled-components'
 const ButtonConnect = styled.button`
   background: ${({ theme }) => theme.colors.secondary};
   margin: 20px 0;
-  border-radius: 15px;
+  border-radius: 8px;
   color: ${({ theme }) => theme.colors.white};
-  min-height: 63px;
+  min-height: 54px;
   width: 100%;
   display: flex;
   text-align: center;
@@ -50,22 +50,16 @@ const SwapButton = styled.button`
   color: ${({ theme, disabled }) =>
   disabled ? "rgba(255, 255, 255, 0.5)" : theme.colors.white};
   width: 100%;
-  border-radius: 10px;
-  padding: 12px;
+  border-radius: 8px;
+  padding: 17px 20px;
   font-weight: 700;
-  font-size: 14px;
+  font-size: 18px;
   margin-bottom: 24px;
   cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
   display: flex;
   justify-content: center;
   align-items: center;
   border: none;
-
-  @media screen and (min-width: 576px) {
-    border-radius: 15px;
-    padding: 21px;
-    font-size: 18px;
-  }
 
   > span {
     margin-right: 8px;
