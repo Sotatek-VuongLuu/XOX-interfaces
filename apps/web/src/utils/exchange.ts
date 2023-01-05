@@ -52,6 +52,7 @@ export function computeTradePriceBreakdown(trade?: Trade<Currency, Currency, Tra
   priceImpactWithoutFee: Percent | undefined
   realizedLPFee: CurrencyAmount<Currency> | undefined | null
 } {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const { chainId } = useActiveChainId()
   // for each hop in our trade, take away the x*y=k price impact from 0.3% fees
   // e.g. for 3 tokens/2 hops: 1 - ((1 - .03) * (1-.03))
