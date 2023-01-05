@@ -171,7 +171,7 @@ const PlatformStat = (props: any): JSX.Element => {
     const result = await userClaimedHistories(chainId)
     if (result) {
       const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
-        const mappingUser = await mapingHistories(item.id)
+        const mappingUser = await mapingHistories(item.address)
         return createData(
           idx + 1,
           mappingUser?.avatar ?? 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',

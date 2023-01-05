@@ -1,22 +1,16 @@
 import { CSSProperties, MutableRefObject, useCallback, useMemo } from 'react'
-import { Currency, CurrencyAmount, Token } from '@pancakeswap/sdk'
+import { Currency, Token } from '@pancakeswap/sdk'
 import { Text, QuestionHelper } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import { FixedSizeList } from 'react-window'
 import { wrappedCurrency } from 'utils/wrappedCurrency'
 import { LightGreyCard } from 'components/Card'
 import { useTranslation } from '@pancakeswap/localization'
-import { useAccount } from 'wagmi'
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { useCombinedActiveList } from '../../state/lists/hooks'
-import { useCurrencyBalance } from '../../state/wallet/hooks'
-import { useIsUserAddedToken } from '../../hooks/Tokens'
 import Column from '../Layout/Column'
-import { RowFixed, RowBetween } from '../Layout/Row'
+import { RowBetween } from '../Layout/Row'
 import { CurrencyLogo } from '../Logo'
-import CircleLoader from '../Loader/CircleLoader'
-import { isTokenOnList } from '../../utils'
 import ImportRow from './ImportRow'
 
 function currencyKey(currency: Currency): string {
@@ -37,10 +31,6 @@ const FixedContentRow = styled.div`
   grid-gap: 16px;
   align-items: center;
 `
-
-function Balance({ balance }: { balance: CurrencyAmount<Currency> }) {
-  return <StyledBalanceText title={balance.toExact()}>{balance.toSignificant(4)}</StyledBalanceText>
-}
 
 const MenuItem = styled(RowBetween)<{ disabled: boolean; selected: boolean }>`
   padding: 16px;
@@ -76,14 +66,7 @@ function CurrencyRow({
   otherSelected: boolean
   style: CSSProperties
 }) {
-  const { address: account } = useAccount()
-  const { t } = useTranslation()
   const key = currencyKey(currency)
-  const selectedTokenList = useCombinedActiveList()
-  const isOnSelectedList = isTokenOnList(selectedTokenList, currency)
-  const customAdded = useIsUserAddedToken(currency)
-  const balance = useCurrencyBalance(account ?? undefined, currency)
-
   // only show add or remove buttons if not on selected list
   return (
     <MenuItem
@@ -96,13 +79,7 @@ function CurrencyRow({
       <CurrencyLogo currency={currency} size="24px" />
       <Column>
         <Text bold>{currency.symbol}</Text>
-        {/* <Text color="textSubtle" small ellipsis maxWidth="200px">
-          {!isOnSelectedList && customAdded && `${t('Added by user')} •`} {currency.name}
-        </Text> */}
       </Column>
-      {/* <RowFixed style={{ justifySelf: 'flex-end' }}>
-        {balance ? <Balance balance={balance} /> : account ? <CircleLoader /> : null}
-      </RowFixed> */}
     </MenuItem>
   )
 }
@@ -155,7 +132,7 @@ export default function CurrencyList({
       const otherSelected = Boolean(otherCurrency && currency && otherCurrency.equals(currency))
       const handleSelect = () => onCurrencySelect(currency)
 
-      const token = wrappedCurrency(currency, chainId)
+      const token = currency as Token
 
       const showImport = index > currencies.length
 
@@ -175,12 +152,7 @@ export default function CurrencyList({
               }}
             >
               <RowBetween>
-                <Text
-                  fontSize="14px"
-                  fontWeight="400"
-                  lineHeight="17px"
-                  color="rgba(255, 255, 255, 0.87)"
-                >
+                <Text fontSize="14px" fontWeight="400" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
                   Expanded results from inactive Token Lists
                 </Text>
                 <QuestionHelper

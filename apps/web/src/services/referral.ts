@@ -126,7 +126,8 @@ export const userClaimedHistories = (chainId: ChainId) => {
     userClaimedHistories{
       id,
       date,
-      amount
+      amount,
+      address
     }
   }`
   return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
