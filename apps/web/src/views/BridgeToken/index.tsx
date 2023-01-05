@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 /* eslint-disable import/order */
-import { useContext, useState } from 'react'
+import { useContext, useState, useCallback } from 'react'
 import { Currency } from '@pancakeswap/sdk'
 import { Flex, BottomDrawer, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { AppBody } from 'components/App'
@@ -20,9 +20,57 @@ import { useAccount } from 'wagmi'
 import { ChainId } from '@pancakeswap/sdk'
 import { TOKENS_SUPPORT } from "./tokensSupport";
 import Reminder from './Reminder'
+import AddressInput from './AddressInput'
+import { getAddress } from '@ethersproject/address'
+import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
+import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 
 import styled from 'styled-components'
 
+const ButtonConnect = styled.button`
+  background: ${({ theme }) => theme.colors.secondary};
+  margin: 20px 0;
+  border-radius: 15px;
+  color: ${({ theme }) => theme.colors.white};
+  min-height: 63px;
+  width: 100%;
+  display: flex;
+  text-align: center;
+  align-items: center;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  justify-content: center;
+  border: none;
+`;
+
+const SwapButton = styled.button`
+  background: ${({ theme, disabled }) =>
+  disabled ? theme.buttonDisable : theme.colors.primary};
+  color: ${({ theme, disabled }) =>
+  disabled ? "rgba(255, 255, 255, 0.5)" : theme.colors.white};
+  width: 100%;
+  border-radius: 10px;
+  padding: 12px;
+  font-weight: 700;
+  font-size: 14px;
+  margin-bottom: 24px;
+  cursor: ${({ disabled }) => (disabled ? "not-allowed" : "pointer")};
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: none;
+
+  @media screen and (min-width: 576px) {
+    border-radius: 15px;
+    padding: 21px;
+    font-size: 18px;
+  }
+
+  > span {
+    margin-right: 8px;
+  }
+`;
 
 const Divider = styled.div`
   padding: 0 12px;
@@ -61,6 +109,8 @@ export default function BridgeToken() {
   const [isShowDropTo, setIsShowDropTo] = useState(false);
   const [minAmount, setMinAmount] = useState<number>(0);
   const [maxAmount, setMaxAmount] = useState<number>(0);
+  const [messageAddress, setMessageAddress] = useState("");
+  const [isOpenConfirm, setIsOpenConfirm] = useState(false);
   const { t } = useTranslation()
   const [addressTokenInput, setAddressTokenInput] = useState(
     TOKENS_SUPPORT[chainId]?.[0].address
@@ -84,6 +134,13 @@ export default function BridgeToken() {
   const outputCurrency = useCurrency(outputCurrencyId)
 
   const [chainIdSupport, setChainIdSupport] = useState(chainId);
+  const [addressTo, setAddressTo] = useState(account);
+  const [messageButton, setMessageButton] = useState("Enter an amount");
+  const [approvalState, approveCallback] = useApproveCallback(
+    TOKENS_SUPPORT[chainId]?.[indexToken] &&
+      tryParseAmount(amountInput, TOKENS_SUPPORT[chainId]?.[indexToken]),
+    // BRIDGE_TOKEN_ADDRESS[chainId]
+  );
 
   const currencies: { [field in Field]?: Currency } = {
     [Field.INPUT]: inputCurrency ?? undefined,
@@ -121,6 +178,40 @@ export default function BridgeToken() {
     setIsShowDropFrom(false);
   };
 
+  const isAddress = (value: any) => {
+    try {
+      return getAddress(value)
+    } catch {
+      return false
+    }
+  }
+
+  const handleAddressTo = (value) => {
+    setAddressTo(value);
+    const validAdress = isAddress(value);
+    if (!validAdress) {
+      setMessageAddress("Please enter a valid address!");
+    } else setMessageAddress("");
+  };
+
+  // handle approve STAND to contract
+  const handleApprove = useCallback(async () => {
+    await approveCallback();
+  }, [approveCallback]);
+
+  // handle click button Swap, approve or swap
+  const handleSwapButtonClick = () => {
+    if (
+      approvalState === ApprovalState.NOT_APPROVED ||
+      approvalState === ApprovalState.UNKNOWN
+    ) {
+      handleApprove();
+      return;
+    }
+
+    setIsOpenConfirm(true);
+  };
+
   // handle switch network
   const switchNetwork = (chainIdToSwitch: ChainId) => {
     // cookie.set("chainId", chainIdToSwitch);
@@ -155,23 +246,23 @@ export default function BridgeToken() {
     <Page>
       <Flex width={['328px', , '100%']} height="100%" justifyContent="center" position="relative">
         <Flex flexDirection="column" position="relative">
-          <svg width="591" height="678" viewBox="0 0 591 678" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g filter="url(#filter0_d_8007_30824)">
-            <path d="M570.777 45.4999L531.696 17.8377C530.006 16.6421 527.988 16 525.918 16H65.0847C63.0152 16 60.9966 16.6421 59.3074 17.8377L20.2259 45.4999C17.5776 47.3745 16.0033 50.4175 16.0033 53.6622L16 629.511V652C16 657.523 20.4772 662 26 662H61.9005H529.096H564.997C570.519 662 574.997 657.523 574.997 652V629.511L575 53.6622C575 50.4175 573.426 47.3745 570.777 45.4999Z" fill="#242424"/>
-            <path d="M569.911 46.7242L530.829 19.0621C529.393 18.0458 527.677 17.5 525.918 17.5H65.0847C63.3256 17.5 61.6098 18.0458 60.174 19.0621L21.0925 46.7243C18.8414 48.3177 17.5033 50.9042 17.5033 53.6622L17.5 629.511V652C17.5 656.694 21.3056 660.5 26 660.5H61.9005H529.096H564.997C569.691 660.5 573.497 656.694 573.497 652V629.511L573.5 53.6622C573.5 50.9042 572.162 48.3176 569.911 46.7242Z" stroke="url(#paint0_linear_8007_30824)" strokeWidth="3"/>
+          <svg width="591" height="743" viewBox="0 0 591 743" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <g filter="url(#filter0_d_8007_31104)">
+            <path d="M570.777 45.4999L531.696 17.8377C530.007 16.6421 527.988 16 525.919 16H65.0849C63.0154 16 60.9968 16.6421 59.3076 17.8377L20.2261 45.4999C17.5777 47.3745 16.0035 50.4175 16.0034 53.6622L16.0002 694.511V717C16.0002 722.523 20.4773 727 26.0002 727H61.9007H529.096H564.997C570.52 727 574.997 722.523 574.997 717V694.511L575 53.6622C575 50.4175 573.426 47.3745 570.777 45.4999Z" fill="#242424"/>
+            <path d="M569.911 46.7242L530.829 19.0621C529.393 18.0458 527.678 17.5 525.919 17.5H65.0849C63.3258 17.5 61.61 18.0458 60.1742 19.0621L21.0927 46.7243C18.8416 48.3177 17.5035 50.9042 17.5034 53.6622L17.5002 694.511V717C17.5002 721.694 21.3058 725.5 26.0002 725.5H61.9007H529.096H564.997C569.691 725.5 573.497 721.694 573.497 717V694.511L573.5 53.6622C573.5 50.9042 572.162 48.3176 569.911 46.7242Z" stroke="url(#paint0_linear_8007_31104)" strokeWidth="3"/>
             </g>
             <defs>
-            <filter id="filter0_d_8007_30824" x="0" y="0" width="591" height="678" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+            <filter id="filter0_d_8007_31104" x="0.000183105" y="0" width="591" height="743" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
             <feFlood floodOpacity="0" result="BackgroundImageFix"/>
             <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
             <feOffset/>
             <feGaussianBlur stdDeviation="8"/>
             <feComposite in2="hardAlpha" operator="out"/>
             <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
-            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8007_30824"/>
-            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_8007_30824" result="shape"/>
+            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8007_31104"/>
+            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_8007_31104" result="shape"/>
             </filter>
-            <linearGradient id="paint0_linear_8007_30824" x1="254.5" y1="16" x2="253.029" y2="531.999" gradientUnits="userSpaceOnUse">
+            <linearGradient id="paint0_linear_8007_31104" x1="254.5" y1="16" x2="253.029" y2="531.999" gradientUnits="userSpaceOnUse">
             <stop stopColor="#6437FF"/>
             <stop offset="0.442708" stopColor="#9F59FF" stopOpacity="0"/>
             </linearGradient>
@@ -247,7 +338,7 @@ export default function BridgeToken() {
                 isShowDrop={isShowDropTo}
                 handleShowDrop={handleShowDropTo}
               />
-              {/* {account && (
+              {account && (
                 <AddressInput
                   address={addressTo}
                   handleAddressTo={handleAddressTo}
@@ -255,15 +346,17 @@ export default function BridgeToken() {
                 />
               )}
               {!account ? (
-                <ButtonConnect onClick={toggleWalletModal}>
-                  {i18n._(t`Connect Wallet`)}
+                <ButtonConnect
+                  // onClick={toggleWalletModal}
+                >
+                  Connect Wallet
                 </ButtonConnect>
               ) : (
                 <SwapButton
                   disabled={
                     (messageButton !== "Swap" &&
                       messageButton !==
-                        `Approve ${TOKENS_SUPPORT[chainId][indexToken].symbol}`) ||
+                        `Approve ${TOKENS_SUPPORT[chainId]?.[indexToken].symbol}`) ||
                     messageAddress !== "" ||
                     amountTo === ""
                   }
@@ -271,10 +364,10 @@ export default function BridgeToken() {
                 >
                   <span>{messageButton}</span>
                   {approvalState === ApprovalState.PENDING && (
-                    <Loader stroke="white" />
+                    <span>Loader...</span>
                   )}
                 </SwapButton>
-              )} */}
+              )}
               <Reminder
                 chainId={chainId}
                 tokenInput={defaultToken}
