@@ -19,7 +19,7 @@ export const GRAPH_API_PREDICTION_V1 = 'https://api.thegraph.com/subgraphs/name/
 
 export const INFO_CLIENT = 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2'
 export const INFO_NR_CLIENT = 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2'
-export const INFO_CLIENT_ETH = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.3'
+export const INFO_CLIENT_ETH = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.5'
 export const BLOCKS_CLIENT = 'https://api.thegraph.com/subgraphs/name/pancakeswap/blocks'
 export const BLOCKS_CLIENT_ETH = 'https://api.thegraph.com/subgraphs/name/blocklytics/ethereum-blocks'
 export const STABLESWAP_SUBGRAPH_CLIENT = 'https://api.thegraph.com/subgraphs/name/pancakeswap/exchange-stableswap'
@@ -51,5 +51,5 @@ export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
   [ChainId.BSC]: '',
   [ChainId.ETHEREUM]: '',
   [ChainId.BSC_TESTNET]: 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2',
-  [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.3',
+  [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.5',
 }
