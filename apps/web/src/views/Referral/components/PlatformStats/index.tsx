@@ -147,7 +147,7 @@ const Wrapper = styled(Box)`
 const PlatformStat = (props: any): JSX.Element => {
   const { listPoint } = props
   const { chainId } = useActiveWeb3React()
-  const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>([])
+  const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>(listData)
   const [userClaimHistories, setUserClaimHistories] = useState([])
   const [dataChart, setDataChart] = useState([])
   const [minAmount, setMinAmount] = useState('')
@@ -156,7 +156,7 @@ const PlatformStat = (props: any): JSX.Element => {
 
   const getUserPoint = async () => {
     const result = await userPoint(chainId)
-    if (result && result.pointDataDays && result.pointDataDays.length > 0) {
+    if (result && result.analysisDatas && result.analysisDatas.length > 0) {
       const totalUnClaimed =
         Number(result.analysisDatas[0]?.total_reward) - Number(result.analysisDatas[0]?.total_claimed_amount)
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
