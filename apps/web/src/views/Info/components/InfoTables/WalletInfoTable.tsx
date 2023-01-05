@@ -295,7 +295,9 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     const nativeBalance = balanceNative
       ? formatAmount(parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol))
       : 0
-    const balanceXOX = tokensBalance.find((token: any) => token.symbol.toLowerCase() === 'xox')
+    const balanceXOX = tokensBalance.find(
+      (token: any) => token.contractAddress.toLowerCase() === XOX_ADDRESS[chainId].toLowerCase(),
+    )
     const xoxBalance = balanceXOX ? formatAmount(balanceXOX.balance * tokenRateXOX(balanceXOX.symbol)) : 0
     const result = [
       {
@@ -309,12 +311,12 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     ]
     let sum = 0
     tokensBalance.forEach((balance: any) => {
-      if (balance.symbol.toLowerCase() === 'busd' || balance.symbol.toLowerCase() === 'usdc') {
+      if (balance.contractAddress.toLowerCase() === USD_ADDRESS[chainId].toLowerCase()) {
         result.push({
           name: balance.symbol,
           value: formatAmount(balance.balance * tokenRateUSD(balance.symbol)),
         })
-      } else if (balance.symbol.toLowerCase() !== 'xox') {
+      } else if (balance.contractAddress.toLowerCase() !== XOX_ADDRESS[chainId].toLowerCase()) {
         sum += formatAmount(balance.balance * tokenRateUSD(balance.symbol))
       }
     })
@@ -322,6 +324,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       name: 'others',
       value: sum,
     })
+    console.log(tokensBalance, xoxBalance, sum, result[2].value, 'result[2].value')
     total = nativeBalance + xoxBalance + result[2].value + sum
     setTotalAsset(total)
     setDataChart(result)
