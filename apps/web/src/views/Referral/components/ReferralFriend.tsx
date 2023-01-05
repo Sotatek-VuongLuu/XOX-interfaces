@@ -717,6 +717,10 @@ const ReferralFriend = ({
                   <span>Claim All</span>
                 </button>
               </div>
+
+              <button type="button" onClick={handleCheckReachLevel}>
+                call
+              </button>
             </WrapperRight>
           </Grid>
         </Grid>

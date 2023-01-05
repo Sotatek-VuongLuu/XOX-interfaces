@@ -371,7 +371,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
                 })}
               </div>
 
-              {rankOfUser.rank && rankOfUser.rank === 6 ? null : (
+              {rankOfUser.rank && rankOfUser.rank <= 6 ? null : (
                 <div className="dot">
                   <div className="dot_item" />
                   <div className="dot_item" />
