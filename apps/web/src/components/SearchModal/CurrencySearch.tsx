@@ -158,7 +158,6 @@ function CurrencySearch({
     },
     [audioPlay, onCurrencySelect],
   )
-
   // manage focus on modal show
   const inputRef = useRef<HTMLInputElement>()
 
@@ -221,7 +220,6 @@ function CurrencySearch({
   }, [chainId, debouncedQuery])
 
   const hasFilteredInactiveTokens = Boolean(filteredInactiveTokens?.length)
-
   const getCurrencyListRows = useCallback(() => {
     if (searchToken && !searchTokenIsAdded && !hasFilteredInactiveTokens) {
       return (
@@ -235,8 +233,7 @@ function CurrencySearch({
         </Column>
       )
     }
-
-    return Boolean(filteredSortedTokens?.length) || hasFilteredInactiveTokens ? (
+    return Boolean(filteredSortedTokens?.length > 0) || hasFilteredInactiveTokens ? (
       <Box>
         <CurrencyList
           height={isMobile ? (height ? height + 80 : 350) : 310}
@@ -255,7 +252,7 @@ function CurrencySearch({
         />
       </Box>
     ) : (
-      <Column style={{ padding: '20px', height: '100%' }} className="no-result">
+      <Column style={{ padding: '20px', height:'50px' }} className="no-result">
         <Text color="textSubtle" textAlign="center" mb="20px">
           {t('No results found.')}
         </Text>
