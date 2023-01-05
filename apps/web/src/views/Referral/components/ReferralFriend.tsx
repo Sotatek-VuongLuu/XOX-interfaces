@@ -10,18 +10,7 @@
 /* eslint-disable no-else-return */
 /* eslint-disable prefer-const */
 /* eslint-disable no-extra-boolean-cast */
-import {
-  Avatar,
-  Box,
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material'
+import { Avatar, Box, Grid, Paper, Table, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -104,7 +93,6 @@ const WrapperLeft = styled(Box)`
     font-size: 20px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
-    margin-bottom: 16px;
 
     @media screen and (max-width: 900px) {
       font-size: 18px;
@@ -316,64 +304,64 @@ const WrapperRight = styled(Box)<IPropsWR>`
   }
 `
 
-// const TableHeader = styled.div`
-//   display: grid;
-//   grid-template-columns: 2fr 1fr 1fr;
-//   gap: 16px;
-//   font-weight: 700;
-//   font-size: 14px;
-//   line-height: 17px;
-//   color: rgba(255, 255, 255, 0.6);
-//   margin-top: 16px;
-//   padding-bottom: 8px;
-//   border-bottom: 1px solid #444444;
+const TableHeader = styled.div`
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr;
+  gap: 16px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(255, 255, 255, 0.6);
+  margin-top: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #444444;
 
-//   div:last-child {
-//     text-align: right;
-//     margin-right: 3px;
-//   }
-// `
-// const TableBody = styled.div`
-//   /* max-height: 107px;
-//   overflow-y: auto;
-//   margin-top: 10px; */
+  div:last-child {
+    text-align: right;
+    margin-right: 3px;
+  }
+`
+const TableBody = styled.div`
+  max-height: 107px;
+  overflow-y: auto;
+  margin-top: 10px;
 
-//   & > div {
-//     display: grid;
-//     grid-template-columns: 2fr 1fr 1fr;
-//     gap: 16px;
-//     font-weight: 400;
-//     font-size: 14px;
-//     line-height: 17px;
-//     color: rgba(255, 255, 255, 0.87);
-//     align-items: center;
-//     margin-bottom: 16px;
-//     margin-right: 5px;
-//   }
+  & > div {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 16px;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.87);
+    align-items: center;
+    margin-bottom: 16px;
+    margin-right: 5px;
+  }
 
-//   & > div div:first-child {
-//     display: grid;
-//     grid-template-columns: 24px 1fr;
-//     gap: 8px;
-//     align-items: center;
+  & > div div:first-child {
+    display: grid;
+    grid-template-columns: 24px 1fr;
+    gap: 8px;
+    align-items: center;
 
-//     img {
-//       border-radius: 50%;
-//       width: 24px;
-//       height: 24px;
-//       object-fit: cover;
-//     }
-//   }
+    img {
+      border-radius: 50%;
+      width: 24px;
+      height: 24px;
+      object-fit: cover;
+    }
+  }
 
-//   & > div div:nth-child(2) {
-//     display: flex;
-//     align-items: center;
-//   }
+  & > div div:nth-child(2) {
+    display: flex;
+    align-items: center;
+  }
 
-//   & > div div:last-child {
-//     text-align: right;
-//   }
-// `
+  & > div div:last-child {
+    text-align: right;
+  }
+`
 
 const Content = styled.div`
   .discription {
@@ -641,9 +629,49 @@ const ReferralFriend = ({
               <p className="title">Referral friends</p>
 
               {account && listFriends.length !== 0 ? (
-                <TableContainer component={Paper} sx={{ height: 131, background: 'transparent', boxShadow: 'none' }}>
-                  <Table aria-label="simple table" sx={{ minWidth: 400 }}>
-                    <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
+                // <div>
+                //   <TableHeader>
+                //     <div>User Name</div>
+                //     <div>Referral Code</div>
+                //     <div>Total Points</div>
+                //   </TableHeader>
+                //   <TableBody>
+                //     {listFriends.map((row) => {
+                //       return (
+                //         <div key={row.name}>
+                //           <div>
+                //             {row.avatar ? (
+                //               <img src={row.avatar} alt="avatar" />
+                //             ) : (
+                //               <img src="/images/default_avatar.jpg" alt="avatar" />
+                //             )}
+                //             {row.name ? row.name : shortenAddress(row.ref_address)}
+                //           </div>
+                //           <div>
+                //             {row?.refCode}
+                //             <CopyButton
+                //               width="24px"
+                //               text={row?.refCode}
+                //               tooltipMessage={t('Copied')}
+                //               button={
+                //                 <img
+                //                   src="/images/copy_purple.svg"
+                //                   alt="copy_purple"
+                //                   style={{ marginBottom: '-2px', marginLeft: '8px' }}
+                //                 />
+                //               }
+                //             />
+                //           </div>
+                //           <div>{row.point}</div>
+                //         </div>
+                //       )
+                //     })}
+                //   </TableBody>
+                // </div>
+
+                <TableContainer>
+                  <Table>
+                    <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
                       <TableRow
                         sx={{
                           '& td, & th': {
@@ -651,13 +679,12 @@ const ReferralFriend = ({
                             fontWeight: 700,
                             fontSize: 14,
                             color: ' rgba(255, 255, 255, 0.6)',
-                            padding: '8px 8px 8px 0px',
                           },
                         }}
                       >
                         <TableCell>User Name</TableCell>
-                        <TableCell align="center">Referral Code</TableCell>
-                        <TableCell align="right">Total Points</TableCell>
+                        <TableCell align="left">Referral Code</TableCell>
+                        <TableCell align="left">Total Points</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -671,7 +698,6 @@ const ReferralFriend = ({
                                 fontWeight: 400,
                                 fontSize: 14,
                                 color: ' rgba(255, 255, 255, 0.87)',
-                                padding: '8px 8px 8px 0px',
                               },
                             }}
                           >
@@ -683,26 +709,23 @@ const ReferralFriend = ({
                               />
                               {row.name ? row.name : shortenAddress(row.ref_address)}
                             </TableCell>
-                            <TableCell align="center">
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <div>{row?.refCode}</div>
-                                <div>
-                                  <CopyButton
-                                    width="24px"
-                                    text={row?.refCode}
-                                    tooltipMessage={t('Copied')}
-                                    button={
-                                      <img
-                                        src="/images/copy_purple.svg"
-                                        alt="copy_purple"
-                                        style={{ marginBottom: '-2px', marginLeft: '8px' }}
-                                      />
-                                    }
+                            <TableCell align="left">
+                              {' '}
+                              {row?.refCode}
+                              <CopyButton
+                                width="24px"
+                                text={row?.refCode}
+                                tooltipMessage={t('Copied')}
+                                button={
+                                  <img
+                                    src="/images/copy_purple.svg"
+                                    alt="copy_purple"
+                                    style={{ marginBottom: '-2px', marginLeft: '8px' }}
                                   />
-                                </div>
-                              </div>
+                                }
+                              />
                             </TableCell>
-                            <TableCell align="right">{row.point} </TableCell>
+                            <TableCell align="left">{row.point} </TableCell>
                           </TableRow>
                         )
                       })}
