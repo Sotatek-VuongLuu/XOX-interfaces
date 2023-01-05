@@ -156,7 +156,7 @@ const PlatformStat = (props: any): JSX.Element => {
 
   const getUserPoint = async () => {
     const result = await userPoint(chainId)
-    if (result) {
+    if (result && result.pointDataDays && result.pointDataDays.length > 0) {
       const totalUnClaimed =
         Number(result.analysisDatas[0]?.total_reward) - Number(result.analysisDatas[0]?.total_claimed_amount)
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
@@ -172,9 +172,10 @@ const PlatformStat = (props: any): JSX.Element => {
     if (result) {
       const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
         const mappingUser = await mapingHistories(item.address)
+        const userAvatar = mappingUser.avatar;
         return createData(
           idx + 1,
-          mappingUser?.avatar ?? 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
+          userAvatar,
           mappingUser?.username,
           moment(item.data).format('DD/MM/YYYY hh:mm:ss'),
           mapPoint(formatBigNumber(BigNumber.from(item.amount))),
@@ -187,7 +188,7 @@ const PlatformStat = (props: any): JSX.Element => {
   }
   const getPointDataDays = async () => {
     const result = await pointDataDays(chainId)
-    if (result) {
+    if (result && result.pointDataDays && result.pointDataDays.length > 0) {
       const arr = result.pointDataDays
       setMinAmount(formatBigNumber(BigNumber.from(arr[0].amount)))
       setMiddleAmount(formatBigNumber(BigNumber.from(arr[Math.floor(arr.length / 2)].amount)))
@@ -254,7 +255,7 @@ const PlatformStat = (props: any): JSX.Element => {
       <div className="second">
         <TableContainer component={Paper} sx={{ height: 160, background: '#303030' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead>
+            <TableHead style={{position: 'sticky', top: 0, zIndex: 1, background:'#303030'}}>
               <TableRow
                 sx={{
                   '& td, & th': {
