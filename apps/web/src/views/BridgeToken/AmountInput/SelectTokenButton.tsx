@@ -174,11 +174,11 @@ const SelectTokenButton: React.FC<Props> = ({
                 height={24}
               />
             <span>XOX</span>
-            {isShowDrop ? <ChevronUpIconStyled /> : <ChevronDownIconStyled />}
+            {/* {isShowDrop ? <ChevronUpIconStyled /> : <ChevronDownIconStyled />} */}
           </div>
         </Wrapper>
 
-        {isShowDrop && (
+        {/* {isShowDrop && (
           <>
             <div
               className="overlay "
@@ -209,7 +209,7 @@ const SelectTokenButton: React.FC<Props> = ({
               })}
             </Select>
           </>
-        )}
+        )} */}
       </FullyContainer>
     </>
   );
