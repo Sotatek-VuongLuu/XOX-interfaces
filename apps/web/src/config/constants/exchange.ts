@@ -197,8 +197,17 @@ export const BETTER_TRADE_LESS_HOPS_THRESHOLD = new Percent(JSBI.BigInt(50), BIP
 export const ZERO_PERCENT = new Percent('0')
 export const ONE_HUNDRED_PERCENT = new Percent('1')
 
-export const BASE_FEE = new Percent(JSBI.BigInt(25), BIPS_BASE)
-export const INPUT_FRACTION_AFTER_FEE = ONE_HUNDRED_PERCENT.subtract(BASE_FEE)
+export const BASE_FEE_BSC = new Percent(JSBI.BigInt(25), BIPS_BASE)
+export const BASE_FEE_ETH = new Percent(JSBI.BigInt(30), BIPS_BASE)
+export const INPUT_FRACTION_AFTER_FEE_BSC = ONE_HUNDRED_PERCENT.subtract(BASE_FEE_BSC);
+export const INPUT_FRACTION_AFTER_FEE_ETH = ONE_HUNDRED_PERCENT.subtract(BASE_FEE_ETH);
+export const INPUT_FRACTION_AFTER_FEE: ChainMap<Percent> = {
+  [ChainId.ETHEREUM]: INPUT_FRACTION_AFTER_FEE_ETH,
+  [ChainId.RINKEBY]: INPUT_FRACTION_AFTER_FEE_ETH,
+  [ChainId.GOERLI]: INPUT_FRACTION_AFTER_FEE_ETH,
+  [ChainId.BSC]: INPUT_FRACTION_AFTER_FEE_BSC,
+  [ChainId.BSC_TESTNET]: INPUT_FRACTION_AFTER_FEE_BSC,
+}
 
 // BNB
 export const DEFAULT_INPUT_CURRENCY = 'BNB'

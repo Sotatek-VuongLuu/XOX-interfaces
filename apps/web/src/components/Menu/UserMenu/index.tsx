@@ -111,7 +111,7 @@ const UserMenu = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    const currentProvider = chainId === 1 || chainId === 5 ? getDefaultProvider(chain.network) : provider
+    const currentProvider = provider
     currentProvider.getBalance(account).then((balance) => {
       setBalanceNative(balance)
     })

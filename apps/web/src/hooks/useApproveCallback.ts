@@ -159,6 +159,22 @@ export function useRouterNormal(
 
   return true
 }
+
+export function useShowReferralCode(
+  inputCurrency: Currency | undefined,
+  outputCurrency: Currency | undefined,
+  chainId?: number,
+): boolean {
+  if (
+    outputCurrency?.isToken &&
+    outputCurrency?.address.toLowerCase() === XOX_ADDRESS[chainId].toLowerCase() &&
+    inputCurrency?.isToken &&
+    inputCurrency?.address.toLowerCase() === USD_ADDRESS[chainId].toLowerCase()
+  )
+    return true
+
+  return false
+}
 // Wraps useApproveCallback in the context of a Gelato Limit Orders
 export function useApproveCallbackFromInputCurrencyAmount(currencyAmountIn: CurrencyAmount<Currency> | undefined) {
   const gelatoLibrary = useGelatoLimitOrdersLib()
