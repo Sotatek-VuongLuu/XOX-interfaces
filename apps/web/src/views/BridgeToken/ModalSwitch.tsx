@@ -97,7 +97,7 @@ const ListNetWork = styled.div`
     }
   }
   button.active {
-    border: 1px solid #72bf65;
+    border: 1px solid ${({theme}) => theme.colors.secondary80};
     cursor: auto;
     &:hover {
       background: transparent;
