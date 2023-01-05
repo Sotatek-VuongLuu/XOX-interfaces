@@ -292,8 +292,11 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
 
   useEffect(() => {
     let total = 0
-    const nativeBalance = balanceNative ? parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol) : 0
-    const xoxBalance = 0
+    const nativeBalance = balanceNative
+      ? formatAmount(parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol))
+      : 0
+    const balanceXOX = tokensBalance.find((token: any) => token.symbol.toLowerCase() === 'xox')
+    const xoxBalance = balanceXOX ? formatAmount(balanceXOX.balance * tokenRateXOX(balanceXOX.symbol)) : 0
     const result = [
       {
         name: native.symbol,
@@ -309,10 +312,10 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       if (balance.symbol.toLowerCase() === 'busd' || balance.symbol.toLowerCase() === 'usdc') {
         result.push({
           name: balance.symbol,
-          value: balance.balance * tokenRateUSD(balance.symbol),
+          value: formatAmount(balance.balance * tokenRateUSD(balance.symbol)),
         })
-      } else {
-        sum += balance.balance * tokenRateUSD(balance.symbol)
+      } else if (balance.symbol.toLowerCase() !== 'xox') {
+        sum += formatAmount(balance.balance * tokenRateUSD(balance.symbol))
       }
     })
     result.push({

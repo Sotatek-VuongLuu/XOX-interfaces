@@ -106,7 +106,6 @@ const UserMenu = () => {
   const native = useNativeCurrency()
   const [balanceNative, setBalanceNative] = useState<any>()
   const [balanceXOX, setBalanceXOX] = useState<any>()
-  const { chain } = useNetwork()
   const provider = useProvider({ chainId })
 
   useEffect(() => {
