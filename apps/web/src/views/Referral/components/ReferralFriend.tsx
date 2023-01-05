@@ -104,6 +104,7 @@ const WrapperLeft = styled(Box)`
     font-size: 20px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
+    margin-bottom: 16px;
 
     @media screen and (max-width: 900px) {
       font-size: 18px;
@@ -312,6 +313,14 @@ const WrapperRight = styled(Box)<IPropsWR>`
         }
       }
     }
+  }
+
+  .claim {
+    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
   }
 `
 
@@ -640,9 +649,9 @@ const ReferralFriend = ({
               <p className="title">Referral friends</p>
 
               {account && listFriends.length !== 0 ? (
-                <TableContainer component={Paper} sx={{ height: 160, background: '#303030' }}>
+                <TableContainer component={Paper} sx={{ height: 137, background: '#242424', boxShadow: 'none' }}>
                   <Table sx={{ minWidth: 400 }} aria-label="simple table">
-                    <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
+                    <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
                       <TableRow
                         sx={{
                           '& td, & th': {
@@ -650,12 +659,13 @@ const ReferralFriend = ({
                             fontWeight: 700,
                             fontSize: 14,
                             color: ' rgba(255, 255, 255, 0.6)',
+                            padding: '8px 8px 8px 0px',
                           },
                         }}
                       >
-                        <TableCell align="left">User Name</TableCell>
-                        <TableCell align="center">Time</TableCell>
-                        <TableCell align="right">Point Level</TableCell>
+                        <TableCell align="left">Username</TableCell>
+                        <TableCell align="center">Referral Code</TableCell>
+                        <TableCell align="right">Total Points</TableCell>
                       </TableRow>
                     </TableHead>
                     <TableBody>
@@ -668,6 +678,7 @@ const ReferralFriend = ({
                               fontWeight: 400,
                               fontSize: 14,
                               color: ' rgba(255, 255, 255, 0.87)',
+                              padding: '8px 8px 8px 0px',
                             },
                           }}
                         >
@@ -746,7 +757,11 @@ const ReferralFriend = ({
                                 setLevel(item.lever)
                               }}
                             >
-                              {item?.isClaimed ? <span>Claimed</span> : <span>Claim</span>}
+                              {item?.isClaimed ? (
+                                <span>Claimed</span>
+                              ) : (
+                                <span className={`${item.isReach ? 'claim' : ''} `}>Claim</span>
+                              )}
                             </button>
                           )}
                         </div>
