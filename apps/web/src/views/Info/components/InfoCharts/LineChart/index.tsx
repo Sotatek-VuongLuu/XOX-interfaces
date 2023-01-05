@@ -30,7 +30,6 @@ export type LineChartProps = {
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
-    console.log(payload, payload[0].payload.value, 'payload')
     return (
       <CustomTooltipStyle>
         <p className="label">{new Date(label).toLocaleString()}</p>
