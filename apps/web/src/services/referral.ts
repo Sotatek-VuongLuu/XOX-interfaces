@@ -20,7 +20,7 @@ export const getUerRank = async (chainId: ChainId) => {
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getUserRanks {
-        userPoints(first: 100, skip: 0, orderBy: amount, orderDirection: desc) {
+        userPoints(first: 101, skip: 0, orderBy: amount, orderDirection: desc) {
           id
           amount
           address
