@@ -52,13 +52,14 @@ export function computeTradePriceBreakdown(trade?: Trade<Currency, Currency, Tra
   priceImpactWithoutFee: Percent | undefined
   realizedLPFee: CurrencyAmount<Currency> | undefined | null
 } {
+  const { chainId } = useActiveChainId()
   // for each hop in our trade, take away the x*y=k price impact from 0.3% fees
   // e.g. for 3 tokens/2 hops: 1 - ((1 - .03) * (1-.03))
   const realizedLPFee = !trade
     ? undefined
     : ONE_HUNDRED_PERCENT.subtract(
         trade.route.pairs.reduce<Fraction>(
-          (currentFee: Fraction): Fraction => currentFee.multiply(INPUT_FRACTION_AFTER_FEE),
+          (currentFee: Fraction): Fraction => currentFee.multiply(INPUT_FRACTION_AFTER_FEE[chainId]),
           ONE_HUNDRED_PERCENT,
         ),
       )

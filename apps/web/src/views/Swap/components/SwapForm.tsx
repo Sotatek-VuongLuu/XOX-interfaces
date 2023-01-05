@@ -24,7 +24,7 @@ import { AutoRow } from 'components/Layout/Row'
 import { AutoColumn } from 'components/Layout/Column'
 
 import { useCurrency } from 'hooks/Tokens'
-import { ApprovalState, useApproveCallbackFromTrade, useRouterNormal } from 'hooks/useApproveCallback'
+import { ApprovalState, useApproveCallbackFromTrade, useRouterNormal, useShowReferralCode } from 'hooks/useApproveCallback'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
 
 import { Field } from 'state/swap/actions'
@@ -236,9 +236,7 @@ export default function SwapForm() {
   )
 
   const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
-  const isShowReferralBox =
-    (inputCurrency?.symbol === 'USDC' && outputCurrency?.symbol === 'XOX') ||
-    (inputCurrency?.symbol === 'BUSD' && outputCurrency?.symbol === 'XOX')
+  const isShowReferralBox = useShowReferralCode(inputCurrency, outputCurrency, chainId);
   const hasAmount = Boolean(parsedAmount)
   const handleChangeReferal = (value: string) => {
     axios

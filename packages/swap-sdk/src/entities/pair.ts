@@ -18,13 +18,19 @@ import { keccak256, pack } from '@ethersproject/solidity'
 import JSBI from 'jsbi'
 import invariant from 'tiny-invariant'
 
-import { FACTORY_ADDRESS_MAP, INIT_CODE_HASH_MAP, XOX_ADDRESS, PAIR_XOX_BUSD, USD_ADDRESS } from '../constants'
+import { FACTORY_ADDRESS_MAP, INIT_CODE_HASH_MAP, XOX_ADDRESS, PAIR_XOX_BUSD, USD_ADDRESS, ChainId } from '../constants'
 import { ERC20Token } from './token'
 
 let PAIR_ADDRESS_CACHE: { [key: string]: string } = {}
 
 export const _90 = JSBI.BigInt(90)
-
+export const _9970 = JSBI.BigInt(9970)
+const LP_FEE: Record<number, JSBI> = {
+  // [ChainId.ETHEREUM]: '',
+  [ChainId.GOERLI]: _9970,
+  // [ChainId.BSC]: '',
+  [ChainId.BSC_TESTNET]: _9975,
+}
 const composeKey = (token0: ERC20Token, token1: ERC20Token) => `${token0.chainId}-${token0.address}-${token1.address}`
 
 export const computePairAddress = ({
@@ -147,7 +153,7 @@ export class Pair {
     }
     const inputReserve = this.reserveOf(inputAmount.currency)
     const outputReserve = this.reserveOf(inputAmount.currency.equals(this.token0) ? this.token1 : this.token0)
-    const inputAmountWithFee = JSBI.multiply(inputAmount.quotient, _9975)
+    const inputAmountWithFee = JSBI.multiply(inputAmount.quotient, LP_FEE[inputAmount.currency.chainId])
     const numerator = JSBI.multiply(inputAmountWithFee, outputReserve.quotient)
     const denominator = JSBI.add(JSBI.multiply(inputReserve.quotient, _10000), inputAmountWithFee)
     const outputAmount = CurrencyAmount.fromRawAmount(
@@ -211,7 +217,7 @@ export class Pair {
     const outputReserve = this.reserveOf(outputAmount.currency)
     const inputReserve = this.reserveOf(outputAmount.currency.equals(this.token0) ? this.token1 : this.token0)
     const numerator = JSBI.multiply(JSBI.multiply(inputReserve.quotient, outputAmount.quotient), _10000)
-    const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmount.quotient), _9975)
+    const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmount.quotient), LP_FEE[outputAmount.currency.chainId])
     const inputAmount = CurrencyAmount.fromRawAmount(
       outputAmount.currency.equals(this.token0) ? this.token1 : this.token0,
       JSBI.add(JSBI.divide(numerator, denominator), ONE)
