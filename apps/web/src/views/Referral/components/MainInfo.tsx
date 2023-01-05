@@ -315,9 +315,11 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
       )
 
       setListUserRanks([...dataMapping])
+
       const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 100).filter((item: any) => {
         return item.address === account?.toLowerCase()
       })
+
       if (levelOfUSer.length !== 0) {
         setRankOfUser(levelOfUSer[0])
       }
@@ -371,7 +373,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
                 })}
               </div>
 
-              {rankOfUser.rank && rankOfUser.rank <= 6 ? null : (
+              {!rankOfUser.rank ? null : rankOfUser.rank <= 6 ? null : (
                 <div className="dot">
                   <div className="dot_item" />
                   <div className="dot_item" />
