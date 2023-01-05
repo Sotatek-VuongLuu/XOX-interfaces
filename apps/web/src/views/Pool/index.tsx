@@ -15,7 +15,7 @@ import { AppHeader, AppBody } from '../../components/App'
 import Page from '../Page'
 
 const Body = styled.div`
-  margin: 25px 0px;
+  padding-top: 25px;
 `
 
 const StyledCardFooter = styled(CardFooter)`
@@ -80,6 +80,11 @@ const Background = styled.div<I>`
   height: ${({ height }) => `${height}px;`}
   z-index: -1;
   background: #242424;
+`
+const ConnectSub = styled.div`
+  text-align:center;
+  margin-top:25px;
+  color:#FFFFFF61;
 `
 
 export default function Pool() {
@@ -158,8 +163,7 @@ export default function Pool() {
                 </svg>
               </span>
             </div>
-
-            <p>p</p>
+            <ConnectSub>Connect to a wallet to view your liquidity</ConnectSub>
           </Title>
         </>
       )
@@ -207,65 +211,13 @@ export default function Pool() {
           {t('No liquidity found.')}
           dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
         </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>{' '}
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
-          dákjdas đâsdasdasdas dá d ád á dsa da sd a dá
-        </Text>
       </>
     )
   }
 
   return (
     <>
-      <Flex width={['328px', , '100%']} height="100%" justifyContent="center" position="relative">
+      <Flex width={['328px', , '100%']} height="100%" justifyContent="center" position="relative" padding='220px 0'>
         <Flex position="relative" flexDirection="column">
           <Background height={divHeight + 25} />
           <div>
@@ -300,46 +252,11 @@ export default function Pool() {
                 <p className="sub_title">Add liquidity to receive LP tokens</p>
               </div>
               <div>
-                <span>
-                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M9.1419 21.5855C7.46635 21.0867 5.9749 20.1605 4.79393 18.9334C5.2345 18.4112 5.5 17.7366 5.5 16.9999C5.5 15.3431 4.15685 13.9999 2.5 13.9999C2.39977 13.9999 2.3007 14.0048 2.203 14.0144C2.0699 13.3637 2 12.69 2 11.9999C2 10.9546 2.16039 9.94679 2.4579 8.99964C2.47191 8.99984 2.48594 8.99994 2.5 8.99994C4.15685 8.99994 5.5 7.65679 5.5 5.99994C5.5 5.52429 5.3893 5.07449 5.1923 4.67494C6.34875 3.59963 7.76025 2.79489 9.32605 2.36145C9.8222 3.33398 10.8333 3.99994 12 3.99994C13.1667 3.99994 14.1778 3.33398 14.674 2.36145C16.2398 2.79489 17.6512 3.59963 18.8077 4.67494C18.6107 5.07449 18.5 5.52429 18.5 5.99994C18.5 7.65679 19.8432 8.99994 21.5 8.99994C21.5141 8.99994 21.5281 8.99984 21.5421 8.99964C21.8396 9.94679 22 10.9546 22 11.9999C22 12.69 21.9301 13.3637 21.797 14.0144C21.6993 14.0048 21.6002 13.9999 21.5 13.9999C19.8432 13.9999 18.5 15.3431 18.5 16.9999C18.5 17.7366 18.7655 18.4112 19.2061 18.9334C18.0251 20.1605 16.5336 21.0867 14.8581 21.5855C14.4714 20.3758 13.338 19.4999 12 19.4999C10.662 19.4999 9.5286 20.3758 9.1419 21.5855Z"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M12 15.5C13.933 15.5 15.5 13.933 15.5 12C15.5 10.067 13.933 8.5 12 8.5C10.067 8.5 8.5 10.067 8.5 12C8.5 13.933 10.067 15.5 12 15.5Z"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                <span style={{marginRight:'16px'}}>
+                <img src='/images/liquidity/setting-icon.svg' alt='' />
                 </span>
                 <span>
-                  <svg width="25" height="24" viewBox="0 0 25 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path
-                      d="M3.90576 3.36365V7H7.54214"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M2.99658 12C2.99658 17.5229 7.47373 22 12.9966 22C18.5194 22 22.9966 17.5229 22.9966 12C22.9966 6.47715 18.5194 2 12.9966 2C9.29558 2 6.06413 4.01056 4.33497 6.99905"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M12.9991 6L12.9985 12.0044L17.2382 16.2441"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                  <img src='/images/liquidity/history-icon.svg' alt='' />
                 </span>
               </div>
             </Header>
