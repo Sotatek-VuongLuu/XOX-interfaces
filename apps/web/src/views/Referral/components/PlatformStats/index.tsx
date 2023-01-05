@@ -177,7 +177,7 @@ const PlatformStat = (props: any): JSX.Element => {
           idx + 1,
           userAvatar,
           mappingUser?.username,
-          moment(item.data).format('DD/MM/YYYY hh:mm:ss'),
+          moment(item.date * 1000).format('DD/MM/YYYY hh:mm:ss'),
           mapPoint(formatBigNumber(BigNumber.from(item.amount))),
           formatBigNumber(BigNumber.from(item.amount)),
         )
