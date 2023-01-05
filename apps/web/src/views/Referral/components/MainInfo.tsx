@@ -275,6 +275,16 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
 
   const handleGetUserRanks = async (typeFilter: string) => {
     try {
+      setListUserRanks([])
+      setRankOfUser({
+        address: '',
+        amount: '',
+        avatar: '',
+        id: '',
+        point: null,
+        rank: null,
+        username: '',
+      })
       let data = []
       if (typeFilter === filterTime[0]) {
         const res = await getUerRank(chainId)
@@ -316,7 +326,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
 
       setListUserRanks([...dataMapping])
 
-      const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 100).filter((item: any) => {
+      const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 101).filter((item: any) => {
         return item.address === account?.toLowerCase()
       })
 
