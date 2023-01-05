@@ -316,7 +316,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
 
       setListUserRanks([...dataMapping])
       const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 100).filter((item: any) => {
-        return item.address === account.toLowerCase()
+        return item.address === account?.toLowerCase()
       })
       if (levelOfUSer.length !== 0) {
         setRankOfUser(levelOfUSer[0])
