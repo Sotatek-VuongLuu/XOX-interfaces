@@ -17,9 +17,12 @@ const Rinkeby = "/images/networks/rinkeby-network.jpg";
 const Ropsten = "/images/networks/ropsten-network.jpg";
 const xDai = "/images/networks/xdai-network.jpg";
 const Celo = "/images/networks/celo-network.jpg";
+
 export const NETWORK_ICON = {
   [ChainId.BSC]: Bsc,
   [ChainId.BSC_TESTNET]: Bsc,
+  [ChainId.ETHEREUM]: Polygon,
+  [ChainId.GOERLI]: Polygon,
 };
 
 // export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
@@ -49,7 +52,7 @@ export const NETWORK_ICON = {
 // [ChainId.CELO]: "Celo",
 // };
 
-export const NETWORK_LABEL: { [chainId in ChainId]?: string } = { [ChainId.RINKEBY]: "Rinkeby", [ChainId.BSC_TESTNET]: "BSC Testnet" }
+export const NETWORK_LABEL: { [chainId in ChainId]?: string } = { [ChainId.RINKEBY]: "Rinkeby", [ChainId.BSC_TESTNET]: "BSC Testnet", [ChainId.ETHEREUM]: "Ethereum", [ChainId.GOERLI]: "Goerli" }
 
 export const NETWORK_LINK: { [chainId in ChainId]?: any } = {
   [ChainId.RINKEBY]: "https://rinkeby.etherscan.io",

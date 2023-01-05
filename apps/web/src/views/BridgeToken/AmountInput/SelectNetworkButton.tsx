@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import styled from "styled-components";
 import Image from "next/image";
 import { ChainId } from '@pancakeswap/sdk'
+import { useModal } from '@pancakeswap/uikit'
 import { NETWORK_ICON, NETWORK_LABEL } from "../networks";
 import SwitchNetworkModal from "../ModalSwitch";
 
@@ -47,8 +48,16 @@ const SelectNetworkButton: React.FC<Props> = ({
   switchNetwork,
 }) => {
   const [isOpen, setIsOpen] = useState(false);
+
+  const [onModalSwitch] = useModal(
+    <SwitchNetworkModal switchNetwork={switchNetwork} currentChainId={inputChainId} />,
+    true,
+    true,
+    'selectCurrencyModal',
+  )
+  
   return (
-    <Wrapper onClick={() => setIsOpen(true)}>
+    <Wrapper onClick={onModalSwitch}>
       <img
         src={NETWORK_ICON[97]}
         alt={`${NETWORK_LABEL_BRIDGE[inputChainId]} Logo`}
@@ -63,8 +72,6 @@ const SelectNetworkButton: React.FC<Props> = ({
       {/* <SwitchNetworkModal
         switchNetwork={switchNetwork}
         currentChainId={inputChainId}
-        isOpen={isOpen}
-        onDismiss={() => setIsOpen(false)}
       /> */}
     </Wrapper>
   );
