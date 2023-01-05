@@ -240,7 +240,7 @@ export const PageButtons = styled(Flex)`
 const SORT_FIELD = {
   timestamp: 'timestamp',
   amountUSD: 'amountUSD',
-  stableCoin: 'amountToken1'
+  stableCoin: 'amountStable'
 }
 
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
@@ -276,6 +276,7 @@ const DataRow: React.FC<
   const abs1 = Math.abs(transaction.amountToken1)
   const outputTokenSymbol = transaction.amountToken0 < 0 ? transaction.token0Symbol : transaction.token1Symbol
   const inputTokenSymbol = transaction.amountToken1 < 0 ? transaction.token0Symbol : transaction.token1Symbol
+  const stablCoin = (inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox') ? `${formatAmount(transaction.amountUSD/10)} Stable coin` : '--'
   const chainName = useGetChainName()
   return (
     <>
@@ -358,7 +359,7 @@ const DataRow: React.FC<
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-stable-coin`}
       >
-        {abs1 ? `${formatAmount(abs1/10)} Stable coin` : '--'}
+        {stablCoin}
       </Text>
       <Link
         width="100%"
@@ -411,6 +412,11 @@ const TransactionsTable: React.FC<
           .slice(0, 100)
           .filter((x) => {
             return txFilter === undefined || x.type === txFilter
+          }).map((item:any) => {
+            const outputTokenSymbol = item.amountToken0 < 0 ? item.token0Symbol : item.token1Symbol
+            const inputTokenSymbol = item.amountToken1 < 0 ? item.token0Symbol : item.token1Symbol
+            const amountStable = (inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox') ? item.amountUSD/10+1 : 0
+            return {...item, amountStable}
           })
           .sort((a, b) => {
             if (a && b) {
