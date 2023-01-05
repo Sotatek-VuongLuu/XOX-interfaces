@@ -15,12 +15,9 @@ const ChevronUpIcon: any = <svg viewBox="0 0 24 24" color="text" width="20px" xm
 </svg>
 
 const FullyContainer = styled.div`
-  width: 111px;
+  width: 93px;
   position: relative;
   margin-left: 10px;
-  @media screen and (min-width: 576px) {
-    width: 136px;
-  }
   .overlay {
     position: fixed;
     top: 0;
@@ -35,13 +32,14 @@ const Wrapper = styled.div`
   justify-content: flex-start;
   align-items: center;
   text-align: left;
-  border-radius: 4px;
-  font-size: 12px;
+  border-radius: 8px;
+  font-size: 16px;
   cursor: pointer;
-  width: 111px;
   ${({ theme }) =>
     `background: none;
   border: 1px solid ${theme.colors.hr}`};
+  width: 100%;
+  color: ${({ theme }) => theme.colors.textSubTitle};
   .flex{
     display: flex;
   }
@@ -49,22 +47,12 @@ const Wrapper = styled.div`
     width: 100%;
     align-items: center;
     text-align: left;
-    padding: 7px 6px;
-  }
-
-  @media screen and (min-width: 576px) {
-    .nested {
-      padding: 10px 12px;
-    }
-    border-radius: 8px;
-    font-size: 16px;
-    width: 100%;
+    padding: 10px 12px;
   }
 
   span {
     white-space: nowrap;
     margin-left: 8px;
-    font-weight: 600;
   }
 `;
 

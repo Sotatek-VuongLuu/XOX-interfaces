@@ -15,7 +15,7 @@ const Text = styled.div`
 const Input = styled.input`
   width: 100%;
   background: transparent;
-  padding: 8px 0px;
+  padding: 8px 0px 0;
   outline: none;
   border: none;
   font-size: ${isMobile ? "11px" : "16px"};

@@ -21,24 +21,19 @@ const TextRow = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: 600;
-  font-size: 12px;
-  margin-bottom: 7px;
-
+  font-weight: 700;
+  font-size: 16px;
+  margin-bottom: 8px;
+  color: ${({ theme }) => theme.colors.textSubtle};
   .balance {
-    width: 120px;
     cursor: pointer;
+    font-weight: 400;
     text-align: right;
     div {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
     }
-  }
-
-  @media screen and (min-width: 576px) {
-    font-weight: 500;
-    margin-bottom: 5px;
   }
 `;
 
@@ -51,13 +46,10 @@ const AmountRow = styled.div`
   .tooltip {
     background: transparent;
     padding: 7px 10px 7px 0;
-    color: #fff;
     font-size: 16px;
-    font-weight: 700;
+    color: ${({theme}) => theme.colors.textSubTitle};
+    font-weight: 400;
     width: calc(100% - 250px);
-    span {
-      color: #fff;
-    }
     div {
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -86,26 +78,21 @@ const AmountRow = styled.div`
 
 const NumericalInputStyled = styled(NumericalInput)`
   background: transparent;
-  padding: 7px 10px 7px 0;
-  font-size: 16px;
-  width: 50px;
-  color: #fff;
+  padding: 10px 8px 10px 0;
+  font-size: 24px;
+  width: auto;
+  color: ${({theme}) => theme.colors.textSubTitle};
+  font-weight: 400;
   ${(props) => props.disabled === true && " pointer-events: none"};
-
-  @media screen and (min-width: 576px) {
-    padding: 10px 8px 10px 0;
-    font-size: 24px;
-    width: auto;
-  }
   & {
-    -webkit-text-fill-color: #fff;
+    -webkit-text-fill-color: ${({theme}) => theme.colors.textSubTitle};
     ::placeholder {
-      -webkit-text-fill-color: #fff;
+      -webkit-text-fill-color: ${({theme}) => theme.colors.textSubTitle};
     }
     opacity: 1;
   }
   &::placeholder {
-    color: #fff;
+    color: ${({theme}) => theme.colors.textSubTitle};
   }
 `;
 
@@ -137,7 +124,7 @@ const AmountInput: React.FC<Props> = ({
   handleShowDrop,
 }) => {
   const getInputLabel = () => {
-    return (isTokenFrom && "From:") || "To (est):";
+    return (isTokenFrom && "From") || "To (est)";
   };
 
   return (

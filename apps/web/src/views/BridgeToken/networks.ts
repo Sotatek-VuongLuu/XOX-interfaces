@@ -2,7 +2,7 @@ import { ChainId } from "@pancakeswap/sdk";
 
 const Arbitrum = "/images/networks/arbitrum-network.jpg";
 const Avalanche = "/images/networks/avalanche-network.jpg";
-const Bsc = "/images/networks/bsc-network.jpg";
+const Bsc = "/images/networks/bsc-network.png";
 const Fantom = "/images/networks/fantom-network.jpg";
 const Goerli = "/images/networks/goerli-network.jpg";
 const Harmony = "/images/networks/harmonyone-network.jpg";
@@ -12,7 +12,7 @@ const Mainnet = "/images/networks/mainnet-network.jpg";
 const Matic = "/images/networks/matic-network.jpg";
 const Moonbeam = "/images/networks/moonbeam-network.jpg";
 const OKEx = "/images/networks/okex-network.jpg";
-const Polygon = "/images/networks/polygon-network.jpg";
+const Polygon = "/images/networks/eth-network.png";
 const Rinkeby = "/images/networks/rinkeby-network.jpg";
 const Ropsten = "/images/networks/ropsten-network.jpg";
 const xDai = "/images/networks/xdai-network.jpg";
