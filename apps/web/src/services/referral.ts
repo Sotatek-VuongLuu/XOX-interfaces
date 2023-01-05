@@ -143,7 +143,7 @@ export const userPoint = (chainId: ChainId) => {
 
 export const userClaimedHistories = (chainId: ChainId) => {
   const requests = `{
-    userClaimedHistories{
+    userClaimedHistories(orderBy: date, orderDirection: desc, first: 100) {
       id,
       date,
       amount,

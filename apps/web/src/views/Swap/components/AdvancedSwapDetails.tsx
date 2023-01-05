@@ -8,13 +8,14 @@ import { computeSlippageAdjustedAmounts, computeTradePriceBreakdown } from 'util
 import { AutoColumn } from 'components/Layout/Column'
 import { TOTAL_FEE, LP_HOLDERS_FEE, TREASURY_FEE, BUYBACK_FEE } from 'config/constants/info'
 import { RowBetween, RowFixed } from 'components/Layout/Row'
+import { useMemo } from 'react'
+import BigNumber from 'bignumber.js'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import SwapRoute from './SwapRoute'
 
-
 const BottomText = styled(Text)`
   @media screen and (max-width: 500px) {
-    font-size:12px;
+    font-size: 12px;
   }
 `
 
@@ -106,15 +107,21 @@ function TradeSummary({
 }
 
 export interface AdvancedSwapDetailsProps {
-  trade?: Trade<Currency, Currency, TradeType>;
+  trade?: Trade<Currency, Currency, TradeType>
   showXOXSreceived?: boolean
+  value: string
 }
 
-export function AdvancedSwapDetails({ trade, showXOXSreceived }: AdvancedSwapDetailsProps) {
+export function AdvancedSwapDetails({ trade, showXOXSreceived, value }: AdvancedSwapDetailsProps) {
   const { t } = useTranslation()
   const [allowedSlippage] = useUserSlippageTolerance()
 
   const showRoute = Boolean(trade)
+
+  const numberXOXSreceived = useMemo(() => {
+    if (!value) return 0
+    return new BigNumber(value).dividedBy(10).toString()
+  }, [value])
 
   return (
     <AutoColumn gap="0px">
@@ -136,11 +143,16 @@ export function AdvancedSwapDetails({ trade, showXOXSreceived }: AdvancedSwapDet
                 </span>
                 <SwapRoute trade={trade} />
               </RowBetweenStyle>
-              {
-                showXOXSreceived && <RowBetweenStyle style={{ padding: '0 16px' }}>
-                  <Text fontSize="16px" color="textSubtle">XOXS received</Text>
+              {showXOXSreceived && (
+                <RowBetweenStyle style={{ padding: '0 16px' }}>
+                  <Text fontSize="16px" color="textSubtle">
+                    XOXS received
+                  </Text>
+                  <Text fontSize="16px" color="rgba(255,255,255,0.87)">
+                    {numberXOXSreceived}
+                  </Text>
                 </RowBetweenStyle>
-              }
+              )}
             </>
           )}
         </>
