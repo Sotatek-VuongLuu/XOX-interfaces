@@ -37,11 +37,14 @@ const StyledModalContainer = styled(ModalContainer)`
   background: #242424;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
-
   ${({ theme }) => theme.mediaQueries.md} {
     min-height: auto;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     border-radius: 20px;
+  }
+  @media screen and (max-width: 450px) {
+    position: fixed;
+    top: 20%;
   }
 `
 

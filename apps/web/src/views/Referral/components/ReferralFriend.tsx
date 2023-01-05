@@ -68,7 +68,12 @@ interface IProps {
   getUserPoint: () => void
   handleCheckReachLevel: () => void
   handleCheckPendingRewardAll: (account: string) => void
-  totalUnClaimed: string
+  totalUnClaimed: string | number
+}
+
+enum TYPE_OF_CLAIM {
+  CLAIM_ALL,
+  CLAIM_BY_LEVEL,
 }
 
 interface IPropsWR {
@@ -479,6 +484,7 @@ const ReferralFriend = ({
   const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
   const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState<boolean>(false)
+  const [isShowModalConfirmClaimAll, setIsShowModalConfirmClaimAll] = useState<boolean>(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
   const [modalReject, setModalReject] = useState<boolean>(false)
@@ -487,24 +493,31 @@ const ReferralFriend = ({
     dollar: 0,
   })
   const [level, setLevel] = useState<number | null>(null)
-  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
+  const [typeOfClaim, setTypeOfClaim] = useState<number | null>(null)
   const [listFriends, setListFriends] = useState([])
   const { t } = useTranslation()
+  const [cacheAmountUnClaimOfUser, setCacheAmountUnClaimOfUser] = useState<null | number>(null)
 
   const handleClaimAll = async () => {
     try {
+      setIsShowModalConfirmClaimAll(false)
       setIsOpenLoadingClaimModal(true)
+      setTypeOfClaim(TYPE_OF_CLAIM.CLAIM_ALL)
+      const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
+      setCacheAmountUnClaimOfUser(Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])))
       const params = []
       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
       const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
         gasLimit,
       })
-      txClaimAll.wait(1)
-      setIsOpenLoadingClaimModal(false)
-      setIsOpenSuccessModal(true)
-      getUserPoint()
-      handleCheckReachLevel()
-      handleCheckPendingRewardAll(account)
+      const tx = await txClaimAll.wait(1)
+      if (tx?.transactionHash) {
+        getUserPoint()
+        handleCheckReachLevel()
+        handleCheckPendingRewardAll(account)
+        setIsOpenLoadingClaimModal(false)
+        setIsOpenSuccessModal(true)
+      }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
@@ -518,18 +531,21 @@ const ReferralFriend = ({
   const handleClaimLevel = async (_level: number) => {
     try {
       if (!_level) return
+      setTypeOfClaim(TYPE_OF_CLAIM.CLAIM_BY_LEVEL)
       setIsShowModalConfirmClaimByLevel(false)
       setIsOpenLoadingClaimModal(true)
       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralByLevel(_level)
       const txClaimByLevel = await contractTreasuryXOX.claimReferralByLevel(_level, {
         gasLimit,
       })
-      txClaimByLevel.wait(1)
-      setIsOpenLoadingClaimModal(false)
-      setIsOpenSuccessModal(true)
-      getUserPoint()
-      handleCheckReachLevel()
-      handleCheckPendingRewardAll(account)
+      const tx = await txClaimByLevel.wait(1)
+      if (tx?.transactionHash) {
+        getUserPoint()
+        handleCheckReachLevel()
+        handleCheckPendingRewardAll(account)
+        setIsOpenLoadingClaimModal(false)
+        setIsOpenSuccessModal(true)
+      }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       setIsOpenLoadingClaimModal(false)
@@ -703,7 +719,6 @@ const ReferralFriend = ({
                   )
                 })}
               </Swiper>
-
               <div className="claim_total">
                 {account && (
                   <div className="unclaim_reward_container">
@@ -712,8 +727,11 @@ const ReferralFriend = ({
                     </div>
                   </div>
                 )}
-
-                <button type="button" onClick={handleClaimAll} disabled={!account || isClaimAll}>
+                <button
+                  type="button"
+                  onClick={() => setIsShowModalConfirmClaimAll(true)}
+                  disabled={!account || isClaimAll}
+                >
                   <span>Claim All</span>
                 </button>
               </div>
@@ -749,10 +767,40 @@ const ReferralFriend = ({
         </Content>
       </ModalConfirmClaim>
 
+      <ModalBase
+        open={isShowModalConfirmClaimAll}
+        handleClose={() => setIsShowModalConfirmClaimAll(false)}
+        title="Claim"
+      >
+        <Content>
+          <div className="discription">Receive {Number(totalUnClaimed)?.toLocaleString()}$</div>
+          <div className="btn-group">
+            <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimAll(false)}>
+              Cancel
+            </button>
+            <button
+              className="confirm"
+              type="button"
+              onClick={() => {
+                handleClaimAll()
+              }}
+            >
+              Confirm
+            </button>
+          </div>
+        </Content>
+      </ModalBase>
+
       <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Success">
         <Content>
           <div className="noti">
-            You have gotten <span>{dataClaim.dollar?.toLocaleString()}$.</span>
+            You have gotten{' '}
+            <span>
+              {typeOfClaim === TYPE_OF_CLAIM.CLAIM_BY_LEVEL
+                ? dataClaim.dollar?.toLocaleString()
+                : Number(cacheAmountUnClaimOfUser)?.toLocaleString()}
+              $.
+            </span>
           </div>
           <div className="noti_claim_success">
             <img src="/images/success_claim.png" alt="success_claim" />

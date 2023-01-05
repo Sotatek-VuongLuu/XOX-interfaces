@@ -1,16 +1,13 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BigNumber } from '@ethersproject/bignumber'
-import { formatEther, formatUnits } from '@ethersproject/units'
+import { formatUnits } from '@ethersproject/units'
 import { Box } from '@mui/material'
-import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTreasuryXOX } from 'hooks/useContract'
 import { useEffect, useState } from 'react'
-import { userPoint } from 'services/referral'
+import { userAmount } from 'services/referral'
 import styled from 'styled-components'
 import Banner from './components/Banner'
 import MainInfo from './components/MainInfo'
@@ -40,7 +37,7 @@ export default function Refferal() {
   const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
   const [isClaimAll, setIsClaimAll] = useState<boolean>(false)
   const [volumnTotalEarn, setVolumnTotalEarn] = useState<string>('')
-  const [volumnTotalUnClaim, setVolumnTotalUnClaim] = useState<string>('')
+  const [totalAmountUnClaimOfUser, setTotalAmountUnClaimOfUser] = useState<number | string>(0)
 
   // eslint-disable-next-line consistent-return
   const handleGetCurrentPoint = async () => {
@@ -63,6 +60,7 @@ export default function Refferal() {
     try {
       const txPendingReward = await contractTreasuryXOX.pendingRewardAll(accountId)
       setIsClaimAll(Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])) === 0)
+      setTotalAmountUnClaimOfUser(Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])))
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
@@ -70,59 +68,56 @@ export default function Refferal() {
   }
 
   const handleCheckReachLevel = async (currentPoint: number) => {
+    const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
+      const reached = currentPoint >= item.point
+      return {
+        ...item,
+        isReach: reached,
+        isClaimed: false,
+      }
+    })
+
     if (currentPoint < listLevelMustReach[0].point) {
       setCurrentLevelReach(0)
     } else {
-      const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
-        const reached = currentPoint >= item.point
-        return {
-          ...item,
-          isReach: reached,
-        }
-      })
-
       const findLastReach = arrAddIsReach.filter((item) => {
         return item.isReach === true
       })
       const currentLever = findLastReach.pop()?.lever
       setCurrentLevelReach(currentLever)
+    }
 
-      const arrCheckClaimed: IItemLevel[] = await Promise.all(
-        arrAddIsReach?.map(async (item: IItemLevel): Promise<any> => {
-          try {
-            if (item.isReach) {
-              const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, item.lever)
-              if (Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])) === 0) {
-                return {
-                  ...item,
-                  isClaimed: true,
-                }
-              }
+    const arrCheckClaimed: IItemLevel[] = await Promise.all(
+      arrAddIsReach?.map(async (item: IItemLevel): Promise<any> => {
+        try {
+          if (item.isReach) {
+            const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, item.lever)
+            if (Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])) === 0) {
               return {
                 ...item,
-                isClaimed: false,
+                isClaimed: true,
               }
             }
-            return item
-          } catch (error) {
-            console.log(`error >>>>`, error)
+            return {
+              ...item,
+              isClaimed: false,
+            }
           }
-        }),
-      )
-      setListLevelMustReach([...arrCheckClaimed])
-    }
+          return item
+        } catch (error) {
+          console.log(`error >>>>`, error)
+        }
+      }),
+    )
+    setListLevelMustReach([...arrCheckClaimed])
   }
 
   const getUserPoint = async () => {
     try {
-      const result = await userPoint(chainId)
+      const result = await userAmount(chainId)
       if (result) {
-        const totalUnClaimed =
-          Number(result.analysisDatas[0]?.total_reward) - Number(result.analysisDatas[0]?.total_claimed_amount)
-        const volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
-        const volumnUnClaim = formatBigNumber(BigNumber.from(totalUnClaimed.toString()))
+        const volumn = formatUnits(result.analysisDatas[0]?.total_claimed_amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])
         setVolumnTotalEarn(volumn)
-        setVolumnTotalUnClaim(volumnUnClaim)
       }
     } catch (error) {
       console.log(`error >>>>`, error)
@@ -172,7 +167,7 @@ export default function Refferal() {
             getUserPoint={getUserPoint}
             handleCheckReachLevel={handleReCallGetCurrentPoint}
             handleCheckPendingRewardAll={handleCheckPendingRewardAll}
-            totalUnClaimed={volumnTotalUnClaim}
+            totalUnClaimed={totalAmountUnClaimOfUser}
           />
         </Box>
       </Wrapper>

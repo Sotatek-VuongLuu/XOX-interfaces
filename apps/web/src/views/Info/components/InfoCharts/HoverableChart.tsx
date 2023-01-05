@@ -103,7 +103,7 @@ const HoverableChart = ({
           : 'BNB'
         : selectedCurrency.symbol.toUpperCase()
     const dataCurrency = currencyDatas.find((data: any) => data?.symbol?.toUpperCase() === sym)
-    if (dataCurrency) setCurrencyData(dataCurrency)
+    setCurrencyData(dataCurrency)
   }, [selectedCurrency, currencyDatas])
 
   const handleFilter = (value: string) => {
@@ -146,7 +146,7 @@ const HoverableChart = ({
           </div>
           <>
             <div className="liquidity">
-              <p>Current price: ${formatAmount(currencyData?.price)} </p>
+              <p>Current price: {currencyData ? `$${formatAmount(currencyData?.price)}` : '--'} </p>
               <p>
                 Price change (in last 24 hours):{' '}
                 {currencyData?.percent_change_24h > 0 ? (
@@ -159,7 +159,9 @@ const HoverableChart = ({
                         fill="#6BB372"
                       />
                     </svg>
-                    <span style={{ color: '#6BB372' }}>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
+                    <span style={{ color: '#6BB372' }}>
+                      {currencyData ? `${currencyData.percent_change_24h?.toFixed(2)}%` : '--'}
+                    </span>
                   </>
                 ) : currencyData?.percent_change_24h < 0 ? (
                   <>
@@ -178,16 +180,22 @@ const HoverableChart = ({
                         fill="#FF0000"
                       />
                     </svg>
-                    <span style={{ color: '#FF0000' }}>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
+                    <span style={{ color: '#FF0000' }}>
+                      {currencyData ? `${currencyData.percent_change_24h?.toFixed(2)}%` : '--'}
+                    </span>
                   </>
                 ) : (
-                  <span>{currencyData?.percent_change_24h?.toFixed(2)}%</span>
+                  <span>{currencyData ? `${currencyData.percent_change_24h?.toFixed(2)}%` : '--'}</span>
                 )}
               </p>
             </div>
             <div className="volume">
-              <p>Market cap: {currencyData && <span>${formatAmount(currencyData?.market_cap)}</span>}</p>
-              <p>Volume 24h {currencyData && <span>${formatAmount(currencyData?.volume_24h)}</span>}</p>
+              <p>
+                Market cap: {currencyData ? <span>${formatAmount(currencyData?.market_cap)}</span> : <span>--</span>}
+              </p>
+              <p>
+                Volume 24h: {currencyData ? <span>${formatAmount(currencyData?.volume_24h)}</span> : <span>--</span>}
+              </p>
             </div>
           </>
         </div>
