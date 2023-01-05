@@ -6,7 +6,7 @@ import { formatAmount } from 'utils/formatInfoNumbers'
 import { Currency, NativeCurrency } from '@pancakeswap/sdk'
 import { CurrencyLogo } from 'components/Logo'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
-import { SUGGESTED_BASES_ID } from 'config/constants/exchange'
+import { SUGGESTED_BASES_ID, USD_ADDRESS } from 'config/constants/exchange'
 import { ResponsiveContainer } from 'recharts'
 import BarChart from './BarChart'
 import LineChart from './LineChart'
@@ -42,9 +42,6 @@ const HoverableChart = ({
   const [dateHover, setDateHover] = useState<string | undefined>()
   const [currencyData, setCurrencyData] = useState<any>()
   const [showX, setShowX] = useState<any>(true)
-
-  const baseToken = chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'
-  const inputCurrency = Object.values(allTokens).find((value: any) => value.symbol === baseToken)
 
   // Getting latest data to display on top of chart when not hovered
   useEffect(() => {
@@ -127,7 +124,7 @@ const HoverableChart = ({
         <div className="btns">
           <a
             className="btn-get-token"
-            href={`/swap?chainId=${chainId}&inputCurrency=${(inputCurrency as any)?.address}&outputCurrency=${
+            href={`/swap?chainId=${chainId}&inputCurrency=${USD_ADDRESS[chainId]}&outputCurrency=${
               selectedCurrency === native ? native.symbol : (selectedCurrency as any).address
             }`}
           >

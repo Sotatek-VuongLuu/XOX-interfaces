@@ -22,9 +22,6 @@ import styled from 'styled-components'
 import ChartRef from './components/ChartRef'
 import ColumnChartRef from './components/ColumnChartRef'
 
-
-
-
 interface IVolumnDataItem {
   volumn: string
   title: string
@@ -47,8 +44,8 @@ const Wrapper = styled(Box)`
 
     .info_volumn {
       display: flex;
-      width:100%;
-      justify-content:space-between;
+      width: 100%;
+      justify-content: space-between;
       gap: 17px;
       .info_volumn_item {
         padding: 16px 17px;
@@ -82,7 +79,7 @@ const Wrapper = styled(Box)`
       .info_volumn {
         flex-direction: column;
         width: 100%;
-       
+
         .info_volumn_item {
           margin: 16px 0px;
           width: 100%;
@@ -147,9 +144,9 @@ const Wrapper = styled(Box)`
   }
 `
 
-const PlatformStat = (props : any): JSX.Element => {
-  const { listPoint } = props;
-  const {  chainId } = useActiveWeb3React()
+const PlatformStat = (props: any): JSX.Element => {
+  const { listPoint } = props
+  const { chainId } = useActiveWeb3React()
   const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>([])
   const [userClaimHistories, setUserClaimHistories] = useState([])
   const [dataChart, setDataChart] = useState([])
@@ -160,7 +157,8 @@ const PlatformStat = (props : any): JSX.Element => {
   const getUserPoint = async () => {
     const result = await userPoint(chainId)
     if (result) {
-      const totalUnClaimed = Number(result.analysisDatas[0]?.total_reward) - Number(result.analysisDatas[0]?.total_claimed_amount);
+      const totalUnClaimed =
+        Number(result.analysisDatas[0]?.total_reward) - Number(result.analysisDatas[0]?.total_claimed_amount)
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
       listData[1].volumn = formatBigNumber(BigNumber.from(totalUnClaimed.toString()))
       listData[2].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
@@ -173,11 +171,11 @@ const PlatformStat = (props : any): JSX.Element => {
     const result = await userClaimedHistories(chainId)
     if (result) {
       const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
-        const mappingUser = await mapingHistories(item.id)
+        const mappingUser = await mapingHistories(item.address)
         return createData(
           idx + 1,
-          mappingUser.avatar ?? 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-          mappingUser.username,
+          mappingUser?.avatar ?? 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
+          mappingUser?.username,
           moment(item.data).format('DD/MM/YYYY hh:mm:ss'),
           mapPoint(formatBigNumber(BigNumber.from(item.amount))),
           formatBigNumber(BigNumber.from(item.amount)),
@@ -190,22 +188,22 @@ const PlatformStat = (props : any): JSX.Element => {
   const getPointDataDays = async () => {
     const result = await pointDataDays(chainId)
     if (result) {
-      const arr = result.pointDataDays;
+      const arr = result.pointDataDays
       setMinAmount(formatBigNumber(BigNumber.from(arr[0].amount)))
-      setMiddleAmount(formatBigNumber(BigNumber.from(arr[Math.floor(arr.length/2)].amount)))
-      setMaxAmount(formatBigNumber(BigNumber.from(arr[arr.length-1].amount)))
+      setMiddleAmount(formatBigNumber(BigNumber.from(arr[Math.floor(arr.length / 2)].amount)))
+      setMaxAmount(formatBigNumber(BigNumber.from(arr[arr.length - 1].amount)))
       const data = arr.map((item: any) => {
-          return createDataChartDay(
-            moment(item.date * 1000).format('DD MMM'),
-            formatBigNumber(BigNumber.from(item.amount)),
-          )
-        })
+        return createDataChartDay(
+          moment(item.date * 1000).format('DD MMM'),
+          formatBigNumber(BigNumber.from(item.amount)),
+        )
+      })
       setDataChart(data)
     }
   }
   const mapPoint = (amount: string) => {
-    for(let i = 0; i <= listPoint.length; i++) {
-      if(Number(amount) <= listPoint[i].reward && Number(amount) < listPoint[i+1].reward) {
+    for (let i = 0; i <= listPoint.length; i++) {
+      if (Number(amount) <= listPoint[i].reward && Number(amount) < listPoint[i + 1].reward) {
         return listPoint[i].point
       }
     }
@@ -229,7 +227,7 @@ const PlatformStat = (props : any): JSX.Element => {
   function createDataChartDay(name: string, uv: string) {
     return { name, uv }
   }
- 
+
   useEffect(() => {
     getUserPoint()
     getUserClaimedHistories()
@@ -238,18 +236,8 @@ const PlatformStat = (props : any): JSX.Element => {
   return (
     <Wrapper sx={{}}>
       <div className="first">
-        {/* <div className="chart_container">
-          <ChartRef name="Claim" percent={25} />
-          <ChartRef
-            name="UnClaimed"
-            percent={25}
-            cx={35}
-            color={['rgba(255, 189, 60, 0.5)', '#FFBD3C', 'rgba(255, 255, 255, 0.1)']}
-          />
-        </div> */}
-
         <div className="info_volumn">
-          {Array.from(volumnData).map((item, index) => {
+          {Array.from(volumnData).map((item) => {
             return (
               <div className="info_volumn_item" key={item.title}>
                 <div>
@@ -315,7 +303,7 @@ const PlatformStat = (props : any): JSX.Element => {
 
       <div className="third">
         <div className="range_volumn">
-        <span className="min">{minAmount}</span>
+          <span className="min">{minAmount}</span>
           <span className="middle">{middleAmount}</span>
           <span className="max">{maxAmount}</span>
         </div>
@@ -323,9 +311,7 @@ const PlatformStat = (props : any): JSX.Element => {
       </div>
 
       <div className="fourth">
-        <p className="noted">
-           Daily reward generated by users
-        </p>
+        <p className="noted">Daily reward generated by users</p>
       </div>
     </Wrapper>
   )
@@ -356,7 +342,7 @@ const listData = [
     volumn: '0',
     title: 'Total reward earned',
     svg: '/images/referral/icon-reward-earn.svg',
-  }
+  },
 ]
 
 export default PlatformStat

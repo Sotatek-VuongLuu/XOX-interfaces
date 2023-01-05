@@ -12,7 +12,7 @@
 /* eslint-disable no-extra-boolean-cast */
 import { Box, Grid } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y } from 'swiper'
 import 'swiper/css'
@@ -30,9 +30,22 @@ import axios from 'axios'
 import { BigNumber } from '@ethersproject/bignumber'
 import { CopyButton, useModal } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
+import { GridLoader } from 'react-spinners'
 import { shortenAddress } from 'utils/shortenAddress'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
 import ModalBase from './Modal/ModalBase'
+
+const floatingAnim = (x: string, y: string) => keyframes`
+  from {
+    transform: translate(0,  0px);
+  }
+  50% {
+    transform: translate(${x}, ${y});
+  }
+  to {
+    transform: translate(0, 0px);
+  }
+`
 
 interface IDataClaim {
   point: number
@@ -162,13 +175,17 @@ const WrapperRight = styled(Box)<IPropsWR>`
       font-size: 14px;
       line-height: 17px;
       color: rgba(255, 255, 255, 0.38);
-      margin-top: 16px;
+      margin-top: 12px;
       cursor: pointer;
     }
 
     button:disabled,
     button[disabled] {
       cursor: not-allowed;
+    }
+
+    .jewellery {
+      animation: ${floatingAnim('0px', '5px')} 3s ease-in-out infinite;
     }
   }
 
@@ -296,9 +313,14 @@ const TableHeader = styled.div`
 
   div:last-child {
     text-align: right;
+    margin-right: 3px;
   }
 `
 const TableBody = styled.div`
+  max-height: 107px;
+  overflow-y: auto;
+  margin-top: 10px;
+
   & > div {
     display: grid;
     grid-template-columns: 2fr 1fr 1fr;
@@ -308,7 +330,8 @@ const TableBody = styled.div`
     line-height: 17px;
     color: rgba(255, 255, 255, 0.87);
     align-items: center;
-    margin-top: 16px;
+    margin-bottom: 16px;
+    margin-right: 5px;
   }
 
   & > div div:first-child {
@@ -400,7 +423,6 @@ const Content = styled.div`
   .xox_loading {
     display: flex;
     justify-content: center;
-    margin: 24px 0;
   }
 
   .reject_xox {
@@ -479,6 +501,7 @@ const ReferralFriend = ({
       })
       txClaimAll.wait(1)
       setIsOpenLoadingClaimModal(false)
+      setIsOpenSuccessModal(true)
       getUserPoint()
       handleCheckReachLevel()
       handleCheckPendingRewardAll(account)
@@ -537,34 +560,38 @@ const ReferralFriend = ({
     return slidesPerView
   }, [width])
 
-  const dataFriend = async () => {
+  const dataFriend = async (accountId: string) => {
     try {
-      const { userInfos } = await getUserFriend(chainId, account)
-      const dataUserFormatAmount = userInfos[0]?.friends?.map((item: any) => {
-        return {
-          ...item,
-          id: item?.ref_address,
-          point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
-        }
-      })
+      setListFriends([])
+      const { userInfos } = await getUserFriend(chainId, accountId)
 
-      const dataMapping = await Promise.all(
-        dataUserFormatAmount?.map(async (item: any): Promise<any> => {
-          const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
-            wallets: [`${item.ref_address}`],
-          })
-          const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/users/${item.ref_address}`)
-          const dataMap = response?.data[0]
+      if (Array.from(userInfos).length !== 0) {
+        const dataUserFormatAmount = userInfos[0]?.friends?.map((item: any) => {
           return {
             ...item,
-            ...dataMap,
-            name: dataMap?.username ?? null,
-            avatar: dataMap?.avatar ?? null,
-            refCode: data?.referralCode,
+            id: item?.ref_address,
+            point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])),
           }
-        }),
-      )
-      setListFriends(dataMapping)
+        })
+
+        const dataMapping = await Promise.all(
+          dataUserFormatAmount?.map(async (item: any): Promise<any> => {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+              wallets: [`${item.ref_address}`],
+            })
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/users/${item.ref_address}`)
+            const dataMap = response?.data[0]
+            return {
+              ...item,
+              ...dataMap,
+              name: dataMap?.username ?? null,
+              avatar: dataMap?.avatar ?? null,
+              refCode: data?.referralCode,
+            }
+          }),
+        )
+        setListFriends(dataMapping)
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error >>>>`, error)
@@ -572,8 +599,8 @@ const ReferralFriend = ({
   }
 
   useEffect(() => {
-    if (account) {
-      dataFriend()
+    if (account && chainId) {
+      dataFriend(account)
     }
   }, [chainId, account])
 
@@ -632,7 +659,7 @@ const ReferralFriend = ({
           </Grid>
 
           <Grid item xs={12} md={8}>
-            <WrapperRight sx={{ marginTop: '16px' }} account={account} isClaimAll={isClaimAll}>
+            <WrapperRight sx={{ marginTop: '16px' }} account={account}>
               <Swiper
                 slidesPerView={controlWidth}
                 modules={[Navigation, Pagination, A11y]}
@@ -652,7 +679,8 @@ const ReferralFriend = ({
                           <div className="shadow" />
 
                           <p className="title">
-                            {item.point.toLocaleString()} points ~ {item.dollar.toLocaleString()}$
+                            {item.point.toLocaleString()} points
+                            <br />~ {item.dollar.toLocaleString()}$
                           </p>
 
                           {account && (
@@ -744,9 +772,8 @@ const ReferralFriend = ({
         title="Claim Confirm"
       >
         <Content>
-          <div className="noti_claim_pending_h1" style={{ marginTop: '16px' }}>
-            {/* <img src="/images/xox_loading.svg" alt="xox_loading" /> */}
-            Processing...!
+          <div className="xox_loading" style={{ margin: '24px 0px' }}>
+            <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
           </div>
           <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
           <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>

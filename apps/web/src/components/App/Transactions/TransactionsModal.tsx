@@ -22,30 +22,30 @@ const RecentButton = styled(Button)`
   font-weight: 700;
 `
 const NoTransaction = styled.div`
-  text-align:center;
+  text-align: center;
   &img {
-    max-width:158px;
-    max-height:160px;
-    width:100%;
-    height:100%;
-    margin-bottom:16px;
+    max-width: 158px;
+    max-height: 160px;
+    width: 100%;
+    height: 100%;
+    margin-bottom: 16px;
   }
 `
 const ConnectBox = styled.div`
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    width:100%;
-    height:100%;
-    min-height:200px;
-    button {
-      width:100%;
-      max-width:268px;
-    }
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 100%;
+  min-height: 200px;
+  button {
+    width: 100%;
+    max-width: 268px;
+  }
 `
 const NoTransactionText = styled(Text)`
-  margin-top:16px;
-  color:#FFFFFF99;
+  margin-top: 16px;
+  color: #ffffff99;
 `
 function renderTransactions(transactions: TransactionDetails[], chainId: number) {
   return (
@@ -77,7 +77,9 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
           {hasTransactions ? (
             <>
               <AutoRow mb="1rem" style={{ justifyContent: 'space-between' }}>
-                <Text>{t('Recent Transactions')}</Text>
+                <Text fontSize="18px" fontWeight="700" lineHeight="22px" color="rgba(255, 255, 255, 0.87)">
+                  {t('Recent Transactions')}
+                </Text>
                 <RecentButton variant="tertiary" scale="xs" onClick={clearAllTransactionsCallback}>
                   {t('clear all')}
                 </RecentButton>
@@ -93,7 +95,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
 
                 return (
                   <div key={`transactions#${chainIdNumber}`}>
-                    <Text fontSize="12px" color="#FFFFFFDE" mb="4px">
+                    <Text fontSize="16px" lineHeight="19px" color="#FFFFFFDE" mb="16px">
                       {chains.find((c) => c.id === chainIdNumber)?.name ?? 'Unknown network'}
                     </Text>
                     {renderTransactions(pending, chainIdNumber)}
@@ -110,8 +112,9 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
           )}
         </ModalBody>
       ) : (
-        <ConnectBox><ConnectWalletButton /></ConnectBox>
-        
+        <ConnectBox>
+          <ConnectWalletButton />
+        </ConnectBox>
       )}
     </Modal>
   )

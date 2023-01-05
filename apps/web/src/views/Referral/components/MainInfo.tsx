@@ -236,9 +236,7 @@ const WrapperRight = styled.div<IPropsContainer>`
 `
 
 const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalEarn }: IProps) => {
-  const yesterday = moment().subtract(1, 'days')
-  const startOfDay = yesterday.startOf('day').toString()
-  const endOfDay = yesterday.endOf('day').toString()
+  const startOfDay = moment().startOf('days').toString()
   const startOfMonth = moment().startOf('month').toString()
   const startOfWeek = moment().startOf('isoWeek').toString()
   const [tabLeaderBoard, setTabLeaderBoard] = useState('All Time')
@@ -260,11 +258,11 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     rank: null,
     username: '',
   })
+
   const payloadPostForDaily = {
     date_gte: moment(startOfDay).unix(),
-    date_lte: moment(endOfDay).unix(),
+    date_lte: moment().unix(),
   }
-
   const payloadPostForMonth = {
     date_gte: moment(startOfMonth).unix(),
     date_lte: moment().unix(),
@@ -296,7 +294,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         return {
           ...item,
           id: item.id,
-          point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])) * 2,
+          point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])),
         }
       })
 
@@ -373,7 +371,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
                 })}
               </div>
 
-              {rankOfUser.rank && rankOfUser.rank !== 6 ? null : (
+              {rankOfUser.rank && rankOfUser.rank === 6 ? null : (
                 <div className="dot">
                   <div className="dot_item" />
                   <div className="dot_item" />

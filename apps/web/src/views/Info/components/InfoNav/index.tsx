@@ -24,6 +24,7 @@ import { useAccount } from 'wagmi'
 import { bsc, mainnet } from '@pancakeswap/wagmi/chains'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useNativeCurrency from 'hooks/useNativeCurrency'
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 
 const NavWrapper = styled(Flex)`
   padding: 28px 24px 24px;
@@ -132,10 +133,6 @@ const InfoNav: React.FC<{ allTokens: any }> = ({ allTokens }) => {
 
   const baseToken = chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'
 
-  const isPairs = router.pathname === `/info${chainPath && `/[chainName]`}/pairs`
-  const isTokens = router.pathname === `/info${chainPath && `/[chainName]`}/tokens`
-
-  const outputCurrency = Object.values(allTokens).find((value: any) => value.symbol === 'XOX')
   const inputCurrency = Object.values(allTokens).find((value: any) => value.symbol === baseToken)
 
   return (
@@ -148,9 +145,7 @@ const InfoNav: React.FC<{ allTokens: any }> = ({ allTokens }) => {
           Stake XOXS automatically to earn more
         </Text>
         <a
-          href={`/swap?chainId=${chainId}&outputCurrency=${(outputCurrency as any)?.address}&inputCurrency=${
-            (inputCurrency as any)?.address
-          }`}
+          href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
         >
           <Button className="get-xox">Get XOX</Button>
         </a>
