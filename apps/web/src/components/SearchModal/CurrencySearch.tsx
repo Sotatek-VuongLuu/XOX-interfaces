@@ -195,30 +195,30 @@ function CurrencySearch({
   // if no results on main list, show option to expand into inactive
   const filteredInactiveTokens = useSearchInactiveTokenLists(debouncedQuery)
 
-  useEffect(() => {
-    const searchAddress = isAddress(debouncedQuery)
-    if (chainId !== 1 || !searchAddress) return
-    const tokenContract = getContract(debouncedQuery, ERC20_ABI)
-    axios
-      .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/v2/cryptocurrency/info`, {
-        params: { address: debouncedQuery },
-      })
-      .then(async (response) => {
-        const tokenInfos = response.data.data
-        if (Object.keys(tokenInfos).length === 0) return
-        const tokenInfo = Object.values(tokenInfos)[0] as any
-        const token = {
-          name: tokenInfo.name,
-          symbol: tokenInfo.symbol,
-          address: debouncedQuery,
-          chainId: 1,
-          decimals: await tokenContract.decimals(),
-          logoURI: `https://s2.coinmarketcap.com/static/img/coins/64x64/${tokenInfo.id}.png`,
-        }
-        filteredInactiveTokens.push(new WrappedTokenInfo(token))
-      })
-      .catch((error) => console.warn(error))
-  }, [chainId, debouncedQuery])
+  // useEffect(() => {
+  //   const searchAddress = isAddress(debouncedQuery)
+  //   if (chainId !== 1 || !searchAddress) return
+  //   const tokenContract = getContract(debouncedQuery, ERC20_ABI)
+  //   axios
+  //     .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/v2/cryptocurrency/info`, {
+  //       params: { address: debouncedQuery },
+  //     })
+  //     .then(async (response) => {
+  //       const tokenInfos = response.data.data
+  //       if (Object.keys(tokenInfos).length === 0) return
+  //       const tokenInfo = Object.values(tokenInfos)[0] as any
+  //       const token = {
+  //         name: tokenInfo.name,
+  //         symbol: tokenInfo.symbol,
+  //         address: debouncedQuery,
+  //         chainId: 1,
+  //         decimals: await tokenContract.decimals(),
+  //         logoURI: `https://s2.coinmarketcap.com/static/img/coins/64x64/${tokenInfo.id}.png`,
+  //       }
+  //       filteredInactiveTokens.push(new WrappedTokenInfo(token))
+  //     })
+  //     .catch((error) => console.warn(error))
+  // }, [chainId, debouncedQuery])
 
   const hasFilteredInactiveTokens = Boolean(filteredInactiveTokens?.length)
 

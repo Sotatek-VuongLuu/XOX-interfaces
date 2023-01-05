@@ -75,9 +75,6 @@
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png"
     },
 
-
-
-
     {
       "name": "BTCB Token",
       "symbol": "BTCB",
@@ -97,7 +94,7 @@
     {
       "name": "BUSD Token",
       "symbol": "BUSD",
-      "address": "0xc4d70b820D9D21D30C8118C91d287Eb6c659C849",
+      "address": "0xBe72fDa9F32897d725F9666e0c113E132f0a4a5c",
       "chainId": 97,
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/4687.png"
@@ -144,17 +141,13 @@
     },
     {
       "name": "XOX",
-      "address": "0x49bb145eD283d33783A5Fa166Ef9ee79Cd974c3C",
+      "address": "0x1D5EB09cb8a70213E52DD1dc084b9E22Fc4dA4dd",
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 97,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png"
     },
 
-
-
-
-    
     {
       "name": "Wrapped BTC",
       "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
@@ -219,10 +212,6 @@
       "chainId": 1,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5994.png"
     },
-
-
-
-
 
     {
       "name": "Wrapped BTC",
