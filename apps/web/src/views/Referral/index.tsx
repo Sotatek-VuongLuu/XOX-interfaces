@@ -2,12 +2,11 @@
 /* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
 import { BigNumber } from '@ethersproject/bignumber'
-import { formatEther, formatUnits } from '@ethersproject/units'
+import { formatUnits } from '@ethersproject/units'
 import { Box } from '@mui/material'
 import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTreasuryXOX } from 'hooks/useContract'
 import { useEffect, useState } from 'react'
 import { userPoint } from 'services/referral'
@@ -70,47 +69,48 @@ export default function Refferal() {
   }
 
   const handleCheckReachLevel = async (currentPoint: number) => {
+    const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
+      const reached = currentPoint >= item.point
+      return {
+        ...item,
+        isReach: reached,
+        isClaimed: false,
+      }
+    })
+
     if (currentPoint < listLevelMustReach[0].point) {
       setCurrentLevelReach(0)
     } else {
-      const arrAddIsReach: IItemLevel[] = listLevelMustReach.map((item: IItemLevel) => {
-        const reached = currentPoint >= item.point
-        return {
-          ...item,
-          isReach: reached,
-        }
-      })
-
       const findLastReach = arrAddIsReach.filter((item) => {
         return item.isReach === true
       })
       const currentLever = findLastReach.pop()?.lever
       setCurrentLevelReach(currentLever)
+    }
 
-      const arrCheckClaimed: IItemLevel[] = await Promise.all(
-        arrAddIsReach?.map(async (item: IItemLevel): Promise<any> => {
-          try {
-            if (item.isReach) {
-              const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, item.lever)
-              if (Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])) === 0) {
-                return {
-                  ...item,
-                  isClaimed: true,
-                }
-              }
+    const arrCheckClaimed: IItemLevel[] = await Promise.all(
+      arrAddIsReach?.map(async (item: IItemLevel): Promise<any> => {
+        try {
+          if (item.isReach) {
+            const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, item.lever)
+            if (Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])) === 0) {
               return {
                 ...item,
-                isClaimed: false,
+                isClaimed: true,
               }
             }
-            return item
-          } catch (error) {
-            console.log(`error >>>>`, error)
+            return {
+              ...item,
+              isClaimed: false,
+            }
           }
-        }),
-      )
-      setListLevelMustReach([...arrCheckClaimed])
-    }
+          return item
+        } catch (error) {
+          console.log(`error >>>>`, error)
+        }
+      }),
+    )
+    setListLevelMustReach([...arrCheckClaimed])
   }
 
   const getUserPoint = async () => {
