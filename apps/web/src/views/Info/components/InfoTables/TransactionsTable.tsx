@@ -240,6 +240,7 @@ export const PageButtons = styled(Flex)`
 const SORT_FIELD = {
   timestamp: 'timestamp',
   amountUSD: 'amountUSD',
+  stableCoin: 'amountStable'
 }
 
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
@@ -275,6 +276,7 @@ const DataRow: React.FC<
   const abs1 = Math.abs(transaction.amountToken1)
   const outputTokenSymbol = transaction.amountToken0 < 0 ? transaction.token0Symbol : transaction.token1Symbol
   const inputTokenSymbol = transaction.amountToken1 < 0 ? transaction.token0Symbol : transaction.token1Symbol
+  const stablCoin = (inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox') ? `${formatAmount(transaction.amountUSD/10)} Stable coin` : '--'
   const chainName = useGetChainName()
   return (
     <>
@@ -357,8 +359,7 @@ const DataRow: React.FC<
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-stable-coin`}
       >
-        --
-        {/* {`${formatAmount(abs1)} Stable coin`} */}
+        {stablCoin}
       </Text>
       <Link
         width="100%"
@@ -386,8 +387,10 @@ const TransactionsTable: React.FC<
 > = ({ transactions }) => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
   const [sortDirection, setSortDirection] = useState<boolean>(false)
+  const [sortStable, setSortStable] = useState<boolean>(false)
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)
+  const [iconSortStable, setIconSortStable] = useState<any>(null)
   const [perPage, setPerPage] = useState(10)
   const [tempPage, setTempPage] = useState('1')
 
@@ -403,12 +406,17 @@ const TransactionsTable: React.FC<
   }, [])
 
   const sortedTransactions = useMemo(() => {
-    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD]
+    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD, SORT_FIELD.stableCoin]
     return transactions
       ? transactions
           .slice(0, 100)
           .filter((x) => {
             return txFilter === undefined || x.type === txFilter
+          }).map((item:any) => {
+            const outputTokenSymbol = item.amountToken0 < 0 ? item.token0Symbol : item.token1Symbol
+            const inputTokenSymbol = item.amountToken1 < 0 ? item.token0Symbol : item.token1Symbol
+            const amountStable = (inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox') ? item.amountUSD/10+1 : 0
+            return {...item, amountStable}
           })
           .sort((a, b) => {
             if (a && b) {
@@ -423,7 +431,7 @@ const TransactionsTable: React.FC<
           })
           .slice(perPage * (page - 1), page * perPage)
       : []
-  }, [transactions, page, sortField, sortDirection, txFilter, perPage])
+  }, [transactions, page, sortField, sortDirection, sortStable, txFilter, perPage])
 
   // Update maxPage based on amount of items & applied filtering
   useEffect(() => {
@@ -455,8 +463,10 @@ const TransactionsTable: React.FC<
     (newField: string) => {
       setSortField(newField)
       setSortDirection(sortField !== newField ? true : !sortDirection)
-      setIconSortField(newField === SORT_FIELD.timestamp ? null : !iconSortField)
-      setIconSortDirection(newField === SORT_FIELD.amountUSD ? null : !iconSortDirection)
+      setSortStable(newField !== SORT_FIELD.stableCoin ? false : !sortStable)
+      setIconSortField(newField !== SORT_FIELD.amountUSD ? null : !iconSortField)
+      setIconSortDirection(newField !== SORT_FIELD.timestamp ? null : !iconSortDirection)
+      setIconSortStable(newField !== SORT_FIELD.stableCoin ? null : !iconSortStable)
     },
     [sortDirection, sortField],
   )
@@ -695,11 +705,12 @@ const TransactionsTable: React.FC<
             fontWeight="700"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.6)"
-            // onClick={() => handleSort(SORT_FIELD.timestamp)}
+            onClick={() => handleSort(SORT_FIELD.stableCoin)}
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Stable Coin Staked</span> {IconSort}
+              <span style={{ marginRight: '12px' }}>Stable Coin Staked</span>
+              {iconSortStable === null ? IconSort : iconSortStable ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
           <Text
