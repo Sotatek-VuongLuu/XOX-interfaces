@@ -718,9 +718,9 @@ const ReferralFriend = ({
                 </button>
               </div>
 
-              <button type="button" onClick={handleCheckReachLevel}>
+              {/* <button type="button" onClick={handleCheckReachLevel}>
                 call
-              </button>
+              </button> */}
             </WrapperRight>
           </Grid>
         </Grid>
