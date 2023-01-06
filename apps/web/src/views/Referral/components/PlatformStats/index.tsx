@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable @next/next/no-img-element */
 import {
   Avatar,
@@ -159,7 +160,7 @@ const PlatformStat = (props: any): JSX.Element => {
     if (result && result.analysisDatas && result.analysisDatas.length > 0) {
       const totalReward = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_reward))
       const totalClaimedAmount = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
-      const totalUnClaimed =  Number(totalReward) - Number(totalClaimedAmount)
+      const totalUnClaimed = Number(totalReward) - Number(totalClaimedAmount)
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
       listData[1].volumn = totalUnClaimed.toFixed(1)
       listData[2].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
@@ -173,7 +174,7 @@ const PlatformStat = (props: any): JSX.Element => {
     if (result) {
       const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
         const mappingUser = await mapingHistories(item.address)
-        const userAvatar = mappingUser.avatar;
+        const userAvatar = mappingUser.avatar
         return createData(
           idx + 1,
           userAvatar,
@@ -256,7 +257,7 @@ const PlatformStat = (props: any): JSX.Element => {
       <div className="second">
         <TableContainer component={Paper} sx={{ height: 160, background: '#303030' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead style={{position: 'sticky', top: 0, zIndex: 1, background:'#303030'}}>
+            <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
               <TableRow
                 sx={{
                   '& td, & th': {
@@ -275,9 +276,9 @@ const PlatformStat = (props: any): JSX.Element => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userClaimHistories.map((row) => (
+              {userClaimHistories.map((row, index) => (
                 <TableRow
-                  key={row.name}
+                  key={`${row.name}_${index}`}
                   sx={{
                     '& td, & th': { border: 0, fontWeight: 400, fontSize: 14, color: ' rgba(255, 255, 255, 0.87)' },
                   }}
