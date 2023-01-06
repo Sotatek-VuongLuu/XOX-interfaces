@@ -13,7 +13,7 @@ const Matic = "/images/networks/matic-network.jpg";
 const Moonbeam = "/images/networks/moonbeam-network.jpg";
 const OKEx = "/images/networks/okex-network.jpg";
 const Polygon = "/images/networks/eth-network.png";
-const Rinkeby = "/images/networks/rinkeby-network.jpg";
+const Rinkeby = "/images/networks/eth-network.png";
 const Ropsten = "/images/networks/ropsten-network.jpg";
 const xDai = "/images/networks/xdai-network.jpg";
 const Celo = "/images/networks/celo-network.jpg";
@@ -23,6 +23,7 @@ export const NETWORK_ICON = {
   [ChainId.BSC_TESTNET]: Bsc,
   [ChainId.ETHEREUM]: Polygon,
   [ChainId.GOERLI]: Polygon,
+  [ChainId.RINKEBY]: Rinkeby,
 };
 
 // export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {

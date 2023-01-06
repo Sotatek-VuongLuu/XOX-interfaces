@@ -62,15 +62,33 @@ const SwapButton = styled.button`
   justify-content: center;
   align-items: center;
   border: none;
-
   > span {
     margin-right: 8px;
   }
+  @media (max-width: 576px) {
+    padding: 12px 20px;
+    font-size: 16px;
+  }
 `;
+
+const WapperBg = styled.div`
+  position: relative;
+  .mobile{
+    display: none;
+  }
+  @media (max-width: 576px){
+    .desktop{
+      display: none;
+    }
+    .mobile{
+      display: block;
+    }
+  }
+`
 
 const Divider = styled.div`
   padding: 0 12px;
-  margin: -5px 0;
+  margin: 5px 0;
   text-align: center;
 
   @media screen and (min-width: 576px) {
@@ -259,33 +277,57 @@ export default function BridgeToken() {
     <Page>
       <Flex width={['328px', , '100%']} height="100%" justifyContent="center" position="relative">
         <Flex flexDirection="column" position="relative">
-          <svg width="591" height="743" viewBox="0 0 591 743" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <g filter="url(#filter0_d_8007_31104)">
-            <path d="M570.777 45.4999L531.696 17.8377C530.007 16.6421 527.988 16 525.919 16H65.0849C63.0154 16 60.9968 16.6421 59.3076 17.8377L20.2261 45.4999C17.5777 47.3745 16.0035 50.4175 16.0034 53.6622L16.0002 694.511V717C16.0002 722.523 20.4773 727 26.0002 727H61.9007H529.096H564.997C570.52 727 574.997 722.523 574.997 717V694.511L575 53.6622C575 50.4175 573.426 47.3745 570.777 45.4999Z" fill="#242424"/>
-            <path d="M569.911 46.7242L530.829 19.0621C529.393 18.0458 527.678 17.5 525.919 17.5H65.0849C63.3258 17.5 61.61 18.0458 60.1742 19.0621L21.0927 46.7243C18.8416 48.3177 17.5035 50.9042 17.5034 53.6622L17.5002 694.511V717C17.5002 721.694 21.3058 725.5 26.0002 725.5H61.9007H529.096H564.997C569.691 725.5 573.497 721.694 573.497 717V694.511L573.5 53.6622C573.5 50.9042 572.162 48.3176 569.911 46.7242Z" stroke="url(#paint0_linear_8007_31104)" strokeWidth="3"/>
-            </g>
-            <defs>
-            <filter id="filter0_d_8007_31104" x="0.000183105" y="0" width="591" height="743" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
-            <feFlood floodOpacity="0" result="BackgroundImageFix"/>
-            <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
-            <feOffset/>
-            <feGaussianBlur stdDeviation="8"/>
-            <feComposite in2="hardAlpha" operator="out"/>
-            <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
-            <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8007_31104"/>
-            <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_8007_31104" result="shape"/>
-            </filter>
-            <linearGradient id="paint0_linear_8007_31104" x1="254.5" y1="16" x2="253.029" y2="531.999" gradientUnits="userSpaceOnUse">
-            <stop stopColor="#6437FF"/>
-            <stop offset="0.442708" stopColor="#9F59FF" stopOpacity="0"/>
-            </linearGradient>
-            </defs>
-          </svg>
+          <WapperBg>
+            <svg className='desktop' width="591" height="760" viewBox="0 0 591 760" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g filter="url(#filter0_d_8007_30311)">
+              <path d="M570.777 45.4999L531.696 17.8377C530.007 16.6421 527.988 16 525.919 16H65.085C63.0154 16 60.9969 16.6421 59.3077 17.8377L20.2262 45.4999C17.5778 47.3745 16.0035 50.4175 16.0035 53.6622L16.0002 711.511V734C16.0002 739.523 20.4774 744 26.0002 744H61.9007H529.096H564.997C570.52 744 574.997 739.523 574.997 734V711.511L575 53.6622C575 50.4175 573.426 47.3745 570.777 45.4999Z" fill="#242424"/>
+              <path d="M569.911 46.7242L530.829 19.0621C529.393 18.0458 527.678 17.5 525.919 17.5H65.085C63.3259 17.5 61.6101 18.0458 60.1742 19.0621L21.0928 46.7243C18.8417 48.3177 17.5035 50.9042 17.5035 53.6622L17.5002 711.511V734C17.5002 738.694 21.3058 742.5 26.0002 742.5H61.9007H529.096H564.997C569.691 742.5 573.497 738.694 573.497 734V711.511L573.5 53.6622C573.5 50.9042 572.162 48.3176 569.911 46.7242Z" stroke="url(#paint0_linear_8007_30311)" strokeWidth="3"/>
+              </g>
+              <defs>
+              <filter id="filter0_d_8007_30311" x="0.000244141" y="0" width="591" height="760" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+              <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+              <feOffset/>
+              <feGaussianBlur stdDeviation="8"/>
+              <feComposite in2="hardAlpha" operator="out"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8007_30311"/>
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_8007_30311" result="shape"/>
+              </filter>
+              <linearGradient id="paint0_linear_8007_30311" x1="254.5" y1="16" x2="253.029" y2="531.999" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#6437FF"/>
+              <stop offset="0.442708" stopColor="#9F59FF" stopOpacity="0"/>
+              </linearGradient>
+              </defs>
+            </svg>
+            <svg className='mobile' width="359" height="796" viewBox="0 0 359 796" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <g filter="url(#filter0_d_8041_24639)">
+              <path d="M338.515 31.9991L318.508 17.8376C316.819 16.642 314.8 15.9999 312.731 15.9999H46.0397C43.9701 15.9999 41.9516 16.642 40.2624 17.8376L20.2546 31.9994C17.6063 33.8739 16.0321 36.9167 16.0319 40.1612L16 760.501V769.489C16 775.012 20.4772 779.489 26 779.489H42.8266H315.879H332.706C338.229 779.489 342.706 775.012 342.706 769.489V760.501L342.738 40.1617C342.738 36.9169 341.164 33.8737 338.515 31.9991Z" fill="#242424"/>
+              <path d="M337.649 33.2234L317.642 19.062C316.206 18.0457 314.49 17.4999 312.731 17.4999H46.0397C44.2806 17.4999 42.5648 18.0457 41.129 19.062L40.2624 17.8376L41.129 19.062L21.1212 33.2238C18.8702 34.8171 17.5321 37.4034 17.5319 40.1613L17.5 760.501V760.501V769.489C17.5 774.183 21.3056 777.989 26 777.989H42.8266H315.879H332.706C337.4 777.989 341.206 774.183 341.206 769.489V760.501L341.238 40.1617C341.238 37.4035 339.9 34.8168 337.649 33.2234Z" stroke="url(#paint0_linear_8041_24639)" strokeWidth="3"/>
+              </g>
+              <defs>
+              <filter id="filter0_d_8041_24639" x="0" y="0" width="358.738" height="795.489" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+              <feFlood floodOpacity="0" result="BackgroundImageFix"/>
+              <feColorMatrix in="SourceAlpha" type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0" result="hardAlpha"/>
+              <feOffset/>
+              <feGaussianBlur stdDeviation="8"/>
+              <feComposite in2="hardAlpha" operator="out"/>
+              <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0"/>
+              <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8041_24639"/>
+              <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_8041_24639" result="shape"/>
+              </filter>
+              <linearGradient id="paint0_linear_8041_24639" x1="155.422" y1="16.0008" x2="154.562" y2="317.576" gradientUnits="userSpaceOnUse">
+              <stop stopColor="#6437FF"/>
+              <stop offset="0.442708" stopColor="#9F59FF" stopOpacity="0"/>
+              </linearGradient>
+              </defs>
+            </svg>
+          </WapperBg>
           <StyledSwapContainer>
             <StyledInputCurrencyWrapper>
               <StyledHeader>
                 <div>
-                  <StyledHeading1>{t('Swap')}</StyledHeading1>
+                  <StyledHeading1>{t('Bridge')}</StyledHeading1>
                   <p>{t('Trade tokens in an instant')} </p>
                 </div>
                 <Button onClick={onPresentTransactionsModal}>

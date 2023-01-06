@@ -35,6 +35,9 @@ const TextRow = styled.div`
       overflow: hidden;
     }
   }
+  @media(max-width: 576px){
+    font-size: 14px;
+  }
 `;
 
 const AmountRow = styled.div`
@@ -73,6 +76,11 @@ const AmountRow = styled.div`
         margin-right: 8px;
       }
     }
+    @media (max-width: 576px) {
+        flex-direction: column;
+        align-items: flex-end;
+        gap: 5px;
+    }
   }
 `;
 
@@ -93,6 +101,9 @@ const NumericalInputStyled = styled(NumericalInput)`
   }
   &::placeholder {
     color: ${({theme}) => theme.colors.textSubTitle};
+  }
+  @media (max-width: 576px) {
+    font-size: 16px;
   }
 `;
 

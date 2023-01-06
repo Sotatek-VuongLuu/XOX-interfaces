@@ -14,7 +14,7 @@ const Heading = styled.h5`
   color: rgba(255, 255, 255, 0.6);
   font-size: 16px;
   margin-bottom: 10px;
-  @media screen and (min-width: 576px) {
+  @media (max-width: 576px) {
     font-size: 14px;
   }
 `;
@@ -22,7 +22,7 @@ const Heading = styled.h5`
 const ReminderList = styled.ul`
   color: rgba(255, 255, 255, 0.6);
   font-size: 14px;
-
+  line-height: 1.4;
   li {
     display: flex;
     margin-bottom: 8px;
@@ -32,7 +32,7 @@ const ReminderList = styled.ul`
       margin-right: 5px;
     }
   }
-  @media screen and (min-width: 576px) {
+  @media (max-width: 576px) {
     font-size: 12px;
   }
 `;
@@ -185,10 +185,10 @@ const Reminder: React.FC<Props> = ({
         </li>
         {/* <li>Maximum Crosschain Amount is {formatNumberStr(bridgeTokenFee?.maxAmount)} STAND</li> */}
         <li>Estimated Time of Crosschain Arrival is 10-30 min</li>
-        <li>
+        {/* <li>
           Crosschain amount larger than {bridgeTokenFee?.maxAmount}{" "}
           {tokenInput?.symbol} could take up to 24 hours
-        </li>
+        </li> */}
       </ReminderList>
     </Wrapper>
   );

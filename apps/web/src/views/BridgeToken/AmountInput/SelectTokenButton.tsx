@@ -49,10 +49,18 @@ const Wrapper = styled.div`
     text-align: left;
     padding: 10px 12px;
   }
-
   span {
     white-space: nowrap;
     margin-left: 8px;
+  }
+  @media(max-width: 576px){
+    font-size: 14px;
+    img{
+      width: 20px;
+    }
+    .nested{
+      padding: 8px 12px;
+    }
   }
 `;
 

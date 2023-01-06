@@ -29,6 +29,14 @@ const Wrapper = styled.button`
     margin: 0 10px;
     color: ${({theme}) => theme.colors.textSubTitle};
   }
+  @media(max-width: 576px){
+    font-size: 12px;
+    padding: 8px 35px 8px 12px;
+    width: inherit;
+    img{
+      width: 20px;
+    }
+  }
 `;
 
 const IconDown = styled.span`
@@ -59,11 +67,11 @@ const SelectNetworkButton: React.FC<Props> = ({
   return (
     <Wrapper onClick={onModalSwitch}>
       <img
-        src={NETWORK_ICON[97]}
+        src={NETWORK_ICON[inputChainId]}
         alt={`${NETWORK_LABEL_BRIDGE[inputChainId]} Logo`}
         width={24}
       />
-      <span>{NETWORK_LABEL_BRIDGE[inputChainId]}Ethereum</span>
+      <span>{NETWORK_LABEL_BRIDGE[inputChainId]}</span>
       <IconDown>
         <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path d="M10.6458 1.625L5.89575 6.375L1.14575 1.625" stroke="#8E8E8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
