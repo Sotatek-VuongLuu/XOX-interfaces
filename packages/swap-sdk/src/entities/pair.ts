@@ -26,9 +26,9 @@ let PAIR_ADDRESS_CACHE: { [key: string]: string } = {}
 export const _90 = JSBI.BigInt(90)
 export const _9970 = JSBI.BigInt(9970)
 const LP_FEE: Record<number, JSBI> = {
-  // [ChainId.ETHEREUM]: '',
+  [ChainId.ETHEREUM]: _9970,
   [ChainId.GOERLI]: _9970,
-  // [ChainId.BSC]: '',
+  [ChainId.BSC]: _9975,
   [ChainId.BSC_TESTNET]: _9975,
 }
 const composeKey = (token0: ERC20Token, token1: ERC20Token) => `${token0.chainId}-${token0.address}-${token1.address}`
