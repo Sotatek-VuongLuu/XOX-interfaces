@@ -157,10 +157,11 @@ const PlatformStat = (props: any): JSX.Element => {
   const getUserPoint = async () => {
     const result = await userPoint(chainId)
     if (result && result.analysisDatas && result.analysisDatas.length > 0) {
-      const totalUnClaimed =
-        Number(result.analysisDatas[0]?.total_reward) - Number(result.analysisDatas[0]?.total_claimed_amount)
+      const totalReward = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_reward))
+      const totalClaimedAmount = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
+      const totalUnClaimed =  Number(totalReward) - Number(totalClaimedAmount)
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
-      listData[1].volumn = formatBigNumber(BigNumber.from(totalUnClaimed.toString()))
+      listData[1].volumn = totalUnClaimed.toFixed(1)
       listData[2].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
       listData[3].volumn = result.analysisDatas[0]?.total_transactions.toString()
       listData[4].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_reward))
