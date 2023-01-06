@@ -1,7 +1,9 @@
 /* eslint-disable react/no-unknown-property */
-import { createRef, Ref, useEffect, useMemo, useRef, useState } from 'react'
+import { createRef, Ref, useContext, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
-import { Text, Flex, CardBody, CardFooter, Button, AddIcon } from '@pancakeswap/uikit'
+import { Text, Flex, CardBody, CardFooter, Button, AddIcon, useMatchBreakpoints } from '@pancakeswap/uikit'
+import LiquidityMainBackgroundDesktop from 'components/Svg/LiquidityMainBackgroundDesktop'
+import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from '@pancakeswap/localization'
@@ -10,10 +12,37 @@ import FullPositionCard, { StableFullPositionCard } from '../../components/Posit
 import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import { usePairs, PairState } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
+
 import Dots from '../../components/Loader/Dots'
 import { AppHeader, AppBody } from '../../components/App'
 import Page from '../Page'
 
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: 0;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+  }
+`
+const Wrapper = styled(Flex)`
+  width: 100%;
+  max-width: 591px;
+  height: fit-content;
+  z-index: 0;
+  align-items: center;
+  justify-content: center;
+`
+const SwapbackgroundWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+`
 const Body = styled.div`
   padding-top: 25px;
 `
@@ -89,10 +118,10 @@ const ConnectSub = styled.div`
 
 export default function Pool() {
   const { address: account } = useAccount()
+  const { isMobile } = useMatchBreakpoints()
   const { t } = useTranslation()
   const [divHeight, setDivHeight] = useState(0)
   const divRef: Ref<HTMLDivElement> = useRef(null)
-
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs()
 
@@ -196,35 +225,23 @@ export default function Pool() {
   }
 
   return (
-    <>
-      <Flex width={['328px', , '100%']} height="100%" justifyContent="center" position="relative" padding='220px 0'>
+    <Page>
+    <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <LiquidityMainBackgroundDesktop />}</MainBackground>
+    
+      <Flex 
+       width={['328px', , '100%']}
+       marginTop="100px"
+       marginBottom="100px"
+       height="100%"
+       justifyContent="center"
+       alignItems="center"
+       position="relative">
         <Flex position="relative" flexDirection="column">
-          <Background height={divHeight + 25} />
-          <div>
-            <svg width="560" height="319" viewBox="0 0 560 319" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path
-                d="M2.00348 286.008V286.011V308.5C2.00348 313.194 5.80906 317 10.5035 317H46.404H513.599H549.5C554.194 317 558 313.194 558 308.5V286.014V286.011L557.507 37.6526C557.502 34.9005 556.164 32.3214 553.918 30.7315L514.826 3.06207C513.39 2.04578 511.675 1.5 509.915 1.5H49.0814C47.3223 1.5 45.6065 2.04578 44.1707 3.06207L5.09956 30.717C2.84354 32.3138 1.50481 34.9078 1.5103 37.6718L2.00348 286.008Z"
-                fill="#242424"
-                stroke="url(#paint0_linear_1_4)"
-                strokeWidth="3"
-              />
-
-              <defs>
-                <linearGradient
-                  id="paint0_linear_1_4"
-                  x1="238.501"
-                  y1="2.39769e-06"
-                  x2="237.03"
-                  y2="516.001"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#6437FF" />
-                  <stop offset="0.442708" stopColor="#9F59FF" stop-opacity="0" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </div>
-
+        <Wrapper flex="column" position="relative">
+        <SwapbackgroundWrapper>
+          <LiquidityMainBackgroundDesktop />
+        </SwapbackgroundWrapper>
+        </Wrapper>
           <StyledLiquidityContainer ref={divRef}>
             <Header>
               <div>
@@ -240,7 +257,7 @@ export default function Pool() {
                 </span>
               </div>
             </Header>
-
+ 
             <Body>
               {renderBody()}
               {/* {account && !v2IsLoading && (
@@ -272,6 +289,6 @@ export default function Pool() {
           </StyledLiquidityContainer>
         </Flex>
       </Flex>
-    </>
+    </Page>
   )
 }

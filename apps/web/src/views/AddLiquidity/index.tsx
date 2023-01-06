@@ -12,8 +12,14 @@ import {
   TooltipText,
   useTooltip,
   MessageText,
+  useMatchBreakpoints,
+  Flex
 } from '@pancakeswap/uikit'
 import { logError } from 'utils/sentry'
+import styled from 'styled-components'
+import LiquidityMainBackgroundDesktop from 'components/Svg/LiquidityMainBackgroundDesktop'
+import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
+import LiquidityDefault from 'components/Svg/LiquidityDefault'
 import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
 import { useTranslation } from '@pancakeswap/localization'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
@@ -66,6 +72,33 @@ import { formatAmount } from '../../utils/formatInfoNumbers'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
 
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: 0;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+  }
+`
+const Wrapper = styled(Flex)`
+  width: 100%;
+  max-width: 591px;
+  height: fit-content;
+  z-index: 0;
+  align-items: center;
+  justify-content: center;
+`
+const SwapbackgroundWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+`
+
 enum Steps {
   Choose,
   Add,
@@ -74,7 +107,7 @@ enum Steps {
 export default function AddLiquidity({ currencyA, currencyB }) {
   const router = useRouter()
   const { account, chainId, isWrongNetwork } = useActiveWeb3React()
-
+  const { isMobile } = useMatchBreakpoints()
   const addPair = usePairAdder()
   const [zapMode] = useZapModeManager()
   const expertMode = useIsExpertMode()
@@ -578,6 +611,12 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   return (
     <Page>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <LiquidityMainBackgroundDesktop />}</MainBackground>
+      <Wrapper flex="column" position="relative">
+        <SwapbackgroundWrapper>
+        <LiquidityDefault />
+        </SwapbackgroundWrapper>
+        </Wrapper>
       <AppBody>
         {!showAddLiquidity && (
           <ChoosePair
