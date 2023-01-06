@@ -188,7 +188,7 @@ const PlatformStat = (props: any): JSX.Element => {
   }
   const getPointDataDays = async () => {
     const startDate = new Date()
-    startDate.setDate(startDate.getDate() - 15)
+    startDate.setDate(startDate.getDate() - 14)
     startDate.setHours(0, 0, 0, 0)
     const endDate = new Date()
     endDate.setHours(23, 59, 59, 999)
@@ -216,31 +216,27 @@ const PlatformStat = (props: any): JSX.Element => {
   }
   const createArray = (from : Date, to : Date, subGraphData: any) => {
     const start = new Date(moment(from).format('MM/DD/YYYY'));
-    const end = new Date('01/06/2023');
-    console.log('start',moment(from).format('MM/DD/YYYY'))
-    console.log('end',moment(to).format('MM/DD/YYYY'))
-    console.log('end2','01/06/2023')
+    const end = new Date(moment(to).format('MM/DD/YYYY'));
     const chartData = [];
-    
-    let loop = new Date(start);
-    loop.setHours(0, 0, 0, 0)
-    while(loop <= end) {
-            
-      const newDate = loop.setDate(loop.getDate() + 1);
-      const dataByDay = {date: moment(newDate).unix() , amount: 0}
-      console.log('newDate',newDate)
-      // let dateInterger = parseInt(newDate / 1000 / 86400);
-      const dateInterger = parseInt(moment(newDate).unix() / 86400);
-      console.log('dateInterger',dateInterger)
-      const findData = subGraphData.find(x =>  {
-        return x.id === dateInterger.toString()
-      });
-      dataByDay.amount = findData ? findData.amount : 0;
-      chartData.push(dataByDay);
-      loop = new Date(newDate);
+    for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
+        let loopDay = new Date(d);
+        loopDay.setHours(23);
+        loopDay.setMinutes(59)
+        loopDay.setSeconds(59);
+        const dataByDay = {date: moment(loopDay).unix() , amount: 0};
+        const dateInterger = parseInt(moment(loopDay).unix() / 86400);
+
+        console.log(`dateInterger`, dateInterger)
+        const findData = subGraphData.find(x =>  {
+          return x.id === dateInterger.toString()
+        });
+        dataByDay.amount = findData ? findData.amount : 0;
+        chartData.push(dataByDay);
+        console.log("Day:" + loopDay);
     }
     return chartData;
   }
+
   const mapPoint = (amount: string) => {
     for (let i = 0; i <= listPoint.length; i++) {
       if (Number(amount) <= listPoint[i].reward && Number(amount) < listPoint[i + 1].reward) {
