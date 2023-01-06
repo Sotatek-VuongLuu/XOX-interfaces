@@ -199,10 +199,6 @@ const PlatformStat = (props: any): JSX.Element => {
     const result = await pointDataDays(time.from, time.to, chainId)
     if (result && result.pointDataDays && result.pointDataDays.length > 0) {
       const arr = result.pointDataDays
-      setMinAmount(formatBigNumber(BigNumber.from(arr[0].amount)))
-      setMiddleAmount(formatBigNumber(BigNumber.from(arr[Math.floor(arr.length / 2)].amount)))
-      setMaxAmount(formatBigNumber(BigNumber.from(arr[arr.length - 1].amount)))
-      
       const chartData =  createArray(startDate, endDate, arr)
       const data = chartData.map((item: any) => {
         return createDataChartDay(
@@ -210,7 +206,9 @@ const PlatformStat = (props: any): JSX.Element => {
           parseFloat(formatBigNumber(BigNumber.from(item.amount))),
         )
       })
-      console.log('chartData',chartData)
+      setMinAmount(data[0].uv.toString())
+      setMiddleAmount(data[Math.floor(data.length / 2)].uv.toString())
+      setMaxAmount(data[data.length - 1].uv.toString())
       setDataChart(data)
     }
   }
@@ -219,20 +217,18 @@ const PlatformStat = (props: any): JSX.Element => {
     const end = new Date(moment(to).format('MM/DD/YYYY'));
     const chartData = [];
     for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
-        let loopDay = new Date(d);
+        const loopDay = new Date(d);
         loopDay.setHours(23);
         loopDay.setMinutes(59)
         loopDay.setSeconds(59);
         const dataByDay = {date: moment(loopDay).unix() , amount: 0};
         const dateInterger = parseInt(moment(loopDay).unix() / 86400);
 
-        console.log(`dateInterger`, dateInterger)
         const findData = subGraphData.find(x =>  {
           return x.id === dateInterger.toString()
         });
         dataByDay.amount = findData ? findData.amount : 0;
         chartData.push(dataByDay);
-        console.log("Day:" + loopDay);
     }
     return chartData;
   }
