@@ -1,15 +1,13 @@
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
-import { BigNumber } from '@ethersproject/bignumber'
 import { formatUnits } from '@ethersproject/units'
 import { Box } from '@mui/material'
-import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
 import { useTreasuryXOX } from 'hooks/useContract'
 import { useEffect, useState } from 'react'
-import { userPoint } from 'services/referral'
+import { userAmount } from 'services/referral'
 import styled from 'styled-components'
 import Banner from './components/Banner'
 import MainInfo from './components/MainInfo'
@@ -39,7 +37,7 @@ export default function Refferal() {
   const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
   const [isClaimAll, setIsClaimAll] = useState<boolean>(false)
   const [volumnTotalEarn, setVolumnTotalEarn] = useState<string>('')
-  const [volumnTotalUnClaim, setVolumnTotalUnClaim] = useState<string>('')
+  const [totalAmountUnClaimOfUser, setTotalAmountUnClaimOfUser] = useState<number | string>(0)
 
   // eslint-disable-next-line consistent-return
   const handleGetCurrentPoint = async () => {
@@ -62,6 +60,7 @@ export default function Refferal() {
     try {
       const txPendingReward = await contractTreasuryXOX.pendingRewardAll(accountId)
       setIsClaimAll(Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])) === 0)
+      setTotalAmountUnClaimOfUser(Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])))
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
@@ -115,14 +114,10 @@ export default function Refferal() {
 
   const getUserPoint = async () => {
     try {
-      const result = await userPoint(chainId)
+      const result = await userAmount(chainId)
       if (result) {
-        const totalUnClaimed =
-          Number(result.analysisDatas[0]?.total_reward) - Number(result.analysisDatas[0]?.total_claimed_amount)
-        const volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
-        const volumnUnClaim = formatBigNumber(BigNumber.from(totalUnClaimed.toString()))
+        const volumn = formatUnits(result.analysisDatas[0]?.total_claimed_amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])
         setVolumnTotalEarn(volumn)
-        setVolumnTotalUnClaim(volumnUnClaim)
       }
     } catch (error) {
       console.log(`error >>>>`, error)
@@ -172,7 +167,7 @@ export default function Refferal() {
             getUserPoint={getUserPoint}
             handleCheckReachLevel={handleReCallGetCurrentPoint}
             handleCheckPendingRewardAll={handleCheckPendingRewardAll}
-            totalUnClaimed={volumnTotalUnClaim}
+            totalUnClaimed={totalAmountUnClaimOfUser}
           />
         </Box>
       </Wrapper>

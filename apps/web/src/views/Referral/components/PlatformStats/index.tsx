@@ -177,7 +177,7 @@ const PlatformStat = (props: any): JSX.Element => {
           idx + 1,
           userAvatar,
           mappingUser?.username,
-          moment(item.data).format('DD/MM/YYYY hh:mm:ss'),
+          moment(item.date * 1000).format('DD/MM/YYYY hh:mm:ss'),
           mapPoint(formatBigNumber(BigNumber.from(item.amount))),
           formatBigNumber(BigNumber.from(item.amount)),
         )
@@ -196,7 +196,7 @@ const PlatformStat = (props: any): JSX.Element => {
       const data = arr.map((item: any) => {
         return createDataChartDay(
           moment(item.date * 1000).format('DD MMM'),
-          formatBigNumber(BigNumber.from(item.amount)),
+          parseFloat(formatBigNumber(BigNumber.from(item.amount))),
         )
       })
       setDataChart(data)
@@ -225,7 +225,7 @@ const PlatformStat = (props: any): JSX.Element => {
   function createData(no: number, avatar: string, name: string, time: string, point: string, claim: string) {
     return { no, avatar, name, time, point, claim }
   }
-  function createDataChartDay(name: string, uv: string) {
+  function createDataChartDay(name: string, uv: number) {
     return { name, uv }
   }
 

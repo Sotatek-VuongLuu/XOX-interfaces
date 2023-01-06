@@ -149,7 +149,7 @@ const HoverableChart = ({
               <p>Current price: {currencyData ? `$${formatAmount(currencyData?.price)}` : '--'} </p>
               <p>
                 Price change (in last 24 hours):{' '}
-                {currencyData?.percent_change_24h > 0 ? (
+                {currencyData?.percent_change_24h?.toFixed(2) > 0 ? (
                   <>
                     <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path

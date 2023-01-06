@@ -20,7 +20,7 @@ export const getUerRank = async (chainId: ChainId) => {
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getUserRanks {
-        userPoints(first: 100, skip: 0, orderBy: amount, orderDirection: desc) {
+        userPoints(first: 101, skip: 0, orderBy: amount, orderDirection: desc) {
           id
           amount
           address
@@ -106,6 +106,25 @@ export const getUserPointWeekly = async (chainId: ChainId, payload?: any) => {
   return response
 }
 
+export const userAmount = async (chainId: ChainId) => {
+  const response = await request(
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
+    gql`
+      {
+        analysisDatas {
+          id
+          number_of_referral
+          total_amount
+          total_claimed_amount
+          total_transactions
+          total_reward
+        }
+      }
+    `,
+  )
+  return response
+}
+
 export const userPoint = (chainId: ChainId) => {
   const requests = `
   {
@@ -121,9 +140,10 @@ export const userPoint = (chainId: ChainId) => {
   `
   return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
 }
+
 export const userClaimedHistories = (chainId: ChainId) => {
   const requests = `{
-    userClaimedHistories{
+    userClaimedHistories(orderBy: date, orderDirection: desc, first: 100) {
       id,
       date,
       amount,

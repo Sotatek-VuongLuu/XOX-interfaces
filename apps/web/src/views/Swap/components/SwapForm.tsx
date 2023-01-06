@@ -24,7 +24,7 @@ import { AutoRow } from 'components/Layout/Row'
 import { AutoColumn } from 'components/Layout/Column'
 
 import { useCurrency } from 'hooks/Tokens'
-import { ApprovalState, useApproveCallbackFromTrade, useRouterNormal } from 'hooks/useApproveCallback'
+import { ApprovalState, useApproveCallbackFromTrade, useRouterNormal, useShowReferralCode } from 'hooks/useApproveCallback'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
 
 import { Field } from 'state/swap/actions'
@@ -47,8 +47,6 @@ import { useStableFarms } from '../StableSwap/hooks/useStableConfig'
 import { isAddress } from '../../../utils'
 import { SwapFeaturesContext } from '../SwapFeaturesContext'
 import { combinedTokenMapFromOfficialsUrlsAtom } from '../../../state/lists/hooks'
-
-const ADDRESS_ZERO = '0x0000000000000000000000000000000000000000'
 
 const ReferralCode = styled.div`
   width: 100%;
@@ -236,9 +234,7 @@ export default function SwapForm() {
   )
 
   const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
-  const isShowReferralBox =
-    (inputCurrency?.symbol === 'USDC' && outputCurrency?.symbol === 'XOX') ||
-    (inputCurrency?.symbol === 'BUSD' && outputCurrency?.symbol === 'XOX')
+  const isShowReferralBox = useShowReferralCode(inputCurrency, outputCurrency, chainId);
   const hasAmount = Boolean(parsedAmount)
   const handleChangeReferal = (value: string) => {
     axios
@@ -253,6 +249,7 @@ export default function SwapForm() {
       refreshBlockNumber()
     }
   }, [hasAmount, refreshBlockNumber])
+  console.log(formattedAmounts[Field.INPUT], 'formattedAmounts[Field.INPUT]')
   return (
     <>
       <CurrencyInputHeader
@@ -393,7 +390,7 @@ export default function SwapForm() {
         </Box>
       </Wrapper>
       {!swapIsUnsupported ? (
-        trade && <AdvancedSwapDetailsDropdown trade={trade} showXOXSreceived={isShowReferralBox} />
+        trade && <AdvancedSwapDetailsDropdown trade={trade} showXOXSreceived={isShowReferralBox} value={formattedAmounts[Field.INPUT]} />
       ) : (
         <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
       )}

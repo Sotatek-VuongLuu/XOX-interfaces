@@ -106,12 +106,11 @@ const UserMenu = () => {
   const native = useNativeCurrency()
   const [balanceNative, setBalanceNative] = useState<any>()
   const [balanceXOX, setBalanceXOX] = useState<any>()
-  const { chain } = useNetwork()
   const provider = useProvider({ chainId })
 
   useEffect(() => {
     if (!account || !chainId) return
-    const currentProvider = chainId === 1 || chainId === 5 ? getDefaultProvider(chain.network) : provider
+    const currentProvider = provider
     currentProvider.getBalance(account).then((balance) => {
       setBalanceNative(balance)
     })
