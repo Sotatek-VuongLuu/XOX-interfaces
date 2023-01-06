@@ -44,7 +44,7 @@ export const getUserFriend = async (chainId: ChainId, account: string) => {
           rank {
             amount
           }
-          friends {
+          friends(orderBy: amount, orderDirection: desc) {
             ref_address
             amount
           }

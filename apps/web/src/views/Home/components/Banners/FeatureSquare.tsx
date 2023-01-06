@@ -106,7 +106,7 @@ const Icon = styled.div`
 `
 
 const SquareItem = ({ item }: Iprops) => {
-  const [isShowReadMore, setIsShow] = useState(item.description.length > 450)
+  const [isShowReadMore, setIsShow] = useState(item.description.length > 330)
   const route = useRouter()
   return (
     <WrapperI className="item">
@@ -118,8 +118,8 @@ const SquareItem = ({ item }: Iprops) => {
           <Title>{item.title}</Title>
           <Description>
             {/* {item.description} */}
-            {isShowReadMore ? `${item.description.slice(0, 450)}...` : item.description}{' '}
-            {item.description.length > 450 ? (
+            {isShowReadMore ? `${item.description.slice(0, 330)}...` : item.description}{' '}
+            {item.description.length > 330 ? (
               <span onClick={() => setIsShow(!isShowReadMore)} style={{ cursor: 'pointer' }}>
                 {isShowReadMore ? <span className="expand">Read more</span> : <span className="expand">Read less</span>}
               </span>

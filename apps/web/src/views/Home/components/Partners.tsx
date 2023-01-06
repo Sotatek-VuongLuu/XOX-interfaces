@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
@@ -11,11 +12,6 @@ import useWindowSize from 'hooks/useWindowSize'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 
 SwiperCore.use([Autoplay])
-
-const translateinfinite = keyframes`
-100% { transform:translateX(calc(-80px * 10))}
-
-`
 
 const Wrapper = styled.div`
   .main {
@@ -104,7 +100,7 @@ const Wrapper = styled.div`
 
 const SliderWrapper = styled.div`
   margin-bottom: 24px;
-  
+
   div.container {
     transition: all 0.3s ease;
   }
@@ -115,9 +111,7 @@ const SliderWrapper = styled.div`
     margin: 0 0 25px 0;
   }
   @media (max-width: 992px) {
-     {
-      padding: 0 20px 0 20px;
-    }
+    padding: 0 20px 0 20px;
   }
   .slide-option {
     margin: 0 0 50px 0;
@@ -148,6 +142,7 @@ const SliderWrapper = styled.div`
     align-items: center;
     color: #343434;
   }
+  
   @keyframes translateinfinitetl {
     100% {
       transform: translateX(calc(-144px * 10));
@@ -161,11 +156,28 @@ const SliderWrapper = styled.div`
       transform: translateX(calc(0));
     }
   }
+
+  @keyframes scale1 {
+    0% {transform: scale(1);
+
+  }
+    50% {transform: scale(1.1);
+ }
+ 100% {transform: scale(1);
+ }
+}
   #infinite div.highway-barrier {
     box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3);
+   
   }
   #infinite div.highway-barrier ul.highway-lane {
     width: calc(144px * 20);
+    &:hover li.highway-car{
+    animation-play-state: paused !important;
+    }
+    &:hover img.partner{
+      animation: scale1 2.8s infinite;
+    }
   }
   #infinite.infinitetl div.highway-barrier ul.highway-lane li.highway-car {
     width: 80px;
@@ -188,6 +200,15 @@ const SliderWrapper = styled.div`
 const Partners = () => {
   const [isShowMore, setIsShowMore] = useState(false)
   const { width } = useWindowSize()
+  const [isHovering, setIsHovering] = useState(false)
+
+  const handleMouseOver = () => {
+    setIsHovering(true)
+  }
+
+  const handleMouseOut = () => {
+    setIsHovering(false)
+  }
 
   const { isMobile } = useMatchBreakpoints()
 
@@ -206,14 +227,26 @@ const Partners = () => {
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      // className={isHovering ? 'partner' : ''}
+                      // onMouseOver={handleMouseOver}
+                      // onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
@@ -222,7 +255,13 @@ const Partners = () => {
                 listPartners.map(({ icon }) => {
                   return (
                     <li className="highway-car" key={icon}>
-                      <img src={icon} alt="icon" />
+                      <img
+                        src={icon}
+                        alt="icon"
+                        // className={isHovering ? 'partner' : ''}
+                        // onMouseOver={handleMouseOver}
+                        // onMouseOut={handleMouseOut}
+                      />
                     </li>
                   )
                 })}
