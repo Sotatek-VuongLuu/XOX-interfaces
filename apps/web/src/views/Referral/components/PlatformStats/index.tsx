@@ -222,7 +222,7 @@ const PlatformStat = (props: any): JSX.Element => {
         loopDay.setMinutes(59)
         loopDay.setSeconds(59);
         const dataByDay = {date: moment(loopDay).unix() , amount: 0};
-        const dateInterger = Math.ceil(moment(loopDay).unix() / 86400);
+        const dateInterger = Math.trunc(moment(loopDay).unix() / 86400);
 
         const findData = subGraphData.find(x =>  {
           return x.id === dateInterger.toString()
