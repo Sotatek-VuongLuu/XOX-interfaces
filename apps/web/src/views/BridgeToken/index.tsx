@@ -1,8 +1,8 @@
 /* eslint-disable import/no-duplicates */
 /* eslint-disable import/order */
-import { useContext, useState, useCallback } from 'react'
+import { useContext, useState, useCallback, useEffect } from 'react'
 import { Currency } from '@pancakeswap/sdk'
-import { Flex, BottomDrawer, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Flex, BottomDrawer, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
 import { AppBody } from 'components/App'
 
 import { useCurrency } from '../../hooks/Tokens'
@@ -24,6 +24,8 @@ import AddressInput from './AddressInput'
 import { getAddress } from '@ethersproject/address'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
+import ConnectWalletButton from '../../components/ConnectWalletButton';
+import TransactionsModal from 'components/App/Transactions/TransactionsModal'
 
 import styled from 'styled-components'
 
@@ -46,9 +48,9 @@ const ButtonConnect = styled.button`
 
 const SwapButton = styled.button`
   background: ${({ theme, disabled }) =>
-  disabled ? theme.buttonDisable : theme.colors.primary};
+  disabled ? 'rgba(255, 255, 255, 0.05) ': theme.colors.primary};
   color: ${({ theme, disabled }) =>
-  disabled ? "rgba(255, 255, 255, 0.5)" : theme.colors.white};
+  disabled ? "rgba(255, 255, 255, 0.38)" : theme.colors.white};
   width: 100%;
   border-radius: 8px;
   padding: 17px 20px;
@@ -77,10 +79,21 @@ const Divider = styled.div`
   }
 `;
 
-const SwitchSwapButton = styled.div`
-  display: inline-block;
-  margin: 0 auto;
+const WapperConnectBtn = styled(ConnectWalletButton)`
+  width: 100%;
+  margin-top: 20px;
+  height: 54px;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 8px;
 `;
+
+const Button = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+`
 
 export const getChainIdToByChainId = (chainId: any) => {
   switch (chainId) {
@@ -141,6 +154,10 @@ export default function BridgeToken() {
     [Field.OUTPUT]: outputCurrency ?? undefined,
   }
 
+  useEffect(() => {
+    setAddressTo(account);
+  }, [account]);
+
   // handle user type input
   const handleUserInput = (value) => {
     const decimalRegExp = new RegExp(
@@ -192,6 +209,8 @@ export default function BridgeToken() {
   const handleApprove = useCallback(async () => {
     await approveCallback();
   }, [approveCallback]);
+
+  const [onPresentTransactionsModal] = useModal(<TransactionsModal />)
 
   // handle click button Swap, approve or swap
   const handleSwapButtonClick = () => {
@@ -269,31 +288,31 @@ export default function BridgeToken() {
                   <StyledHeading1>{t('Swap')}</StyledHeading1>
                   <p>{t('Trade tokens in an instant')} </p>
                 </div>
-                <span>
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-                  <path
-                    d="M2.90918 3.36365V7H6.54556"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M2 12C2 17.5229 6.47715 22 12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C8.299 2 5.06755 4.01056 3.33839 6.99905"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M12.0026 6L12.002 12.0044L16.2417 16.2441"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-              </svg>
-                </span>
+                <Button onClick={onPresentTransactionsModal}>
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                    <path
+                      d="M2.90918 3.36365V7H6.54556"
+                      stroke="#8E8E8E"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M2 12C2 17.5229 6.47715 22 12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C8.299 2 5.06755 4.01056 3.33839 6.99905"
+                      stroke="#8E8E8E"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                    <path
+                      d="M12.0026 6L12.002 12.0044L16.2417 16.2441"
+                      stroke="#8E8E8E"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    />
+                  </svg>
+                </Button>
               </StyledHeader>
               <AmountInput
                 isTokenFrom
@@ -340,11 +359,9 @@ export default function BridgeToken() {
                 />
               )}
               {!account ? (
-                <ButtonConnect
-                  // onClick={toggleWalletModal}
-                >
+                <WapperConnectBtn>
                   Connect Wallet
-                </ButtonConnect>
+                </WapperConnectBtn>
               ) : (
                 <SwapButton
                   disabled={
