@@ -166,7 +166,7 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
             <StyledNav isLanding={isLanding}>
               <Flex>
                 <Logo href={homeLink?.href ?? "/"} />
-                <AtomBox display={{ xs: "none", md: "block" }}>
+                <AtomBox display={{ xs: "none", xxl: "block" }}>
                   <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />
                 </AtomBox>
               </Flex>

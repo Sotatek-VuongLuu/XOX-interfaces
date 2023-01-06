@@ -44,5 +44,6 @@ export interface DropdownMenuItems {
   status?: LinkStatus;
   disabled?: boolean;
   iconName?: string;
+  icon?: React.ReactNode;
   isMobileOnly?: boolean;
 }

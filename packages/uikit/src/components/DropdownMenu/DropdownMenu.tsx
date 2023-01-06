@@ -1,5 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useContext, useEffect, useState, useCallback } from "react";
+import React, { useContext, useEffect, useState, useCallback, createElement } from "react";
 import { usePopper } from "react-popper";
 import { useOnClickOutside } from "../../hooks";
 import { MenuContext } from "../../widgets/Menu/context";
@@ -10,7 +10,6 @@ import {
   DropdownMenuItem,
   StyledDropdownMenu,
   LinkStatus,
-  StyledDropdownMenuItemContainer,
 } from "./styles";
 import { DropdownMenuItemType, DropdownMenuProps } from "./types";
 
@@ -81,7 +80,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
       </Box>
       {hasItems && (
         <StyledDropdownMenu
-          style={styles.popper}
+          // style={styles.popper}
           ref={setTooltipRef}
           {...attributes.popper}
           $isBottomNav={isBottomNav}
@@ -91,11 +90,12 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
             .filter((item) => !item.isMobileOnly)
             .map(
               (
-                { type = DropdownMenuItemType.INTERNAL_LINK, label, href = "/", status, disabled, ...itemProps },
+                { type = DropdownMenuItemType.INTERNAL_LINK, label, href = "/", status, disabled, icon, ...itemProps },
                 itemItem
               ) => {
                 const MenuItemContent = (
                   <>
+                    {icon && createElement(icon as any)}
                     {label}
                     {status && (
                       <LinkStatus textTransform="uppercase" color={status.color} fontSize="14px">
@@ -106,7 +106,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                 );
                 const isActive = href === activeItem;
                 return (
-                  <StyledDropdownMenuItemContainer key={itemItem}>
+                  <div key={itemItem}>
                     {type === DropdownMenuItemType.BUTTON && (
                       <DropdownMenuItem
                         $isActive={isActive}
@@ -127,6 +127,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                           setIsOpen(false);
                         }}
                         {...itemProps}
+                        className="submenu"
                       >
                         {MenuItemContent}
                       </DropdownMenuItem>
@@ -150,7 +151,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                       </DropdownMenuItem>
                     )}
                     {type === DropdownMenuItemType.DIVIDER && <DropdownMenuDivider />}
-                  </StyledDropdownMenuItemContainer>
+                  </div>
                 );
               }
             )}
