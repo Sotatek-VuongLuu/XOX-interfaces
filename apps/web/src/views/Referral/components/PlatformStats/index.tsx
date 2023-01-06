@@ -1,3 +1,4 @@
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable @next/next/no-img-element */
 import {
   Avatar,
@@ -305,9 +306,9 @@ const PlatformStat = (props: any): JSX.Element => {
               </TableRow>
             </TableHead>
             <TableBody>
-              {userClaimHistories.map((row) => (
+              {userClaimHistories.map((row, index) => (
                 <TableRow
-                  key={row.name}
+                  key={`${row.name}_${index}`}
                   sx={{
                     '& td, & th': { border: 0, fontWeight: 400, fontSize: 14, color: ' rgba(255, 255, 255, 0.87)' },
                   }}
