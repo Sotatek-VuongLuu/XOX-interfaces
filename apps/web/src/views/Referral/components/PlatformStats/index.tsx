@@ -19,7 +19,6 @@ import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { BigNumber } from '@ethersproject/bignumber'
 import moment from 'moment'
 import styled from 'styled-components'
-import ChartRef from './components/ChartRef'
 import ColumnChartRef from './components/ColumnChartRef'
 
 interface IVolumnDataItem {
@@ -159,7 +158,7 @@ const PlatformStat = (props: any): JSX.Element => {
     if (result && result.analysisDatas && result.analysisDatas.length > 0) {
       const totalReward = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_reward))
       const totalClaimedAmount = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
-      const totalUnClaimed =  Number(totalReward) - Number(totalClaimedAmount)
+      const totalUnClaimed = Number(totalReward) - Number(totalClaimedAmount)
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
       listData[1].volumn = totalUnClaimed.toFixed(1)
       listData[2].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
@@ -173,7 +172,7 @@ const PlatformStat = (props: any): JSX.Element => {
     if (result) {
       const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
         const mappingUser = await mapingHistories(item.address)
-        const userAvatar = mappingUser.avatar;
+        const userAvatar = mappingUser.avatar
         return createData(
           idx + 1,
           userAvatar,
@@ -188,20 +187,59 @@ const PlatformStat = (props: any): JSX.Element => {
     }
   }
   const getPointDataDays = async () => {
-    const result = await pointDataDays(chainId)
+    const startDate = new Date()
+    startDate.setDate(startDate.getDate() - 15)
+    startDate.setHours(0, 0, 0, 0)
+    const endDate = new Date()
+    endDate.setHours(23, 59, 59, 999)
+    const time = {
+      from: moment(startDate).unix(),
+      to: moment(endDate).unix(),
+    }
+    const result = await pointDataDays(time.from, time.to, chainId)
     if (result && result.pointDataDays && result.pointDataDays.length > 0) {
       const arr = result.pointDataDays
       setMinAmount(formatBigNumber(BigNumber.from(arr[0].amount)))
       setMiddleAmount(formatBigNumber(BigNumber.from(arr[Math.floor(arr.length / 2)].amount)))
       setMaxAmount(formatBigNumber(BigNumber.from(arr[arr.length - 1].amount)))
-      const data = arr.map((item: any) => {
+      
+      const chartData =  createArray(startDate, endDate, arr)
+      const data = chartData.map((item: any) => {
         return createDataChartDay(
-          moment(item.date * 1000).format('DD MMM'),
+          moment(item.date*1000).format('DD MMM'),
           parseFloat(formatBigNumber(BigNumber.from(item.amount))),
         )
       })
+      console.log('chartData',chartData)
       setDataChart(data)
     }
+  }
+  const createArray = (from : Date, to : Date, subGraphData: any) => {
+    const start = new Date(moment(from).format('MM/DD/YYYY'));
+    const end = new Date('01/06/2023');
+    console.log('start',moment(from).format('MM/DD/YYYY'))
+    console.log('end',moment(to).format('MM/DD/YYYY'))
+    console.log('end2','01/06/2023')
+    const chartData = [];
+    
+    let loop = new Date(start);
+    loop.setHours(0, 0, 0, 0)
+    while(loop <= end) {
+            
+      const newDate = loop.setDate(loop.getDate() + 1);
+      const dataByDay = {date: moment(newDate).unix() , amount: 0}
+      console.log('newDate',newDate)
+      // let dateInterger = parseInt(newDate / 1000 / 86400);
+      const dateInterger = parseInt(moment(newDate).unix() / 86400);
+      console.log('dateInterger',dateInterger)
+      const findData = subGraphData.find(x =>  {
+        return x.id === dateInterger.toString()
+      });
+      dataByDay.amount = findData ? findData.amount : 0;
+      chartData.push(dataByDay);
+      loop = new Date(newDate);
+    }
+    return chartData;
   }
   const mapPoint = (amount: string) => {
     for (let i = 0; i <= listPoint.length; i++) {
@@ -256,7 +294,7 @@ const PlatformStat = (props: any): JSX.Element => {
       <div className="second">
         <TableContainer component={Paper} sx={{ height: 160, background: '#303030' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead style={{position: 'sticky', top: 0, zIndex: 1, background:'#303030'}}>
+            <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
               <TableRow
                 sx={{
                   '& td, & th': {
