@@ -20,7 +20,6 @@ import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { BigNumber } from '@ethersproject/bignumber'
 import moment from 'moment'
 import styled from 'styled-components'
-import ChartRef from './components/ChartRef'
 import ColumnChartRef from './components/ColumnChartRef'
 
 interface IVolumnDataItem {
@@ -189,21 +188,52 @@ const PlatformStat = (props: any): JSX.Element => {
     }
   }
   const getPointDataDays = async () => {
-    const result = await pointDataDays(chainId)
+    const startDate = new Date()
+    startDate.setDate(startDate.getDate() - 14)
+    startDate.setHours(0, 0, 0, 0)
+    const endDate = new Date()
+    endDate.setHours(23, 59, 59, 999)
+    const time = {
+      from: moment(startDate).unix(),
+      to: moment(endDate).unix(),
+    }
+    const result = await pointDataDays(time.from, time.to, chainId)
     if (result && result.pointDataDays && result.pointDataDays.length > 0) {
       const arr = result.pointDataDays
-      setMinAmount(formatBigNumber(BigNumber.from(arr[0].amount)))
-      setMiddleAmount(formatBigNumber(BigNumber.from(arr[Math.floor(arr.length / 2)].amount)))
-      setMaxAmount(formatBigNumber(BigNumber.from(arr[arr.length - 1].amount)))
-      const data = arr.map((item: any) => {
+      const chartData =  createArray(startDate, endDate, arr)
+      const data = chartData.map((item: any) => {
         return createDataChartDay(
-          moment(item.date * 1000).format('DD MMM'),
+          moment(item.date*1000).format('DD MMM'),
           parseFloat(formatBigNumber(BigNumber.from(item.amount))),
         )
       })
+      setMinAmount(data[0].uv.toString())
+      setMiddleAmount(data[Math.floor(data.length / 2)].uv.toString())
+      setMaxAmount(data[data.length - 1].uv.toString())
       setDataChart(data)
     }
   }
+  const createArray = (from : Date, to : Date, subGraphData: any) => {
+    const start = new Date(moment(from).format('MM/DD/YYYY'));
+    const end = new Date(moment(to).format('MM/DD/YYYY'));
+    const chartData = [];
+    for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
+        const loopDay = new Date(d);
+        loopDay.setHours(23);
+        loopDay.setMinutes(59)
+        loopDay.setSeconds(59);
+        const dataByDay = {date: moment(loopDay).unix() , amount: 0};
+        const dateInterger = Math.trunc(moment(loopDay).unix() / 86400);
+
+        const findData = subGraphData.find(x =>  {
+          return x.id === dateInterger.toString()
+        });
+        dataByDay.amount = findData ? findData.amount : 0;
+        chartData.push(dataByDay);
+    }
+    return chartData;
+  }
+
   const mapPoint = (amount: string) => {
     for (let i = 0; i <= listPoint.length; i++) {
       if (Number(amount) <= listPoint[i].reward && Number(amount) < listPoint[i + 1].reward) {

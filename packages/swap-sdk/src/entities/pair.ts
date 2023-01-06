@@ -176,7 +176,7 @@ export class Pair {
     const outputReserve = this.reserveOf(inputAmount.currency.equals(this.token0) ? this.token1 : this.token0)
 
     if (inputAmount.currency.equals(this.token0)) {
-      const inputAmountWithFee = JSBI.multiply(inputAmount.quotient, _9975)
+      const inputAmountWithFee = JSBI.multiply(inputAmount.quotient, LP_FEE[inputAmount.currency.chainId])
       const numerator = JSBI.multiply(inputAmountWithFee, outputReserve.quotient)
       const denominator = JSBI.add(JSBI.multiply(inputReserve.quotient, _10000), inputAmountWithFee)
 
@@ -190,7 +190,7 @@ export class Pair {
       return [outputAmount, new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount))]
     } else {
       const inputAmountSwap = JSBI.divide(JSBI.multiply(inputAmount.quotient, _90), _100)
-      const inputAmountWithFee = JSBI.multiply(inputAmountSwap, _9975)
+      const inputAmountWithFee = JSBI.multiply(inputAmountSwap, LP_FEE[inputAmount.currency.chainId])
       const numerator = JSBI.multiply(inputAmountWithFee, outputReserve.quotient)
       const denominator = JSBI.add(JSBI.multiply(inputReserve.quotient, _10000), inputAmountWithFee)
       const outputAmount = CurrencyAmount.fromRawAmount(
@@ -241,7 +241,7 @@ export class Pair {
     if (outputAmount.currency.equals(this.token1)) {
       const outputAmountSwap = JSBI.divide(JSBI.multiply(outputAmount.quotient, _100), _90)
       const numerator = JSBI.multiply(JSBI.multiply(inputReserve.quotient, outputAmountSwap), _10000)
-      const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmountSwap), _9975)
+      const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmountSwap), LP_FEE[outputAmount.currency.chainId])
       const inputAmount = CurrencyAmount.fromRawAmount(
         outputAmount.currency.equals(this.token0) ? this.token1 : this.token0,
         JSBI.add(JSBI.divide(numerator, denominator), ONE)
@@ -249,7 +249,7 @@ export class Pair {
       return [inputAmount, new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount))]
     } else {
       const numerator = JSBI.multiply(JSBI.multiply(inputReserve.quotient, outputAmount.quotient), _10000)
-      const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmount.quotient), _9975)
+      const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmount.quotient), LP_FEE[outputAmount.currency.chainId])
       const inputAmountSwap = JSBI.add(JSBI.divide(numerator, denominator), ONE)
       const inputAmount = CurrencyAmount.fromRawAmount(
         outputAmount.currency.equals(this.token0) ? this.token1 : this.token0,

@@ -217,7 +217,7 @@
       "name": "Wrapped BTC",
       "address": "0x2a924bcD60450C7a354413d8b2c906A3173F9208",
       "symbol": "WBTC",
-      "decimals": 18,
+      "decimals": 8,
       "chainId": 5,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/3717.png"
     },
