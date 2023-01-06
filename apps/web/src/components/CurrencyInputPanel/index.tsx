@@ -50,6 +50,10 @@ const PercentButton = styled(Button)`
   font-weight: 700;
   height: 27px;
   border-radius: 30px;
+  :hover{
+    background: #9072ff !important;
+    color: #fff !important;
+  }
 `
 const TextBalance = styled.div`
   position:absolute;
