@@ -37,10 +37,10 @@ export const XOX_ADDRESS: Record<number, string> = {
 }
 
 export const USD_ADDRESS: Record<number, string> = {
-  [ChainId.ETHEREUM]: '',
+  [ChainId.ETHEREUM]: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
   [ChainId.RINKEBY]: '',
   [ChainId.GOERLI]: '0xDCe94ECc218EA46242B515A3Ff69CDFA8d5c206F',
-  [ChainId.BSC]: '',
+  [ChainId.BSC]: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
   [ChainId.BSC_TESTNET]: '0xBe72fDa9F32897d725F9666e0c113E132f0a4a5c',
 }
 export const INIT_CODE_HASH = '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5'

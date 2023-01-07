@@ -149,7 +149,7 @@
     },
 
     {
-      "name": "Wrapped BTC",
+      "name": "Wrapped Bitcoin",
       "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
       "symbol": "WBTC",
       "decimals": 18,
@@ -214,7 +214,7 @@
     },
 
     {
-      "name": "Wrapped BTC",
+      "name": "Wrapped Bitcoin",
       "address": "0x2a924bcD60450C7a354413d8b2c906A3173F9208",
       "symbol": "WBTC",
       "decimals": 8,
@@ -231,7 +231,7 @@
     },
     {
       "name": "USD Coin",
-      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "address": "0xDCe94ECc218EA46242B515A3Ff69CDFA8d5c206F",
       "symbol": "USDC",
       "decimals": 6,
       "chainId": 1,
