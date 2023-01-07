@@ -201,6 +201,7 @@ const WrapperRight = styled.div<IPropsContainer>`
       color: #ffffff;
       position: relative;
       z-index: 2;
+      overflow: auto;
 
       .subTab_item.active {
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
@@ -214,6 +215,7 @@ const WrapperRight = styled.div<IPropsContainer>`
         line-height: 17px;
         color: #ffffff;
         cursor: pointer;
+        white-space: nowrap;
       }
     }
 

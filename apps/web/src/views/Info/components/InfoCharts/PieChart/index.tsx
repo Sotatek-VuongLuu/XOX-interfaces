@@ -16,7 +16,6 @@ const CustomTooltipStyle = styled.div`
 
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
-    console.log(payload[0], 'payload[0]')
     return (
       <CustomTooltipStyle>
         <p className="label">{`${payload[0].name}: $${formatAmount(payload[0].value, {displayThreshold: 2})}`}</p>

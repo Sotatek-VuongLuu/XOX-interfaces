@@ -80,7 +80,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
 
     const tempIds = Object.values(coinmarketcapIds)
     axios
-      .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/v2/cryptocurrency/quotes/latest`, {
+      .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/price`, {
         params: {
           id: tempIds.filter((id, index) => tempIds.indexOf(id) === index).join(','),
         },
@@ -120,7 +120,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
     Promise.all(
       tokenListNotHaveIds.map(async (token: any) => {
         return axios
-          .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/v2/cryptocurrency/info`, {
+          .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/info`, {
             params: { address: token.address.toUpperCase() },
           })
           .then((response) => {
