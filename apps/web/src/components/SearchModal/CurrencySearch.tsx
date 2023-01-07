@@ -11,13 +11,10 @@ import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 import { useAudioModeManager } from 'state/user/hooks'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import axios from 'axios'
-import { getContract, isAddress } from 'utils'
-import ERC20_ABI from 'config/abi/erc20.json'
+import { isAddress } from 'utils'
 import { useAllTokens, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
 import Column, { AutoColumn } from '../Layout/Column'
 import Row from '../Layout/Row'
-import CommonBases from './CommonBases'
 import CurrencyList from './CurrencyList'
 import { createFilterToken, useSortedTokensByQuery } from './filtering'
 import useTokenComparator from './sorting'
@@ -110,7 +107,6 @@ function CurrencySearch({
   height,
 }: CurrencySearchProps) {
   const { t } = useTranslation()
-  const { chainId } = useActiveChainId()
 
   // refs for fixed size lists
   const fixedList = useRef<FixedSizeList>()
