@@ -234,7 +234,7 @@
       "address": "0xDCe94ECc218EA46242B515A3Ff69CDFA8d5c206F",
       "symbol": "USDC",
       "decimals": 6,
-      "chainId": 1,
+      "chainId": 5,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
     },
     {

@@ -127,6 +127,7 @@ const HoverableChart = ({
             href={`/swap?chainId=${chainId}&inputCurrency=${USD_ADDRESS[chainId]}&outputCurrency=${
               selectedCurrency === native ? native.symbol : (selectedCurrency as any).address
             }`}
+            target="_blank"
           >
             <div className="boxed-child">
               <span>Get {selectedCurrency.symbol}</span>
