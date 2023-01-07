@@ -16,6 +16,7 @@ import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
 import { getUerRank, getUserPointDaily, getUserPointMonthly, getUserPointWeekly } from '../../../services/referral'
+import BigNumber from 'bignumber.js'
 
 export interface IItemLeaderBoard {
   name: string
@@ -307,8 +308,9 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         return {
           ...item,
           id: item.id,
-          point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])),
+          point: new BigNumber(item.amount).div(10 ** MAPPING_DECIMAL_WITH_CHAIN[chainId]).toNumber(),
         }
+        // formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])
       })
 
       const dataMapping: IMappingFormat[] = await Promise.all(

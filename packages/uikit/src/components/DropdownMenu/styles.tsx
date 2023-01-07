@@ -1,5 +1,6 @@
 import styled, { DefaultTheme } from "styled-components";
 import { Colors } from "../../theme";
+import { Box } from "../Box";
 import { Text } from "../Text";
 import { StyledDropdownMenuItemProps } from "./types";
 
@@ -73,7 +74,7 @@ export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: b
   grid-template-columns: 1fr 1fr;
   height: auto;
 
-  ${({ theme }) => theme.mediaQueries.md} {
+  ${({ theme }) => theme.mediaQueries.xxl} {
     position: fixed;
     inset: 0px auto auto 0px;
     transform: translate(451px, 64px);
@@ -98,4 +99,22 @@ export const LinkStatus = styled(Text)<{ color: keyof Colors }>`
   box-shadow: none;
   color: ${({ theme, color }) => theme.colors[color]};
   margin-left: 8px;
+`;
+
+export const BoxDropdown = styled(Box)<{ isActive: boolean }>`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  ${({ theme }) => theme.mediaQueries.xxl} {
+    justify-content: flex-start;
+
+    & svg {
+      margin-bottom: 4px;
+    }
+  }
+
+  svg {
+    ${({ isActive }) => (isActive ? "transform: rotate(0)" : "transform: rotate(180deg)")}
+  }
 `;

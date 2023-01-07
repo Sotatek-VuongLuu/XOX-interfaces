@@ -5,12 +5,8 @@ import { useOnClickOutside } from "../../hooks";
 import { MenuContext } from "../../widgets/Menu/context";
 import { Box, Flex } from "../Box";
 import { LogoutIcon } from "../Svg";
-import {
-  DropdownMenuDivider,
-  DropdownMenuItem,
-  StyledDropdownMenu,
-  LinkStatus,
-} from "./styles";
+import UpIcon from "../Svg/Icons/UpIcon";
+import { DropdownMenuDivider, DropdownMenuItem, StyledDropdownMenu, LinkStatus, BoxDropdown } from "./styles";
 import { DropdownMenuItemType, DropdownMenuProps } from "./types";
 
 const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
@@ -71,13 +67,15 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
 
   return (
     <Box ref={setTargetRef} {...props}>
-      <Box
+      <BoxDropdown
         onPointerDown={() => {
           setIsOpen((s) => !s);
         }}
+        isActive={isOpen}
       >
         {children}
-      </Box>
+        {items.length > 0 && <UpIcon />}
+      </BoxDropdown>
       {hasItems && (
         <StyledDropdownMenu
           // style={styles.popper}
