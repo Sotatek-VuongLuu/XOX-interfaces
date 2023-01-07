@@ -12,6 +12,7 @@ import {
   TableHead,
   TableRow,
 } from '@mui/material'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import { userPoint, userClaimedHistories, pointDataDays } from 'services/referral'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
@@ -21,6 +22,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import moment from 'moment'
 import styled from 'styled-components'
 import ColumnChartRef from './components/ColumnChartRef'
+
 
 interface IVolumnDataItem {
   volumn: string
@@ -143,8 +145,19 @@ const Wrapper = styled(Box)`
     }
   }
 `
-
+const Line = styled.div`
+  position: absolute;
+  top:56px;
+  background:#444444;
+  width:99%;
+  height:1px;
+  z-index:99;
+  @media screen and (max-width: 425px) {
+    width:97%;
+  }
+`
 const PlatformStat = (props: any): JSX.Element => {
+  const { isMobile } = useMatchBreakpoints()
   const { listPoint } = props
   const { chainId } = useActiveWeb3React()
   const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>(listData)
@@ -284,9 +297,13 @@ const PlatformStat = (props: any): JSX.Element => {
         </div>
       </div>
 
-      <div className="second">
-        <TableContainer component={Paper} sx={{ height: 160, background: '#303030' }}>
+      <div className="second" style={{position:'relative'}}>
+        {/* <Line /> */}
+        {/* <CustomTableContainer> */}
+        <TableContainer component={Paper} sx={isMobile ? { height:'300px', background: '#303030' } : {height:'160px', background: '#303030'}}>
+     
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
+       
             <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
               <TableRow
                 sx={{
@@ -300,9 +317,9 @@ const PlatformStat = (props: any): JSX.Element => {
               >
                 <TableCell>No</TableCell>
                 <TableCell align="left">User Name</TableCell>
-                <TableCell align="left">Time</TableCell>
-                <TableCell align="left">Point Level</TableCell>
-                <TableCell align="right">Claimed Amount</TableCell>
+                <TableCell style={{minWidth:'190px'}} align="left">Time</TableCell>
+                <TableCell style={{minWidth:'120px'}} align="left">Point Level</TableCell>
+                <TableCell style={{minWidth:'155px'}} align="right">Claimed Amount</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -332,6 +349,7 @@ const PlatformStat = (props: any): JSX.Element => {
             </TableBody>
           </Table>
         </TableContainer>
+        {/* </CustomTableContainer> */}
       </div>
 
       <div className="third">
