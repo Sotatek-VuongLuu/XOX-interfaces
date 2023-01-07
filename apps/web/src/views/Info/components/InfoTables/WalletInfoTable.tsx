@@ -324,7 +324,6 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       name: 'others',
       value: sum,
     })
-    console.log(tokensBalance, xoxBalance, sum, result[2].value, 'result[2].value')
     total = nativeBalance + xoxBalance + result[2].value + sum
     setTotalAsset(total)
     setDataChart(result)

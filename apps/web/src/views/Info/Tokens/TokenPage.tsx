@@ -239,7 +239,7 @@ const TokenPage: React.FC<React.PropsWithChildren<{ routeAddress: string }>> = (
               {t('Transactions')}
             </Heading>
 
-            <TransactionTable transactions={transactions} />
+            {/* <TransactionTable transactions={transactions} /> */}
           </>
         )
       ) : (

@@ -1,7 +1,7 @@
 import { gql } from 'graphql-request'
 import { mapBurns, mapMints, mapSwaps } from 'state/info/queries/helpers'
 import { BurnResponse, MintResponse, SwapResponse } from 'state/info/queries/types'
-import { Transaction } from 'state/info/types'
+import { Transaction, TransactionFrom } from 'state/info/types'
 import { getMultiChainQueryEndPointWithStableSwap, MultiChainName } from '../../constant'
 
 /**
@@ -40,7 +40,7 @@ const GLOBAL_TRANSACTIONS = gql`
           symbol
         }
       }
-      from
+      sender
       amount0In
       amount1In
       amount0Out
@@ -74,24 +74,70 @@ interface TransactionResults {
   burns: BurnResponse[]
 }
 
-const fetchTopTransactions = async (chainName: MultiChainName): Promise<Transaction[] | undefined> => {
+const fetchTopTransactions = async (
+  chainName: MultiChainName,
+): Promise<{ transactionsXOX: Transaction[] | undefined; transactionsOther: Transaction[] | undefined }> => {
   try {
-    const data = await getMultiChainQueryEndPointWithStableSwap(chainName).request<TransactionResults>(
-      GLOBAL_TRANSACTIONS,
-    )
-    if (!data) {
-      return undefined
+    const dataXOX = await getMultiChainQueryEndPointWithStableSwap(
+      chainName,
+      TransactionFrom.XOX,
+    ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
+    let transactionsXOX = undefined
+    if (dataXOX) {
+      const mintsXOX = dataXOX.mints.map(mapMints)
+      const burnsXOX = dataXOX.burns.map(mapBurns)
+      const swapsXOX = dataXOX.swaps.map(mapSwaps)
+
+      transactionsXOX = [...mintsXOX, ...burnsXOX, ...swapsXOX].sort((a, b) => {
+        return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
+      })
     }
 
-    const mints = data.mints.map(mapMints)
-    const burns = data.burns.map(mapBurns)
-    const swaps = data.swaps.map(mapSwaps)
+    if (chainName === 'ETH') {
+      const dataUNI = await getMultiChainQueryEndPointWithStableSwap(
+        chainName,
+        TransactionFrom.UNI,
+      ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
+      let transactionsOther = undefined
 
-    return [...mints, ...burns, ...swaps].sort((a, b) => {
-      return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
-    })
+      if (dataUNI) {
+        const mintsUNI = dataUNI.mints.map(mapMints)
+        const burnsUNI = dataUNI.burns.map(mapBurns)
+        const swapsUNI = dataUNI.swaps.map(mapSwaps)
+
+        transactionsOther = [...mintsUNI, ...burnsUNI, ...swapsUNI].sort((a, b) => {
+          return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
+        })
+      }
+      return {
+        transactionsXOX,
+        transactionsOther,
+      }
+    } else {
+      const dataPANCAKE = await getMultiChainQueryEndPointWithStableSwap(
+        chainName,
+        TransactionFrom.PANCAKE,
+      ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
+      let transactionsOther = undefined
+      if (dataPANCAKE) {
+        const mintsPANCAKE = dataPANCAKE.mints.map(mapMints)
+        const burnsPANCAKE = dataPANCAKE.burns.map(mapBurns)
+        const swapsPANCAKE = dataPANCAKE.swaps.map(mapSwaps)
+
+        transactionsOther = [...mintsPANCAKE, ...burnsPANCAKE, ...swapsPANCAKE].sort((a, b) => {
+          return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
+        })
+      }
+      return {
+        transactionsXOX,
+        transactionsOther,
+      }
+    }
   } catch {
-    return undefined
+    return {
+      transactionsXOX: undefined,
+      transactionsOther: undefined,
+    }
   }
 }
 
