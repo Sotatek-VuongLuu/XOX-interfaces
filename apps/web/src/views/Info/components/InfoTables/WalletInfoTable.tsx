@@ -248,7 +248,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     return new ERC20Token(chainId, token.contractAddress, token.decimals, token.symbol)
   }, [])
 
-  const formatAmount = (number: number, decimals: number = 2) => {
+  const formatAmount = (number: number, decimals = 2) => {
     return parseInt((number * 10 ** decimals).toString()) / 10 ** decimals
   }
 
