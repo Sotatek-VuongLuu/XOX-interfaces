@@ -361,6 +361,7 @@ const FormReferralModal = (_, ref) => {
         .catch((error) => console.log(error))
     }, 500)
 
+    // eslint-disable-next-line consistent-return
     return () => clearTimeout(getData)
   }, [username])
 
