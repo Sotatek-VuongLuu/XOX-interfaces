@@ -128,6 +128,7 @@ const HoverableChart = ({
               selectedCurrency === native ? native.symbol : (selectedCurrency as any).address
             }`}
             target="_blank"
+            rel="noreferrer"
           >
             <div className="boxed-child">
               <span>Get {selectedCurrency.symbol}</span>
