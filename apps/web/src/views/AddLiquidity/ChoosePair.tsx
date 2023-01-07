@@ -15,19 +15,32 @@ import { CommonBasesType } from '../../components/SearchModal/types'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 
 const ChoosePairCardBody = styled(CardBody)`
-  padding:24px 0;
+  padding:24px 0 0 0;
 `
 const FlexCurrency = styled.div`
   display:flex;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
   position:relative;
 `
 const PlusIcon = styled.div`
   position:absolute;
-  top:10px;
+  top:20px;
   left:50%;
   z-index:99;
+  transform: translate(-50%, -50%);
+`
+const BottomBox = styled.div`
+  display:flex;
+  align-items:center;
+  justify-content: space-between;
+  margin-top:24px;
+  font-size:16px;
+  color:#FFFFFFDE;
+`
+const LiquidityFooter = styled(CardFooter)`
+  border-top:unset;
+  padding:24px 0;
 `
 export function ChoosePair({
   currencyA,
@@ -65,7 +78,7 @@ export function ChoosePair({
       />
       <ChoosePairCardBody>
         <Box>
-          <Text color="#ffffffde" size='18px' mb="24px">
+          <Text color="#ffffffde" size='18px' mb="34px">
             {t('Pool')}
           </Text>
           <FlexCurrency>
@@ -76,7 +89,9 @@ export function ChoosePair({
               showCommonBases
               commonBasesType={CommonBasesType.LIQUIDITY}
             />
-            <PlusIcon><AddIcon color="textSubtle" /></PlusIcon>
+            <PlusIcon>
+              <AddIcon color="textSubtle" />
+            </PlusIcon>
             <CurrencySelect
               id="add-liquidity-select-tokenb"
               selectedCurrency={currencyB}
@@ -97,8 +112,12 @@ export function ChoosePair({
             </RowBetween>
           )}
         </Box>
+        <BottomBox>
+          <Text>LP reward APR</Text>
+          <Text>1.17%</Text>
+        </BottomBox>
       </ChoosePairCardBody>
-      <CardFooter>
+      <LiquidityFooter>
         {!account ? (
           <ConnectWalletButton width="100%" />
         ) : (
@@ -112,7 +131,7 @@ export function ChoosePair({
             {error ?? t('Add Liquidity')}
           </CommitButton>
         )}
-      </CardFooter>
+      </LiquidityFooter>
     </>
   )
 }

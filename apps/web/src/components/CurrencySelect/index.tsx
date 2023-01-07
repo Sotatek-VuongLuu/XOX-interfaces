@@ -9,6 +9,9 @@ import { useAccount } from 'wagmi'
 import { CurrencyLogo } from '../Logo'
 import { RowBetween, AutoRow } from '../Layout/Row'
 
+const BalanceBox = styled(Box)`
+  margin-top:13px;
+`
 const DropDownHeader = styled.div`
   width: 100%;
   height: 100%;
@@ -105,7 +108,7 @@ export const CurrencySelect = ({
         {/* <ArrowDropDownIcon color="text" className="down-icon" /> */}
       </DropDownContainer>
       {account && !!selectedCurrency && !hideBalance && (
-        <Box>
+        <BalanceBox>
           <AutoRow justify="space-between" gap="2px">
             <Text color="textSubtle" fontSize="12px">
               {t('Balance')}:
@@ -120,7 +123,7 @@ export const CurrencySelect = ({
               </Text>
             )}
           </RowBetween>
-        </Box>
+        </BalanceBox>
       )}
     </Box>
   )
