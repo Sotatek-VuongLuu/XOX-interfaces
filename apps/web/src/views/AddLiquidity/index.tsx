@@ -98,6 +98,12 @@ const SwapbackgroundWrapper = styled.div`
   transform: translateX(-50%);
   z-index: 1;
 `
+const LiquidityBody = styled.div`
+  position: relative;
+  padding: 15px 0;
+  max-width:503px;
+  width:100%;
+`
 
 enum Steps {
   Choose,
@@ -617,7 +623,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
         <LiquidityDefault />
         </SwapbackgroundWrapper>
         </Wrapper>
-      <AppBody>
+      <LiquidityBody>
         {!showAddLiquidity && (
           <ChoosePair
             error={error}
@@ -932,7 +938,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
             </CardBody>
           </>
         )}
-      </AppBody>
+      </LiquidityBody>
       {!(addIsUnsupported || addIsWarning) ? (
         pair && !noLiquidity && pairState !== PairState.INVALID ? (
           <AutoColumn style={{ minWidth: '20rem', width: '100%', maxWidth: '400px', marginTop: '1rem' }}>

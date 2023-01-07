@@ -11,15 +11,15 @@ import { RowBetween, AutoRow } from '../Layout/Row'
 
 const DropDownHeader = styled.div`
   width: 100%;
-  height: 40px;
+  height: 100%;
+  height:54px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0px 16px;
   box-shadow: ${({ theme }) => theme.shadows.inset};
-  border: 1px solid ${({ theme }) => theme.colors.inputSecondary};
-  border-radius: 16px;
-  background: ${({ theme }) => theme.colors.input};
+  border: 1px solid #444444;
+  border-radius: 6px;
   transition: border-radius 0.15s;
 `
 
@@ -82,7 +82,7 @@ export const CurrencySelect = ({
   const quoted = selectedCurrencyBalance && price?.quote(selectedCurrencyBalance)
 
   return (
-    <Box width="100%" {...props}>
+    <Box maxWidth='223px' width="100%" {...props}>
       <DropDownContainer p={0} onClick={onPresentCurrencyModal}>
         <DropDownHeader>
           <Text id="pair" color={!selectedCurrency ? 'text' : undefined}>
@@ -103,7 +103,7 @@ export const CurrencySelect = ({
             )}
           </Text>
         </DropDownHeader>
-        <ArrowDropDownIcon color="text" className="down-icon" />
+        {/* <ArrowDropDownIcon color="text" className="down-icon" /> */}
       </DropDownContainer>
       {account && !!selectedCurrency && !hideBalance && (
         <Box>

@@ -1,6 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Currency } from '@pancakeswap/sdk'
 import { AddIcon, Box, CardBody, CardFooter, Text, TooltipText, useTooltip, FlexGap } from '@pancakeswap/uikit'
+import styled from 'styled-components'
 import { CommitButton } from 'components/CommitButton'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { CurrencySelect } from 'components/CurrencySelect'
@@ -13,6 +14,21 @@ import { AppHeader } from '../../components/App'
 import { CommonBasesType } from '../../components/SearchModal/types'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 
+const ChoosePairCardBody = styled(CardBody)`
+  padding:24px 0;
+`
+const FlexCurrency = styled.div`
+  display:flex;
+  align-items: center;
+  justify-content: space-between;
+  position:relative;
+`
+const PlusIcon = styled.div`
+  position:absolute;
+  top:10px;
+  left:50%;
+  z-index:99;
+`
 export function ChoosePair({
   currencyA,
   currencyB,
@@ -47,12 +63,12 @@ export function ChoosePair({
         )}
         backTo="/liquidity"
       />
-      <CardBody>
+      <ChoosePairCardBody>
         <Box>
-          <Text textTransform="uppercase" color="secondary" bold small pb="24px">
-            {t('Choose a valid pair')}
+          <Text color="#ffffffde" size='18px' mb="24px">
+            {t('Pool')}
           </Text>
-          <FlexGap gap="4px">
+          <FlexCurrency>
             <CurrencySelect
               id="add-liquidity-select-tokena"
               selectedCurrency={currencyA}
@@ -60,7 +76,7 @@ export function ChoosePair({
               showCommonBases
               commonBasesType={CommonBasesType.LIQUIDITY}
             />
-            <AddIcon color="textSubtle" />
+            <PlusIcon><AddIcon color="textSubtle" /></PlusIcon>
             <CurrencySelect
               id="add-liquidity-select-tokenb"
               selectedCurrency={currencyB}
@@ -68,7 +84,7 @@ export function ChoosePair({
               showCommonBases
               commonBasesType={CommonBasesType.LIQUIDITY}
             />
-          </FlexGap>
+          </FlexCurrency>
           {pair && poolData && (
             <RowBetween mt="24px">
               <TooltipText ref={targetRef} bold fontSize="12px" color="secondary">
@@ -81,7 +97,7 @@ export function ChoosePair({
             </RowBetween>
           )}
         </Box>
-      </CardBody>
+      </ChoosePairCardBody>
       <CardFooter>
         {!account ? (
           <ConnectWalletButton width="100%" />
