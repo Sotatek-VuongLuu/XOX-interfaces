@@ -22,7 +22,7 @@ const DescriptionWithTx: React.FC<React.PropsWithChildren<DescriptionWithTxProps
     <>
       {typeof children === 'string' ? <Text as="p">{children}</Text> : children}
       {txHash && (
-        <Link external href={getBlockExploreLink(txHash, 'transaction', txChainId || chainId)}>
+        <Link external href={getBlockExploreLink(txHash, 'transaction', txChainId || chainId)} style={{color: '#3D8AFF'}}>
           {t('View on %site%', { site: getBlockExploreName(txChainId || chainId) })}: {truncateHash(txHash, 8, 0)}
         </Link>
       )}
