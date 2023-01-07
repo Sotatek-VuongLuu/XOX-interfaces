@@ -10,13 +10,13 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import BigNumber from 'bignumber.js'
 import HowToJoin from './HowToJoin'
 // eslint-disable-next-line import/no-cycle
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
 import { getUerRank, getUserPointDaily, getUserPointMonthly, getUserPointWeekly } from '../../../services/referral'
-import BigNumber from 'bignumber.js'
 
 export interface IItemLeaderBoard {
   name: string
