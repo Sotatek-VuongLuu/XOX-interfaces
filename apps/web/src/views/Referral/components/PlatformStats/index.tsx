@@ -298,8 +298,6 @@ const PlatformStat = (props: any): JSX.Element => {
       </div>
 
       <div className="second" style={{position:'relative'}}>
-        {/* <Line /> */}
-        {/* <CustomTableContainer> */}
         <TableContainer component={Paper} sx={isMobile ? { height:'300px', background: '#303030' } : {height:'160px', background: '#303030'}}>
      
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -349,7 +347,6 @@ const PlatformStat = (props: any): JSX.Element => {
             </TableBody>
           </Table>
         </TableContainer>
-        {/* </CustomTableContainer> */}
       </div>
 
       <div className="third">
