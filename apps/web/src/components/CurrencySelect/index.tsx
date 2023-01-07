@@ -27,13 +27,12 @@ const DropDownContainer = styled(Button)`
   cursor: pointer;
   width: 100%;
   position: relative;
-  background: ${({ theme }) => theme.colors.input};
-  border-radius: 16px;
+  background: unset;
   height: 40px;
   min-width: 136px;
   user-select: none;
   z-index: 20;
-
+  box-shadow:unset;
   ${({ theme }) => theme.mediaQueries.sm} {
     min-width: 168px;
   }
