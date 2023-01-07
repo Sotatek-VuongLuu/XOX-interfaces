@@ -3,13 +3,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 import { formatUnits } from '@ethersproject/units'
-import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
 import axios from 'axios'
 import { Box, Grid } from '@mui/material'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { USD_DECIMALS } from 'config/constants/exchange'
 import BigNumber from 'bignumber.js'
 import HowToJoin from './HowToJoin'
 // eslint-disable-next-line import/no-cycle
@@ -308,9 +308,8 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         return {
           ...item,
           id: item.id,
-          point: new BigNumber(item.amount).div(10 ** MAPPING_DECIMAL_WITH_CHAIN[chainId]).toNumber(),
+          point: new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber(),
         }
-        // formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])
       })
 
       const dataMapping: IMappingFormat[] = await Promise.all(

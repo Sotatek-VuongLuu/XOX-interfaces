@@ -68,6 +68,14 @@ export const USD_ADDRESS: ChainMap<string> = {
   [ChainId.BSC_TESTNET]: '0xBe72fDa9F32897d725F9666e0c113E132f0a4a5c',
 }
 
+export const USD_DECIMALS: ChainMap<number> = {
+  [ChainId.ETHEREUM]: 6,
+  [ChainId.RINKEBY]: 6,
+  [ChainId.GOERLI]: 6,
+  [ChainId.BSC]: 18,
+  [ChainId.BSC_TESTNET]: 18,
+}
+
 // used to construct intermediary pairs for trading
 export const BASES_TO_CHECK_TRADES_AGAINST: ChainTokenList = {
   [ChainId.ETHEREUM]: [WNATIVE[ChainId.ETHEREUM], USDC[ChainId.ETHEREUM], USDT[ChainId.ETHEREUM], WBTC_ETH],
@@ -198,8 +206,8 @@ export const ONE_HUNDRED_PERCENT = new Percent('1')
 
 export const BASE_FEE_BSC = new Percent(JSBI.BigInt(25), BIPS_BASE)
 export const BASE_FEE_ETH = new Percent(JSBI.BigInt(30), BIPS_BASE)
-export const INPUT_FRACTION_AFTER_FEE_BSC = ONE_HUNDRED_PERCENT.subtract(BASE_FEE_BSC);
-export const INPUT_FRACTION_AFTER_FEE_ETH = ONE_HUNDRED_PERCENT.subtract(BASE_FEE_ETH);
+export const INPUT_FRACTION_AFTER_FEE_BSC = ONE_HUNDRED_PERCENT.subtract(BASE_FEE_BSC)
+export const INPUT_FRACTION_AFTER_FEE_ETH = ONE_HUNDRED_PERCENT.subtract(BASE_FEE_ETH)
 export const INPUT_FRACTION_AFTER_FEE: ChainMap<Percent> = {
   [ChainId.ETHEREUM]: INPUT_FRACTION_AFTER_FEE_ETH,
   [ChainId.RINKEBY]: INPUT_FRACTION_AFTER_FEE_ETH,

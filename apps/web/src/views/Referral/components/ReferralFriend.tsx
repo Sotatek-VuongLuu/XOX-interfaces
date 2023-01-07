@@ -32,17 +32,13 @@ import 'swiper/css/pagination'
 import useWindowSize from 'hooks/useWindowSize'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTreasuryXOX } from 'hooks/useContract'
-import { formatEther, formatUnits } from '@ethersproject/units'
-import { useSelector } from 'react-redux'
-import { AppState } from 'state'
+import { formatUnits } from '@ethersproject/units'
 import { getUserFriend } from 'services/referral'
-import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
+import { USD_DECIMALS } from 'config/constants/exchange'
 import axios from 'axios'
-import { BigNumber } from '@ethersproject/bignumber'
-import { CopyButton, useModal } from '@pancakeswap/uikit'
+import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { GridLoader } from 'react-spinners'
-import { shortenAddress } from 'utils/shortenAddress'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
 import ModalBase from './Modal/ModalBase'
 
@@ -524,7 +520,7 @@ const ReferralFriend = ({
       setIsOpenLoadingClaimModal(true)
       setTypeOfClaim(TYPE_OF_CLAIM.CLAIM_ALL)
       const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
-      setCacheAmountUnClaimOfUser(Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])))
+      setCacheAmountUnClaimOfUser(Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])))
       const params = []
       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
       const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
@@ -606,7 +602,7 @@ const ReferralFriend = ({
           return {
             ...item,
             id: item?.ref_address,
-            point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])),
+            point: Number(formatUnits(item.amount, USD_DECIMALS[chainId])),
           }
         })
 

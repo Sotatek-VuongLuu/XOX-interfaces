@@ -20,6 +20,8 @@ import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { BigNumber } from '@ethersproject/bignumber'
 import moment from 'moment'
 import styled from 'styled-components'
+import { BUSD_BSC, USDC_ETH } from '@pancakeswap/tokens'
+import { USD_DECIMALS } from 'config/constants/exchange'
 import ColumnChartRef from './components/ColumnChartRef'
 
 interface IVolumnDataItem {
@@ -157,14 +159,22 @@ const PlatformStat = (props: any): JSX.Element => {
   const getUserPoint = async () => {
     const result = await userPoint(chainId)
     if (result && result.analysisDatas && result.analysisDatas.length > 0) {
-      const totalReward = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_reward))
-      const totalClaimedAmount = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
+      const totalReward = formatBigNumber(
+        BigNumber.from(result.analysisDatas[0]?.total_reward),
+        2,
+        chainId === 1 || chainId === 5 ? USDC_ETH.decimals : BUSD_BSC.decimals,
+      )
+      const totalClaimedAmount = formatBigNumber(
+        BigNumber.from(result.analysisDatas[0]?.total_claimed_amount),
+        2,
+        chainId === 1 || chainId === 5 ? USDC_ETH.decimals : BUSD_BSC.decimals,
+      )
       const totalUnClaimed = Number(totalReward) - Number(totalClaimedAmount)
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
       listData[1].volumn = totalUnClaimed.toFixed(1)
-      listData[2].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_claimed_amount))
+      listData[2].volumn = totalClaimedAmount
       listData[3].volumn = result.analysisDatas[0]?.total_transactions.toString()
-      listData[4].volumn = formatBigNumber(BigNumber.from(result.analysisDatas[0]?.total_reward))
+      listData[4].volumn = totalReward
       setVolumnData(listData)
     }
   }
@@ -180,7 +190,11 @@ const PlatformStat = (props: any): JSX.Element => {
           mappingUser?.username,
           moment(item.date * 1000).format('DD/MM/YYYY hh:mm:ss'),
           mapPoint(formatBigNumber(BigNumber.from(item.amount))),
-          formatBigNumber(BigNumber.from(item.amount)),
+          formatBigNumber(
+            BigNumber.from(item.amount),
+            2,
+            chainId === 1 || chainId === 5 ? USDC_ETH.decimals : BUSD_BSC.decimals,
+          ),
         )
       })
       const lastResponse = await Promise.all(histories)
@@ -200,11 +214,11 @@ const PlatformStat = (props: any): JSX.Element => {
     const result = await pointDataDays(time.from, time.to, chainId)
     if (result && result.pointDataDays && result.pointDataDays.length > 0) {
       const arr = result.pointDataDays
-      const chartData =  createArray(startDate, endDate, arr)
+      const chartData = createArray(startDate, endDate, arr)
       const data = chartData.map((item: any) => {
         return createDataChartDay(
-          moment(item.date*1000).format('DD MMM'),
-          parseFloat(formatBigNumber(BigNumber.from(item.amount))),
+          moment(item.date * 1000).format('DD MMM'),
+          parseFloat(formatBigNumber(BigNumber.from(item.amount), 2, USD_DECIMALS[chainId])),
         )
       })
       setMinAmount(data[0].uv.toString())
@@ -213,25 +227,25 @@ const PlatformStat = (props: any): JSX.Element => {
       setDataChart(data)
     }
   }
-  const createArray = (from : Date, to : Date, subGraphData: any) => {
-    const start = new Date(moment(from).format('MM/DD/YYYY'));
-    const end = new Date(moment(to).format('MM/DD/YYYY'));
-    const chartData = [];
+  const createArray = (from: Date, to: Date, subGraphData: any) => {
+    const start = new Date(moment(from).format('MM/DD/YYYY'))
+    const end = new Date(moment(to).format('MM/DD/YYYY'))
+    const chartData = []
     for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
-        const loopDay = new Date(d);
-        loopDay.setHours(23);
-        loopDay.setMinutes(59)
-        loopDay.setSeconds(59);
-        const dataByDay = {date: moment(loopDay).unix() , amount: 0};
-        const dateInterger = Math.trunc(moment(loopDay).unix() / 86400);
+      const loopDay = new Date(d)
+      loopDay.setHours(23)
+      loopDay.setMinutes(59)
+      loopDay.setSeconds(59)
+      const dataByDay = { date: moment(loopDay).unix(), amount: 0 }
+      const dateInterger = Math.trunc(moment(loopDay).unix() / 86400)
 
-        const findData = subGraphData.find(x =>  {
-          return x.id === dateInterger.toString()
-        });
-        dataByDay.amount = findData ? findData.amount : 0;
-        chartData.push(dataByDay);
+      const findData = subGraphData.find((x) => {
+        return x.id === dateInterger.toString()
+      })
+      dataByDay.amount = findData ? findData.amount : 0
+      chartData.push(dataByDay)
     }
-    return chartData;
+    return chartData
   }
 
   const mapPoint = (amount: string) => {
@@ -265,7 +279,8 @@ const PlatformStat = (props: any): JSX.Element => {
     getUserPoint()
     getUserClaimedHistories()
     getPointDataDays()
-  }, [])
+  }, [chainId])
+
   return (
     <Wrapper sx={{}}>
       <div className="first">
