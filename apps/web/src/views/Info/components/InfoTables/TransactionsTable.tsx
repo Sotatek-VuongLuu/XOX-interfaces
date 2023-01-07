@@ -413,7 +413,7 @@ const TransactionsTable: React.FC = () => {
     const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD, SORT_FIELD.stableCoin]
     return currentTransactions
       ? currentTransactions
-          .slice(0, 100)
+          .slice(0, 300)
           .filter((x) => {
             return txFilter === undefined || x.type === txFilter
           })
@@ -448,7 +448,7 @@ const TransactionsTable: React.FC = () => {
         .filter((tx) => {
           return txFilter === undefined || tx.type === txFilter
         })
-        .slice(0, 100)
+        .slice(0, 300)
       if (filteredTransactions.length % perPage === 0) {
         setMaxPage(Math.floor(filteredTransactions.length / perPage))
       } else {
@@ -671,7 +671,7 @@ const TransactionsTable: React.FC = () => {
             lineHeight="17px"
             color="rgba(255, 255, 255, 0.6)"
           >
-            Total: {currentTransactions ? (currentTransactions.length > 100 ? 100 : currentTransactions.length) : 0}{' '}
+            Total: {currentTransactions ? (currentTransactions.length > 300 ? 300 : currentTransactions.length) : 0}{' '}
             transactions
           </Text>
         </Flex>
