@@ -44,7 +44,7 @@ export const getUserFriend = async (chainId: ChainId, account: string) => {
           rank {
             amount
           }
-          friends {
+          friends(orderBy: amount, orderDirection: desc) {
             ref_address
             amount
           }
@@ -152,10 +152,10 @@ export const userClaimedHistories = (chainId: ChainId) => {
   }`
   return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
 }
-export const pointDataDays = (chainId: ChainId) => {
+export const pointDataDays = (from : number, to: number, chainId: ChainId) => {
   const requests = `{
-    pointDataDays {
-      id, 
+    pointDataDays(where: { date_gte: ${from}, date_lte: ${to} }, orderBy: date, orderDirection: desc) {
+      id,
       amount,
       date
     }

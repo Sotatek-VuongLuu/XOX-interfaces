@@ -561,7 +561,7 @@ const FormReferralModal = (_, ref) => {
               <FormLabel>
                 Username<span>*</span>
               </FormLabel>
-              <FormInput value={username} onChange={handleUsername} className={errorMessages.username ? 'error' : ''} />
+              <FormInput value={username} onChange={handleUsername} maxLength={20} className={errorMessages.username ? 'error' : ''} />
               {errorMessages.username && <span className="form__error-message">{errorMessages.username}</span>}
             </div>
             <div>

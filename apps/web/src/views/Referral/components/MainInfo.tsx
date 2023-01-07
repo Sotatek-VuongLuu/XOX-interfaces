@@ -35,6 +35,8 @@ interface IItemLevel {
 interface IPropsTotal {
   percentPoint?: number
   account?: string
+  chainid?: number
+  totalPoint?: number
 }
 
 interface IPropsContainer {
@@ -151,7 +153,8 @@ const Second = styled.div<IPropsTotal>`
       padding: 3px;
 
       .current_point_bar {
-        background: ${({ account }) => (account ? 'linear-gradient(90deg, #fc6d40 0%, #fa9204 100%)' : 'transparent')};
+        background: ${({ account, chainid, totalPoint }) =>
+          account && chainid && totalPoint ? 'linear-gradient(90deg, #fc6d40 0%, #fa9204 100%)' : 'transparent'};
         border-radius: 30px;
         height: 18px;
         width: ${({ percentPoint }) => `${percentPoint}%`};
@@ -400,17 +403,21 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
               ) : null}
             </First>
 
-            <Second percentPoint={percentPoint} account={account}>
+            <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint}>
               <div className="total_point">
                 <p className="title">Your current total points</p>
                 <div className="total_point_bar">
                   <div className="current_point_bar">
-                    <span>
-                      {userCurrentPoint}/
-                      {currentLevelReach === 9
-                        ? listLever[currentLevelReach - 1]?.point
-                        : listLever[currentLevelReach]?.point}
-                    </span>
+                    {totalPoint ? (
+                      <span>
+                        {userCurrentPoint}/
+                        {currentLevelReach === 9
+                          ? listLever[currentLevelReach - 1]?.point
+                          : listLever[currentLevelReach]?.point}
+                      </span>
+                    ) : (
+                      <span />
+                    )}
                   </div>
                 </div>
               </div>

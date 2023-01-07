@@ -1,6 +1,5 @@
 import {
   MenuItemsType,
-  SwapIcon,
   SwapFillIcon,
   EarnFillIcon,
   EarnIcon,
@@ -12,6 +11,13 @@ import {
 } from '@pancakeswap/uikit'
 import { ContextApi } from '@pancakeswap/localization'
 import { SUPPORT_ONLY_BSC } from 'config/constants/supportChains'
+import SwapIcon from 'components/Svg/SwapIcon'
+import BridgeIcon from 'components/Svg/BridgeIcon'
+import LiquidityIcon from 'components/Svg/LiquidityIcon'
+import ReferralIcon from 'components/Svg/ReferralIcon'
+import AssetIcon from 'components/Svg/AssetIcon'
+import StableCoinIcon from 'components/Svg/StableCoinIcon'
+import FarmingIcon from 'components/Svg/FarmingIcon'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -127,6 +133,59 @@ export const configLanding: (
       href: '#',
       showItemsOnMobile: false,
       items: [],
+    },
+    {
+      label: t('Product'),
+      icon: CompanyIcon,
+      fillIcon: SwapFillIcon,
+      href: '#',
+      items: [
+        {
+          label: t('Swap'),
+          href: '/swap',
+          icon: SwapIcon,
+          fillIcon: SwapFillIcon,
+        },
+        {
+          label: t('Bridge'),
+          icon: BridgeIcon,
+          fillIcon: SwapFillIcon,
+          href: '/bridge',
+        },
+        {
+          label: t('Liquidity'),
+          icon: LiquidityIcon,
+          fillIcon: SwapFillIcon,
+          href: '/liquidity',
+        },
+        {
+          label: t('Farming'),
+          href: '/pools',
+          icon: FarmingIcon,
+          fillIcon: EarnFillIcon,
+          image: '/images/decorations/pe2.png',
+        },
+        {
+          label: t('Referral'),
+          href: '/referral',
+          icon: ReferralIcon,
+          fillIcon: EarnFillIcon,
+          image: '/images/decorations/pe2.png',
+        },
+        {
+          label: t('Asset'),
+          href: '/info',
+          icon: AssetIcon,
+          fillIcon: EarnFillIcon,
+          image: '/images/decorations/pe2.png',
+        },
+        {
+          label: 'Stable Coin',
+          icon: StableCoinIcon,
+          fillIcon: SwapFillIcon,
+          href: '/stable-coin',
+        },
+      ].map((item) => addMenuItemSupported(item, chainId)),
     },
   ].map((item) => addMenuItemSupported(item, chainId))
 

@@ -22,7 +22,7 @@ export const StyledMenuItemContainer = styled.div<StyledMenuItemProps>`
 
 const StyledMenuItem = styled.a<StyledMenuItemProps>`
   position: relative;
-  display: block;
+  display: inline-block;
   align-items: center;
   background: ${({ $isActive }) => ($isActive ? "linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)" : "#1d1d1d")};
   font-family: "Inter";

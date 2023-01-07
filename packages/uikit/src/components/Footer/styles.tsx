@@ -35,6 +35,7 @@ export const FooterMainContent = styled.div`
   padding: 92px 119px;
   background-color: #1d1d1d;
   position: relative;
+  width: 100%;
 
   &:before {
     content: "";
@@ -46,10 +47,10 @@ export const FooterMainContent = styled.div`
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr 1fr;
     gap: 40px 20px;
-    padding: 40px 24px;
+    padding: 40px;
 
     & > div:first-child,
     & > div:last-child {
@@ -59,6 +60,10 @@ export const FooterMainContent = styled.div`
     br {
       display: none;
     }
+  }
+
+  @media screen and (max-width: 560px) {
+    padding: 40px 24px;
   }
 `;
 
