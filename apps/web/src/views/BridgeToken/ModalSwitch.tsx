@@ -1,3 +1,4 @@
+
 import Image from "next/image";
 import { ChainId } from '@pancakeswap/sdk'
 import styled from "styled-components";
@@ -97,10 +98,11 @@ const ListNetWork = styled.div`
     }
   }
   button.active {
-    border: 1px solid ${({theme}) => theme.colors.secondary80};
+    border-color: rgba(0,0,0,0);
+    background: ${({theme}) => theme.colors.gradientViolet};
     cursor: auto;
     &:hover {
-      background: transparent;
+      background: ${({theme}) => theme.colors.gradientViolet};
     }
   }
   .title-network {

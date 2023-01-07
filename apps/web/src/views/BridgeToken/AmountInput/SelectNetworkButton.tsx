@@ -6,7 +6,7 @@ import { useModal } from '@pancakeswap/uikit'
 import { NETWORK_ICON, NETWORK_LABEL } from "../networks";
 import SwitchNetworkModal from "../ModalSwitch";
 
-const NETWORK_LABEL_BRIDGE: { [chainId in ChainId]?: string } = { [ChainId.RINKEBY]: "Rinkeby", [ChainId.BSC_TESTNET]: "BSC" }
+const NETWORK_LABEL_BRIDGE: { [chainId in ChainId]?: string } = { [ChainId.GOERLI]: "Ethereum", [ChainId.BSC_TESTNET]: "BSC" }
 
 const Wrapper = styled.button`
   padding: 7px 6px;
@@ -61,11 +61,11 @@ const SelectNetworkButton: React.FC<Props> = ({
     <SwitchNetworkModal switchNetwork={switchNetwork} currentChainId={inputChainId} />,
     true,
     true,
-    'selectCurrencyModal',
-  )
-  
+    `selectCurrencyModal${inputChainId}`,
+  );
+
   return (
-    <Wrapper onClick={onModalSwitch}>
+    <Wrapper onClick={() => onModalSwitch()}>
       <img
         src={NETWORK_ICON[inputChainId]}
         alt={`${NETWORK_LABEL_BRIDGE[inputChainId]} Logo`}
@@ -77,10 +77,6 @@ const SelectNetworkButton: React.FC<Props> = ({
           <path d="M10.6458 1.625L5.89575 6.375L1.14575 1.625" stroke="#8E8E8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
         </svg>
       </IconDown>
-      {/* <SwitchNetworkModal
-        switchNetwork={switchNetwork}
-        currentChainId={inputChainId}
-      /> */}
     </Wrapper>
   );
 };

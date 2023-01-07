@@ -115,10 +115,10 @@ const Button = styled.button`
 
 export const getChainIdToByChainId = (chainId: any) => {
   switch (chainId) {
-    case ChainId.RINKEBY:
+    case ChainId.GOERLI:
       return ChainId.BSC_TESTNET;
     case ChainId.BSC_TESTNET:
-      return ChainId.RINKEBY;
+      return ChainId.GOERLI;
     default:
       return chainId;
   }
