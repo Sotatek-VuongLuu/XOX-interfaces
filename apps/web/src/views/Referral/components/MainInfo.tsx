@@ -450,6 +450,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         const userAvatar = mappingUser.avatar
         const point = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
         const claim = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
+        
         return createData(
           idx + 1,
           userAvatar,
@@ -520,9 +521,9 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     return data
   }
   const mapPoint = (amount: number) => {
-    for (let i = 0; i <= listPoint?.length; i++) {
-      if (amount <= listPoint[i]?.reward && amount < listPoint[i + 1]?.reward) {
-        return listPoint[i]?.point
+    for (let i = 0; i <= listPoint.length; i++) {
+      if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
+        return listPoint[i].point
       }
     }
     return ''
