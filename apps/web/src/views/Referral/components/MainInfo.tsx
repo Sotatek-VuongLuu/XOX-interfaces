@@ -16,6 +16,8 @@ import HowToJoin from './HowToJoin'
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
+import Trans from 'components/Trans'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import {
   getUerRank,
   getUserPointDaily,
@@ -253,7 +255,40 @@ const WrapperRight = styled.div<IPropsContainer>`
     }
   }
 `
+const ConnectBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content:center;
+`
+const ConnectWalletButtonWraper = styled(ConnectWalletButton)`
+  padding: 10px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 146px;
+  margin-top: 16px;
+  height:37px;
 
+`
+const BoxWrapper = styled(Box)`
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: rgba(255, 255, 255, 0.87);
+  align-items: center;
+
+  button {
+    max-width: 146px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius:6px;
+  }
+`
+const SubTitle = styled.div`
+  color: #ffffffde;
+  text-align: center;
+  max-width: 242px;
+  margin: 0 auto;
+`
 const defaultIMappingFormat = {
   address: '',
   amount: '',
@@ -574,25 +609,41 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
               ) : null}
             </First>
 
-            <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint}>
-              <div className="total_point">
-                <p className="title">Your current total points</p>
-                <div className="total_point_bar">
-                  <div className="current_point_bar">
-                    {totalPoint ? (
-                      <span>
-                        {userCurrentPoint}/
-                        {currentLevelReach === 9
-                          ? listLever[currentLevelReach - 1]?.point
-                          : listLever[currentLevelReach]?.point}
-                      </span>
-                    ) : (
-                      <span />
-                    )}
+            {account && (
+              <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint}>
+                <div className="total_point">
+                  <p className="title">Your current total points</p>
+                  <div className="total_point_bar">
+                    <div className="current_point_bar">
+                      {totalPoint ? (
+                        <span>
+                          {userCurrentPoint}/
+                          {currentLevelReach === 9
+                            ? listLever[currentLevelReach - 1]?.point
+                            : listLever[currentLevelReach]?.point}
+                        </span>
+                      ) : (
+                        <span />
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Second>
+              </Second>
+            )}
+            {!account && (
+              <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint}>
+                <div className="total_point" style={{ height: '203px', padding: '58px 0' }}>
+                  <SubTitle className="please-connec">Please connect wallet to view your referral information</SubTitle>
+                  <ConnectBox>
+                    <ConnectWalletButtonWraper scale="sm">
+                      <BoxWrapper display={['flex', , , 'flex']}>
+                        <Trans>Connect Wallet</Trans>
+                      </BoxWrapper>
+                    </ConnectWalletButtonWraper>
+                  </ConnectBox>
+                </div>
+              </Second>
+            )}
           </div>
         </Grid>
         <Grid item xs={12} lg={8}>
