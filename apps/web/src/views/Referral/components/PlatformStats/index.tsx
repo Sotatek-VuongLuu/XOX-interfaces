@@ -148,7 +148,6 @@ const Line = styled.div`
 const PlatformStat = (props: IPropsItem): JSX.Element => {
   const { isMobile } = useMatchBreakpoints()
   const { volumnData, userClaimHistories, dataChart, minAmount, middleAmount, maxAmount } = props
-
   return (
     <Wrapper sx={{}}>
       <div className="first">
