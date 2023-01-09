@@ -21,6 +21,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
@@ -603,7 +604,6 @@ const ReferralFriend = ({
     try {
       setListFriends([])
       const { userInfos } = await getUserFriend(chainId, accountId)
-      console.log(await getUserFriend(chainId, accountId), 'userInfos')
       const sortByPoints = userInfos[0]?.friends?.sort(function (a: any, b: any) {
         return a.amount - b.amount
       })
@@ -694,7 +694,13 @@ const ReferralFriend = ({
                                 src={row.avatar}
                                 sx={{ marginRight: '8px', height: '24px', width: '24px' }}
                               />
-                              {row.name}
+                              <Tooltip title={row?.name}>
+                                <p>
+                                  {row.name?.length > 9
+                                    ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                                    : row.name}
+                                </p>
+                              </Tooltip>
                             </TableCell>
                             <TableCell align="left">
                               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
