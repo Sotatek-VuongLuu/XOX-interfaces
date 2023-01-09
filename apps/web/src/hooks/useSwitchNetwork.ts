@@ -34,7 +34,6 @@ export function useSwitchNetwork() {
 
   const switchNetworkLocal = useSwitchNetworkLocal()
   const isLoading = _isLoading || loading
-
   const switchNetworkAsync = useCallback(
     async (chainId: number) => {
       if (isConnected && typeof _switchNetworkAsync === 'function') {
@@ -53,7 +52,10 @@ export function useSwitchNetwork() {
             // TODO: review the error
             toastError(t('Error connecting, please retry and confirm in wallet!'))
           })
-          .finally(() => setLoading(false))
+          .finally(() => {
+            setLoading(false)
+            window.location.reload()
+          })
       }
       return new Promise(() => {
         switchNetworkLocal(chainId)
