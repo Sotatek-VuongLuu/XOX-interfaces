@@ -271,7 +271,7 @@ const PoolPage: React.FC<React.PropsWithChildren<{ address: string }>> = ({ addr
           <Heading mb="16px" mt="40px" scale="lg">
             {t('Transactions')}
           </Heading>
-          <TransactionTable transactions={transactions} />
+          {/* <TransactionTable transactions={transactions} /> */}
         </>
       ) : (
         <Flex mt="80px" justifyContent="center">

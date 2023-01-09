@@ -26,6 +26,12 @@ export enum TransactionType {
   BURN,
 }
 
+export enum TransactionFrom {
+  XOX,
+  UNI,
+  PANCAKE,
+}
+
 export type Transaction = {
   type: TransactionType
   hash: string
