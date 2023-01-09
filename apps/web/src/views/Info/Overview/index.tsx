@@ -2,7 +2,6 @@
 import { Flex } from '@pancakeswap/uikit'
 import Page from 'components/Layout/Page'
 import { useCallback, useEffect, useState } from 'react'
-import { useProtocolTransactionsSWR } from 'state/info/hooks'
 import styled from 'styled-components'
 import LineChart from 'views/Info/components/InfoCharts/LineChart'
 import TransactionTable from 'views/Info/components/InfoTables/TransactionsTable'
@@ -63,7 +62,6 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const [filter, setFilter] = useState('ALL')
   const [chartData, setChardData] = useState<Array<any> | undefined>()
   const [currencyDatas, setCurrencyDatas] = useState<Array<any> | undefined>()
-  const transactions = useProtocolTransactionsSWR()
   const { chainId } = useActiveChainId()
   const allTokens = useAllTokens()
 
@@ -206,7 +204,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
           <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} />
         </div>
         <div>
-          <TransactionTable transactions={transactions} />
+          <TransactionTable />
         </div>
       </PageContainer>
     </Page>
