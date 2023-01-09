@@ -22,7 +22,6 @@ import styled from 'styled-components'
 import ColumnChartRef from './components/ColumnChartRef'
 import { userClaimedHistories } from '../../../../services/referral'
 
-
 interface IVolumnDataItem {
   volumn: string
   title: string
@@ -169,10 +168,20 @@ const Line = styled.div`
   }
 `
 const PlatformStat = (props: IPropsItem): JSX.Element => {
-  const {  chainId } = useActiveWeb3React()
+  const { chainId } = useActiveWeb3React()
   const { listPoint, volumnData, dataChart, minAmount, middleAmount, maxAmount } = props
   const [userClaimHistories, setUserClaimHistories] = useState([])
 
+  const mapPoint = (amount: number) => {
+    if (listPoint && listPoint.length > 0) {
+      for (let i = 0; i <= listPoint.length; i++) {
+        if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
+          return listPoint[i].point.toString()
+        }
+      }
+    }
+    return ''
+  }
   const getUserClaimedHistories = async () => {
     const result = await userClaimedHistories(chainId)
     if (result) {
@@ -195,7 +204,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       setUserClaimHistories(lastResponse)
     }
   }
-  function createData(no: number, avatar: string, name: string, time: string, point: number, claim: number) {
+  function createData(no: number, avatar: string, name: string, time: string, point: string, claim: number) {
     return { no, avatar, name, time, point, claim }
   }
   const mapingHistories = async (address: string) => {
@@ -210,16 +219,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
     const data = result?.data[0]
     return data
   }
-  const mapPoint = (amount: number) => {
-    if (listPoint && listPoint.length > 0) {
-      for (let i = 0; i <= listPoint.length; i++) {
-        if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
-          return listPoint[i].point
-        }
-      }
-    }
-    return ''
-  }
+
   useEffect(() => {
     getUserClaimedHistories()
   }, [])
