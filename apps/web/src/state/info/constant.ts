@@ -27,8 +27,8 @@ import {
   INFO_BUCKETS_COOKIES,
 } from 'config/constants/info'
 import Cookies from 'js-cookie'
-import { TransactionFrom } from './types'
 import { GraphQLClient } from 'graphql-request'
+import { TransactionFrom } from './types'
 
 export type MultiChainName = 'BSC' | 'ETH'
 
@@ -119,7 +119,7 @@ export const multiChainTokenBlackList = {
 
 export const getMultiChainQueryEndPointWithStableSwap = (
   chainName: MultiChainName,
-  transactionFrom: TransactionFrom,
+  transactionFrom?: TransactionFrom,
 ) => {
   const isStableSwap = checkIsStableSwap()
   const bucketInfo = Cookies.get(INFO_BUCKETS_COOKIES) // sf or nr
