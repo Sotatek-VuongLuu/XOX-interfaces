@@ -197,7 +197,7 @@ const WrapperRight = styled.div<IPropsContainer>`
 
   .container {
     width: 100%;
-    height: 594px;
+    height: 600px;
     background: #242424;
     border-radius: 10px;
     padding: 27px;
@@ -410,16 +410,14 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
       const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
         const mappingUser = await mapingHistories(item.address)
         const userAvatar = mappingUser.avatar
-        const claim = new BigNumber(item.amount)
-          .div(10 ** USD_DECIMALS[chainId])
-          .toNumber()
-          .toString()
+        const point = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
+        const claim = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
         return createData(
           idx + 1,
           userAvatar,
           mappingUser?.username,
           moment(item.date * 1000).format('DD/MM/YYYY hh:mm:ss'),
-          mapPoint(new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()),
+          mapPoint(point),
           claim,
         )
       })
@@ -491,7 +489,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     }
     return ''
   }
-  function createData(no: number, avatar: string, name: string, time: string, point: string, claim: string) {
+  function createData(no: number, avatar: string, name: string, time: string, point: number, claim: number) {
     return { no, avatar, name, time, point, claim }
   }
   function createDataChartDay(name: string, uv: number) {

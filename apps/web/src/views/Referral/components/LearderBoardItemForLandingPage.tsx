@@ -1,4 +1,4 @@
-import { Avatar, Box } from '@mui/material'
+import { Avatar, Box, Tooltip } from '@mui/material'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
 import { useCallback } from 'react'
@@ -164,7 +164,13 @@ const LeaderBoardItemLP = (props: IProps): JSX.Element => {
         <div className={`${ranking.includes(item.rank) ? `bg_white` : `bg_rba`} user_info`}>
           <div className="user_avatar_name">
             <Avatar alt="Remy Sharp" src={item.avatar} sx={{ height: isMobile ? 24 : 40, width: isMobile ? 24 : 40 }} />
-            <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>{item.name}</p>
+            <Tooltip title={item.name}>
+              <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>
+                {item.name?.length > 9
+                  ? `${item.name.substring(0, 7)}...${item.name.substring(item.name.length - 2)}`
+                  : item.name}
+              </p>
+            </Tooltip>
           </div>
 
           <div className="point">{item.point}</div>

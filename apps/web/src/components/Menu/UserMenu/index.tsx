@@ -31,6 +31,7 @@ import useNativeCurrency from 'hooks/useNativeCurrency'
 import { getDefaultProvider } from '@ethersproject/providers'
 import { XOX_ADDRESS } from 'config/constants/exchange'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
+import { Tooltip } from '@mui/material'
 
 export const LOW_NATIVE_BALANCE = parseUnits('0.002', 'ether')
 
@@ -184,16 +185,22 @@ const UserMenu = () => {
             </Flex>
             <Flex flexDirection="column" width="100%">
               <Flex flexDirection="row" justifyContent="space-between" mb="8px">
-                <Text
-                  fontSize="16px"
-                  fontFamily="Inter"
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="19px"
-                  color="rgba(255, 255, 255)"
-                >
-                  {userProfile?.username}
-                </Text>
+                <Tooltip title={userProfile?.username}>
+                  <Text
+                    fontSize="16px"
+                    fontFamily="Inter"
+                    fontStyle="normal"
+                    fontWeight="700"
+                    lineHeight="19px"
+                    color="rgba(255, 255, 255)"
+                  >
+                    {userProfile?.username?.length > 9
+                      ? `${userProfile?.username.substring(0, 7)}...${userProfile?.username.substring(
+                          userProfile?.username.length - 2,
+                        )}`
+                      : userProfile?.username}
+                  </Text>
+                </Tooltip>
                 {/* eslint-disable-next-line */}
                 <div
                   style={{ cursor: 'pointer', borderRadius: '50%', overflow: 'hidden' }}
