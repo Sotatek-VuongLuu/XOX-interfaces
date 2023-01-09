@@ -258,7 +258,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
 
     // eslint-disable-next-line consistent-return
     return () => clearInterval(id)
-  }, [])
+  }, [chainId])
 
   useEffect(() => {
     if (!account || !chain || allTokens.length === 0) return
@@ -327,7 +327,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     total = nativeBalance + xoxBalance + result[2].value + sum
     setTotalAsset(total)
     setDataChart(result)
-  }, [balanceNative, tokensBalance])
+  }, [balanceNative, tokensBalance, chainId])
 
   return (
     <Wrapper>

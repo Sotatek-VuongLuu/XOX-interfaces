@@ -92,7 +92,7 @@ const WrapperLeft = styled(Box)`
   padding: 24px;
   background: #242424;
   border-radius: 10px;
-  height: 225px;
+  min-height: 248px;
   position: relative;
 
   .title {
@@ -125,26 +125,26 @@ const WrapperRight = styled(Box)<IPropsWR>`
   margin-top: 0 !important;
   position: relative;
 
-  &:before {
-    content: '';
-    position: absolute;
-    width: 117px;
-    height: 157px;
-    left: 0px;
-    top: 16px;
-    background: linear-gradient(90deg, #121212 16.15%, rgba(18, 18, 18, 0) 100%);
-  }
+  // &:before {
+  //   content: '';
+  //   position: absolute;
+  //   width: 117px;
+  //   height: 157px;
+  //   left: 0px;
+  //   top: 16px;
+  //   background: linear-gradient(90deg, #121212 16.15%, rgba(18, 18, 18, 0) 100%);
+  // }
 
-  &:after {
-    content: '';
-    position: absolute;
-    width: 117px;
-    height: 157px;
-    right: 0;
-    top: 16px;
-    background: linear-gradient(90deg, #121212 15.1%, rgba(18, 18, 18, 0) 100%);
-    transform: matrix(-1, 0, 0, 1, 0, 0);
-  }
+  // &:after {
+  //   content: '';
+  //   position: absolute;
+  //   width: 117px;
+  //   height: 157px;
+  //   right: 0;
+  //   top: 16px;
+  //   background: linear-gradient(90deg, #121212 15.1%, rgba(18, 18, 18, 0) 100%);
+  //   transform: matrix(-1, 0, 0, 1, 0, 0);
+  // }
 
   .item {
     position: relative;
@@ -155,6 +155,7 @@ const WrapperRight = styled(Box)<IPropsWR>`
     width: 192px;
     background: url(/images/item.svg);
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+    margin: auto;
   }
   .item > div {
     display: flex;
@@ -574,6 +575,12 @@ const ReferralFriend = ({
 
   const controlWidth = useMemo(() => {
     let slidesPerView = 5
+    if (width < 1400) {
+      slidesPerView = 4
+    }
+    if (width < 1200) {
+      slidesPerView = 4
+    }
     if (width < 900) {
       slidesPerView = 4
     }
@@ -640,12 +647,12 @@ const ReferralFriend = ({
     <>
       <Box sx={{ marginTop: '16px' }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} lg={4}>
             <WrapperLeft>
               <p className="title">Referral friends</p>
 
               {account && listFriends.length !== 0 ? (
-                <TableContainer component={Paper} sx={{ height: 137, background: '#242424', boxShadow: 'none' }}>
+                <TableContainer component={Paper} sx={{ height: 170, background: '#242424', boxShadow: 'none' }}>
                   <Table sx={{ minWidth: 400 }} aria-label="simple table">
                     <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
                       <TableRow
@@ -717,7 +724,7 @@ const ReferralFriend = ({
             </WrapperLeft>
           </Grid>
 
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} lg={8}>
             <WrapperRight sx={{ marginTop: '16px' }} account={account}>
               <Swiper
                 slidesPerView={controlWidth}
