@@ -582,7 +582,7 @@ const ReferralFriend = ({
       slidesPerView = 4
     }
     if (width < 900) {
-      slidesPerView = 4
+      slidesPerView = 3
     }
     if (width < 698) {
       slidesPerView = 3

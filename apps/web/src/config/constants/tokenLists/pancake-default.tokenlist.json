@@ -231,7 +231,7 @@
     },
     {
       "name": "USD Coin",
-      "address": "0xDCe94ECc218EA46242B515A3Ff69CDFA8d5c206F",
+      "address": "0x74905dfad4b2dEeD1b1a28a73De5c0BA3300e05d",
       "symbol": "USDC",
       "decimals": 6,
       "chainId": 5,
@@ -279,7 +279,7 @@
     },
     {
       "name": "XOX",
-      "address": "0x7B11CED691A5014a57B14A82Ad623afeC3058C4F",
+      "address": "0x0e3FA7D925eeE7C361aBafFba280c0b376644327",
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 5,
