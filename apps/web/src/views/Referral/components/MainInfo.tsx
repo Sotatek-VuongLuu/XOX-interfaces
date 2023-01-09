@@ -258,7 +258,7 @@ const WrapperRight = styled.div<IPropsContainer>`
 const ConnectBox = styled.div`
   display: flex;
   align-items: center;
-  justify-content:center;
+  justify-content: center;
 `
 const ConnectWalletButtonWraper = styled(ConnectWalletButton)`
   padding: 10px;
@@ -266,8 +266,7 @@ const ConnectWalletButtonWraper = styled(ConnectWalletButton)`
   width: 100%;
   max-width: 146px;
   margin-top: 16px;
-  height:37px;
-
+  height: 37px;
 `
 const BoxWrapper = styled(Box)`
   font-weight: 700;
@@ -280,7 +279,7 @@ const BoxWrapper = styled(Box)`
     max-width: 146px;
     font-size: 14px;
     font-weight: 700;
-    border-radius:6px;
+    border-radius: 6px;
   }
 `
 const SubTitle = styled.div`
@@ -386,9 +385,9 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
           wallets: listAddress,
         })
-        const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index)=> {
+        const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index) => {
           const dataUserInfos = response.data
-          const userInfo = dataUserInfos?.find((user=> item.address === user.address))
+          const userInfo = dataUserInfos?.find((user) => item.address === user.address)
 
           return {
             ...item,
@@ -450,7 +449,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         const userAvatar = mappingUser.avatar
         const point = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
         const claim = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
-        
+
         return createData(
           idx + 1,
           userAvatar,
@@ -521,11 +520,14 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     return data
   }
   const mapPoint = (amount: number) => {
-    for (let i = 0; i <= listPoint.length; i++) {
-      if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
-        return listPoint[i].point
+    if (listPoint) {
+      for (let i = 0; i <= listPoint.length; i++) {
+        if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
+          return listPoint[i].point
+        }
       }
     }
+
     return ''
   }
   function createData(no: number, avatar: string, name: string, time: string, point: number, claim: number) {
