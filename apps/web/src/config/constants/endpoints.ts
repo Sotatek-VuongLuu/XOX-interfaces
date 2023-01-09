@@ -62,9 +62,5 @@ export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
   [ChainId.BSC]: '',
   [ChainId.ETHEREUM]: '',
   [ChainId.BSC_TESTNET]: 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2',
-<<<<<<< HEAD
-  [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11/',
-=======
   [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11',
->>>>>>> develop
 }
