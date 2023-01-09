@@ -2,13 +2,12 @@
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { formatUnits } from '@ethersproject/units'
 import axios from 'axios'
 import { Box, Grid } from '@mui/material'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
-import { useEffect, useState } from 'react'
 import { BUSD_BSC, USDC_ETH } from '@pancakeswap/tokens'
+import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import BigNumber from 'bignumber.js'
@@ -255,35 +254,47 @@ const WrapperRight = styled.div<IPropsContainer>`
   }
 `
 
+const defaultIMappingFormat = {
+  address: '',
+  amount: '',
+  avatar: '',
+  id: '',
+  point: null,
+  rank: null,
+  username: '',
+}
+const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily'] as const
+type FilterTime = typeof filterTime[number]
+
 const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalEarn }: IProps) => {
   const startOfDay = moment().startOf('days').toString()
   const startOfMonth = moment().startOf('month').toString()
   const startOfWeek = moment().startOf('isoWeek').toString()
-  const [tabLeaderBoard, setTabLeaderBoard] = useState('All Time')
   const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>(listData)
   const [userClaimHistories, setUserClaimHistories] = useState([])
   const [dataChart, setDataChart] = useState([])
   const [minAmount, setMinAmount] = useState('')
   const [middleAmount, setMiddleAmount] = useState('')
   const [maxAmount, setMaxAmount] = useState('')
+  const [tabLeaderBoard, setTabLeaderBoard] = useState<FilterTime>('All Time')
   const [subTabIndex, setSubTabIndex] = useState(0)
   const [listUserRanks, setListUserRanks] = useState<IMappingFormat[]>([])
+  const [listUserRanksDaily, setListUserRanksDaily] = useState<IMappingFormat[]>([])
+  const [listUserRanksWeekly, setListUserRanksWeekly] = useState<IMappingFormat[]>([])
+  const [listUserRanksMonthly, setListUserRanksMonthly] = useState<IMappingFormat[]>([])
+  const [listUserRanksAllTime, setListUserRanksAllTime] = useState<IMappingFormat[]>([])
   const [listPoint, setListPoint] = useState([])
   const { account, chainId } = useActiveWeb3React()
   const totalPoint = listLever[currentLevelReach]?.point
   const currentPoint = userCurrentPoint
   const percentPoint = (currentPoint / totalPoint) * 100
-  const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily']
+
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
-  const [rankOfUser, setRankOfUser] = useState<IMappingFormat>({
-    address: '',
-    amount: '',
-    avatar: '',
-    id: '',
-    point: null,
-    rank: null,
-    username: '',
-  })
+  const [rankOfUser, setRankOfUser] = useState<IMappingFormat>(defaultIMappingFormat)
+  const [rankOfUserDaily, setRankOfUserDaily] = useState<IMappingFormat>(defaultIMappingFormat)
+  const [rankOfUserWeekly, setRankOfUserWeekly] = useState<IMappingFormat>(defaultIMappingFormat)
+  const [rankOfUserMonthly, setRankOfUserMonthly] = useState<IMappingFormat>(defaultIMappingFormat)
+  const [rankOfUserAllTime, setRankOfUserAllTime] = useState<IMappingFormat>(defaultIMappingFormat)
 
   const payloadPostForDaily = {
     date_gte: moment(startOfDay).unix(),
@@ -299,31 +310,31 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     date_lte: moment().unix(),
   }
 
-  const handleGetUserRanks = async (typeFilter: string) => {
+  const handleGetUserRanks = async (
+    typeFilter: FilterTime,
+    setList: (arr: IMappingFormat[]) => void,
+    setRank: (rank: IMappingFormat) => void,
+  ) => {
     try {
-      setListUserRanks([])
-      setRankOfUser({
-        address: '',
-        amount: '',
-        avatar: '',
-        id: '',
-        point: null,
-        rank: null,
-        username: '',
-      })
       let data = []
-      if (typeFilter === filterTime[0]) {
-        const res = await getUerRank(chainId)
-        data = res.userPoints
-      } else if (typeFilter === filterTime[3]) {
-        const res = await getUserPointDaily(chainId, payloadPostForDaily)
-        data = res.userPointDailies
-      } else if (typeFilter === filterTime[1]) {
-        const res = await getUserPointMonthly(chainId, payloadPostForMonth)
-        data = res.userPointMonthlies
-      } else {
-        const res = await getUserPointWeekly(chainId, payloadPostForWeek)
-        data = res.userPointWeeklies
+      let res = undefined
+      switch (typeFilter) {
+        case 'All Time':
+          res = await getUerRank(chainId)
+          data = res.userPoints
+          break
+        case 'Monthly':
+          res = await getUserPointMonthly(chainId, payloadPostForMonth)
+          data = res.userPointMonthlies
+          break
+        case 'Weekly':
+          res = await getUserPointWeekly(chainId, payloadPostForWeek)
+          data = res.userPointWeeklies
+          break
+        default:
+          res = await getUserPointDaily(chainId, payloadPostForDaily)
+          data = res.userPointDailies
+          break
       }
 
       const dataUserFormatAmount: IDataFormatUnit[] = data.map((item) => {
@@ -334,35 +345,39 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         }
       })
 
-      const dataMapping: IMappingFormat[] = await Promise.all(
-        dataUserFormatAmount.map(async (item: IDataFormatUnit, index: number): Promise<any> => {
-          const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
-            wallets: [`${item.address}`],
-          })
-          const dataMap = response?.data[0]
+      const listAddress = dataUserFormatAmount.map((item) => item.address)
+
+      if (listAddress.length > 0) {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+          wallets: listAddress,
+        })
+        const dataMapping: IMappingFormat[] = response.data.map((item, index) => {
           return {
+            ...dataUserFormatAmount[index],
             ...item,
-            ...dataMap,
             rank: index + 1,
-            username: dataMap?.username ?? null,
-            avatar: dataMap?.avatar ?? null,
+            username: item?.username ?? null,
+            avatar: item?.avatar ?? null,
           }
-        }),
-      )
+        })
 
-      setListUserRanks([...dataMapping])
+        setList([...dataMapping])
+        if (tabLeaderBoard === typeFilter) setListUserRanks([...dataMapping])
 
-      const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 101).filter((item: any) => {
-        return item.address === account?.toLowerCase()
-      })
+        const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 101).filter((item: any) => {
+          return item.address === account?.toLowerCase()
+        })
 
-      if (levelOfUSer.length !== 0) {
-        setRankOfUser(levelOfUSer[0])
+        if (levelOfUSer.length !== 0) {
+          setRank(levelOfUSer[0])
+          if (tabLeaderBoard === typeFilter) setRankOfUser(levelOfUSer[0])
+        }
       }
     } catch (error) {
       console.log(`error >>>`, error)
     }
   }
+
   const getListPointConfig = async () => {
     const res: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/point/config`).catch((error) => {
       console.warn(error)
@@ -483,18 +498,43 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     return { name, uv }
   }
 
+  const handleOnChangeRankTab = (item: FilterTime) => {
+    setTabLeaderBoard(item)
+    switch (item) {
+      case 'All Time':
+        setListUserRanks(listUserRanksAllTime)
+        setRankOfUser(rankOfUserAllTime)
+        break
+      case 'Monthly':
+        setListUserRanks(listUserRanksMonthly)
+        setRankOfUser(rankOfUserMonthly)
+        break
+      case 'Weekly':
+        setListUserRanks(listUserRanksWeekly)
+        setRankOfUser(rankOfUserWeekly)
+        break
+      default:
+        setListUserRanks(listUserRanksDaily)
+        setRankOfUser(rankOfUserDaily)
+        break
+    }
+  }
+
   useEffect(() => {
     getListPointConfig()
-    handleGetUserRanks('All Time')
     getUserPoint()
     getUserClaimedHistories()
     getPointDataDays()
+    handleGetUserRanks('All Time', setListUserRanksAllTime, setRankOfUserAllTime)
+    handleGetUserRanks('Monthly', setListUserRanksMonthly, setRankOfUserMonthly)
+    handleGetUserRanks('Weekly', setListUserRanksWeekly, setRankOfUserWeekly)
+    handleGetUserRanks('Daily', setListUserRanksDaily, setRankOfUserDaily)
   }, [chainId])
 
   return (
     <Box sx={{ marginTop: '16px' }}>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} lg={4}>
           <div>
             <First account={account}>
               <div className="tab_filter">
@@ -503,11 +543,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
                     // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                     <div
                       key={item}
-                      onClick={() => {
-                        setTabLeaderBoard(item)
-                        handleGetUserRanks(item)
-                        setListUserRanks([])
-                      }}
+                      onClick={() => handleOnChangeRankTab(item)}
                       className={tabLeaderBoard === item ? 'tab_item active' : 'tab_item'}
                     >
                       {item}
@@ -561,7 +597,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
             </Second>
           </div>
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} lg={8}>
           <WrapperRight subTabIndex={subTabIndex}>
             <div className="container">
               <div className="filter">
