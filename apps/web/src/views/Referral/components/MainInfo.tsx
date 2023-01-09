@@ -442,7 +442,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
       setVolumnData(listData)
     }
   }
-  
+
   const getPointDataDays = async () => {
     const startDate = new Date()
     startDate.setDate(startDate.getDate() - 14)
@@ -487,7 +487,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     }
     return chartData
   }
-  
+
   function createDataChartDay(name: string, uv: number) {
     return { name, uv }
   }
@@ -519,12 +519,11 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     handleGetUserRanks('Monthly', setListUserRanksMonthly, setRankOfUserMonthly)
     handleGetUserRanks('Weekly', setListUserRanksWeekly, setRankOfUserWeekly)
     handleGetUserRanks('Daily', setListUserRanksDaily, setRankOfUserDaily)
-  }, [chainId])
-  useEffect(() => {
     getListPointConfig()
     getUserPoint()
     getPointDataDays()
-  }, [])
+  }, [chainId])
+
   return (
     <Box sx={{ marginTop: '16px' }}>
       <Grid container spacing={2}>
