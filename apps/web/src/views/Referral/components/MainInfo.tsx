@@ -298,7 +298,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
   ) => {
     try {
       let data = []
-      let res = undefined
+      let res
       switch (typeFilter) {
         case 'All Time':
           res = await getUerRank(chainId)
