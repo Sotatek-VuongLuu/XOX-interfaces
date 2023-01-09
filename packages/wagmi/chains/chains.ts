@@ -127,7 +127,7 @@ export const mainnet: Chain = {
     default: 'https://eth-mainnet.g.alchemy.com/v2/OUbNK0UxmBbmI2_G7a1Ytrw1kGA1-wXm',
   },
   blockExplorers: {
-    default: { name: 'etherscan', url: 'https://etherscan.io/' },
+    default: { name: 'Etherscan', url: 'https://etherscan.io/' },
   },
 }
 
@@ -145,7 +145,7 @@ export const goerli: Chain = {
     default: 'https://eth-goerli.g.alchemy.com/v2/ihTj-Za_e4vpSsy3R65jobkf6vo7ZoND',
   },
   blockExplorers: {
-    default: { name: 'goerliscan', url: 'https://goerli.etherscan.io/' },
+    default: { name: 'Etherscan', url: 'https://goerli.etherscan.io/' },
   },
   testnet: true,
 }

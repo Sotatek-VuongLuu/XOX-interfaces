@@ -102,7 +102,7 @@ const Banner = () => {
   return (
     <Box>
       <Grid container spacing={2}>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} lg={8}>
           <WrapperLeft>
             <p className="title">Invite Your Friends. Earn Money Together.</p>
 
@@ -112,7 +112,7 @@ const Banner = () => {
           </WrapperLeft>
         </Grid>
 
-        <Grid item xs={12} md={4}>
+        <Grid item xs={12} lg={4}>
           <WrapperRight>
             <p className="my_code">My Referral Code</p>
             <div className="code">

@@ -72,7 +72,7 @@ export const USDC_RINKEBY = new ERC20Token(
 
 export const USDC_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xDCe94ECc218EA46242B515A3Ff69CDFA8d5c206F',
+  '0x74905dfad4b2dEeD1b1a28a73De5c0BA3300e05d',
   6,
   'tUSDC',
   'test USD Coin',
@@ -175,7 +175,7 @@ export const UNI_GOERLI = new ERC20Token(ChainId.GOERLI, '0x1bC4803310B723B4f0A2
 export const SUSHI_GOERLI = new ERC20Token(ChainId.GOERLI, '0x28362Cd5D11a8ce0371B4768Cd8EDF8a943CC2A9', 18, 'SUSHI')
 export const LINK_GOERLI = new ERC20Token(ChainId.GOERLI, '0xCfc1B83B17084e744423Db6314B7e811729c6514', 18, 'LINK')
 export const SHIB_GOERLI = new ERC20Token(ChainId.GOERLI, '0x5f933e0F9D17A4B28F229a2882e2E18dcef266c7', 18, 'SHIB')
-export const XOX_GOERLI = new ERC20Token(ChainId.GOERLI, '0x7B11CED691A5014a57B14A82Ad623afeC3058C4F', 18, 'XOX')
+export const XOX_GOERLI = new ERC20Token(ChainId.GOERLI, '0x0e3FA7D925eeE7C361aBafFba280c0b376644327', 18, 'XOX')
 
 export const BTCB_BSC = new ERC20Token(
   ChainId.BSC,
@@ -281,5 +281,5 @@ export const WBTC_ETH = new ERC20Token(
   '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
   8,
   'WBTC',
-  'Wrapped BTC',
+  'Wrapped Bitcoin',
 )

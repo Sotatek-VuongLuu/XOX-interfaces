@@ -4,7 +4,7 @@
 import { formatUnits } from '@ethersproject/units'
 import { Box } from '@mui/material'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
+import { USD_DECIMALS } from 'config/constants/exchange'
 import { useTreasuryXOX } from 'hooks/useContract'
 import { useEffect, useState } from 'react'
 import { userAmount } from 'services/referral'
@@ -45,7 +45,7 @@ export default function Refferal() {
     try {
       const infosUser: any[] = await contractTreasuryXOX.userInfo(account)
       const dataParse: any[] = infosUser.map((item) => {
-        return formatUnits(item, MAPPING_DECIMAL_WITH_CHAIN[chainId])
+        return formatUnits(item, USD_DECIMALS[chainId])
       })
       setUserCurrentPoint(Number(dataParse[0]))
       currentPoint = Number(dataParse[0])
@@ -59,8 +59,8 @@ export default function Refferal() {
   const handleCheckPendingRewardAll = async (accountId: string) => {
     try {
       const txPendingReward = await contractTreasuryXOX.pendingRewardAll(accountId)
-      setIsClaimAll(Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])) === 0)
-      setTotalAmountUnClaimOfUser(Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])))
+      setIsClaimAll(Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])) === 0)
+      setTotalAmountUnClaimOfUser(Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])))
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
@@ -92,7 +92,7 @@ export default function Refferal() {
         try {
           if (item.isReach) {
             const txPendingReward = await contractTreasuryXOX.pendingRewardByLevel(account, item.lever)
-            if (Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])) === 0) {
+            if (Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])) === 0) {
               return {
                 ...item,
                 isClaimed: true,
@@ -116,7 +116,7 @@ export default function Refferal() {
     try {
       const result = await userAmount(chainId)
       if (result) {
-        const volumn = formatUnits(result.analysisDatas[0]?.total_claimed_amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])
+        const volumn = formatUnits(result.analysisDatas[0]?.total_claimed_amount, USD_DECIMALS[chainId])
         setVolumnTotalEarn(volumn)
       }
     } catch (error) {

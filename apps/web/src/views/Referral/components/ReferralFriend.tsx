@@ -32,17 +32,13 @@ import 'swiper/css/pagination'
 import useWindowSize from 'hooks/useWindowSize'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTreasuryXOX } from 'hooks/useContract'
-import { formatEther, formatUnits } from '@ethersproject/units'
-import { useSelector } from 'react-redux'
-import { AppState } from 'state'
+import { formatUnits } from '@ethersproject/units'
 import { getUserFriend } from 'services/referral'
-import { MAPPING_DECIMAL_WITH_CHAIN } from 'config/constants/mappingDecimals'
+import { USD_DECIMALS } from 'config/constants/exchange'
 import axios from 'axios'
-import { BigNumber } from '@ethersproject/bignumber'
-import { CopyButton, useModal } from '@pancakeswap/uikit'
+import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { GridLoader } from 'react-spinners'
-import { shortenAddress } from 'utils/shortenAddress'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
 import ModalBase from './Modal/ModalBase'
 
@@ -96,7 +92,7 @@ const WrapperLeft = styled(Box)`
   padding: 24px;
   background: #242424;
   border-radius: 10px;
-  height: 225px;
+  min-height: 248px;
   position: relative;
 
   .title {
@@ -129,26 +125,26 @@ const WrapperRight = styled(Box)<IPropsWR>`
   margin-top: 0 !important;
   position: relative;
 
-  &:before {
-    content: '';
-    position: absolute;
-    width: 117px;
-    height: 157px;
-    left: 0px;
-    top: 16px;
-    background: linear-gradient(90deg, #121212 16.15%, rgba(18, 18, 18, 0) 100%);
-  }
+  // &:before {
+  //   content: '';
+  //   position: absolute;
+  //   width: 117px;
+  //   height: 157px;
+  //   left: 0px;
+  //   top: 16px;
+  //   background: linear-gradient(90deg, #121212 16.15%, rgba(18, 18, 18, 0) 100%);
+  // }
 
-  &:after {
-    content: '';
-    position: absolute;
-    width: 117px;
-    height: 157px;
-    right: 0;
-    top: 16px;
-    background: linear-gradient(90deg, #121212 15.1%, rgba(18, 18, 18, 0) 100%);
-    transform: matrix(-1, 0, 0, 1, 0, 0);
-  }
+  // &:after {
+  //   content: '';
+  //   position: absolute;
+  //   width: 117px;
+  //   height: 157px;
+  //   right: 0;
+  //   top: 16px;
+  //   background: linear-gradient(90deg, #121212 15.1%, rgba(18, 18, 18, 0) 100%);
+  //   transform: matrix(-1, 0, 0, 1, 0, 0);
+  // }
 
   .item {
     position: relative;
@@ -159,6 +155,7 @@ const WrapperRight = styled(Box)<IPropsWR>`
     width: 192px;
     background: url(/images/item.svg);
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+    margin: auto;
   }
   .item > div {
     display: flex;
@@ -524,7 +521,7 @@ const ReferralFriend = ({
       setIsOpenLoadingClaimModal(true)
       setTypeOfClaim(TYPE_OF_CLAIM.CLAIM_ALL)
       const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
-      setCacheAmountUnClaimOfUser(Number(formatUnits(txPendingReward._hex, MAPPING_DECIMAL_WITH_CHAIN[chainId])))
+      setCacheAmountUnClaimOfUser(Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])))
       const params = []
       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
       const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
@@ -578,8 +575,14 @@ const ReferralFriend = ({
 
   const controlWidth = useMemo(() => {
     let slidesPerView = 5
-    if (width < 900) {
+    if (width < 1400) {
       slidesPerView = 4
+    }
+    if (width < 1200) {
+      slidesPerView = 4
+    }
+    if (width < 900) {
+      slidesPerView = 3
     }
     if (width < 698) {
       slidesPerView = 3
@@ -606,7 +609,7 @@ const ReferralFriend = ({
           return {
             ...item,
             id: item?.ref_address,
-            point: Number(formatUnits(item.amount, MAPPING_DECIMAL_WITH_CHAIN[chainId])),
+            point: Number(formatUnits(item.amount, USD_DECIMALS[chainId])),
           }
         })
 
@@ -644,12 +647,12 @@ const ReferralFriend = ({
     <>
       <Box sx={{ marginTop: '16px' }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} md={4}>
+          <Grid item xs={12} lg={4}>
             <WrapperLeft>
               <p className="title">Referral friends</p>
 
               {account && listFriends.length !== 0 ? (
-                <TableContainer component={Paper} sx={{ height: 137, background: '#242424', boxShadow: 'none' }}>
+                <TableContainer component={Paper} sx={{ height: 170, background: '#242424', boxShadow: 'none' }}>
                   <Table sx={{ minWidth: 400 }} aria-label="simple table">
                     <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
                       <TableRow
@@ -721,7 +724,7 @@ const ReferralFriend = ({
             </WrapperLeft>
           </Grid>
 
-          <Grid item xs={12} md={8}>
+          <Grid item xs={12} lg={8}>
             <WrapperRight sx={{ marginTop: '16px' }} account={account}>
               <Swiper
                 slidesPerView={controlWidth}

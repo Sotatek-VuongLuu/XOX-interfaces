@@ -248,8 +248,8 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     return new ERC20Token(chainId, token.contractAddress, token.decimals, token.symbol)
   }, [])
 
-  const formatAmount = (number: number) => {
-    return parseInt((number * 100).toString()) / 100
+  const formatAmount = (number: number, decimals = 2) => {
+    return parseInt((number * 10 ** decimals).toString()) / 10 ** decimals
   }
 
   useEffect(() => {
@@ -258,7 +258,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
 
     // eslint-disable-next-line consistent-return
     return () => clearInterval(id)
-  }, [])
+  }, [chainId])
 
   useEffect(() => {
     if (!account || !chain || allTokens.length === 0) return
@@ -321,14 +321,13 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       }
     })
     result.push({
-      name: 'others',
+      name: 'Others',
       value: sum,
     })
-    console.log(tokensBalance, xoxBalance, sum, result[2].value, 'result[2].value')
     total = nativeBalance + xoxBalance + result[2].value + sum
     setTotalAsset(total)
     setDataChart(result)
-  }, [balanceNative, tokensBalance])
+  }, [balanceNative, tokensBalance, chainId])
 
   return (
     <Wrapper>
@@ -456,7 +455,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                           color="rgba(255, 255, 255, 0.87)"
                           marginRight="5px"
                         >
-                          {balance?.balance}
+                          {formatAmount(balance?.balance, 6)}
                         </Text>
                         <Text
                           fontSize="14px"
@@ -485,7 +484,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                             ? balance?.balance * tokenRateXOX(balance.symbol)
                             : '' */}
                         {balance?.symbol !== 'XOX' && (
-                          <>| ~{formatAmount(balance?.balance * tokenRateXOX(balance.symbol))} XOX</>
+                          <> | ~{formatAmount(balance?.balance * tokenRateXOX(balance.symbol))} XOX</>
                         )}
                       </Text>
                     </Flex>

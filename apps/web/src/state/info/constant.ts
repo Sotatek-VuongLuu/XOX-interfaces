@@ -5,7 +5,18 @@ import {
   INFO_CLIENT_ETH,
   INFO_NR_CLIENT,
 } from 'config/constants/endpoints'
-import { infoClient, infoClientETH, infoNRClient, infoStableSwapClient } from 'utils/graphql'
+import {
+  infoClient,
+  infoClientETH,
+  infoClientETHUNI,
+  infoClientETHXOX,
+  infoClientPANCAKE,
+  infoClientXOX,
+  infoNRClient,
+  infoNRClientPANCAKE,
+  infoNRClientXOX,
+  infoStableSwapClient,
+} from 'utils/graphql'
 
 import { ChainId } from '@pancakeswap/sdk'
 import {
@@ -16,6 +27,8 @@ import {
   INFO_BUCKETS_COOKIES,
 } from 'config/constants/info'
 import Cookies from 'js-cookie'
+import { GraphQLClient } from 'graphql-request'
+import { TransactionFrom } from './types'
 
 export type MultiChainName = 'BSC' | 'ETH'
 
@@ -49,9 +62,39 @@ export const multiChainQueryClient = {
   ETH: infoClientETH,
 }
 
+export const multiChainQueryClientWithFrom = {
+  [TransactionFrom.XOX]: {
+    BSC: infoClientXOX,
+    ETH: infoClientETHXOX,
+  },
+  [TransactionFrom.UNI]: {
+    ETH: infoClientETHUNI,
+    BSC: new GraphQLClient(''),
+  },
+  [TransactionFrom.PANCAKE]: {
+    ETH: new GraphQLClient(''),
+    BSC: infoClientPANCAKE,
+  },
+}
+
 export const multiChainQueryClientWithNR = {
   BSC: infoNRClient,
   ETH: infoClientETH,
+}
+
+export const multiChainQueryClientWithNRWithFrom = {
+  [TransactionFrom.XOX]: {
+    BSC: infoNRClientXOX,
+    ETH: infoClientETHXOX,
+  },
+  [TransactionFrom.UNI]: {
+    ETH: infoClientETHUNI,
+    BSC: new GraphQLClient(''),
+  },
+  [TransactionFrom.PANCAKE]: {
+    ETH: new GraphQLClient(''),
+    BSC: infoNRClientPANCAKE,
+  },
 }
 
 export const multiChainQueryEndPoint = {
@@ -74,11 +117,20 @@ export const multiChainTokenBlackList = {
   ETH: ETH_TOKEN_BLACKLIST,
 }
 
-export const getMultiChainQueryEndPointWithStableSwap = (chainName: MultiChainName) => {
+export const getMultiChainQueryEndPointWithStableSwap = (
+  chainName: MultiChainName,
+  transactionFrom?: TransactionFrom,
+) => {
   const isStableSwap = checkIsStableSwap()
   const bucketInfo = Cookies.get(INFO_BUCKETS_COOKIES) // sf or nr
   if (isStableSwap) return infoStableSwapClient
-  return bucketInfo === 'sf' ? multiChainQueryClient[chainName] : multiChainQueryClientWithNR[chainName]
+  return bucketInfo === 'sf'
+    ? transactionFrom
+      ? multiChainQueryClientWithFrom[transactionFrom][chainName]
+      : multiChainQueryClient[chainName]
+    : transactionFrom
+    ? multiChainQueryClientWithNRWithFrom[transactionFrom][chainName]
+    : multiChainQueryClientWithNR[chainName]
 }
 
 export const checkIsStableSwap = () => window.location.href.includes('stableSwap')

@@ -45,7 +45,7 @@
     {
       "name": "Polygon",
       "symbol": "MATIC",
-      "address": "0xcc42724c6683b7e57334c4e856f4c9965ed682bd",
+      "address": "0xCC42724C6683B7E57334c4E856f4c9965ED682bD",
       "chainId": 56,
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/3890.png"
@@ -149,10 +149,10 @@
     },
 
     {
-      "name": "Wrapped BTC",
-      "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "name": "Wrapped Bitcoin",
+      "address": "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599",
       "symbol": "WBTC",
-      "decimals": 18,
+      "decimals": 8,
       "chainId": 1,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/3717.png"
     },
@@ -182,7 +182,7 @@
     },
     {
       "name": "Uniswap",
-      "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+      "address": "0x1f9840a85d5aF5bf1D1762F925BDADdC4201F984",
       "symbol": "UNI",
       "decimals": 18,
       "chainId": 1,
@@ -190,7 +190,7 @@
     },
     {
       "name": "SushiSwap",
-      "address": "0x6b3595068778dd592e39a122f4f5a5cf09c90fe2",
+      "address": "0x6B3595068778DD592e39A122f4f5a5cF09C90fE2",
       "symbol": "SUSHI",
       "decimals": 18,
       "chainId": 1,
@@ -198,7 +198,7 @@
     },
     {
       "name": "Chainlink",
-      "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+      "address": "0x514910771AF9Ca656af840dff83E8264EcF986CA",
       "symbol": "LINK",
       "decimals": 18,
       "chainId": 1,
@@ -206,7 +206,7 @@
     },
     {
       "name": "Shiba Inu",
-      "address": "0x95ad61b0a150d79219dcf64e1e6cc01f0b64c4ce",
+      "address": "0x95aD61b0a150d79219dCF64E1E6Cc01f0B64C4cE",
       "symbol": "SHIB",
       "decimals": 18,
       "chainId": 1,
@@ -214,7 +214,7 @@
     },
 
     {
-      "name": "Wrapped BTC",
+      "name": "Wrapped Bitcoin",
       "address": "0x2a924bcD60450C7a354413d8b2c906A3173F9208",
       "symbol": "WBTC",
       "decimals": 8,
@@ -231,10 +231,10 @@
     },
     {
       "name": "USD Coin",
-      "address": "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48",
+      "address": "0x74905dfad4b2dEeD1b1a28a73De5c0BA3300e05d",
       "symbol": "USDC",
       "decimals": 6,
-      "chainId": 1,
+      "chainId": 5,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
     },
     {
@@ -279,7 +279,7 @@
     },
     {
       "name": "XOX",
-      "address": "0x7B11CED691A5014a57B14A82Ad623afeC3058C4F",
+      "address": "0x0e3FA7D925eeE7C361aBafFba280c0b376644327",
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 5,

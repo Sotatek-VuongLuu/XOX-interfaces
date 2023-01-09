@@ -33,8 +33,8 @@ const CustomTooltip = ({ active, payload, label }: any) => {
     return (
       <CustomTooltipStyle>
         <p className="label">{new Date(label).toLocaleString()}</p>
-        <p className="intro">{`Price: ${formatAmount(payload[0].payload.value)}`}</p>
-        <p className="desc">{`Volume: ${formatAmount(payload[0].payload.vol)}`}</p>
+        <p className="intro">{`Price: $${formatAmount(payload[0].payload.value)}`}</p>
+        <p className="desc">{`Volume: $${formatAmount(payload[0].payload.vol)}`}</p>
       </CustomTooltipStyle>
     )
   }

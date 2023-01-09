@@ -345,6 +345,7 @@ const FormReferralModal = (_, ref) => {
   }, [username, email, telegram, avatar, userProfile])
 
   useEffect(() => {
+    if (!username) return
     const getData = setTimeout(() => {
       axios
         .get(`${process.env.NEXT_PUBLIC_API}/users/${username?.trim()}/existed`)
@@ -357,9 +358,10 @@ const FormReferralModal = (_, ref) => {
           }
           setErrorMessages(error)
         })
-        .catch((error) => console.warn(error))
+        .catch((error) => console.log(error))
     }, 500)
 
+    // eslint-disable-next-line consistent-return
     return () => clearTimeout(getData)
   }, [username])
 
@@ -561,7 +563,12 @@ const FormReferralModal = (_, ref) => {
               <FormLabel>
                 Username<span>*</span>
               </FormLabel>
-              <FormInput value={username} onChange={handleUsername} maxLength={20} className={errorMessages.username ? 'error' : ''} />
+              <FormInput
+                value={username}
+                onChange={handleUsername}
+                maxLength={20}
+                className={errorMessages.username ? 'error' : ''}
+              />
               {errorMessages.username && <span className="form__error-message">{errorMessages.username}</span>}
             </div>
             <div>

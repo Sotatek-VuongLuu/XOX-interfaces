@@ -6,12 +6,13 @@ import truncateHash from '@pancakeswap/utils/truncateHash'
 import { Box, Flex, LinkExternal, Skeleton, Text, Button, Link, Select, Input } from '@pancakeswap/uikit'
 import { formatISO9075 } from 'date-fns'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import { useGetChainName } from 'state/info/hooks'
-import { Transaction, TransactionType } from 'state/info/types'
+import { useGetChainName, useProtocolTransactionsSWR } from 'state/info/hooks'
+import { Transaction, TransactionFrom, TransactionType } from 'state/info/types'
 import styled from 'styled-components'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 import { getBlockExploreLink } from 'utils'
 import { formatAmount } from 'utils/formatInfoNumbers'
-import { Arrow, Break, ClickableColumnHeader } from './shared'
+import { Arrow, ClickableColumnHeader } from './shared'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -240,7 +241,7 @@ export const PageButtons = styled(Flex)`
 const SORT_FIELD = {
   timestamp: 'timestamp',
   amountUSD: 'amountUSD',
-  stableCoin: 'amountStable'
+  stableCoin: 'amountStable',
 }
 
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
@@ -276,7 +277,10 @@ const DataRow: React.FC<
   const abs1 = Math.abs(transaction.amountToken1)
   const outputTokenSymbol = transaction.amountToken0 < 0 ? transaction.token0Symbol : transaction.token1Symbol
   const inputTokenSymbol = transaction.amountToken1 < 0 ? transaction.token0Symbol : transaction.token1Symbol
-  const stablCoin = (inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox') ? `${formatAmount(transaction.amountUSD/10)} Stable coin` : '--'
+  const stablCoin =
+    inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
+      ? `${formatAmount(transaction.amountUSD / 10)} Stable coin`
+      : '--'
   const chainName = useGetChainName()
   return (
     <>
@@ -380,11 +384,7 @@ const DataRow: React.FC<
   )
 }
 
-const TransactionsTable: React.FC<
-  React.PropsWithChildren<{
-    transactions: Transaction[]
-  }>
-> = ({ transactions }) => {
+const TransactionsTable: React.FC = () => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
   const [sortDirection, setSortDirection] = useState<boolean>(false)
   const [sortStable, setSortStable] = useState<boolean>(false)
@@ -393,6 +393,10 @@ const TransactionsTable: React.FC<
   const [iconSortStable, setIconSortStable] = useState<any>(null)
   const [perPage, setPerPage] = useState(10)
   const [tempPage, setTempPage] = useState('1')
+  const { chainId } = useActiveChainId()
+  const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
+  const transactions = useProtocolTransactionsSWR()
+  const [currentTransactions, setCurrentTransactions] = useState([])
 
   const { t } = useTranslation()
 
@@ -407,16 +411,20 @@ const TransactionsTable: React.FC<
 
   const sortedTransactions = useMemo(() => {
     const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD, SORT_FIELD.stableCoin]
-    return transactions
-      ? transactions
-          .slice(0, 100)
+    return currentTransactions
+      ? currentTransactions
+          .slice(0, 300)
           .filter((x) => {
             return txFilter === undefined || x.type === txFilter
-          }).map((item:any) => {
+          })
+          .map((item: any) => {
             const outputTokenSymbol = item.amountToken0 < 0 ? item.token0Symbol : item.token1Symbol
             const inputTokenSymbol = item.amountToken1 < 0 ? item.token0Symbol : item.token1Symbol
-            const amountStable = (inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox') ? item.amountUSD/10+1 : 0
-            return {...item, amountStable}
+            const amountStable =
+              inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
+                ? item.amountUSD / 10 + 1
+                : 0
+            return { ...item, amountStable }
           })
           .sort((a, b) => {
             if (a && b) {
@@ -431,23 +439,23 @@ const TransactionsTable: React.FC<
           })
           .slice(perPage * (page - 1), page * perPage)
       : []
-  }, [transactions, page, sortField, sortDirection, sortStable, txFilter, perPage])
+  }, [currentTransactions, page, sortField, sortDirection, sortStable, txFilter, perPage])
 
   // Update maxPage based on amount of items & applied filtering
   useEffect(() => {
-    if (transactions) {
-      const filteredTransactions = transactions
+    if (currentTransactions) {
+      const filteredTransactions = currentTransactions
         .filter((tx) => {
           return txFilter === undefined || tx.type === txFilter
         })
-        .slice(0, 100)
+        .slice(0, 300)
       if (filteredTransactions.length % perPage === 0) {
         setMaxPage(Math.floor(filteredTransactions.length / perPage))
       } else {
         setMaxPage(Math.floor(filteredTransactions.length / perPage) + 1)
       }
     }
-  }, [transactions, txFilter, perPage])
+  }, [currentTransactions, txFilter, perPage])
 
   const handleFilter = useCallback(
     (newFilter: TransactionType) => {
@@ -457,6 +465,16 @@ const TransactionsTable: React.FC<
       }
     },
     [txFilter],
+  )
+
+  const handleFilterFrom = useCallback(
+    (newFilterFrom: TransactionFrom) => {
+      if (newFilterFrom !== transactionFrom) {
+        setTransactionFrom(newFilterFrom)
+        setPage(1)
+      }
+    },
+    [transactionFrom],
   )
 
   const handleSort = useCallback(
@@ -564,6 +582,17 @@ const TransactionsTable: React.FC<
   }, [])
 
   useEffect(() => {
+    switch (transactionFrom) {
+      case TransactionFrom.XOX:
+        setCurrentTransactions(transactions?.transactionsXOX)
+        break
+      default:
+        setCurrentTransactions(transactions?.transactionsOther)
+        break
+    }
+  }, [transactions, transactionFrom])
+
+  useEffect(() => {
     setTempPage(page.toString())
   }, [page])
 
@@ -587,6 +616,30 @@ const TransactionsTable: React.FC<
           Transactions History
         </Text>
         <Flex flexDirection="column" alignItems="flex-end">
+          <Flex className="btn-filter" mb="8px">
+            <Button
+              onClick={() => handleFilterFrom(TransactionFrom.XOX)}
+              className={TransactionFrom.XOX === transactionFrom ? 'active' : 'inactive'}
+            >
+              XOX
+            </Button>
+            {(chainId === 1 || chainId === 5) && (
+              <Button
+                onClick={() => handleFilterFrom(TransactionFrom.UNI)}
+                className={TransactionFrom.UNI === transactionFrom ? 'active' : 'inactive'}
+              >
+                Uniswap
+              </Button>
+            )}
+            {(chainId === 56 || chainId === 97) && (
+              <Button
+                onClick={() => handleFilterFrom(TransactionFrom.PANCAKE)}
+                className={TransactionFrom.PANCAKE === transactionFrom ? 'active' : 'inactive'}
+              >
+                Pancake swap
+              </Button>
+            )}
+          </Flex>
           <Flex className="btn-filter" mb="8px">
             <Button onClick={() => handleFilter(undefined)} className={undefined === txFilter ? 'active' : 'inactive'}>
               All
@@ -618,7 +671,8 @@ const TransactionsTable: React.FC<
             lineHeight="17px"
             color="rgba(255, 255, 255, 0.6)"
           >
-            Total: {transactions ? (transactions.length > 100 ? 100 : transactions.length) : 0} transactions
+            Total: {currentTransactions ? (currentTransactions.length > 300 ? 300 : currentTransactions.length) : 0}{' '}
+            transactions
           </Text>
         </Flex>
       </Flex>
@@ -727,7 +781,7 @@ const TransactionsTable: React.FC<
           </Text>
           {/* <Break /> */}
 
-          {transactions ? (
+          {currentTransactions ? (
             <>
               {sortedTransactions.map((transaction, index) => {
                 if (transaction) {
@@ -755,7 +809,7 @@ const TransactionsTable: React.FC<
           )}
         </Table>
       </CustomTableWrapper>
-      {transactions && (
+      {currentTransactions && (
         <PageButtons>
           <div>
             <Arrow

@@ -80,14 +80,16 @@ const ResetCSS = createGlobalStyle`
 
   /* Scrollbar */
   ::-webkit-scrollbar {
-    width: 8px;
+    width: 6px;
+    height: 6px;
   }
   ::-webkit-scrollbar-thumb {
-    background: ${({ theme }) => theme.colors.textSubtle}; 
-    border-radius: 8px;
+    background: #444444;
+    transform: matrix(0, -1, -1, 0, 0, 0);
+    border-radius: 10px;
   }
   ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 5px ${({ theme }) => theme.colors.input}; 
+    box-shadow: none;
     border-radius: 10px;
   }
 

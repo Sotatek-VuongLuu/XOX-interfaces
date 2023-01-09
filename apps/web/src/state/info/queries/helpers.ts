@@ -50,7 +50,7 @@ export const mapSwaps = (swap: SwapResponse) => {
     type: TransactionType.SWAP,
     hash: swap.id.split('-')[0],
     timestamp: swap.timestamp,
-    sender: swap.from,
+    sender: swap.sender,
     token0Symbol: swap.pair.token0.symbol,
     token1Symbol: swap.pair.token1.symbol,
     token0Address: swap.pair.token0.id,

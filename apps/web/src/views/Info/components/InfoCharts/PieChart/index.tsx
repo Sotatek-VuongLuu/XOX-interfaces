@@ -1,7 +1,30 @@
 import React from 'react'
 import { PieChart, Pie, Cell, ResponsiveContainer, LabelList, Tooltip } from 'recharts'
+import styled from 'styled-components'
+import { formatAmount } from 'utils/formatInfoNumbers'
 
 const RADIAN = Math.PI / 180
+
+const CustomTooltipStyle = styled.div`
+  background: #fff;
+  padding: 5px 10px;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  color: black;
+`
+
+const CustomTooltip = ({ active, payload, label }: any) => {
+  if (active && payload && payload.length) {
+    return (
+      <CustomTooltipStyle>
+        <p className="label">{`${payload[0].name}: $${formatAmount(payload[0].value, {displayThreshold: 2})}`}</p>
+      </CustomTooltipStyle>
+    )
+  }
+
+  return null
+}
 
 export default function InfoPieChart({ data, colors, total }) {
   const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -20,7 +43,7 @@ export default function InfoPieChart({ data, colors, total }) {
     <ResponsiveContainer width="100%" height={220}>
       {total > 0 ? (
         <PieChart
-          // onMouseEnter={renderCustomizedLabel}
+        // onMouseEnter={renderCustomizedLabel}
         >
           <Pie
             data={data}
@@ -29,14 +52,13 @@ export default function InfoPieChart({ data, colors, total }) {
             dataKey="value"
             startAngle={90}
             endAngle={-270}
-            onMouseEnter={renderCustomizedLabel}
-            // label={renderCustomizedLabel}
+            onMouseOver={renderCustomizedLabel}
           >
             {data.map((_: any, index: number) => (
               <Cell key={colors[index % colors.length]} fill={colors[index % colors.length]} />
             ))}
           </Pie>
-          <Tooltip cursor={{ stroke: 'red', strokeWidth: 2 }} />
+          <Tooltip content={<CustomTooltip />} />
         </PieChart>
       ) : (
         <div
