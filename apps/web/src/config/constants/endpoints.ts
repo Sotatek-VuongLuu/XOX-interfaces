@@ -20,15 +20,15 @@ export const GRAPH_API_PREDICTION_V1 = 'https://api.thegraph.com/subgraphs/name/
 export const INFO_CLIENT = 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2'
 export const INFO_CLIENT_XOX = 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2'
 export const INFO_CLIENT_PANCAKE =
-  'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11/'
+  'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11'
 
 export const INFO_NR_CLIENT = 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2'
 export const INFO_NR_CLIENT_XOX = 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2'
 export const INFO_NR_CLIENT_PANCAKE =
-  'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11/'
+  'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11'
 
-export const INFO_CLIENT_ETH = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11/'
-export const INFO_CLIENT_ETH_XOX = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11/'
+export const INFO_CLIENT_ETH = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11'
+export const INFO_CLIENT_ETH_XOX = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11'
 export const INFO_CLIENT_ETH_UNI = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
 
 export const BLOCKS_CLIENT = 'https://api.thegraph.com/subgraphs/name/pancakeswap/blocks'
@@ -62,5 +62,9 @@ export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
   [ChainId.BSC]: '',
   [ChainId.ETHEREUM]: '',
   [ChainId.BSC_TESTNET]: 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2',
+<<<<<<< HEAD
   [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11/',
+=======
+  [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.11',
+>>>>>>> develop
 }

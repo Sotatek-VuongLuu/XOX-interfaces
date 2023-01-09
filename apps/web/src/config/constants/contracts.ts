@@ -163,7 +163,7 @@ export default {
   },
   treasuryXOX: {
     97: '0x2a3fc6c13b34602B91AC8c5A17D5C585249efCE2',
-    5: '0x344F81855f12be417f0c34E1dd7Fc18A3baA8505',
+    5: '0x7948ecb1dc0058BAcC12a49664dcf7B6105b6A3d',
     1: '',
     56: '',
   },
@@ -175,7 +175,7 @@ export default {
   },
   contractXOXPool: {
     97: '0xF38Df69bF602EAABD10f13B74Eaeb363428B26fa',
-    5: '0x9D57DC19D30448a9d33B88721Aee1E35F999c5D0',
+    5: '0xbCda2cb851062e2CdB3D237f206Ab98F2188e4aC',
     1: '', // TODO: change address
     56: '',
   },
