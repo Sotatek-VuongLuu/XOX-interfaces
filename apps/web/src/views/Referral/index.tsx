@@ -35,7 +35,7 @@ export default function Refferal() {
   const [userCurrentPoint, setUserCurrentPoint] = useState<number>(0)
   const [currentLevelReach, setCurrentLevelReach] = useState<number>(0)
   const [listLevelMustReach, setListLevelMustReach] = useState<IItemLevel[]>(listLever)
-  const [isClaimAll, setIsClaimAll] = useState<boolean>(false)
+  const [isClaimAll, setIsClaimAll] = useState<boolean>(true)
   const [volumnTotalEarn, setVolumnTotalEarn] = useState<string>('')
   const [totalAmountUnClaimOfUser, setTotalAmountUnClaimOfUser] = useState<number | string>(0)
 
