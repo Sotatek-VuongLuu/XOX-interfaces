@@ -105,7 +105,7 @@ const fetchTopTransactions = async (
         const burnsUNI = dataUNI.burns.map(mapBurns)
         const swapsUNI = dataUNI.swaps.map(mapSwaps)
 
-        transactionsOther = [...mintsUNI, ...burnsUNI, ...swapsUNI].sort((a, b) => {
+        transactionsOther = [...swapsUNI].sort((a, b) => {
           return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
         })
       }
@@ -119,7 +119,7 @@ const fetchTopTransactions = async (
         const burnsPANCAKE = dataPANCAKE.burns.map(mapBurns)
         const swapsPANCAKE = dataPANCAKE.swaps.map(mapSwaps)
 
-        transactionsOther = [...mintsPANCAKE, ...burnsPANCAKE, ...swapsPANCAKE].sort((a, b) => {
+        transactionsOther = [...swapsPANCAKE].sort((a, b) => {
           return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
         })
       }

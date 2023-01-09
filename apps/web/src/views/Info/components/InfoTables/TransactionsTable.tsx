@@ -640,29 +640,31 @@ const TransactionsTable: React.FC = () => {
               </Button>
             )}
           </Flex>
-          <Flex className="btn-filter" mb="8px">
-            <Button onClick={() => handleFilter(undefined)} className={undefined === txFilter ? 'active' : 'inactive'}>
-              All
-            </Button>
-            <Button
-              onClick={() => handleFilter(TransactionType.SWAP)}
-              className={TransactionType.SWAP === txFilter ? 'active' : 'inactive'}
-            >
-              Swaps
-            </Button>
-            <Button
-              onClick={() => handleFilter(TransactionType.MINT)}
-              className={TransactionType.MINT === txFilter ? 'active' : 'inactive'}
-            >
-              Adds
-            </Button>
-            <Button
-              onClick={() => handleFilter(TransactionType.BURN)}
-              className={TransactionType.BURN === txFilter ? 'active' : 'inactive'}
-            >
-              Removes
-            </Button>
-          </Flex>
+          {
+            transactionFrom === TransactionFrom.XOX && <Flex className="btn-filter" mb="8px">
+              <Button onClick={() => handleFilter(undefined)} className={undefined === txFilter ? 'active' : 'inactive'}>
+                All
+              </Button>
+              <Button
+                onClick={() => handleFilter(TransactionType.SWAP)}
+                className={TransactionType.SWAP === txFilter ? 'active' : 'inactive'}
+              >
+                Swaps
+              </Button>
+              <Button
+                onClick={() => handleFilter(TransactionType.MINT)}
+                className={TransactionType.MINT === txFilter ? 'active' : 'inactive'}
+              >
+                Adds
+              </Button>
+              <Button
+                onClick={() => handleFilter(TransactionType.BURN)}
+                className={TransactionType.BURN === txFilter ? 'active' : 'inactive'}
+              >
+                Removes
+              </Button>
+            </Flex>
+          }
           <Text
             fontSize="14px"
             fontFamily="Inter"
