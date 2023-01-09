@@ -1,35 +1,22 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @next/next/no-img-element */
-import {
-  Avatar,
-  Box,
-  Grid,
-  Paper,
-  Table,
-  TableBody,
-  TableCell,
-  TableContainer,
-  TableHead,
-  TableRow,
-} from '@mui/material'
+import { Avatar, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
-import { userPoint, userClaimedHistories, pointDataDays } from 'services/referral'
-import { useEffect, useState } from 'react'
-import axios from 'axios'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
-import { BigNumber } from '@ethersproject/bignumber'
-import moment from 'moment'
 import styled from 'styled-components'
-import { BUSD_BSC, USDC_ETH } from '@pancakeswap/tokens'
-import { USD_DECIMALS } from 'config/constants/exchange'
 import ColumnChartRef from './components/ColumnChartRef'
-
 
 interface IVolumnDataItem {
   volumn: string
   title: string
   svg: string
+}
+interface IPropsItem {
+  volumnData?: IVolumnDataItem[]
+  userClaimHistories?: any[]
+  dataChart?: any[]
+  minAmount?: string
+  middleAmount?: string
+  maxAmount?: string
 }
 
 const Wrapper = styled(Box)`
@@ -149,150 +136,18 @@ const Wrapper = styled(Box)`
 `
 const Line = styled.div`
   position: absolute;
-  top:56px;
-  background:#444444;
-  width:99%;
-  height:1px;
-  z-index:99;
+  top: 56px;
+  background: #444444;
+  width: 99%;
+  height: 1px;
+  z-index: 99;
   @media screen and (max-width: 425px) {
-    width:97%;
+    width: 97%;
   }
 `
-const PlatformStat = (props: any): JSX.Element => {
+const PlatformStat = (props: IPropsItem): JSX.Element => {
   const { isMobile } = useMatchBreakpoints()
-  const { listPoint } = props
-  const { chainId } = useActiveWeb3React()
-  const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>(listData)
-  const [userClaimHistories, setUserClaimHistories] = useState([])
-  const [dataChart, setDataChart] = useState([])
-  const [minAmount, setMinAmount] = useState('')
-  const [middleAmount, setMiddleAmount] = useState('')
-  const [maxAmount, setMaxAmount] = useState('')
-
-  const getUserPoint = async () => {
-    const result = await userPoint(chainId)
-    if (result && result.analysisDatas && result.analysisDatas.length > 0) {
-      const totalReward = formatBigNumber(
-        BigNumber.from(result.analysisDatas[0]?.total_reward),
-        2,
-        chainId === 1 || chainId === 5 ? USDC_ETH.decimals : BUSD_BSC.decimals,
-      )
-      const totalClaimedAmount = formatBigNumber(
-        BigNumber.from(result.analysisDatas[0]?.total_claimed_amount),
-        2,
-        chainId === 1 || chainId === 5 ? USDC_ETH.decimals : BUSD_BSC.decimals,
-      )
-      const totalUnClaimed = Number(totalReward) - Number(totalClaimedAmount)
-      listData[0].volumn = result.analysisDatas[0]?.number_of_referral
-      listData[1].volumn = totalUnClaimed.toFixed(1)
-      listData[2].volumn = totalClaimedAmount
-      listData[3].volumn = result.analysisDatas[0]?.total_transactions.toString()
-      listData[4].volumn = totalReward
-      setVolumnData(listData)
-    }
-  }
-  const getUserClaimedHistories = async () => {
-    const result = await userClaimedHistories(chainId)
-    if (result) {
-      const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
-        const mappingUser = await mapingHistories(item.address)
-        const userAvatar = mappingUser.avatar
-        return createData(
-          idx + 1,
-          userAvatar,
-          mappingUser?.username,
-          moment(item.date * 1000).format('DD/MM/YYYY hh:mm:ss'),
-          mapPoint(formatBigNumber(BigNumber.from(item.amount))),
-          formatBigNumber(
-            BigNumber.from(item.amount),
-            2,
-            chainId === 1 || chainId === 5 ? USDC_ETH.decimals : BUSD_BSC.decimals,
-          ),
-        )
-      })
-      const lastResponse = await Promise.all(histories)
-      setUserClaimHistories(lastResponse)
-    }
-  }
-  const getPointDataDays = async () => {
-    const startDate = new Date()
-    startDate.setDate(startDate.getDate() - 14)
-    startDate.setHours(0, 0, 0, 0)
-    const endDate = new Date()
-    endDate.setHours(23, 59, 59, 999)
-    const time = {
-      from: moment(startDate).unix(),
-      to: moment(endDate).unix(),
-    }
-    const result = await pointDataDays(time.from, time.to, chainId)
-    if (result && result.pointDataDays && result.pointDataDays.length > 0) {
-      const arr = result.pointDataDays
-      const chartData = createArray(startDate, endDate, arr)
-      const data = chartData.map((item: any) => {
-        return createDataChartDay(
-          moment(item.date * 1000).format('DD MMM'),
-          parseFloat(formatBigNumber(BigNumber.from(item.amount), 2, USD_DECIMALS[chainId])),
-        )
-      })
-      setMinAmount(data[0].uv.toString())
-      setMiddleAmount(data[Math.floor(data.length / 2)].uv.toString())
-      setMaxAmount(data[data.length - 1].uv.toString())
-      setDataChart(data)
-    }
-  }
-  const createArray = (from: Date, to: Date, subGraphData: any) => {
-    const start = new Date(moment(from).format('MM/DD/YYYY'))
-    const end = new Date(moment(to).format('MM/DD/YYYY'))
-    const chartData = []
-    for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
-      const loopDay = new Date(d)
-      loopDay.setHours(23)
-      loopDay.setMinutes(59)
-      loopDay.setSeconds(59)
-      const dataByDay = { date: moment(loopDay).unix(), amount: 0 }
-      const dateInterger = Math.trunc(moment(loopDay).unix() / 86400)
-
-      const findData = subGraphData.find((x) => {
-        return x.id === dateInterger.toString()
-      })
-      dataByDay.amount = findData ? findData.amount : 0
-      chartData.push(dataByDay)
-    }
-    return chartData
-  }
-
-  const mapPoint = (amount: string) => {
-    for (let i = 0; i <= listPoint.length; i++) {
-      if (Number(amount) <= listPoint[i].reward && Number(amount) < listPoint[i + 1].reward) {
-        return listPoint[i].point
-      }
-    }
-    return ''
-  }
-  const mapingHistories = async (address: string) => {
-    const payload = {
-      wallets: [`${address}`],
-    }
-    const result: any = await axios
-      .post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, payload)
-      .catch((error) => {
-        console.warn(error)
-      })
-    const data = result?.data[0]
-    return data
-  }
-  function createData(no: number, avatar: string, name: string, time: string, point: string, claim: string) {
-    return { no, avatar, name, time, point, claim }
-  }
-  function createDataChartDay(name: string, uv: number) {
-    return { name, uv }
-  }
-
-  useEffect(() => {
-    getUserPoint()
-    getUserClaimedHistories()
-    getPointDataDays()
-  }, [chainId])
+  const { volumnData, userClaimHistories, dataChart, minAmount, middleAmount, maxAmount } = props
 
   return (
     <Wrapper sx={{}}>
@@ -312,11 +167,12 @@ const PlatformStat = (props: any): JSX.Element => {
         </div>
       </div>
 
-      <div className="second" style={{position:'relative'}}>
-        <TableContainer component={Paper} sx={isMobile ? { height:'300px', background: '#303030' } : {height:'160px', background: '#303030'}}>
-     
+      <div className="second" style={{ position: 'relative' }}>
+        <TableContainer
+          component={Paper}
+          sx={isMobile ? { height: '300px', background: '#303030' } : { height: '160px', background: '#303030' }}
+        >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-       
             <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
               <TableRow
                 sx={{
@@ -330,9 +186,15 @@ const PlatformStat = (props: any): JSX.Element => {
               >
                 <TableCell>No</TableCell>
                 <TableCell align="left">User Name</TableCell>
-                <TableCell style={{minWidth:'190px'}} align="left">Time</TableCell>
-                <TableCell style={{minWidth:'120px'}} align="left">Point Level</TableCell>
-                <TableCell style={{minWidth:'155px'}} align="right">Claimed Amount</TableCell>
+                <TableCell style={{ minWidth: '190px' }} align="left">
+                  Time
+                </TableCell>
+                <TableCell style={{ minWidth: '120px' }} align="left">
+                  Point Level
+                </TableCell>
+                <TableCell style={{ minWidth: '155px' }} align="right">
+                  Claimed Amount
+                </TableCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -379,33 +241,5 @@ const PlatformStat = (props: any): JSX.Element => {
     </Wrapper>
   )
 }
-
-const listData = [
-  {
-    volumn: '',
-    title: 'Number of Referral Participants',
-    svg: '/images/referral/icon-user.svg',
-  },
-  {
-    volumn: '',
-    title: 'Total Money Unclaimed',
-    svg: '/images/referral/icon-unclaimed-money.svg',
-  },
-  {
-    volumn: '',
-    title: 'Total Money Claimed',
-    svg: '/images/referral/icon-total-claim-money.svg',
-  },
-  {
-    volumn: '0',
-    title: 'Number of referral transactions',
-    svg: '/images/referral/icon-number-of-referral.svg',
-  },
-  {
-    volumn: '0',
-    title: 'Total reward earned',
-    svg: '/images/referral/icon-reward-earn.svg',
-  },
-]
 
 export default PlatformStat
