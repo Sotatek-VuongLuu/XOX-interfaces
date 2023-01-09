@@ -42,6 +42,7 @@ export function useNetworkConnectorUpdater() {
         },
         undefined,
       )
+      window.location.reload()
     }
     return setPrevChainId()
   }, [chainId, loading, router])
