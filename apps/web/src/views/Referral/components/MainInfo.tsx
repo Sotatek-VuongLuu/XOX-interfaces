@@ -274,7 +274,7 @@ const BoxWrapper = styled(Box)`
   font-weight: 700;
   font-size: 14px;
   line-height: 17px;
-  color: rgba(255, 255, 255, 0.87);
+  color: #ffffff;
   align-items: center;
 
   button {
