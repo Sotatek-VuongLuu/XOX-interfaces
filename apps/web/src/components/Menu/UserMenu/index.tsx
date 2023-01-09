@@ -19,16 +19,15 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
 import { useCallback, useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
-import { useAccount, useBalance, useNetwork, useProvider } from 'wagmi'
+import { useAccount, useProvider } from 'wagmi'
 import { parseUnits } from '@ethersproject/units'
-import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { getBlockExploreLink, getBlockExploreName } from 'utils'
 import { AppState, useAppDispatch } from 'state'
 import { updateOpenFormReferral } from 'state/user/actions'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import useNativeCurrency from 'hooks/useNativeCurrency'
-import { getDefaultProvider } from '@ethersproject/providers'
 import { XOX_ADDRESS } from 'config/constants/exchange'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { Tooltip } from '@mui/material'
@@ -301,7 +300,7 @@ const UserMenu = () => {
             <Skeleton height="22px" width="60px" />
           ) : (
             <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
-              {balanceXOX.balance}
+              {formatAmountNumber(balanceXOX.balance, 6)}
             </Text>
           )}
         </Flex>
