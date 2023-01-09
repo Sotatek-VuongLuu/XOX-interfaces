@@ -25,7 +25,6 @@ import {
   getUserPointWeekly,
   userPoint,
   pointDataDays,
-  userClaimedHistories,
 } from '../../../services/referral'
 
 export interface IItemLeaderBoard {
@@ -42,7 +41,10 @@ interface IItemLevel {
   lever: number
   isReach?: boolean
 }
-
+interface IListPoint {
+  reward: number
+  point: number
+}
 interface IPropsTotal {
   percentPoint?: number
   account?: string
@@ -305,7 +307,6 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
   const startOfMonth = moment().startOf('month').toString()
   const startOfWeek = moment().startOf('isoWeek').toString()
   const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>(listData)
-  const [userClaimHistories, setUserClaimHistories] = useState([])
   const [dataChart, setDataChart] = useState([])
   const [minAmount, setMinAmount] = useState('')
   const [middleAmount, setMiddleAmount] = useState('')
@@ -317,7 +318,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
   const [listUserRanksWeekly, setListUserRanksWeekly] = useState<IMappingFormat[]>([])
   const [listUserRanksMonthly, setListUserRanksMonthly] = useState<IMappingFormat[]>([])
   const [listUserRanksAllTime, setListUserRanksAllTime] = useState<IMappingFormat[]>([])
-  const [listPoint, setListPoint] = useState([])
+  const [listPoint, setListPoint] = useState<IListPoint[]>([])
   const { account, chainId } = useActiveWeb3React()
   const totalPoint = listLever[currentLevelReach]?.point
   const currentPoint = userCurrentPoint
@@ -441,28 +442,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
       setVolumnData(listData)
     }
   }
-  const getUserClaimedHistories = async () => {
-    const result = await userClaimedHistories(chainId)
-    if (result) {
-      const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
-        const mappingUser = await mapingHistories(item.address)
-        const userAvatar = mappingUser.avatar
-        const point = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
-        const claim = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
-
-        return createData(
-          idx + 1,
-          userAvatar,
-          mappingUser?.username,
-          moment(item.date * 1000).format('DD/MM/YYYY hh:mm:ss'),
-          mapPoint(point),
-          claim,
-        )
-      })
-      const lastResponse = await Promise.all(histories)
-      setUserClaimHistories(lastResponse)
-    }
-  }
+  
   const getPointDataDays = async () => {
     const startDate = new Date()
     startDate.setDate(startDate.getDate() - 14)
@@ -507,32 +487,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     }
     return chartData
   }
-  const mapingHistories = async (address: string) => {
-    const payload = {
-      wallets: [`${address}`],
-    }
-    const result: any = await axios
-      .post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, payload)
-      .catch((error) => {
-        console.warn(error)
-      })
-    const data = result?.data[0]
-    return data
-  }
-  const mapPoint = (amount: number) => {
-    if (listPoint && listPoint.length > 0) {
-      for (let i = 0; i <= listPoint.length; i++) {
-        if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
-          return listPoint[i].point
-        }
-      }
-    }
-
-    return ''
-  }
-  function createData(no: number, avatar: string, name: string, time: string, point: number, claim: number) {
-    return { no, avatar, name, time, point, claim }
-  }
+  
   function createDataChartDay(name: string, uv: number) {
     return { name, uv }
   }
@@ -560,16 +515,16 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
   }
 
   useEffect(() => {
-    getListPointConfig()
-    getUserPoint()
-    getUserClaimedHistories()
-    getPointDataDays()
     handleGetUserRanks('All Time', setListUserRanksAllTime, setRankOfUserAllTime)
     handleGetUserRanks('Monthly', setListUserRanksMonthly, setRankOfUserMonthly)
     handleGetUserRanks('Weekly', setListUserRanksWeekly, setRankOfUserWeekly)
     handleGetUserRanks('Daily', setListUserRanksDaily, setRankOfUserDaily)
   }, [chainId])
-
+  useEffect(() => {
+    getListPointConfig()
+    getUserPoint()
+    getPointDataDays()
+  }, [])
   return (
     <Box sx={{ marginTop: '16px' }}>
       <Grid container spacing={2}>
@@ -673,11 +628,11 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
               {subTabIndex === 1 && (
                 <PlatformStat
                   volumnData={volumnData}
-                  userClaimHistories={userClaimHistories}
                   dataChart={dataChart}
                   minAmount={minAmount}
                   middleAmount={middleAmount}
                   maxAmount={maxAmount}
+                  listPoint={listPoint}
                 />
               )}
               {subTabIndex === 2 && <HowToJoin />}
