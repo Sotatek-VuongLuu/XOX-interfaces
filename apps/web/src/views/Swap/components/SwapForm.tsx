@@ -249,7 +249,7 @@ export default function SwapForm() {
       refreshBlockNumber()
     }
   }, [hasAmount, refreshBlockNumber])
-  console.log(formattedAmounts[Field.INPUT], 'formattedAmounts[Field.INPUT]')
+
   return (
     <>
       <CurrencyInputHeader

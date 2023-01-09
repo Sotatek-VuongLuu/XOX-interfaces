@@ -603,6 +603,7 @@ const ReferralFriend = ({
     try {
       setListFriends([])
       const { userInfos } = await getUserFriend(chainId, accountId)
+      console.log(await getUserFriend(chainId, accountId), 'userInfos')
       const sortByPoints = userInfos[0]?.friends?.sort(function (a: any, b: any) {
         return a.amount - b.amount
       })
