@@ -603,9 +603,12 @@ const ReferralFriend = ({
     try {
       setListFriends([])
       const { userInfos } = await getUserFriend(chainId, accountId)
-
+      console.log(await getUserFriend(chainId, accountId), 'userInfos')
+      const sortByPoints = userInfos[0]?.friends?.sort(function (a: any, b: any) {
+        return a.amount - b.amount
+      })
       if (Array.from(userInfos).length !== 0) {
-        const dataUserFormatAmount = userInfos[0]?.friends?.map((item: any) => {
+        const dataUserFormatAmount = sortByPoints.map((item: any) => {
           return {
             ...item,
             id: item?.ref_address,

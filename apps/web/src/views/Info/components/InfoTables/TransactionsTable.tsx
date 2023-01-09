@@ -275,13 +275,18 @@ const DataRow: React.FC<
   const { t } = useTranslation()
   const abs0 = Math.abs(transaction.amountToken0)
   const abs1 = Math.abs(transaction.amountToken1)
-  const outputTokenSymbol = transaction.amountToken0 < 0 ? transaction.token0Symbol : transaction.token1Symbol
-  const inputTokenSymbol = transaction.amountToken1 < 0 ? transaction.token0Symbol : transaction.token1Symbol
+  const { chainId } = useActiveChainId();
+  const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
+  const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOX' : transaction.token0Symbol
+  const symbolToken1 = transaction.token1Symbol === 'xox' ? 'XOX' : transaction.token1Symbol
+
+  const outputTokenSymbol = transaction.amountToken0 < 0 ? symbolToken0 : symbolToken1
+  const inputTokenSymbol = transaction.amountToken1 < 0 ? symbolToken0 : symbolToken1
   const stablCoin =
     inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
       ? `${formatAmount(transaction.amountUSD / 10)} Stable coin`
       : '--'
-  const chainName = useGetChainName()
+
   return (
     <>
       <Text
@@ -297,7 +302,7 @@ const DataRow: React.FC<
       </Text>
       <LinkExternal
         color="#9072FF"
-        href={getBlockExploreLink(transaction.hash, 'transaction', chainName === 'ETH' && ChainId.ETHEREUM)}
+        href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
         key={`${transaction.hash}-type`}
       >
         <Text
@@ -309,10 +314,10 @@ const DataRow: React.FC<
           color="rgba(255, 255, 255, 0.87)"
         >
           {transaction.type === TransactionType.MINT
-            ? t('Add %token0% and %token1%', { token0: transaction.token0Symbol, token1: transaction.token1Symbol })
+            ? t('Add %token0% and %token1%', { token0: symbolToken0, token1: symbolToken1 })
             : transaction.type === TransactionType.SWAP
             ? t('Swap %token0% for %token1%', { token0: inputTokenSymbol, token1: outputTokenSymbol })
-            : t('Remove %token0% and %token1%', { token0: transaction.token0Symbol, token1: transaction.token1Symbol })}
+            : t('Remove %token0% and %token1%', { token0: symbolToken0, token1: symbolToken1 })}
         </Text>
       </LinkExternal>
       <Text
@@ -344,7 +349,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(abs0)} ${transaction.token0Symbol}`}</Text>
+      >{`${formatAmount(abs0)} ${symbolToken0}`}</Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -353,7 +358,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token1`}
-      >{`${formatAmount(abs1)} ${transaction.token1Symbol}`}</Text>
+      >{`${formatAmount(abs1)} ${symbolToken1}`}</Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -375,7 +380,7 @@ const DataRow: React.FC<
         color="#3D8AFF"
         style={{ justifySelf: 'right' }}
         target="_blank"
-        href={getBlockExploreLink(transaction.sender, 'address', chainName === 'ETH' && ChainId.ETHEREUM)}
+        href={getBlockExploreLink(transaction.sender, 'address', chainIdLink)}
         key={`${transaction.hash}-sender`}
       >
         {truncateHash(transaction.sender, 4, 5)}

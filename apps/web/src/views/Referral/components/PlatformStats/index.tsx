@@ -1,6 +1,17 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @next/next/no-img-element */
-import { Avatar, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+} from '@mui/material'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import ColumnChartRef from './components/ColumnChartRef'
@@ -148,7 +159,6 @@ const Line = styled.div`
 const PlatformStat = (props: IPropsItem): JSX.Element => {
   const { isMobile } = useMatchBreakpoints()
   const { volumnData, userClaimHistories, dataChart, minAmount, middleAmount, maxAmount } = props
-
   return (
     <Wrapper sx={{}}>
       <div className="first">
@@ -170,7 +180,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       <div className="second" style={{ position: 'relative' }}>
         <TableContainer
           component={Paper}
-          sx={isMobile ? { height: '300px', background: '#303030' } : { height: '160px', background: '#303030' }}
+          sx={{ height: '165px', background: '#303030' }}
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
@@ -202,7 +212,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                 <TableRow
                   key={`${row.name}_${index}`}
                   sx={{
-                    '& td, & th': { border: 0, fontWeight: 400, fontSize: 14, color: ' rgba(255, 255, 255, 0.87)' },
+                    '& td, & th': { border: 0, fontWeight: 400, fontSize: 14, color: ' rgba(255, 255, 255, 0.87)', padding: '6px 16px' },
                   }}
                 >
                   <TableCell component="th" scope="row">
@@ -214,7 +224,13 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                       src={row.avatar}
                       sx={{ marginRight: '8px', height: '24px', width: '24px' }}
                     />
-                    {row.name}
+                    <Tooltip title={row?.name}>
+                      <p>
+                        {row.name?.length > 9
+                          ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                          : row.name}
+                      </p>
+                    </Tooltip>
                   </TableCell>
                   <TableCell align="left">{row.time}</TableCell>
                   <TableCell align="left">{row.point} points</TableCell>
