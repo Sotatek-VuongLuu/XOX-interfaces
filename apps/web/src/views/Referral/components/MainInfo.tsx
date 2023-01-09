@@ -520,7 +520,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     return data
   }
   const mapPoint = (amount: number) => {
-    if (listPoint) {
+    if (listPoint && listPoint.length > 0) {
       for (let i = 0; i <= listPoint.length; i++) {
         if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
           return listPoint[i].point
