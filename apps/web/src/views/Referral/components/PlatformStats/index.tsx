@@ -1,6 +1,17 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @next/next/no-img-element */
-import { Avatar, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import {
+  Avatar,
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+} from '@mui/material'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import ColumnChartRef from './components/ColumnChartRef'
@@ -213,7 +224,13 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                       src={row.avatar}
                       sx={{ marginRight: '8px', height: '24px', width: '24px' }}
                     />
-                    {row.name}
+                    <Tooltip title={row?.name}>
+                      <p>
+                        {row.name?.length > 9
+                          ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                          : row.name}
+                      </p>
+                    </Tooltip>
                   </TableCell>
                   <TableCell align="left">{row.time}</TableCell>
                   <TableCell align="left">{row.point} points</TableCell>
