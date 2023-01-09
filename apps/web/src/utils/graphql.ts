@@ -44,8 +44,8 @@ export const infoClientWithChain = (chainId: number) => {
 }
 
 export const infoClientETH = new GraphQLClient(INFO_CLIENT_ETH)
-export const infoClientETH_XOX = new GraphQLClient(INFO_CLIENT_ETH_XOX)
-export const infoClientETH_UNI = new GraphQLClient(INFO_CLIENT_ETH_UNI)
+export const infoClientETHXOX = new GraphQLClient(INFO_CLIENT_ETH_XOX)
+export const infoClientETHUNI = new GraphQLClient(INFO_CLIENT_ETH_UNI)
 
 export const infoStableSwapClient = new GraphQLClient(STABLESWAP_SUBGRAPH_CLIENT)
 

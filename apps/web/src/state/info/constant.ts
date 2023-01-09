@@ -8,8 +8,8 @@ import {
 import {
   infoClient,
   infoClientETH,
-  infoClientETH_UNI,
-  infoClientETH_XOX,
+  infoClientETHUNI,
+  infoClientETHXOX,
   infoClientPANCAKE,
   infoClientXOX,
   infoNRClient,
@@ -65,10 +65,10 @@ export const multiChainQueryClient = {
 export const multiChainQueryClientWithFrom = {
   [TransactionFrom.XOX]: {
     BSC: infoClientXOX,
-    ETH: infoClientETH_XOX,
+    ETH: infoClientETHXOX,
   },
   [TransactionFrom.UNI]: {
-    ETH: infoClientETH_UNI,
+    ETH: infoClientETHUNI,
     BSC: new GraphQLClient(''),
   },
   [TransactionFrom.PANCAKE]: {
@@ -85,10 +85,10 @@ export const multiChainQueryClientWithNR = {
 export const multiChainQueryClientWithNRWithFrom = {
   [TransactionFrom.XOX]: {
     BSC: infoNRClientXOX,
-    ETH: infoClientETH_XOX,
+    ETH: infoClientETHXOX,
   },
   [TransactionFrom.UNI]: {
-    ETH: infoClientETH_UNI,
+    ETH: infoClientETHUNI,
     BSC: new GraphQLClient(''),
   },
   [TransactionFrom.PANCAKE]: {
