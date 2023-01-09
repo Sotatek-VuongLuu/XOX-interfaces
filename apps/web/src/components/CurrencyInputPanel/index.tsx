@@ -122,7 +122,7 @@ const Overlay = styled.div`
 `
 
 const NumericalInputWrapper = styled(NumericalInput)`
-  padding-right: 120px;
+  padding-right: 155px;
   font-size: 18px;
   @media screen and (max-width: 576px) {
     font-size: 16px;
