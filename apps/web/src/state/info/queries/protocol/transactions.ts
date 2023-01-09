@@ -82,7 +82,8 @@ const fetchTopTransactions = async (
       chainName,
       TransactionFrom.XOX,
     ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
-    let transactionsXOX = undefined
+    let transactionsXOX:any
+    let transactionsOther:any
     if (dataXOX) {
       const mintsXOX = dataXOX.mints.map(mapMints)
       const burnsXOX = dataXOX.burns.map(mapBurns)
@@ -98,7 +99,6 @@ const fetchTopTransactions = async (
         chainName,
         TransactionFrom.UNI,
       ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
-      let transactionsOther = undefined
 
       if (dataUNI) {
         const mintsUNI = dataUNI.mints.map(mapMints)
@@ -109,16 +109,11 @@ const fetchTopTransactions = async (
           return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
         })
       }
-      return {
-        transactionsXOX,
-        transactionsOther,
-      }
     } else {
       const dataPANCAKE = await getMultiChainQueryEndPointWithStableSwap(
         chainName,
         TransactionFrom.PANCAKE,
       ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
-      let transactionsOther = undefined
       if (dataPANCAKE) {
         const mintsPANCAKE = dataPANCAKE.mints.map(mapMints)
         const burnsPANCAKE = dataPANCAKE.burns.map(mapBurns)
@@ -128,10 +123,10 @@ const fetchTopTransactions = async (
           return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
         })
       }
-      return {
-        transactionsXOX,
-        transactionsOther,
-      }
+    }
+    return {
+      transactionsXOX,
+      transactionsOther
     }
   } catch {
     return {
