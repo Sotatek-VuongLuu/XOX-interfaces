@@ -52,10 +52,7 @@ export function useSwitchNetwork() {
             // TODO: review the error
             toastError(t('Error connecting, please retry and confirm in wallet!'))
           })
-          .finally(() => {
-            setLoading(false)
-            window.location.reload()
-          })
+          .finally(() => setLoading(false))
       }
       return new Promise(() => {
         switchNetworkLocal(chainId)

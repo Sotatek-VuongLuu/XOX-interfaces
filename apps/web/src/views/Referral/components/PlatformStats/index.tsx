@@ -222,7 +222,8 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
 
   useEffect(() => {
     getUserClaimedHistories()
-  }, [])
+  }, [chainId])
+
   return (
     <Wrapper sx={{}}>
       <div className="first">
