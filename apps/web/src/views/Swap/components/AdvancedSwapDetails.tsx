@@ -14,6 +14,7 @@ import FormattedPriceImpact from './FormattedPriceImpact'
 import SwapRoute from './SwapRoute'
 
 const BottomText = styled(Text)`
+  word-break: break-word;
   @media screen and (max-width: 500px) {
     font-size: 12px;
   }
