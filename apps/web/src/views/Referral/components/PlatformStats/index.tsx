@@ -218,6 +218,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
         }
       }
     }
+    return ''
   }
   useEffect(() => {
     getUserClaimedHistories()
