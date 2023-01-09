@@ -386,13 +386,16 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
           wallets: listAddress,
         })
-        const dataMapping: IMappingFormat[] = response.data.map((item, index) => {
+        const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index)=> {
+          const dataUserInfos = response.data
+          const userInfo = dataUserInfos?.find((user=> item.address === user.address))
+
           return {
-            ...dataUserFormatAmount[index],
             ...item,
+            ...userInfo,
             rank: index + 1,
-            username: item?.username ?? null,
-            avatar: item?.avatar ?? null,
+            username: userInfo?.username ?? null,
+            avatar: userInfo?.avatar ?? null,
           }
         })
 
