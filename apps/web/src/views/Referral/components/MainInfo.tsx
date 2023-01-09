@@ -197,7 +197,7 @@ const WrapperRight = styled.div<IPropsContainer>`
 
   .container {
     width: 100%;
-    height: 594px;
+    height: 600px;
     background: #242424;
     border-radius: 10px;
     padding: 27px;

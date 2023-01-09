@@ -180,7 +180,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       <div className="second" style={{ position: 'relative' }}>
         <TableContainer
           component={Paper}
-          sx={isMobile ? { height: '300px', background: '#303030' } : { height: '160px', background: '#303030' }}
+          sx={{ height: '165px', background: '#303030' }}
         >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
@@ -212,7 +212,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                 <TableRow
                   key={`${row.name}_${index}`}
                   sx={{
-                    '& td, & th': { border: 0, fontWeight: 400, fontSize: 14, color: ' rgba(255, 255, 255, 0.87)' },
+                    '& td, & th': { border: 0, fontWeight: 400, fontSize: 14, color: ' rgba(255, 255, 255, 0.87)', padding: '6px 16px' },
                   }}
                 >
                   <TableCell component="th" scope="row">
