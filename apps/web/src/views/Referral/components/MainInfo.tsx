@@ -2,11 +2,11 @@
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { formatUnits } from '@ethersproject/units'
 import axios from 'axios'
 import { Box, Grid } from '@mui/material'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
+import { BUSD_BSC, USDC_ETH } from '@pancakeswap/tokens'
 import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { USD_DECIMALS } from 'config/constants/exchange'
@@ -16,7 +16,15 @@ import HowToJoin from './HowToJoin'
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
-import { getUerRank, getUserPointDaily, getUserPointMonthly, getUserPointWeekly } from '../../../services/referral'
+import {
+  getUerRank,
+  getUserPointDaily,
+  getUserPointMonthly,
+  getUserPointWeekly,
+  userPoint,
+  pointDataDays,
+  userClaimedHistories,
+} from '../../../services/referral'
 
 export interface IItemLeaderBoard {
   name: string
@@ -65,6 +73,11 @@ export interface IMappingFormat {
   point: number | null
   rank: number | null
   username: string
+}
+interface IVolumnDataItem {
+  volumn: string
+  title: string
+  svg: string
 }
 
 const First = styled.div<IPropsTotal>`
@@ -257,6 +270,12 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
   const startOfDay = moment().startOf('days').toString()
   const startOfMonth = moment().startOf('month').toString()
   const startOfWeek = moment().startOf('isoWeek').toString()
+  const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>(listData)
+  const [userClaimHistories, setUserClaimHistories] = useState([])
+  const [dataChart, setDataChart] = useState([])
+  const [minAmount, setMinAmount] = useState('')
+  const [middleAmount, setMiddleAmount] = useState('')
+  const [maxAmount, setMaxAmount] = useState('')
   const [tabLeaderBoard, setTabLeaderBoard] = useState<FilterTime>('All Time')
   const [subTabIndex, setSubTabIndex] = useState(0)
   const [listUserRanks, setListUserRanks] = useState<IMappingFormat[]>([])
@@ -367,6 +386,117 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
       setListPoint(res.data)
     }
   }
+  const getUserPoint = async () => {
+    const result = await userPoint(chainId)
+    if (result && result.analysisDatas && result.analysisDatas.length > 0) {
+      const totalReward = new BigNumber(result.analysisDatas[0]?.total_reward)
+        .div(10 ** USD_DECIMALS[chainId])
+        .toNumber()
+      const totalClaimedAmount = new BigNumber(result.analysisDatas[0]?.total_claimed_amount)
+        .div(10 ** USD_DECIMALS[chainId])
+        .toNumber()
+      const totalUnClaimed = Number(totalReward) - Number(totalClaimedAmount)
+      listData[0].volumn = result.analysisDatas[0]?.number_of_referral
+      listData[1].volumn = totalUnClaimed.toFixed(1)
+      listData[2].volumn = totalClaimedAmount.toString()
+      listData[3].volumn = result.analysisDatas[0]?.total_transactions.toString()
+      listData[4].volumn = totalReward.toString()
+      setVolumnData(listData)
+    }
+  }
+  const getUserClaimedHistories = async () => {
+    const result = await userClaimedHistories(chainId)
+    if (result) {
+      const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
+        const mappingUser = await mapingHistories(item.address)
+        const userAvatar = mappingUser.avatar
+        const claim = new BigNumber(item.amount)
+          .div(10 ** USD_DECIMALS[chainId])
+          .toNumber()
+          .toString()
+        return createData(
+          idx + 1,
+          userAvatar,
+          mappingUser?.username,
+          moment(item.date * 1000).format('DD/MM/YYYY hh:mm:ss'),
+          mapPoint(new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()),
+          claim,
+        )
+      })
+      const lastResponse = await Promise.all(histories)
+      setUserClaimHistories(lastResponse)
+    }
+  }
+  const getPointDataDays = async () => {
+    const startDate = new Date()
+    startDate.setDate(startDate.getDate() - 14)
+    startDate.setHours(0, 0, 0, 0)
+    const endDate = new Date()
+    endDate.setHours(23, 59, 59, 999)
+    const time = {
+      from: moment(startDate).unix(),
+      to: moment(endDate).unix(),
+    }
+    const result = await pointDataDays(time.from, time.to, chainId)
+    if (result && result.pointDataDays && result.pointDataDays.length > 0) {
+      const arr = result.pointDataDays
+      const chartData = createArray(startDate, endDate, arr)
+      const data = chartData.map((item: any) => {
+        const amount = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
+        return createDataChartDay(moment(item.date * 1000).format('DD MMM'), amount)
+      })
+      setMinAmount(data[0].uv.toString())
+      setMiddleAmount(data[Math.floor(data.length / 2)].uv.toString())
+      setMaxAmount(data[data.length - 1].uv.toString())
+      setDataChart(data)
+    }
+  }
+  const createArray = (from: Date, to: Date, subGraphData: any) => {
+    const start = new Date(moment(from).format('MM/DD/YYYY'))
+    const end = new Date(moment(to).format('MM/DD/YYYY'))
+    const chartData = []
+    for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
+      const loopDay = new Date(d)
+      loopDay.setHours(23)
+      loopDay.setMinutes(59)
+      loopDay.setSeconds(59)
+      const dataByDay = { date: moment(loopDay).unix(), amount: 0 }
+      const dateInterger = Math.trunc(moment(loopDay).unix() / 86400)
+
+      const findData = subGraphData.find((x) => {
+        return x.id === dateInterger.toString()
+      })
+      dataByDay.amount = findData ? findData.amount : 0
+      chartData.push(dataByDay)
+    }
+    return chartData
+  }
+  const mapingHistories = async (address: string) => {
+    const payload = {
+      wallets: [`${address}`],
+    }
+    const result: any = await axios
+      .post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, payload)
+      .catch((error) => {
+        console.warn(error)
+      })
+    const data = result?.data[0]
+    return data
+  }
+  const mapPoint = (amount: number) => {
+    for (let i = 0; i <= listPoint?.length; i++) {
+      if (amount <= listPoint[i]?.reward && amount < listPoint[i + 1]?.reward) {
+        return listPoint[i]?.point
+      }
+    }
+    return ''
+  }
+  function createData(no: number, avatar: string, name: string, time: string, point: string, claim: string) {
+    return { no, avatar, name, time, point, claim }
+  }
+  function createDataChartDay(name: string, uv: number) {
+    return { name, uv }
+  }
 
   const handleOnChangeRankTab = (item: FilterTime) => {
     setTabLeaderBoard(item)
@@ -392,6 +522,9 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
 
   useEffect(() => {
     getListPointConfig()
+    getUserPoint()
+    getUserClaimedHistories()
+    getPointDataDays()
     handleGetUserRanks('All Time', setListUserRanksAllTime, setRankOfUserAllTime)
     handleGetUserRanks('Monthly', setListUserRanksMonthly, setRankOfUserMonthly)
     handleGetUserRanks('Weekly', setListUserRanksWeekly, setRankOfUserWeekly)
@@ -482,7 +615,16 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
               </div>
 
               {subTabIndex === 0 && <TotalEarned volumnTotalEarn={volumnTotalEarn} />}
-              {subTabIndex === 1 && <PlatformStat listPoint={listPoint} />}
+              {subTabIndex === 1 && (
+                <PlatformStat
+                  volumnData={volumnData}
+                  userClaimHistories={userClaimHistories}
+                  dataChart={dataChart}
+                  minAmount={minAmount}
+                  middleAmount={middleAmount}
+                  maxAmount={maxAmount}
+                />
+              )}
               {subTabIndex === 2 && <HowToJoin />}
             </div>
           </WrapperRight>
@@ -491,5 +633,33 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     </Box>
   )
 }
+
+const listData = [
+  {
+    volumn: '',
+    title: 'Number of Referral Participants',
+    svg: '/images/referral/icon-user.svg',
+  },
+  {
+    volumn: '',
+    title: 'Total Money Unclaimed',
+    svg: '/images/referral/icon-unclaimed-money.svg',
+  },
+  {
+    volumn: '',
+    title: 'Total Money Claimed',
+    svg: '/images/referral/icon-total-claim-money.svg',
+  },
+  {
+    volumn: '0',
+    title: 'Number of referral transactions',
+    svg: '/images/referral/icon-number-of-referral.svg',
+  },
+  {
+    volumn: '0',
+    title: 'Total reward earned',
+    svg: '/images/referral/icon-reward-earn.svg',
+  },
+]
 
 export default MainInfo
