@@ -6,7 +6,8 @@ import axios from 'axios'
 import { Box, Grid } from '@mui/material'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
-import { BUSD_BSC, USDC_ETH } from '@pancakeswap/tokens'
+import Trans from 'components/Trans'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { USD_DECIMALS } from 'config/constants/exchange'
@@ -16,8 +17,7 @@ import HowToJoin from './HowToJoin'
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
-import Trans from 'components/Trans'
-import ConnectWalletButton from 'components/ConnectWalletButton'
+
 import {
   getUerRank,
   getUserPointDaily,
