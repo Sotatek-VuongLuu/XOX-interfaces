@@ -142,7 +142,6 @@ const fetchTopTransactions = async (
       TransactionFrom.XOX,
     ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
     let transactionsXOX: any
-    let transactionsOther: any
     if (dataXOX) {
       const mintsXOX = dataXOX.mints.map(mapMints)
       const burnsXOX = dataXOX.burns.map(mapBurns)

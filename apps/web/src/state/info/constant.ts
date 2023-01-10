@@ -65,9 +65,9 @@ export const multiChainQueryClient = {
 
 export const multiChainQueryClientWithFrom = {
   [TransactionFrom.XOX]: {
-    [ChainId.BSC]: infoClientXoxBsc,
+    [ChainId.BSC]: infoNRClientXoxBsc,
     [ChainId.ETHEREUM]: infoClientXoxEth,
-    [ChainId.BSC_TESTNET]: infoClientXoxBscTestnet,
+    [ChainId.BSC_TESTNET]: infoNRClientXoxBscTestnet,
     [ChainId.GOERLI]: infoClientXoxGoerli,
   },
   [TransactionFrom.UNI]: {
@@ -79,19 +79,6 @@ export const multiChainQueryClientWithFrom = {
 export const multiChainQueryClientWithNR = {
   BSC: infoNRClient,
   ETH: infoClientETH,
-}
-
-export const multiChainQueryClientWithNRWithFrom = {
-  [TransactionFrom.XOX]: {
-    [ChainId.BSC]: infoNRClientXoxBsc,
-    [ChainId.ETHEREUM]: infoClientXoxEth,
-    [ChainId.BSC_TESTNET]: infoNRClientXoxBscTestnet,
-    [ChainId.GOERLI]: infoClientXoxGoerli,
-  },
-  [TransactionFrom.UNI]: {
-    ETH: infoClientETHUNI,
-    BSC: new GraphQLClient(''),
-  },
 }
 
 export const multiChainQueryEndPoint = {
