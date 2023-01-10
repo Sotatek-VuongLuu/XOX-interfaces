@@ -59,8 +59,8 @@ export const BLOCKS_CLIENT_WITH_CHAIN = {
 }
 
 export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
-  [ChainId.BSC]: 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2',
-  [ChainId.ETHEREUM]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.18',
+  [ChainId.BSC]: '',
+  [ChainId.ETHEREUM]: '',
   [ChainId.BSC_TESTNET]: 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2',
   [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.18',
 }

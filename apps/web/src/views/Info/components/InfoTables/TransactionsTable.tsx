@@ -277,8 +277,14 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
 }
 
 const DataRow: React.FC<
-  React.PropsWithChildren<{ transaction: Transaction; index: number; page: number; perPage: number }>
-> = ({ transaction, index, page, perPage }) => {
+  React.PropsWithChildren<{
+    transaction: Transaction
+    index: number
+    page: number
+    perPage: number
+    transactionFrom: TransactionFrom
+  }>
+> = ({ transaction, index, page, perPage, transactionFrom }) => {
   const { t } = useTranslation()
   const abs0 = Math.abs(transaction.amountToken0)
   const abs1 = Math.abs(transaction.amountToken1)
@@ -289,8 +295,31 @@ const DataRow: React.FC<
 
   const outputTokenSymbol = transaction.amountToken0 < 0 ? symbolToken0 : symbolToken1
   const inputTokenSymbol = transaction.amountToken1 < 0 ? symbolToken0 : symbolToken1
+
   const amountUSD =
-    inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD' ? (transaction.amountToken1 < 0 ? abs0 : abs1) : 0
+    inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD'
+      ? transaction.amountToken1 < 0
+        ? abs0
+        : abs1
+      : transaction.amountToken0 < 0
+      ? abs0 / 0.9
+      : abs1 / 0.9
+  // if (transactionFrom === TransactionFrom.XOX) {
+  //   if (transaction.amountToken1 < 0) {
+  //     console.log(transaction.amountToken1, symbolToken0)
+  //     if (symbolToken0 === 'USDC' || symbolToken0 === 'BUSD') {
+  //       amountUSD = abs1
+  //     } else {
+  //       amountUSD = abs1 / 0.9
+  //     }
+  //   } else {
+  //     if (symbolToken1 === 'USDC' || symbolToken1 === 'BUSD') {
+  //       amountUSD = abs0
+  //     } else {
+  //       amountUSD = abs0 / 0.9
+  //     }
+  //   }
+  // }
   const stablCoin =
     (inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD') && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
       ? `${formatAmount(amountUSD / 10)} Stable coin`
@@ -358,7 +387,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(abs0)} ${symbolToken0}`}</Text>
+      >{`${formatAmount(symbolToken0 === inputTokenSymbol ? abs0 : abs1)} ${inputTokenSymbol}`}</Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -367,7 +396,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token1`}
-      >{`${formatAmount(abs1)} ${symbolToken1}`}</Text>
+      >{`${formatAmount(symbolToken0 === inputTokenSymbol ? abs1 : abs0)} ${outputTokenSymbol}`}</Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -400,7 +429,7 @@ const DataRow: React.FC<
 
 const TransactionsTable: React.FC = () => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
-  const [sortDirection, setSortDirection] = useState<boolean>(false)
+  const [sortDirection, setSortDirection] = useState<boolean>(true)
   const [sortStable, setSortStable] = useState<boolean>(false)
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)
@@ -812,7 +841,13 @@ const TransactionsTable: React.FC = () => {
                   return (
                     // eslint-disable-next-line react/no-array-index-key
                     <Fragment key={index}>
-                      <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
+                      <DataRow
+                        transaction={transaction}
+                        index={index}
+                        page={page}
+                        perPage={perPage}
+                        transactionFrom={transactionFrom}
+                      />
                     </Fragment>
                   )
                 }
