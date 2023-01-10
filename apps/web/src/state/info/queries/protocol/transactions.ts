@@ -135,7 +135,7 @@ interface TransactionResultsUNI {
 const fetchTopTransactions = async (
   chainId: number,
 ): Promise<{ transactionsXOX: Transaction[] | undefined; transactionsOther: Transaction[] | undefined }> => {
-  let ressult = { transactionsXOX: [], transactionsOther: [] }
+  const result = { transactionsXOX: [], transactionsOther: [] }
   try {
     const dataXOX = await getMultiChainQueryEndPointWithChainId(
       chainId,
@@ -152,9 +152,9 @@ const fetchTopTransactions = async (
         return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
       })
     }
-    ressult.transactionsXOX = transactionsXOX
+    result.transactionsXOX = transactionsXOX
   } catch {
-    ressult.transactionsXOX = []
+    result.transactionsXOX = []
   }
 
   try {
@@ -189,11 +189,11 @@ const fetchTopTransactions = async (
         })
       }
     }
-    ressult.transactionsOther = transactionsOther
+    result.transactionsOther = transactionsOther
   } catch {
-    ressult.transactionsOther = []
+    result.transactionsOther = []
   }
-  return ressult
+  return result
 }
 
 export default fetchTopTransactions
