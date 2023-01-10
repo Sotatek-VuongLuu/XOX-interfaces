@@ -646,6 +646,10 @@ const TransactionsTable: React.FC = () => {
     setPage(1)
   }, [perPage])
 
+  useEffect(() => {
+    setCurrentTransactions([])
+  }, [chainId])
+
   return (
     <Wrapper>
       <Flex mb="16px" justifyContent="space-between">
