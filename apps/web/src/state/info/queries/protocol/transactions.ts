@@ -89,8 +89,7 @@ const QUERYPANCAKE = `
       amount1
       amountUSD
     }
-    swaps: 
-    swaps(first: 100, orderBy: timestamp, orderDirection: desc) {
+    swaps: swaps(first: 100, orderBy: timestamp, orderDirection: desc) {
       id
       timestamp
       pair {
@@ -145,8 +144,8 @@ const fetchTopTransactions = async (
       chainName,
       TransactionFrom.XOX,
     ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
-    let transactionsXOX:any
-    let transactionsOther:any
+    let transactionsXOX: any
+    let transactionsOther: any
     if (dataXOX) {
       const mintsXOX = dataXOX.mints.map(mapMints)
       const burnsXOX = dataXOX.burns.map(mapBurns)
@@ -170,8 +169,11 @@ const fetchTopTransactions = async (
         })
       }
     } else {
-      const dataPANCAKERES = await axios.post(`${process.env.NEXT_PUBLIC_API}/Pancake/query`, {url: 'https://proxy-worker-dev.pancake-swap.workers.dev/bsc-exchange',query: QUERYPANCAKE})
-      const dataPANCAKE = dataPANCAKERES?.data;
+      const dataPANCAKERES = await axios.post(`${process.env.NEXT_PUBLIC_API}/Pancake/query`, {
+        url: 'https://proxy-worker-dev.pancake-swap.workers.dev/bsc-exchange',
+        query: QUERYPANCAKE,
+      })
+      const dataPANCAKE = dataPANCAKERES?.data
       // const dataPANCAKE = await getMultiChainQueryEndPointWithStableSwap(
       //   chainName,
       //   TransactionFrom.PANCAKE,
@@ -185,7 +187,7 @@ const fetchTopTransactions = async (
     }
     return {
       transactionsXOX,
-      transactionsOther
+      transactionsOther,
     }
   } catch {
     return {

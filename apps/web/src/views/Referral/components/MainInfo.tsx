@@ -435,7 +435,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         .toNumber()
       const totalUnClaimed = Number(totalReward) - Number(totalClaimedAmount)
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
-      listData[1].volumn = totalUnClaimed.toFixed(1)
+      listData[1].volumn = totalUnClaimed.toString()
       listData[2].volumn = totalClaimedAmount.toString()
       listData[3].volumn = result.analysisDatas[0]?.total_transactions.toString()
       listData[4].volumn = totalReward.toString()

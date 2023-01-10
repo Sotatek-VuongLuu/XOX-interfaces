@@ -238,6 +238,13 @@ export const PageButtons = styled(Flex)`
   }
 `
 
+const NoTransactionWrapper = styled(Flex)`
+  grid-column: 1 / span 2;
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-column: 1 / span 7;
+  }
+`
+
 const SORT_FIELD = {
   timestamp: 'timestamp',
   amountUSD: 'amountUSD',
@@ -275,16 +282,18 @@ const DataRow: React.FC<
   const { t } = useTranslation()
   const abs0 = Math.abs(transaction.amountToken0)
   const abs1 = Math.abs(transaction.amountToken1)
-  const { chainId } = useActiveChainId();
-  const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
+  const { chainId } = useActiveChainId()
+  const chainIdLink = [1, 5, 56, 97].some((it) => it === chainId) ? chainId : ChainId.ETHEREUM
   const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOX' : transaction.token0Symbol
   const symbolToken1 = transaction.token1Symbol === 'xox' ? 'XOX' : transaction.token1Symbol
 
   const outputTokenSymbol = transaction.amountToken0 < 0 ? symbolToken0 : symbolToken1
   const inputTokenSymbol = transaction.amountToken1 < 0 ? symbolToken0 : symbolToken1
+  const amountUSD =
+    inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD' ? (transaction.amountToken1 < 0 ? abs0 : abs1) : 0
   const stablCoin =
-    inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
-      ? `${formatAmount(transaction.amountUSD / 10)} Stable coin`
+    (inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD') && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
+      ? `${formatAmount(amountUSD / 10)} Stable coin`
       : '--'
 
   return (
@@ -339,7 +348,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
       >
-        ${formatAmount(transaction.amountUSD)}
+        ${formatAmount(transaction.amountUSD === 0 ? amountUSD : transaction.amountUSD)}
       </Text>
       <Text
         fontSize="16px"
@@ -477,6 +486,11 @@ const TransactionsTable: React.FC = () => {
       if (newFilterFrom !== transactionFrom) {
         setTransactionFrom(newFilterFrom)
         setPage(1)
+        if (newFilterFrom === TransactionFrom.XOX) {
+          setTxFilter(undefined)
+        } else {
+          setTxFilter(TransactionType.SWAP)
+        }
       }
     },
     [transactionFrom],
@@ -645,9 +659,12 @@ const TransactionsTable: React.FC = () => {
               </Button>
             )}
           </Flex>
-          {
-            transactionFrom === TransactionFrom.XOX && <Flex className="btn-filter" mb="8px">
-              <Button onClick={() => handleFilter(undefined)} className={undefined === txFilter ? 'active' : 'inactive'}>
+          {transactionFrom === TransactionFrom.XOX && (
+            <Flex className="btn-filter" mb="8px">
+              <Button
+                onClick={() => handleFilter(undefined)}
+                className={undefined === txFilter ? 'active' : 'inactive'}
+              >
                 All
               </Button>
               <Button
@@ -669,7 +686,7 @@ const TransactionsTable: React.FC = () => {
                 Removes
               </Button>
             </Flex>
-          }
+          )}
           <Text
             fontSize="14px"
             fontFamily="Inter"
@@ -802,9 +819,9 @@ const TransactionsTable: React.FC = () => {
                 return null
               })}
               {sortedTransactions.length === 0 ? (
-                <Flex justifyContent="center">
-                  <Text>{t('No Transactions')}</Text>
-                </Flex>
+                <NoTransactionWrapper justifyContent="center">
+                  <Text textAlign="center">{t('No Transactions')}</Text>
+                </NoTransactionWrapper>
               ) : undefined}
             </>
           ) : (
