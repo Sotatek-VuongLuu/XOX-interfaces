@@ -11,7 +11,7 @@ import { getUnixTime } from 'date-fns'
 import { TransactionType } from 'state/info/types'
 import { ChartEntry } from '../types'
 import { MultiChainName, multiChainStartTime } from '../constant'
-import { MintResponse, SwapResponse, BurnResponse, TokenDayData, PairDayData, PancakeDayData } from './types'
+import { MintResponse, SwapResponse, BurnResponse, TokenDayData, PairDayData, PancakeDayData, SwapResponseUNI } from './types'
 
 export const mapMints = (mint: MintResponse) => {
   return {
@@ -50,7 +50,23 @@ export const mapSwaps = (swap: SwapResponse) => {
     type: TransactionType.SWAP,
     hash: swap.id.split('-')[0],
     timestamp: swap.timestamp,
-    sender: swap.sender,
+    sender: swap.from,
+    token0Symbol: swap.pair.token0.symbol,
+    token1Symbol: swap.pair.token1.symbol,
+    token0Address: swap.pair.token0.id,
+    token1Address: swap.pair.token1.id,
+    amountUSD: parseFloat(swap.amountUSD),
+    amountToken0: parseFloat(swap.amount0In) - parseFloat(swap.amount0Out),
+    amountToken1: parseFloat(swap.amount1In) - parseFloat(swap.amount1Out),
+  }
+}
+
+export const mapSwapsUNI = (swap: SwapResponseUNI) => {
+  return {
+    type: TransactionType.SWAP,
+    hash: swap.id.split('-')[0],
+    timestamp: swap.timestamp,
+    sender: swap.to,
     token0Symbol: swap.pair.token0.symbol,
     token1Symbol: swap.pair.token1.symbol,
     token0Address: swap.pair.token0.id,

@@ -23,7 +23,19 @@ export interface SwapResponse {
   id: string
   timestamp: string
   pair?: PairResponse
-  sender: string
+  from: string
+  amount0In: string
+  amount1In: string
+  amount0Out: string
+  amount1Out: string
+  amountUSD: string
+}
+
+export interface SwapResponseUNI {
+  id: string
+  timestamp: string
+  pair?: PairResponse
+  to: string
   amount0In: string
   amount1In: string
   amount0Out: string

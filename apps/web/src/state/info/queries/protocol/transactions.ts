@@ -1,6 +1,6 @@
 import { gql } from 'graphql-request'
-import { mapBurns, mapMints, mapSwaps } from 'state/info/queries/helpers'
-import { BurnResponse, MintResponse, SwapResponse } from 'state/info/queries/types'
+import { mapBurns, mapMints, mapSwaps, mapSwapsUNI } from 'state/info/queries/helpers'
+import { BurnResponse, MintResponse, SwapResponse, SwapResponseUNI } from 'state/info/queries/types'
 import { Transaction, TransactionFrom } from 'state/info/types'
 import axios from 'axios'
 import { getMultiChainQueryEndPointWithStableSwap, MultiChainName } from '../../constant'
@@ -41,7 +41,7 @@ const GLOBAL_TRANSACTIONS = gql`
           symbol
         }
       }
-      sender
+      from
       amount0In
       amount1In
       amount0Out
@@ -70,25 +70,6 @@ const GLOBAL_TRANSACTIONS = gql`
 `
 
 const QUERYPANCAKE = `
-  query overviewTransactions {
-    mints: mints(first: 100, orderBy: timestamp, orderDirection: desc) {
-      id
-      timestamp
-      pair {
-        token0 {
-          id
-          symbol
-        }
-        token1 {
-          id
-          symbol
-        }
-      }
-      to
-      amount0
-      amount1
-      amountUSD
-    }
     swaps: swaps(first: 100, orderBy: timestamp, orderDirection: desc) {
       id
       timestamp
@@ -102,14 +83,19 @@ const QUERYPANCAKE = `
           symbol
         }
       }
-      sender
+      from
       amount0In
       amount1In
       amount0Out
       amount1Out
       amountUSD
     }
-    burns: burns(first: 100, orderBy: timestamp, orderDirection: desc) {
+  }
+`
+
+const QUERYUNI = `
+  query overviewTransactions {
+    swaps: swaps(first: 100, orderBy: timestamp, orderDirection: desc) {
       id
       timestamp
       pair {
@@ -122,9 +108,11 @@ const QUERYPANCAKE = `
           symbol
         }
       }
-      sender
-      amount0
-      amount1
+      to
+      amount0In
+      amount1In
+      amount0Out
+      amount1Out
       amountUSD
     }
   }
@@ -134,6 +122,9 @@ interface TransactionResults {
   mints: MintResponse[]
   swaps: SwapResponse[]
   burns: BurnResponse[]
+}
+interface TransactionResultsUNI {
+  swaps: SwapResponseUNI[]
 }
 
 const fetchTopTransactions = async (
@@ -159,10 +150,10 @@ const fetchTopTransactions = async (
       const dataUNI = await getMultiChainQueryEndPointWithStableSwap(
         chainName,
         TransactionFrom.UNI,
-      ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
+      ).request<TransactionResultsUNI>(QUERYUNI)
 
       if (dataUNI) {
-        const swapsUNI = dataUNI.swaps.map(mapSwaps)
+        const swapsUNI = dataUNI.swaps.map(mapSwapsUNI)
 
         transactionsOther = [...swapsUNI].sort((a, b) => {
           return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
