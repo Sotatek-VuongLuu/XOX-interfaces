@@ -203,8 +203,9 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       const lastResponse = await Promise.all(histories)
       setUserClaimHistories(
         lastResponse.sort((a, b) => {
-          if (a.time != b.time) return b.time - a.time
-          else return b.point - a.point
+          if (a.time !== b.time) return b.time - a.time
+        
+          return b.point - a.point
         }),
       )
     }
