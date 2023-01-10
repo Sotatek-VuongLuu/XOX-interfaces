@@ -1,5 +1,5 @@
 import { gql } from 'graphql-request'
-import { mapBurns, mapMints, mapSwaps, mapSwapsUNI } from 'state/info/queries/helpers'
+import { mapBurns, mapMints, mapSwaps, mapSwapsUNI, mapSwapsXOX } from 'state/info/queries/helpers'
 import { BurnResponse, MintResponse, SwapResponse, SwapResponseUNI } from 'state/info/queries/types'
 import { Transaction, TransactionFrom } from 'state/info/types'
 import axios from 'axios'
@@ -141,7 +141,7 @@ const fetchTopTransactions = async (
     if (dataXOX) {
       const mintsXOX = dataXOX.mints.map(mapMints)
       const burnsXOX = dataXOX.burns.map(mapBurns)
-      const swapsXOX = dataXOX.swaps.map(mapSwaps)
+      const swapsXOX = dataXOX.swaps.map(mapSwapsXOX)
 
       transactionsXOX = [...mintsXOX, ...burnsXOX, ...swapsXOX].sort((a, b) => {
         return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)

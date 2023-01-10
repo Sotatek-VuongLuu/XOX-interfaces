@@ -8,10 +8,44 @@ import IPancakePairABI from 'config/abi/IPancakePair.json'
 import bep20Abi from 'config/abi/erc20.json'
 import { multicallv2 } from 'utils/multicall'
 import { getUnixTime } from 'date-fns'
-import { TransactionType } from 'state/info/types'
+import { Transaction, TransactionType } from 'state/info/types'
 import { ChartEntry } from '../types'
 import { MultiChainName, multiChainStartTime } from '../constant'
-import { MintResponse, SwapResponse, BurnResponse, TokenDayData, PairDayData, PancakeDayData, SwapResponseUNI } from './types'
+import {
+  MintResponse,
+  SwapResponse,
+  BurnResponse,
+  TokenDayData,
+  PairDayData,
+  PancakeDayData,
+  SwapResponseUNI,
+} from './types'
+
+const calculatorAmountUSDMint = (mint: MintResponse) => {
+  const token0Symbol = mint.pair.token0.symbol
+  const amountToken0 = parseFloat(mint.amount0)
+  const amountToken1 = parseFloat(mint.amount0)
+  const abs0 = Math.abs(amountToken0)
+  const abs1 = Math.abs(amountToken1)
+  const symbolToken0 = token0Symbol === 'USDC' ? 'XOX' : token0Symbol
+
+  const inputTokenSymbol = symbolToken0
+  const amountUSD = inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD' ? abs0 : abs1
+  return amountUSD * 2
+}
+
+const calculatorAmountUSDBurn = (burn: BurnResponse) => {
+  const token0Symbol = burn.pair.token0.symbol
+  const amountToken0 = parseFloat(burn.amount0)
+  const amountToken1 = parseFloat(burn.amount0)
+  const abs0 = Math.abs(amountToken0)
+  const abs1 = Math.abs(amountToken1)
+  const symbolToken0 = token0Symbol === 'USDC' ? 'XOX' : token0Symbol
+
+  const inputTokenSymbol = symbolToken0
+  const amountUSD = inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD' ? abs0 : abs1
+  return amountUSD * 2
+}
 
 export const mapMints = (mint: MintResponse) => {
   return {
@@ -23,7 +57,7 @@ export const mapMints = (mint: MintResponse) => {
     token1Symbol: mint.pair.token1.symbol,
     token0Address: mint.pair.token0.id,
     token1Address: mint.pair.token1.id,
-    amountUSD: parseFloat(mint.amountUSD),
+    amountUSD: calculatorAmountUSDMint(mint),
     amountToken0: parseFloat(mint.amount0),
     amountToken1: parseFloat(mint.amount1),
   }
@@ -39,7 +73,7 @@ export const mapBurns = (burn: BurnResponse) => {
     token1Symbol: burn.pair.token1.symbol,
     token0Address: burn.pair.token0.id,
     token1Address: burn.pair.token1.id,
-    amountUSD: parseFloat(burn.amountUSD),
+    amountUSD: calculatorAmountUSDBurn(burn),
     amountToken0: parseFloat(burn.amount0),
     amountToken1: parseFloat(burn.amount1),
   }
@@ -56,6 +90,44 @@ export const mapSwaps = (swap: SwapResponse) => {
     token0Address: swap.pair.token0.id,
     token1Address: swap.pair.token1.id,
     amountUSD: parseFloat(swap.amountUSD),
+    amountToken0: parseFloat(swap.amount0In) - parseFloat(swap.amount0Out),
+    amountToken1: parseFloat(swap.amount1In) - parseFloat(swap.amount1Out),
+  }
+}
+
+const calculatorAmountUSDSwap = (swap: SwapResponse) => {
+  const token0Symbol = swap.pair.token0.symbol
+  const token1Symbol = swap.pair.token1.symbol
+  const amountToken0 = parseFloat(swap.amount0In) - parseFloat(swap.amount0Out)
+  const amountToken1 = parseFloat(swap.amount1In) - parseFloat(swap.amount1Out)
+  const abs0 = Math.abs(amountToken0)
+  const abs1 = Math.abs(amountToken1)
+  const symbolToken0 = token0Symbol === 'xox' ? 'XOX' : token0Symbol
+  const symbolToken1 = token1Symbol === 'xox' ? 'XOX' : token1Symbol
+
+  const inputTokenSymbol = amountToken1 < 0 ? symbolToken0 : symbolToken1
+  const amountUSD =
+    inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD'
+      ? amountToken1 < 0
+        ? abs0
+        : abs1
+      : amountToken0 < 0
+      ? abs0 / 0.9
+      : abs1 / 0.9
+  return amountUSD
+}
+
+export const mapSwapsXOX = (swap: SwapResponse) => {
+  return {
+    type: TransactionType.SWAP,
+    hash: swap.id.split('-')[0],
+    timestamp: swap.timestamp,
+    sender: swap.from,
+    token0Symbol: swap.pair.token0.symbol,
+    token1Symbol: swap.pair.token1.symbol,
+    token0Address: swap.pair.token0.id,
+    token1Address: swap.pair.token1.id,
+    amountUSD: calculatorAmountUSDSwap(swap),
     amountToken0: parseFloat(swap.amount0In) - parseFloat(swap.amount0Out),
     amountToken1: parseFloat(swap.amount1In) - parseFloat(swap.amount1Out),
   }

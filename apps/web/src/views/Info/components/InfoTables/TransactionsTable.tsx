@@ -282,9 +282,8 @@ const DataRow: React.FC<
     index: number
     page: number
     perPage: number
-    transactionFrom: TransactionFrom
   }>
-> = ({ transaction, index, page, perPage, transactionFrom }) => {
+> = ({ transaction, index, page, perPage }) => {
   const { t } = useTranslation()
   const abs0 = Math.abs(transaction.amountToken0)
   const abs1 = Math.abs(transaction.amountToken1)
@@ -387,7 +386,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(symbolToken0 === inputTokenSymbol ? abs0 : abs1)} ${inputTokenSymbol}`}</Text>
+      >{`${formatAmount(abs0)} ${transaction.token0Symbol}`}</Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -396,7 +395,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token1`}
-      >{`${formatAmount(symbolToken0 === inputTokenSymbol ? abs1 : abs0)} ${outputTokenSymbol}`}</Text>
+      >{`${formatAmount(abs1)} ${transaction.token1Symbol}`}</Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -846,7 +845,6 @@ const TransactionsTable: React.FC = () => {
                         index={index}
                         page={page}
                         perPage={perPage}
-                        transactionFrom={transactionFrom}
                       />
                     </Fragment>
                   )
