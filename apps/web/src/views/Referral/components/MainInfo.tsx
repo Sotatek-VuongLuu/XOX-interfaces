@@ -330,8 +330,9 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
   const [listUserRanksMonthly, setListUserRanksMonthly] = useState<IMappingFormat[]>([])
   const [listUserRanksAllTime, setListUserRanksAllTime] = useState<IMappingFormat[]>([])
   const [loadOk, setLoadOk] = useState(false)
+  const [loadNetWork, setLoadNetWork] = useState(false)
   const [listPoint, setListPoint] = useState<IListPoint[]>([])
-  const { account, chainId } = useActiveWeb3React()
+  const { account, chainId, isWrongNetwork } = useActiveWeb3React()
   const totalPoint = listLever[currentLevelReach]?.point
   const currentPoint = userCurrentPoint
   const percentPoint = (currentPoint / totalPoint) * 100
@@ -528,10 +529,8 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
 
   useEffect(() => {
     if (!chainId || !account) return
+    if (loadOk) window.location.reload()
     setLoadOk(true)
-    if (loadOk) {
-      window.location.reload()
-    }
     handleGetUserRanks('All Time', setListUserRanksAllTime, setRankOfUserAllTime)
     handleGetUserRanks('Monthly', setListUserRanksMonthly, setRankOfUserMonthly)
     handleGetUserRanks('Weekly', setListUserRanksWeekly, setRankOfUserWeekly)
@@ -540,6 +539,12 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     getUserPoint()
     getPointDataDays()
   }, [chainId, account])
+
+  useEffect(() => {
+    if (isWrongNetwork === undefined) return
+    if (loadNetWork) window.location.reload()
+    setLoadNetWork(true)
+  }, [isWrongNetwork])
 
   return (
     <Box sx={{ marginTop: '16px' }}>
