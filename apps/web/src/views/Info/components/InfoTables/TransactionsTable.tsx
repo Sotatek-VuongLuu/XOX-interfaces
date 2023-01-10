@@ -386,7 +386,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(abs0)} ${transaction.token0Symbol}`}</Text>
+      >{`${formatAmount(abs0)} ${transaction.token0Symbol.toUpperCase()}`}</Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -395,7 +395,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token1`}
-      >{`${formatAmount(abs1)} ${transaction.token1Symbol}`}</Text>
+      >{`${formatAmount(abs1)} ${transaction.token1Symbol.toUpperCase()}`}</Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -439,7 +439,6 @@ const TransactionsTable: React.FC = () => {
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
   const transactions = useProtocolTransactionsSWR()
   const [currentTransactions, setCurrentTransactions] = useState([])
-
   const { t } = useTranslation()
 
   const [page, setPage] = useState(1)
@@ -840,12 +839,7 @@ const TransactionsTable: React.FC = () => {
                   return (
                     // eslint-disable-next-line react/no-array-index-key
                     <Fragment key={index}>
-                      <DataRow
-                        transaction={transaction}
-                        index={index}
-                        page={page}
-                        perPage={perPage}
-                      />
+                      <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
                     </Fragment>
                   )
                 }

@@ -490,7 +490,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
             </CoinListWrapper>
           </Flex>
         ) : (
-          <Flex height="100%" flexDirection="column" justifyContent="center" alignItems="center">
+          <Flex height="100%" minHeight="350px" flexDirection="column" justifyContent="center" alignItems="center">
             <Text
               fontSize="14px"
               fontFamily="Inter"
