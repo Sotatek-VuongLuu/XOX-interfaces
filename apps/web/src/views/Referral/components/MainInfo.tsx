@@ -9,6 +9,7 @@ import moment from 'moment'
 import Trans from 'components/Trans'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useCallback, useEffect, useState } from 'react'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 import styled from 'styled-components'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import BigNumber from 'bignumber.js'
@@ -593,7 +594,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
                     <div className="current_point_bar">
                       {totalPoint ? (
                         <span>
-                          {userCurrentPoint}/
+                          {formatAmountNumber(userCurrentPoint, 2)}/
                           {currentLevelReach === 9
                             ? listLever[currentLevelReach - 1]?.point
                             : listLever[currentLevelReach]?.point}
