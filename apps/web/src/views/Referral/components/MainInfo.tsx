@@ -257,6 +257,16 @@ const WrapperRight = styled.div<IPropsContainer>`
     }
   }
 `
+const NoDataWraper = styled.div`
+  width:100%;
+  height:360px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-weight:700;
+  font-size:18px;
+  color:rgba(255,255,255,0.6);
+`
 const ConnectBox = styled.div`
   display: flex;
   align-items: center;
@@ -545,10 +555,17 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
               </div>
 
               <div className="learder_board">
-                {listUserRanks?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
-                  // eslint-disable-next-line react/no-array-index-key
-                  return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
-                })}
+                {listUserRanks && listUserRanks.length > 0 && 
+                  listUserRanks?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
+                    // eslint-disable-next-line react/no-array-index-key
+                    return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
+                  })
+                }
+                {listUserRanks.length === 0 &&
+                <NoDataWraper>
+                  No data
+                </NoDataWraper>
+                }
               </div>
 
               {!rankOfUser.rank ? null : rankOfUser.rank <= 6 ? null : (
