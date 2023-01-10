@@ -48,6 +48,10 @@ const Wrapper = styled.div`
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
   }
 
+  & .total{
+    padding-top: 25px;
+  }
+
   .btn-filter button {
     height: 37px;
     font-family: 'Inter';
@@ -64,6 +68,20 @@ const Wrapper = styled.div`
     background: transparent;
     border: none;
     box-shadow: none;
+  }
+
+  @media (max-width: 576px) {
+    & .heading {
+        font-size: 16px;
+    }
+
+    & .total{
+        padding-top: 0px;
+        font-size: 12px;
+    }
+    & .size-14{
+        font-size: 14px !important;
+    }
   }
 
   ${({ theme }) => theme.mediaQueries.xl} {
@@ -100,6 +118,12 @@ const Table = styled.div`
   grid-template-columns: 0.15fr 1.4fr 1fr 0.4fr;
   .table-header {
     margin-bottom: 16px;
+  }
+
+  @media(max-width: 576px){
+    .table-header{
+        font-size: 14px;
+    }
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -557,6 +581,18 @@ const TransactionsTable: React.FC = () => {
           height="24px"
         >
           Transactions History
+        </Text>
+        <Text
+            className='total'
+            fontSize="14px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="400"
+            lineHeight="17px"
+            color="rgba(255, 255, 255, 0.6)"
+          >
+          Total: {currentTransactions ? (currentTransactions.length > 300 ? 300 : currentTransactions.length) : 0}{' '}
+          transactions
         </Text>
       </Flex>
       <CustomTableWrapper>
