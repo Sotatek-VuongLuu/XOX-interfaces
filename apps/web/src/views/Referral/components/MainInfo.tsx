@@ -522,8 +522,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     getListPointConfig()
     getUserPoint()
     getPointDataDays()
-  }, [chainId])
-
+  }, [chainId, account])
   return (
     <Box sx={{ marginTop: '16px' }}>
       <Grid container spacing={2}>
