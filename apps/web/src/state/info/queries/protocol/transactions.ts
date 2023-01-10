@@ -3,7 +3,7 @@ import { mapBurns, mapMints, mapSwaps, mapSwapsUNI, mapSwapsXOX } from 'state/in
 import { BurnResponse, MintResponse, SwapResponse, SwapResponseUNI } from 'state/info/queries/types'
 import { Transaction, TransactionFrom } from 'state/info/types'
 import axios from 'axios'
-import { getMultiChainQueryEndPointWithStableSwap, MultiChainName } from '../../constant'
+import { getMultiChainQueryEndPointWithChainId, getMultiChainQueryEndPointWithStableSwap, MultiChainName } from '../../constant'
 
 /**
  * Transactions for Transaction table on the Home page
@@ -129,11 +129,11 @@ interface TransactionResultsUNI {
 }
 
 const fetchTopTransactions = async (
-  chainName: MultiChainName,
+  chainId: number,
 ): Promise<{ transactionsXOX: Transaction[] | undefined; transactionsOther: Transaction[] | undefined }> => {
   try {
-    const dataXOX = await getMultiChainQueryEndPointWithStableSwap(
-      chainName,
+    const dataXOX = await getMultiChainQueryEndPointWithChainId(
+      chainId,
       TransactionFrom.XOX,
     ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
     let transactionsXOX: any
@@ -147,9 +147,9 @@ const fetchTopTransactions = async (
         return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
       })
     }
-    if (chainName === 'ETH') {
-      const dataUNI = await getMultiChainQueryEndPointWithStableSwap(
-        chainName,
+    if (chainId === 1) {
+      const dataUNI = await getMultiChainQueryEndPointWithChainId(
+        chainId,
         TransactionFrom.UNI,
       ).request<TransactionResultsUNI>(QUERYUNI)
 
@@ -167,7 +167,7 @@ const fetchTopTransactions = async (
       })
       const dataPANCAKE = dataPANCAKERES?.data
       // const dataPANCAKE = await getMultiChainQueryEndPointWithStableSwap(
-      //   chainName,
+      //   chainId,
       //   TransactionFrom.PANCAKE,
       // ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
       if (dataPANCAKE) {
