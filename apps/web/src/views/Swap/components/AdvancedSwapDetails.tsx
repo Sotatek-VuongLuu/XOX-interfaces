@@ -59,7 +59,7 @@ function TradeSummary({
           />
         </RowFixed>
         <RowFixed>
-          <BottomText fontSize="16px">
+          <BottomText fontSize="16px" color='while87'>
             {isExactIn
               ? `${slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)} ${trade.outputAmount.currency.symbol}` ??
                 '-'
@@ -99,7 +99,7 @@ function TradeSummary({
             placement="top-start"
           />
         </RowFixed>
-        <BottomText fontSize="16px">
+        <BottomText fontSize="16px" color='while87'>
           {realizedLPFee ? `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol}` : '-'}
         </BottomText>
       </RowBetweenStyle>
