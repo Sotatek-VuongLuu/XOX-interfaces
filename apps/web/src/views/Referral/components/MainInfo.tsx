@@ -6,7 +6,8 @@ import axios from 'axios'
 import { Box, Grid } from '@mui/material'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
-import { BUSD_BSC, USDC_ETH } from '@pancakeswap/tokens'
+import Trans from 'components/Trans'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { USD_DECIMALS } from 'config/constants/exchange'
@@ -16,6 +17,7 @@ import HowToJoin from './HowToJoin'
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
+
 import {
   getUerRank,
   getUserPointDaily,
@@ -23,7 +25,6 @@ import {
   getUserPointWeekly,
   userPoint,
   pointDataDays,
-  userClaimedHistories,
 } from '../../../services/referral'
 
 export interface IItemLeaderBoard {
@@ -40,7 +41,10 @@ interface IItemLevel {
   lever: number
   isReach?: boolean
 }
-
+interface IListPoint {
+  reward: number
+  point: number
+}
 interface IPropsTotal {
   percentPoint?: number
   account?: string
@@ -253,7 +257,39 @@ const WrapperRight = styled.div<IPropsContainer>`
     }
   }
 `
+const ConnectBox = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`
+const ConnectWalletButtonWraper = styled(ConnectWalletButton)`
+  padding: 10px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 146px;
+  margin-top: 16px;
+  height: 37px;
+`
+const BoxWrapper = styled(Box)`
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+  align-items: center;
 
+  button {
+    max-width: 146px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 6px;
+  }
+`
+const SubTitle = styled.div`
+  color: #ffffffde;
+  text-align: center;
+  max-width: 242px;
+  margin: 0 auto;
+`
 const defaultIMappingFormat = {
   address: '',
   amount: '',
@@ -271,7 +307,6 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
   const startOfMonth = moment().startOf('month').toString()
   const startOfWeek = moment().startOf('isoWeek').toString()
   const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>(listData)
-  const [userClaimHistories, setUserClaimHistories] = useState([])
   const [dataChart, setDataChart] = useState([])
   const [minAmount, setMinAmount] = useState('')
   const [middleAmount, setMiddleAmount] = useState('')
@@ -283,7 +318,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
   const [listUserRanksWeekly, setListUserRanksWeekly] = useState<IMappingFormat[]>([])
   const [listUserRanksMonthly, setListUserRanksMonthly] = useState<IMappingFormat[]>([])
   const [listUserRanksAllTime, setListUserRanksAllTime] = useState<IMappingFormat[]>([])
-  const [listPoint, setListPoint] = useState([])
+  const [listPoint, setListPoint] = useState<IListPoint[]>([])
   const { account, chainId } = useActiveWeb3React()
   const totalPoint = listLever[currentLevelReach]?.point
   const currentPoint = userCurrentPoint
@@ -351,9 +386,9 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
           wallets: listAddress,
         })
-        const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index)=> {
+        const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index) => {
           const dataUserInfos = response.data
-          const userInfo = dataUserInfos?.find((user=> item.address === user.address))
+          const userInfo = dataUserInfos?.find((user) => item.address === user.address)
 
           return {
             ...item,
@@ -407,27 +442,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
       setVolumnData(listData)
     }
   }
-  const getUserClaimedHistories = async () => {
-    const result = await userClaimedHistories(chainId)
-    if (result) {
-      const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
-        const mappingUser = await mapingHistories(item.address)
-        const userAvatar = mappingUser.avatar
-        const point = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
-        const claim = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
-        return createData(
-          idx + 1,
-          userAvatar,
-          mappingUser?.username,
-          moment(item.date * 1000).format('DD/MM/YYYY hh:mm:ss'),
-          mapPoint(point),
-          claim,
-        )
-      })
-      const lastResponse = await Promise.all(histories)
-      setUserClaimHistories(lastResponse)
-    }
-  }
+
   const getPointDataDays = async () => {
     const startDate = new Date()
     startDate.setDate(startDate.getDate() - 14)
@@ -472,29 +487,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     }
     return chartData
   }
-  const mapingHistories = async (address: string) => {
-    const payload = {
-      wallets: [`${address}`],
-    }
-    const result: any = await axios
-      .post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, payload)
-      .catch((error) => {
-        console.warn(error)
-      })
-    const data = result?.data[0]
-    return data
-  }
-  const mapPoint = (amount: number) => {
-    for (let i = 0; i <= listPoint?.length; i++) {
-      if (amount <= listPoint[i]?.reward && amount < listPoint[i + 1]?.reward) {
-        return listPoint[i]?.point
-      }
-    }
-    return ''
-  }
-  function createData(no: number, avatar: string, name: string, time: string, point: number, claim: number) {
-    return { no, avatar, name, time, point, claim }
-  }
+
   function createDataChartDay(name: string, uv: number) {
     return { name, uv }
   }
@@ -522,14 +515,13 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
   }
 
   useEffect(() => {
-    getListPointConfig()
-    getUserPoint()
-    getUserClaimedHistories()
-    getPointDataDays()
     handleGetUserRanks('All Time', setListUserRanksAllTime, setRankOfUserAllTime)
     handleGetUserRanks('Monthly', setListUserRanksMonthly, setRankOfUserMonthly)
     handleGetUserRanks('Weekly', setListUserRanksWeekly, setRankOfUserWeekly)
     handleGetUserRanks('Daily', setListUserRanksDaily, setRankOfUserDaily)
+    getListPointConfig()
+    getUserPoint()
+    getPointDataDays()
   }, [chainId])
 
   return (
@@ -577,25 +569,41 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
               ) : null}
             </First>
 
-            <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint}>
-              <div className="total_point">
-                <p className="title">Your current total points</p>
-                <div className="total_point_bar">
-                  <div className="current_point_bar">
-                    {totalPoint ? (
-                      <span>
-                        {userCurrentPoint}/
-                        {currentLevelReach === 9
-                          ? listLever[currentLevelReach - 1]?.point
-                          : listLever[currentLevelReach]?.point}
-                      </span>
-                    ) : (
-                      <span />
-                    )}
+            {account && (
+              <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint}>
+                <div className="total_point">
+                  <p className="title">Your current total points</p>
+                  <div className="total_point_bar">
+                    <div className="current_point_bar">
+                      {totalPoint ? (
+                        <span>
+                          {userCurrentPoint}/
+                          {currentLevelReach === 9
+                            ? listLever[currentLevelReach - 1]?.point
+                            : listLever[currentLevelReach]?.point}
+                        </span>
+                      ) : (
+                        <span />
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </Second>
+              </Second>
+            )}
+            {!account && (
+              <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint}>
+                <div className="total_point" style={{ height: '203px', padding: '58px 0' }}>
+                  <SubTitle className="please-connec">Please connect wallet to view your referral information</SubTitle>
+                  <ConnectBox>
+                    <ConnectWalletButtonWraper scale="sm">
+                      <BoxWrapper display={['flex', , , 'flex']}>
+                        <Trans>Connect Wallet</Trans>
+                      </BoxWrapper>
+                    </ConnectWalletButtonWraper>
+                  </ConnectBox>
+                </div>
+              </Second>
+            )}
           </div>
         </Grid>
         <Grid item xs={12} lg={8}>
@@ -619,11 +627,11 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
               {subTabIndex === 1 && (
                 <PlatformStat
                   volumnData={volumnData}
-                  userClaimHistories={userClaimHistories}
                   dataChart={dataChart}
                   minAmount={minAmount}
                   middleAmount={middleAmount}
                   maxAmount={maxAmount}
+                  listPoint={listPoint}
                 />
               )}
               {subTabIndex === 2 && <HowToJoin />}

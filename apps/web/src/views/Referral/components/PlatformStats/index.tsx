@@ -12,14 +12,24 @@ import {
   TableRow,
   Tooltip,
 } from '@mui/material'
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import axios from 'axios'
+import moment from 'moment'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useEffect, useState } from 'react'
+import BigNumber from 'bignumber.js'
+import { USD_DECIMALS } from 'config/constants/exchange'
 import styled from 'styled-components'
 import ColumnChartRef from './components/ColumnChartRef'
+import { userClaimedHistories } from '../../../../services/referral'
 
 interface IVolumnDataItem {
   volumn: string
   title: string
   svg: string
+}
+interface IListPoint {
+  reward: number
+  point: number
 }
 interface IPropsItem {
   volumnData?: IVolumnDataItem[]
@@ -28,6 +38,7 @@ interface IPropsItem {
   minAmount?: string
   middleAmount?: string
   maxAmount?: string
+  listPoint?: IListPoint[]
 }
 
 const Wrapper = styled(Box)`
@@ -157,8 +168,63 @@ const Line = styled.div`
   }
 `
 const PlatformStat = (props: IPropsItem): JSX.Element => {
-  const { isMobile } = useMatchBreakpoints()
-  const { volumnData, userClaimHistories, dataChart, minAmount, middleAmount, maxAmount } = props
+  const { chainId } = useActiveWeb3React()
+  const { listPoint, volumnData, dataChart, minAmount, middleAmount, maxAmount } = props
+  const [userClaimHistories, setUserClaimHistories] = useState([])
+
+  const mapPoint = (amount: number) => {
+    if (listPoint && listPoint.length > 0) {
+      for (let i = 0; i < listPoint.length; i++) {
+        if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
+          return listPoint[i].point.toString()
+        }
+      }
+    }
+    return ''
+  }
+  const getUserClaimedHistories = async () => {
+    const result = await userClaimedHistories(chainId)
+    if (result) {
+      const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
+        const mappingUser = await mapingHistories(item.address)
+        const userAvatar = mappingUser.avatar
+        const point = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
+        const claim = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
+
+        return createData(
+          idx + 1,
+          userAvatar,
+          mappingUser?.username,
+          moment(item.date * 1000).format('DD/MM/YYYY hh:mm:ss'),
+          mapPoint(point),
+          claim,
+        )
+      })
+      const lastResponse = await Promise.all(histories)
+      setUserClaimHistories(lastResponse)
+    }
+  }
+  function createData(no: number, avatar: string, name: string, time: string, point: string, claim: number) {
+    return { no, avatar, name, time, point, claim }
+  }
+  const mapingHistories = async (address: string) => {
+    const payload = {
+      wallets: [`${address}`],
+    }
+    const result: any = await axios
+      .post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, payload)
+      .catch((error) => {
+        console.warn(error)
+      })
+    const data = result?.data[0]
+    return data
+  }
+
+  useEffect(() => {
+    if(!chainId) return
+    getUserClaimedHistories()
+  }, [chainId])
+
   return (
     <Wrapper sx={{}}>
       <div className="first">
@@ -178,10 +244,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       </div>
 
       <div className="second" style={{ position: 'relative' }}>
-        <TableContainer
-          component={Paper}
-          sx={{ height: '165px', background: '#303030' }}
-        >
+        <TableContainer component={Paper} sx={{ height: '165px', background: '#303030' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
               <TableRow
@@ -212,7 +275,13 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                 <TableRow
                   key={`${row.name}_${index}`}
                   sx={{
-                    '& td, & th': { border: 0, fontWeight: 400, fontSize: 14, color: ' rgba(255, 255, 255, 0.87)', padding: '6px 16px' },
+                    '& td, & th': {
+                      border: 0,
+                      fontWeight: 400,
+                      fontSize: 14,
+                      color: ' rgba(255, 255, 255, 0.87)',
+                      padding: '6px 16px',
+                    },
                   }}
                 >
                   <TableCell component="th" scope="row">
