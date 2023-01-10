@@ -172,7 +172,7 @@ const fetchTopTransactions = async (
           return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
         })
       }
-    } else {gst
+    } else {
       const dataPANCAKERES = await axios.post(`${process.env.NEXT_PUBLIC_API}/Pancake/query`, {
         url: 'https://proxy-worker-dev.pancake-swap.workers.dev/bsc-exchange',
         query: QUERYPANCAKE,
