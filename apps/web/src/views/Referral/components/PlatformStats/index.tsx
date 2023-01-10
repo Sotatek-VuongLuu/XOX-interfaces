@@ -174,7 +174,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
 
   const mapPoint = (amount: number) => {
     if (listPoint && listPoint.length > 0) {
-      for (let i = 0; i <= listPoint.length; i++) {
+      for (let i = 0; i < listPoint.length; i++) {
         if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
           return listPoint[i].point.toString()
         }
@@ -221,6 +221,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
   }
 
   useEffect(() => {
+    if(!chainId) return
     getUserClaimedHistories()
   }, [chainId])
 
