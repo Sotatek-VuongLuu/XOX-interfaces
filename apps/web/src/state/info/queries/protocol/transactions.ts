@@ -135,6 +135,7 @@ interface TransactionResultsUNI {
 const fetchTopTransactions = async (
   chainId: number,
 ): Promise<{ transactionsXOX: Transaction[] | undefined; transactionsOther: Transaction[] | undefined }> => {
+  let ressult = { transactionsXOX: [], transactionsOther: [] }
   try {
     const dataXOX = await getMultiChainQueryEndPointWithChainId(
       chainId,
@@ -151,6 +152,13 @@ const fetchTopTransactions = async (
         return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
       })
     }
+    ressult.transactionsXOX = transactionsXOX
+  } catch {
+    ressult.transactionsXOX = []
+  }
+
+  try {
+    let transactionsOther
     if (chainId === 1) {
       const dataUNI = await getMultiChainQueryEndPointWithChainId(
         chainId,
@@ -164,7 +172,7 @@ const fetchTopTransactions = async (
           return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
         })
       }
-    } else {
+    } else {gst
       const dataPANCAKERES = await axios.post(`${process.env.NEXT_PUBLIC_API}/Pancake/query`, {
         url: 'https://proxy-worker-dev.pancake-swap.workers.dev/bsc-exchange',
         query: QUERYPANCAKE,
@@ -181,16 +189,11 @@ const fetchTopTransactions = async (
         })
       }
     }
-    return {
-      transactionsXOX,
-      transactionsOther,
-    }
+    ressult.transactionsOther = transactionsOther
   } catch {
-    return {
-      transactionsXOX: [],
-      transactionsOther: [],
-    }
+    ressult.transactionsOther = []
   }
+  return ressult
 }
 
 export default fetchTopTransactions

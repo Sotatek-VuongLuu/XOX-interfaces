@@ -204,7 +204,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       setUserClaimHistories(
         lastResponse.sort((a, b) => {
           if (a.time !== b.time) return b.time - a.time
-        
+
           return b.point - a.point
         }),
       )
@@ -317,7 +317,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
         </TableContainer>
       </div>
 
-      <div className="third">
+      <div className="third" style={{ marginTop: '30px' }}>
         {/* <div className="range_volumn">
           <span className="min">{minAmount}</span>
           <span className="middle">{middleAmount}</span>
