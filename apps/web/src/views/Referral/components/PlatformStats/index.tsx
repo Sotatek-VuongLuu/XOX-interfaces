@@ -291,7 +291,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.no}
+                    {index + 1}
                   </TableCell>
                   <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar
