@@ -607,7 +607,7 @@ const ReferralFriend = ({
       const sortByPoints = userInfos[0]?.friends?.sort(function (a: any, b: any) {
         return Number(b.amount) - Number(a.amount)
       })
-      console.log('sortByPoints',sortByPoints)
+      console.log('sortByPoints', sortByPoints)
       if (Array.from(userInfos).length !== 0) {
         const dataUserFormatAmount = sortByPoints.map((item: any) => {
           return {
@@ -646,6 +646,13 @@ const ReferralFriend = ({
       dataFriend(account)
     }
   }, [chainId, account])
+
+  useEffect(() => {
+    document.querySelector('.swiper-button-next').addEventListener('dblclick', (e) => {
+      e.preventDefault()
+      event.stopPropagation();
+    }, true)
+  })
 
   return (
     <>
