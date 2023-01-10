@@ -647,6 +647,7 @@ const TransactionsTable: React.FC = () => {
   }, [perPage])
 
   useEffect(() => {
+    setTxFilter(undefined)
     setCurrentTransactions([])
   }, [chainId])
 
