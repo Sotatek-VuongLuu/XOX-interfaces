@@ -312,11 +312,11 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       </div>
 
       <div className="third">
-        <div className="range_volumn">
+        {/* <div className="range_volumn">
           <span className="min">{minAmount}</span>
           <span className="middle">{middleAmount}</span>
           <span className="max">{maxAmount}</span>
-        </div>
+        </div> */}
         <ColumnChartRef data={dataChart} />
       </div>
 

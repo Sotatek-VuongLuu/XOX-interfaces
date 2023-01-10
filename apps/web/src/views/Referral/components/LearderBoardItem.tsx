@@ -146,7 +146,7 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
         )
       }
 
-      return <div className="ranking">{rank < 7 ? <span>{rank}</span> : <span>7+</span>}</div>
+      return <div className="ranking">{rank < 100 ? <span>{rank}</span> : <span>100+</span>}</div>
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
