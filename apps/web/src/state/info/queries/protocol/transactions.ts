@@ -70,6 +70,7 @@ const GLOBAL_TRANSACTIONS = gql`
 `
 
 const QUERYPANCAKE = `
+  query overviewTransactions {
     swaps: swaps(first: 100, orderBy: timestamp, orderDirection: desc) {
       id
       timestamp
