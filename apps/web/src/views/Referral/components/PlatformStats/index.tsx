@@ -201,7 +201,12 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
         )
       })
       const lastResponse = await Promise.all(histories)
-      setUserClaimHistories(lastResponse)
+      setUserClaimHistories(
+        lastResponse.sort((a, b) => {
+          if (a.time != b.time) return b.time - a.time
+          else return b.point - a.point
+        }),
+      )
     }
   }
   function createData(no: number, avatar: string, name: string, time: string, point: string, claim: number) {
@@ -221,7 +226,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
   }
 
   useEffect(() => {
-    if(!chainId) return
+    if (!chainId) return
     getUserClaimedHistories()
   }, [chainId])
 
