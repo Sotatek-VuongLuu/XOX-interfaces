@@ -3,7 +3,11 @@ import { mapBurns, mapMints, mapSwaps, mapSwapsUNI, mapSwapsXOX } from 'state/in
 import { BurnResponse, MintResponse, SwapResponse, SwapResponseUNI } from 'state/info/queries/types'
 import { Transaction, TransactionFrom } from 'state/info/types'
 import axios from 'axios'
-import { getMultiChainQueryEndPointWithChainId, getMultiChainQueryEndPointWithStableSwap, MultiChainName } from '../../constant'
+import {
+  getMultiChainQueryEndPointWithChainId,
+  getMultiChainQueryEndPointWithStableSwap,
+  MultiChainName,
+} from '../../constant'
 
 /**
  * Transactions for Transaction table on the Home page
@@ -183,8 +187,8 @@ const fetchTopTransactions = async (
     }
   } catch {
     return {
-      transactionsXOX: undefined,
-      transactionsOther: undefined,
+      transactionsXOX: [],
+      transactionsOther: [],
     }
   }
 }
