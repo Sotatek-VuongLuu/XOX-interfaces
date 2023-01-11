@@ -9,6 +9,7 @@ import {
   Message,
   MessageText,
   useMatchBreakpoints,
+  Text,
 } from '@pancakeswap/uikit'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
@@ -20,11 +21,16 @@ import AccessRisk from 'views/Swap/components/AccessRisk'
 import styled from 'styled-components'
 import CurrencyInputPanel from 'components/CurrencyInputPanel'
 import { CommonBasesType } from 'components/SearchModal/types'
-import { AutoRow } from 'components/Layout/Row'
+import { AutoRow, RowBetween } from 'components/Layout/Row'
 import { AutoColumn } from 'components/Layout/Column'
 
 import { useCurrency } from 'hooks/Tokens'
-import { ApprovalState, useApproveCallbackFromTrade, useRouterNormal, useShowReferralCode } from 'hooks/useApproveCallback'
+import {
+  ApprovalState,
+  useApproveCallbackFromTrade,
+  useRouterNormal,
+  useShowReferralCode,
+} from 'hooks/useApproveCallback'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
 
 import { Field } from 'state/swap/actions'
@@ -234,7 +240,7 @@ export default function SwapForm() {
   )
 
   const swapIsUnsupported = useIsTransactionUnsupported(currencies?.INPUT, currencies?.OUTPUT)
-  const isShowReferralBox = useShowReferralCode(inputCurrency, outputCurrency, chainId);
+  const isShowReferralBox = useShowReferralCode(inputCurrency, outputCurrency, chainId)
   const hasAmount = Boolean(parsedAmount)
   const handleChangeReferal = (value: string) => {
     axios
@@ -328,9 +334,9 @@ export default function SwapForm() {
             </>
           ) : null}
 
-          {showWrap
-            ? null
-            : Boolean(trade) && (
+          {!showWrap && (
+            <>
+              {Boolean(trade) && (
                 <>
                   <PerPriceTitle>{t('Price')}</PerPriceTitle>
                   <SwapUI.Info
@@ -350,6 +356,18 @@ export default function SwapForm() {
                   />
                 </>
               )}
+              {Boolean(!trade) && (
+                <RowBetween>
+                  <Text bold fontSize="18px" color="#FFFFFFDE" fontWeight={400}>
+                    {t('Slippage Tolerance')}
+                  </Text>
+                  <Text bold color="#9072FF">
+                    {allowedSlippage / 100}%
+                  </Text>
+                </RowBetween>
+              )}
+            </>
+          )}
           {isShowReferralBox && (
             <ReferralCode>
               <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
@@ -390,7 +408,13 @@ export default function SwapForm() {
         </Box>
       </Wrapper>
       {!swapIsUnsupported ? (
-        trade && <AdvancedSwapDetailsDropdown trade={trade} showXOXSreceived={isShowReferralBox} value={formattedAmounts[Field.INPUT]} />
+        trade && (
+          <AdvancedSwapDetailsDropdown
+            trade={trade}
+            showXOXSreceived={isShowReferralBox}
+            value={formattedAmounts[Field.INPUT]}
+          />
+        )
       ) : (
         <UnsupportedCurrencyFooter currencies={[currencies.INPUT, currencies.OUTPUT]} />
       )}

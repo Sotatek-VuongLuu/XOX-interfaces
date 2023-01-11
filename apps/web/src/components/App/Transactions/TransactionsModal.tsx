@@ -73,7 +73,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
   return (
     <Modal title={t('Recent Transactions')} onDismiss={onDismiss}>
       {account ? (
-        <ModalBody>
+        <ModalBody style={{maxWidth:'495px', width:'100%'}}>
           {hasTransactions ? (
             <>
               <AutoRow mb="1rem" style={{ justifyContent: 'space-between' }}>
@@ -81,7 +81,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
                   {t('Recent Transactions')}
                 </Text>
                 <RecentButton variant="tertiary" scale="xs" onClick={clearAllTransactionsCallback}>
-                  {t('clear all')}
+                  {t('Clear all')}
                 </RecentButton>
               </AutoRow>
               {Object.entries(sortedRecentTransactions).map(([chainId, transactions]) => {
