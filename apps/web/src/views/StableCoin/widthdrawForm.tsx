@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components'
-import { Flex, Button, Text, Select } from '@pancakeswap/uikit'
+import { Flex, Button, Text, Select, Dropdown } from '@pancakeswap/uikit'
 
 const WrapForm = styled.div`
   padding: 60px 0;
@@ -14,8 +14,9 @@ const WrapForm = styled.div`
     >div{
       flex-direction: column;
       align-items: flex-start;
-      gap: 5px;
+      gap: 8px;
     }
+    padding: 0;
   }
 `
 const TextStyle = styled(Text)`
@@ -73,6 +74,41 @@ const InputFill = styled.div`
   display: flex;
   align-items: center;
   color: rgba(255, 255, 255, 0.87);
+  &.dropdown{
+    cursor: pointer;
+    +div{
+      width: 100%;
+      padding: 0;
+      transform: translate(0);
+      left: 0;
+      background: ${({theme}) => theme.colors.backgroundAlt};
+      border: 1px solid ${({theme}) => theme.colors.cardBorder};
+    }
+  }
+  & .icon-dropdown{
+    position: absolute;
+    right: 10px;
+  }
+  img{
+    max-width: 20px !important;
+    margin-right: 10px;
+  }
+`
+const MenuItem = styled.div`
+  height: 44px;
+  display: flex;
+  align-items: center;
+  color: ${({theme}) => theme.colors.text};
+  padding: 0 20px;
+  font-size: 16px;
+  img{
+    max-width: 20px !important;
+    margin-right: 10px;
+  }
+  &:hover{
+    background: ${({theme}) => theme.colors.tertiary};
+    cursor: pointer;
+  }
 `
 
 const ButtonRight = styled(Button)`
@@ -84,7 +120,7 @@ const ButtonRight = styled(Button)`
 export default function WidthdrawForm() {
 
   const handleChangeNetwork = () => {
-    console.log("aaa");
+    console.log("handle change network");
   }
 
   return (
@@ -92,27 +128,26 @@ export default function WidthdrawForm() {
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Network</TextStyle>
         <BoxRight className='wrap-select'>
-          <Select
-            options={[
-              {
-                label: 'BSC',
-                value: 'hot',
-              },
-              {
-                label: 'Rinkey',
-                value: 'apr',
-              }
-            ]}
-            onOptionChange={handleChangeNetwork}
-          />
+          <Dropdown position="bottom" target={
+            <InputFill className='dropdown'>
+                <img src="/images/chains/1.png" alt="icon" />  Rinkey
+                <span className='icon-dropdown'>
+                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M10.8542 1.625L6.10425 6.375L1.35425 1.625" stroke="#8E8E8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+              </span>
+            </InputFill>
+          }>
+            <MenuItem><img src="/images/chains/56.png" alt="icon" />BSC Testnet</MenuItem>
+            <MenuItem><img src="/images/chains/1.png" alt="icon" />Rinkey</MenuItem>
+          </Dropdown>
         </BoxRight>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Interest</TextStyle>
-        <BoxRight>
+        <BoxRight> 
           <InputFill>
-          {/* <img src="" /> */}
-          USDC
+            <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt='icon' /> USDC
           </InputFill>
         </BoxRight>
       </Flex>

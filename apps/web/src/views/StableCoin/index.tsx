@@ -3,7 +3,7 @@ import { Flex, Button, Text } from '@pancakeswap/uikit'
 import { useAllTokens } from 'hooks/Tokens'
 import styled from 'styled-components'
 import InfoNav from "../Info/components/InfoNav"
-import WithdrawTable from "./withdrawTable"
+import HistoryTable, {TYPE_HISTORY} from "./historyTable"
 import TransactionTable from "./transactionTable"
 import WidthdrawForm from "./widthdrawForm"
 
@@ -44,6 +44,9 @@ const Box = styled.div`
       max-width: 50px;
     }
     &.wrap-table{
+      padding: 18px;
+    }
+    &.wrap-withdraw{
       padding: 18px;
     }
   }
@@ -114,7 +117,7 @@ export default function StableCoin() {
               <TextStyle className='primary'>Withdraw reward</TextStyle>
             </Flex>
             <Row style={{marginTop: 25}}>
-              <Box>
+              <Box className='wrap-withdraw'>
                 <WidthdrawForm />
               </Box>
             </Row>
@@ -122,17 +125,27 @@ export default function StableCoin() {
           }
           {
             widthDraw === TYPE.history &&
-            <Flex alignItems="center" style={{gap: 10}}>
-              <Flex onClick={() => setWidthDraw(TYPE.default)} style={{cursor: 'pointer', gap: 5}} alignItems="center"> 
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M6 11.9961H18" stroke="#8E8E8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 18L6 12L12 6" stroke="#8E8E8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-                <TextStyle>Stable coin</TextStyle>
+            <>
+              <Flex alignItems="center" style={{gap: 10}}>
+                <Flex onClick={() => setWidthDraw(TYPE.default)} style={{cursor: 'pointer', gap: 5}} alignItems="center"> 
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M6 11.9961H18" stroke="#8E8E8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                    <path d="M12 18L6 12L12 6" stroke="#8E8E8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                  <TextStyle>Stable coin</TextStyle>
+                </Flex>
+                <TextStyle>|</TextStyle>
+                <TextStyle className='primary'>History</TextStyle>
               </Flex>
-              <TextStyle>|</TextStyle>
-              <TextStyle className='primary'>History</TextStyle>
-            </Flex>
+              <Row style={{marginTop: 24}}>
+                <Box className='wrap-table'>
+                  <HistoryTable typePage={TYPE_HISTORY.stake} />
+                </Box>
+                <Box className='wrap-table'>
+                  <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
+                </Box>
+              </Row>
+            </>
           }
           {
             widthDraw === TYPE.default && 
@@ -177,7 +190,7 @@ export default function StableCoin() {
               </Row>
               <Row style={{marginTop: 24}}>
                 <Box className='wrap-table'>
-                  <WithdrawTable />
+                  <HistoryTable typePage={TYPE_HISTORY.widthDraw} />
                 </Box>
                 <Box className='wrap-table'>
                   <TransactionTable />

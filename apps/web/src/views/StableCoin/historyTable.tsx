@@ -14,6 +14,12 @@ import { getBlockExploreLink } from 'utils'
 import { formatAmount } from 'utils/formatInfoNumbers'
 import { Arrow, ClickableColumnHeader } from '../Info/components/InfoTables/shared'
 
+export const TYPE_HISTORY = {
+  widthDraw: 'WIDTH_DRAW',
+  stake: 'STAKE',
+  myWidthDraw: 'MY_WIDTH_DRAW'
+}
+
 const Wrapper = styled.div`
   width: 100%;
   grid-column: 1;
@@ -355,7 +361,7 @@ const DataRow: React.FC<
   )
 }
 
-const WithdrawTable: React.FC = () => {
+const HistoryTable = ({typePage} : {typePage?: string}) => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
   const [sortDirection, setSortDirection] = useState<boolean>(false)
   const [sortStable, setSortStable] = useState<boolean>(false)
@@ -584,7 +590,8 @@ const WithdrawTable: React.FC = () => {
           color="rgba(255, 255, 255, 0.87)"
           height="24px"
         >
-          Withdraw History
+          {typePage === TYPE_HISTORY.stake && "Stake History" }
+          {(typePage === TYPE_HISTORY.widthDraw || typePage === TYPE_HISTORY.myWidthDraw) && "Withdraw History" }
         </Text>
         <Text
             className='total'
@@ -827,4 +834,4 @@ const WithdrawTable: React.FC = () => {
   )
 }
 
-export default WithdrawTable
+export default HistoryTable
