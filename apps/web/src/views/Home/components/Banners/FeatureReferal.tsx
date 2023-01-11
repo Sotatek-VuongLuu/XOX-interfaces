@@ -1,10 +1,19 @@
+/* eslint-disable no-console */
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
+import BigNumber from 'bignumber.js'
 import { Box, Grid } from '@mui/material'
+import { ChainId } from '@pancakeswap/sdk'
+import { USD_DECIMALS } from 'config/constants/exchange'
+import moment from 'moment'
 import { useRouter } from 'next/router'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { getUerRank, getUserPointDaily, getUserPointMonthly, getUserPointWeekly } from 'services/referral'
 import styled from 'styled-components'
+import axios from 'axios'
+
 import LeaderBoardItemLP from 'views/Referral/components/LearderBoardItemForLandingPage'
 
 export interface IItemLeaderBoard {
@@ -14,9 +23,20 @@ export interface IItemLeaderBoard {
   rank: number
 }
 
-interface IProps {
-  item: IItemLeaderBoard
-  mb?: boolean
+export interface IMappingFormat {
+  address: string
+  amount: string
+  avatar: string
+  id: string
+  point: number | null
+  rank: number | null
+  username: string
+}
+
+interface IDataFormatUnit {
+  id: string
+  amount: string
+  address: string
 }
 
 const Wrapper = styled(Box)`
@@ -199,11 +219,133 @@ const Overlay = styled(Box)`
   border-radius: 20px;
 `
 
+const NoDataWraper = styled.div`
+  width: 100%;
+  height: 360px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.6);
+`
+
+const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily'] as const
+type FilterTime = typeof filterTime[number]
+
 const FeatureReferal = () => {
-  const [tabLeaderBoard, setTabLeaderBoard] = useState(0)
-  const [leaderBoardList, _] = useState<Array<IItemLeaderBoard>>(listLeader)
-  const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily']
+  const startOfDay = moment().startOf('days').toString()
+  const startOfMonth = moment().startOf('month').toString()
+  const startOfWeek = moment().startOf('isoWeek').toString()
+  const [tabLeaderBoard, setTabLeaderBoard] = useState<FilterTime>('All Time')
   const route = useRouter()
+  const [listUserRanks, setListUserRanks] = useState<IMappingFormat[]>([])
+  const [listUserRanksDaily, setListUserRanksDaily] = useState<IMappingFormat[]>([])
+  const [listUserRanksWeekly, setListUserRanksWeekly] = useState<IMappingFormat[]>([])
+  const [listUserRanksMonthly, setListUserRanksMonthly] = useState<IMappingFormat[]>([])
+  const [listUserRanksAllTime, setListUserRanksAllTime] = useState<IMappingFormat[]>([])
+
+  const payloadPostForDaily = {
+    date_gte: moment(startOfDay).unix(),
+    date_lte: moment().unix(),
+  }
+  const payloadPostForMonth = {
+    date_gte: moment(startOfMonth).unix(),
+    date_lte: moment().unix(),
+  }
+
+  const payloadPostForWeek = {
+    date_gte: moment(startOfWeek).unix(),
+    date_lte: moment().unix(),
+  }
+
+  const handleGetUserRanks = async (typeFilter: FilterTime, setList: (arr: IMappingFormat[]) => void) => {
+    try {
+      let data = []
+      let res
+      switch (typeFilter) {
+        case 'All Time':
+          res = await getUerRank(ChainId.BSC_TESTNET)
+          data = res.userPoints
+          break
+        case 'Monthly':
+          res = await getUserPointMonthly(ChainId.BSC_TESTNET, payloadPostForMonth)
+          data = res.userPointMonthlies
+          break
+        case 'Weekly':
+          res = await getUserPointWeekly(ChainId.BSC_TESTNET, payloadPostForWeek)
+          data = res.userPointWeeklies
+          break
+        default:
+          res = await getUserPointDaily(ChainId.BSC_TESTNET, payloadPostForDaily)
+          data = res.userPointDailies
+          break
+      }
+
+      const dataUserFormatAmount: IDataFormatUnit[] = data.map((item) => {
+        return {
+          ...item,
+          id: item.id,
+          point: new BigNumber(item.amount).div(10 ** USD_DECIMALS[ChainId.BSC_TESTNET]).toNumber(),
+        }
+      })
+
+      const listAddress = dataUserFormatAmount.map((item) => item.address)
+
+      if (listAddress.length > 0) {
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+          wallets: listAddress,
+        })
+        const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index) => {
+          const dataUserInfos = response.data
+          const userInfo = dataUserInfos?.find((user) => item.address === user.address)
+
+          return {
+            ...item,
+            ...userInfo,
+            rank: index + 1,
+            username: userInfo?.username ?? null,
+            avatar: userInfo?.avatar ?? null,
+          }
+        })
+
+        setList([...dataMapping])
+      }
+    } catch (error) {
+      console.log(`error >>>`, error)
+    }
+  }
+
+  const handleOnChangeRankTab = (item: FilterTime) => {
+    setTabLeaderBoard(item)
+    switch (item) {
+      case 'All Time':
+        setListUserRanks(listUserRanksAllTime)
+        break
+      case 'Monthly':
+        setListUserRanks(listUserRanksMonthly)
+
+        break
+      case 'Weekly':
+        setListUserRanks(listUserRanksWeekly)
+        break
+      default:
+        setListUserRanks(listUserRanksDaily)
+        break
+    }
+  }
+
+  useEffect(() => {
+    handleGetUserRanks('All Time', setListUserRanksAllTime)
+    handleGetUserRanks('Monthly', setListUserRanksMonthly)
+    handleGetUserRanks('Weekly', setListUserRanksWeekly)
+    handleGetUserRanks('Daily', setListUserRanksDaily)
+  }, [])
+
+  useEffect(() => {
+    if (!listUserRanksAllTime) return
+    handleOnChangeRankTab('All Time')
+  }, [listUserRanksAllTime])
 
   return (
     <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
@@ -214,13 +356,13 @@ const FeatureReferal = () => {
               <Overlay>
                 <First>
                   <div className="tab_filter">
-                    {Array.from(filterTime).map((item, index) => {
+                    {Array.from(filterTime).map((item) => {
                       return (
                         // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                         <div
                           key={item}
-                          onClick={() => setTabLeaderBoard(index)}
-                          className={tabLeaderBoard === index ? 'tab_item_active' : 'tab_item'}
+                          onClick={() => handleOnChangeRankTab(item)}
+                          className={tabLeaderBoard === item ? 'tab_item_active' : 'tab_item'}
                           style={{ cursor: 'pointer' }}
                         >
                           {item}
@@ -230,10 +372,13 @@ const FeatureReferal = () => {
                   </div>
 
                   <div className="learder_board">
-                    {Array.from(leaderBoardList).map((item: IItemLeaderBoard, index: number) => {
-                      // eslint-disable-next-line react/no-array-index-key
-                      return <LeaderBoardItemLP item={item} key={`learder_item_${index}`} />
-                    })}
+                    {listUserRanks &&
+                      listUserRanks.length > 0 &&
+                      listUserRanks?.slice(0, 5).map((item: IMappingFormat, index: number) => {
+                        // eslint-disable-next-line react/no-array-index-key
+                        return <LeaderBoardItemLP item={item} key={`learder_item_${index}`} />
+                      })}
+                    {listUserRanks.length === 0 && <NoDataWraper>No data</NoDataWraper>}
                   </div>
                 </First>
               </Overlay>

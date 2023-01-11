@@ -31,7 +31,8 @@ const GlobalStyle = createGlobalStyle`
 
   #computer_xox {
     position: absolute;
-    right: -500px;
+    right: -50%;
+    transform: translateX(-30%);
 
     @media screen and (max-width: 900px) {
       right: 0;
@@ -53,6 +54,18 @@ const GlobalStyle = createGlobalStyle`
   .welcome {
     @media screen and (max-width: 900px) {
       align-items: unset !important;
+    }
+  }
+
+  #asset_3d {
+    margin-left: 69px;
+  }
+
+  #asset_3d_mb {
+    @media screen and (max-width: 900px) {
+      position: absolute;
+      left: 50%;
+      transform: translateX(-39%);
     }
   }
 

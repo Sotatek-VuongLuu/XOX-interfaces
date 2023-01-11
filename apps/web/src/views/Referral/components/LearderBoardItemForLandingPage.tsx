@@ -1,13 +1,25 @@
 import { Avatar, Box, Tooltip } from '@mui/material'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 import useWindowSize from 'hooks/useWindowSize'
 import { useCallback } from 'react'
 import styled from 'styled-components'
+import { shortenAddress } from 'utils/shortenAddress'
 // eslint-disable-next-line import/no-cycle
 import { IItemLeaderBoard } from './MainInfoForLandingPage'
 
+export interface IMappingFormat {
+  address: string
+  amount: string
+  avatar: string
+  id: string
+  point: number | null
+  rank: number | null
+  username: string
+}
+
 interface IProps {
-  item: IItemLeaderBoard
+  item: IMappingFormat
   mb?: boolean
 }
 
@@ -164,16 +176,17 @@ const LeaderBoardItemLP = (props: IProps): JSX.Element => {
         <div className={`${ranking.includes(item.rank) ? `bg_white` : `bg_rba`} user_info`}>
           <div className="user_avatar_name">
             <Avatar alt="Remy Sharp" src={item.avatar} sx={{ height: isMobile ? 24 : 40, width: isMobile ? 24 : 40 }} />
-            <Tooltip title={item.name}>
+            <Tooltip title={item.username}>
               <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>
-                {item.name?.length > 9
-                  ? `${item.name.substring(0, 7)}...${item.name.substring(item.name.length - 2)}`
-                  : item.name}
+                {item.username
+                  ? item.username?.length > 9
+                    ? `${item.username.substring(0, 7)}...${item.username.substring(item.username.length - 2)}`
+                    : item.username
+                  : shortenAddress(item.address)}
               </p>
             </Tooltip>
           </div>
-
-          <div className="point">{item.point}</div>
+          <div className="point">{formatAmountNumber(item.point, 2)}</div>
         </div>
       </div>
     </Wrapper>

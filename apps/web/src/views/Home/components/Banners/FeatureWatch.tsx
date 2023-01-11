@@ -76,19 +76,17 @@ const Main = styled(Grid)`
 `
 
 const FeatureWatch = () => {
+  const { width } = useWindowSize()
   return (
     <Wrapper>
       <Main container spacing={2}>
         <Grid item xs={12} md={6}>
           <LeftContent>
-            {/* {width > 900 ? <img src="/images/xoxs.svg" alt="xoxs" /> : <img src="/images/xoxs_mobile.svg" alt="xoxs" />} */}
-            {/* <Spline
-              scene="https://prod.spline.design/eHWlbskKUlvFMGuG/scene.splinecode"
-              height={800}
-              width={300}
-              id="my-canvas"
-              style={{ background: 'transparent' }}
-            /> */}
+            {width < 900 ? (
+              <img src="/images/xoxs_mobile.png" alt="xoxs" style={{ marginLeft: 20 }} data-aos="fade-right" />
+            ) : (
+              <img src="/images/xoxs.png" alt="xoxs" style={{ marginLeft: 20 }} data-aos="fade-right" />
+            )}
           </LeftContent>
         </Grid>
         <Grid item xs={12} md={6}>

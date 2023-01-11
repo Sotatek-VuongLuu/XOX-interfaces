@@ -88,7 +88,7 @@ const UpComingItem = ({ title, describe }) => {
   const { width } = useWindowSize()
 
   return (
-    <WrapperItem isShowReadMore={isShowReadMore} data-aos="fade-up">
+    <WrapperItem isShowReadMore={isShowReadMore}>
       <div className="container_title">
         <div className="title_item">{title}</div>
         {width <= 900 ? (
@@ -129,7 +129,7 @@ const UpComing = () => {
         massive value to the Ecosystem overtime.
       </p>
 
-      <Box sx={{ flexGrow: 1, display: 'flex' }}>
+      <Box sx={{ flexGrow: 1, display: 'flex' }} data-aos="fade-up">
         <Grid container spacing={2}>
           {listItem.map(({ title, describe }) => {
             return (

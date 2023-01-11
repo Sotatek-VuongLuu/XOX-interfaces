@@ -71,8 +71,10 @@ const EconomyMobile = () => {
   return (
     <Wrapper>
       <div className="title_container">
-        <p className="title">Built and Available on every leading blockchain.</p>
-        <p className="description">
+        <p className="title" data-aos="fade-right">
+          Built and Available on every leading blockchain.
+        </p>
+        <p className="description" data-aos="fade-left">
           Creating A Truly Decentralized Multichain Ecosystem with Unlimited possibilities. Supporting Defi and Web3
           global adoption for a better future.
         </p>

@@ -5,9 +5,8 @@
 /* eslint-disable react/jsx-boolean-value */
 import styled from 'styled-components'
 import 'swiper/css'
-import AOS from 'aos'
 import SwiperCore, { Autoplay } from 'swiper'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 
@@ -99,7 +98,6 @@ const Wrapper = styled.div`
 `
 
 const SliderWrapper = styled.div`
-  margin-bottom: 24px;
 
   div.container {
     transition: all 0.3s ease;
@@ -123,7 +121,7 @@ const SliderWrapper = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 80px;
+    height: 120px;
   }
   div.highway-slider div.highway-barrier {
     overflow: hidden;
@@ -175,7 +173,7 @@ const SliderWrapper = styled.div`
     &:hover li.highway-car{
     animation-play-state: paused !important;
     }
-    &:hover img.partner{
+    & img.partner:hover {
       animation: scale1 2.8s infinite;
     }
   }
@@ -199,7 +197,6 @@ const SliderWrapper = styled.div`
 
 const Partners = () => {
   const [isShowMore, setIsShowMore] = useState(false)
-  const { width } = useWindowSize()
   const [isHovering, setIsHovering] = useState(false)
 
   const handleMouseOver = () => {
@@ -245,7 +242,13 @@ const Partners = () => {
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
@@ -254,7 +257,13 @@ const Partners = () => {
                 listPartners.map(({ icon }) => {
                   return (
                     <li className="highway-car" key={icon}>
-                      <img src={icon} alt="icon" />
+                      <img
+                        src={icon}
+                        alt="icon"
+                        className={isHovering ? 'partner' : ''}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      />
                     </li>
                   )
                 })}
@@ -270,14 +279,26 @@ const Partners = () => {
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
@@ -293,14 +314,26 @@ const Partners = () => {
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
@@ -317,14 +350,26 @@ const Partners = () => {
                 {listPartners.map(({ icon }) => {
                   return (
                     <li className="highway-car" key={icon}>
-                      <img src={icon} alt="icon" />
+                      <img
+                        src={icon}
+                        alt="icon"
+                        className={isHovering ? 'partner' : ''}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      />
                     </li>
                   )
                 })}
                 {listPartners.map(({ icon }) => {
                   return (
                     <li className="highway-car" key={icon}>
-                      <img src={icon} alt="icon" />
+                      <img
+                        src={icon}
+                        alt="icon"
+                        className={isHovering ? 'partner' : ''}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      />
                     </li>
                   )
                 })}
@@ -334,7 +379,7 @@ const Partners = () => {
         </SliderWrapper>
       ) : null}
 
-      <div className="btn_see_all">
+      <div className="btn_see_all" data-aos="fade-up">
         <div className="get_xox" onClick={handleChangeShowMore}>
           <div className="boxed-child">{isShowMore ? <span>See Less</span> : <span>See All</span>}</div>
         </div>

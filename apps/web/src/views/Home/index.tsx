@@ -3,9 +3,8 @@ import PageSection from 'components/PageSection'
 import { PageMeta } from 'components/Layout/Page'
 import 'aos/dist/aos.css'
 import { useEffect } from 'react'
+import useWindowSize from 'hooks/useWindowSize'
 import AOS from 'aos'
-import Spline from '@splinetool/react-spline'
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import BallPurple from './components/BallPurple'
 import WelcomeXOX from './components/Banners/WelcomeXOX'
 import FeatureWatch from './components/Banners/FeatureWatch'
@@ -14,7 +13,6 @@ import RoadMap from './components/Banners/RoadMap'
 import Partners from './components/Partners'
 import Community from './components/Banners/Community'
 import FeatureEconomy from './components/Banners/FeatureEconomy'
-import Backgroud from './components/Banners/Background'
 import BackgroudWatch from './components/Banners/BackgroundWatch'
 import FeatureReferal from './components/Banners/FeatureReferal'
 import UpComing from './components/Banners/FeatureUpComing'
@@ -36,7 +34,7 @@ const StyledSection = styled(PageSection)`
 `
 
 const Home: React.FC<React.PropsWithChildren> = () => {
-  const { isMobile } = useMatchBreakpoints()
+  const { width: innerWidth } = useWindowSize()
   useEffect(() => {
     AOS.init({ duration: 2000 })
   }, [])
@@ -56,6 +54,8 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             height: '88vh',
             display: 'flex',
             alignItems: 'center',
+            justifyContent: 'space-around',
+            overflow: 'hidden',
           },
         }}
         containerProps={{
@@ -65,38 +65,12 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
-        <BallPurple src="/images/bg-pur.svg" css={{ right: 0 }} />
+        <BallPurple src="/images/bg-pur.svg" />
         <WelcomeXOX />
-
-        {isMobile ? (
-          <Spline
-            scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-            onLoad={(e) => e.setZoom(0.35)}
-            id="mobile_xox"
-          />
-        ) : (
-          <Spline
-            scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-            onLoad={(e) => e.setZoom(1)}
-            id="computer_xox"
-          />
-        )}
       </StyledSection>
 
       <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={1}
-        hasCurvedDivider={false}
-      >
-        <Backgroud />
-        <FeatureEconomy />
-      </StyledSection>
-
-      <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
+        innerProps={{ style: { margin: '0' } }}
         containerProps={{
           id: 'home',
         }}
@@ -104,14 +78,18 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BackgroudWatch />
-        <FeatureSquare />
-        <FeatureWatch />
-        <FeaturePlant />
-        <FeatureReferal />
+
+        <div style={{ width: innerWidth > 1000 && 1400 }}>
+          <FeatureEconomy />
+          <FeatureSquare />
+          <FeatureWatch />
+          <FeaturePlant />
+          <FeatureReferal />
+        </div>
       </StyledSection>
 
       <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
+        innerProps={{ style: { margin: '0', width: innerWidth < 1000 && '100%' } }}
         containerProps={{
           id: 'home',
         }}
@@ -119,11 +97,13 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BGPartner />
-        <Partners />
-        <SecuredBy />
-        <UpComing />
-        <RoadMap />
-        <Community />
+        <div style={{ width: innerWidth > 1000 && 1400 }}>
+          <Partners />
+          <SecuredBy />
+          <UpComing />
+          <RoadMap />
+          <Community />
+        </div>
       </StyledSection>
     </>
   )
