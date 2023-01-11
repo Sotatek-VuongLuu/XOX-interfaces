@@ -32,7 +32,7 @@ export function TradePrice({ price }: TradePriceProps) {
       <Text style={{ justifyContent: "space-between", alignItems: "center", display: "flex", width: "100%" }}>
         {show ? (
           <>
-            <span style={{fontWeight:'700', fontSize:'18px', wordBreak: 'break-word'}}>{formattedPrice ?? "-"}</span>
+            <span style={{fontWeight:'700', fontSize:'18px', color :'#FFFFFF', wordBreak: 'break-word'}}>{formattedPrice ?? "-"}</span>
             {/* <AtomBox className={balanceMaxMiniClass} onClick={() => setShowInverted(!showInverted)}>
               <AutoRenewIcon width="14px" />
             </AtomBox> */}

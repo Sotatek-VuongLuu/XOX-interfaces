@@ -1,6 +1,7 @@
 import { Box, Modal } from '@mui/material'
 import useWindowSize from 'hooks/useWindowSize'
 import React from 'react'
+import styled from 'styled-components'
 
 interface IProps {
   handleClose: () => void
@@ -12,22 +13,29 @@ interface IProps {
 const ModalConfirmClaim: React.FC<React.PropsWithChildren<IProps>> = ({ open, handleClose, children, title }) => {
   const { width } = useWindowSize()
 
-  const style = {
-    position: 'absolute',
-    top: '50%',
-    left: '50%',
-    transform: 'translate(-50%, -50%)',
-    width: width <= 900 ? 327 : 464,
-    bgcolor: '#242424',
-    border: 'none',
-    boxShadow: 24,
-    borderRadius: '20px',
-    p: '32px 24px',
-  }
+  const BoxWrapper = styled.div`
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 464px;
+    background: #242424;
+    border: none;
+    boxshadow: 24;
+    borderradius: '20px';
+    padding: 32px 24px;
+    border-radius: 6px;
+    :focus-visible {
+      outline: none;
+    }
+    @media screen and (max-width: 900px) {
+      width: 327px;
+    }
+  `
 
   return (
     <Modal open={open} onClose={handleClose}>
-      <Box sx={style}>
+      <BoxWrapper>
         <Box
           sx={{
             fontWeight: 700,
@@ -40,7 +48,7 @@ const ModalConfirmClaim: React.FC<React.PropsWithChildren<IProps>> = ({ open, ha
           {title}
         </Box>
         <Box> {children}</Box>
-      </Box>
+      </BoxWrapper>
     </Modal>
   )
 }

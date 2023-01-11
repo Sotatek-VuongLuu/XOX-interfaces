@@ -238,6 +238,13 @@ export const PageButtons = styled(Flex)`
   }
 `
 
+const NoTransactionWrapper = styled(Flex)`
+  grid-column: 1 / span 2;
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-column: 1 / span 7;
+  }
+`
+
 const SORT_FIELD = {
   timestamp: 'timestamp',
   amountUSD: 'amountUSD',
@@ -270,21 +277,51 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
 }
 
 const DataRow: React.FC<
-  React.PropsWithChildren<{ transaction: Transaction; index: number; page: number; perPage: number }>
+  React.PropsWithChildren<{
+    transaction: Transaction
+    index: number
+    page: number
+    perPage: number
+  }>
 > = ({ transaction, index, page, perPage }) => {
   const { t } = useTranslation()
   const abs0 = Math.abs(transaction.amountToken0)
   const abs1 = Math.abs(transaction.amountToken1)
-  const { chainId } = useActiveChainId();
-  const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
+  const { chainId } = useActiveChainId()
+  const chainIdLink = [1, 5, 56, 97].some((it) => it === chainId) ? chainId : ChainId.ETHEREUM
   const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOX' : transaction.token0Symbol
   const symbolToken1 = transaction.token1Symbol === 'xox' ? 'XOX' : transaction.token1Symbol
 
   const outputTokenSymbol = transaction.amountToken0 < 0 ? symbolToken0 : symbolToken1
   const inputTokenSymbol = transaction.amountToken1 < 0 ? symbolToken0 : symbolToken1
+
+  const amountUSD =
+    inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD'
+      ? transaction.amountToken1 < 0
+        ? abs0
+        : abs1
+      : transaction.amountToken0 < 0
+      ? abs0 / 0.9
+      : abs1 / 0.9
+  // if (transactionFrom === TransactionFrom.XOX) {
+  //   if (transaction.amountToken1 < 0) {
+  //     console.log(transaction.amountToken1, symbolToken0)
+  //     if (symbolToken0 === 'USDC' || symbolToken0 === 'BUSD') {
+  //       amountUSD = abs1
+  //     } else {
+  //       amountUSD = abs1 / 0.9
+  //     }
+  //   } else {
+  //     if (symbolToken1 === 'USDC' || symbolToken1 === 'BUSD') {
+  //       amountUSD = abs0
+  //     } else {
+  //       amountUSD = abs0 / 0.9
+  //     }
+  //   }
+  // }
   const stablCoin =
-    inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
-      ? `${formatAmount(transaction.amountUSD / 10)} Stable coin`
+    (inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD') && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
+      ? `${formatAmount(amountUSD / 10)} Stable coin`
       : '--'
 
   return (
@@ -339,7 +376,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
       >
-        ${formatAmount(transaction.amountUSD)}
+        ${formatAmount(transaction.amountUSD === 0 ? amountUSD : transaction.amountUSD)}
       </Text>
       <Text
         fontSize="16px"
@@ -349,7 +386,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(abs0)} ${symbolToken0}`}</Text>
+      >{`${formatAmount(abs0)} ${transaction.token0Symbol.toUpperCase()}`}</Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -358,7 +395,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token1`}
-      >{`${formatAmount(abs1)} ${symbolToken1}`}</Text>
+      >{`${formatAmount(abs1)} ${transaction.token1Symbol.toUpperCase()}`}</Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -391,7 +428,7 @@ const DataRow: React.FC<
 
 const TransactionsTable: React.FC = () => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
-  const [sortDirection, setSortDirection] = useState<boolean>(false)
+  const [sortDirection, setSortDirection] = useState<boolean>(true)
   const [sortStable, setSortStable] = useState<boolean>(false)
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)
@@ -402,7 +439,6 @@ const TransactionsTable: React.FC = () => {
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
   const transactions = useProtocolTransactionsSWR()
   const [currentTransactions, setCurrentTransactions] = useState([])
-
   const { t } = useTranslation()
 
   const [page, setPage] = useState(1)
@@ -477,6 +513,11 @@ const TransactionsTable: React.FC = () => {
       if (newFilterFrom !== transactionFrom) {
         setTransactionFrom(newFilterFrom)
         setPage(1)
+        if (newFilterFrom === TransactionFrom.XOX) {
+          setTxFilter(undefined)
+        } else {
+          setTxFilter(TransactionType.SWAP)
+        }
       }
     },
     [transactionFrom],
@@ -605,6 +646,12 @@ const TransactionsTable: React.FC = () => {
     setPage(1)
   }, [perPage])
 
+  useEffect(() => {
+    setTxFilter(undefined)
+    setTransactionFrom(TransactionFrom.XOX)
+    setCurrentTransactions([])
+  }, [chainId])
+
   return (
     <Wrapper>
       <Flex mb="16px" justifyContent="space-between">
@@ -645,9 +692,12 @@ const TransactionsTable: React.FC = () => {
               </Button>
             )}
           </Flex>
-          {
-            transactionFrom === TransactionFrom.XOX && <Flex className="btn-filter" mb="8px">
-              <Button onClick={() => handleFilter(undefined)} className={undefined === txFilter ? 'active' : 'inactive'}>
+          {transactionFrom === TransactionFrom.XOX && (
+            <Flex className="btn-filter" mb="8px">
+              <Button
+                onClick={() => handleFilter(undefined)}
+                className={undefined === txFilter ? 'active' : 'inactive'}
+              >
                 All
               </Button>
               <Button
@@ -669,7 +719,7 @@ const TransactionsTable: React.FC = () => {
                 Removes
               </Button>
             </Flex>
-          }
+          )}
           <Text
             fontSize="14px"
             fontFamily="Inter"
@@ -802,9 +852,9 @@ const TransactionsTable: React.FC = () => {
                 return null
               })}
               {sortedTransactions.length === 0 ? (
-                <Flex justifyContent="center">
-                  <Text>{t('No Transactions')}</Text>
-                </Flex>
+                <NoTransactionWrapper justifyContent="center">
+                  <Text textAlign="center">{t('No Transactions')}</Text>
+                </NoTransactionWrapper>
               ) : undefined}
             </>
           ) : (

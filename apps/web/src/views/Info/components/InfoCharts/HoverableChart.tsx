@@ -183,11 +183,11 @@ const HoverableChart = ({
                       />
                     </svg>
                     <span style={{ color: '#FF0000' }}>
-                      {currencyData ? `${currencyData.percent_change_24h?.toFixed(2)}%` : '--'}
+                      {currencyData ? `${Math.abs(currencyData.percent_change_24h?.toFixed(2))}%` : '--'}
                     </span>
                   </>
                 ) : (
-                  <span>{currencyData ? "0.00%" : '--'}</span>
+                  <span>{currencyData ? '0.00%' : '--'}</span>
                 )}
               </p>
             </div>

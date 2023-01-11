@@ -201,7 +201,13 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
         )
       })
       const lastResponse = await Promise.all(histories)
-      setUserClaimHistories(lastResponse)
+      setUserClaimHistories(
+        lastResponse.sort((a, b) => {
+          if (a.time !== b.time) return b.time - a.time
+
+          return b.point - a.point
+        }),
+      )
     }
   }
   function createData(no: number, avatar: string, name: string, time: string, point: string, claim: number) {
@@ -221,7 +227,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
   }
 
   useEffect(() => {
-    if(!chainId) return
+    if (!chainId) return
     getUserClaimedHistories()
   }, [chainId])
 
@@ -285,7 +291,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.no}
+                    {index + 1}
                   </TableCell>
                   <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar
@@ -311,12 +317,12 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
         </TableContainer>
       </div>
 
-      <div className="third">
-        <div className="range_volumn">
+      <div className="third" style={{ marginTop: '30px' }}>
+        {/* <div className="range_volumn">
           <span className="min">{minAmount}</span>
           <span className="middle">{middleAmount}</span>
           <span className="max">{maxAmount}</span>
-        </div>
+        </div> */}
         <ColumnChartRef data={dataChart} />
       </div>
 

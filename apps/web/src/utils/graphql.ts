@@ -4,12 +4,13 @@ import {
   STABLESWAP_SUBGRAPH_CLIENT,
   INFO_CLIENT_ETH,
   INFO_NR_CLIENT,
-  INFO_CLIENT_XOX,
-  INFO_CLIENT_PANCAKE,
-  INFO_NR_CLIENT_XOX,
-  INFO_NR_CLIENT_PANCAKE,
-  INFO_CLIENT_ETH_XOX,
-  INFO_CLIENT_ETH_UNI,
+  INFO_CLIENT_XOX_BSC,
+  INFO_CLIENT_XOX_BSC_TESTNET,
+  INFO_NR_CLIENT_XOX_BSC,
+  INFO_NR_CLIENT_XOX_BSC_TESTNET,
+  INFO_CLIENT_XOX_ETH,
+  INFO_CLIENT_XOX_GOERLI,
+  INFO_CLIENT_UNI,
 } from 'config/constants/endpoints'
 import { GraphQLClient } from 'graphql-request'
 import { INFO_CLIENT_WITH_CHAIN } from '../config/constants/endpoints'
@@ -32,20 +33,23 @@ export const getGQLHeaders = (endpoint: string) => {
 }
 
 export const infoClient = new GraphQLClient(INFO_CLIENT, { headers: getGQLHeaders(INFO_CLIENT) })
-export const infoClientXOX = new GraphQLClient(INFO_CLIENT_XOX, { headers: getGQLHeaders(INFO_CLIENT_XOX) })
-export const infoClientPANCAKE = new GraphQLClient(INFO_CLIENT_PANCAKE, { headers: getGQLHeaders(INFO_CLIENT_PANCAKE) })
+export const infoClientXoxBsc = new GraphQLClient(INFO_CLIENT_XOX_BSC, { headers: getGQLHeaders(INFO_CLIENT_XOX_BSC) })
+export const infoClientXoxBscTestnet = new GraphQLClient(INFO_CLIENT_XOX_BSC_TESTNET, {
+  headers: getGQLHeaders(INFO_CLIENT_XOX_BSC_TESTNET),
+})
 
 export const infoNRClient = new GraphQLClient(INFO_NR_CLIENT)
-export const infoNRClientXOX = new GraphQLClient(INFO_NR_CLIENT_XOX)
-export const infoNRClientPANCAKE = new GraphQLClient(INFO_NR_CLIENT_PANCAKE)
+export const infoNRClientXoxBsc = new GraphQLClient(INFO_NR_CLIENT_XOX_BSC)
+export const infoNRClientXoxBscTestnet = new GraphQLClient(INFO_NR_CLIENT_XOX_BSC_TESTNET)
 
 export const infoClientWithChain = (chainId: number) => {
   return new GraphQLClient(INFO_CLIENT_WITH_CHAIN[chainId], { headers: getGQLHeaders(INFO_CLIENT_WITH_CHAIN[chainId]) })
 }
 
 export const infoClientETH = new GraphQLClient(INFO_CLIENT_ETH)
-export const infoClientETHXOX = new GraphQLClient(INFO_CLIENT_ETH_XOX)
-export const infoClientETHUNI = new GraphQLClient(INFO_CLIENT_ETH_UNI)
+export const infoClientXoxEth = new GraphQLClient(INFO_CLIENT_XOX_ETH)
+export const infoClientXoxGoerli = new GraphQLClient(INFO_CLIENT_XOX_GOERLI)
+export const infoClientETHUNI = new GraphQLClient(INFO_CLIENT_UNI)
 
 export const infoStableSwapClient = new GraphQLClient(STABLESWAP_SUBGRAPH_CLIENT)
 
