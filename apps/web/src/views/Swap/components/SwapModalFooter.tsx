@@ -36,7 +36,8 @@ export default function SwapModalFooter({
 }) {
   const { t } = useTranslation()
   const [showInverted, setShowInverted] = useState<boolean>(false)
-  const { priceImpactWithoutFee, realizedLPFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
+  // const { priceImpactWithoutFee, realizedLPFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
+  const { priceImpactWithoutFee, realizedLPFee } = computeTradePriceBreakdown(trade)
   const severity = warningSeverity(priceImpactWithoutFee)
 
   const totalFeePercent = `${(TOTAL_FEE * 100).toFixed(2)}%`
@@ -63,7 +64,7 @@ export default function SwapModalFooter({
             {/* <StyledBalanceMaxMini onClick={() => setShowInverted(!showInverted)}>
               <AutoRenewIcon width="14px" />
             </StyledBalanceMaxMini> */}
-            {/* <img onClick={() => setShowInverted(!showInverted)} src="/images/swap/circle-refresh.svg" alt="" style={{ cursor: "pointer" }} /> */}
+            <img onClick={() => setShowInverted(!showInverted)} src="/images/swap/circle-refresh.svg" alt="" style={{ cursor: "pointer" }} />
           </Text>
         </RowBetween>
 
