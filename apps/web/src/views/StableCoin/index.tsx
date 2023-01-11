@@ -36,6 +36,9 @@ const Box = styled.div`
   img{
     max-width: 60px;
   }
+  &.wrap-table{
+    align-items: flex-start;
+  }
   @media (max-width: 576px) {
     &.h-190{
       min-height: 193px;

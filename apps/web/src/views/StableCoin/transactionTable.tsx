@@ -112,22 +112,27 @@ const Wrapper = styled.div`
 
 const Table = styled.div`
   display: grid;
-  grid-gap: 16px 35px;
+  grid-gap: 16px 25px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1fr 0.4fr;
+  grid-template-columns: 0.15fr 1.4fr 1fr 0.7fr;
   .table-header {
     margin-bottom: 16px;
   }
 
   @media(max-width: 576px){
+    grid-gap: 15px 25px;
     .table-header{
         font-size: 14px;
+    }
+    div[font-size="16px"]{
+      font-size: 14px;
+      white-space: nowrap;
     }
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    grid-gap: 24px 35px;
+    grid-gap: 24px 25px;
 
     .table-header {
       margin-bottom: 8px;
@@ -194,7 +199,7 @@ export const PageButtons = styled(Flex)`
     justify-content: flex-end;
 
     & > div {
-      margin-top: 8px;
+      margin-top: 20px;
     }
 
     & > div:first-child {
