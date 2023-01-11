@@ -28,7 +28,6 @@ function ConfirmationPendingContent({ trade }: { trade: Trade<Currency, Currency
 
   return (
     <Wrapper>
-      <Text color='#FFFFFF99' marginBottom='16px'>You have set your profile successfully.</Text>
       <ConfirmedIcon>
         {/* <Spinner /> */}
         <GridLoader color="#9072FF" style={{width:'51px', height:'51px'}} />
