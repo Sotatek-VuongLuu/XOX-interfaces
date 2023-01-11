@@ -63,6 +63,8 @@ import {
   getContractXOXToken,
   getContractXOXPool,
 } from 'utils/contractHelpers'
+
+import { getBridgeTokenAddress } from 'utils/addressHelpers'
 import { useSigner } from 'wagmi'
 
 // Imports below migrated from Exchange useContract.ts
@@ -73,7 +75,10 @@ import ERC20_ABI from 'config/abi/erc20.json'
 import IPancakePairABI from 'config/abi/IPancakePair.json'
 import multiCallAbi from 'config/abi/Multicall.json'
 import WETH_ABI from 'config/abi/weth.json'
+import BRIDGE_TOKEN_ABI from 'config/abi/bridgeTokenAddress.json'
 import { getContract } from 'utils'
+
+import { ChainId } from '@pancakeswap/sdk'
 
 import { IPancakePair } from 'config/abi/types/IPancakePair'
 import { VaultKey } from 'state/types'
@@ -404,4 +409,8 @@ export const useXOXPoolContract = (withSignerIfPossible = true) => {
   const { chainId } = useActiveChainId()
   const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
   return useMemo(() => getContractXOXPool(providerOrSigner as any, chainId), [providerOrSigner, chainId])
+}
+
+export function useBridgeTokenContract(chainId: ChainId, withSignerIfPossible?: boolean): Contract | null {
+  return useContract(getBridgeTokenAddress(chainId), BRIDGE_TOKEN_ABI, withSignerIfPossible)
 }

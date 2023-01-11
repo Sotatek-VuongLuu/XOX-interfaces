@@ -131,6 +131,7 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
 
   const handleSwitchNetwork = (key) => {
     switchNetwork(key);
+    onDismiss();
   };
 
   return (
