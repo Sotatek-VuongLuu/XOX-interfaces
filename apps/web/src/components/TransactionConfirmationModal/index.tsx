@@ -25,34 +25,33 @@ import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToW
 const Wrapper = styled.div`
   width: 100%;
 `
-const Section = styled(AutoColumn)`
-`
+const Section = styled(AutoColumn)``
 
 const ConfirmedIcon = styled(ColumnCenter)`
   padding: 0 0 24px 0;
 `
 const ButtonFooters = styled.div`
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  height:43px;
-  width:100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 43px;
+  width: 100%;
   button {
-    min-width:200px;
+    min-width: 200px;
   }
   @media screen and (max-width: 500px) {
     button {
-      min-width:unset;
+      min-width: unset;
     }
   }
 `
 const ConfirmImg = styled.div`
   max-width: 171px;
   max-height: 160px;
-  margin:0 auto;
+  margin: 0 auto;
   img {
-    width:100%;
-    height:100%;
+    width: 100%;
+    height: 100%;
   }
 `
 
@@ -98,34 +97,45 @@ export function TransactionSubmittedContent({
       <Section>
         <ConfirmedIcon>
           {/* <ArrowUpIcon strokeWidth={0.5} width="90px" color="primary" /> */}
-          <ConfirmImg><img src='/images/swap/transaction-submited.png' alt='' /></ConfirmImg>
-         
+          <ConfirmImg>
+            <img src="/images/swap/transaction-submited.png" alt="" />
+          </ConfirmImg>
         </ConfirmedIcon>
-        <AutoColumn gap="12px" justify="center">
-          <Text fontSize="20px">{t('Transaction Submitted')}</Text>
+        <AutoColumn gap="8px" justify="center">
+          <Text fontSize="20px" lineHeight="24px">
+            {t('Transaction Submitted')}
+          </Text>
           {chainId && hash && (
-            <Link external small href={getBlockExploreLink(hash, 'transaction', chainId)} style={{color: '#3D8AFF'}}>
-              {t('View on %site%', { 
+            <Link
+              external
+              href={getBlockExploreLink(hash, 'transaction', chainId)}
+              style={{ color: '#3D8AFF', fontWeight: 400, textDecoration: 'none', marginBottom: '16px' }}
+            >
+              {t('View on %site%', {
                 site: getBlockExploreName(chainId),
               })}
             </Link>
           )}
           <ButtonFooters>
-          <Button onClick={onDismiss} maxWidth='200px' style={{height:'43px', background:'#313131', marginRight:'16px'}}>
-            {t('Close')}
-          </Button>
-          {currencyToAdd && (
-            <AddToWalletButton
-              variant="tertiary"
-              maxWidth='200px'
-              textOptions={AddToWalletTextOptions.TEXT_WITH_ASSET}
-              tokenAddress={token.address}
-              tokenSymbol={currencyToAdd.symbol}
-              tokenDecimals={token.decimals}
-              tokenLogo={token instanceof WrappedTokenInfo ? token.logoURI : undefined}
-              style = {{fontSize:'15px', height:'43px'}}
-            />
-          )}
+            <Button
+              onClick={onDismiss}
+              maxWidth="200px"
+              style={{ height: '43px', background: '#313131', marginRight: '16px' }}
+            >
+              {t('Close')}
+            </Button>
+            {currencyToAdd && (
+              <AddToWalletButton
+                variant="tertiary"
+                maxWidth="200px"
+                textOptions={AddToWalletTextOptions.TEXT_WITH_ASSET}
+                tokenAddress={token.address}
+                tokenSymbol={currencyToAdd.symbol}
+                tokenDecimals={token.decimals}
+                tokenLogo={token instanceof WrappedTokenInfo ? token.logoURI : undefined}
+                style={{ fontSize: '15px', height: '43px' }}
+              />
+            )}
           </ButtonFooters>
         </AutoColumn>
       </Section>
@@ -184,8 +194,11 @@ export function TransactionSwapErrorContent({
   return (
     <Wrapper>
       <AutoColumn justify="center">
-        <img src='/images/swap/icon-swap-error.svg' alt='' />
-        <Text color="failure" style={{ textAlign: 'center', width: '85%', marginTop:'24px', color:'#FFFFFF99', wordBreak: 'break-word' }}>
+        <img src="/images/swap/icon-swap-error.svg" alt="" />
+        <Text
+          color="failure"
+          style={{ textAlign: 'center', width: '85%', marginTop: '24px', color: '#FFFFFF99', wordBreak: 'break-word' }}
+        >
           {message}
         </Text>
       </AutoColumn>

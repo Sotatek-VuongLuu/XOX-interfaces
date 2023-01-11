@@ -36,6 +36,7 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { getUserFriend } from 'services/referral'
 import { USD_DECIMALS } from 'config/constants/exchange'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 import axios from 'axios'
 import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
@@ -225,11 +226,15 @@ const WrapperRight = styled(Box)<IPropsWR>`
   }
 
   .swiper-button-next {
+    z-index: 999;
     background-image: url(/images/next.svg);
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
     border-radius: 50%;
+    @media screen and (max-width: 555px) {
+      margin-right: -14px;
+    }
   }
 
   .swiper-button-next::after {
@@ -712,7 +717,13 @@ const ReferralFriend = ({
                             </TableCell>
                             <TableCell align="left">
                               <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <div>{row?.refCode}</div>
+                                <div>
+                                  {row?.refCode?.length > 9
+                                    ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
+                                        row.refCode.length - 2,
+                                      )}`
+                                    : row.refCode}
+                                </div>
                                 <div>
                                   <CopyButton
                                     width="24px"
@@ -729,7 +740,7 @@ const ReferralFriend = ({
                                 </div>
                               </div>
                             </TableCell>
-                            <TableCell align="right">{row.point} points</TableCell>
+                            <TableCell align="right">{formatAmountNumber(row.point, 2)}</TableCell>
                           </TableRow>
                         ))}
                       </TableBody>
