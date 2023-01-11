@@ -2,14 +2,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
 import styled from 'styled-components'
-import Spline from '@splinetool/react-spline'
 import { Box, Grid } from '@mui/material'
-import useWindowSize from 'hooks/useWindowSize'
-import { useMemo } from 'react'
 import { useRouter } from 'next/router'
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
 
 const Wrapper = styled.div`
+  width: 50%;
+  z-index: 2;
   @media screen and (max-width: 900px) {
     .title {
       font-size: 24px;
@@ -28,6 +26,8 @@ const Wrapper = styled.div`
       padding: 12px 18px;
       font-size: 16px;
     }
+
+    width: 100%;
   }
 
   @media screen and (max-width: 530px) {
@@ -101,7 +101,7 @@ const Title = styled.p`
 
 const Feature = styled.div`
   font-weight: 700;
-  font-size: 36px;
+  font-size: 24px;
   line-height: 44px;
   color: #9072ff;
   margin: 24px 0;
@@ -142,48 +142,20 @@ const GridLeft = styled(Grid)`
 `
 
 const WelcomeXOX = (): JSX.Element => {
-  const { width } = useWindowSize()
-
-  const { isMobile } = useMatchBreakpoints()
-
   const route = useRouter()
-
-  const controlWidth = useMemo(() => {
-    let size = 600
-    if (width < 1380) {
-      size = 600
-    }
-
-    if (width < 632) {
-      size = 380
-    }
-
-    if (width <= 576) {
-      size = 342
-    }
-
-    if (width <= 374) {
-      size = 300
-    }
-
-    if (width < 334) {
-      size = 210
-    }
-    return size
-  }, [width])
-
-  // const el = document.getElementById('my-spline')
-  // el.addEventListener('wheel', function stopWheel(e) {
-  //   e.preventDefault()
-  // })
-
   return (
     <Wrapper>
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
         <Grid container spacing={2} className="grid_welcome_container">
-          <GridLeft item xs={12} md={7}>
+          <GridLeft item xs={12} md={8}>
             <LeftContent>
-              <Title className="title">XOX The Multichain Defi Apps & Solutions for Web3 Provider</Title>
+              <Title className="title">
+                XOX The Multichain
+                <br />
+                Defi Apps & Solutions
+                <br />
+                for Web3 Provider
+              </Title>
               <Feature className="feature">Revolutionary - Scalable - Multichain</Feature>
               <Description className="description">
                 Swap, earn, and build on the leading decentralized Web3 crypto ecosystem.
@@ -200,28 +172,6 @@ const WelcomeXOX = (): JSX.Element => {
               </div>
             </LeftContent>
           </GridLeft>
-
-          <Grid item xs={12} md={5} style={{ justifyContent: 'center', display: 'flex' }}>
-            {isMobile ? (
-              <Spline
-                scene="https://prod.spline.design/o7-ZQWkGS2tIZeP0/scene.splinecode"
-                height={342}
-                width={342}
-                onLoad={(e) => e.setZoom(0.4)}
-                id="my-spline"
-                onWheel={(e) => console.log(e.target.id)}
-              />
-            ) : (
-              <Spline
-                scene="https://prod.spline.design/o7-ZQWkGS2tIZeP0/scene.splinecode"
-                height={570}
-                width={570}
-                onLoad={(e) => e.setZoom(0.7)}
-                id="my-spline"
-                onWheel={(e) => console.log(e.target.id)}
-              />
-            )}
-          </Grid>
         </Grid>
       </Box>
     </Wrapper>

@@ -116,7 +116,11 @@ const RoadMapMobile = () => {
       <div className="main_content">
         {listRoadMap.map((item, index) => {
           return (
-            <div className={`item_container child_${index + 1}_th`} key={`${item.year}_parent_${index + 1}`}>
+            <div
+              className={`item_container child_${index + 1}_th`}
+              key={`${item.year}_parent_${index + 1}`}
+              data-aos="fade-left"
+            >
               <div className="line_milestone">
                 {item.status === 'done' ? (
                   <img src="/images/done_mobile.svg" alt="milestone" />

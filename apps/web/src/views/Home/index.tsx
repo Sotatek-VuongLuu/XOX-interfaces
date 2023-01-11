@@ -1,6 +1,11 @@
 import styled from 'styled-components'
 import PageSection from 'components/PageSection'
 import { PageMeta } from 'components/Layout/Page'
+import 'aos/dist/aos.css'
+import { useEffect } from 'react'
+import AOS from 'aos'
+import Spline from '@splinetool/react-spline'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import BallPurple from './components/BallPurple'
 import WelcomeXOX from './components/Banners/WelcomeXOX'
 import FeatureWatch from './components/Banners/FeatureWatch'
@@ -31,6 +36,10 @@ const StyledSection = styled(PageSection)`
 `
 
 const Home: React.FC<React.PropsWithChildren> = () => {
+  const { isMobile } = useMatchBreakpoints()
+  useEffect(() => {
+    AOS.init({ duration: 2000 })
+  }, [])
   return (
     <>
       <PageMeta />
@@ -46,18 +55,32 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             width: '100%',
             height: '88vh',
             display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center',
           },
         }}
         containerProps={{
           id: 'home',
         }}
+        innerClass="welcome"
         index={2}
         hasCurvedDivider={false}
       >
         <BallPurple src="/images/bg-pur.svg" css={{ right: 0 }} />
         <WelcomeXOX />
+
+        {isMobile ? (
+          <Spline
+            scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
+            onLoad={(e) => e.setZoom(0.35)}
+            id="mobile_xox"
+          />
+        ) : (
+          <Spline
+            scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
+            onLoad={(e) => e.setZoom(1)}
+            id="computer_xox"
+          />
+        )}
       </StyledSection>
 
       <StyledSection

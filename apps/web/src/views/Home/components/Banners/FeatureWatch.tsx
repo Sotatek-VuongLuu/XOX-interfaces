@@ -1,4 +1,5 @@
 import { Box, Grid } from '@mui/material'
+import Spline from '@splinetool/react-spline'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
@@ -75,17 +76,23 @@ const Main = styled(Grid)`
 `
 
 const FeatureWatch = () => {
-  const { width } = useWindowSize()
   return (
     <Wrapper>
       <Main container spacing={2}>
         <Grid item xs={12} md={6}>
           <LeftContent>
-            {width > 900 ? <img src="/images/xoxs.svg" alt="xoxs" /> : <img src="/images/xoxs_mobile.svg" alt="xoxs" />}
+            {/* {width > 900 ? <img src="/images/xoxs.svg" alt="xoxs" /> : <img src="/images/xoxs_mobile.svg" alt="xoxs" />} */}
+            {/* <Spline
+              scene="https://prod.spline.design/eHWlbskKUlvFMGuG/scene.splinecode"
+              height={800}
+              width={300}
+              id="my-canvas"
+              style={{ background: 'transparent' }}
+            /> */}
           </LeftContent>
         </Grid>
         <Grid item xs={12} md={6}>
-          <RightContent>
+          <RightContent data-aos="fade-left">
             <Title>Meet XOXS. Our Hybrid Multichain Stable Coin.</Title>
             <Paragraph style={{ margin: '24px 0' }}>
               Designed to be the staking substitute to our governance token XOX, preventing Supply Inflation & Selling

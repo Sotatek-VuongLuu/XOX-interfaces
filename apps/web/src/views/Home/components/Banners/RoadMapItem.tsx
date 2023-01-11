@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import 'aos/dist/aos.css'
 // eslint-disable-next-line import/no-cycle
 import { IRoadMapItem } from './RoadMap'
 
@@ -95,7 +95,7 @@ const Wrapper = styled.div`
 
 const RoadMapItem = ({ item, index }: Iprops) => {
   return (
-    <Wrapper className={`timeline-item timeline-item-${index}`}>
+    <Wrapper className={`timeline-item timeline-item-${index}`} data-aos={index % 2 === 0 ? `fade-down` : `fade-up`}>
       <ContainerItem>
         {item.status === 'done' ? <LineDash className="line_status" /> : <LineNotDone className="line_status" />}
         {item.status === 'done' ? (

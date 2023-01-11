@@ -4,17 +4,7 @@
 import { Box, Grid } from '@mui/material'
 import useWindowSize from 'hooks/useWindowSize'
 import { useState } from 'react'
-import styled, { keyframes } from 'styled-components'
-import TeamMenber from './TeamMenber'
-
-const spin180deg = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(180deg);
-  }
-`
+import styled from 'styled-components'
 
 interface IPropsWI {
   isShowReadMore?: boolean
@@ -98,7 +88,7 @@ const UpComingItem = ({ title, describe }) => {
   const { width } = useWindowSize()
 
   return (
-    <WrapperItem isShowReadMore={isShowReadMore}>
+    <WrapperItem isShowReadMore={isShowReadMore} data-aos="fade-up">
       <div className="container_title">
         <div className="title_item">{title}</div>
         {width <= 900 ? (
@@ -131,8 +121,10 @@ const UpComingItem = ({ title, describe }) => {
 const UpComing = () => {
   return (
     <Wrapper>
-      <div className="title">Upcoming Utilities</div>
-      <p className="decoration">
+      <div className="title" data-aos="fade-up">
+        Upcoming Utilities
+      </div>
+      <p className="decoration" data-aos="fade-up" data-aos-duration="2300">
         Every utility is current under development and they are gonna be gradually implemented once ready. Adding
         massive value to the Ecosystem overtime.
       </p>

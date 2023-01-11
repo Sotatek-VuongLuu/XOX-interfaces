@@ -29,6 +29,33 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+  #computer_xox {
+    position: absolute;
+    right: -500px;
+
+    @media screen and (max-width: 900px) {
+      right: 0;
+    }
+  }
+
+  #mobile_xox {
+    position: absolute;
+    right: -50%;
+    transform: translateX(-40%); 
+
+    @media screen and (max-width: 900px) {
+      right: -50%;
+      top: 60%;
+      transform: translate(-45%, -34%); 
+    }  
+  }
+
+  .welcome {
+    @media screen and (max-width: 900px) {
+      align-items: unset !important;
+    }
+  }
+
 `
 
 export default GlobalStyle

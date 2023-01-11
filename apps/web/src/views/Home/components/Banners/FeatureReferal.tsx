@@ -1,11 +1,10 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
-import { Avatar, Box, Grid } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { useRouter } from 'next/router'
-import { useCallback, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
-import LeaderBoardItem from 'views/Referral/components/LearderBoardItem'
 import LeaderBoardItemLP from 'views/Referral/components/LearderBoardItemForLandingPage'
 
 export interface IItemLeaderBoard {
@@ -202,14 +201,15 @@ const Overlay = styled(Box)`
 
 const FeatureReferal = () => {
   const [tabLeaderBoard, setTabLeaderBoard] = useState(0)
-  const [leaderBoardList, setLeaderBoardList] = useState<Array<IItemLeaderBoard>>(listLeader)
+  const [leaderBoardList, _] = useState<Array<IItemLeaderBoard>>(listLeader)
   const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily']
   const route = useRouter()
+
   return (
     <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={5}>
-          <WrapperLeft>
+          <WrapperLeft data-aos="fade-right">
             <Container>
               <Overlay>
                 <First>
@@ -242,7 +242,7 @@ const FeatureReferal = () => {
         </Grid>
         <Grid item xs={12} md={1} />
         <Grid item xs={12} md={6}>
-          <div className="ref_container">
+          <div className="ref_container" data-aos="fade-left">
             <p className="title_ref">Gamified Referral Program</p>
             <Paragraph className="description">
               Built to give back, the XOX Gamified Referral Program rewards both "The Referee" & "The Referrer" Earn

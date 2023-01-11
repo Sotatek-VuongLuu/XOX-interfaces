@@ -76,8 +76,7 @@ const Background = styled.div<I>`
   width: 556px;
   // height: 500px;
 
-
-  height: ${({ height }) => `${height}px;`}
+  height: ${({ height }) => `${height}px;`};
   z-index: -1;
   background: #242424;
 `
