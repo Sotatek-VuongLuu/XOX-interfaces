@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { ChainId } from '@pancakeswap/sdk'
 import { formatUnits, parseEther, parseUnits } from 'ethers/lib/utils'
-import { cancelBridgeTokenFee, fetchBridgeTokenFee } from '../../context/globalData'
+import { fetchBridgeTokenFee } from '../../context/globalData'
 
 const Wrapper = styled.div`
   border-radius: 8px;
@@ -75,22 +75,25 @@ const Reminder: React.FC<Props> = ({
   useEffect(() => {
     const fetchData = async () => {
       if (!chainId) {
-        if (cancelBridgeTokenFee) {
-          cancelBridgeTokenFee()
-        }
         setBridgeTokenFee(initialBridgeTokenFee)
         setAmountTo('')
         return
       }
       const res = await fetchBridgeTokenFee(chainId, amount && amount !== ('.' || '') ? amount : '0')
-      const  bridgeTokenFee: BridgeTokenFee = res?.data
-      if (bridgeTokenFee) {
+      const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data
+      // const bridgeTokenFee: BridgeTokenFee = {
+      //   gasFee: '0.13681800000000000014',
+      //   minCrossChainFee: '0.01',
+      //   minAmount: '0.15681800000000000014',
+      //   maxAmount: '2000000',
+      // }
+      if (bridgeTokenFeeCurrent) {
         setBridgeTokenFee((prev) => ({
           ...prev,
-          ...bridgeTokenFee,
+          ...bridgeTokenFeeCurrent,
         }))
-        setAmountTo(getAmountTo(bridgeTokenFee.gasFee, bridgeTokenFee.minCrossChainFee, bridgeTokenFee.minAmount))
-        onBridgeTokenFeeChange(bridgeTokenFee.minAmount, bridgeTokenFee.maxAmount)
+        setAmountTo(getAmountTo(bridgeTokenFeeCurrent.gasFee, bridgeTokenFeeCurrent.minCrossChainFee, bridgeTokenFeeCurrent.minAmount))
+        onBridgeTokenFeeChange(bridgeTokenFeeCurrent.minAmount, bridgeTokenFeeCurrent.maxAmount)
       }
     }
 

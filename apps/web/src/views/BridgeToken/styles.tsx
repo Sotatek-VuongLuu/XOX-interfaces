@@ -1,7 +1,11 @@
 import { Box, Flex } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 
-export const StyledSwapContainer = styled(Flex)<{ $isChartExpanded: boolean }>`
+interface IpropsSwapContainer {
+  isChartExpanded?: boolean
+}
+
+export const StyledSwapContainer = styled(Flex)<IpropsSwapContainer>`
   flex-shrink: 0;
   height: fit-content;
   position: absolute;

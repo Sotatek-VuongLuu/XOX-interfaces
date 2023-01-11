@@ -1,5 +1,7 @@
 /* eslint-disable import/no-duplicates */
 /* eslint-disable import/order */
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useContext, useState, useCallback, useEffect } from 'react'
 import { Currency } from '@pancakeswap/sdk'
 import { Flex, BottomDrawer, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'

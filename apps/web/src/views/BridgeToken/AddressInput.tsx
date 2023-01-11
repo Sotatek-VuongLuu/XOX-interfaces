@@ -1,7 +1,10 @@
 import React from "react";
 import styled from "styled-components";
-import { isMobile } from "react-device-detect";
 
+interface PropInput {
+  messageAddress?: string
+  value?: any
+}
 const Wrapper = styled.div`
   margin: 20px 0 24px;
   @media (max-width: 576px) {
@@ -18,7 +21,7 @@ const Text = styled.div`
   }
 `;
 
-const Input = styled.input`
+const Input = styled.input<PropInput>`
   width: 100%;
   background: transparent;
   padding: 10px 14px;
@@ -54,7 +57,7 @@ const ErrorMessage = styled.div`
 type Props = {
   address: any;
   handleAddressTo: any;
-  messageAddress: any;
+  messageAddress: string;
 };
 
 const AddressInput: React.FC<Props> = ({

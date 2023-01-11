@@ -12,7 +12,7 @@ import {
 import zapAbi from 'config/abi/zap.json'
 import { useProviderOrSigner } from 'hooks/useProviderOrSigner'
 import { useMemo } from 'react'
-import { getMulticallAddress, getPredictionsV1Address, getZapAddress } from 'utils/addressHelpers'
+import { getMulticallAddress, getPredictionsV1Address, getZapAddress, getBridgeTokenAddress } from 'utils/addressHelpers'
 import {
   getAnniversaryAchievementContract,
   getBCakeFarmBoosterContract,
@@ -64,12 +64,11 @@ import {
   getContractXOXPool,
 } from 'utils/contractHelpers'
 
-import { getBridgeTokenAddress } from 'utils/addressHelpers'
 import { useSigner } from 'wagmi'
 
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
-import { WNATIVE } from '@pancakeswap/sdk'
+import { WNATIVE, ChainId } from '@pancakeswap/sdk'
 import { ERC20_BYTES32_ABI } from 'config/abi/erc20'
 import ERC20_ABI from 'config/abi/erc20.json'
 import IPancakePairABI from 'config/abi/IPancakePair.json'
@@ -78,7 +77,6 @@ import WETH_ABI from 'config/abi/weth.json'
 import BRIDGE_TOKEN_ABI from 'config/abi/bridgeTokenAddress.json'
 import { getContract } from 'utils'
 
-import { ChainId } from '@pancakeswap/sdk'
 
 import { IPancakePair } from 'config/abi/types/IPancakePair'
 import { VaultKey } from 'state/types'
