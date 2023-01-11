@@ -90,7 +90,7 @@ const HoverableChart = ({
       if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList.ETH)
       else setCoinmarketcapId(_tokenList.BNB)
     } else {
-      setCoinmarketcapId(_tokenList[(selectedCurrency as any).address.toUpperCase()])
+      setCoinmarketcapId(_tokenList[(selectedCurrency as any).address])
     }
   }, [selectedCurrency])
 
@@ -183,11 +183,11 @@ const HoverableChart = ({
                       />
                     </svg>
                     <span style={{ color: '#FF0000' }}>
-                      {currencyData ? `${currencyData.percent_change_24h?.toFixed(2)}%` : '--'}
+                      {currencyData ? `${Math.abs(currencyData.percent_change_24h?.toFixed(2))}%` : '--'}
                     </span>
                   </>
                 ) : (
-                  <span>{currencyData ? "0.00%" : '--'}</span>
+                  <span>{currencyData ? '0.00%' : '--'}</span>
                 )}
               </p>
             </div>

@@ -34,7 +34,6 @@ export function useSwitchNetwork() {
 
   const switchNetworkLocal = useSwitchNetworkLocal()
   const isLoading = _isLoading || loading
-
   const switchNetworkAsync = useCallback(
     async (chainId: number) => {
       if (isConnected && typeof _switchNetworkAsync === 'function') {

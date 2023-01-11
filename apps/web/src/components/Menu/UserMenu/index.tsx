@@ -19,18 +19,18 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
 import { useCallback, useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
-import { useAccount, useBalance, useNetwork, useProvider } from 'wagmi'
+import { useAccount, useProvider } from 'wagmi'
 import { parseUnits } from '@ethersproject/units'
-import { formatBigNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { getBlockExploreLink, getBlockExploreName } from 'utils'
 import { AppState, useAppDispatch } from 'state'
 import { updateOpenFormReferral } from 'state/user/actions'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import useNativeCurrency from 'hooks/useNativeCurrency'
-import { getDefaultProvider } from '@ethersproject/providers'
 import { XOX_ADDRESS } from 'config/constants/exchange'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
+import { Tooltip } from '@mui/material'
 
 export const LOW_NATIVE_BALANCE = parseUnits('0.002', 'ether')
 
@@ -184,16 +184,22 @@ const UserMenu = () => {
             </Flex>
             <Flex flexDirection="column" width="100%">
               <Flex flexDirection="row" justifyContent="space-between" mb="8px">
-                <Text
-                  fontSize="16px"
-                  fontFamily="Inter"
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="19px"
-                  color="rgba(255, 255, 255)"
-                >
-                  {userProfile?.username}
-                </Text>
+                <Tooltip title={userProfile?.username}>
+                  <Text
+                    fontSize="16px"
+                    fontFamily="Inter"
+                    fontStyle="normal"
+                    fontWeight="700"
+                    lineHeight="19px"
+                    color="rgba(255, 255, 255)"
+                  >
+                    {userProfile?.username?.length > 9
+                      ? `${userProfile?.username.substring(0, 7)}...${userProfile?.username.substring(
+                          userProfile?.username.length - 2,
+                        )}`
+                      : userProfile?.username}
+                  </Text>
+                </Tooltip>
                 {/* eslint-disable-next-line */}
                 <div
                   style={{ cursor: 'pointer', borderRadius: '50%', overflow: 'hidden' }}
@@ -294,7 +300,7 @@ const UserMenu = () => {
             <Skeleton height="22px" width="60px" />
           ) : (
             <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
-              {balanceXOX.balance}
+              {formatAmountNumber(balanceXOX.balance, 6)}
             </Text>
           )}
         </Flex>

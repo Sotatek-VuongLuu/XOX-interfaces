@@ -21,6 +21,7 @@ import {
   TableContainer,
   TableHead,
   TableRow,
+  Tooltip,
 } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
@@ -35,6 +36,7 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { getUserFriend } from 'services/referral'
 import { USD_DECIMALS } from 'config/constants/exchange'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 import axios from 'axios'
 import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
@@ -224,11 +226,15 @@ const WrapperRight = styled(Box)<IPropsWR>`
   }
 
   .swiper-button-next {
+    z-index: 999;
     background-image: url(/images/next.svg);
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
     border-radius: 50%;
+    @media screen and (max-width: 555px) {
+      margin-right: -14px;
+    }
   }
 
   .swiper-button-next::after {
@@ -603,9 +609,12 @@ const ReferralFriend = ({
     try {
       setListFriends([])
       const { userInfos } = await getUserFriend(chainId, accountId)
-
+      const sortByPoints = userInfos[0]?.friends?.sort(function (a: any, b: any) {
+        return Number(b.amount) - Number(a.amount)
+      })
+      // console.log('sortByPoints', sortByPoints)
       if (Array.from(userInfos).length !== 0) {
-        const dataUserFormatAmount = userInfos[0]?.friends?.map((item: any) => {
+        const dataUserFormatAmount = sortByPoints.map((item: any) => {
           return {
             ...item,
             id: item?.ref_address,
@@ -643,85 +652,105 @@ const ReferralFriend = ({
     }
   }, [chainId, account])
 
+  // useEffect(() => {
+  //   document.querySelector('.swiper-button-next').addEventListener('dblclick', (e) => {
+  //     e.preventDefault()
+  //     event.stopPropagation();
+  //   }, true)
+  // })
+
   return (
     <>
       <Box sx={{ marginTop: '16px' }}>
         <Grid container spacing={2}>
           <Grid item xs={12} lg={4}>
-            <WrapperLeft>
-              <p className="title">Referral friends</p>
-
-              {account && listFriends.length !== 0 ? (
-                <TableContainer component={Paper} sx={{ height: 170, background: '#242424', boxShadow: 'none' }}>
-                  <Table sx={{ minWidth: 400 }} aria-label="simple table">
-                    <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
-                      <TableRow
-                        sx={{
-                          '& td, & th': {
-                            borderBottom: '1px solid #444444',
-                            fontWeight: 700,
-                            fontSize: 14,
-                            color: ' rgba(255, 255, 255, 0.6)',
-                            padding: '8px 8px 8px 0px',
-                          },
-                        }}
-                      >
-                        <TableCell align="left">Username</TableCell>
-                        <TableCell align="center">Referral Code</TableCell>
-                        <TableCell align="right">Total Points</TableCell>
-                      </TableRow>
-                    </TableHead>
-                    <TableBody>
-                      {listFriends.map((row) => (
+            {account && (
+              <WrapperLeft>
+                <p className="title">Referral friends</p>
+                {listFriends.length !== 0 ? (
+                  <TableContainer component={Paper} sx={{ height: 170, background: '#242424', boxShadow: 'none' }}>
+                    <Table sx={{ minWidth: 400 }} aria-label="simple table">
+                      <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
                         <TableRow
-                          key={row.name}
                           sx={{
                             '& td, & th': {
-                              border: 0,
-                              fontWeight: 400,
+                              borderBottom: '1px solid #444444',
+                              fontWeight: 700,
                               fontSize: 14,
-                              color: ' rgba(255, 255, 255, 0.87)',
+                              color: ' rgba(255, 255, 255, 0.6)',
                               padding: '8px 8px 8px 0px',
                             },
                           }}
                         >
-                          <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                            <Avatar
-                              alt="Remy Sharp"
-                              src={row.avatar}
-                              sx={{ marginRight: '8px', height: '24px', width: '24px' }}
-                            />
-                            {row.name}
-                          </TableCell>
-                          <TableCell align="left">
-                            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                              <div>{row?.refCode}</div>
-                              <div>
-                                <CopyButton
-                                  width="24px"
-                                  text={row?.refCode}
-                                  tooltipMessage={t('Copied')}
-                                  button={
-                                    <img
-                                      src="/images/copy_purple.svg"
-                                      alt="copy_purple"
-                                      style={{ marginBottom: '-2px', marginLeft: '8px' }}
-                                    />
-                                  }
-                                />
-                              </div>
-                            </div>
-                          </TableCell>
-                          <TableCell align="right">{row.point} points</TableCell>
+                          <TableCell align="left">Username</TableCell>
+                          <TableCell align="center">Referral Code</TableCell>
+                          <TableCell align="right">Total Points</TableCell>
                         </TableRow>
-                      ))}
-                    </TableBody>
-                  </Table>
-                </TableContainer>
-              ) : (
-                <div className="no-data">No Data</div>
-              )}
-            </WrapperLeft>
+                      </TableHead>
+                      <TableBody>
+                        {listFriends.map((row) => (
+                          <TableRow
+                            key={row.name}
+                            sx={{
+                              '& td, & th': {
+                                border: 0,
+                                fontWeight: 400,
+                                fontSize: 14,
+                                color: ' rgba(255, 255, 255, 0.87)',
+                                padding: '8px 8px 8px 0px',
+                              },
+                            }}
+                          >
+                            <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                              <Avatar
+                                alt="Remy Sharp"
+                                src={row.avatar}
+                                sx={{ marginRight: '8px', height: '24px', width: '24px' }}
+                              />
+                              <Tooltip title={row?.name}>
+                                <p>
+                                  {row.name?.length > 9
+                                    ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                                    : row.name}
+                                </p>
+                              </Tooltip>
+                            </TableCell>
+                            <TableCell align="left">
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <div>
+                                  {row?.refCode?.length > 9
+                                    ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
+                                        row.refCode.length - 2,
+                                      )}`
+                                    : row.refCode}
+                                </div>
+                                <div>
+                                  <CopyButton
+                                    width="24px"
+                                    text={row?.refCode}
+                                    tooltipMessage={t('Copied')}
+                                    button={
+                                      <img
+                                        src="/images/copy_purple.svg"
+                                        alt="copy_purple"
+                                        style={{ marginBottom: '-2px', marginLeft: '8px' }}
+                                      />
+                                    }
+                                  />
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell align="right">{formatAmountNumber(row.point, 2)}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : (
+                  <div className="no-data">No Data</div>
+                )}
+              </WrapperLeft>
+            )}
           </Grid>
 
           <Grid item xs={12} lg={8}>

@@ -4,6 +4,7 @@ import { Trade, TradeType, CurrencyAmount, Currency } from '@pancakeswap/sdk'
 import { Button, Text, AutoRenewIcon, QuestionHelper } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { Field } from 'state/swap/actions'
+import CircleRefresh from 'components/Svg/CircleRefresh'
 import { computeTradePriceBreakdown, formatExecutionPrice, warningSeverity } from 'utils/exchange'
 import { AutoColumn } from 'components/Layout/Column'
 import { AutoRow, RowBetween, RowFixed } from 'components/Layout/Row'
@@ -17,6 +18,9 @@ const SwapModalFooterContainer = styled(AutoColumn)`
   border-radius: ${({ theme }) => theme.radii.default};
   border: 1px solid ${({ theme }) => theme.colors.cardBorder};
   background-color: ${({ theme }) => theme.colors.dark3};
+`
+const CircleBox = styled.div`
+  cursor: pointer;
 `
 
 export default function SwapModalFooter({
@@ -36,7 +40,8 @@ export default function SwapModalFooter({
 }) {
   const { t } = useTranslation()
   const [showInverted, setShowInverted] = useState<boolean>(false)
-  const { priceImpactWithoutFee, realizedLPFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
+  // const { priceImpactWithoutFee, realizedLPFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
+  const { priceImpactWithoutFee, realizedLPFee } = computeTradePriceBreakdown(trade)
   const severity = warningSeverity(priceImpactWithoutFee)
 
   const totalFeePercent = `${(TOTAL_FEE * 100).toFixed(2)}%`
@@ -60,10 +65,9 @@ export default function SwapModalFooter({
             }}
           >
             {formatExecutionPrice(trade, showInverted)}
-            {/* <StyledBalanceMaxMini onClick={() => setShowInverted(!showInverted)}>
-              <AutoRenewIcon width="14px" />
-            </StyledBalanceMaxMini> */}
-            {/* <img onClick={() => setShowInverted(!showInverted)} src="/images/swap/circle-refresh.svg" alt="" style={{ cursor: "pointer" }} /> */}
+            <CircleBox onClick={() => setShowInverted(!showInverted)}>
+              <CircleRefresh />
+            </CircleBox>
           </Text>
         </RowBetween>
 
@@ -77,7 +81,7 @@ export default function SwapModalFooter({
                 'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.',
               )}
               ml="4px"
-              placement='auto'
+              placement="auto"
             />
           </RowFixed>
           <RowFixed>
@@ -99,7 +103,7 @@ export default function SwapModalFooter({
             <QuestionHelper
               text={t('The difference between the market price and your price due to trade size.')}
               ml="4px"
-              placement='auto'
+              placement="auto"
             />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
@@ -117,7 +121,7 @@ export default function SwapModalFooter({
                 </>
               }
               ml="4px"
-              placement='auto'
+              placement="auto"
             />
           </RowFixed>
           <Text fontSize="14px">

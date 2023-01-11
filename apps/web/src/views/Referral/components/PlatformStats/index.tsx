@@ -1,14 +1,35 @@
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable @next/next/no-img-element */
-import { Avatar, Box, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import {
+  Avatar,
+  Box,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+} from '@mui/material'
+import axios from 'axios'
+import moment from 'moment'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useEffect, useState } from 'react'
+import BigNumber from 'bignumber.js'
+import { USD_DECIMALS } from 'config/constants/exchange'
 import styled from 'styled-components'
 import ColumnChartRef from './components/ColumnChartRef'
+import { userClaimedHistories } from '../../../../services/referral'
 
 interface IVolumnDataItem {
   volumn: string
   title: string
   svg: string
+}
+interface IListPoint {
+  reward: number
+  point: number
 }
 interface IPropsItem {
   volumnData?: IVolumnDataItem[]
@@ -17,6 +38,7 @@ interface IPropsItem {
   minAmount?: string
   middleAmount?: string
   maxAmount?: string
+  listPoint?: IListPoint[]
 }
 
 const Wrapper = styled(Box)`
@@ -146,8 +168,68 @@ const Line = styled.div`
   }
 `
 const PlatformStat = (props: IPropsItem): JSX.Element => {
-  const { isMobile } = useMatchBreakpoints()
-  const { volumnData, userClaimHistories, dataChart, minAmount, middleAmount, maxAmount } = props
+  const { chainId } = useActiveWeb3React()
+  const { listPoint, volumnData, dataChart, minAmount, middleAmount, maxAmount } = props
+  const [userClaimHistories, setUserClaimHistories] = useState([])
+
+  const mapPoint = (amount: number) => {
+    if (listPoint && listPoint.length > 0) {
+      for (let i = 0; i < listPoint.length; i++) {
+        if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
+          return listPoint[i].point.toString()
+        }
+      }
+    }
+    return ''
+  }
+  const getUserClaimedHistories = async () => {
+    const result = await userClaimedHistories(chainId)
+    if (result) {
+      const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
+        const mappingUser = await mapingHistories(item.address)
+        const userAvatar = mappingUser.avatar
+        const point = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
+        const claim = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
+
+        return createData(
+          idx + 1,
+          userAvatar,
+          mappingUser?.username,
+          moment(item.date * 1000).format('DD/MM/YYYY hh:mm:ss'),
+          mapPoint(point),
+          claim,
+        )
+      })
+      const lastResponse = await Promise.all(histories)
+      setUserClaimHistories(
+        lastResponse.sort((a, b) => {
+          if (a.time !== b.time) return b.time - a.time
+
+          return b.point - a.point
+        }),
+      )
+    }
+  }
+  function createData(no: number, avatar: string, name: string, time: string, point: string, claim: number) {
+    return { no, avatar, name, time, point, claim }
+  }
+  const mapingHistories = async (address: string) => {
+    const payload = {
+      wallets: [`${address}`],
+    }
+    const result: any = await axios
+      .post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, payload)
+      .catch((error) => {
+        console.warn(error)
+      })
+    const data = result?.data[0]
+    return data
+  }
+
+  useEffect(() => {
+    if (!chainId) return
+    getUserClaimedHistories()
+  }, [chainId])
 
   return (
     <Wrapper sx={{}}>
@@ -168,10 +250,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       </div>
 
       <div className="second" style={{ position: 'relative' }}>
-        <TableContainer
-          component={Paper}
-          sx={isMobile ? { height: '300px', background: '#303030' } : { height: '160px', background: '#303030' }}
-        >
+        <TableContainer component={Paper} sx={{ height: '165px', background: '#303030' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
               <TableRow
@@ -202,11 +281,17 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                 <TableRow
                   key={`${row.name}_${index}`}
                   sx={{
-                    '& td, & th': { border: 0, fontWeight: 400, fontSize: 14, color: ' rgba(255, 255, 255, 0.87)' },
+                    '& td, & th': {
+                      border: 0,
+                      fontWeight: 400,
+                      fontSize: 14,
+                      color: ' rgba(255, 255, 255, 0.87)',
+                      padding: '6px 16px',
+                    },
                   }}
                 >
                   <TableCell component="th" scope="row">
-                    {row.no}
+                    {index + 1}
                   </TableCell>
                   <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
                     <Avatar
@@ -214,7 +299,13 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                       src={row.avatar}
                       sx={{ marginRight: '8px', height: '24px', width: '24px' }}
                     />
-                    {row.name}
+                    <Tooltip title={row?.name}>
+                      <p>
+                        {row.name?.length > 9
+                          ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                          : row.name}
+                      </p>
+                    </Tooltip>
                   </TableCell>
                   <TableCell align="left">{row.time}</TableCell>
                   <TableCell align="left">{row.point} points</TableCell>
@@ -226,12 +317,12 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
         </TableContainer>
       </div>
 
-      <div className="third">
-        <div className="range_volumn">
+      <div className="third" style={{ marginTop: '30px' }}>
+        {/* <div className="range_volumn">
           <span className="min">{minAmount}</span>
           <span className="middle">{middleAmount}</span>
           <span className="max">{maxAmount}</span>
-        </div>
+        </div> */}
         <ColumnChartRef data={dataChart} />
       </div>
 

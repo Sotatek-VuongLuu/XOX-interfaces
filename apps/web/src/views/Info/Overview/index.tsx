@@ -111,7 +111,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       .map((key: any) => {
         const token = allTokens[key]
         const { address } = token
-        if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[address.toUpperCase()]) {
+        if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[address]) {
           return undefined
         }
         return token
@@ -121,13 +121,13 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       tokenListNotHaveIds.map(async (token: any) => {
         return axios
           .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/info`, {
-            params: { address: token.address.toUpperCase() },
+            params: { address: token.address },
           })
           .then((response) => {
             const tokenInfos = response.data.data
             const tokenInfo = Object.keys(tokenInfos).map((key) => tokenInfos[key])?.[0]
             const res = {}
-            res[token.address.toUpperCase()] = tokenInfo.id
+            res[token.address] = tokenInfo.id
             return res
           })
           .catch(() => {

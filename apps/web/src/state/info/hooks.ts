@@ -13,7 +13,8 @@ import fetchPoolsForToken from 'state/info/queries/tokens/poolsForToken'
 import fetchTokenPriceData from 'state/info/queries/tokens/priceData'
 import { fetchAllTokenData, fetchAllTokenDataByAddresses } from 'state/info/queries/tokens/tokenData'
 import fetchTokenTransactions from 'state/info/queries/tokens/transactions'
-import { Transaction, TransactionFrom } from 'state/info/types'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+import { Transaction } from 'state/info/types'
 import useSWRImmutable from 'swr/immutable'
 import { SWRConfiguration } from 'swr'
 import { getDeltaTimestamps } from 'utils/getDeltaTimestamps'
@@ -55,12 +56,13 @@ export const useProtocolTransactionsSWR = (): {
   transactionsXOX: Transaction[] | undefined
   transactionsOther: Transaction[] | undefined
 } => {
+  const { chainId } = useActiveChainId()
   const chainName = useGetChainName()
   // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const type = 'swap'
   const { data: transactions } = useSWRImmutable(
     [`info/protocol/updateProtocolTransactionsData/${type}`, chainName],
-    () => fetchTopTransactions(chainName),
+    () => fetchTopTransactions(chainId),
     SWR_SETTINGS, // update latest Transactions per 15s
   )
   return transactions

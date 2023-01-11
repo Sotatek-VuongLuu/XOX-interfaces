@@ -58,22 +58,23 @@ export const lightColors = {
   gradientVioletAlt: 'linear-gradient(180deg, #434575 0%, #66578D 100%)',
   gradientGold: 'linear-gradient(180deg, #FFD800 0%, #FDAB32 100%)',
   gradientBold: 'linear-gradient(#53DEE9, #9A6AFF)',
-  dark3: '#303030'
+  dark3: '#303030',
+  while87 : '#ffffffde'
 }
 
 export const darkColors = {
   ...baseColors,
   ...additionalColors,
-  secondary: '#9A6AFF',
+  secondary: 'linear-gradient(100.7deg, #6034FF 0%, #A35AFF 100%);',
   secondary80: '#9A6AFF80',
   background: '#121212',
   backgroundDisabled: '#3c3742',
+  violet: '#9072ff',
+  blue: '#3D8AFF',
   backgroundAlt: '#1d1d1d',
   backgroundAlt2: 'rgba(39, 38, 44, 0.7)',
   cardBorder: '#383241',
   contrast: '#FFFFFF',
-  violet: '#9072ff',
-  blue: '#3D8AFF',
   dropdown: '#1E1D20',
   dropdownDeep: '#100C18',
   hr: '#444444',
@@ -89,7 +90,7 @@ export const darkColors = {
   textSubTitle: 'rgba(255, 255, 255, 0.87)',
   error: '#F44336',
   disabled: '#524B63',
-  gradientBubblegum: 'linear-gradient(139.73deg, #313D5C 0%, #3D2A54 100%)',
+  gradientBubblegum: '#121212',
   gradientInverseBubblegum: 'linear-gradient(139.73deg, #3D2A54 0%, #313D5C 100%)',
   gradientCardHeader: 'linear-gradient(166.77deg, #3B4155 0%, #3A3045 100%)',
   gradientBlue: 'linear-gradient(180deg, #00707F 0%, #19778C 100%)',
@@ -97,5 +98,6 @@ export const darkColors = {
   gradientVioletAlt: 'linear-gradient(180deg, #434575 0%, #66578D 100%)',
   gradientGold: 'linear-gradient(180deg, #FFD800 0%, #FDAB32 100%)',
   gradientBold: 'linear-gradient(#53DEE9, #9A6AFF)',
-  dark3: '#303030'
+  dark3: '#303030',
+  while87 : '#ffffffde'
 }

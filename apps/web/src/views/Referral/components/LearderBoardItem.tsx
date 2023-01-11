@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
-import { Avatar, Box } from '@mui/material'
+import { Avatar, Box, Tooltip } from '@mui/material'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 import useWindowSize from 'hooks/useWindowSize'
 import { useCallback } from 'react'
 import styled from 'styled-components'
@@ -145,7 +146,7 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
         )
       }
 
-      return <div className="ranking">{rank <= 100 ? <span>{rank}</span> : <span>100+</span>}</div>
+      return <div className="ranking">{rank < 100 ? <span>{rank}</span> : <span>100+</span>}</div>
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
@@ -159,12 +160,18 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
         <div className={`${ranking.includes(item.rank) ? `bg_white` : `bg_rba`} user_info`}>
           <div className="user_avatar_name">
             <Avatar alt="Remy Sharp" src={item.avatar} sx={{ height: 30, width: 30 }} />
-            <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>
-              {item.username ? item.username : shortenAddress(item.address)}
-            </p>
+            <Tooltip title={item.username}>
+              <p className={`${ranking.includes(item.rank) ? `ranking_name` : `name`}`}>
+                {item.username
+                  ? item.username?.length > 9
+                    ? `${item.username.substring(0, 7)}...${item.username.substring(item.username.length - 2)}`
+                    : item.username
+                  : shortenAddress(item.address)}
+              </p>
+            </Tooltip>
           </div>
 
-          <div className="point">{item.point}</div>
+          <div className="point">{formatAmountNumber(item.point, 2)}</div>
         </div>
       </div>
     </Wrapper>

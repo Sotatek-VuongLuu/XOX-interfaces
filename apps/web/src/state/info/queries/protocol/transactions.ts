@@ -1,8 +1,13 @@
 import { gql } from 'graphql-request'
-import { mapBurns, mapMints, mapSwaps } from 'state/info/queries/helpers'
-import { BurnResponse, MintResponse, SwapResponse } from 'state/info/queries/types'
+import { mapBurns, mapMints, mapSwaps, mapSwapsUNI, mapSwapsXOX } from 'state/info/queries/helpers'
+import { BurnResponse, MintResponse, SwapResponse, SwapResponseUNI } from 'state/info/queries/types'
 import { Transaction, TransactionFrom } from 'state/info/types'
-import { getMultiChainQueryEndPointWithStableSwap, MultiChainName } from '../../constant'
+import axios from 'axios'
+import {
+  getMultiChainQueryEndPointWithChainId,
+  getMultiChainQueryEndPointWithStableSwap,
+  MultiChainName,
+} from '../../constant'
 
 /**
  * Transactions for Transaction table on the Home page
@@ -40,7 +45,7 @@ const GLOBAL_TRANSACTIONS = gql`
           symbol
         }
       }
-      sender
+      from
       amount0In
       amount1In
       amount0Out
@@ -68,72 +73,126 @@ const GLOBAL_TRANSACTIONS = gql`
   }
 `
 
+const QUERYPANCAKE = `
+  query overviewTransactions {
+    swaps: swaps(first: 100, orderBy: timestamp, orderDirection: desc) {
+      id
+      timestamp
+      pair {
+        token0 {
+          id
+          symbol
+        }
+        token1 {
+          id
+          symbol
+        }
+      }
+      from
+      amount0In
+      amount1In
+      amount0Out
+      amount1Out
+      amountUSD
+    }
+  }
+`
+
+const QUERYUNI = `
+  query overviewTransactions {
+    swaps: swaps(first: 100, orderBy: timestamp, orderDirection: desc) {
+      id
+      timestamp
+      pair {
+        token0 {
+          id
+          symbol
+        }
+        token1 {
+          id
+          symbol
+        }
+      }
+      to
+      amount0In
+      amount1In
+      amount0Out
+      amount1Out
+      amountUSD
+    }
+  }
+`
+
 interface TransactionResults {
   mints: MintResponse[]
   swaps: SwapResponse[]
   burns: BurnResponse[]
 }
+interface TransactionResultsUNI {
+  swaps: SwapResponseUNI[]
+}
 
 const fetchTopTransactions = async (
-  chainName: MultiChainName,
+  chainId: number,
 ): Promise<{ transactionsXOX: Transaction[] | undefined; transactionsOther: Transaction[] | undefined }> => {
+  const result = { transactionsXOX: [], transactionsOther: [] }
   try {
-    const dataXOX = await getMultiChainQueryEndPointWithStableSwap(
-      chainName,
+    const dataXOX = await getMultiChainQueryEndPointWithChainId(
+      chainId,
       TransactionFrom.XOX,
     ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
-    let transactionsXOX:any
-    let transactionsOther:any
+    let transactionsXOX: any
     if (dataXOX) {
       const mintsXOX = dataXOX.mints.map(mapMints)
       const burnsXOX = dataXOX.burns.map(mapBurns)
-      const swapsXOX = dataXOX.swaps.map(mapSwaps)
+      const swapsXOX = dataXOX.swaps.map(mapSwapsXOX)
 
       transactionsXOX = [...mintsXOX, ...burnsXOX, ...swapsXOX].sort((a, b) => {
         return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
       })
     }
+    result.transactionsXOX = transactionsXOX
+  } catch {
+    result.transactionsXOX = []
+  }
 
-    if (chainName === 'ETH') {
-      const dataUNI = await getMultiChainQueryEndPointWithStableSwap(
-        chainName,
+  try {
+    let transactionsOther
+    if (chainId === 1) {
+      const dataUNI = await getMultiChainQueryEndPointWithChainId(
+        chainId,
         TransactionFrom.UNI,
-      ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
+      ).request<TransactionResultsUNI>(QUERYUNI)
 
       if (dataUNI) {
-        const mintsUNI = dataUNI.mints.map(mapMints)
-        const burnsUNI = dataUNI.burns.map(mapBurns)
-        const swapsUNI = dataUNI.swaps.map(mapSwaps)
+        const swapsUNI = dataUNI.swaps.map(mapSwapsUNI)
 
-        transactionsOther = [...mintsUNI, ...burnsUNI, ...swapsUNI].sort((a, b) => {
+        transactionsOther = [...swapsUNI].sort((a, b) => {
           return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
         })
       }
     } else {
-      const dataPANCAKE = await getMultiChainQueryEndPointWithStableSwap(
-        chainName,
-        TransactionFrom.PANCAKE,
-      ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
+      const dataPANCAKERES = await axios.post(`${process.env.NEXT_PUBLIC_API}/Pancake/query`, {
+        url: 'https://proxy-worker-dev.pancake-swap.workers.dev/bsc-exchange',
+        query: QUERYPANCAKE,
+      })
+      const dataPANCAKE = dataPANCAKERES?.data
+      // const dataPANCAKE = await getMultiChainQueryEndPointWithStableSwap(
+      //   chainId,
+      //   TransactionFrom.PANCAKE,
+      // ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
       if (dataPANCAKE) {
-        const mintsPANCAKE = dataPANCAKE.mints.map(mapMints)
-        const burnsPANCAKE = dataPANCAKE.burns.map(mapBurns)
         const swapsPANCAKE = dataPANCAKE.swaps.map(mapSwaps)
-
-        transactionsOther = [...mintsPANCAKE, ...burnsPANCAKE, ...swapsPANCAKE].sort((a, b) => {
+        transactionsOther = [...swapsPANCAKE].sort((a, b) => {
           return parseInt(b.timestamp, 10) - parseInt(a.timestamp, 10)
         })
       }
     }
-    return {
-      transactionsXOX,
-      transactionsOther
-    }
+    result.transactionsOther = transactionsOther
   } catch {
-    return {
-      transactionsXOX: undefined,
-      transactionsOther: undefined,
-    }
+    result.transactionsOther = []
   }
+  return result
 }
 
 export default fetchTopTransactions

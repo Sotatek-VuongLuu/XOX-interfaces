@@ -9,17 +9,20 @@ import { useAccount } from 'wagmi'
 import { CurrencyLogo } from '../Logo'
 import { RowBetween, AutoRow } from '../Layout/Row'
 
+const BalanceBox = styled(Box)`
+  margin-top:13px;
+`
 const DropDownHeader = styled.div`
   width: 100%;
-  height: 40px;
+  height: 100%;
+  height:54px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 0px 16px;
   box-shadow: ${({ theme }) => theme.shadows.inset};
-  border: 1px solid ${({ theme }) => theme.colors.inputSecondary};
-  border-radius: 16px;
-  background: ${({ theme }) => theme.colors.input};
+  border: 1px solid #444444;
+  border-radius: 6px;
   transition: border-radius 0.15s;
 `
 
@@ -27,13 +30,12 @@ const DropDownContainer = styled(Button)`
   cursor: pointer;
   width: 100%;
   position: relative;
-  background: ${({ theme }) => theme.colors.input};
-  border-radius: 16px;
+  background: unset;
   height: 40px;
   min-width: 136px;
   user-select: none;
   z-index: 20;
-
+  box-shadow:unset;
   ${({ theme }) => theme.mediaQueries.sm} {
     min-width: 168px;
   }
@@ -82,7 +84,7 @@ export const CurrencySelect = ({
   const quoted = selectedCurrencyBalance && price?.quote(selectedCurrencyBalance)
 
   return (
-    <Box width="100%" {...props}>
+    <Box maxWidth='223px' width="100%" {...props}>
       <DropDownContainer p={0} onClick={onPresentCurrencyModal}>
         <DropDownHeader>
           <Text id="pair" color={!selectedCurrency ? 'text' : undefined}>
@@ -103,10 +105,10 @@ export const CurrencySelect = ({
             )}
           </Text>
         </DropDownHeader>
-        <ArrowDropDownIcon color="text" className="down-icon" />
+        {/* <ArrowDropDownIcon color="text" className="down-icon" /> */}
       </DropDownContainer>
       {account && !!selectedCurrency && !hideBalance && (
-        <Box>
+        <BalanceBox>
           <AutoRow justify="space-between" gap="2px">
             <Text color="textSubtle" fontSize="12px">
               {t('Balance')}:
@@ -121,7 +123,7 @@ export const CurrencySelect = ({
               </Text>
             )}
           </RowBetween>
-        </Box>
+        </BalanceBox>
       )}
     </Box>
   )

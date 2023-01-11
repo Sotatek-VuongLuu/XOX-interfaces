@@ -1,18 +1,20 @@
 import { Price, Currency } from "@pancakeswap/swap-sdk-core";
-import { AtomBox } from "@pancakeswap/ui/components/AtomBox";
-import { Text, AutoRenewIcon } from "@pancakeswap/uikit";
+import { Text } from "@pancakeswap/uikit";
 import { useState } from "react";
 import styled from "styled-components";
-import { balanceMaxMiniClass } from "./SwapWidget.css";
+import CircleRefresh from "../../../../../apps/web/src/components/Svg/CircleRefresh";
 
 const PerLabel = styled.div`
   color: #ffffff;
   font-size: 16px;
-  font-weight:400;
+  font-weight: 400;
   margin-top: "8px";
   @media (max-width: 576px) {
     font-size: 14px;
   }
+`;
+const CircleBox = styled.div`
+  cursor:pointer;  
 `;
 interface TradePriceProps {
   price?: Price<Currency, Currency>;
@@ -32,13 +34,12 @@ export function TradePrice({ price }: TradePriceProps) {
       <Text style={{ justifyContent: "space-between", alignItems: "center", display: "flex", width: "100%" }}>
         {show ? (
           <>
-            <span style={{fontWeight:'700', fontSize:'18px', wordBreak: 'break-word'}}>{formattedPrice ?? "-"}</span>
-            {/* <AtomBox className={balanceMaxMiniClass} onClick={() => setShowInverted(!showInverted)}>
-              <AutoRenewIcon width="14px" />
-            </AtomBox> */}
-            <div onClick={() => setShowInverted(!showInverted)}>
-              <img src="/images/swap/circle-refresh.svg" alt="" style={{ cursor: "pointer" }} />
-            </div>
+            <span style={{ fontWeight: "700", fontSize: "18px", color: "#FFFFFF", wordBreak: "break-word" }}>
+              {formattedPrice ?? "-"}
+            </span>
+            <CircleBox onClick={() => setShowInverted(!showInverted)}>
+              <CircleRefresh />
+            </CircleBox>
           </>
         ) : (
           "-"
