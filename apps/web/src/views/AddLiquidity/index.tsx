@@ -13,13 +13,14 @@ import {
   useTooltip,
   MessageText,
   useMatchBreakpoints,
-  Flex
+  Flex,
 } from '@pancakeswap/uikit'
 import { logError } from 'utils/sentry'
 import styled from 'styled-components'
 import LiquidityMainBackgroundDesktop from 'components/Svg/LiquidityMainBackgroundDesktop'
 import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 import LiquidityDefault from 'components/Svg/LiquidityDefault'
+import LiquiditySupply from 'components/Svg/LiquiditySupply'
 import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
 import { useTranslation } from '@pancakeswap/localization'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
@@ -92,17 +93,14 @@ const Wrapper = styled(Flex)`
   justify-content: center;
 `
 const SwapbackgroundWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
+  margin-top:60px;
 `
 const LiquidityBody = styled.div`
-  position: relative;
+  top:70px;
+  position: absolute;
   padding: 15px 0;
-  max-width:503px;
-  width:100%;
+  max-width: 503px;
+  width: 100%;
 `
 
 enum Steps {
@@ -614,15 +612,14 @@ export default function AddLiquidity({ currencyA, currencyB }) {
       (pair && JSBI.lessThan(pair.reserve0.quotient, MINIMUM_LIQUIDITY)) ||
       (pair && JSBI.lessThan(pair.reserve1.quotient, MINIMUM_LIQUIDITY))
     )
-
   return (
     <Page>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <LiquidityMainBackgroundDesktop />}</MainBackground>
       <Wrapper flex="column" position="relative">
         <SwapbackgroundWrapper>
-        <LiquidityDefault />
+           {showAddLiquidity ? <LiquiditySupply /> : <LiquidityDefault />}
         </SwapbackgroundWrapper>
-        </Wrapper>
+      </Wrapper>
       <LiquidityBody>
         {!showAddLiquidity && (
           <ChoosePair
@@ -666,20 +663,20 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   showBUSD
                   onInputBlur={canZap ? zapIn.onInputBlurOnce : undefined}
                   error={zapIn.priceSeverity > 3 && zapIn.swapTokenField === Field.CURRENCY_A}
-                  disabled={canZap && !zapTokenCheckedA}
-                  beforeButton={
-                    canZap && (
-                      <ZapCheckbox
-                        disabled={currencyBalances?.[Field.CURRENCY_A]?.equalTo(0)}
-                        checked={zapTokenCheckedA}
-                        onChange={(e) => {
-                          setZapTokenToggleA(e.target.checked)
-                        }}
-                      />
-                    )
-                  }
+                  // disabled={canZap && !zapTokenCheckedA}
+                  // beforeButton={
+                  //   canZap && (
+                  //     <ZapCheckbox
+                  //       disabled={currencyBalances?.[Field.CURRENCY_A]?.equalTo(0)}
+                  //       checked={zapTokenCheckedA}
+                  //       onChange={(e) => {
+                  //         setZapTokenToggleA(e.target.checked)
+                  //       }}
+                  //     />
+                  //   )
+                  // }
                   onCurrencySelect={handleCurrencyASelect}
-                  zapStyle={canZap ? 'zap' : 'noZap'}
+                  // zapStyle={canZap ? 'zap' : 'noZap'}
                   value={formattedAmounts[Field.CURRENCY_A]}
                   onUserInput={onFieldAInput}
                   onPercentInput={(percent) => {
@@ -702,23 +699,23 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                 </ColumnCenter>
                 <CurrencyInputPanel
                   showBUSD
-                  onInputBlur={canZap ? zapIn.onInputBlurOnce : undefined}
-                  disabled={canZap && !zapTokenCheckedB}
+                  // onInputBlur={canZap ? zapIn.onInputBlurOnce : undefined}
+                  // disabled={canZap && !zapTokenCheckedB}
                   error={zapIn.priceSeverity > 3 && zapIn.swapTokenField === Field.CURRENCY_B}
-                  beforeButton={
-                    canZap && (
-                      <ZapCheckbox
-                        disabled={currencyBalances?.[Field.CURRENCY_B]?.equalTo(0)}
-                        checked={zapTokenCheckedB}
-                        onChange={(e) => {
-                          setZapTokenToggleB(e.target.checked)
-                        }}
-                      />
-                    )
-                  }
+                  // beforeButton={
+                  //   canZap && (
+                  //     <ZapCheckbox
+                  //       disabled={currencyBalances?.[Field.CURRENCY_B]?.equalTo(0)}
+                  //       checked={zapTokenCheckedB}
+                  //       onChange={(e) => {
+                  //         setZapTokenToggleB(e.target.checked)
+                  //       }}
+                  //     />
+                  //   )
+                  // }
                   onCurrencySelect={handleCurrencyBSelect}
                   disableCurrencySelect={canZap}
-                  zapStyle={canZap ? 'zap' : 'noZap'}
+                  // zapStyle={canZap ? 'zap' : 'noZap'}
                   value={formattedAmounts[Field.CURRENCY_B]}
                   onUserInput={onFieldBInput}
                   onPercentInput={(percent) => {
@@ -823,7 +820,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   </RowFixed>
                 )}
 
-                {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && pairState !== PairState.INVALID && (
+                {/* {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && pairState !== PairState.INVALID && (
                   <>
                     <LightCard padding="0px" borderRadius="20px">
                       <RowBetween padding="1rem">
@@ -841,10 +838,10 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                       </LightCard>
                     </LightCard>
                   </>
-                )}
+                )} */}
 
                 <RowBetween>
-                  <Text bold fontSize="12px" color="secondary">
+                  <Text bold fontSize="12px" color="#FFFFFFDE">
                     {t('Slippage Tolerance')}
                   </Text>
                   <Text bold color="primary">
@@ -939,7 +936,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
           </>
         )}
       </LiquidityBody>
-      {!(addIsUnsupported || addIsWarning) ? (
+      {/* {!(addIsUnsupported || addIsWarning) ? (
         pair && !noLiquidity && pairState !== PairState.INVALID ? (
           <AutoColumn style={{ minWidth: '20rem', width: '100%', maxWidth: '400px', marginTop: '1rem' }}>
             <MinimalPositionCard showUnwrapped={oneCurrencyIsWNATIVE} pair={pair} />
@@ -947,7 +944,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
         ) : null
       ) : (
         <UnsupportedCurrencyFooter currencies={[currencies.CURRENCY_A, currencies.CURRENCY_B]} />
-      )}
+      )} */}
     </Page>
   )
 }

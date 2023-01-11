@@ -3,6 +3,7 @@ import { createRef, Ref, useContext, useEffect, useMemo, useRef, useState } from
 import styled from 'styled-components'
 import { Text, Flex, CardBody, CardFooter, Button, AddIcon, useMatchBreakpoints } from '@pancakeswap/uikit'
 import LiquidityMainBackgroundDesktop from 'components/Svg/LiquidityMainBackgroundDesktop'
+import LiquidityConnectWallet from 'components/Svg/LiquidityConnectWallet'
 import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
@@ -20,13 +21,16 @@ import Page from '../Page'
 const MainBackground = styled.div`
   position: absolute;
   z-index: 0;
-  top: -50px;
+  top: 0;
   left: 0;
   right: 0;
   bottom: 0;
   svg {
     width: 100vw;
   }
+`
+const FlexBoxContainer = styled(Flex)`
+  margin-top:81px;
 `
 const Wrapper = styled(Flex)`
   width: 100%;
@@ -54,9 +58,11 @@ const StyledCardFooter = styled(CardFooter)`
 const StyledLiquidityContainer = styled.div`
   flex-shrink: 0;
   height: fit-content;
-  position: absolute;
-  top: 56px;
-  left: 0px;
+  // position: absolute;
+  // top: 56px;
+  // left: 0px;
+  margin-top:58px;
+  z-index:9;
   padding: 0 28px;
   width: 560px;
 `
@@ -111,9 +117,9 @@ const Background = styled.div<I>`
   background: #242424;
 `
 const ConnectSub = styled.div`
-  text-align:center;
-  margin-top:25px;
-  color:#FFFFFF61;
+  text-align: center;
+  margin-top: 25px;
+  color: #ffffff61;
 `
 
 export default function Pool() {
@@ -170,7 +176,7 @@ export default function Pool() {
             <div className="flex">
               <span>Your Liquidity</span>
               <span>
-              <img src='/images/liquidity/question-icon.svg' alt='' />
+                <img src="/images/liquidity/question-icon.svg" alt="" />
               </span>
             </div>
             <ConnectSub>Connect to a wallet to view your liquidity</ConnectSub>
@@ -226,41 +232,32 @@ export default function Pool() {
 
   return (
     <Page>
-    <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <LiquidityMainBackgroundDesktop />}</MainBackground>
-    
-      <Flex 
-       width={['328px', , '100%']}
-       marginTop="100px"
-       marginBottom="100px"
-       height="100%"
-       justifyContent="center"
-       alignItems="center"
-       position="relative">
-        <Flex position="relative" flexDirection="column">
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <LiquidityMainBackgroundDesktop />}</MainBackground>
+      <FlexBoxContainer position="relative" flexDirection="column">
         <Wrapper flex="column" position="relative">
-        <SwapbackgroundWrapper>
-          <LiquidityMainBackgroundDesktop />
-        </SwapbackgroundWrapper>
+          <SwapbackgroundWrapper>
+            <LiquidityConnectWallet />
+          </SwapbackgroundWrapper>
         </Wrapper>
-          <StyledLiquidityContainer ref={divRef}>
-            <Header>
-              <div>
-                <p className="title">Liquidity</p>
-                <p className="sub_title">Add liquidity to receive LP tokens</p>
-              </div>
-              <div>
-                <span style={{marginRight:'16px'}}>
-                <img src='/images/liquidity/setting-icon.svg' alt='' />
-                </span>
-                <span>
-                  <img src='/images/liquidity/history-icon.svg' alt='' />
-                </span>
-              </div>
-            </Header>
- 
-            <Body>
-              {renderBody()}
-              {/* {account && !v2IsLoading && (
+        <StyledLiquidityContainer ref={divRef}>
+          <Header>
+            <div>
+              <p className="title">Liquidity</p>
+              <p className="sub_title">Add liquidity to receive LP tokens</p>
+            </div>
+            <div>
+              <span style={{ marginRight: '16px' }}>
+                <img src="/images/liquidity/setting-icon.svg" alt="" />
+              </span>
+              <span>
+                <img src="/images/liquidity/history-icon.svg" alt="" />
+              </span>
+            </div>
+          </Header>
+
+          <Body>
+            {renderBody()}
+            {/* {account && !v2IsLoading && (
                 <Flex flexDirection="column" alignItems="center" mt="24px">
                   <Text color="textSubtle" mb="8px">
                     {t("Don't see a pool you joined?")}
@@ -272,23 +269,22 @@ export default function Pool() {
                   </Link>
                 </Flex>
               )} */}
-            </Body>
-            <StyledCardFooter style={{ textAlign: 'center' }}>
-              {account ? (
-                <Link href="/add" passHref>
-                  <Button id="join-pool-button" width="100%" startIcon={<AddIcon color="invertedContrast" />}>
-                    {t('Add Liquidity')}
-                  </Button>
-                </Link>
-              ) : (
-                <Button id="join-pool-button" width="100%" startIcon={null}>
-                  Connect Wallet
+          </Body>
+          <StyledCardFooter style={{ textAlign: 'center' }}>
+            {account ? (
+              <Link href="/add" passHref>
+                <Button id="join-pool-button" width="100%" startIcon={<AddIcon color="invertedContrast" />}>
+                  {t('Add Liquidity')}
                 </Button>
-              )}
-            </StyledCardFooter>
-          </StyledLiquidityContainer>
-        </Flex>
-      </Flex>
+              </Link>
+            ) : (
+              <Button id="join-pool-button" width="100%" startIcon={null}>
+                Connect Wallet
+              </Button>
+            )}
+          </StyledCardFooter>
+        </StyledLiquidityContainer>
+      </FlexBoxContainer>
     </Page>
   )
 }
