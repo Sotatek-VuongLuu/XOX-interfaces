@@ -29,6 +29,7 @@ const Box = styled.div`
   padding: 17px 30px;
   border-radius: 10px;
   background: ${({theme}) => theme.colors.bgBox};
+  box-shadow: 0px 0px 16px  #00000080;
   flex: 1;
   align-items: center;
   display: flex;
@@ -38,6 +39,7 @@ const Box = styled.div`
   }
   &.wrap-table{
     align-items: flex-start;
+    max-width: calc(50% - 15px);
   }
   @media (max-width: 576px) {
     &.h-190{
@@ -48,6 +50,7 @@ const Box = styled.div`
     }
     &.wrap-table{
       padding: 18px;
+      max-width: 100%;
     }
     &.wrap-withdraw{
       padding: 18px;
