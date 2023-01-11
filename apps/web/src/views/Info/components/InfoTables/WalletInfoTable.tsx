@@ -193,7 +193,6 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const [rateXOX, setRateXOX] = useState(0)
   const contractUSD = useERC20(USD_ADDRESS[chainId])
   const contractXOX = useERC20(XOX_ADDRESS[chainId])
-  const baseToken = Object.values(allTokens).find((value: any) => value.symbol === USD_ADDRESS[chainId].symbol)
 
   const colors = ['#9072FF', '#5F35EB', '#89DDEF', '#90F0B1']
 
