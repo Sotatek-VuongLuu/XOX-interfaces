@@ -9,7 +9,7 @@ const WrapForm = styled.div`
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 10px;
   @media(max-width: 576px){
     >div{
       flex-direction: column;
@@ -89,6 +89,10 @@ const InputFill = styled.div`
     position: absolute;
     right: 10px;
   }
+  &.no-border{
+    border: none;
+    padding: 0;
+  }
   img{
     max-width: 20px !important;
     margin-right: 10px;
@@ -146,7 +150,7 @@ export default function WidthdrawForm() {
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Interest</TextStyle>
         <BoxRight> 
-          <InputFill>
+          <InputFill className='no-border'>
             <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt='icon' /> USDC
           </InputFill>
         </BoxRight>
