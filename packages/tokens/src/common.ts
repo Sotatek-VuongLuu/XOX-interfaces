@@ -1,15 +1,15 @@
 import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 
-// export const XOX_MAINNET = new ERC20Token(
-//   ChainId.BSC,
-//   '',
-//   18,
-//   'XOX',
-//   'XOX',
-//   'http://localhost:3001/swap?chainId=56',
-// )
+export const XOX_BSC_MAINNET = new ERC20Token(
+  ChainId.BSC,
+  '0x1D5EB09cb8a70213E52DD1dc084b9E22Fc4dA4dd',
+  18,
+  'XOX',
+  'XOX',
+  'http://localhost:3001/swap?chainId=56',
+)
 
-export const XOX_TESTNET = new ERC20Token(
+export const XOX_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
   '0x1D5EB09cb8a70213E52DD1dc084b9E22Fc4dA4dd',
   18,
@@ -17,6 +17,32 @@ export const XOX_TESTNET = new ERC20Token(
   'XOX',
   'http://localhost:3001/swap?chainId=97',
 )
+
+export const XOX_MAINNET = new ERC20Token(
+  ChainId.ETHEREUM,
+  '0x0e3FA7D925eeE7C361aBafFba280c0b376644327',
+  18,
+  'XOX',
+  'XOX',
+  'http://localhost:3001/swap?chainId=1',
+)
+
+export const XOX_GOERLI = new ERC20Token(
+  ChainId.GOERLI,
+  '0x0e3FA7D925eeE7C361aBafFba280c0b376644327',
+  18,
+  'XOX',
+  'XOX',
+  'http://localhost:3001/swap?chainId=5',
+)
+
+export const XOX: Record<ChainId, ERC20Token> = {
+  [ChainId.ETHEREUM]: XOX_MAINNET,
+  [ChainId.RINKEBY]: XOX_GOERLI,
+  [ChainId.GOERLI]: XOX_GOERLI,
+  [ChainId.BSC]: XOX_BSC_MAINNET,
+  [ChainId.BSC_TESTNET]: XOX_BSC_TESTNET,
+}
 
 export const CAKE_MAINNET = new ERC20Token(
   ChainId.BSC,
@@ -175,7 +201,6 @@ export const UNI_GOERLI = new ERC20Token(ChainId.GOERLI, '0x1bC4803310B723B4f0A2
 export const SUSHI_GOERLI = new ERC20Token(ChainId.GOERLI, '0x28362Cd5D11a8ce0371B4768Cd8EDF8a943CC2A9', 18, 'SUSHI')
 export const LINK_GOERLI = new ERC20Token(ChainId.GOERLI, '0xCfc1B83B17084e744423Db6314B7e811729c6514', 18, 'LINK')
 export const SHIB_GOERLI = new ERC20Token(ChainId.GOERLI, '0x5f933e0F9D17A4B28F229a2882e2E18dcef266c7', 18, 'SHIB')
-export const XOX_GOERLI = new ERC20Token(ChainId.GOERLI, '0x0e3FA7D925eeE7C361aBafFba280c0b376644327', 18, 'XOX')
 
 export const BTCB_BSC = new ERC20Token(
   ChainId.BSC,
@@ -241,12 +266,6 @@ export const ADA_BSC_TESTNET = new ERC20Token(
   '0x624bcfBb991cCef8e790E58eD973D8e24cc66eCc',
   18,
   'ADA',
-)
-export const XOX_BSC_TESTNET = new ERC20Token(
-  ChainId.BSC_TESTNET,
-  '0x1D5EB09cb8a70213E52DD1dc084b9E22Fc4dA4dd',
-  18,
-  'XOX',
 )
 // export const XOX_BSC_TESTNET = new ERC20Token(ChainId.BSC_TESTNET, '0x798bb5B1CD7ed74654EBfD5D58a24d3D9Cc67847', 18, 'XOX')
 
