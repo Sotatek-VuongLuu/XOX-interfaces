@@ -1,6 +1,17 @@
-import React from 'react';
+/* eslint-disable @typescript-eslint/no-shadow */
+import React, {useState} from 'react';
 import styled from 'styled-components'
-import { Flex, Button, Text, Select, Dropdown } from '@pancakeswap/uikit'
+import { Flex, Button, Text, Select, Dropdown , useToast } from '@pancakeswap/uikit'
+import { NetworkSwitcher } from 'components/NetworkSwitcher'
+import { useWeb3React } from '@pancakeswap/wagmi'
+import { ChainId } from '@pancakeswap/sdk'
+import { useTreasuryXOX } from 'hooks/useContract'
+import { getDecimalAmount } from '@pancakeswap/utils/formatBalance'
+import BigNumber from "bignumber.js";
+import { calculateGasMargin } from 'utils';
+import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
+import { TransactionResponse } from '@ethersproject/providers'
+import { addTransaction } from 'state/transactions/actions';
 
 const WrapForm = styled.div`
   padding: 60px 0;
@@ -30,6 +41,16 @@ const TextStyle = styled(Text)`
   &.color-white{
     color: rgba(255, 255, 255, 0.87);
   }
+  &.error{
+    color: #F44336;
+    font-weight: 400;
+    padding-left: 120px;
+  }
+  @media(max-width: 576px){
+    &.error{
+      padding-left: 0;
+    }
+  }
 `
 
 const BoxRight = styled.div`
@@ -56,6 +77,23 @@ const BoxRight = styled.div`
       height: 44px;
       >div:nth-child(1){
         height: 44px;
+        margin: 0;
+      }
+      >div>div{
+        width: 100%;
+        justify-content: flex-start;
+        >div{
+          padding-right: 50px;
+          width: 100%;
+          +div{
+            max-width: 330px;
+            padding-right: 0;
+          }
+          svg{
+            position: absolute;
+            right: 0;
+          }
+        }
       }
     }
   }
@@ -121,10 +159,42 @@ const ButtonRight = styled(Button)`
   top: 9px;
 `
 
-export default function WidthdrawForm() {
+const WidthdrawForm = ({priceAvailable} : {priceAvailable?: number | string}) => {
+  const { account, chainId } = useWeb3React();
+  const contractTreasuryXOX = useTreasuryXOX();
+  const isBUSD = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET);
+  const [keyInput, setKeyInput] = useState(Math.random());
+  const [amount, setAmount] = useState<any>();
+  const [error, setError] = useState<any>();
+  const {callWithGasPrice} = useCallWithGasPrice();
+  const { toastError } = useToast();
+  const symbol = 'BUSD';
 
-  const handleChangeNetwork = () => {
-    console.log("handle change network");
+  const handleWidthdraw = async() => {
+    const fullDecimalWithdrawAmount = getDecimalAmount(new BigNumber(amount), 18);
+    const estimatedGas = await contractTreasuryXOX.estimateGas.claimFarmingReward(fullDecimalWithdrawAmount.toString()).catch((err) => {
+      console.log(err);
+    });
+
+    return callWithGasPrice(
+      contractTreasuryXOX,
+      'claimFarmingReward',
+      [fullDecimalWithdrawAmount.toString()],
+      {
+        gasLimit: calculateGasMargin(estimatedGas),
+      },
+    ).then((response: any) => {
+      addTransaction(response);
+    }).catch((error: any) => {
+      console.error('Failed to approve token', error)
+      if (error?.code === 'ACTION_REJECTED') {
+        return
+      }
+      if (error?.code !== 4001) {
+        toastError('Error', error.message);
+      }
+      // throw error
+    })
   }
 
   return (
@@ -132,26 +202,15 @@ export default function WidthdrawForm() {
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Network</TextStyle>
         <BoxRight className='wrap-select'>
-          <Dropdown position="bottom" target={
-            <InputFill className='dropdown'>
-                <img src="/images/chains/1.png" alt="icon" />  Rinkey
-                <span className='icon-dropdown'>
-                  <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M10.8542 1.625L6.10425 6.375L1.35425 1.625" stroke="#8E8E8E" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-              </span>
-            </InputFill>
-          }>
-            <MenuItem><img src="/images/chains/56.png" alt="icon" />BSC Testnet</MenuItem>
-            <MenuItem><img src="/images/chains/1.png" alt="icon" />Rinkey</MenuItem>
-          </Dropdown>
+          <NetworkSwitcher />
         </BoxRight>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Interest</TextStyle>
         <BoxRight> 
           <InputFill className='no-border'>
-            <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt='icon' /> USDC
+            {isBUSD ? <img src="/images/1/tokens/BUSD.png" alt='icon' /> : <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt='icon' />}
+            {isBUSD ? 'BUSD' : 'USDC'}
           </InputFill>
         </BoxRight>
       </Flex>
@@ -159,20 +218,35 @@ export default function WidthdrawForm() {
         <TextStyle>Available</TextStyle>
         <BoxRight>
           <Flex alignItems="center" height={44}>
-            <TextStyle className='color-white'>100.98 USDC</TextStyle>
+            <TextStyle className='color-white'>{priceAvailable} {isBUSD ? 'BUSD' : 'USDC'}</TextStyle>
           </Flex>
         </BoxRight>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Amount</TextStyle>
         <BoxRight>
-          <input placeholder='0.00' />
-          <ButtonRight width={43} height={27} style={{fontSize: 12}}>All</ButtonRight>
+          <input key={keyInput} defaultValue={amount} placeholder='0.00' onChange={(e:any) => {
+            setAmount(e?.target?.value);
+            if(parseFloat(e?.target?.value) > priceAvailable){
+              setError('Insufficient balance');
+            }else{
+              setError('');
+            }
+          }} />
+          <ButtonRight width={43} height={27} style={{fontSize: 12}} onClick={() => {
+            setAmount(priceAvailable);
+            setKeyInput(Math.random());
+            setError('')
+          }}>All</ButtonRight>
         </BoxRight>
       </Flex>
+      {
+        error && <TextStyle className='error'>{error}</TextStyle>
+      }
       <Flex justifyContent="end">
-        <Button width={140} height={43}>Withdraw</Button>
+        <Button width={140} height={43} disabled={error || !amount} onClick={handleWidthdraw}>Withdraw</Button>
       </Flex>
     </WrapForm>
   )
 }
+export default WidthdrawForm

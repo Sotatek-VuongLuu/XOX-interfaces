@@ -1,7 +1,11 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import { Flex, Button, Text } from '@pancakeswap/uikit'
 import { useAllTokens } from 'hooks/Tokens'
 import styled from 'styled-components'
+import { useTreasuryXOX } from 'hooks/useContract'
+import { formatUnits } from '@ethersproject/units'
+import { USD_DECIMALS } from 'config/constants/exchange'
+import { useWeb3React } from '@pancakeswap/wagmi'
 import InfoNav from "../Info/components/InfoNav"
 import HistoryTable, {TYPE_HISTORY} from "./historyTable"
 import TransactionTable from "./transactionTable"
@@ -102,8 +106,43 @@ const TextStyle = styled(Text)`
 `
 
 export default function StableCoin() {
+  const { account, chainId } = useWeb3React()
   const [widthDraw, setWidthDraw] = useState(TYPE.default); 
   const allTokens = useAllTokens();
+  const contractTreasuryXOX = useTreasuryXOX();
+  const [currentXOX, setCurrentXOX] = useState<number | string>(0);
+  const [currentReward, setCurrentReward] = useState<number | string>(0);
+
+  // eslint-disable-next-line consistent-return
+  const handleCheckPendingRewardAll = async (accountId: string) => {
+    try {
+      const [infosUser, res2] = await Promise.all([
+        contractTreasuryXOX.userInfo(account),
+        contractTreasuryXOX.pendingReward(accountId),
+      ]);
+      const txPendingReward:any = res2;
+      const dataParse: any[] = infosUser.map((item) => {
+        return formatUnits(item, USD_DECIMALS[chainId])
+      })
+      const amountPoint = Number(dataParse[1]);
+      const rewardPoint = Number(dataParse[2]);
+      setCurrentXOX(amountPoint);
+      if(rewardPoint === 0 || rewardPoint){
+        const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])) + rewardPoint;
+        setCurrentReward(numberReward?.toFixed(6));
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>>>`, error)
+    }
+  }
+
+  useEffect(() => {
+    if(account){
+      handleCheckPendingRewardAll(account);
+    }
+  }, [account]);
+
   return(
     <>
       <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
@@ -124,7 +163,7 @@ export default function StableCoin() {
             </Flex>
             <Row style={{marginTop: 25}}>
               <Box className='wrap-withdraw'>
-                <WidthdrawForm />
+                <WidthdrawForm priceAvailable={currentReward} />
               </Box>
             </Row>
             </>
@@ -161,7 +200,7 @@ export default function StableCoin() {
                   <Flex justifyContent="space-between" alignItems="center" width="100%">
                     <WrapText>
                       <p>Your current XOXS</p>
-                      <p className='number'>23</p>
+                      <p className='number'>{currentXOX}</p>
                       <Button height={37} style={{fontSize: 14}} onClick={() => setWidthDraw(TYPE.history)}>View your history</Button>
                     </WrapText>
                     <img src='/images/1/tokens/XOX.png' alt='icon' />
@@ -187,7 +226,7 @@ export default function StableCoin() {
                   <Flex justifyContent="space-between" alignItems="center" width="100%">
                     <WrapText>
                       <p>Your current reward</p>
-                      <p className='number'>23</p>
+                      <p className='number'>{currentReward}</p>
                       <Button height={37} style={{fontSize: 14}} onClick={() => setWidthDraw(TYPE.withdraw)}>Withdraw reward</Button>
                     </WrapText>
                     <img src='/images/1/tokens/XOX.png' alt='icon' />
