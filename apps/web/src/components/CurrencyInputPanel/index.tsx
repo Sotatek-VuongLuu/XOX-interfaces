@@ -315,7 +315,8 @@ export default function CurrencyInputPanel({
                       {percent}%
                     </PercentButton>
                   ))}
-                <PercentButton
+                {showMaxButton && (
+                  <PercentButton
                     onClick={(e) => {
                       e.stopPropagation()
                       e.preventDefault()
@@ -328,6 +329,7 @@ export default function CurrencyInputPanel({
                   >
                     {t('Max')}
                   </PercentButton>
+                )}
               </Flex>
             )}
           </InputRow>
