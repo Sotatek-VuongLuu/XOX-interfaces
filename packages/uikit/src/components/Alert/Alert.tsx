@@ -65,6 +65,9 @@ const CloseHandler = styled.div`
   right: 8px;
   position: absolute;
   top: 8px;
+  :hover{
+    background:unset;
+  }
 `;
 
 const StyledAlert = styled(Flex)`
