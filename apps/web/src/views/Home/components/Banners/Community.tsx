@@ -139,7 +139,7 @@ const Wrapper = styled.div`
 const CommunityItem = ({ item }: Iprops) => {
   const { width } = useWindowSize()
   return (
-    <div className="item_container">
+    <div className="item_container" data-aos="fade-up">
       <div className="wrapper_mobile">
         <div className="icon-container_moblie">
           <div className="icon-container">
@@ -167,8 +167,12 @@ const CommunityItem = ({ item }: Iprops) => {
 const Community = () => {
   return (
     <Wrapper>
-      <div className="title">Meet the worldwide community.</div>
-      <p className="decoration">We are supported by many people. Why don’t you join them?</p>
+      <div className="title" data-aos="fade-up">
+        Meet the worldwide community.
+      </div>
+      <p className="decoration" data-aos="fade-up" data-aos-duration="2300">
+        We are supported by many people. Why don’t you join them?
+      </p>
       <div className="main_container">
         <div className="main">
           {listCommunity.map((item: IItemListCommunity) => {

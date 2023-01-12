@@ -15,6 +15,7 @@ interface PageSectionProps extends BackgroundColorProps {
   innerProps?: BoxProps
   clipFill?: ClipFill
   dividerFill?: DividerFill
+  innerClass?: string
 }
 
 interface BackgroundColorProps extends FlexProps {
@@ -58,6 +59,7 @@ const PageSection: React.FC<React.PropsWithChildren<PageSectionProps>> = ({
   dividerFill,
   containerProps,
   innerProps,
+  innerClass,
   ...props
 }) => {
   const padding = useMemo(() => {
@@ -92,7 +94,9 @@ const PageSection: React.FC<React.PropsWithChildren<PageSectionProps>> = ({
         />
       )}
       <BackgroundColor index={index} padding={padding} {...props}>
-        <ChildrenWrapper {...innerProps}>{children}</ChildrenWrapper>
+        <ChildrenWrapper {...innerProps} className={innerClass}>
+          {children}
+        </ChildrenWrapper>
       </BackgroundColor>
       {hasCurvedDivider && dividerPosition === 'bottom' && (
         <CurvedDivider
