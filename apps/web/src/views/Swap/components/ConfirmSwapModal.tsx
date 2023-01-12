@@ -46,7 +46,7 @@ const SwapTransactionErrorContent = ({ onDismiss, message, openSettingModal }) =
       }
     />
   ) : (
-    <TransactionSwapErrorContent message='Transaction rejected.' onDismiss={onDismiss} />
+    <TransactionSwapErrorContent message={message} onDismiss={onDismiss} />
   )
 }
 

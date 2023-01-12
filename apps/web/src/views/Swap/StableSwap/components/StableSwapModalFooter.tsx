@@ -59,7 +59,7 @@ export default function StableSwapModalFooter({
 
         <RowBetween>
           <RowFixed>
-            <Text fontSize="14px">
+            <Text fontSize="16px">
               {trade.tradeType === TradeType.EXACT_INPUT ? t('Minimum received') : t('Maximum sold')}
             </Text>
             <QuestionHelper
@@ -70,12 +70,12 @@ export default function StableSwapModalFooter({
             />
           </RowFixed>
           <RowFixed>
-            <Text fontSize="14px">
+            <Text fontSize="16px">
               {trade.tradeType === TradeType.EXACT_INPUT
                 ? slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4) ?? '-'
                 : slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4) ?? '-'}
             </Text>
-            <Text fontSize="14px" marginLeft="4px">
+            <Text fontSize="16px" marginLeft="4px">
               {trade.tradeType === TradeType.EXACT_INPUT
                 ? trade.outputAmount.currency.symbol
                 : trade.inputAmount.currency.symbol}

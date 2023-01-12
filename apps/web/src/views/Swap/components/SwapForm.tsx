@@ -269,7 +269,7 @@ export default function SwapForm() {
           <CurrencyInputPanel
             label={independentField === Field.OUTPUT && !showWrap && trade ? t('From (estimated)') : t('From')}
             value={formattedAmounts[Field.INPUT]}
-            showMaxButton={!atMaxAmountInput}
+            showMaxButton={!false}
             showQuickInputButton
             currency={currencies[Field.INPUT]}
             onUserInput={handleTypeInput}
