@@ -53,7 +53,7 @@ export default function SwapModalFooter({
     <>
       <SwapModalFooterContainer>
         <RowBetween align="center">
-          <Text fontSize="16px">{t('Price')}</Text>
+          <Text fontSize="16px" color="textSubtle">{t('Price')}</Text>
           <Text
             fontSize="16px"
             style={{
@@ -73,7 +73,7 @@ export default function SwapModalFooter({
 
         <RowBetween>
           <RowFixed>
-            <Text fontSize="16px">
+            <Text fontSize="16px" color="textSubtle">
               {trade.tradeType === TradeType.EXACT_INPUT ? t('Minimum received') : t('Maximum sold')}
             </Text>
             <QuestionHelper
@@ -99,7 +99,7 @@ export default function SwapModalFooter({
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize="16px">{t('Price Impact')}</Text>
+            <Text fontSize="16px" color="textSubtle">{t('Price Impact')}</Text>
             <QuestionHelper
               text={t('The difference between the market price and your price due to trade size.')}
               ml="4px"
@@ -110,7 +110,7 @@ export default function SwapModalFooter({
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize="16px">{t('Liquidity Provider Fee')}</Text>
+            <Text fontSize="16px" color="textSubtle">{t('Liquidity Provider Fee')}</Text>
             <QuestionHelper
               text={
                 <>
