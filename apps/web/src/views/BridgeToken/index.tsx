@@ -35,6 +35,7 @@ import { useBridgeTokenContract } from '../../hooks/useContract'
 import { getBridgeTokenAddress } from 'utils/addressHelpers'
 import ModalBase from '../Referral/components/Modal/ModalBase'
 import { parseUnits } from '@ethersproject/units'
+import ModalTransactionHistory from './ModalTransactionHistory'
 
 const ButtonConnect = styled.button`
   background: ${({ theme }) => theme.colors.secondary};
@@ -354,7 +355,7 @@ export default function BridgeToken() {
     await approveCallback()
   }, [approveCallback])
 
-  const [onPresentTransactionsModal] = useModal(<TransactionsModal />)
+  const [onHistoryTransactionsModal] = useModal(<ModalTransactionHistory />)
 
   // handle click button Swap, approve or swap
   const handleSwapButtonClick = () => {
@@ -521,7 +522,7 @@ export default function BridgeToken() {
                   <StyledHeading1>{t('Bridge')}</StyledHeading1>
                   <p>{t('Trade tokens in an instant')} </p>
                 </div>
-                <Button onClick={onPresentTransactionsModal}>
+                <Button onClick={onHistoryTransactionsModal}>
                   <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                     <path
                       d="M2.90918 3.36365V7H6.54556"

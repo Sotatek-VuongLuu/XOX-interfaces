@@ -1,23 +1,9 @@
-
-import Image from "next/image";
 import { ChainId } from '@pancakeswap/sdk'
-import styled from "styled-components";
-import { isMobile } from "react-device-detect";
-import { useActiveChainId, useLocalNetworkChain } from 'hooks/useActiveChainId'
-import {
-  ModalContainer,
-  ModalHeader,
-  ModalTitle,
-  ModalBackButton,
-  ModalCloseButton,
-  ModalBody,
-  InjectedModalProps,
-  Heading,
-  Button,
-  useMatchBreakpoints,
-  MODAL_SWIPE_TO_CLOSE_VELOCITY,
-} from '@pancakeswap/uikit'
-import { NETWORK_ICON, NETWORK_LABEL } from "./networks";
+import styled from 'styled-components'
+import { isMobile } from 'react-device-detect'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+import { ModalContainer, ModalHeader, ModalCloseButton } from '@pancakeswap/uikit'
+import { NETWORK_ICON, NETWORK_LABEL } from './networks'
 
 const StyledModalContainer = styled(ModalContainer)`
   width: 448px;
@@ -84,7 +70,7 @@ const ListNetWork = styled.div`
   margin-top: 20px;
   flex-direction: column;
   button {
-    border: 1px solid ${({theme}) => theme.colors.hr};
+    border: 1px solid ${({ theme }) => theme.colors.hr};
     box-sizing: border-box;
     border-radius: 10px;
     display: flex;
@@ -93,46 +79,46 @@ const ListNetWork = styled.div`
     width: 100%;
     background: none;
     cursor: pointer;
-    &:hover{
+    &:hover {
       background-color: #1d1d1d;
     }
   }
   button.active {
-    border-color: rgba(0,0,0,0);
-    background: ${({theme}) => theme.colors.gradientViolet};
+    border-color: rgba(0, 0, 0, 0);
+    background: ${({ theme }) => theme.colors.gradientViolet};
     cursor: auto;
     &:hover {
-      background: ${({theme}) => theme.colors.gradientViolet};
+      background: ${({ theme }) => theme.colors.gradientViolet};
     }
   }
   .title-network {
     font-style: normal;
     font-weight: 400;
-    font-size: ${isMobile ? "14px" : "18px"};
-    padding-left: ${isMobile ? "5px" : "12px"} !important;
-    color: ${({theme}) => theme.colors.textSubTitle};
+    font-size: ${isMobile ? '14px' : '18px'};
+    padding-left: ${isMobile ? '5px' : '12px'} !important;
+    color: ${({ theme }) => theme.colors.textSubTitle};
   }
   img {
     border-radius: 50%;
   }
   .image-network {
-    margin-right: ${isMobile ? "5px" : "12px"} !important;
+    margin-right: ${isMobile ? '5px' : '12px'} !important;
   }
-  .gap-4{
+  .gap-4 {
     gap: 16px;
   }
-`;
+`
 
 export default function SwitchNetworkModal(props: any): JSX.Element {
-  const { switchNetwork, currentChainId, onDismiss } = props;
-  const { chainId } = useActiveChainId();
-  if (!chainId) return null;
+  const { switchNetwork, currentChainId, onDismiss } = props
+  const { chainId } = useActiveChainId()
+  if (!chainId) return null
   const arrNetwork = [ChainId.GOERLI, ChainId.BSC_TESTNET]
 
   const handleSwitchNetwork = (key) => {
-    switchNetwork(key);
-    onDismiss();
-  };
+    switchNetwork(key)
+    onDismiss()
+  }
 
   return (
     <StyledModalContainer>
@@ -142,7 +128,7 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
       </StyledModalHeader>
       <ListNetWork
         className={`${
-          isMobile ? "gap-4" : "gap-6"
+          isMobile ? 'gap-4' : 'gap-6'
         } grid grid-flow-row-dense grid-cols-1 overflow-y-auto md:grid-cols-1 magin`}
       >
         {arrNetwork.map((key: ChainId, i: number) => {
@@ -151,13 +137,10 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
             <button
               onClick={() => {
                 // eslint-disable-next-line no-unused-expressions
-                currentChainId !== Number(key) &&
-                  handleSwitchNetwork(
-                    currentChainId !== chainId ? currentChainId : key
-                  );
+                currentChainId !== Number(key) && handleSwitchNetwork(currentChainId !== chainId ? currentChainId : key)
               }}
-              style={isMobile ? { height: "60px" } : { height: "60px" }}
-              className={`${currentChainId === Number(key) && "active"}`}
+              style={isMobile ? { height: '60px' } : { height: '60px' }}
+              className={`${currentChainId === Number(key) && 'active'}`}
               // eslint-disable-next-line react/no-array-index-key
               key={i}
             >
@@ -167,14 +150,14 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
                   src={NETWORK_ICON[key]}
                   alt="Network Icon"
                   className=""
-                  width={isMobile ? "32px" : "36px"}
-                  height={isMobile ? "32px" : "36px"}
+                  width={isMobile ? '32px' : '36px'}
+                  height={isMobile ? '32px' : '36px'}
                 />
               </div>
             </button>
-          );
+          )
         })}
       </ListNetWork>
     </StyledModalContainer>
-  );
+  )
 }
