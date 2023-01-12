@@ -2,22 +2,18 @@
 /* eslint-disable import/order */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useContext, useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect } from 'react'
 import { Currency } from '@pancakeswap/sdk'
-import { Flex, BottomDrawer, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
-import { AppBody } from 'components/App'
-
+import { Flex, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
 import { useCurrency } from '../../hooks/Tokens'
 import { Field } from '../../state/swap/actions'
-import { useSwapState, useSingleTokenSwapInfo } from '../../state/swap/hooks'
+import { useSwapState } from '../../state/swap/hooks'
 import Page from '../Page'
 import { useTranslation } from '@pancakeswap/localization'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useSwitchNetwork } from 'hooks/useSwitchNetwork'
-
 import { StyledInputCurrencyWrapper, StyledSwapContainer, StyledHeader, StyledHeading1 } from './styles'
 import AmountInput from './AmountInput'
-import { useActiveChainId, useLocalNetworkChain } from 'hooks/useActiveChainId'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useAccount } from 'wagmi'
 import { ChainId } from '@pancakeswap/sdk'
@@ -31,10 +27,11 @@ import TransactionsModal from 'components/App/Transactions/TransactionsModal'
 import { XOX_ADDRESS } from 'config/constants/exchange'
 import { XOX } from '@pancakeswap/tokens'
 import styled from 'styled-components'
-import { useBridgeTokenContract } from '../../hooks/useContract'
-import { getBridgeTokenAddress } from 'utils/addressHelpers'
-import ModalBase from '../Referral/components/Modal/ModalBase'
 import { parseUnits } from '@ethersproject/units'
+import { getBridgeTokenAddress } from 'utils/addressHelpers'
+import { useBridgeTokenContract } from '../../hooks/useContract'
+import ModalBase from '../Referral/components/Modal/ModalBase'
+// eslint-disable-next-line import/no-cycle
 import ModalTransactionHistory from './ModalTransactionHistory'
 
 const ButtonConnect = styled.button`
@@ -354,6 +351,8 @@ export default function BridgeToken() {
   const handleApprove = useCallback(async () => {
     await approveCallback()
   }, [approveCallback])
+
+  const [onPresentTransactionsModal] = useModal(<TransactionsModal />)
 
   const [onHistoryTransactionsModal] = useModal(<ModalTransactionHistory />)
 

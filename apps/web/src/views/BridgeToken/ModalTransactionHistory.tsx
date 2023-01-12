@@ -1,6 +1,5 @@
-import { Avatar, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
-import { Modal, ModalBody, ModalContainer, ModalHeader } from '@pancakeswap/uikit'
-import { AddToWalletTextOptions } from 'components/AddToWallet/AddToWalletButton'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { ModalContainer, ModalHeader, InjectedModalProps } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
@@ -9,7 +8,17 @@ import { NETWORK_LABEL, NETWORK_LINK } from './networks'
 // eslint-disable-next-line import/no-cycle
 import { getChainIdToByChainId } from '.'
 
-const StyledModalContainer = styled(ModalContainer)``
+const StyledModalContainer = styled(ModalContainer)`
+  position: relative;
+  min-width: 337px;
+
+  .x-close-icon {
+    position: absolute;
+    right: 15px;
+    top: 15px;
+    cursor: pointer;
+  }
+`
 
 const StyledModalHeader = styled(ModalHeader)`
   display: flex;
@@ -27,6 +36,7 @@ const Content = styled.div`
   padding: 0 24px;
 `
 
+const NoData = styled.div``
 const TxHash = styled.a``
 
 export const shortenAddress = (address = '', start = 8, chars = 4) => {
@@ -37,7 +47,7 @@ export const linkTransaction = (chainId) => {
   return `${NETWORK_LINK[chainId]}/tx/`
 }
 
-const ModalTransactionHistory = (): JSX.Element => {
+const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss }) => {
   const { account, chainId } = useActiveWeb3React()
   const [historyData, setHistoryData] = useState<Array<any>>([])
   const [tableOptions, _] = useState({
@@ -54,8 +64,8 @@ const ModalTransactionHistory = (): JSX.Element => {
         params: {
           limit: tableOptions.pageSize,
           page: tableOptions.current,
-          address: '0xD64dBC451395dB1190d9153BF1F3BDC2e00D4Bfb',
-          chainId: 97,
+          address: account,
+          chainId,
         },
       })
 
@@ -81,8 +91,6 @@ const ModalTransactionHistory = (): JSX.Element => {
     }
   }
 
-  console.log(`historyData`, historyData)
-
   useEffect(() => {
     if (!chainId || !account) return
     handleGetBridgeHistory()
@@ -92,48 +100,53 @@ const ModalTransactionHistory = (): JSX.Element => {
   return (
     <StyledModalContainer>
       <StyledModalHeader>Bridge Token History</StyledModalHeader>
-
+      <img
+        src="/images/close-one.svg"
+        alt="close-one"
+        className="x-close-icon"
+        onClick={onDismiss}
+        aria-hidden="true"
+      />
       <Content>
-        <TableContainer component={Paper} sx={{ height: '165px', background: '#242424', boxShadow: 'none' }}>
-          <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
-              <TableRow
-                sx={{
-                  '& td, & th': {
-                    borderBottom: '1px solid #444444',
-                    fontWeight: 700,
-                    fontSize: 14,
-                    color: ' rgba(255, 255, 255, 0.6)',
-                    padding: ' 0px 8px 8px 0px',
-                  },
-                }}
-              >
-                <TableCell style={{ minWidth: '50px' }}>No</TableCell>
-                <TableCell align="left" style={{ minWidth: '150px' }}>
-                  Input Transaction
-                </TableCell>
-                <TableCell align="left" style={{ minWidth: '150px' }}>
-                  Input Amount
-                </TableCell>
-                <TableCell style={{ minWidth: '150px' }} align="left">
-                  Output Transaction
-                </TableCell>
-                <TableCell style={{ minWidth: '150px' }} align="left">
-                  Output Amount
-                </TableCell>
-                <TableCell style={{ minWidth: '150px' }} align="left">
-                  Type
-                </TableCell>
-                <TableCell style={{ minWidth: '150px' }} align="left">
-                  Status
-                </TableCell>
-                <TableCell style={{ minWidth: '150px' }} align="left" />
-              </TableRow>
-            </TableHead>
-            <TableBody>
-              {historyData &&
-                historyData.length !== 0 &&
-                historyData.map((row, index) => {
+        {historyData && historyData.length !== 0 ? (
+          <TableContainer component={Paper} sx={{ height: '165px', background: '#242424', boxShadow: 'none' }}>
+            <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
+                <TableRow
+                  sx={{
+                    '& td, & th': {
+                      borderBottom: '1px solid #444444',
+                      fontWeight: 700,
+                      fontSize: 14,
+                      color: ' rgba(255, 255, 255, 0.6)',
+                      padding: ' 0px 8px 8px 0px',
+                    },
+                  }}
+                >
+                  <TableCell style={{ minWidth: '50px' }}>No</TableCell>
+                  <TableCell align="left" style={{ minWidth: '150px' }}>
+                    Input Transaction
+                  </TableCell>
+                  <TableCell align="left" style={{ minWidth: '150px' }}>
+                    Input Amount
+                  </TableCell>
+                  <TableCell style={{ minWidth: '150px' }} align="left">
+                    Output Transaction
+                  </TableCell>
+                  <TableCell style={{ minWidth: '150px' }} align="left">
+                    Output Amount
+                  </TableCell>
+                  <TableCell style={{ minWidth: '150px' }} align="left">
+                    Type
+                  </TableCell>
+                  <TableCell style={{ minWidth: '150px' }} align="left">
+                    Status
+                  </TableCell>
+                  <TableCell style={{ minWidth: '150px' }} align="left" />
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {historyData.map((row, index) => {
                   return (
                     <TableRow
                       // eslint-disable-next-line react/no-array-index-key
@@ -180,9 +193,27 @@ const ModalTransactionHistory = (): JSX.Element => {
                     </TableRow>
                   )
                 })}
-            </TableBody>
-          </Table>
-        </TableContainer>
+              </TableBody>
+            </Table>
+          </TableContainer>
+        ) : (
+          <NoData>
+            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+              <img src="/images/nodata_bridge.svg" alt="nodata_bridge" />
+            </div>
+            <p
+              style={{
+                textAlign: 'center',
+                fontWeight: 400,
+                fontSize: '14px',
+                color: 'rgba(255, 255, 255, 0.6)',
+                marginTop: '16px',
+              }}
+            >
+              No Data
+            </p>
+          </NoData>
+        )}
       </Content>
     </StyledModalContainer>
   )
