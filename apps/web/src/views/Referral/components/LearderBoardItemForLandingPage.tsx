@@ -6,7 +6,6 @@ import { useCallback } from 'react'
 import styled from 'styled-components'
 import { shortenAddress } from 'utils/shortenAddress'
 // eslint-disable-next-line import/no-cycle
-import { IItemLeaderBoard } from './MainInfoForLandingPage'
 
 export interface IMappingFormat {
   address: string
