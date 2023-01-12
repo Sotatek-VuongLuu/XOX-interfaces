@@ -88,7 +88,11 @@ export const ModalBackButton: React.FC<React.PropsWithChildren<{ onBack: ModalPr
   );
 };
 
-export const ModalContainer = styled(MotionBox)<{ $minWidth: string }>`
+interface IMotionBox {
+  $minWidth?: string;
+}
+
+export const ModalContainer = styled(MotionBox)<IMotionBox>`
   overflow: hidden;
   border: none;
   width: calc(100% - 48px);
