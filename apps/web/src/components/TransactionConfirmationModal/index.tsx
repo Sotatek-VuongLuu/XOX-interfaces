@@ -169,7 +169,8 @@ export function TransactionErrorContent({
   return (
     <Wrapper>
       <AutoColumn justify="center">
-        <ErrorIcon color="failure" width="64px" />
+        {/* <ErrorIcon color="failure" width="64px" /> */}
+        <img alt='' src='/images/swap/icon-swap-error.svg' style={{padding:'10px 0'}} /> 
         <Text color="failure" style={{ textAlign: 'center', width: '85%', wordBreak: 'break-word' }}>
           {message}
         </Text>
