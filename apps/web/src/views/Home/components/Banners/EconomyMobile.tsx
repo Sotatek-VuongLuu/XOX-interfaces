@@ -79,7 +79,7 @@ const EconomyMobile = () => {
           global adoption for a better future.
         </p>
       </div>
-      <div className="chain_container">
+      <div className="chain_container" data-aos="fade-right">
         <div className="main">
           <div className="couple mt">
             <img src="/images/ethers_chain.svg" alt="eth_mobile" className="eth" />

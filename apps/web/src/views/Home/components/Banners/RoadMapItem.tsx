@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import 'aos/dist/aos.css'
 // eslint-disable-next-line import/no-cycle
 import { IRoadMapItem } from './RoadMap'
 
