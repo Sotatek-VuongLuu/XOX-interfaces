@@ -25,9 +25,9 @@ export const INFO_NR_CLIENT = 'https://dev-graph-node.xoxnet.io/subgraphs/name/s
 export const INFO_NR_CLIENT_XOX_BSC = ''
 export const INFO_NR_CLIENT_XOX_BSC_TESTNET = 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2'
 
-export const INFO_CLIENT_ETH = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.20'
+export const INFO_CLIENT_ETH = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.21/'
 export const INFO_CLIENT_XOX_ETH = ''
-export const INFO_CLIENT_XOX_GOERLI = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.20'
+export const INFO_CLIENT_XOX_GOERLI = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.21/'
 export const INFO_CLIENT_UNI = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
 
 export const BLOCKS_CLIENT = 'https://api.thegraph.com/subgraphs/name/pancakeswap/blocks'
@@ -61,5 +61,5 @@ export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
   [ChainId.BSC]: '',
   [ChainId.ETHEREUM]: '',
   [ChainId.BSC_TESTNET]: 'https://dev-graph-node.xoxnet.io/subgraphs/name/subgraph2',
-  [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.20',
+  [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.21/',
 }
