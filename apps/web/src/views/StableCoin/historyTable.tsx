@@ -15,6 +15,7 @@ import { getBlockExploreLink } from 'utils'
 import { formatAmount } from 'utils/formatInfoNumbers'
 import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { Arrow, ClickableColumnHeader } from '../Info/components/InfoTables/shared'
 
 export const TYPE_HISTORY = {
@@ -358,6 +359,7 @@ const DataRow: React.FC<
 const HistoryTable = ({typePage} : {typePage?: string}) => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
   const [sortDirection, setSortDirection] = useState<boolean>(false)
+  const { account } = useActiveWeb3React()
   const [sortStable, setSortStable] = useState<boolean>(false)
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)
@@ -367,7 +369,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
   const transactions = useProtocolTransactionsSWR();
-  const dataTable = (typePage === TYPE_HISTORY.stake) ? useStakeStableCoinSWR() : useWidthDrawStableCoinSWR();
+  const dataTable = (typePage === TYPE_HISTORY.stake) ? useStakeStableCoinSWR(account) : useWidthDrawStableCoinSWR();
   const [currentTransactions, setCurrentTransactions] = useState([])
 
   const { t } = useTranslation()

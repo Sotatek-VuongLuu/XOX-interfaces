@@ -47,9 +47,9 @@ const QUERYWITHDRAW = `
   }
 `
 
-const QUERYSTACK = `
+const QUERYSTACK = (address?:string) => `
   {
-    userStakeHistories(first: 100, orderBy: date, orderDirection: desc) {
+    userStakeHistories(first: 100, orderBy: date, orderDirection: desc ${!address ? '' : `, where: { address:"${address}" }`}) {
       address,
       amount,
       apy,
@@ -110,10 +110,11 @@ export const fetchWithdrawStableCoin = async (
 
 export const fetchStakeStableCoin = async (
   chainId: number,
+  address?: string
 ) => {
   const result = { transactionsXOX: [] }
   const chainName = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BSC' : 'ETH';
-  const dataXOX = await multiChainQueryClientWithNR[chainName].request<any>(QUERYSTACK);
+  const dataXOX = await multiChainQueryClientWithNR[chainName].request<any>(QUERYSTACK(address));
   if (dataXOX) {
     result.transactionsXOX = dataXOX?.userStakeHistories
   }
