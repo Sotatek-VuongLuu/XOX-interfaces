@@ -151,19 +151,21 @@ const SliderWrapper = styled.div`
       transform: translateX(calc(-144px * 10));
     }
     100% {
-      transform: translateX(calc(0));
+      transform: translateX(0);
     }
   }
 
   @keyframes scale1 {
-    0% {transform: scale(1);
-
+    0% {
+      transform: scale(1);
+    }
+    50% {
+      transform: scale(1.1);
+    }
+    100% {
+      transform: scale(1);
+    }
   }
-    50% {transform: scale(1.1);
- }
- 100% {transform: scale(1);
- }
-}
   #infinite div.highway-barrier {
     box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3);
    
@@ -171,7 +173,7 @@ const SliderWrapper = styled.div`
   #infinite div.highway-barrier ul.highway-lane {
     width: calc(144px * 20);
     &:hover li.highway-car{
-    animation-play-state: paused !important;
+      animation-play-state: paused !important;
     }
     & img.partner:hover {
       animation: scale1 2.8s infinite;
@@ -252,7 +254,6 @@ const Partners = () => {
                   </li>
                 )
               })}
-
               {isMobile &&
                 listPartners.map(({ icon }) => {
                   return (
