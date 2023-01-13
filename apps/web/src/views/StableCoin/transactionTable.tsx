@@ -6,7 +6,7 @@ import truncateHash from '@pancakeswap/utils/truncateHash'
 import { Box, Flex, LinkExternal, Skeleton, Text, Button, Link, Select, Input } from '@pancakeswap/uikit'
 import { formatISO9075 } from 'date-fns'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import { useGetChainName, useProtocolTransactionsSWR } from 'state/info/hooks'
+import { useTransactionStableCoinSWR } from 'state/info/hooks'
 import { Transaction, TransactionFrom, TransactionType } from 'state/info/types'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -367,8 +367,8 @@ const TransactionsTable: React.FC = () => {
   const [tempPage, setTempPage] = useState('1')
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
-  const transactions = useProtocolTransactionsSWR()
   const [currentTransactions, setCurrentTransactions] = useState([])
+  const stablecoin = useTransactionStableCoinSWR();
 
   const { t } = useTranslation()
 
@@ -554,15 +554,10 @@ const TransactionsTable: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    switch (transactionFrom) {
-      case TransactionFrom.XOX:
-        setCurrentTransactions(transactions?.transactionsXOX)
-        break
-      default:
-        setCurrentTransactions(transactions?.transactionsOther)
-        break
+    if(stablecoin){
+      setCurrentTransactions(stablecoin?.transactionsXOX)
     }
-  }, [transactions, transactionFrom])
+  }, [stablecoin])
 
   useEffect(() => {
     setTempPage(page.toString())
@@ -586,18 +581,6 @@ const TransactionsTable: React.FC = () => {
           height="24px"
         >
           Transactions History
-        </Text>
-        <Text
-            className='total'
-            fontSize="14px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="400"
-            lineHeight="17px"
-            color="rgba(255, 255, 255, 0.6)"
-          >
-          Total: {currentTransactions ? (currentTransactions.length > 300 ? 300 : currentTransactions.length) : 0}{' '}
-          transactions
         </Text>
       </Flex>
       <CustomTableWrapper>
@@ -701,7 +684,7 @@ const TransactionsTable: React.FC = () => {
             </Arrow>
 
             <Flex>
-              {maxPage <= 7 ? (
+              {maxPage <= 5 ? (
                 [...Array(maxPage)].map((_, i) => (
                   <button
                     type="button"
@@ -728,9 +711,9 @@ const TransactionsTable: React.FC = () => {
                       <button type="button" className="page" onClick={() => setPagePagination(page - 3)}>
                         ...
                       </button>
-                      <button type="button" className="page" onClick={() => setPagePagination(page - 2)}>
+                      {/* <button type="button" className="page" onClick={() => setPagePagination(page - 2)}>
                         {page - 2}
-                      </button>
+                      </button> */}
                       <button type="button" className="page" onClick={() => setPagePagination(page - 1)}>
                         {page - 1}
                       </button>
@@ -750,9 +733,9 @@ const TransactionsTable: React.FC = () => {
                       <button type="button" className="page" onClick={() => setPagePagination(page + 1)}>
                         {page + 1}
                       </button>
-                      <button type="button" className="page" onClick={() => setPagePagination(page + 2)}>
+                      {/* <button type="button" className="page" onClick={() => setPagePagination(page + 2)}>
                         {page + 2}
-                      </button>
+                      </button> */}
                       <button type="button" className="page" onClick={() => setPagePagination(page + 3)}>
                         ...
                       </button>

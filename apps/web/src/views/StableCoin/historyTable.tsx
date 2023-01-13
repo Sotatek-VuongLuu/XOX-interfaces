@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 // TODO PCS refactor ternaries
 /* eslint-disable no-nested-ternary */
 import { useTranslation } from '@pancakeswap/localization'
@@ -6,12 +7,14 @@ import truncateHash from '@pancakeswap/utils/truncateHash'
 import { Box, Flex, LinkExternal, Skeleton, Text, Button, Link, Select, Input } from '@pancakeswap/uikit'
 import { formatISO9075 } from 'date-fns'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import { useGetChainName, useProtocolTransactionsSWR } from 'state/info/hooks'
+import { useGetChainName, useProtocolTransactionsSWR, useWidthDrawStableCoinSWR, useStakeStableCoinSWR } from 'state/info/hooks'
 import { Transaction, TransactionFrom, TransactionType } from 'state/info/types'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { getBlockExploreLink } from 'utils'
 import { formatAmount } from 'utils/formatInfoNumbers'
+import { formatUnits } from '@ethersproject/units'
+import { USD_DECIMALS } from 'config/constants/exchange'
 import { Arrow, ClickableColumnHeader } from '../Info/components/InfoTables/shared'
 
 export const TYPE_HISTORY = {
@@ -259,7 +262,6 @@ export const PageButtons = styled(Flex)`
 const SORT_FIELD = {
   timestamp: 'timestamp',
   amountUSD: 'amountUSD',
-  stableCoin: 'amountStable',
 }
 
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
@@ -288,22 +290,13 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
 }
 
 const DataRow: React.FC<
-  React.PropsWithChildren<{ transaction: Transaction; index: number; page: number; perPage: number }>
+  React.PropsWithChildren<{ transaction: any; index: number; page: number; perPage: number }>
 > = ({ transaction, index, page, perPage }) => {
   const { t } = useTranslation()
-  const abs0 = Math.abs(transaction.amountToken0)
-  const abs1 = Math.abs(transaction.amountToken1)
   const { chainId } = useActiveChainId();
+  const abs0 = formatUnits(transaction?.amount, USD_DECIMALS[chainId]);
   const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
-  const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOX' : transaction.token0Symbol
-  const symbolToken1 = transaction.token1Symbol === 'xox' ? 'XOX' : transaction.token1Symbol
-
-  const outputTokenSymbol = transaction.amountToken0 < 0 ? symbolToken0 : symbolToken1
-  const inputTokenSymbol = transaction.amountToken1 < 0 ? symbolToken0 : symbolToken1
-  const stablCoin =
-    inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
-      ? `${formatAmount(transaction.amountUSD / 10)} Stable coin`
-      : '--'
+  const symbolToken0 = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BUSD' : 'USDC';
 
   return (
     <>
@@ -333,11 +326,7 @@ const DataRow: React.FC<
           lineHeight="19px"
           color="rgba(255, 255, 255, 0.87)"
         >
-          {transaction.type === TransactionType.MINT
-            ? t('Add %token0% and %token1%', { token0: symbolToken0, token1: symbolToken1 })
-            : transaction.type === TransactionType.SWAP
-            ? t('Swap %token0% for %token1%', { token0: inputTokenSymbol, token1: outputTokenSymbol })
-            : t('Remove %token0% and %token1%', { token0: symbolToken0, token1: symbolToken1 })}
+          WithDraw
         </Text>
       </LinkExternal>
       <Text
@@ -350,7 +339,7 @@ const DataRow: React.FC<
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-time`}
       >
-        {formatISO9075(parseInt(transaction.timestamp, 10) * 1000)}
+        {formatISO9075(parseInt(transaction.date, 10) * 1000)}
       </Text>
       <Text
         fontSize="16px"
@@ -361,7 +350,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(abs0)} ${symbolToken0}`}</Text>
+      >{`${abs0} ${symbolToken0}`}</Text>
     </>
   )
 }
@@ -377,12 +366,13 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
   const [tempPage, setTempPage] = useState('1')
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
-  const transactions = useProtocolTransactionsSWR()
+  const transactions = useProtocolTransactionsSWR();
+  const dataTable = (typePage === TYPE_HISTORY.stake) ? useStakeStableCoinSWR() : useWidthDrawStableCoinSWR();
   const [currentTransactions, setCurrentTransactions] = useState([])
 
   const { t } = useTranslation()
 
-  const [page, setPage] = useState(1)
+  const [page, setPage] = useState(1) 
   const [maxPage, setMaxPage] = useState(1)
 
   const [txFilter, setTxFilter] = useState<TransactionType | undefined>(undefined)
@@ -392,7 +382,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
   }, [])
 
   const sortedTransactions = useMemo(() => {
-    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD, SORT_FIELD.stableCoin]
+    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD]
     return currentTransactions
       ? currentTransactions
           .slice(0, 300)
@@ -402,11 +392,11 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
           .map((item: any) => {
             const outputTokenSymbol = item.amountToken0 < 0 ? item.token0Symbol : item.token1Symbol
             const inputTokenSymbol = item.amountToken1 < 0 ? item.token0Symbol : item.token1Symbol
-            const amountStable =
-              inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
-                ? item.amountUSD / 10 + 1
-                : 0
-            return { ...item, amountStable }
+            // const amountStable =
+            //   inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
+            //     ? item.amountUSD / 10 + 1
+            //     : 0
+            return { ...item }
           })
           .sort((a, b) => {
             if (a && b) {
@@ -449,24 +439,12 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
     [txFilter],
   )
 
-  const handleFilterFrom = useCallback(
-    (newFilterFrom: TransactionFrom) => {
-      if (newFilterFrom !== transactionFrom) {
-        setTransactionFrom(newFilterFrom)
-        setPage(1)
-      }
-    },
-    [transactionFrom],
-  )
-
   const handleSort = useCallback(
     (newField: string) => {
       setSortField(newField)
       setSortDirection(sortField !== newField ? true : !sortDirection)
-      setSortStable(newField !== SORT_FIELD.stableCoin ? false : !sortStable)
       setIconSortField(newField !== SORT_FIELD.amountUSD ? null : !iconSortField)
       setIconSortDirection(newField !== SORT_FIELD.timestamp ? null : !iconSortDirection)
-      setIconSortStable(newField !== SORT_FIELD.stableCoin ? null : !iconSortStable)
     },
     [sortDirection, sortField],
   )
@@ -564,15 +542,10 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
   }, [])
 
   useEffect(() => {
-    switch (transactionFrom) {
-      case TransactionFrom.XOX:
-        setCurrentTransactions(transactions?.transactionsXOX)
-        break
-      default:
-        setCurrentTransactions(transactions?.transactionsOther)
-        break
+    if(dataTable){
+      setCurrentTransactions(dataTable?.transactionsXOX);
     }
-  }, [transactions, transactionFrom])
+  }, [dataTable])
 
   useEffect(() => {
     setTempPage(page.toString())
@@ -598,18 +571,6 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
           {typePage === TYPE_HISTORY.stake && "Stake History" }
           {(typePage === TYPE_HISTORY.widthDraw || typePage === TYPE_HISTORY.myWidthDraw) && "Withdraw History" }
         </Text>
-        <Text
-            className='total'
-            fontSize="14px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="400"
-            lineHeight="17px"
-            color="rgba(255, 255, 255, 0.6)"
-          >
-            Total: {currentTransactions ? (currentTransactions.length > 300 ? 300 : currentTransactions.length) : 0}{' '}
-            transactions
-          </Text>
       </Flex>
       <CustomTableWrapper>
         <Table>
@@ -691,7 +652,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
           )}
         </Table>
       </CustomTableWrapper>
-      {currentTransactions && (
+      {currentTransactions?.length > 0 && (
         <PageButtons>
           <div>
             <Arrow
@@ -712,7 +673,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
             </Arrow>
 
             <Flex>
-              {maxPage <= 7 ? (
+              {maxPage <= 5 ? (
                 [...Array(maxPage)].map((_, i) => (
                   <button
                     type="button"
@@ -739,9 +700,9 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
                       <button type="button" className="page" onClick={() => setPagePagination(page - 3)}>
                         ...
                       </button>
-                      <button type="button" className="page" onClick={() => setPagePagination(page - 2)}>
+                      {/* <button type="button" className="page" onClick={() => setPagePagination(page - 2)}>
                         {page - 2}
-                      </button>
+                      </button> */}
                       <button type="button" className="page" onClick={() => setPagePagination(page - 1)}>
                         {page - 1}
                       </button>
@@ -761,9 +722,9 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
                       <button type="button" className="page" onClick={() => setPagePagination(page + 1)}>
                         {page + 1}
                       </button>
-                      <button type="button" className="page" onClick={() => setPagePagination(page + 2)}>
+                      {/* <button type="button" className="page" onClick={() => setPagePagination(page + 2)}>
                         {page + 2}
-                      </button>
+                      </button> */}
                       <button type="button" className="page" onClick={() => setPagePagination(page + 3)}>
                         ...
                       </button>

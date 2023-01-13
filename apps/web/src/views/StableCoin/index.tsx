@@ -1,4 +1,5 @@
-import {useState, useEffect} from 'react';
+/* eslint-disable react-hooks/rules-of-hooks */
+import {useState, useEffect, useMemo} from 'react';
 import { Flex, Button, Text } from '@pancakeswap/uikit'
 import { useAllTokens } from 'hooks/Tokens'
 import styled from 'styled-components'
@@ -6,10 +7,12 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
+import { useStableCoinSWR } from 'state/info/hooks'
 import InfoNav from "../Info/components/InfoNav"
 import HistoryTable, {TYPE_HISTORY} from "./historyTable"
 import TransactionTable from "./transactionTable"
 import WidthdrawForm from "./widthdrawForm"
+import Earned from "./earned";
 
 const TYPE = {
   default: 'DEFAULT',
@@ -193,7 +196,7 @@ export default function StableCoin() {
             </>
           }
           {
-            widthDraw === TYPE.default && 
+            widthDraw === TYPE.default && account && 
             <>
               <Row>
                 <Box className='h-190'>
@@ -207,20 +210,7 @@ export default function StableCoin() {
                   </Flex>
                 </Box>
                 <Box className='h-190'>
-                  <Flex justifyContent="space-between" alignItems="center" width="100%" style={{marginBottom: 15}}>
-                    <WrapText>
-                      <p>BUSD earned</p>
-                      <p className='number'>23</p>
-                    </WrapText>
-                    <img src='/images/1/tokens/BUSD.png' alt='icon' />
-                  </Flex>
-                  <Flex justifyContent="space-between" alignItems="center" width="100%">
-                    <WrapText>
-                      <p>USDC earned</p>
-                      <p className='number'>23</p>
-                    </WrapText>
-                    <img src='/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg' alt='icon' />
-                  </Flex>
+                  <Earned address={account} />
                 </Box>
                 <Box className='h-190'>
                   <Flex justifyContent="space-between" alignItems="center" width="100%">
