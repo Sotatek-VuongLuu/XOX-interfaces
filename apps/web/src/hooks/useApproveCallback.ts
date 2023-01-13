@@ -110,7 +110,7 @@ export function useApproveCallback(
       })
       .catch((error: any) => {
         logError(error)
-        console.log('err',error)
+        console.log('callWithGasPrice err',error?.code)
         console.error('Failed to approve token', error)
         // if (error?.code === 'ACTION_REJECTED') {
         //   return
