@@ -358,10 +358,10 @@ export default function SwapForm() {
               )}
               {Boolean(!trade) && (
                 <RowBetween>
-                  <Text bold fontSize={['14px', , '18px']} color="#FFFFFFDE" fontWeight={400}>
+                  <Text bold fontSize={['14px', , '18px']} color="rgba(255, 255, 255, 0.87)" fontWeight={400}>
                     {t('Slippage Tolerance')}
                   </Text>
-                  <Text bold color="#9072FF">
+                  <Text bold fontSize={['14px', , '18px']} color="#9072FF">
                     {allowedSlippage / 100}%
                   </Text>
                 </RowBetween>
@@ -370,7 +370,7 @@ export default function SwapForm() {
           )}
           {isShowReferralBox && (
             <ReferralCode>
-              <SwapUI.InfoLabel>{t('Referral Code')}</SwapUI.InfoLabel>
+              <Text bold fontSize={['14px', , '18px']} color="rgba(255, 255, 255, 0.87)" fontWeight={400}>{t('Referral Code')}</Text>
               <ReferralInput onChange={(e) => handleChangeReferal(e.target.value)} maxLength={8} />
             </ReferralCode>
           )}
