@@ -358,7 +358,7 @@ export default function SwapForm() {
               )}
               {Boolean(!trade) && (
                 <RowBetween>
-                  <Text bold fontSize="18px" color="#FFFFFFDE" fontWeight={400}>
+                  <Text bold fontSize={['14px', , '18px']} color="#FFFFFFDE" fontWeight={400}>
                     {t('Slippage Tolerance')}
                   </Text>
                   <Text bold color="#9072FF">
