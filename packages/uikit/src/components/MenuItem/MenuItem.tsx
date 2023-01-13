@@ -12,6 +12,8 @@ const MenuItem: React.FC<React.PropsWithChildren<MenuItemProps>> = ({
   variant = "default",
   scrollLayerRef,
   statusColor,
+  isHover,
+  label,
   ...props
 }) => {
   const { isMobile } = useMatchBreakpoints();
@@ -37,6 +39,7 @@ const MenuItem: React.FC<React.PropsWithChildren<MenuItemProps>> = ({
       scrollLayer.scrollLeft = menuNode.offsetLeft;
     }
   }, [isActive, isMobile, scrollLayerRef]);
+
   return (
     <StyledMenuItemContainer $isActive={isActive} $variant={variant} ref={menuItemRef}>
       <StyledMenuItem
@@ -45,7 +48,10 @@ const MenuItem: React.FC<React.PropsWithChildren<MenuItemProps>> = ({
         $isDisabled={isDisabled}
         $variant={variant}
         $statusColor={statusColor}
+        $isHover={isHover}
+        $label={label}
         {...props}
+        className={isHover && label === "Product" ? `product_active_hover` : ""}
       >
         {children}
       </StyledMenuItem>

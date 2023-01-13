@@ -58,7 +58,10 @@ const GlobalStyle = createGlobalStyle`
   }
 
   #asset_3d {
-    margin-left: 69px;
+    position: absolute;
+    left: 50%;
+    bottom: 35px;
+    transform: translateX(-25%);
   }
 
   #asset_3d_mb {
@@ -67,6 +70,14 @@ const GlobalStyle = createGlobalStyle`
       left: 50%;
       transform: translateX(-39%);
     }
+  }
+
+  .product_active_hover {
+    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
   }
 
 `

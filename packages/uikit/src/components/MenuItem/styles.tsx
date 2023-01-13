@@ -63,6 +63,8 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
     padding: 12px 4px 12px 4px;
     height: 42px;
   `}
+  
+
 
   &:hover {
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);

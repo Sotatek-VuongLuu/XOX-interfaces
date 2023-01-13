@@ -5,6 +5,7 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { useEffect } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
+import Spline from '@splinetool/react-spline'
 import BallPurple from './components/BallPurple'
 import WelcomeXOX from './components/Banners/WelcomeXOX'
 import FeatureWatch from './components/Banners/FeatureWatch'
@@ -51,7 +52,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           style: {
             margin: '0',
             width: '100%',
-            height: '88vh',
+            height: innerWidth > 1000 ? '74vh' : '88vh',
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'space-around',
@@ -66,7 +67,14 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BallPurple src="/images/bg-pur.svg" />
-        <WelcomeXOX />
+        <div style={{ width: innerWidth > 1000 && 1400 }}>
+          <WelcomeXOX />
+        </div>
+        <Spline
+          scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
+          onLoad={(e) => e.setZoom(1)}
+          id="asset_3d"
+        />
       </StyledSection>
 
       <StyledSection
