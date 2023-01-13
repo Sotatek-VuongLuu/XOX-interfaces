@@ -120,8 +120,8 @@ export default function SwapCommitButton({
       .catch((error) => {
         console.log('error', error)
         let message = error?.message
-        if (error?.message > 250) {
-          message = 'Transaction rejected.'
+        if (error?.message.length > 250) {
+          message = 'Transaction failed.'
         }
 
         setSwapState({
