@@ -108,8 +108,10 @@ const RoadMap = () => {
   const { width } = useWindowSize()
   return (
     <Wrapper>
-      <Title>Road map</Title>
-      <Description>Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.</Description>
+      <Title data-aos="fade-up">Road map</Title>
+      <Description data-aos="fade-up" data-aos-duration="2300">
+        Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.
+      </Description>
 
       {width < 970 ? (
         <RoadMapMobile />

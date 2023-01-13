@@ -3,8 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
 /* eslint-disable react/jsx-boolean-value */
-import styled, { keyframes } from 'styled-components'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import styled from 'styled-components'
 import 'swiper/css'
 import SwiperCore, { Autoplay } from 'swiper'
 import { useState } from 'react'
@@ -99,7 +98,6 @@ const Wrapper = styled.div`
 `
 
 const SliderWrapper = styled.div`
-  margin-bottom: 24px;
 
   div.container {
     transition: all 0.3s ease;
@@ -123,7 +121,7 @@ const SliderWrapper = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 80px;
+    height: 120px;
   }
   div.highway-slider div.highway-barrier {
     overflow: hidden;
@@ -175,7 +173,7 @@ const SliderWrapper = styled.div`
     &:hover li.highway-car{
     animation-play-state: paused !important;
     }
-    &:hover img.partner{
+    & img.partner:hover {
       animation: scale1 2.8s infinite;
     }
   }
@@ -199,7 +197,6 @@ const SliderWrapper = styled.div`
 
 const Partners = () => {
   const [isShowMore, setIsShowMore] = useState(false)
-  const { width } = useWindowSize()
   const [isHovering, setIsHovering] = useState(false)
 
   const handleMouseOver = () => {
@@ -215,12 +212,17 @@ const Partners = () => {
   const handleChangeShowMore = () => {
     setIsShowMore(!isShowMore)
   }
+
   return (
     <Wrapper>
-      <div className="title">Strategic Partners</div>
-      <p className="decoration">Backed by the Best to Deliver the Best.</p>
+      <div className="title" data-aos="fade-up">
+        Strategic Partners
+      </div>
+      <p className="decoration" data-aos="fade-up" data-aos-duration="2300">
+        Backed by the Best to Deliver the Best.
+      </p>
 
-      <SliderWrapper>
+      <SliderWrapper data-aos="fade-up">
         <div id="infinite" className="infinitetl highway-slider">
           <div className="container highway-barrier">
             <ul className="highway-lane">
@@ -243,9 +245,9 @@ const Partners = () => {
                     <img
                       src={icon}
                       alt="icon"
-                      // className={isHovering ? 'partner' : ''}
-                      // onMouseOver={handleMouseOver}
-                      // onMouseOut={handleMouseOut}
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
                     />
                   </li>
                 )
@@ -258,9 +260,9 @@ const Partners = () => {
                       <img
                         src={icon}
                         alt="icon"
-                        // className={isHovering ? 'partner' : ''}
-                        // onMouseOver={handleMouseOver}
-                        // onMouseOut={handleMouseOut}
+                        className={isHovering ? 'partner' : ''}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
                       />
                     </li>
                   )
@@ -270,80 +272,118 @@ const Partners = () => {
         </div>
       </SliderWrapper>
 
-      {/* <SliderWrapper>
+      <SliderWrapper>
         <div id="infinite" className="infinitetr speed-20 highway-slider">
           <div className="container highway-barrier">
             <ul className="highway-lane">
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
             </ul>
           </div>
         </div>
-      </SliderWrapper> */}
+      </SliderWrapper>
 
-      {/* <SliderWrapper>
+      <SliderWrapper>
         <div id="infinite" className="infinitetl speed-20 highway-slider">
           <div className="container highway-barrier">
             <ul className="highway-lane">
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
               {listPartners.map(({ icon }) => {
                 return (
                   <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
+                    <img
+                      src={icon}
+                      alt="icon"
+                      className={isHovering ? 'partner' : ''}
+                      onMouseOver={handleMouseOver}
+                      onMouseOut={handleMouseOut}
+                    />
                   </li>
                 )
               })}
             </ul>
           </div>
         </div>
-      </SliderWrapper> */}
+      </SliderWrapper>
 
-      {/* <SliderWrapper>
-        <div id="infinite" className="infinitetr highway-slider">
-          <div className="container highway-barrier">
-            <ul className="highway-lane">
-              {listPartners.map(({ icon }) => {
-                return (
-                  <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
-                  </li>
-                )
-              })}
-              {listPartners.map(({ icon }) => {
-                return (
-                  <li className="highway-car" key={icon}>
-                    <img src={icon} alt="icon" />
-                  </li>
-                )
-              })}
-            </ul>
+      {isShowMore ? (
+        <SliderWrapper>
+          <div id="infinite" className="infinitetr highway-slider">
+            <div className="container highway-barrier">
+              <ul className="highway-lane">
+                {listPartners.map(({ icon }) => {
+                  return (
+                    <li className="highway-car" key={icon}>
+                      <img
+                        src={icon}
+                        alt="icon"
+                        className={isHovering ? 'partner' : ''}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      />
+                    </li>
+                  )
+                })}
+                {listPartners.map(({ icon }) => {
+                  return (
+                    <li className="highway-car" key={icon}>
+                      <img
+                        src={icon}
+                        alt="icon"
+                        className={isHovering ? 'partner' : ''}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      />
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
           </div>
-        </div>
-      </SliderWrapper> */}
+        </SliderWrapper>
+      ) : null}
 
-      {/* <div className="btn_see_all">
+      <div className="btn_see_all" data-aos="fade-up">
         <div className="get_xox" onClick={handleChangeShowMore}>
           <div className="boxed-child">{isShowMore ? <span>See Less</span> : <span>See All</span>}</div>
         </div>
-      </div> */}
+      </div>
     </Wrapper>
   )
 }

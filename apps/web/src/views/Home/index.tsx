@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 import PageSection from 'components/PageSection'
 import { PageMeta } from 'components/Layout/Page'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
+import { useEffect } from 'react'
+import useWindowSize from 'hooks/useWindowSize'
 import BallPurple from './components/BallPurple'
 import WelcomeXOX from './components/Banners/WelcomeXOX'
 import FeatureWatch from './components/Banners/FeatureWatch'
@@ -9,7 +13,6 @@ import RoadMap from './components/Banners/RoadMap'
 import Partners from './components/Partners'
 import Community from './components/Banners/Community'
 import FeatureEconomy from './components/Banners/FeatureEconomy'
-import Backgroud from './components/Banners/Background'
 import BackgroudWatch from './components/Banners/BackgroundWatch'
 import FeatureReferal from './components/Banners/FeatureReferal'
 import UpComing from './components/Banners/FeatureUpComing'
@@ -31,6 +34,10 @@ const StyledSection = styled(PageSection)`
 `
 
 const Home: React.FC<React.PropsWithChildren> = () => {
+  const { width: innerWidth } = useWindowSize()
+  useEffect(() => {
+    AOS.init({ duration: 2000 })
+  }, [])
   return (
     <>
       <PageMeta />
@@ -46,34 +53,24 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             width: '100%',
             height: '88vh',
             display: 'flex',
-            justifyContent: 'center',
             alignItems: 'center',
+            justifyContent: 'space-around',
+            overflow: 'hidden',
           },
         }}
         containerProps={{
           id: 'home',
         }}
+        innerClass="welcome"
         index={2}
         hasCurvedDivider={false}
       >
-        <BallPurple src="/images/bg-pur.svg" css={{ right: 0 }} />
+        <BallPurple src="/images/bg-pur.svg" />
         <WelcomeXOX />
       </StyledSection>
 
       <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
-        containerProps={{
-          id: 'home',
-        }}
-        index={1}
-        hasCurvedDivider={false}
-      >
-        <Backgroud />
-        <FeatureEconomy />
-      </StyledSection>
-
-      <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
+        innerProps={{ style: { margin: '0' } }}
         containerProps={{
           id: 'home',
         }}
@@ -81,14 +78,18 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BackgroudWatch />
-        <FeatureSquare />
-        <FeatureWatch />
-        <FeaturePlant />
-        <FeatureReferal />
+
+        <div style={{ width: innerWidth > 1000 && 1400 }}>
+          <FeatureEconomy />
+          <FeatureSquare />
+          <FeatureWatch />
+          <FeaturePlant />
+          <FeatureReferal />
+        </div>
       </StyledSection>
 
       <StyledSection
-        innerProps={{ style: { margin: '0', width: '100%' } }}
+        innerProps={{ style: { margin: '0', width: innerWidth < 1000 && '100%' } }}
         containerProps={{
           id: 'home',
         }}
@@ -96,11 +97,13 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BGPartner />
-        <Partners />
-        <SecuredBy />
-        <UpComing />
-        <RoadMap />
-        <Community />
+        <div style={{ width: innerWidth > 1000 && 1400 }}>
+          <Partners />
+          <SecuredBy />
+          <UpComing />
+          <RoadMap />
+          <Community />
+        </div>
       </StyledSection>
     </>
   )

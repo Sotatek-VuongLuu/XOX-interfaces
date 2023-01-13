@@ -119,7 +119,7 @@ const FeaturePlant = () => {
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
-          <LeftContent>
+          <LeftContent data-aos="fade-right">
             <Title>XOX Dapp - An All-IN-One Solution.</Title>
             <Paragraph style={{ margin: '24px 0' }}>
               Primarily design to provide simple solutions to its users and XOX Holders, the XOX Dapp already provides
@@ -142,7 +142,7 @@ const FeaturePlant = () => {
           </LeftContent>
         </Grid>
         <Grid item xs={12} md={5} style={{ height: 285 }}>
-          <RightContent>
+          <RightContent data-aos="fade-left">
             <Watch>
               {width > 900 ? (
                 <>
