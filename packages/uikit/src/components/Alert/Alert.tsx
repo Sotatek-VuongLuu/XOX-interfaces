@@ -65,6 +65,10 @@ const CloseHandler = styled.div`
   right: 8px;
   position: absolute;
   top: 8px;
+
+  button {
+    background: none !important;
+  }
 `;
 
 const StyledAlert = styled(Flex)`

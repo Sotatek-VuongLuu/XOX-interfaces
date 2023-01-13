@@ -1,3 +1,4 @@
+import Spline from '@splinetool/react-spline'
 import styled, { CSSProperties } from 'styled-components'
 
 interface Iprops {
@@ -15,7 +16,11 @@ const StyledImage = styled.img`
 `
 
 const BallPurple = ({ src }: Iprops): JSX.Element => {
-  return <StyledImage src={src} alt="ball_purple" style={{ right: 0 }} />
+  return (
+    <>
+      <StyledImage src={src} alt="ball_purple" style={{ right: 0 }} />
+    </>
+  )
 }
 
 export default BallPurple

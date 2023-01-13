@@ -111,6 +111,7 @@ export default function SwapCommitButton({
     if (!swapCallback) {
       return
     }
+
     setSwapState({ attemptingTxn: true, tradeToConfirm, swapErrorMessage: undefined, txHash: undefined })
     swapCallback()
       .then((hash) => {
@@ -118,10 +119,15 @@ export default function SwapCommitButton({
       })
       .catch((error) => {
         console.log('error', error)
+        let message = error?.message
+        if (error?.message.length > 250) {
+          message = 'Transaction failed.'
+        }
+
         setSwapState({
           attemptingTxn: false,
           tradeToConfirm,
-          swapErrorMessage: error.message,
+          swapErrorMessage: message,
           txHash: undefined,
         })
       })

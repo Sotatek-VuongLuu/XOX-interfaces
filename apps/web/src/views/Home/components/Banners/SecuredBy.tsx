@@ -41,23 +41,28 @@ const Wrapper = styled.div`
 
 const SecuredBy = () => {
   const { width } = useWindowSize()
+
   return (
     <Wrapper>
-      <p className="title">Secured By</p>
-      <p className="description">XOX has Industry Leading Security. Protected By The Best.</p>
+      <p className="title" data-aos="fade-up">
+        Secured By
+      </p>
+      <p className="description" data-aos="fade-up" data-aos-duration="2300">
+        XOX has Industry Leading Security. Protected By The Best.
+      </p>
 
       <p className="img">
         {width < 900 ? (
           <>
-            <img src="/images/s1_mobile.svg" alt="security" />
-            <img src="/images/s2_mobile.svg" alt="security" />
-            <img src="/images/s3_mobile.svg" alt="security" />
+            <img src="/images/s1_mobile.svg" alt="security" data-aos="fade-right" />
+            <img src="/images/s2_mobile.svg" alt="security" data-aos="fade-down" />
+            <img src="/images/s3_mobile.svg" alt="security" data-aos="fade-left" />
           </>
         ) : (
           <>
-            <img src="/images/s1.svg" alt="security" style={{ cursor: 'pointer' }} />
-            <img src="/images/s2.svg" alt="security" />
-            <img src="/images/s3.svg" alt="security" />
+            <img src="/images/s1.svg" alt="security" style={{ cursor: 'pointer' }} data-aos="fade-right" />
+            <img src="/images/s2.svg" alt="security" data-aos="fade-down" />
+            <img src="/images/s3.svg" alt="security" data-aos="fade-left" />
           </>
         )}
       </p>

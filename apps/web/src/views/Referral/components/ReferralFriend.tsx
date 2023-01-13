@@ -1,15 +1,4 @@
-/* eslint-disable consistent-return */
-/* eslint-disable no-console */
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
-/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/no-unescaped-entities */
-/* eslint-disable no-restricted-globals */
-/* eslint-disable @typescript-eslint/no-array-constructor */
-/* eslint-disable no-else-return */
-/* eslint-disable prefer-const */
-/* eslint-disable no-extra-boolean-cast */
 import {
   Avatar,
   Box,
@@ -126,27 +115,6 @@ const WrapperLeft = styled(Box)`
 const WrapperRight = styled(Box)<IPropsWR>`
   margin-top: 0 !important;
   position: relative;
-
-  // &:before {
-  //   content: '';
-  //   position: absolute;
-  //   width: 117px;
-  //   height: 157px;
-  //   left: 0px;
-  //   top: 16px;
-  //   background: linear-gradient(90deg, #121212 16.15%, rgba(18, 18, 18, 0) 100%);
-  // }
-
-  // &:after {
-  //   content: '';
-  //   position: absolute;
-  //   width: 117px;
-  //   height: 157px;
-  //   right: 0;
-  //   top: 16px;
-  //   background: linear-gradient(90deg, #121212 15.1%, rgba(18, 18, 18, 0) 100%);
-  //   transform: matrix(-1, 0, 0, 1, 0, 0);
-  // }
 
   .item {
     position: relative;
@@ -326,65 +294,6 @@ const WrapperRight = styled(Box)<IPropsWR>`
     text-fill-color: transparent;
   }
 `
-
-// const TableHeader = styled.div`
-//   display: grid;
-//   grid-template-columns: 2fr 1fr 1fr;
-//   gap: 16px;
-//   font-weight: 700;
-//   font-size: 14px;
-//   line-height: 17px;
-//   color: rgba(255, 255, 255, 0.6);
-//   margin-top: 16px;
-//   padding-bottom: 8px;
-//   border-bottom: 1px solid #444444;
-
-//   div:last-child {
-//     text-align: right;
-//     margin-right: 3px;
-//   }
-// `
-// const TableBody = styled.div`
-//   max-height: 107px;
-//   overflow-y: auto;
-//   margin-top: 10px;
-
-//   & > div {
-//     display: grid;
-//     grid-template-columns: 2fr 1fr 1fr;
-//     gap: 16px;
-//     font-weight: 400;
-//     font-size: 14px;
-//     line-height: 17px;
-//     color: rgba(255, 255, 255, 0.87);
-//     align-items: center;
-//     margin-bottom: 16px;
-//     margin-right: 5px;
-//   }
-
-//   & > div div:first-child {
-//     display: grid;
-//     grid-template-columns: 24px 1fr;
-//     gap: 8px;
-//     align-items: center;
-
-//     img {
-//       border-radius: 50%;
-//       width: 24px;
-//       height: 24px;
-//       object-fit: cover;
-//     }
-//   }
-
-//   & > div div:nth-child(2) {
-//     display: flex;
-//     align-items: center;
-//   }
-
-//   & > div div:last-child {
-//     text-align: right;
-//   }
-// `
 
 const Content = styled.div`
   .discription {
@@ -892,6 +801,7 @@ const ReferralFriend = ({
             src="/images/close-one.svg"
             alt="close-one"
             className="x-close-icon"
+            aria-hidden="true"
             onClick={() => setIsOpenSuccessModal(false)}
           />
         </Content>
@@ -912,6 +822,7 @@ const ReferralFriend = ({
             src="/images/close-one.svg"
             alt="close-one"
             className="x-close-icon"
+            aria-hidden="true"
             onClick={() => setIsOpenLoadingClaimModal(false)}
           />
         </Content>
@@ -931,6 +842,7 @@ const ReferralFriend = ({
             src="/images/close-one.svg"
             alt="close-one"
             className="x-close-icon"
+            aria-hidden="true"
             onClick={() => setModalReject(false)}
           />
         </Content>

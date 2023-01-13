@@ -181,8 +181,10 @@ const FeatureSquare = () => {
   return (
     <Wrapper>
       <div className="title">
-        <p className="heart">The Heart of the XOX Ecosystem</p>
-        <p className="describe">
+        <p className="heart" data-aos="fade-right">
+          The Heart of the XOX Ecosystem
+        </p>
+        <p className="describe" data-aos="fade-left">
           Wide range of apps, utilities and solutions powering the protocol creating a True One-Stop Ecosystem for all
           your DeFi needs.
         </p>
@@ -192,7 +194,7 @@ const FeatureSquare = () => {
         <Grid container spacing={2}>
           {listSquare.map((item: ISquareItem) => {
             return (
-              <Grid item xs={12} md={4} key={item.title}>
+              <Grid item xs={12} md={4} key={item.title} data-aos="fade-up">
                 <SquareItem item={item} />
               </Grid>
             )

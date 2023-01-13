@@ -53,9 +53,9 @@ export default function SwapModalFooter({
     <>
       <SwapModalFooterContainer>
         <RowBetween align="center">
-          <Text fontSize="14px">{t('Price')}</Text>
+          <Text fontSize="16px" color="textSubtle">{t('Price')}</Text>
           <Text
-            fontSize="14px"
+            fontSize="16px"
             style={{
               justifyContent: 'center',
               alignItems: 'center',
@@ -73,7 +73,7 @@ export default function SwapModalFooter({
 
         <RowBetween>
           <RowFixed>
-            <Text fontSize="14px">
+            <Text fontSize="16px" color="textSubtle">
               {trade.tradeType === TradeType.EXACT_INPUT ? t('Minimum received') : t('Maximum sold')}
             </Text>
             <QuestionHelper
@@ -85,12 +85,12 @@ export default function SwapModalFooter({
             />
           </RowFixed>
           <RowFixed>
-            <Text fontSize="14px">
+            <Text fontSize="16px">
               {trade.tradeType === TradeType.EXACT_INPUT
                 ? slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4) ?? '-'
                 : slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4) ?? '-'}
             </Text>
-            <Text fontSize="14px" marginLeft="4px">
+            <Text fontSize="16px" marginLeft="4px">
               {trade.tradeType === TradeType.EXACT_INPUT
                 ? trade.outputAmount.currency.symbol
                 : trade.inputAmount.currency.symbol}
@@ -99,7 +99,7 @@ export default function SwapModalFooter({
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize="14px">{t('Price Impact')}</Text>
+            <Text fontSize="16px" color="textSubtle">{t('Price Impact')}</Text>
             <QuestionHelper
               text={t('The difference between the market price and your price due to trade size.')}
               ml="4px"
@@ -110,7 +110,7 @@ export default function SwapModalFooter({
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize="14px">{t('Liquidity Provider Fee')}</Text>
+            <Text fontSize="16px" color="textSubtle">{t('Liquidity Provider Fee')}</Text>
             <QuestionHelper
               text={
                 <>
@@ -124,7 +124,7 @@ export default function SwapModalFooter({
               placement="auto"
             />
           </RowFixed>
-          <Text fontSize="14px">
+          <Text fontSize="16px">
             {realizedLPFee ? `${realizedLPFee?.toSignificant(6)} ${trade.inputAmount.currency.symbol}` : '-'}
           </Text>
         </RowBetween>
