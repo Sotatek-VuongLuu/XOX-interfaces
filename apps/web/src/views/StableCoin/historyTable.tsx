@@ -369,7 +369,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
   const transactions = useProtocolTransactionsSWR();
-  const dataTable = (typePage === TYPE_HISTORY.stake) ? useStakeStableCoinSWR(account) : useWidthDrawStableCoinSWR();
+  const dataTable = (typePage === TYPE_HISTORY.stake) ? useStakeStableCoinSWR(account) : useWidthDrawStableCoinSWR(typePage === TYPE_HISTORY.myWidthDraw ? account : null);
   const [currentTransactions, setCurrentTransactions] = useState([])
 
   const { t } = useTranslation()
