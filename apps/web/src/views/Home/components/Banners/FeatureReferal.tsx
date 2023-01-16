@@ -406,9 +406,11 @@ const FeatureReferal = () => {
               })}
             </div>
 
-            <button className="btn_join" onClick={() => route.push('#')}>
-              Join Now
-            </button>
+            <a href="/referral" target="blank">
+              <button className="btn_join" onClick={() => route.push('#')}>
+                Join Now
+              </button>
+            </a>
           </div>
         </Grid>
       </Grid>
