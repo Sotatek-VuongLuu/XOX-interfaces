@@ -82,7 +82,7 @@ const FeatureEconomy = () => {
         <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
           <Grid container spacing={2}>
             <Grid item xs={12} md={8}>
-              <div className="main_card_content" data-aos="fade-right">
+              <div className="main_card_content">
                 <img src="/images/chain_4.svg" alt="token-card" className="chain_4" />
 
                 <div className="card_container">
@@ -93,7 +93,7 @@ const FeatureEconomy = () => {
               </div>
             </Grid>
             <Grid item xs={12} md={4}>
-              <div className="paragraph" data-aos="fade-left">
+              <div className="paragraph">
                 <p className="title">Built and Available on every leading blockchain.</p>
                 <p className="description">
                   Creating A Truly Decentralized Multichain Ecosystem with Unlimited possibilities. Supporting Defi and
