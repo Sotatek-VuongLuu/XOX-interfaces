@@ -109,7 +109,7 @@ export function TransactionSubmittedContent({
             <Link
               external
               href={getBlockExploreLink(hash, 'transaction', chainId)}
-              style={{ color: '#3D8AFF', fontWeight: 400, textDecoration: 'none', marginBottom: '16px' }}
+              style={{ color: '#3D8AFF', fontWeight: 400, marginBottom: '16px' }}
             >
               {t('View on %site%', {
                 site: getBlockExploreName(chainId),

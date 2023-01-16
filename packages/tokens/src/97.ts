@@ -5,7 +5,6 @@ export const bscTestnetTokens = {
   wbnb: WBNB[ChainId.BSC_TESTNET],
   cake: CAKE_TESTNET,
   busd: BUSD_TESTNET,
-  xox: XOX_BSC_TESTNET,
   syrup: new ERC20Token(
     ChainId.BSC_TESTNET,
     '0xfE1e507CeB712BDe086f3579d2c03248b2dB77f9',

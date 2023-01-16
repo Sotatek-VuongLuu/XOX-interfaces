@@ -110,11 +110,11 @@ export function useApproveCallback(
       })
       .catch((error: any) => {
         logError(error)
-        console.log('err',error)
+        console.log('error',error?.code)
         console.error('Failed to approve token', error)
-        // if (error?.code === 'ACTION_REJECTED') {
-        //   return
-        // }
+        if (error?.code === 'ACTION_REJECTED') {
+          return
+        }
         if (error?.code !== 4001) {
           toastError(t('Error'), error.message)
         }

@@ -125,7 +125,7 @@ const MainContent = styled.div`
   }
 `
 
-const InfoNav: React.FC<{ allTokens: any }> = ({ allTokens }) => {
+const InfoNav: React.FC<{ allTokens: any, textContentBanner?: string }> = ({ allTokens, textContentBanner }) => {
   const router = useRouter()
   const chainPath = useMultiChainPath()
   const { chainId } = useActiveChainId()
@@ -142,7 +142,7 @@ const InfoNav: React.FC<{ allTokens: any }> = ({ allTokens }) => {
           Swap to get XOX and XOXS
         </Text>
         <Text className="subtitle" marginBottom="16px">
-          Stake XOXS automatically to earn more
+          {textContentBanner || "Stake XOXS automatically to earn more"}
         </Text>
         <a
           href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
