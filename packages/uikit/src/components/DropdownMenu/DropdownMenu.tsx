@@ -18,6 +18,9 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   index,
   setMenuOpenByIndex,
   isDisabled,
+  handleMouseEnter,
+  handleMouseLeave,
+  setIsHover,
   ...props
 }) => {
   const { linkComponent } = useContext(MenuContext);
@@ -83,6 +86,8 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
           {...attributes.popper}
           $isBottomNav={isBottomNav}
           $isOpen={isMenuShow}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
         >
           {items
             .filter((item) => !item.isMobileOnly)

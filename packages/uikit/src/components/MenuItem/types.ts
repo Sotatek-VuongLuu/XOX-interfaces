@@ -9,6 +9,8 @@ export interface MenuItemProps {
   variant?: MenuItemVariant;
   statusColor?: keyof Colors;
   scrollLayerRef?: React.RefObject<HTMLDivElement>;
+  isHover?: boolean;
+  label?: string;
 }
 
 export type StyledMenuItemProps = {
@@ -16,4 +18,6 @@ export type StyledMenuItemProps = {
   $isDisabled?: boolean;
   $variant?: MenuItemVariant;
   $statusColor?: keyof Colors;
+  $isHover?: boolean;
+  $label?: string;
 };
