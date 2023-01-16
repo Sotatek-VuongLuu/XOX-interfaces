@@ -291,8 +291,8 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
 }
 
 const DataRow: React.FC<
-  React.PropsWithChildren<{ transaction: any; index: number; page: number; perPage: number }>
-> = ({ transaction, index, page, perPage }) => {
+  React.PropsWithChildren<{ transaction: any; index: number; page: number; perPage: number, typePage: any }>
+> = ({ transaction, index, page, perPage, typePage }) => {
   const { t } = useTranslation()
   const { chainId } = useActiveChainId();
   const abs0 = formatUnits(transaction?.amount, USD_DECIMALS[chainId]);
@@ -313,23 +313,26 @@ const DataRow: React.FC<
       >
         {index + 1 + (page - 1) * perPage}
       </Text>
-      <LinkExternal
-        color="#9072FF"
-        href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
-        key={`${transaction.hash}-type`}
-      >
-        <Text
-          fontSize="16px"
-          className='size-14'
-          fontFamily="Inter"
-          fontStyle="normal"
-          fontWeight="400"
-          lineHeight="19px"
-          color="rgba(255, 255, 255, 0.87)"
+      {
+        typePage !== TYPE_HISTORY.stake && <LinkExternal
+          color="#9072FF"
+          href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
+          key={`${transaction.hash}-type`}
         >
-          WithDraw
-        </Text>
-      </LinkExternal>
+          <Text
+            fontSize="16px"
+            className='size-14'
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="400"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.87)"
+          >
+            WithDraw
+          </Text>
+        </LinkExternal>
+      }
+      
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -350,8 +353,19 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-token0`}
       >{`${abs0} ${symbolToken0}`}</Text>
+      {
+        typePage === TYPE_HISTORY.stake && <Text
+          fontSize="16px"
+          fontFamily="Inter"
+          className='size-14'
+          fontStyle="normal"
+          fontWeight="400"
+          lineHeight="19px"
+          color="rgba(255, 255, 255, 0.87)"
+          key={`${transaction.hash}-token0`}
+        >{`${transaction?.apy}%`}</Text>
+      }
     </>
   )
 }
@@ -581,17 +595,19 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
           >
             No
           </Text>
-          <Text
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            Action
-          </Text>
+          {
+            typePage !== TYPE_HISTORY.stake && <Text
+              fontSize="16px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="19px"
+              color="rgba(255, 255, 255, 0.6)"
+              className="table-header"
+            >
+              Action
+            </Text>
+          }
           <Text
             fontSize="16px"
             fontFamily="Inter"
@@ -618,6 +634,20 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
               {iconSortField === null ? IconSort : iconSortField ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
+          {
+            typePage === TYPE_HISTORY.stake && <Text
+              fontSize="16px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="19px"
+              color="rgba(255, 255, 255, 0.6)"
+              className="table-header"
+            >
+              APY
+            </Text>
+          }
+          
           {/* <Break /> */}
 
           {currentTransactions ? (
@@ -627,7 +657,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
                   return (
                     // eslint-disable-next-line react/no-array-index-key
                     <Fragment key={index}>
-                      <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
+                      <DataRow transaction={transaction} index={index} page={page} perPage={perPage} typePage={typePage} />
                     </Fragment>
                   )
                 }
