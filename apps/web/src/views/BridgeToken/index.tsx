@@ -17,7 +17,6 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useAccount } from 'wagmi'
 import { ChainId } from '@pancakeswap/sdk'
-import Reminder from './Reminder'
 import AddressInput from './AddressInput'
 import { getAddress } from '@ethersproject/address'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
@@ -31,6 +30,7 @@ import { parseUnits } from '@ethersproject/units'
 import { getBridgeTokenAddress } from 'utils/addressHelpers'
 import { useBridgeTokenContract } from '../../hooks/useContract'
 import ModalBase from '../Referral/components/Modal/ModalBase'
+import Reminder from './Reminder'
 // eslint-disable-next-line import/no-cycle
 import ModalTransactionHistory from './ModalTransactionHistory'
 
@@ -52,7 +52,8 @@ const ButtonConnect = styled.button`
 `
 
 const SwapButton = styled.button`
-  background: ${({ theme, disabled }) => (disabled ? 'rgba(255, 255, 255, 0.05) ' : theme.colors.primary)};
+  background: ${({ disabled }) =>
+    disabled ? 'rgba(255, 255, 255, 0.05) ' : 'linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)'};
   color: ${({ theme, disabled }) => (disabled ? 'rgba(255, 255, 255, 0.38)' : theme.colors.white)};
   width: 100%;
   border-radius: 8px;
@@ -100,20 +101,22 @@ const Divider = styled.div`
   }
 `
 
-const WapperConnectBtn = styled(ConnectWalletButton)`
+const Button = styled.button`
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+`
+
+const WapperConnectBtn = styled(Button)`
   width: 100%;
   margin-top: 20px;
   height: 54px;
   font-size: 18px;
   font-weight: 700;
   border-radius: 8px;
-`
-
-const Button = styled.button`
-  background: none;
-  border: none;
-  cursor: pointer;
-  padding: 0;
+  background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+  color: white;
 `
 
 const Content = styled.div`
@@ -343,7 +346,7 @@ export default function BridgeToken() {
     setAddressTo(value)
     const validAdress = isAddress(value)
     if (!validAdress) {
-      setMessageAddress('Please enter a valid address!')
+      setMessageAddress('Please enter a valid address.')
     } else setMessageAddress('')
   }
 
@@ -351,8 +354,6 @@ export default function BridgeToken() {
   const handleApprove = useCallback(async () => {
     await approveCallback()
   }, [approveCallback])
-
-  const [onPresentTransactionsModal] = useModal(<TransactionsModal />)
 
   const [onHistoryTransactionsModal] = useModal(<ModalTransactionHistory />)
 
@@ -522,7 +523,7 @@ export default function BridgeToken() {
                   <p>{t('Trade tokens in an instant')} </p>
                 </div>
                 <Button onClick={onHistoryTransactionsModal}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
                     <path
                       d="M2.90918 3.36365V7H6.54556"
                       stroke="#8E8E8E"
@@ -635,6 +636,8 @@ export default function BridgeToken() {
                 src="/images/close-one.svg"
                 alt="close-one"
                 className="x-close-icon"
+                height={20}
+                width={20}
                 onClick={() => setIsOpenSuccessModal(false)}
               />
             </Content>

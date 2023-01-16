@@ -6,6 +6,7 @@ import { Box, Grid } from '@mui/material'
 import { useRouter } from 'next/router'
 import Spline from '@splinetool/react-spline'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import useWindowSize from 'hooks/useWindowSize'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -149,6 +150,8 @@ const GridLeft = styled(Grid)`
 `
 
 const WelcomeXOX = (): JSX.Element => {
+  const { width: innerWidth } = useWindowSize()
+  const { isMobile, isTablet } = useMatchBreakpoints()
   const route = useRouter()
   return (
     <Wrapper>
@@ -180,6 +183,16 @@ const WelcomeXOX = (): JSX.Element => {
               </div>
             </LeftContent>
           </GridLeft>
+          <Grid item xs={12} md={5} sx={{ position: 'relative', height: '385px' }}>
+            {(isMobile || isTablet) && (
+              <Spline
+                scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
+                onLoad={(e) => e.setZoom(0.5)}
+                height={600}
+                id="mb_3d"
+              />
+            )}
+          </Grid>
         </Grid>
       </Box>
     </Wrapper>
