@@ -172,7 +172,7 @@ const WidthdrawForm = ({priceAvailable} : {priceAvailable?: number | string}) =>
 
   const handleWidthdraw = async() => {
     const fullDecimalWithdrawAmount = getDecimalAmount(new BigNumber(amount), 18);
-    const estimatedGas = await contractTreasuryXOX.estimateGas.claimFarmingReward(fullDecimalWithdrawAmount.toString()).catch((err) => {
+    const estimatedGas:any = await contractTreasuryXOX.estimateGas.claimFarmingReward(fullDecimalWithdrawAmount.toString()).catch((err) => {
       console.log(err);
     });
 
