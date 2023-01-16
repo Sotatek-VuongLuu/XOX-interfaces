@@ -127,6 +127,9 @@ const Table = styled.div`
   align-items: center;
   position: relative;
   grid-template-columns: 0.15fr 1.4fr 1.2fr 0.8fr;
+  &.table-withdraw{
+    grid-gap: 13px 25px;
+  }
   .table-header {
     margin-bottom: 16px;
   }
@@ -651,7 +654,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
         </Text>
       </Flex>
       <CustomTableWrapper>
-        <Table>
+        <Table className={typePage === TYPE_HISTORY.widthDraw ? 'table-withdraw' : ''}>
           <Text
             fontSize="16px"
             fontFamily="Inter"

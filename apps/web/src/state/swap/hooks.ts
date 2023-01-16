@@ -2,7 +2,7 @@ import { useAccount } from 'wagmi'
 import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk'
 import { ParsedUrlQuery } from 'querystring'
 import { useEffect, useMemo, useState } from 'react'
-import { DEFAULT_INPUT_CURRENCY, DEFAULT_OUTPUT_CURRENCY } from 'config/constants/exchange'
+import { DEFAULT_INPUT_CURRENCY, DEFAULT_OUTPUT_CURRENCY, USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { multicallv2 } from 'utils/multicall'
 import IPancakePairABI from 'config/abi/IPancakePair.json'
 import { useDispatch, useSelector } from 'react-redux'
@@ -112,8 +112,16 @@ export function useDerivedSwapInfo(
   const isExactIn: boolean = independentField === Field.INPUT
   const parsedAmount = tryParseAmount(typedValue, (isExactIn ? inputCurrency : outputCurrency) ?? undefined)
 
-  const bestTradeExactIn = useTradeXOXExactIn(isExactIn ? parsedAmount : undefined, outputCurrency ?? undefined, isRouterNormal)
-  const bestTradeExactOut = useTradeXOXExactOut(inputCurrency ?? undefined, !isExactIn ? parsedAmount : undefined, isRouterNormal)
+  const bestTradeExactIn = useTradeXOXExactIn(
+    isExactIn ? parsedAmount : undefined,
+    outputCurrency ?? undefined,
+    isRouterNormal,
+  )
+  const bestTradeExactOut = useTradeXOXExactOut(
+    inputCurrency ?? undefined,
+    !isExactIn ? parsedAmount : undefined,
+    isRouterNormal,
+  )
 
   const v2Trade = isExactIn ? bestTradeExactIn : bestTradeExactOut
 
@@ -240,7 +248,7 @@ export function useDefaultsFromURLSearch():
 
   useEffect(() => {
     if (!chainId || !native) return
-    const parsed = queryParametersToSwapState(query, native.symbol, USDC[chainId]?.address)
+    const parsed = queryParametersToSwapState(query, USD_ADDRESS[chainId], XOX_ADDRESS[chainId])
 
     dispatch(
       replaceSwapState({
