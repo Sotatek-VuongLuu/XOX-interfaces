@@ -1,6 +1,7 @@
 import { Duration, getUnixTime, startOfHour, sub } from 'date-fns'
 import { useRouter } from 'next/router'
 import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useWeb3React } from '@pancakeswap/wagmi'
 
 import fetchPoolChartData from 'state/info/queries/pools/chartData'
 import { fetchAllPoolData, fetchAllPoolDataWithAddress } from 'state/info/queries/pools/poolData'
@@ -8,6 +9,7 @@ import fetchPoolTransactions from 'state/info/queries/pools/transactions'
 import { fetchGlobalChartData } from 'state/info/queries/protocol/chart'
 import { fetchProtocolData } from 'state/info/queries/protocol/overview'
 import fetchTopTransactions from 'state/info/queries/protocol/transactions'
+import fetchTopStableCoin, { fetchTransactionStableCoin, fetchWithdrawStableCoin, fetchStakeStableCoin } from 'state/info/queries/protocol/stablecoin'
 import fetchTokenChartData from 'state/info/queries/tokens/chartData'
 import fetchPoolsForToken from 'state/info/queries/tokens/poolsForToken'
 import fetchTokenPriceData from 'state/info/queries/tokens/priceData'
@@ -66,6 +68,60 @@ export const useProtocolTransactionsSWR = (): {
     SWR_SETTINGS, // update latest Transactions per 15s
   )
   return transactions
+}
+
+export const useStableCoinSWR = (address:any): {
+  infoBUSD: any
+  infoUSDC: any
+} => {
+  const chainName = useGetChainName()
+  // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
+  const type = 'swap'
+  const { data: stablecoin } = useSWRImmutable(
+    [`info/protocol/updateStableCoinData/${type}`, chainName],
+    () => fetchTopStableCoin(address),
+    SWR_SETTINGS, // update latest Transactions per 15s
+  )
+  return stablecoin
+}
+
+export const useTransactionStableCoinSWR = () => {
+  const chainName = useGetChainName()
+  const { chainId } = useActiveChainId()
+  // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
+  const type = 'swap'
+  const { data: stablecoin } = useSWRImmutable(
+    [`info/protocol/updateStableCoinTransactionData/${type}`, chainName],
+    () => fetchTransactionStableCoin(chainId),
+    SWR_SETTINGS, // update latest Transactions per 15s
+  )
+  return stablecoin;
+}
+
+export const useWidthDrawStableCoinSWR = (address?: any) => {
+  const chainName = useGetChainName()
+  const { chainId } = useActiveChainId()
+  // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
+  const type = 'swap'
+  const { data: withdraw } = useSWRImmutable(
+    [`info/protocol/updateStableCoinWidthDrawData/${type}`, chainName],
+    () => fetchWithdrawStableCoin(chainId, address),
+    SWR_SETTINGS, // update latest Transactions per 15s
+  )
+  return withdraw;
+}
+
+export const useStakeStableCoinSWR = (address?: any) => {
+  const chainName = useGetChainName()
+  const { chainId } = useActiveChainId()
+  // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
+  const type = 'swap'
+  const { data: stakeTable } = useSWRImmutable(
+    [`info/protocol/updateStableCoinStakeData/${type}`, chainName],
+    () => fetchStakeStableCoin(chainId, address),
+    SWR_SETTINGS, // update latest Transactions per 15s
+  )
+  return stakeTable;
 }
 
 export const useAllPoolDataSWR = () => {
