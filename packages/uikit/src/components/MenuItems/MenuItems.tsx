@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createElement, memo } from "react";
+import { createElement, memo, useState } from "react";
 import { Flex } from "../Box";
 import isTouchDevice from "../../util/isTouchDevice";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
@@ -12,6 +12,15 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
   activeSubItem,
   ...props
 }) => {
+  const [isHover, setIsHover] = useState(false);
+
+  const handleMouseEnter = () => {
+    setIsHover(true);
+  };
+  const handleMouseLeave = () => {
+    setIsHover(false);
+  };
+
   return (
     <Flex {...props}>
       {items.map(({ label, items: menuItems = [], href, icon, disabled }) => {
@@ -26,8 +35,17 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
             py={1}
             activeItem={activeSubItem}
             isDisabled={disabled}
+            handleMouseEnter={handleMouseEnter}
+            handleMouseLeave={handleMouseLeave}
           >
-            <MenuItem {...linkProps} isActive={isActive} statusColor={statusColor} isDisabled={disabled}>
+            <MenuItem
+              {...linkProps}
+              isActive={isActive}
+              statusColor={statusColor}
+              isDisabled={disabled}
+              isHover={isHover}
+              label={label}
+            >
               {label || (icon && createElement(Icon as any, { color: isActive ? "secondary" : "textSubtle" }))}
             </MenuItem>
           </DropdownMenu>

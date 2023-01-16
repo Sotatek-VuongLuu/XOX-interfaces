@@ -17,7 +17,6 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTranslation } from '@pancakeswap/localization'
 import { maxAmountSpend } from 'utils/maxAmountSpend'
 import { useSwapActionHandlers } from 'state/swap/useSwapActionHandlers'
-import AccessRisk from 'views/Swap/components/AccessRisk'
 import styled from 'styled-components'
 import CurrencyInputPanel from 'components/CurrencyInputPanel'
 import { CommonBasesType } from 'components/SearchModal/types'
@@ -32,7 +31,6 @@ import {
   useShowReferralCode,
 } from 'hooks/useApproveCallback'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
-
 import { Field } from 'state/swap/actions'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
 import { useExpertModeManager, useUserSlippageTolerance } from 'state/user/hooks'
@@ -40,7 +38,6 @@ import { useExpertModeManager, useUserSlippageTolerance } from 'state/user/hooks
 import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
 import { currencyId } from 'utils/currencyId'
 import axios from 'axios'
-
 import { useAtomValue } from 'jotai'
 import CurrencyInputHeader from './CurrencyInputHeader'
 import SwapCommitButton from './SwapCommitButton'
@@ -72,6 +69,14 @@ const ReferralInput = styled.input`
   text-transform:uppercase;
   font-size:14px;
 `
+const ErrorReferral = styled.div`
+  font-size: 12px;
+  color: #f44336;
+  text-align: right;
+  width: 100%;
+  margin-top: -8px;
+  margin-bottom: 24px;
+`
 const PerPriceTitle = styled.div`
   color: #9072ff;
   font-weight: 700;
@@ -90,7 +95,7 @@ export default function SwapForm() {
   const tokenMap = useAtomValue(combinedTokenMapFromOfficialsUrlsAtom)
   const [referralCode, setReferralCode] = useState(null)
   const { account, chainId } = useActiveWeb3React()
-
+  const [referralError, setReferralError] = useState(null)
   // for expert mode
   const [isExpertMode] = useExpertModeManager()
 
@@ -243,12 +248,30 @@ export default function SwapForm() {
   const isShowReferralBox = useShowReferralCode(inputCurrency, outputCurrency, chainId)
   const hasAmount = Boolean(parsedAmount)
   const handleChangeReferal = (value: string) => {
+    if (value.length === 0) {
+      setReferralError(null)
+      return
+    }
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/users`, { params: { ref: value } })
       .then((response) => {
         if (response.data.address) setReferralCode(response.data.address)
       })
       .catch((error) => console.warn(error))
+    if (value.length === 8) {
+      axios
+        .post(`${process.env.NEXT_PUBLIC_API}/users/referalcode/existed`, { address: account, referal_code: value })
+        .then((response) => {
+          if (response.data) {
+            setReferralError(null)
+          }
+        })
+        .catch((error) => {
+          if (error.response?.data?.message) {
+            setReferralError(error.response.data.message)
+          }
+        })
+    }
   }
   const onRefreshPrice = useCallback(() => {
     if (hasAmount) {
@@ -369,10 +392,15 @@ export default function SwapForm() {
             </>
           )}
           {isShowReferralBox && (
-            <ReferralCode>
-              <Text bold fontSize={['14px', , '18px']} color="rgba(255, 255, 255, 0.87)" fontWeight={400}>{t('Referral Code')}</Text>
-              <ReferralInput onChange={(e) => handleChangeReferal(e.target.value)} maxLength={8} />
-            </ReferralCode>
+            <>
+              <ReferralCode>
+                <Text bold fontSize={['14px', , '18px']} color="rgba(255, 255, 255, 0.87)" fontWeight={400}>
+                  {t('Referral Code')}
+                </Text>
+                <ReferralInput onChange={(e) => handleChangeReferal(e.target.value)} maxLength={8} />
+              </ReferralCode>
+              {referralError && <ErrorReferral>{referralError}</ErrorReferral>}
+            </>
           )}
         </AutoColumn>
         {hasStableSwapAlternative && (
