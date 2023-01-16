@@ -1,5 +1,5 @@
 import { gql } from 'graphql-request'
-import { mapBurns, mapMints, mapSwaps, mapSwapsUNI, mapSwapsXOX, mapStablecoinXOX } from 'state/info/queries/helpers'
+import { mapBurns, mapMints, mapSwaps, mapSwapsUNI, mapSwapsXOX } from 'state/info/queries/helpers'
 import { BurnResponse, MintResponse, SwapResponse, SwapResponseUNI } from 'state/info/queries/types'
 import { Transaction, TransactionFrom } from 'state/info/types'
 
