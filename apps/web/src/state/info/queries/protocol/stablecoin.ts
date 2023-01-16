@@ -42,7 +42,9 @@ const QUERYWITHDRAW = (address?:string) => `
     userWithdrawHistories(first: 100, orderBy: date, orderDirection: desc ${!address ? '' : `, where: { address:"${address}" }`}) {
       address,
       amount,
-      date 
+      date,
+      id,
+      tx
     }
   }
 `
@@ -53,7 +55,9 @@ const QUERYSTACK = (address?:string) => `
       address,
       amount,
       apy,
-      date
+      date,
+      id,
+      tx
     }
   }
 `
@@ -104,7 +108,12 @@ export const fetchWithdrawStableCoin = async (
   const chainName = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BSC' : 'ETH';
   const dataXOX = await multiChainQueryClientWithNR[chainName].request<any>(QUERYWITHDRAW(address));
   if (dataXOX) {
-    result.transactionsXOX = dataXOX?.userWithdrawHistories
+    result.transactionsXOX = dataXOX?.userWithdrawHistories?.map(item => {
+      return {
+        ...item,
+        hash: item?.tx,
+      }
+    })
   }
   return result;
 }
@@ -117,7 +126,12 @@ export const fetchStakeStableCoin = async (
   const chainName = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BSC' : 'ETH';
   const dataXOX = await multiChainQueryClientWithNR[chainName].request<any>(QUERYSTACK(address));
   if (dataXOX) {
-    result.transactionsXOX = dataXOX?.userStakeHistories
+    result.transactionsXOX = dataXOX?.userStakeHistories?.map(item => {
+      return {
+        ...item,
+        hash: item?.tx,
+      }
+    })
   }
   return result;
 }

@@ -76,7 +76,8 @@ export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: b
 
   ${({ theme }) => theme.mediaQueries.xxl} {
     position: fixed;
-    inset: 0px auto auto 0px;
+    top: 0;
+    left: 0;
     transform: translate(451px, 64px);
     background-color: ${({ theme }) => theme.card.background};
   }
