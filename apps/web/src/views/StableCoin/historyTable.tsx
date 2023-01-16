@@ -126,7 +126,7 @@ const Table = styled.div`
   grid-gap: 16px 25px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1fr 0.7fr;
+  grid-template-columns: 0.15fr 1.4fr 1.2fr 0.8fr;
   .table-header {
     margin-bottom: 16px;
   }
@@ -371,15 +371,34 @@ const DataRow: React.FC<
       >
         {formatISO9075(parseInt(transaction.date, 10) * 1000)}
       </Text>
-      <Text
-        fontSize="16px"
-        fontFamily="Inter"
-        className='size-14'
-        fontStyle="normal"
-        fontWeight="400"
-        lineHeight="19px"
-        color="rgba(255, 255, 255, 0.87)"
-      >{`${abs0} ${symbolToken0}`}</Text>
+      {
+        typePage === TYPE_HISTORY.myWidthDraw && <Text
+          fontSize="16px"
+          fontFamily="Inter"
+          className='size-14'
+          fontStyle="normal"
+          fontWeight="400"
+          lineHeight="19px"
+          color="rgba(255, 255, 255, 0.87)"
+        >{`${abs0} ${symbolToken0}`}</Text>
+      }
+      {
+        typePage === TYPE_HISTORY.widthDraw && <LinkExternal
+          color="#9072FF"
+          href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
+          key={`${transaction.hash}-type`}
+        >
+          <Text
+            fontSize="16px"
+            fontFamily="Inter"
+            className='size-14'
+            fontStyle="normal"
+            fontWeight="400"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.87)"
+          >{`${abs0} ${symbolToken0}`}</Text>
+        </LinkExternal>
+      }
       {
         typePage === TYPE_HISTORY.stake && <Text
           fontSize="16px"
