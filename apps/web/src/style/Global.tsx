@@ -72,19 +72,19 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  .product_active_hover {
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
-  }
-
   #mb_3d {
     position: absolute;
     top: 0;
     right: 50%;
     transform: translate(37%, -24%);
+  }
+
+  .product_active_hover {
+    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%) !important;
+    -webkit-background-clip: text !important;
+    -webkit-text-fill-color: transparent !important;
+    background-clip: text !important;
+    text-fill-color: transparent !important;
   }
 
 `

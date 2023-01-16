@@ -51,7 +51,7 @@ const MenuItem: React.FC<React.PropsWithChildren<MenuItemProps>> = ({
         $isHover={isHover}
         $label={label}
         {...props}
-        className={isHover && label === "Product" ? `product_active_hover` : ""}
+        className={isHover && label === "Products" ? `product_active_hover` : ""}
       >
         {children}
       </StyledMenuItem>

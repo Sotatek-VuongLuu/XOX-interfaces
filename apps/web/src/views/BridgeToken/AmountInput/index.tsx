@@ -1,9 +1,13 @@
+/* eslint-disable import/no-cycle */
 import React, { useState } from 'react'
 import { ChainId } from '@pancakeswap/sdk'
 import styled from 'styled-components'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 import { NumericalInput } from '@pancakeswap/uikit'
 import SelectNetworkButton from './SelectNetworkButton'
 import SelectTokenButton from './SelectTokenButton'
+import { NETWORK_LABEL } from '../networks'
+import { getChainIdToByChainId } from '..'
 
 const Wrapper = styled.div`
   border-radius: 8px;
@@ -134,6 +138,7 @@ const AmountInput: React.FC<Props> = ({
   isShowDrop,
   handleShowDrop,
 }) => {
+  const { chainId } = useActiveChainId()
   const getInputLabel = () => {
     return (isTokenFrom && 'From') || 'To (est)'
   }
@@ -145,6 +150,12 @@ const AmountInput: React.FC<Props> = ({
         {isTokenFrom && (
           <span className="balance" onClick={() => balance !== '-' && handleBalanceMax(balance)} aria-hidden="true">
             Balance: ${balance}
+          </span>
+        )}
+
+        {!isTokenFrom && (
+          <span className="balance" aria-hidden="true">
+            {NETWORK_LABEL[getChainIdToByChainId(chainId)]} Pool balance:
           </span>
         )}
       </TextRow>

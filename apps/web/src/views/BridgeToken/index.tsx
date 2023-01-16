@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable import/no-duplicates */
 /* eslint-disable import/order */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
@@ -561,8 +562,17 @@ export default function BridgeToken() {
                 handleShowDrop={handleShowDropFrom}
               />
               <Divider>
-                <div onClick={switchNetwork} aria-hidden="true">
-                  <svg width="31" height="30" viewBox="0 0 31 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <div>
+                  <svg
+                    width="31"
+                    height="30"
+                    viewBox="0 0 31 30"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    onClick={switchNetwork}
+                    aria-hidden="true"
+                    style={{ cursor: 'pointer' }}
+                  >
                     <circle cx="15.5" cy="15" r="15" fill="#303030" />
                     <path
                       d="M15.5042 20.9498V9"
@@ -598,7 +608,7 @@ export default function BridgeToken() {
               ) : (
                 <SwapButton
                   disabled={
-                    (messageButton !== 'Swap' && messageButton !== `Approve ${addressTokenInput.symbol}`) ||
+                    (messageButton !== 'Bridge' && messageButton !== `Approve ${addressTokenInput.symbol}`) ||
                     messageAddress !== '' ||
                     amountTo === '' ||
                     loading

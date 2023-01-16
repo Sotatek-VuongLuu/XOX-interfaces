@@ -56,7 +56,7 @@ const BGPartner = () => {
         <>
           <BGLeft src="/images/pl.svg" />
           <BGRight src="/images/pr.svg" />
-          <BGXOX src="/images/xox_1.svg" />
+          <BGXOX src="/images/xoxs_secured.svg" />
         </>
       ) : (
         <>

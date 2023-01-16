@@ -178,22 +178,26 @@ const SliderWrapper = styled.div`
     & img.partner:hover {
       animation: scale1 2.8s infinite;
     }
+
+    & img {
+      cursor: pointer;
+    }
   }
   #infinite.infinitetl div.highway-barrier ul.highway-lane li.highway-car {
     width: 80px;
-    animation: translateinfinitetl 10s linear infinite;
+    animation: translateinfinitetl 23s linear infinite;
   }
   #infinite.infinitetr div.highway-barrier ul.highway-lane li.highway-car {
     width: 80px;
-    animation: translateinfinitetr 10s linear infinite;
+    animation: translateinfinitetr 23s linear infinite;
   }
   #infinite.infinitetl.speed-20 div.highway-barrier ul.highway-lane li.highway-car {
     width: 80px;
-    animation: translateinfinitetl 20s linear infinite;
+    animation: translateinfinitetl 23s linear infinite;
   }
   #infinite.infinitetr.speed-20 div.highway-barrier ul.highway-lane li.highway-car {
     width: 80px;
-    animation: translateinfinitetr 20s linear infinite;
+    animation: translateinfinitetr 23s linear infinite;
   }
 `
 
