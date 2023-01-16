@@ -609,7 +609,7 @@ export default function BridgeToken() {
                 </SwapButton>
               )}
               <Reminder
-                chainId={getChainIdToByChainId(chainId)}
+                chainId={chainId}
                 tokenInput={defaultToken}
                 tokenOutput={tokenB}
                 amount={amountInput}

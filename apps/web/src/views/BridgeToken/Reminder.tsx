@@ -80,19 +80,19 @@ const Reminder: React.FC<Props> = ({
         return
       }
       const res = await fetchBridgeTokenFee(chainId, amount && amount !== ('.' || '') ? amount : '0')
-      const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data
+      const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data || bridgeTokenFee
       // const bridgeTokenFee: BridgeTokenFee = {
       //   gasFee: '0.13681800000000000014',
       //   minCrossChainFee: '0.01',
       //   minAmount: '0.15681800000000000014',
       //   maxAmount: '2000000',
-      // }
+      // }      
       if (bridgeTokenFeeCurrent) {
         setBridgeTokenFee((prev) => ({
           ...prev,
           ...bridgeTokenFeeCurrent,
         }))
-        setAmountTo(getAmountTo(bridgeTokenFeeCurrent.gasFee, bridgeTokenFeeCurrent.minCrossChainFee, bridgeTokenFeeCurrent.minAmount))
+        setAmountTo(getAmountTo(Number(bridgeTokenFeeCurrent.gasFee).toFixed(18), bridgeTokenFeeCurrent.minCrossChainFee, bridgeTokenFeeCurrent.minAmount))
         onBridgeTokenFeeChange(bridgeTokenFeeCurrent.minAmount, bridgeTokenFeeCurrent.maxAmount)
       }
     }
