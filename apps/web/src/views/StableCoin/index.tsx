@@ -179,15 +179,9 @@ export default function StableCoin() {
               <TextStyle style={{ transform: 'translateY(1px)' }}>|</TextStyle>
               <TextStyle className="primary">Withdraw reward</TextStyle>
             </Flex>
-<<<<<<< HEAD
             <Row style={{marginTop: 25}}>
               <Box className='wrap-withdraw'>
                 <WidthdrawForm priceAvailable={currentReward} onSuccess={() => setWidthDraw(TYPE.default)} />
-=======
-            <Row style={{ marginTop: 25 }}>
-              <Box className="wrap-withdraw">
-                <WidthdrawForm priceAvailable={currentReward} />
->>>>>>> develop
               </Box>
             </Row>
           </>
