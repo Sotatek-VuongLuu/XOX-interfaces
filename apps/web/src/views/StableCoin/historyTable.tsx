@@ -372,7 +372,7 @@ const DataRow: React.FC<
         {formatISO9075(parseInt(transaction.date, 10) * 1000)}
       </Text>
       {
-        typePage === TYPE_HISTORY.myWidthDraw && <Text
+        typePage !== TYPE_HISTORY.widthDraw && <Text
           fontSize="16px"
           fontFamily="Inter"
           className='size-14'

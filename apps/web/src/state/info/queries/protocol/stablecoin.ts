@@ -43,7 +43,8 @@ const QUERYWITHDRAW = (address?:string) => `
       address,
       amount,
       date,
-      id 
+      id,
+      tx
     }
   }
 `
@@ -55,7 +56,8 @@ const QUERYSTACK = (address?:string) => `
       amount,
       apy,
       date,
-      id
+      id,
+      tx
     }
   }
 `
@@ -109,7 +111,7 @@ export const fetchWithdrawStableCoin = async (
     result.transactionsXOX = dataXOX?.userWithdrawHistories?.map(item => {
       return {
         ...item,
-        hash: item.id.split('-')[0],
+        hash: item?.tx,
       }
     })
   }
@@ -127,7 +129,7 @@ export const fetchStakeStableCoin = async (
     result.transactionsXOX = dataXOX?.userStakeHistories?.map(item => {
       return {
         ...item,
-        hash: item.id.split('-')[0],
+        hash: item?.tx,
       }
     })
   }
