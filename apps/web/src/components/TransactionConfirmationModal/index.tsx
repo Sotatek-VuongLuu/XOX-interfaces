@@ -215,7 +215,7 @@ export function TransactionSwapErrorContent({
 interface ConfirmationModalProps {
   title: string
   customOnDismiss?: () => void
-  hash: string | undefined
+  hash?: string | undefined
   content: () => React.ReactNode
   attemptingTxn: boolean
   pendingText: string
