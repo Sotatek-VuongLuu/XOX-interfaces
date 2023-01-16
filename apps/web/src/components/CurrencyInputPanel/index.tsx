@@ -272,6 +272,7 @@ export default function CurrencyInputPanel({
               onBlur={onInputBlur}
               onUserInput={(val) => {
                 onUserInput(val)
+                setActivePercent(val)
               }}
               // style={
               //   isShowPercent && isShowDolar
