@@ -262,7 +262,7 @@ export const PageButtons = styled(Flex)`
 
 const SORT_FIELD = {
   timestamp: 'timestamp',
-  amountUSD: 'amountUSD',
+  amount: 'amount',
 }
 
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
@@ -384,7 +384,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
   }, [])
 
   const sortedTransactions = useMemo(() => {
-    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD]
+    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amount]
     return currentTransactions
       ? currentTransactions
           .slice(0, 300)
@@ -392,12 +392,6 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
             return txFilter === undefined || x.type === txFilter
           })
           .map((item: any) => {
-            const outputTokenSymbol = item.amountToken0 < 0 ? item.token0Symbol : item.token1Symbol
-            const inputTokenSymbol = item.amountToken1 < 0 ? item.token0Symbol : item.token1Symbol
-            // const amountStable =
-            //   inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
-            //     ? item.amountUSD / 10 + 1
-            //     : 0
             return { ...item }
           })
           .sort((a, b) => {
@@ -445,7 +439,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
     (newField: string) => {
       setSortField(newField)
       setSortDirection(sortField !== newField ? true : !sortDirection)
-      setIconSortField(newField !== SORT_FIELD.amountUSD ? null : !iconSortField)
+      setIconSortField(newField !== SORT_FIELD.amount ? null : !iconSortField)
       setIconSortDirection(newField !== SORT_FIELD.timestamp ? null : !iconSortDirection)
     },
     [sortDirection, sortField],
@@ -598,21 +592,6 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
           >
             Action
           </Text>
-          <ClickableColumnHeader
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            onClick={() => handleSort(SORT_FIELD.timestamp)}
-            className="table-header"
-          >
-            <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Time</span>{' '}
-              {iconSortDirection === null ? IconSort : iconSortDirection ? IconDown : IconUp}
-            </Flex>
-          </ClickableColumnHeader>
           <Text
             fontSize="16px"
             fontFamily="Inter"
@@ -622,8 +601,23 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Amount
+            Time
           </Text>
+          <ClickableColumnHeader
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.6)"
+            onClick={() => handleSort(SORT_FIELD.amount)}
+            className="table-header"
+          >
+            <Flex alignItems="center">
+              <span style={{ marginRight: '12px' }}>Amount</span>{' '}
+              {iconSortField === null ? IconSort : iconSortField ? IconDown : IconUp}
+            </Flex>
+          </ClickableColumnHeader>
           {/* <Break /> */}
 
           {currentTransactions ? (

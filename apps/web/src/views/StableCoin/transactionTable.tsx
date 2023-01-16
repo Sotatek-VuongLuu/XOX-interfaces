@@ -607,21 +607,6 @@ const TransactionsTable: React.FC = () => {
           >
             Action
           </Text>
-          <ClickableColumnHeader
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            onClick={() => handleSort(SORT_FIELD.timestamp)}
-            className="table-header"
-          >
-            <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Time</span>{' '}
-              {iconSortDirection === null ? IconSort : iconSortDirection ? IconDown : IconUp}
-            </Flex>
-          </ClickableColumnHeader>
           <Text
             fontSize="16px"
             fontFamily="Inter"
@@ -631,8 +616,23 @@ const TransactionsTable: React.FC = () => {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Amount
+            Time
           </Text>
+          <ClickableColumnHeader
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="19px"
+            color="rgba(255, 255, 255, 0.6)"
+            onClick={() => handleSort(SORT_FIELD.stableCoin)}
+            className="table-header"
+          >
+            <Flex alignItems="center">
+              <span style={{ marginRight: '12px' }}>Amount</span>{' '}
+              {iconSortStable === null ? IconSort : iconSortStable ? IconDown : IconUp}
+            </Flex>
+          </ClickableColumnHeader>
           {/* <Break /> */}
 
           {currentTransactions ? (
