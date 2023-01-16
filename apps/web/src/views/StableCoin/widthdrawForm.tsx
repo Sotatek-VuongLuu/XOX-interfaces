@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, {useState} from 'react';
+import React, {useState, useCallback} from 'react';
 import styled from 'styled-components'
-import { Flex, Button, Text, Select, Dropdown , useToast } from '@pancakeswap/uikit'
+import { Flex, Button, Text, Select, Dropdown , useToast, useModal } from '@pancakeswap/uikit'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { ChainId } from '@pancakeswap/sdk'
@@ -12,6 +12,10 @@ import { calculateGasMargin } from 'utils';
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { TransactionResponse } from '@ethersproject/providers'
 import { addTransaction } from 'state/transactions/actions';
+import TransactionConfirmationModal, {
+  TransactionErrorContent,
+} from 'components/TransactionConfirmationModal'
+import ConfirmSwapModal from '../Swap/components/ConfirmSwapModal'
 
 const WrapForm = styled.div`
   padding: 60px 0;
@@ -159,7 +163,9 @@ const ButtonRight = styled(Button)`
   top: 9px;
 `
 
-const WidthdrawForm = ({priceAvailable} : {priceAvailable?: number | string}) => {
+const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | string, onSuccess?: any}) => {
+  const [withdrawErrorMessage, setWithdrawErrorMessage] = useState('');
+  const [pending, setPending] = useState(false);
   const { account, chainId } = useWeb3React();
   const contractTreasuryXOX = useTreasuryXOX();
   const isBUSD = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET);
@@ -176,6 +182,8 @@ const WidthdrawForm = ({priceAvailable} : {priceAvailable?: number | string}) =>
       console.log(err);
     });
 
+    onPresentConfirmModal();
+    setPending(true);
     return callWithGasPrice(
       contractTreasuryXOX,
       'claimFarmingReward',
@@ -184,9 +192,13 @@ const WidthdrawForm = ({priceAvailable} : {priceAvailable?: number | string}) =>
         gasLimit: calculateGasMargin(estimatedGas),
       },
     ).then((response: any) => {
+      setPending(false);
+      setWithdrawErrorMessage('');
       addTransaction(response);
+      // onSuccess();
     }).catch((error: any) => {
-      console.error('Failed to approve token', error)
+      setPending(false);
+      setWithdrawErrorMessage('Transaction rejected.');
       if (error?.code === 'ACTION_REJECTED') {
         return
       }
@@ -196,6 +208,31 @@ const WidthdrawForm = ({priceAvailable} : {priceAvailable?: number | string}) =>
       // throw error
     })
   }
+
+  const confirmationContent = useCallback(
+    () =>
+      withdrawErrorMessage ? (
+        <>
+          <TransactionErrorContent message={withdrawErrorMessage} />
+        </>
+      ) : (
+        <></>
+      ),
+    [withdrawErrorMessage],
+  )
+
+  const [onPresentConfirmModal] = useModal(
+    <TransactionConfirmationModal
+      title="Confirm Withdraw"
+      content={confirmationContent}
+      pendingText="Pending"
+      attemptingTxn={pending}
+      hash={chainId.toString()}
+    />,
+    true,
+    true,
+    'transactionConfirmationModal',
+  )
 
   return (
     <WrapForm>
