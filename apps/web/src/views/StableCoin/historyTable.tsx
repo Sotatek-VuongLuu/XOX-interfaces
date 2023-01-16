@@ -654,7 +654,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
           )}
         </Table>
       </CustomTableWrapper>
-      {currentTransactions?.length > 0 && (
+      {currentTransactions?.length > 9 && (
         <PageButtons>
           <div>
             <Arrow

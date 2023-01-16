@@ -663,7 +663,7 @@ const TransactionsTable: React.FC = () => {
           )}
         </Table>
       </CustomTableWrapper>
-      {currentTransactions && (
+      {currentTransactions && currentTransactions?.length > 9 && (
         <PageButtons>
           <div>
             <Arrow
