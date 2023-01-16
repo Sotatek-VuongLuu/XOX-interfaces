@@ -1,16 +1,16 @@
-import { useMemo, useState } from 'react'
+import { useState } from 'react'
 import styled from 'styled-components'
 import { Trade, TradeType, CurrencyAmount, Currency } from '@pancakeswap/sdk'
-import { Button, Text, AutoRenewIcon, QuestionHelper } from '@pancakeswap/uikit'
+import { Button, Text, QuestionHelper } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { Field } from 'state/swap/actions'
 import CircleRefresh from 'components/Svg/CircleRefresh'
 import { computeTradePriceBreakdown, formatExecutionPrice, warningSeverity } from 'utils/exchange'
 import { AutoColumn } from 'components/Layout/Column'
 import { AutoRow, RowBetween, RowFixed } from 'components/Layout/Row'
-import { TOTAL_FEE, LP_HOLDERS_FEE, TREASURY_FEE, BUYBACK_FEE } from 'config/constants/info'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 import FormattedPriceImpact from './FormattedPriceImpact'
-import { StyledBalanceMaxMini, SwapCallbackError } from './styleds'
+import { SwapCallbackError } from './styleds'
 
 const SwapModalFooterContainer = styled(AutoColumn)`
   margin-top: 24px;
@@ -39,21 +39,21 @@ export default function SwapModalFooter({
   disabledConfirm: boolean
 }) {
   const { t } = useTranslation()
+  const { chainId } = useActiveChainId()
   const [showInverted, setShowInverted] = useState<boolean>(false)
   // const { priceImpactWithoutFee, realizedLPFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
   const { priceImpactWithoutFee, realizedLPFee } = computeTradePriceBreakdown(trade)
   const severity = warningSeverity(priceImpactWithoutFee)
 
-  const totalFeePercent = `${(TOTAL_FEE * 100).toFixed(2)}%`
-  const lpHoldersFeePercent = `${(LP_HOLDERS_FEE * 100).toFixed(2)}%`
-  const treasuryFeePercent = `${(TREASURY_FEE * 100).toFixed(4)}%`
-  const buyBackFeePercent = `${(BUYBACK_FEE * 100).toFixed(4)}%`
+  const totalFeePercent = chainId === 1 || chainId === 5 ? '0.3%' : '0.25%'
 
   return (
     <>
       <SwapModalFooterContainer>
         <RowBetween align="center">
-          <Text fontSize="16px" color="textSubtle">{t('Price')}</Text>
+          <Text fontSize="16px" color="textSubtle">
+            {t('Price')}
+          </Text>
           <Text
             fontSize="16px"
             style={{
@@ -99,7 +99,9 @@ export default function SwapModalFooter({
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize="16px" color="textSubtle">{t('Price Impact')}</Text>
+            <Text fontSize="16px" color="textSubtle">
+              {t('Price Impact')}
+            </Text>
             <QuestionHelper
               text={t('The difference between the market price and your price due to trade size.')}
               ml="4px"
@@ -110,14 +112,13 @@ export default function SwapModalFooter({
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize="16px" color="textSubtle">{t('Liquidity Provider Fee')}</Text>
+            <Text fontSize="16px" color="textSubtle">
+              {t('Liquidity Provider Fee')}
+            </Text>
             <QuestionHelper
               text={
                 <>
                   <Text mb="12px">{t('For each trade a %amount% fee is paid', { amount: totalFeePercent })}</Text>
-                  <Text>- {t('%amount% to LP token holders', { amount: lpHoldersFeePercent })}</Text>
-                  <Text>- {t('%amount% to the Treasury', { amount: treasuryFeePercent })}</Text>
-                  <Text>- {t('%amount% towards CAKE buyback and burn', { amount: buyBackFeePercent })}</Text>
                 </>
               }
               ml="4px"

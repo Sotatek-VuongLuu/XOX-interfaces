@@ -6,10 +6,10 @@ import { useTranslation } from '@pancakeswap/localization'
 import { useUserSlippageTolerance } from 'state/user/hooks'
 import { computeSlippageAdjustedAmounts, computeTradePriceBreakdown } from 'utils/exchange'
 import { AutoColumn } from 'components/Layout/Column'
-import { TOTAL_FEE, LP_HOLDERS_FEE, TREASURY_FEE, BUYBACK_FEE } from 'config/constants/info'
 import { RowBetween, RowFixed } from 'components/Layout/Row'
 import { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import SwapRoute from './SwapRoute'
 
@@ -34,14 +34,12 @@ function TradeSummary({
   allowedSlippage: number
 }) {
   const { t } = useTranslation()
+  const { chainId } = useActiveChainId()
   const { priceImpactWithoutFee, realizedLPFee } = computeTradePriceBreakdown(trade)
   const isExactIn = trade.tradeType === TradeType.EXACT_INPUT
   const slippageAdjustedAmounts = computeSlippageAdjustedAmounts(trade, allowedSlippage)
 
-  const totalFeePercent = `${(TOTAL_FEE * 100).toFixed(2)}%`
-  const lpHoldersFeePercent = `${(LP_HOLDERS_FEE * 100).toFixed(2)}%`
-  const treasuryFeePercent = `${(TREASURY_FEE * 100).toFixed(4)}%`
-  const buyBackFeePercent = `${(BUYBACK_FEE * 100).toFixed(4)}%`
+  const totalFeePercent = chainId === 1 || chainId === 5 ? '0.3%' : '0.25%'
 
   return (
     <AutoColumn style={{ padding: '0 16px' }}>
@@ -59,7 +57,7 @@ function TradeSummary({
           />
         </RowFixed>
         <RowFixed>
-          <BottomText fontSize="16px" color='while87'>
+          <BottomText fontSize="16px" color="while87">
             {isExactIn
               ? `${slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)} ${trade.outputAmount.currency.symbol}` ??
                 '-'
@@ -90,16 +88,16 @@ function TradeSummary({
             text={
               <>
                 <Text mb="12px">{t('For each trade a %amount% fee is paid', { amount: totalFeePercent })}</Text>
-                <Text>- {t('%amount% to LP token holders', { amount: lpHoldersFeePercent })}</Text>
+                {/* <Text>- {t('%amount% to LP token holders', { amount: lpHoldersFeePercent })}</Text>
                 <Text>- {t('%amount% to the Treasury', { amount: treasuryFeePercent })}</Text>
-                <Text>- {t('%amount% towards CAKE buyback and burn', { amount: buyBackFeePercent })}</Text>
+                <Text>- {t('%amount% towards CAKE buyback and burn', { amount: buyBackFeePercent })}</Text> */}
               </>
             }
             ml="4px"
             placement="top-start"
           />
         </RowFixed>
-        <BottomText fontSize="16px" color='while87'>
+        <BottomText fontSize="16px" color="while87">
           {realizedLPFee ? `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol}` : '-'}
         </BottomText>
       </RowBetweenStyle>

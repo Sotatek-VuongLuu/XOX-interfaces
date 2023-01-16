@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 import { ChainId } from '@pancakeswap/sdk'
-import styled from "styled-components";
-import { NumericalInput } from '@pancakeswap/uikit';
-import SelectNetworkButton from "./SelectNetworkButton";
-import SelectTokenButton from "./SelectTokenButton";
+import styled from 'styled-components'
+import { NumericalInput } from '@pancakeswap/uikit'
+import SelectNetworkButton from './SelectNetworkButton'
+import SelectTokenButton from './SelectTokenButton'
 
 const Wrapper = styled.div`
   border-radius: 8px;
@@ -14,7 +14,7 @@ const Wrapper = styled.div`
     border-radius: 15px;
     padding: 16px 24px;
   }
-`;
+`
 
 const TextRow = styled.div`
   color: #fff;
@@ -35,10 +35,10 @@ const TextRow = styled.div`
       overflow: hidden;
     }
   }
-  @media(max-width: 576px){
+  @media (max-width: 576px) {
     font-size: 14px;
   }
-`;
+`
 
 const AmountRow = styled.div`
   display: flex;
@@ -50,7 +50,7 @@ const AmountRow = styled.div`
     background: transparent;
     padding: 7px 10px 7px 0;
     font-size: 16px;
-    color: ${({theme}) => theme.colors.textSubTitle};
+    color: ${({ theme }) => theme.colors.textSubTitle};
     font-weight: 400;
     width: calc(100% - 250px);
     div {
@@ -60,7 +60,7 @@ const AmountRow = styled.div`
     }
     @media screen and (min-width: 576px) {
       padding: 10px 8px 10px 0;
-      font-size: 24px;
+      font-size: 18px;
       width: calc(100% - 322px);
     }
   }
@@ -77,49 +77,49 @@ const AmountRow = styled.div`
       }
     }
     @media (max-width: 576px) {
-        flex-direction: column;
-        align-items: flex-end;
-        gap: 5px;
+      flex-direction: column;
+      align-items: flex-end;
+      gap: 5px;
     }
   }
-`;
+`
 
 const NumericalInputStyled = styled(NumericalInput)`
   background: transparent;
   padding: 10px 8px 10px 0;
-  font-size: 24px;
+  font-size: 18px;
   width: auto;
-  color: ${({theme}) => theme.colors.textSubTitle};
+  color: ${({ theme }) => theme.colors.textSubTitle};
   font-weight: 400;
-  ${(props) => props.disabled === true && " pointer-events: none"};
+  ${(props) => props.disabled === true && ' pointer-events: none'};
   & {
-    -webkit-text-fill-color: ${({theme}) => theme.colors.textSubTitle};
+    -webkit-text-fill-color: ${({ theme }) => theme.colors.textSubTitle};
     ::placeholder {
-      -webkit-text-fill-color: ${({theme}) => theme.colors.textSubTitle};
+      -webkit-text-fill-color: ${({ theme }) => theme.colors.textSubTitle};
     }
     opacity: 1;
   }
   &::placeholder {
-    color: ${({theme}) => theme.colors.textSubTitle};
+    color: ${({ theme }) => theme.colors.textSubTitle};
   }
   @media (max-width: 576px) {
     font-size: 16px;
   }
-`;
+`
 
 type Props = {
-  isTokenFrom: boolean;
-  inputChainId: ChainId;
-  balance?: any;
-  amount: any;
-  handleUserInput?: any;
-  handleBalanceMax?: any;
-  switchNetwork?: any;
-  tokenSymbol?: string;
-  switchToken?: any;
-  isShowDrop?: any;
-  handleShowDrop?: any;
-};
+  isTokenFrom: boolean
+  inputChainId: ChainId
+  balance?: any
+  amount: any
+  handleUserInput?: any
+  handleBalanceMax?: any
+  switchNetwork?: any
+  tokenSymbol?: string
+  switchToken?: any
+  isShowDrop?: any
+  handleShowDrop?: any
+}
 
 const AmountInput: React.FC<Props> = ({
   isTokenFrom,
@@ -135,19 +135,15 @@ const AmountInput: React.FC<Props> = ({
   handleShowDrop,
 }) => {
   const getInputLabel = () => {
-    return (isTokenFrom && "From") || "To (est)";
-  };
+    return (isTokenFrom && 'From') || 'To (est)'
+  }
 
   return (
     <Wrapper>
       <TextRow>
         <span>{getInputLabel()}</span>
         {isTokenFrom && (
-          <span
-            className="balance"
-            onClick={() => balance !== "-" && handleBalanceMax(balance)}
-            aria-hidden="true"
-          >
+          <span className="balance" onClick={() => balance !== '-' && handleBalanceMax(balance)} aria-hidden="true">
             Balance: ${balance}
           </span>
         )}
@@ -161,11 +157,7 @@ const AmountInput: React.FC<Props> = ({
             onUserInput={(value) => handleUserInput(value)}
           />
         ) : (
-          <div className="tooltip">
-            {amount || (
-              <span>0.0</span>
-            )}
-          </div>
+          <div className="tooltip">{amount || <span>0.0</span>}</div>
         )}
 
         <div className="buttons-group">
@@ -177,14 +169,11 @@ const AmountInput: React.FC<Props> = ({
             isShowDrop={isShowDrop}
             handleShowDrop={handleShowDrop}
           />
-          <SelectNetworkButton
-            inputChainId={inputChainId}
-            switchNetwork={switchNetwork}
-          />
+          <SelectNetworkButton inputChainId={inputChainId} switchNetwork={switchNetwork} />
         </div>
       </AmountRow>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default AmountInput;
+export default AmountInput
