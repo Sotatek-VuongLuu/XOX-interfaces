@@ -135,7 +135,7 @@ export const configLanding: (
       items: [],
     },
     {
-      label: t('Product'),
+      label: t('Products'),
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,
       href: '#',

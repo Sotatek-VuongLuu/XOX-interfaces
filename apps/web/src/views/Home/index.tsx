@@ -52,10 +52,10 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           style: {
             margin: '0',
             width: '100%',
-            height: innerWidth > 1000 ? '74vh' : '88vh',
+            height: innerWidth > 900 ? '74vh' : '88vh',
             display: 'flex',
             alignItems: 'center',
-            justifyContent: 'space-around',
+            justifyContent: innerWidth > 900 ? 'space-around' : 'unset',
             overflow: 'hidden',
           },
         }}
@@ -67,14 +67,17 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BallPurple src="/images/bg-pur.svg" />
-        <div style={{ width: innerWidth > 1000 && 1400 }}>
+        <div style={{ width: innerWidth > 900 && 1400 }}>
           <WelcomeXOX />
         </div>
-        <Spline
-          scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-          onLoad={(e) => e.setZoom(1)}
-          id="asset_3d"
-        />
+
+        {innerWidth > 967 && (
+          <Spline
+            scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
+            onLoad={(e) => e.setZoom(1)}
+            id="asset_3d"
+          />
+        )}
       </StyledSection>
 
       <StyledSection
@@ -87,7 +90,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       >
         <BackgroudWatch />
 
-        <div style={{ width: innerWidth > 1000 && 1400 }}>
+        <div style={{ width: innerWidth > 900 && 1400 }}>
           <FeatureEconomy />
           <FeatureSquare />
           <FeatureWatch />
@@ -97,7 +100,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       </StyledSection>
 
       <StyledSection
-        innerProps={{ style: { margin: '0', width: innerWidth < 1000 && '100%' } }}
+        innerProps={{ style: { margin: '0', width: innerWidth < 900 && '100%' } }}
         containerProps={{
           id: 'home',
         }}
@@ -105,7 +108,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BGPartner />
-        <div style={{ width: innerWidth > 1000 && 1400 }}>
+        <div style={{ width: innerWidth > 900 && 1400 }}>
           <Partners />
           <SecuredBy />
           <UpComing />

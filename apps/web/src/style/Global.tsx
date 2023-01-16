@@ -80,6 +80,13 @@ const GlobalStyle = createGlobalStyle`
     text-fill-color: transparent;
   }
 
+  #mb_3d {
+    position: absolute;
+    top: 0;
+    right: 50%;
+    transform: translate(37%, -24%);
+  }
+
 `
 
 export default GlobalStyle

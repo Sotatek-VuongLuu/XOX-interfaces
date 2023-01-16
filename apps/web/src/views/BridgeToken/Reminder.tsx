@@ -21,7 +21,7 @@ const Heading = styled.h5`
 `
 
 const ReminderList = styled.ul`
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.87);
   font-size: 14px;
   line-height: 1.4;
   li {
@@ -92,7 +92,13 @@ const Reminder: React.FC<Props> = ({
           ...prev,
           ...bridgeTokenFeeCurrent,
         }))
-        setAmountTo(getAmountTo(bridgeTokenFeeCurrent.gasFee, bridgeTokenFeeCurrent.minCrossChainFee, bridgeTokenFeeCurrent.minAmount))
+        setAmountTo(
+          getAmountTo(
+            bridgeTokenFeeCurrent.gasFee,
+            bridgeTokenFeeCurrent.minCrossChainFee,
+            bridgeTokenFeeCurrent.minAmount,
+          ),
+        )
         onBridgeTokenFeeChange(bridgeTokenFeeCurrent.minAmount, bridgeTokenFeeCurrent.maxAmount)
       }
     }
@@ -123,7 +129,7 @@ const Reminder: React.FC<Props> = ({
     const decimals = Math.max(gasFee.split('.')[1]?.length || 0, crosschainFee.split('.')[1]?.length || 0)
     const totalFeeParsed = parseUnits(gasFee, decimals).add(parseUnits(crosschainFee, decimals))
     const amountToParsed = amount && amount !== ('.' || '') && parseUnits(amount, decimals).sub(totalFeeParsed)
-    
+
     return amount && amount !== ('.' || '') && !amountToParsed.isNegative()
       ? Number(formatUnits(amountToParsed, decimals)).toFixed(6)
       : amount && amount !== ('.' || '')
