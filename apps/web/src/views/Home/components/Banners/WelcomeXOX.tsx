@@ -8,8 +8,7 @@ import Spline from '@splinetool/react-spline'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 
 const Wrapper = styled.div`
-  /* width: 50%;
-  z-index: 2; */
+  width: 100%;
   @media screen and (max-width: 900px) {
     .title {
       font-size: 24px;
@@ -35,9 +34,15 @@ const Wrapper = styled.div`
   @media screen and (max-width: 530px) {
     margin-top: 50px;
   }
+
+  #asset_3d {
+    position: absolute;
+  }
 `
 
 const LeftContent = styled.div`
+  min-width: 600px;
+  z-index: 2;
   .btn_group {
     display: grid;
     gap: 19px;
@@ -144,13 +149,12 @@ const GridLeft = styled(Grid)`
 `
 
 const WelcomeXOX = (): JSX.Element => {
-  const { isMobile } = useMatchBreakpoints()
   const route = useRouter()
   return (
     <Wrapper>
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
         <Grid container spacing={2} className="grid_welcome_container">
-          <GridLeft item xs={12} md={6}>
+          <GridLeft item xs={12} md={5}>
             <LeftContent>
               <Title className="title">
                 XOX The Multichain
@@ -161,7 +165,8 @@ const WelcomeXOX = (): JSX.Element => {
               </Title>
               <Feature className="feature">Revolutionary - Scalable - Multichain</Feature>
               <Description className="description">
-                Swap, earn, and build on the leading decentralized Web3 crypto ecosystem.
+                Swap, earn, and build on the leading decentralized Web3 <br />
+                crypto ecosystem.
               </Description>
               <div className="btn_group">
                 <Button className="btn_read_doc" onClick={() => window.open('')}>
@@ -175,22 +180,6 @@ const WelcomeXOX = (): JSX.Element => {
               </div>
             </LeftContent>
           </GridLeft>
-          <Grid item xs={12} md={6} sx={{ position: 'relative' }}>
-            {isMobile ? (
-              <Spline
-                scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-                onLoad={(e) => e.setZoom(0.9)}
-                height={300}
-                id="asset_3d_mb"
-              />
-            ) : (
-              <Spline
-                scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-                onLoad={(e) => e.setZoom(0.6)}
-                id="asset_3d"
-              />
-            )}
-          </Grid>
         </Grid>
       </Box>
     </Wrapper>
