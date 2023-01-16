@@ -95,6 +95,29 @@ const Wrapper = styled.div`
       }
     }
   }
+
+  .slide_container {
+    position: relative;
+    &::before {
+      content: '';
+      position: absolute;
+      height: 100%;
+      width: 117px;
+      background: linear-gradient(90deg, black 0%, rgba(18, 18, 18, 0) 100%);
+      z-index: 99;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      height: 100%;
+      right: 0;
+      top: 0;
+      width: 117px;
+      background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 100%);
+      z-index: 99;
+    }
+  }
 `
 
 const SliderWrapper = styled.div`
@@ -228,38 +251,12 @@ const Partners = () => {
         Backed by the Best to Deliver the Best.
       </p>
 
-      <SliderWrapper data-aos="fade-up">
-        <div id="infinite" className="infinitetl highway-slider">
-          <div className="container highway-barrier">
-            <ul className="highway-lane">
-              {listPartners.map(({ icon }) => {
-                return (
-                  <li className="highway-car" key={icon}>
-                    <img
-                      src={icon}
-                      alt="icon"
-                      className={isHovering ? 'partner' : ''}
-                      onMouseOver={handleMouseOver}
-                      onMouseOut={handleMouseOut}
-                    />
-                  </li>
-                )
-              })}
-              {listPartners.map(({ icon }) => {
-                return (
-                  <li className="highway-car" key={icon}>
-                    <img
-                      src={icon}
-                      alt="icon"
-                      className={isHovering ? 'partner' : ''}
-                      onMouseOver={handleMouseOver}
-                      onMouseOut={handleMouseOut}
-                    />
-                  </li>
-                )
-              })}
-              {isMobile &&
-                listPartners.map(({ icon }) => {
+      <div className="slide_container">
+        <SliderWrapper data-aos="fade-up">
+          <div id="infinite" className="infinitetl highway-slider">
+            <div className="container highway-barrier">
+              <ul className="highway-lane">
+                {listPartners.map(({ icon }) => {
                   return (
                     <li className="highway-car" key={icon}>
                       <img
@@ -272,84 +269,40 @@ const Partners = () => {
                     </li>
                   )
                 })}
-            </ul>
+                {listPartners.map(({ icon }) => {
+                  return (
+                    <li className="highway-car" key={icon}>
+                      <img
+                        src={icon}
+                        alt="icon"
+                        className={isHovering ? 'partner' : ''}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      />
+                    </li>
+                  )
+                })}
+                {isMobile &&
+                  listPartners.map(({ icon }) => {
+                    return (
+                      <li className="highway-car" key={icon}>
+                        <img
+                          src={icon}
+                          alt="icon"
+                          className={isHovering ? 'partner' : ''}
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        />
+                      </li>
+                    )
+                  })}
+              </ul>
+            </div>
           </div>
-        </div>
-      </SliderWrapper>
+        </SliderWrapper>
 
-      <SliderWrapper>
-        <div id="infinite" className="infinitetr speed-20 highway-slider">
-          <div className="container highway-barrier">
-            <ul className="highway-lane">
-              {listPartners.map(({ icon }) => {
-                return (
-                  <li className="highway-car" key={icon}>
-                    <img
-                      src={icon}
-                      alt="icon"
-                      className={isHovering ? 'partner' : ''}
-                      onMouseOver={handleMouseOver}
-                      onMouseOut={handleMouseOut}
-                    />
-                  </li>
-                )
-              })}
-              {listPartners.map(({ icon }) => {
-                return (
-                  <li className="highway-car" key={icon}>
-                    <img
-                      src={icon}
-                      alt="icon"
-                      className={isHovering ? 'partner' : ''}
-                      onMouseOver={handleMouseOver}
-                      onMouseOut={handleMouseOut}
-                    />
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        </div>
-      </SliderWrapper>
-
-      <SliderWrapper>
-        <div id="infinite" className="infinitetl speed-20 highway-slider">
-          <div className="container highway-barrier">
-            <ul className="highway-lane">
-              {listPartners.map(({ icon }) => {
-                return (
-                  <li className="highway-car" key={icon}>
-                    <img
-                      src={icon}
-                      alt="icon"
-                      className={isHovering ? 'partner' : ''}
-                      onMouseOver={handleMouseOver}
-                      onMouseOut={handleMouseOut}
-                    />
-                  </li>
-                )
-              })}
-              {listPartners.map(({ icon }) => {
-                return (
-                  <li className="highway-car" key={icon}>
-                    <img
-                      src={icon}
-                      alt="icon"
-                      className={isHovering ? 'partner' : ''}
-                      onMouseOver={handleMouseOver}
-                      onMouseOut={handleMouseOut}
-                    />
-                  </li>
-                )
-              })}
-            </ul>
-          </div>
-        </div>
-      </SliderWrapper>
-
-      {isShowMore ? (
         <SliderWrapper>
-          <div id="infinite" className="infinitetr highway-slider">
+          <div id="infinite" className="infinitetr speed-20 highway-slider">
             <div className="container highway-barrier">
               <ul className="highway-lane">
                 {listPartners.map(({ icon }) => {
@@ -382,7 +335,79 @@ const Partners = () => {
             </div>
           </div>
         </SliderWrapper>
-      ) : null}
+
+        <SliderWrapper>
+          <div id="infinite" className="infinitetl speed-20 highway-slider">
+            <div className="container highway-barrier">
+              <ul className="highway-lane">
+                {listPartners.map(({ icon }) => {
+                  return (
+                    <li className="highway-car" key={icon}>
+                      <img
+                        src={icon}
+                        alt="icon"
+                        className={isHovering ? 'partner' : ''}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      />
+                    </li>
+                  )
+                })}
+                {listPartners.map(({ icon }) => {
+                  return (
+                    <li className="highway-car" key={icon}>
+                      <img
+                        src={icon}
+                        alt="icon"
+                        className={isHovering ? 'partner' : ''}
+                        onMouseOver={handleMouseOver}
+                        onMouseOut={handleMouseOut}
+                      />
+                    </li>
+                  )
+                })}
+              </ul>
+            </div>
+          </div>
+        </SliderWrapper>
+
+        {isShowMore ? (
+          <SliderWrapper>
+            <div id="infinite" className="infinitetr highway-slider">
+              <div className="container highway-barrier">
+                <ul className="highway-lane">
+                  {listPartners.map(({ icon }) => {
+                    return (
+                      <li className="highway-car" key={icon}>
+                        <img
+                          src={icon}
+                          alt="icon"
+                          className={isHovering ? 'partner' : ''}
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        />
+                      </li>
+                    )
+                  })}
+                  {listPartners.map(({ icon }) => {
+                    return (
+                      <li className="highway-car" key={icon}>
+                        <img
+                          src={icon}
+                          alt="icon"
+                          className={isHovering ? 'partner' : ''}
+                          onMouseOver={handleMouseOver}
+                          onMouseOut={handleMouseOut}
+                        />
+                      </li>
+                    )
+                  })}
+                </ul>
+              </div>
+            </div>
+          </SliderWrapper>
+        ) : null}
+      </div>
 
       <div className="btn_see_all" data-aos="fade-up">
         <div className="get_xox" onClick={handleChangeShowMore}>
