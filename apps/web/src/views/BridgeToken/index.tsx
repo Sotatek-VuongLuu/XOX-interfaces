@@ -17,7 +17,6 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useAccount } from 'wagmi'
 import { ChainId } from '@pancakeswap/sdk'
-import Reminder from './Reminder'
 import AddressInput from './AddressInput'
 import { getAddress } from '@ethersproject/address'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
@@ -31,6 +30,7 @@ import { parseUnits } from '@ethersproject/units'
 import { getBridgeTokenAddress } from 'utils/addressHelpers'
 import { useBridgeTokenContract } from '../../hooks/useContract'
 import ModalBase from '../Referral/components/Modal/ModalBase'
+import Reminder from './Reminder'
 // eslint-disable-next-line import/no-cycle
 import ModalTransactionHistory from './ModalTransactionHistory'
 
@@ -610,7 +610,7 @@ export default function BridgeToken() {
                 </SwapButton>
               )}
               <Reminder
-                chainId={getChainIdToByChainId(chainId)}
+                chainId={chainId}
                 tokenInput={defaultToken}
                 tokenOutput={tokenB}
                 amount={amountInput}

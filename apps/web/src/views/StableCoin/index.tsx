@@ -117,7 +117,7 @@ export default function StableCoin() {
   const [currentReward, setCurrentReward] = useState<number | string>(0)
 
   // eslint-disable-next-line consistent-return
-  const handleCheckPendingRewardAll = async (accountId: string) => {
+  const handleCheckPendingRewardAll = async (accountId: string, chainIdEffect: any) => {
     try {
       const [infosUser, res2] = await Promise.all([
         contractTreasuryXOX.userInfo(account),
@@ -125,14 +125,14 @@ export default function StableCoin() {
       ])
       const txPendingReward: any = res2
       const dataParse: any[] = infosUser.map((item) => {
-        return formatUnits(item, USD_DECIMALS[chainId])
+        return formatUnits(item, USD_DECIMALS[chainIdEffect])
       })
-      const amountPoint = Number(dataParse[1])
-      const rewardPoint = Number(dataParse[2])
-      setCurrentXOX(amountPoint)
-      if (rewardPoint === 0 || rewardPoint) {
-        const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])) + rewardPoint
-        setCurrentReward(numberReward?.toFixed(6))
+      const amountPoint = Number(dataParse[1]);
+      const rewardPoint = Number(dataParse[2]);
+      setCurrentXOX(amountPoint);
+      if(rewardPoint === 0 || rewardPoint){
+        const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdEffect])) + rewardPoint;
+        setCurrentReward(numberReward ? numberReward?.toFixed(6) : 0);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -141,10 +141,10 @@ export default function StableCoin() {
   }
 
   useEffect(() => {
-    if (account) {
-      handleCheckPendingRewardAll(account)
+    if(account){
+      handleCheckPendingRewardAll(account, chainId);
     }
-  }, [account])
+  }, [account, chainId]);
 
   return (
     <>
@@ -179,9 +179,9 @@ export default function StableCoin() {
               <TextStyle style={{ transform: 'translateY(1px)' }}>|</TextStyle>
               <TextStyle className="primary">Withdraw reward</TextStyle>
             </Flex>
-            <Row style={{ marginTop: 25 }}>
-              <Box className="wrap-withdraw">
-                <WidthdrawForm priceAvailable={currentReward} />
+            <Row style={{marginTop: 25}}>
+              <Box className='wrap-withdraw'>
+                <WidthdrawForm priceAvailable={currentReward} onSuccess={() => setWidthDraw(TYPE.default)} />
               </Box>
             </Row>
           </>
