@@ -253,25 +253,23 @@ export default function SwapForm() {
       return
     }
     axios
-      .get(`${process.env.NEXT_PUBLIC_API}/users`, { params: { ref: value } })
+      .post(`${process.env.NEXT_PUBLIC_API}/users/referalcode/existed`, { address: account, referal_code: value })
       .then((response) => {
-        if (response.data.address) setReferralCode(response.data.address)
+        if (response.data) {
+          setReferralError(null)
+          axios
+            .get(`${process.env.NEXT_PUBLIC_API}/users`, { params: { ref: value } })
+            .then((res) => {
+              if (res.data.address) setReferralCode(res.data.address)
+            })
+            .catch((error) => console.warn(error))
+        }
       })
-      .catch((error) => console.warn(error))
-    if (value.length === 8) {
-      axios
-        .post(`${process.env.NEXT_PUBLIC_API}/users/referalcode/existed`, { address: account, referal_code: value })
-        .then((response) => {
-          if (response.data) {
-            setReferralError(null)
-          }
-        })
-        .catch((error) => {
-          if (error.response?.data?.message) {
-            setReferralError(error.response.data.message)
-          }
-        })
-    }
+      .catch((error) => {
+        if (error.response?.data?.message) {
+          setReferralError(error.response.data.message)
+        }
+      })
   }
   const onRefreshPrice = useCallback(() => {
     if (hasAmount) {
@@ -425,7 +423,7 @@ export default function SwapForm() {
             currencies={currencies}
             isExpertMode={isExpertMode}
             trade={trade}
-            swapInputError={swapInputError}
+            swapInputError={swapInputError || referralError}
             currencyBalances={currencyBalances}
             recipient={recipient}
             referral={referralCode}
