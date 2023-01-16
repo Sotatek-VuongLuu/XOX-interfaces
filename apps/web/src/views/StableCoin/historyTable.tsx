@@ -16,6 +16,7 @@ import { formatAmount } from 'utils/formatInfoNumbers'
 import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import axios from 'axios'
 import { Arrow, ClickableColumnHeader } from '../Info/components/InfoTables/shared'
 
 export const TYPE_HISTORY = {
@@ -128,6 +129,18 @@ const Table = styled.div`
   grid-template-columns: 0.15fr 1.4fr 1fr 0.7fr;
   .table-header {
     margin-bottom: 16px;
+  }
+
+  .flex-username{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    img{
+      width: 30px;
+      object-fit: cover;
+      height: 30px;
+      border-radius: 50%;
+    }
   }
 
   @media(max-width: 576px){
@@ -314,7 +327,7 @@ const DataRow: React.FC<
         {index + 1 + (page - 1) * perPage}
       </Text>
       {
-        typePage !== TYPE_HISTORY.stake && <LinkExternal
+        typePage === TYPE_HISTORY.myWidthDraw && <LinkExternal
           color="#9072FF"
           href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
           key={`${transaction.hash}-type`}
@@ -332,7 +345,20 @@ const DataRow: React.FC<
           </Text>
         </LinkExternal>
       }
-      
+      {
+        typePage === TYPE_HISTORY.widthDraw &&  <Text
+          fontSize="16px"
+          className='size-14 flex-username'
+          fontFamily="Inter"
+          fontStyle="normal"
+          fontWeight="400"
+          lineHeight="19px"
+          color="rgba(255, 255, 255, 0.87)"
+        >
+          {transaction?.avatar ? <img src={transaction?.avatar} alt="avatar" /> : <img src="images/default_avatar.jpg" alt="imagess" />}
+          {transaction?.username}
+        </Text>
+      }
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -549,11 +575,34 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
         />
       </svg>
     )
-  }, [])
+  }, []);
+
+  const loadDataWithDraw = async() => {
+    const listAddress = dataTable?.transactionsXOX?.map((item) => item.address);
+    if (listAddress.length > 0) {
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+        wallets: listAddress,
+      });
+      const dataMapping:any = dataTable?.transactionsXOX?.map((item:any, index:any) => {
+        const dataUserInfos = response.data;
+        const userInfo = dataUserInfos?.find((user) => item.address === user.address)
+        return {
+          ...item,
+          username: userInfo?.username ?? null,
+          avatar: userInfo?.avatar ?? null,
+        }
+      });
+      setCurrentTransactions(dataMapping);
+    }
+  }
 
   useEffect(() => {
     if(dataTable){
-      setCurrentTransactions(dataTable?.transactionsXOX);
+      if(typePage === TYPE_HISTORY.widthDraw){
+        loadDataWithDraw();
+      }else{
+        setCurrentTransactions(dataTable?.transactionsXOX);
+      }
     }
   }, [dataTable])
 
@@ -596,7 +645,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
             No
           </Text>
           {
-            typePage !== TYPE_HISTORY.stake && <Text
+            typePage === TYPE_HISTORY.myWidthDraw && <Text
               fontSize="16px"
               fontFamily="Inter"
               fontStyle="normal"
@@ -606,6 +655,19 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
               className="table-header"
             >
               Action
+            </Text>
+          }
+          {
+            typePage === TYPE_HISTORY.widthDraw && <Text
+              fontSize="16px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="19px"
+              color="rgba(255, 255, 255, 0.6)"
+              className="table-header"
+            >
+              Username
             </Text>
           }
           <Text
