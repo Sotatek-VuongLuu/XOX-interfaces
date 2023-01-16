@@ -150,7 +150,7 @@ export const configLanding: (
           label: t('Bridge'),
           icon: BridgeIcon,
           fillIcon: BridgeIcon,
-          href: '/bridge',
+          href: '/bridge-token',
         },
         {
           label: t('Liquidity'),

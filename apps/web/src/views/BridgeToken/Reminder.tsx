@@ -74,36 +74,42 @@ const Reminder: React.FC<Props> = ({
 
   useEffect(() => {
     const fetchData = async () => {
-      if (!chainId) {
-        setBridgeTokenFee(initialBridgeTokenFee)
-        setAmountTo('')
-        return
-      }
-      const res = await fetchBridgeTokenFee(chainId, amount && amount !== ('.' || '') ? amount : '0')
-      const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data || bridgeTokenFee
-      // const bridgeTokenFee: BridgeTokenFee = {
-      //   gasFee: '0.13681800000000000014',
-      //   minCrossChainFee: '0.01',
-      //   minAmount: '0.15681800000000000014',
-      //   maxAmount: '2000000',
-      // }
-      if (bridgeTokenFeeCurrent) {
-        setBridgeTokenFee((prev) => ({
-          ...prev,
-          ...bridgeTokenFeeCurrent,
-        }))
-        setAmountTo(
-          getAmountTo(
-            bridgeTokenFeeCurrent.gasFee,
-            bridgeTokenFeeCurrent.minCrossChainFee,
-            bridgeTokenFeeCurrent.minAmount,
-          ),
-        )
-        onBridgeTokenFeeChange(bridgeTokenFeeCurrent.minAmount, bridgeTokenFeeCurrent.maxAmount)
+      try {
+        if (!chainId) {
+          setBridgeTokenFee(initialBridgeTokenFee)
+          setAmountTo('')
+          return
+        }
+        const res = await fetchBridgeTokenFee(chainId, amount && amount !== ('.' || '') ? amount : '0')
+        const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data || bridgeTokenFee
+        // const bridgeTokenFee: BridgeTokenFee = {
+        //   gasFee: '0.13681800000000000014',
+        //   minCrossChainFee: '0.01',
+        //   minAmount: '0.15681800000000000014',
+        //   maxAmount: '2000000',
+        // }
+        if (bridgeTokenFeeCurrent) {
+          setBridgeTokenFee((prev) => ({
+            ...prev,
+            ...bridgeTokenFeeCurrent,
+          }))
+          setAmountTo(
+            getAmountTo(
+              bridgeTokenFeeCurrent.gasFee,
+              bridgeTokenFeeCurrent.minCrossChainFee,
+              bridgeTokenFeeCurrent.minAmount,
+            ),
+          )
+          onBridgeTokenFeeChange(bridgeTokenFeeCurrent.minAmount, bridgeTokenFeeCurrent.maxAmount)
+        }
+      } catch (error) {
+        // eslint-disable-next-line no-console
+        console.log('error>>', error)
       }
     }
 
     fetchData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, amount, addressTokenOutput])
 
   const formatNumberStr = (numberStr: string) => {
