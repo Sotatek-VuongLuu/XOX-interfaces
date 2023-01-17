@@ -126,7 +126,7 @@ const SquareItem = ({ item }: Iprops) => {
             ) : null}
           </Description>
         </div>
-        <a href={item.link} target="blank">
+        <a href={item.link} target="_blank" rel="noreferrer">
           <div className="get_xox">
             <div className="boxed-child">
               <span>Discover More</span>
