@@ -23,6 +23,8 @@ interface HoverableChartProps {
   chainId: number
   native: NativeCurrency
   allTokens: any
+  fetchingTokenId: boolean
+  setFetchingTokenId: (b: boolean) => void
 }
 
 const HoverableChart = ({
@@ -35,7 +37,9 @@ const HoverableChart = ({
   setCoinmarketcapId,
   native,
   chainId,
+  fetchingTokenId,
   allTokens,
+  setFetchingTokenId,
 }: HoverableChartProps) => {
   const [hover, setHover] = useState<number | undefined>()
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>(native)
@@ -85,6 +89,7 @@ const HoverableChart = ({
   }, [native])
 
   useEffect(() => {
+    setFetchingTokenId(false)
     const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds')) || SUGGESTED_BASES_ID
     if (selectedCurrency === native) {
       if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList.ETH)
@@ -92,7 +97,7 @@ const HoverableChart = ({
     } else {
       setCoinmarketcapId(_tokenList[(selectedCurrency as any).address])
     }
-  }, [selectedCurrency])
+  }, [selectedCurrency, fetchingTokenId])
 
   useEffect(() => {
     if (!currencyDatas) return

@@ -64,6 +64,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const [currencyDatas, setCurrencyDatas] = useState<Array<any> | undefined>()
   const { chainId } = useActiveChainId()
   const allTokens = useAllTokens()
+  const [fetchingTokenId, setFetchingTokenId] = useState(false)
 
   // const allPoolData = useAllPoolDataSWR()
   // const allPoolData = useAllPoolData()
@@ -140,6 +141,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
         tokenIds = { ...tokenIds, ...value }
       })
       setCoinmarketcapIds(tokenIds)
+      setFetchingTokenId(true)
     })
   }, [allTokens])
 
@@ -199,6 +201,8 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
               chainId={chainId}
               native={native}
               allTokens={allTokens}
+              fetchingTokenId={fetchingTokenId}
+              setFetchingTokenId={setFetchingTokenId}
             />
           </ChartCardsContainer>
           <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} />
