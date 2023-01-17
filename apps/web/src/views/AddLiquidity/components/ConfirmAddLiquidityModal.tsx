@@ -92,6 +92,8 @@ const ConfirmAddLiquidityModal: React.FC<
         width="100%"
         onClick={onAdd}
         mt="24px"
+        mb="32px"
+        height={['37px', , '54px']}
         style={{
           background: 'linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)',
           borderRadius: '8px',
@@ -123,7 +125,6 @@ const ConfirmAddLiquidityModal: React.FC<
       onDismiss={onDismiss}
       customOnDismiss={customOnDismiss}
       attemptingTxn={attemptingTxn}
-      currencyToAdd={currencyToAdd}
       hash={hash}
       content={confirmationContent}
       pendingText={pendingText}

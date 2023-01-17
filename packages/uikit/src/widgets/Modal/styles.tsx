@@ -104,7 +104,6 @@ export const ModalContainer = styled(MotionBox)<IMotionBox>`
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 24px;
   max-width: calc(100vw - 48px) !important;
-  padding-bottom: 32px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: auto;

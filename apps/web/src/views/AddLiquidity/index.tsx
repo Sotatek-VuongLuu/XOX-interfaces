@@ -29,7 +29,7 @@ import { callWithEstimateGas } from 'utils/calls'
 import { SUPPORT_ZAP } from 'config/constants/supportChains'
 import { ContractMethodName } from 'utils/types'
 import { transactionErrorToUserReadableMessage } from 'utils/transactionErrorToUserReadableMessage'
-import { ROUTER_ADDRESS } from 'config/constants/exchange'
+import { ROUTER_ADDRESS, ROUTER_XOX } from 'config/constants/exchange'
 import { useLPApr } from 'state/swap/useLPApr'
 import SwapbackgroundDesktop from 'components/Svg/SwapBackgroundDesktop'
 import SwapbackgroundDesktopNone from 'components/Svg/SwapBackgroundDesktopNone'
@@ -321,11 +321,11 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   // check whether the user has approved the router on the tokens
   const [approvalA, approveACallback] = useApproveCallback(
     parsedAmounts[Field.CURRENCY_A],
-    preferZapInstead ? zapAddress : ROUTER_ADDRESS[chainId],
+    preferZapInstead ? zapAddress : ROUTER_XOX[chainId],
   )
   const [approvalB, approveBCallback] = useApproveCallback(
     parsedAmounts[Field.CURRENCY_B],
-    preferZapInstead ? zapAddress : ROUTER_ADDRESS[chainId],
+    preferZapInstead ? zapAddress : ROUTER_XOX[chainId],
   )
 
   const addTransaction = useTransactionAdder()
@@ -448,9 +448,12 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   const zapContract = useZapContract()
 
+  console.log(pair, 'pair')
   const [onPresentAddLiquidityModal] = useModal(
     <ConfirmAddLiquidityModal
-      title={noLiquidity ? t('You are creating a pool') : attemptingTxn ? t('Confirm') : t('You will receive')}
+      title={
+        noLiquidity ? t('You are creating a pool') : attemptingTxn || txHash ? t('Confirm') : t('You will receive')
+      }
       customOnDismiss={handleDismissConfirmation}
       attemptingTxn={attemptingTxn}
       hash={txHash}
@@ -678,7 +681,6 @@ export default function AddLiquidity({ currencyA, currencyB }) {
     )
   return (
     <Page>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
         width={['328px', , '100%']}
         marginTop="100px"
@@ -736,9 +738,11 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                         )}`
                       : t('Add Liquidity')
                   }
-                  subtitle={t('Receive LP tokens and earn 0.17% trading fees')}
+                  subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
                   helper={t(
-                    'Liquidity providers earn a 0.17% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.',
+                    `Liquidity providers earn a ${
+                      chainId === 5 || chainId === 1 ? 0.3 : 0.25
+                    }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
                   )}
                   backTo={canZap ? () => setSteps(Steps.Choose) : '/liquidity'}
                 />
@@ -758,7 +762,6 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                       </ColumnCenter>
                     )}
                     <CurrencyInputPanel
-                      disableCurrencySelect={canZap}
                       showBUSD
                       onInputBlur={canZap ? zapIn.onInputBlurOnce : undefined}
                       error={zapIn.priceSeverity > 3 && zapIn.swapTokenField === Field.CURRENCY_A}
@@ -794,6 +797,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                       id="add-liquidity-input-tokena"
                       showCommonBases
                       commonBasesType={CommonBasesType.LIQUIDITY}
+                      disableCurrencySelect
                     />
                     <ColumnCenter>
                       <AddIcon width="16px" />
@@ -815,7 +819,6 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                       //   )
                       // }
                       onCurrencySelect={handleCurrencyBSelect}
-                      disableCurrencySelect={canZap}
                       // zapStyle={canZap ? 'zap' : 'noZap'}
                       value={formattedAmounts[Field.CURRENCY_B]}
                       onUserInput={onFieldBInput}
@@ -835,6 +838,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                       id="add-liquidity-input-tokenb"
                       showCommonBases
                       commonBasesType={CommonBasesType.LIQUIDITY}
+                      disableCurrencySelect
                     />
 
                     {showZapWarning && (

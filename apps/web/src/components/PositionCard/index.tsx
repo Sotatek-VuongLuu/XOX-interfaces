@@ -320,7 +320,6 @@ function MinimalPositionCardView({
   token1Deposited,
   totalUSDValue,
   userPoolBalance,
-  poolTokenPercentage,
 }: PositionCardProps) {
   const isStableLP = useContext(StableConfigContext)
 
@@ -334,92 +333,77 @@ function MinimalPositionCardView({
   )
 
   return (
-    <>
-      {userPoolBalance && JSBI.greaterThan(userPoolBalance.quotient, BIG_INT_ZERO) ? (
-        <CustomCardMinimal>
-          <CardBody>
-            <AutoColumn gap="16px">
+    <CustomCardMinimal>
+      <CardBody>
+        <AutoColumn gap="16px">
+          <CustomFixedHeightRow>
+            <CustomRowFixed>
+              <Text className="lp-token-text">{t('LP tokens in your wallet')}</Text>
+            </CustomRowFixed>
+          </CustomFixedHeightRow>
+          <AutoColumn gap="4px">
+            <CustomFixedHeightRow>
+              <CustomRowFixed>
+                <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin size={20} />
+                <Text className="text-left">
+                  {currency0.symbol}-{currency1.symbol} LP
+                </Text>
+              </CustomRowFixed>
+              <CustomRowFixed>
+                <Flex flexDirection="column" alignItems="flex-end">
+                  <Text className="text-right">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Text>
+                  {Number.isFinite(totalUSDValue) && (
+                    <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
+                      minimumFractionDigits: 2,
+                      maximumFractionDigits: 2,
+                    })} USD)`}</Text>
+                  )}
+                </Flex>
+              </CustomRowFixed>
+            </CustomFixedHeightRow>
+            {poolData && (
               <CustomFixedHeightRow>
-                <CustomRowFixed>
-                  <Text className="lp-token-text">{t('LP tokens in your wallet')}</Text>
-                </CustomRowFixed>
+                <TooltipText ref={targetRef} color="textSubtle" small>
+                  {t('LP reward APR')}:
+                </TooltipText>
+                {tooltipVisible && tooltip}
+                <Text>{formatAmount(poolData.lpApr7d)}%</Text>
               </CustomFixedHeightRow>
-              <AutoColumn gap="4px">
-                <CustomFixedHeightRow>
-                  <CustomRowFixed>
-                    <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin size={20} />
-                    <Text className="text-left">
-                      {currency0.symbol}-{currency1.symbol} LP
-                    </Text>
-                  </CustomRowFixed>
-                  <CustomRowFixed>
-                    <Flex flexDirection="column" alignItems="flex-end">
-                      <Text className="text-right">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Text>
-                      {Number.isFinite(totalUSDValue) && (
-                        <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
-                          minimumFractionDigits: 2,
-                          maximumFractionDigits: 2,
-                        })} USD)`}</Text>
-                      )}
-                    </Flex>
-                  </CustomRowFixed>
-                </CustomFixedHeightRow>
-                {poolData && (
-                  <CustomFixedHeightRow>
-                    <TooltipText ref={targetRef} color="textSubtle" small>
-                      {t('LP reward APR')}:
-                    </TooltipText>
-                    {tooltipVisible && tooltip}
-                    <Text>{formatAmount(poolData.lpApr7d)}%</Text>
-                  </CustomFixedHeightRow>
-                )}
-                {/* <CustomFixedHeightRow>
+            )}
+            {/* <CustomFixedHeightRow>
                   <Text color="textSubtle" small>
                     {t('Share of Pool')}:
                   </Text>
                   <Text>{poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '-'}</Text>
                 </CustomFixedHeightRow> */}
-                {isStableLP ? null : (
-                  <CustomFixedHeightRow>
-                    <Text className="text-left">{currency0.symbol}</Text>
-                    {token0Deposited ? (
-                      <CustomRowFixed>
-                        <Text className="text-right">{token0Deposited?.toSignificant(6)}</Text>
-                      </CustomRowFixed>
-                    ) : (
-                      '-'
-                    )}
-                  </CustomFixedHeightRow>
+            {isStableLP ? null : (
+              <CustomFixedHeightRow>
+                <Text className="text-left">{currency0.symbol}</Text>
+                {token0Deposited ? (
+                  <CustomRowFixed>
+                    <Text className="text-right">{token0Deposited?.toSignificant(6)}</Text>
+                  </CustomRowFixed>
+                ) : (
+                  '-'
                 )}
-                {isStableLP ? null : (
-                  <CustomFixedHeightRow>
-                    <Text className="text-left">{currency1.symbol}</Text>
-                    {token1Deposited ? (
-                      <CustomRowFixed>
-                        <Text className="text-right">{token1Deposited?.toSignificant(6)}</Text>
-                      </CustomRowFixed>
-                    ) : (
-                      '-'
-                    )}
-                  </CustomFixedHeightRow>
-                )}
-              </AutoColumn>
-            </AutoColumn>
-          </CardBody>
-        </CustomCardMinimal>
-      ) : (
-        <LightCard>
-          <Text fontSize="14px" style={{ textAlign: 'center' }}>
-            <span role="img" aria-label="pancake-icon">
-              🥞
-            </span>{' '}
-            {t(
-              "By adding liquidity you'll earn 0.17% of all trades on this pair proportional to your share of the pool. Fees are added to the pool, accrue in real time and can be claimed by withdrawing your liquidity.",
+              </CustomFixedHeightRow>
             )}
-          </Text>
-        </LightCard>
-      )}
-    </>
+            {isStableLP ? null : (
+              <CustomFixedHeightRow>
+                <Text className="text-left">{currency1.symbol}</Text>
+                {token1Deposited ? (
+                  <CustomRowFixed>
+                    <Text className="text-right">{token1Deposited?.toSignificant(6)}</Text>
+                  </CustomRowFixed>
+                ) : (
+                  '-'
+                )}
+              </CustomFixedHeightRow>
+            )}
+          </AutoColumn>
+        </AutoColumn>
+      </CardBody>
+    </CustomCardMinimal>
   )
 }
 

@@ -29,7 +29,7 @@ import { getZapAddress } from 'utils/addressHelpers'
 import { ZapCheckbox } from 'components/CurrencyInputPanel/ZapCheckbox'
 import { CommitButton } from 'components/CommitButton'
 import { useTranslation } from '@pancakeswap/localization'
-import { ROUTER_ADDRESS } from 'config/constants/exchange'
+import { ROUTER_ADDRESS, ROUTER_XOX } from 'config/constants/exchange'
 import { transactionErrorToUserReadableMessage } from 'utils/transactionErrorToUserReadableMessage'
 import { useLPApr } from 'state/swap/useLPApr'
 import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
@@ -174,8 +174,8 @@ const CustomCardBody = styled(CardBody)`
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-  padding: 32px 24px;
-  .amount {
+    padding: 32px 24px;
+    .amount {
       font-weight: 500;
       font-size: 40px;
       line-height: 48px;
@@ -317,7 +317,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   const [signatureData, setSignatureData] = useState<{ v: number; r: string; s: string; deadline: number } | null>(null)
   const [approval, approveCallback] = useApproveCallback(
     parsedAmounts[Field.LIQUIDITY],
-    isZap ? getZapAddress(chainId) : ROUTER_ADDRESS[chainId],
+    isZap ? getZapAddress(chainId) : ROUTER_XOX[chainId],
   )
 
   async function onAttemptToApprove() {
@@ -352,7 +352,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     ]
     const message = {
       owner: account,
-      spender: ROUTER_ADDRESS[chainId],
+      spender: ROUTER_XOX[chainId],
       value: liquidityAmount.quotient.toString(),
       nonce: nonce.toHexString(),
       deadline: deadline.toNumber(),
@@ -367,23 +367,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
       message,
     })
 
-    library
-      .send('eth_signTypedData_v4', [account, data])
-      .then(splitSignature)
-      .then((signature) => {
-        setSignatureData({
-          v: signature.v,
-          r: signature.r,
-          s: signature.s,
-          deadline: deadline.toNumber(),
-        })
-      })
-      .catch((err) => {
-        // for all errors other than 4001 (EIP-1193 user rejected request), fall back to manual approve
-        if (err?.code !== 4001) {
-          approveCallback()
-        }
-      })
+    approveCallback()
   }
 
   // wrapped onUserInput to clear signatures
@@ -866,7 +850,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                 showCommonBases
                 commonBasesType={CommonBasesType.LIQUIDITY}
               />
-              <ColumnCenter>
+              <ColumnCenter style={{ margin: '8px auto' }}>
                 <ArrowDownIcon width="24px" my="16px" />
               </ColumnCenter>
               <CurrencyInputPanel

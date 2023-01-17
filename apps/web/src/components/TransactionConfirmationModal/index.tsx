@@ -25,6 +25,7 @@ import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToW
 
 const Wrapper = styled.div`
   width: 100%;
+  min-width: 300px;
 
   .waiting {
     font-weight: 500;
@@ -70,7 +71,8 @@ const ButtonFooters = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 43px;
+  height: 37px;
+  margin-bottom: 32px;
   width: 100%;
   button {
     min-width: 200px;
@@ -91,14 +93,12 @@ const ConfirmImg = styled.div`
   }
 `
 
-function ConfirmationPendingContent({ pendingText, iconGridLoader }: { pendingText: string, iconGridLoader?: any }) {
+function ConfirmationPendingContent({ pendingText, iconGridLoader }: { pendingText: string; iconGridLoader?: any }) {
   const { t } = useTranslation()
   return (
     <Wrapper>
       <ConfirmedIcon>
-        {
-          iconGridLoader ? <GridLoader color="#9072FF" style={{width:'51px', height:'51px'}} /> : <Spinner />
-        }
+        <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
       </ConfirmedIcon>
       <AutoColumn gap="16px" justify="center">
         <Text className="waiting">{t('Waiting For Confirmation')}</Text>
@@ -150,11 +150,7 @@ export function TransactionSubmittedContent({
             </Link>
           )}
           <ButtonFooters>
-            <Button
-              onClick={onDismiss}
-              maxWidth="200px"
-              style={{ height: '43px', background: '#313131', marginRight: '16px' }}
-            >
+            <Button onClick={onDismiss} maxWidth="200px" style={{ height: '37px', background: '#313131' }}>
               {t('Close')}
             </Button>
             {currencyToAdd && (
@@ -166,7 +162,7 @@ export function TransactionSubmittedContent({
                 tokenSymbol={currencyToAdd.symbol}
                 tokenDecimals={token.decimals}
                 tokenLogo={token instanceof WrappedTokenInfo ? token.logoURI : undefined}
-                style={{ fontSize: '15px', height: '43px' }}
+                style={{ fontSize: '15px', height: '37px', marginLeft: '16px' }}
               />
             )}
           </ButtonFooters>
@@ -203,14 +199,14 @@ export function TransactionErrorContent({
     <Wrapper>
       <AutoColumn justify="center">
         {/* <ErrorIcon color="failure" width="64px" /> */}
-        <img alt='' src='/images/swap/icon-swap-error.svg' style={{padding:'10px 0'}} /> 
+        <img alt="" src="/images/swap/icon-swap-error.svg" style={{ padding: '10px 0' }} />
         <Text color="failure" style={{ textAlign: 'center', width: '85%', wordBreak: 'break-word' }}>
           {message}
         </Text>
       </AutoColumn>
 
       {onDismiss ? (
-        <Flex justifyContent="center" pt="24px">
+        <Flex justifyContent="center" pt="24px" mb="32px">
           <Button onClick={onDismiss}>{t('Dismiss')}</Button>
         </Flex>
       ) : null}
@@ -238,7 +234,7 @@ export function TransactionSwapErrorContent({
       </AutoColumn>
 
       {onDismiss ? (
-        <Flex justifyContent="center" pt="24px">
+        <Flex justifyContent="center" pt="24px" mb="32px">
           <Button onClick={onDismiss}>{t('Dismiss')}</Button>
         </Flex>
       ) : null}
@@ -258,7 +254,18 @@ interface ConfirmationModalProps {
 
 const TransactionConfirmationModal: React.FC<
   React.PropsWithChildren<InjectedModalProps & ConfirmationModalProps & ModalProps>
-> = ({ title, onDismiss, customOnDismiss, attemptingTxn, hash, pendingText, content, currencyToAdd, iconGridLoader, ...props }) => {
+> = ({
+  title,
+  onDismiss,
+  customOnDismiss,
+  attemptingTxn,
+  hash,
+  pendingText,
+  content,
+  currencyToAdd,
+  iconGridLoader,
+  ...props
+}) => {
   const { chainId } = useActiveChainId()
   const handleDismiss = useCallback(() => {
     if (customOnDismiss) {

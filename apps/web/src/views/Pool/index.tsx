@@ -20,6 +20,10 @@ import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
 import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
 import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
+import ConnectWalletButton from 'components/ConnectWalletButton'
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+import { CurrencyLogo } from 'views/Info/components/CurrencyLogo'
 
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -28,6 +32,15 @@ const SwapBackgroundWrapper = styled.div`
   transform: translateX(-50%);
   z-index: 1;
   width: 100%;
+`
+
+const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
+  width: 100%;
+  height: 37px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: 43px;
+  }
 `
 
 const BackgroundWrapper = styled.div`
@@ -152,12 +165,24 @@ const ConnectSub = styled.div`
   color: #ffffff61;
 `
 
+const PoolWrapper = styled(Flex)`
+  .pair-icon,
+  .pair-balance {
+    display: grid;
+    grid-template-columns: 1fr 57px 1fr;
+  }
+
+  .pair-icon {
+    margin-top: 24px;
+    margin-bottom: 8px;
+  }
+`
+
 export default function Pool() {
   const { address: account } = useAccount()
   const { isMobile } = useMatchBreakpoints()
   const { t } = useTranslation()
-  const [divHeight, setDivHeight] = useState(0)
-  const divRef: Ref<HTMLDivElement> = useRef(null)
+  const { chainId } = useActiveChainId()
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs()
 
@@ -176,11 +201,16 @@ export default function Pool() {
 
   const stablePairs = useLPTokensWithBalanceByAccount(account)
 
+  console.log(tokenPairsWithLiquidityTokens, 'tokenPairsWithLiquidityTokens')
+
   // fetch the reserves for all V2 pools in which the user has a balance
   const liquidityTokensWithBalances = useMemo(
     () =>
-      tokenPairsWithLiquidityTokens.filter(({ liquidityToken }) =>
-        v2PairsBalances[liquidityToken.address]?.greaterThan('0'),
+      tokenPairsWithLiquidityTokens.filter(
+        ({ liquidityToken, tokens }) =>
+          v2PairsBalances[liquidityToken.address]?.greaterThan('0') &&
+          ((tokens[0].address === USD_ADDRESS[chainId] && tokens[1].address === XOX_ADDRESS[chainId]) ||
+            (tokens[0].address === XOX_ADDRESS[chainId] && tokens[1].address === USD_ADDRESS[chainId])),
       ),
     [tokenPairsWithLiquidityTokens, v2PairsBalances],
   )
@@ -193,10 +223,6 @@ export default function Pool() {
   const allV2PairsWithLiquidity = v2Pairs
     ?.filter(([pairState, pair]) => pairState === PairState.EXISTS && Boolean(pair))
     .map(([, pair]) => pair)
-
-  useEffect(() => {
-    setDivHeight(divRef.current.offsetHeight)
-  }, [])
 
   const renderBody = () => {
     if (!account) {
@@ -257,11 +283,106 @@ export default function Pool() {
     }
 
     return (
-      <>
-        <Text color="textSubtle" textAlign="center">
-          {t('No liquidity found.')}
+      <PoolWrapper flexDirection="column">
+        <Text
+          fontWeight="400"
+          fontSize={['14px', , '18px']}
+          lineHeight={['17px', , '22px']}
+          color="rgba(255, 255, 255, 0.87)"
+        >
+          Pool
         </Text>
-      </>
+        <div className="pair-icon">
+          <Flex
+            flexDirection="row"
+            alignItems="center"
+            px="16px"
+            py="12px"
+            border="1px solid #444444"
+            borderRadius="8px"
+          >
+            <CurrencyLogo address={USD_ADDRESS[chainId]} chainName={chainId === 1 || chainId === 5 ? 'ETH' : 'BSC'} />
+            <Text
+              fontWeight="400"
+              fontSize={['16px', , '18px']}
+              lineHeight={['19px', , '22px']}
+              color="rgba(255, 255, 255, 0.87)"
+              ml="8px"
+            >
+              {chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'}
+            </Text>
+          </Flex>
+          <Flex justifyContent="center" alignItems="center">
+            <AddIcon />
+          </Flex>
+          <Flex
+            flexDirection="row"
+            alignItems="center"
+            px="16px"
+            py="12px"
+            border="1px solid #444444"
+            borderRadius="8px"
+          >
+            <CurrencyLogo address={XOX_ADDRESS[chainId]} chainName={chainId === 1 || chainId === 5 ? 'ETH' : 'BSC'} />
+            <Text
+              fontWeight="400"
+              fontSize={['16px', , '18px']}
+              lineHeight={['19px', , '22px']}
+              color="rgba(255, 255, 255, 0.87)"
+              ml="8px"
+            >
+              XOX
+            </Text>
+          </Flex>
+        </div>
+        <div className="pair-balance">
+          <Flex flexDirection="row" justifyContent="space-between">
+            <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)">
+              Balance
+            </Text>
+            <Flex flexDirection="column" alignItems="flex-end">
+              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.87)">
+                0
+              </Text>
+              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)" mt="8px">
+                ~$0.00
+              </Text>
+            </Flex>
+          </Flex>
+          <div />
+          <Flex flexDirection="row" justifyContent="space-between">
+            <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)">
+              Balance
+            </Text>
+            <Flex flexDirection="column" alignItems="flex-end">
+              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.87)">
+                0
+              </Text>
+              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)" mt="8px">
+                ~$0.00
+              </Text>
+            </Flex>
+          </Flex>
+        </div>
+        <Flex flexDirection="row" justifyContent="space-between" mt="24px">
+          <Text
+            fontWeight="400"
+            fontSize={['14px', , '16px']}
+            lineHeight={['17px', , '19px']}
+            color="rgba(255, 255, 255, 0.87)"
+          >
+            LP reward APR
+          </Text>
+          <Text
+            fontWeight="700"
+            fontSize={['14px', , '16px']}
+            lineHeight={['17px', , '19px']}
+            color="rgba(255, 255, 255, 0.87)"
+          >
+            {chainId === 1 || chainId === 5 ? 1.3 : 1.25}%
+          </Text>
+        </Flex>
+      </PoolWrapper>
     )
   }
 
@@ -301,7 +422,7 @@ export default function Pool() {
           )}
           <BackgroundWrapper />
 
-          <StyledLiquidityContainer ref={divRef}>
+          <StyledLiquidityContainer>
             <Header>
               <div>
                 <p className="title">Liquidity</p>
@@ -340,9 +461,7 @@ export default function Pool() {
                   </ButtonWrapper>
                 </Link>
               ) : (
-                <ButtonWrapper id="join-pool-button" width="100%" startIcon={null}>
-                  Connect Wallet
-                </ButtonWrapper>
+                <ConnectWalletButtonWrapper />
               )}
             </StyledCardFooter>
           </StyledLiquidityContainer>
