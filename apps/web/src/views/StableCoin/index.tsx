@@ -225,37 +225,39 @@ export default function StableCoin() {
             </Row>
           </>
         )}
-        {widthDraw === TYPE.default && account && (
+        {widthDraw === TYPE.default && (
           <>
-            <Row>
-              <Box className="h-190">
-                <Flex justifyContent="space-between" alignItems="center" width="100%">
-                  <WrapText>
-                    <p>Your current XOXS</p>
-                    <p className="number">{currentXOX}</p>
-                    <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
-                      View your history
-                    </Button>
-                  </WrapText>
-                  <img src="/images/1/tokens/XOX.png" alt="icon" />
-                </Flex>
-              </Box>
-              <Box className="h-190">
-                <Earned address={account} />
-              </Box>
-              <Box className="h-190">
-                <Flex justifyContent="space-between" alignItems="center" width="100%">
-                  <WrapText>
-                    <p>Your current reward</p>
-                    <p className="number">{currentReward}</p>
-                    <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.withdraw)}>
-                      Withdraw reward
-                    </Button>
-                  </WrapText>
-                  <img src="/images/1/tokens/XOX.png" alt="icon" />
-                </Flex>
-              </Box>
-            </Row>
+            {
+              account && <Row>
+                <Box className="h-190">
+                  <Flex justifyContent="space-between" alignItems="center" width="100%">
+                    <WrapText>
+                      <p>Your current XOXS</p>
+                      <p className="number">{currentXOX}</p>
+                      <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
+                        View your history
+                      </Button>
+                    </WrapText>
+                    <img src="/images/1/tokens/XOX.png" alt="icon" />
+                  </Flex>
+                </Box>
+                <Box className="h-190">
+                  <Earned address={account} />
+                </Box>
+                <Box className="h-190">
+                  <Flex justifyContent="space-between" alignItems="center" width="100%">
+                    <WrapText>
+                      <p>Your current reward</p>
+                      <p className="number">{currentReward}</p>
+                      <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.withdraw)}>
+                        Withdraw reward
+                      </Button>
+                    </WrapText>
+                    <img src="/images/1/tokens/XOX.png" alt="icon" />
+                  </Flex>
+                </Box>
+              </Row>
+            }
             <Row style={{ marginTop: 24 }}>
               <Box className="wrap-table">
                 <HistoryTable typePage={TYPE_HISTORY.widthDraw} />
