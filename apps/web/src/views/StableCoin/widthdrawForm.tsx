@@ -262,7 +262,7 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Amount</TextStyle>
         <BoxRight>
-          <input key={keyInput} defaultValue={amount} placeholder='0.00' onChange={(e:any) => {
+          <input type="number" key={keyInput} defaultValue={amount} placeholder='0.00' onChange={(e:any) => {
             setAmount(e?.target?.value);
             if(parseFloat(e?.target?.value) > priceAvailable){
               setError('Insufficient balance');
