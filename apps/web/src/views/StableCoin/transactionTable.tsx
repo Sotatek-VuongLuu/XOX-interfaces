@@ -253,7 +253,7 @@ export const PageButtons = styled(Flex)`
 const SORT_FIELD = {
   timestamp: 'timestamp',
   amountUSD: 'amountUSD',
-  stableCoin: 'amountToken0',
+  stableCoin: 'amountToken1',
 }
 
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
@@ -289,8 +289,8 @@ const DataRow: React.FC<
   const abs1 = Math.abs(transaction.amountToken1)
   const { chainId } = useActiveChainId();
   const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
-  const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOXS' : transaction.token0Symbol
-  const symbolToken1 = transaction.token1Symbol === 'xox' ? 'XOXS' : transaction.token1Symbol
+  const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOX' : transaction.token0Symbol
+  const symbolToken1 = transaction.token1Symbol === 'xox' ? 'XOX' : transaction.token1Symbol
 
   const outputTokenSymbol = transaction.amountToken0 < 0 ? symbolToken0 : symbolToken1
   const inputTokenSymbol = transaction.amountToken1 < 0 ? symbolToken0 : symbolToken1
@@ -351,7 +351,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(abs0)} ${symbolToken0}`}</Text>
+      >{`${formatAmount(abs1)} ${symbolToken0}`}</Text>
     </>
   )
 }
@@ -648,11 +648,6 @@ const TransactionsTable: React.FC = () => {
                 }
                 return null
               })}
-              {sortedTransactions.length === 0 ? (
-                <Flex justifyContent="center">
-                  <Text>{t('No Transactions')}</Text>
-                </Flex>
-              ) : undefined}
             </>
           ) : (
             <>
@@ -662,6 +657,11 @@ const TransactionsTable: React.FC = () => {
             </>
           )}
         </Table>
+        {sortedTransactions.length === 0 ? (
+          <Flex justifyContent="center" style={{margin: "100px 0"}}>
+            <Text>{t('No Transactions')}</Text>
+          </Flex>
+        ) : undefined}
       </CustomTableWrapper>
       {currentTransactions && currentTransactions?.length > 9 && (
         <PageButtons>

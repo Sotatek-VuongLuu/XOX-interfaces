@@ -747,11 +747,6 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
                 }
                 return null
               })}
-              {sortedTransactions.length === 0 ? (
-                <Flex justifyContent="center">
-                  <Text>{t('No Transactions')}</Text>
-                </Flex>
-              ) : undefined}
             </>
           ) : (
             <>
@@ -761,6 +756,11 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
             </>
           )}
         </Table>
+        {sortedTransactions.length === 0 ? (
+          <Flex justifyContent="center" style={{margin: "100px 0"}}>
+            <Text>{t('No Transactions')}</Text>
+          </Flex>
+        ) : undefined}
       </CustomTableWrapper>
       {currentTransactions?.length > 9 && (
         <PageButtons>

@@ -18,6 +18,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { wrappedCurrency } from 'utils/wrappedCurrency'
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 import { useActiveChainId } from 'hooks/useActiveChainId'
+import { GridLoader } from 'react-spinners'
 import { AutoColumn, ColumnCenter } from '../Layout/Column'
 import { getBlockExploreLink, getBlockExploreName } from '../../utils'
 import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToWalletButton'
@@ -55,12 +56,14 @@ const ConfirmImg = styled.div`
   }
 `
 
-function ConfirmationPendingContent({ pendingText }: { pendingText: string }) {
+function ConfirmationPendingContent({ pendingText, iconGridLoader }: { pendingText: string, iconGridLoader?: any }) {
   const { t } = useTranslation()
   return (
     <Wrapper>
       <ConfirmedIcon>
-        <Spinner />
+        {
+          iconGridLoader ? <GridLoader color="#9072FF" style={{width:'51px', height:'51px'}} /> : <Spinner />
+        }
       </ConfirmedIcon>
       <AutoColumn gap="12px" justify="center">
         <Text fontSize="18px">{t('Waiting For Confirmation')}</Text>
@@ -220,11 +223,12 @@ interface ConfirmationModalProps {
   attemptingTxn: boolean
   pendingText: string
   currencyToAdd?: Currency | undefined
+  iconGridLoader?: boolean
 }
 
 const TransactionConfirmationModal: React.FC<
   React.PropsWithChildren<InjectedModalProps & ConfirmationModalProps & ModalProps>
-> = ({ title, onDismiss, customOnDismiss, attemptingTxn, hash, pendingText, content, currencyToAdd, ...props }) => {
+> = ({ title, onDismiss, customOnDismiss, attemptingTxn, hash, pendingText, content, currencyToAdd, iconGridLoader, ...props }) => {
   const { chainId } = useActiveChainId()
   const handleDismiss = useCallback(() => {
     if (customOnDismiss) {
@@ -238,7 +242,7 @@ const TransactionConfirmationModal: React.FC<
   return (
     <Modal title={title} {...props} onDismiss={handleDismiss}>
       {attemptingTxn ? (
-        <ConfirmationPendingContent pendingText={pendingText} />
+        <ConfirmationPendingContent pendingText={pendingText} iconGridLoader={iconGridLoader} />
       ) : hash ? (
         <TransactionSubmittedContent
           chainId={chainId}
