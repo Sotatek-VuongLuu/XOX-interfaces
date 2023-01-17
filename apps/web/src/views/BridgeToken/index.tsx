@@ -323,7 +323,7 @@ export default function BridgeToken() {
       setMessageButton('Approving')
     } else if (amountTo === '0') {
       setMessageButton('Input Amount Not Allowed')
-    } else setMessageButton('Swap')
+    } else setMessageButton('Bridge')
   }, [amountInput, approvalState, balanceInput, minAmount])
 
   // handle user type input
