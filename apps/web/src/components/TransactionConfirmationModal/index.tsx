@@ -25,6 +25,41 @@ import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToW
 
 const Wrapper = styled.div`
   width: 100%;
+
+  .waiting {
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .pending {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 24px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .confirm {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    .waiting {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    .pending {
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
 `
 const Section = styled(AutoColumn)``
 
@@ -65,16 +100,12 @@ function ConfirmationPendingContent({ pendingText, iconGridLoader }: { pendingTe
           iconGridLoader ? <GridLoader color="#9072FF" style={{width:'51px', height:'51px'}} /> : <Spinner />
         }
       </ConfirmedIcon>
-      <AutoColumn gap="12px" justify="center">
-        <Text fontSize="18px">{t('Waiting For Confirmation')}</Text>
+      <AutoColumn gap="16px" justify="center">
+        <Text className="waiting">{t('Waiting For Confirmation')}</Text>
         <AutoColumn gap="12px" justify="center">
-          <Text bold small textAlign="center">
-            {pendingText}
-          </Text>
+          <Text className="pending">{pendingText}</Text>
         </AutoColumn>
-        <Text small color="textSubtle" textAlign="center">
-          {t('Confirm this transaction in your wallet')}
-        </Text>
+        <Text className="confirm">{t('Confirm this transaction in your wallet.')}</Text>
       </AutoColumn>
     </Wrapper>
   )
@@ -99,7 +130,6 @@ export function TransactionSubmittedContent({
     <Wrapper>
       <Section>
         <ConfirmedIcon>
-          {/* <ArrowUpIcon strokeWidth={0.5} width="90px" color="primary" /> */}
           <ConfirmImg>
             <img src="/images/swap/transaction-submited.png" alt="" />
           </ConfirmImg>

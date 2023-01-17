@@ -41,6 +41,171 @@ const FixedHeightRow = styled(RowBetween)`
   height: 24px;
 `
 
+const CustomCard = styled(Card)`
+  border: 1px solid #444444;
+  border-radius: 20px;
+  background: unset;
+  padding: 0;
+
+  & > div {
+    background: unset;
+    width: 100%;
+    height: 100%;
+    border-radius: unset;
+  }
+
+  .main-content {
+    padding: 0 16px 16px 16px;
+  }
+
+  .button {
+    padding: 16px;
+  }
+
+  img {
+    width: 18px;
+    height: unset;
+  }
+
+  .pair-token {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    margin-left: 8px;
+  }
+
+  .text-left {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+  }
+
+  .text-right {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: right;
+    color: #ffffff;
+  }
+
+  .text-logo {
+    margin-right: 8px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-size: 16px;
+    line-height: 19px;
+
+    img {
+      width: 20px;
+      height: unset;
+    }
+
+    .text-left {
+      font-size: 16px;
+      line-height: 19px;
+    }
+
+    .text-right {
+      font-size: 18px;
+      line-height: 22px;
+    }
+  }
+`
+
+const ButtonWrapper = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 16px;
+
+  .btn-remove {
+    background: #313131;
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    height: 37px;
+
+    :hover:not(:disabled):not(.pancake-button--disabled):not(.pancake-button--disabled):not(:active) {
+      background: #313131;
+    }
+  }
+
+  .btn-add {
+    border-radius: 6px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    height: 37px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    .btn-remove {
+      background: #313131;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      height: 43px;
+    }
+
+    .btn-add {
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      height: 43px;
+    }
+  }
+`
+
+const CustomCardMinimal = styled(Card)`
+  padding: 0;
+
+  .lp-token-text {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #9072ff;
+    text-transform: uppercase;
+  }
+
+  & > div {
+    background: #303030;
+    border-radius: 20px;
+  }
+
+  & > div > div {
+    padding: 20px 17px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    .lp-token-text {
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }
+`
+
+const CustomFixedHeightRow = styled(FixedHeightRow)`
+  margin-bottom: 0;
+`
+
+const CustomRowFixed = styled(RowFixed)`
+  margin-bottom: 0;
+`
+
+const CustomRow = styled(Flex)`
+  justify-content: space-between;
+`
+
 interface PositionCardProps extends CardProps {
   pair: Pair
   showUnwrapped?: boolean
@@ -171,83 +336,77 @@ function MinimalPositionCardView({
   return (
     <>
       {userPoolBalance && JSBI.greaterThan(userPoolBalance.quotient, BIG_INT_ZERO) ? (
-        <Card>
+        <CustomCardMinimal>
           <CardBody>
             <AutoColumn gap="16px">
-              <FixedHeightRow>
-                <RowFixed>
-                  <Text color="secondary" bold>
-                    {t('LP tokens in your wallet')}
-                  </Text>
-                </RowFixed>
-              </FixedHeightRow>
-              <FixedHeightRow>
-                <RowFixed>
-                  <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin size={20} />
-                  <Text small color="textSubtle">
-                    {currency0.symbol}-{currency1.symbol} LP
-                  </Text>
-                </RowFixed>
-                <RowFixed>
-                  <Flex flexDirection="column" alignItems="flex-end">
-                    <Text>{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Text>
-                    {Number.isFinite(totalUSDValue) && (
-                      <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
-                        minimumFractionDigits: 2,
-                        maximumFractionDigits: 2,
-                      })} USD)`}</Text>
-                    )}
-                  </Flex>
-                </RowFixed>
-              </FixedHeightRow>
+              <CustomFixedHeightRow>
+                <CustomRowFixed>
+                  <Text className="lp-token-text">{t('LP tokens in your wallet')}</Text>
+                </CustomRowFixed>
+              </CustomFixedHeightRow>
               <AutoColumn gap="4px">
+                <CustomFixedHeightRow>
+                  <CustomRowFixed>
+                    <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin size={20} />
+                    <Text className="text-left">
+                      {currency0.symbol}-{currency1.symbol} LP
+                    </Text>
+                  </CustomRowFixed>
+                  <CustomRowFixed>
+                    <Flex flexDirection="column" alignItems="flex-end">
+                      <Text className="text-right">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Text>
+                      {Number.isFinite(totalUSDValue) && (
+                        <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
+                          minimumFractionDigits: 2,
+                          maximumFractionDigits: 2,
+                        })} USD)`}</Text>
+                      )}
+                    </Flex>
+                  </CustomRowFixed>
+                </CustomFixedHeightRow>
                 {poolData && (
-                  <FixedHeightRow>
+                  <CustomFixedHeightRow>
                     <TooltipText ref={targetRef} color="textSubtle" small>
                       {t('LP reward APR')}:
                     </TooltipText>
                     {tooltipVisible && tooltip}
                     <Text>{formatAmount(poolData.lpApr7d)}%</Text>
-                  </FixedHeightRow>
+                  </CustomFixedHeightRow>
                 )}
-                <FixedHeightRow>
+                {/* <CustomFixedHeightRow>
                   <Text color="textSubtle" small>
                     {t('Share of Pool')}:
                   </Text>
                   <Text>{poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '-'}</Text>
-                </FixedHeightRow>
+                </CustomFixedHeightRow> */}
                 {isStableLP ? null : (
-                  <FixedHeightRow>
-                    <Text color="textSubtle" small>
-                      {t('Pooled %asset%', { asset: currency0.symbol })}:
-                    </Text>
+                  <CustomFixedHeightRow>
+                    <Text className="text-left">{currency0.symbol}</Text>
                     {token0Deposited ? (
-                      <RowFixed>
-                        <Text ml="6px">{token0Deposited?.toSignificant(6)}</Text>
-                      </RowFixed>
+                      <CustomRowFixed>
+                        <Text className="text-right">{token0Deposited?.toSignificant(6)}</Text>
+                      </CustomRowFixed>
                     ) : (
                       '-'
                     )}
-                  </FixedHeightRow>
+                  </CustomFixedHeightRow>
                 )}
                 {isStableLP ? null : (
-                  <FixedHeightRow>
-                    <Text color="textSubtle" small>
-                      {t('Pooled %asset%', { asset: currency1.symbol })}:
-                    </Text>
+                  <CustomFixedHeightRow>
+                    <Text className="text-left">{currency1.symbol}</Text>
                     {token1Deposited ? (
-                      <RowFixed>
-                        <Text ml="6px">{token1Deposited?.toSignificant(6)}</Text>
-                      </RowFixed>
+                      <CustomRowFixed>
+                        <Text className="text-right">{token1Deposited?.toSignificant(6)}</Text>
+                      </CustomRowFixed>
                     ) : (
                       '-'
                     )}
-                  </FixedHeightRow>
+                  </CustomFixedHeightRow>
                 )}
               </AutoColumn>
             </AutoColumn>
           </CardBody>
-        </Card>
+        </CustomCardMinimal>
       ) : (
         <LightCard>
           <Text fontSize="14px" style={{ textAlign: 'center' }}>
@@ -288,12 +447,18 @@ function FullPositionCard({
   const [showMore, setShowMore] = useState(false)
 
   return (
-    <Card {...props}>
-      <Flex justifyContent="space-between" role="button" onClick={() => setShowMore(!showMore)} p="16px">
+    <CustomCard {...props}>
+      <Flex
+        justifyContent="space-between"
+        className="button"
+        role="button"
+        onClick={() => setShowMore(!showMore)}
+        p="16px"
+      >
         <Flex flexDirection="column">
-          <Flex alignItems="center" mb="4px">
+          <Flex alignItems="center">
             <DoubleCurrencyLogo currency0={currency0} currency1={currency1} size={20} />
-            <Text bold ml="8px">
+            <Text className="pair-token">
               {!currency0 || !currency1 ? <Dots>{t('Loading')}</Dots> : `${currency0.symbol}/${currency1.symbol}`}
             </Text>
             {isStableLP ? (
@@ -303,9 +468,9 @@ function FullPositionCard({
               </Text>
             ) : null}
           </Flex>
-          <Text fontSize="14px" color="textSubtle">
+          {/* <Text fontSize="14px" color="textSubtle">
             {userPoolBalance?.toSignificant(4)}
-          </Text>
+          </Text> */}
           {Number.isFinite(totalUSDValue) && (
             <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
               minimumFractionDigits: 2,
@@ -313,75 +478,75 @@ function FullPositionCard({
             })} USD)`}</Text>
           )}
         </Flex>
-        {showMore ? <ChevronUpIcon /> : <ChevronDownIcon />}
+        {showMore ? <ChevronUpIcon fill="#8E8E8E" /> : <ChevronDownIcon fill="#8E8E8E" />}
       </Flex>
 
       {showMore && (
-        <AutoColumn gap="8px" style={{ padding: '16px' }}>
+        <AutoColumn gap="8px" className="main-content">
           {isStableLP ? null : (
-            <FixedHeightRow>
-              <RowFixed>
-                <CurrencyLogo size="20px" currency={currency0} />
-                <Text color="textSubtle" ml="4px">
-                  {t('Pooled %asset%', { asset: currency0.symbol })}:
-                </Text>
-              </RowFixed>
+            <CustomRow>
+              <CustomRowFixed>
+                <Text className="text-left">{t('Pooled %asset%', { asset: currency0.symbol })}:</Text>
+              </CustomRowFixed>
               {token0Deposited ? (
-                <RowFixed>
-                  <Text ml="6px">{token0Deposited?.toSignificant(6)}</Text>
-                </RowFixed>
+                <CustomRowFixed>
+                  <Text className="text-right text-logo">{token0Deposited?.toSignificant(6)}</Text>
+                  <CurrencyLogo currency={currency0} />
+                </CustomRowFixed>
               ) : (
                 '-'
               )}
-            </FixedHeightRow>
+            </CustomRow>
           )}
 
           {isStableLP ? null : (
-            <FixedHeightRow>
-              <RowFixed>
-                <CurrencyLogo size="20px" currency={currency1} />
-                <Text color="textSubtle" ml="4px">
-                  {t('Pooled %asset%', { asset: currency1.symbol })}:
-                </Text>
-              </RowFixed>
+            <CustomRow>
+              <CustomRowFixed>
+                <Text className="text-left">{t('Pooled %asset%', { asset: currency1.symbol })}:</Text>
+              </CustomRowFixed>
               {token1Deposited ? (
-                <RowFixed>
-                  <Text ml="6px">{token1Deposited?.toSignificant(6)}</Text>
-                </RowFixed>
+                <CustomRowFixed>
+                  <Text className="text-right text-logo">{token1Deposited?.toSignificant(6)}</Text>
+                  <CurrencyLogo currency={currency1} />
+                </CustomRowFixed>
               ) : (
                 '-'
               )}
-            </FixedHeightRow>
+            </CustomRow>
           )}
           {poolData && (
-            <FixedHeightRow>
-              <RowFixed>
+            <CustomRow>
+              <CustomRowFixed>
                 <TooltipText ref={targetRef} color="textSubtle">
                   {t('LP reward APR')}:
                 </TooltipText>
                 {tooltipVisible && tooltip}
-              </RowFixed>
+              </CustomRowFixed>
               <Text>{formatAmount(poolData.lpApr7d)}%</Text>
-            </FixedHeightRow>
+            </CustomRow>
           )}
 
-          <FixedHeightRow>
-            <Text color="textSubtle">{t('Share of Pool')}</Text>
-            <Text>
+          <CustomRow>
+            <Text className="text-left">{t('Your pool tokens')}</Text>
+            <Text className="text-right">{userPoolBalance?.toSignificant(6)}</Text>
+          </CustomRow>
+
+          <CustomRow>
+            <Text className="text-left">{t('Your pool share')}</Text>
+            <Text className="text-right">
               {poolTokenPercentage
                 ? `${poolTokenPercentage.toFixed(2) === '0.00' ? '<0.01' : poolTokenPercentage.toFixed(2)}%`
                 : '-'}
             </Text>
-          </FixedHeightRow>
+          </CustomRow>
 
           {userPoolBalance && JSBI.greaterThan(userPoolBalance.quotient, BIG_INT_ZERO) && (
-            <Flex flexDirection="column">
+            <ButtonWrapper>
               <Button
                 as={NextLinkFromReactRouter}
                 to={`/remove/${currencyId(currency0)}/${currencyId(currency1)}${isStableLP ? '?stable=1' : ''}`}
-                variant="primary"
                 width="100%"
-                mb="8px"
+                className="btn-remove"
               >
                 {t('Remove')}
               </Button>
@@ -389,16 +554,16 @@ function FullPositionCard({
                 as={NextLinkFromReactRouter}
                 to={`/add/${currencyId(currency0)}/${currencyId(currency1)}?step=1`}
                 variant="text"
-                startIcon={<AddIcon color="primary" />}
                 width="100%"
+                className="btn-add"
               >
-                {t('Add liquidity instead')}
+                {t('Add')}
               </Button>
-            </Flex>
+            </ButtonWrapper>
           )}
         </AutoColumn>
       )}
-    </Card>
+    </CustomCard>
   )
 }
 

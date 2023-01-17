@@ -17,7 +17,7 @@ interface Props {
 const AppHeaderContainer = styled(Flex)`
   align-items: center;
   justify-content: space-between;
-  padding: 24px;
+  padding: 20px 24px;
   width: 100%;
   border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
 `
@@ -31,20 +31,19 @@ const AppHeader: React.FC<React.PropsWithChildren<Props>> = ({ title, subtitle, 
         {backTo &&
           (typeof backTo === 'string' ? (
             <Link passHref href={backTo}>
-              <IconButton as="a" scale="sm">
-                <ArrowBackIcon width="32px" />
-              </IconButton>
+              <div style={{ cursor: 'pointer' }}>
+                <ArrowBackIcon width="24px" />
+              </div>
             </Link>
           ) : (
             <IconButton scale="sm" variant="text" onClick={backTo}>
-              <ArrowBackIcon width="32px" />
+              <ArrowBackIcon width="24px" />
             </IconButton>
           ))}
         <Flex flexDirection="column" width="100%">
-          <Flex mb="8px" alignItems="center" justifyContent="space-between">
+          <Flex alignItems="center" justifyContent="space-between">
             <Flex>
               <Heading as="h2">{title}</Heading>
-              {helper && <QuestionHelper text={helper} ml="4px" placement="top-start" />}
             </Flex>
             {!noConfig && (
               <Flex alignItems="center">
@@ -55,11 +54,13 @@ const AppHeader: React.FC<React.PropsWithChildren<Props>> = ({ title, subtitle, 
               </Flex>
             )}
           </Flex>
-          <Flex alignItems="center">
-            <Text color="textSubtle" fontSize="14px">
-              {subtitle}
-            </Text>
-          </Flex>
+          {subtitle && (
+            <Flex mt="8px" alignItems="center">
+              <Text color="textSubtle" fontSize="14px">
+                {subtitle}
+              </Text>
+            </Flex>
+          )}
         </Flex>
       </Flex>
     </AppHeaderContainer>

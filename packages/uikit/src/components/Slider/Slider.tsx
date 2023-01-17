@@ -2,9 +2,7 @@ import React, { ChangeEvent, useCallback } from "react";
 import { Box } from "../Box";
 import {
   BunnySlider,
-  BarBackground,
   BarProgress,
-  BunnyButt,
   StyledInput,
   SliderLabel,
   SliderLabelContainer,
@@ -44,10 +42,8 @@ const Slider: React.FC<React.PropsWithChildren<SliderProps>> = ({
   const labelProgress = isMax ? "calc(100% - 12px)" : `${progressPercentage}%`;
   const displayValueLabel = isMax ? "MAX" : valueLabel;
   return (
-    <Box position="relative" height="48px" {...props}>
-      <BunnyButt disabled={disabled} />
+    <Box position="relative" height="30px" {...props}>
       <BunnySlider>
-        <BarBackground disabled={disabled} />
         <BarProgress style={{ width: progressWidth }} disabled={disabled} />
         <StyledInput
           name={name}
