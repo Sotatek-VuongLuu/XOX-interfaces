@@ -127,7 +127,7 @@ const Menu = (props) => {
         rightSide={
           route.pathname === '/' ? (
             <>
-              <a href="/swap" style={{ marginRight: '11px' }} target="blank">
+              <a href="/swap" style={{ marginRight: '11px' }} target="_blank">
                 <BTNLaunchApp>Launch App</BTNLaunchApp>
               </a>
 
