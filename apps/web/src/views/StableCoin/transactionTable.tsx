@@ -253,7 +253,7 @@ export const PageButtons = styled(Flex)`
 const SORT_FIELD = {
   timestamp: 'timestamp',
   amountUSD: 'amountUSD',
-  stableCoin: 'amountStable',
+  stableCoin: 'amountToken0',
 }
 
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
