@@ -129,10 +129,11 @@ export default function StableCoin() {
       })
       const amountPoint = Number(dataParse[1]);
       const rewardPoint = Number(dataParse[2]);
-      setCurrentXOX(amountPoint);
       if(rewardPoint === 0 || rewardPoint){
         const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdEffect])) + rewardPoint;
         setCurrentReward(numberReward ? numberReward?.toFixed(6) : 0);
+        const totalCurrentXOXS = amountPoint+numberReward;
+        setCurrentXOX(totalCurrentXOXS ? totalCurrentXOXS.toFixed(6) : 0);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
