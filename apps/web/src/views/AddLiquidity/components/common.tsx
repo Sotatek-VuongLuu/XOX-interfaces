@@ -341,7 +341,7 @@ export const AddLiquidityModalHeader = ({
             </Text>
           </Flex>
         </CustomRowBetween>
-        <CustomRowBetween style={{ justifyContent: 'flex-end' }}></CustomRowBetween>
+        <CustomRowBetween style={{ justifyContent: 'flex-end' }} />
       </AutoColumn>
       <CustomRowBetween>
         <Text className="text-left">{t('Share of Pool')}</Text>

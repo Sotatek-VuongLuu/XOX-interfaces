@@ -10,10 +10,11 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { usePair } from 'hooks/usePairs'
 import { formatAmount } from 'utils/formatInfoNumbers'
 import { useLPApr } from 'state/swap/useLPApr'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+
 import { AppHeader } from '../../components/App'
 import { CommonBasesType } from '../../components/SearchModal/types'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
-import { useActiveChainId } from 'hooks/useActiveChainId'
 
 const ChoosePairCardBody = styled(CardBody)`
   padding: 24px 0 0 0;

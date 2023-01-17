@@ -10,12 +10,6 @@ import { useTranslation } from '@pancakeswap/localization'
 import { useLPTokensWithBalanceByAccount } from 'views/Swap/StableSwap/hooks/useStableConfig'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
-
-import FullPositionCard, { StableFullPositionCard } from '../../components/PositionCard'
-import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { usePairs, PairState } from '../../hooks/usePairs'
-import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import Page from '../Page'
 import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
 import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
 import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
@@ -24,6 +18,12 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { CurrencyLogo } from 'views/Info/components/CurrencyLogo'
+
+import FullPositionCard, { StableFullPositionCard } from '../../components/PositionCard'
+import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
+import { usePairs, PairState } from '../../hooks/usePairs'
+import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
+import Page from '../Page'
 
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
