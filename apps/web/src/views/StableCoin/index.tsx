@@ -149,7 +149,7 @@ export default function StableCoin() {
   return (
     <>
       <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
-      <Container>
+      <Container style={{marginBottom: 100}}>
         {widthDraw === TYPE.withdraw && (
           <>
             <Flex alignItems="center" style={{ gap: 10 }}>
