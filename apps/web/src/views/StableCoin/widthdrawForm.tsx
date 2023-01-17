@@ -239,7 +239,7 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Network</TextStyle>
         <BoxRight className='wrap-select'>
-          <NetworkSwitcher />
+          <NetworkSwitcher removeTxtHeader />
         </BoxRight>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
