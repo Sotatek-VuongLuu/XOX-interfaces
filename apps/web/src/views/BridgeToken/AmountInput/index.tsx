@@ -155,7 +155,7 @@ const AmountInput: React.FC<Props> = ({
 
         {!isTokenFrom && (
           <span className="balance" aria-hidden="true">
-            {NETWORK_LABEL[getChainIdToByChainId(chainId)]} Pool balance:
+            {NETWORK_LABEL[getChainIdToByChainId(chainId)]} Pool balance: ${balance}
           </span>
         )}
       </TextRow>
