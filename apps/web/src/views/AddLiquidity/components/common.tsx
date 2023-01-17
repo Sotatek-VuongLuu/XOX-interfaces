@@ -1,19 +1,142 @@
 import React from 'react'
 import { Currency, Fraction, Percent, CurrencyAmount, Token } from '@pancakeswap/sdk'
-import { Text, useTooltip, TooltipText, Box, Flex, Svg, SvgProps } from '@pancakeswap/uikit'
+import { Text, useTooltip, Box, Flex, Svg, SvgProps } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import styled from 'styled-components'
 import { AutoColumn } from 'components/Layout/Column'
-import { AutoRow, RowBetween } from 'components/Layout/Row'
+import { AutoRow, CustomRowBetween, RowBetween } from 'components/Layout/Row'
 import { Field } from 'state/burn/actions'
 import { DoubleCurrencyLogo, CurrencyLogo } from 'components/Logo'
-import { GreyCard } from 'components/Card'
-import { getLPSymbol } from 'utils/getLpSymbol'
+import { getLPSymbol, getLPSymbol2 } from 'utils/getLpSymbol'
 
 const Dot = styled(Box)<{ scale?: 'sm' | 'md' }>`
   width: 12px;
   height: 12px;
   border-radius: 50%;
+`
+
+const CustomRowBetweenWrapper = styled(CustomRowBetween)`
+  display: flex;
+  flex-direction: column;
+  align-items: unset;
+
+  .pair {
+    margin-top: 8px;
+  }
+
+  .liquidity-minted {
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 29px;
+    color: #ffffff;
+  }
+
+  .pair-text {
+    font-weight: 700;
+    font-size: 12px;
+    line-height: 15px;
+    display: flex;
+    align-items: flex-end;
+    color: rgba(255, 255, 255, 0.87);
+    margin-left: 8px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    flex-direction: row;
+    align-items: flex-end;
+
+    .pair {
+      margin: 0 8px 9px;
+    }
+
+    .liquidity-minted {
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 48px;
+      color: #ffffff;
+    }
+
+    .pair-text {
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      display: flex;
+      align-items: flex-end;
+      color: rgba(255, 255, 255, 0.87);
+      margin-left: 8px;
+    }
+  }
+`
+
+const AutoColumnWrapper = styled(AutoColumn)`
+  .pool {
+    margin: '8px 0';
+  }
+
+  .estimated {
+    margin-bottom: 8px;
+    div {
+      font-style: italic;
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 17px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+
+  .text-left {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+  }
+
+  .text-right {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+  }
+
+  .logo img {
+    width: 18px;
+    height: unset;
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    .pool {
+      margin: '16px 0';
+    }
+
+    .estimated {
+      margin-bottom: 16px;
+      div {
+        font-style: italic;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+    }
+
+    .text-left {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+    }
+
+    .text-right {
+      font-weight: 700;
+      font-size: 18px;
+      line-height: 22px;
+      color: #ffffff;
+    }
+
+    .logo img {
+      width: 24px;
+    }
+  }
 `
 
 const CircleSvg = ({ percent = 1, ...props }: SvgProps & { percent?: number }) => (
@@ -123,6 +246,8 @@ interface AddLiquidityModalHeaderProps {
   allowedSlippage: number
   children: React.ReactNode
   noLiquidity?: boolean
+  currencyAValue?: string
+  currencyBValue?: string
 }
 
 export const AddLiquidityModalHeader = ({
@@ -132,6 +257,8 @@ export const AddLiquidityModalHeader = ({
   price,
   allowedSlippage,
   noLiquidity,
+  currencyAValue,
+  currencyBValue,
   children,
 }: AddLiquidityModalHeaderProps) => {
   const { t } = useTranslation()
@@ -142,60 +269,93 @@ export const AddLiquidityModalHeader = ({
   )
 
   return (
-    <AutoColumn gap="24px">
-      <AutoColumn gap="8px">
-        <Subtitle>{t('You will receive')}</Subtitle>
-        <GreyCard>
-          <RowBetween>
-            <AutoRow gap="4px">
-              <DoubleCurrencyLogo
-                currency0={currencies[Field.CURRENCY_A]}
-                currency1={currencies[Field.CURRENCY_B]}
-                size={24}
-              />
-              <Text color="textSubtle">
-                {currencies[Field.CURRENCY_A]?.symbol &&
-                  currencies[Field.CURRENCY_B]?.symbol &&
-                  getLPSymbol(
-                    currencies[Field.CURRENCY_A]?.symbol,
-                    currencies[Field.CURRENCY_B]?.symbol,
-                    currencies[Field.CURRENCY_A]?.chainId,
-                  )}
-              </Text>
-            </AutoRow>
-            <Text ml="8px">{liquidityMinted?.toSignificant(6)}</Text>
-          </RowBetween>
-        </GreyCard>
-      </AutoColumn>
-      <RowBetween>
-        <Subtitle>{t('Your pool share')}</Subtitle>
-        <Text>{noLiquidity ? '100' : poolTokenPercentage?.toSignificant(4)}%</Text>
-      </RowBetween>
-      <AutoColumn gap="8px">{children}</AutoColumn>
+    <AutoColumnWrapper gap="8px">
       <AutoColumn>
-        <RowBetween>
-          <Subtitle>{t('Rates')}</Subtitle>
-          <Text>
-            {`1 ${currencies[Field.CURRENCY_A]?.symbol} = ${price?.toSignificant(4)} ${
-              currencies[Field.CURRENCY_B]?.symbol
-            }`}
-          </Text>
-        </RowBetween>
-        <RowBetween style={{ justifyContent: 'flex-end' }}>
-          <Text>
-            {`1 ${currencies[Field.CURRENCY_B]?.symbol} = ${price?.invert().toSignificant(4)} ${
-              currencies[Field.CURRENCY_A]?.symbol
-            }`}
-          </Text>
-        </RowBetween>
+        <CustomRowBetweenWrapper>
+          <Text className="liquidity-minted">{liquidityMinted?.toSignificant(6)}</Text>
+          <AutoRow className="pair logo">
+            <DoubleCurrencyLogo
+              currency0={currencies[Field.CURRENCY_A]}
+              currency1={currencies[Field.CURRENCY_B]}
+              size={24}
+              margin={false}
+            />
+            <Text className="pair-text">
+              {currencies[Field.CURRENCY_A]?.symbol &&
+                currencies[Field.CURRENCY_B]?.symbol &&
+                getLPSymbol(
+                  currencies[Field.CURRENCY_A]?.symbol,
+                  currencies[Field.CURRENCY_B]?.symbol,
+                  currencies[Field.CURRENCY_A]?.chainId,
+                )}
+            </Text>
+          </AutoRow>
+        </CustomRowBetweenWrapper>
       </AutoColumn>
-      {!noLiquidity && (
-        <RowBetween>
-          <Subtitle>{t('Slippage Tolerance')}</Subtitle>
+      <CustomRowBetween className="pool">
+        <Text fontSize="18px" fontWeight="500" lineHeight="22px" color="#9072FF">
+          {currencies[Field.CURRENCY_A]?.symbol &&
+            currencies[Field.CURRENCY_B]?.symbol &&
+            getLPSymbol2(
+              currencies[Field.CURRENCY_A]?.symbol,
+              currencies[Field.CURRENCY_B]?.symbol,
+              currencies[Field.CURRENCY_A]?.chainId,
+            )}
+        </Text>
+      </CustomRowBetween>
+      <CustomRowBetween className="estimated">
+        <Text>Output is estimated. If the price changes by more than 0.8% your transaction will revert</Text>
+      </CustomRowBetween>
+      <CustomRowBetween>
+        <Text className="text-left">{`${currencies[Field.CURRENCY_A]?.symbol} Deposited`}</Text>
+        <Flex className="logo">
+          {currencies[Field.CURRENCY_A] && <CurrencyLogo currency={currencies[Field.CURRENCY_A]} />}
+          <Text className="text-right" ml="8px">
+            {currencyAValue}
+          </Text>
+        </Flex>
+      </CustomRowBetween>
+      <CustomRowBetween>
+        <Text className="text-left">{`${currencies[Field.CURRENCY_B]?.symbol} Deposited`}</Text>
+        <Flex className="logo">
+          {currencies[Field.CURRENCY_B] && <CurrencyLogo currency={currencies[Field.CURRENCY_B]} />}
+          <Text className="text-right" ml="8px">
+            {currencyBValue}
+          </Text>
+        </Flex>
+      </CustomRowBetween>
+      <AutoColumn>
+        <CustomRowBetween>
+          <Text className="text-left">{t('Rates')}</Text>
+          <Flex flexDirection="column">
+            <Text className="text-right" mb="8px">
+              {`1 ${currencies[Field.CURRENCY_A]?.symbol} = ${price?.toSignificant(4)} ${
+                currencies[Field.CURRENCY_B]?.symbol
+              }`}
+            </Text>
+
+            <Text className="text-right">
+              {`1 ${currencies[Field.CURRENCY_B]?.symbol} = ${price?.invert().toSignificant(4)} ${
+                currencies[Field.CURRENCY_A]?.symbol
+              }`}
+            </Text>
+          </Flex>
+        </CustomRowBetween>
+        <CustomRowBetween style={{ justifyContent: 'flex-end' }}></CustomRowBetween>
+      </AutoColumn>
+      <CustomRowBetween>
+        <Text className="text-left">{t('Share of Pool')}</Text>
+        <Text className="text-right">{noLiquidity ? '100' : poolTokenPercentage?.toSignificant(4)}%</Text>
+      </CustomRowBetween>
+      {/* {!noLiquidity && (
+        <CustomRowBetween>
+          <Text fontSize="16px" fontWeight="400" lineHeight="19px" color="#FFFFFF">
+            {t('Slippage Tolerance')}
+          </Text>
           <TooltipText ref={targetRef}>{allowedSlippage / 100}%</TooltipText>
           {tooltipVisible && tooltip}
-        </RowBetween>
-      )}
-    </AutoColumn>
+        </CustomRowBetween>
+      )} */}
+    </AutoColumnWrapper>
   )
 }

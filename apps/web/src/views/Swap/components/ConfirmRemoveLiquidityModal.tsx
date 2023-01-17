@@ -135,6 +135,7 @@ const ConfirmRemoveLiquidityModal: React.FC<
         <Button
           width="100%"
           mt="20px"
+          mb="32px"
           disabled={!(approval === ApprovalState.APPROVED || signatureData !== null)}
           onClick={onRemove}
         >

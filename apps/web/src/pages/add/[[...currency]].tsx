@@ -11,6 +11,7 @@ import AddLiquidity from 'views/AddLiquidity'
 import AddStableLiquidity from 'views/AddLiquidity/AddStableLiquidity/index'
 import useStableConfig, { StableConfigContext } from 'views/Swap/StableSwap/hooks/useStableConfig'
 import { useActiveChainId } from 'hooks/useActiveChainId'
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 
 const AddLiquidityPage = () => {
   const router = useRouter()
@@ -19,9 +20,9 @@ const AddLiquidityPage = () => {
 
   const native = useNativeCurrency()
 
-  const [currencyIdA, currencyIdB] = router.query.currency || [
-    native.symbol,
-    CAKE[chainId]?.address ?? USDC[chainId]?.address,
+  const [currencyIdA, currencyIdB] = [
+    USD_ADDRESS[chainId],
+    XOX_ADDRESS[chainId],
   ]
 
   const currencyA = useCurrency(currencyIdA)

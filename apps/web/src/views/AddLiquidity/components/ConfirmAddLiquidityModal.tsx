@@ -71,6 +71,8 @@ const ConfirmAddLiquidityModal: React.FC<
         poolTokenPercentage={poolTokenPercentage}
         price={price}
         noLiquidity={noLiquidity}
+        currencyAValue={parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}
+        currencyBValue={parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}
       >
         <PairDistribution
           title={t('Input')}
@@ -86,7 +88,21 @@ const ConfirmAddLiquidityModal: React.FC<
 
   const modalBottom = useCallback(() => {
     return (
-      <Button width="100%" onClick={onAdd} mt="20px">
+      <Button
+        width="100%"
+        onClick={onAdd}
+        mt="24px"
+        mb="32px"
+        height={['37px', , '54px']}
+        style={{
+          background: 'linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)',
+          borderRadius: '8px',
+          fontWeight: 700,
+          fontSize: '18px',
+          lineHeight: '22px',
+          color: '#FFFFFF',
+        }}
+      >
         {noLiquidity ? t('Create Pool & Supply') : t('Confirm Supply')}
       </Button>
     )
@@ -109,7 +125,6 @@ const ConfirmAddLiquidityModal: React.FC<
       onDismiss={onDismiss}
       customOnDismiss={customOnDismiss}
       attemptingTxn={attemptingTxn}
-      currencyToAdd={currencyToAdd}
       hash={hash}
       content={confirmationContent}
       pendingText={pendingText}

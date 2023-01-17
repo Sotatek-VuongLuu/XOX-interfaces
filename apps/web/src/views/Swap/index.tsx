@@ -3,11 +3,6 @@
 import { useContext } from 'react'
 import { Currency } from '@pancakeswap/sdk'
 import { Flex, useMatchBreakpoints } from '@pancakeswap/uikit'
-import SwapNonTrade from 'components/Svg/SwapNonTrade'
-import SwapTrade from 'components/Svg/SwapTrade'
-import SwapTradeMobile from 'components/Svg/SwapTradeMobile'
-import SwapNonTradeMobile from 'components/Svg/SwapNonTradeMobile'
-import SwapDefaultMobile from 'components/Svg/SwapDefaultMobile'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
 import { useDerivedSwapInfo, useSwapState } from 'state/swap/hooks'
 import { useCurrency } from '../../hooks/Tokens'
@@ -21,7 +16,6 @@ import { useAccount } from 'wagmi'
 import { useRouterNormal } from 'hooks/useApproveCallback'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import styled from 'styled-components'
-import SwapbackgroundNone from 'components/Svg/SwapBackgroundDesktopNone'
 import SwapbackgroundDesktop from 'components/Svg/SwapBackgroundDesktop'
 import SwapbackgroundDesktopNone from 'components/Svg/SwapBackgroundDesktopNone'
 import SwapbackgroundMobile from 'components/Svg/SwapBackgroundMobile'
@@ -127,38 +121,6 @@ export default function Swap() {
         alignItems="center"
         position="relative"
       >
-        {/* {!isMobile && isChartSupported && (
-          <PriceChartContainer
-            inputCurrencyId={inputCurrencyId}
-            inputCurrency={currencies[Field.INPUT]}
-            outputCurrencyId={outputCurrencyId}
-            outputCurrency={currencies[Field.OUTPUT]}
-            isChartExpanded={isChartExpanded}
-            setIsChartExpanded={setIsChartExpanded}
-            isChartDisplayed={isChartDisplayed}
-            currentSwapPrice={singleTokenPrice}
-          />
-        )}
-        {isChartSupported && (
-          <BottomDrawer
-            content={
-              <PriceChartContainer
-                inputCurrencyId={inputCurrencyId}
-                inputCurrency={currencies[Field.INPUT]}
-                outputCurrencyId={outputCurrencyId}
-                outputCurrency={currencies[Field.OUTPUT]}
-                isChartExpanded={isChartExpanded}
-                setIsChartExpanded={setIsChartExpanded}
-                isChartDisplayed={isChartDisplayed}
-                currentSwapPrice={singleTokenPrice}
-                isMobile
-              />
-            }
-            isOpen={isChartDisplayed}
-            setIsOpen={setIsChartDisplayed}
-          />
-        )} */}
-
         <Wrapper flex="column" position="relative">
           {isMobile ? (
             <>
