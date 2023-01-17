@@ -175,7 +175,7 @@ const WelcomeXOX = (): JSX.Element => {
                 <Button className="btn_read_doc" onClick={() => window.open('')}>
                   Read Documentation
                 </Button>
-                <a href="/swap" target="blank">
+                <a href="/swap" target="_blank">
                   <div className="get_xox">
                     <div className="boxed-child">
                       <span>Get XOX</span>

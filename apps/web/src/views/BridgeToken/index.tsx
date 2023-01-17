@@ -3,7 +3,7 @@
 /* eslint-disable import/order */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { useState, useCallback, useEffect } from 'react'
+import { useState, useCallback, useEffect, useMemo } from 'react'
 import { Currency } from '@pancakeswap/sdk'
 import { Flex, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
 import { useCurrency } from '../../hooks/Tokens'
@@ -16,7 +16,7 @@ import { StyledInputCurrencyWrapper, StyledSwapContainer, StyledHeader, StyledHe
 import AmountInput from './AmountInput'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCurrencyBalance } from 'state/wallet/hooks'
-import { useAccount } from 'wagmi'
+import { useAccount, useConnect } from 'wagmi'
 import { ChainId } from '@pancakeswap/sdk'
 import AddressInput from './AddressInput'
 import { getAddress } from '@ethersproject/address'
@@ -34,6 +34,12 @@ import ModalBase from '../Referral/components/Modal/ModalBase'
 import Reminder from './Reminder'
 // eslint-disable-next-line import/no-cycle
 import ModalTransactionHistory from './ModalTransactionHistory'
+import { WalletModalV2 } from '@pancakeswap/ui-wallets'
+import { createWallets, getDocLink } from 'config/wallet'
+import { useActiveHandle } from 'hooks/useEagerConnect.bmp'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
+import useAuth from 'hooks/useAuth'
 
 const ButtonConnect = styled.button`
   background: ${({ theme }) => theme.colors.secondary};
@@ -254,7 +260,10 @@ export default function BridgeToken() {
   const [minAmount, setMinAmount] = useState<number>(0)
   const [maxAmount, setMaxAmount] = useState<number>(0)
   const [messageAddress, setMessageAddress] = useState('')
-  const { t } = useTranslation()
+  const {
+    t,
+    currentLanguage: { code },
+  } = useTranslation()
   const [addressTokenInput, setAddressTokenInput] = useState(XOX[chainId])
   const [amountTo, setAmountTo] = useState<string>('')
   const [tokenB, setTokenB] = useState(XOX[getChainIdToByChainId(chainId)])
@@ -397,6 +406,27 @@ export default function BridgeToken() {
       // nothing
     }
   }
+
+  const handleActive = useActiveHandle()
+  const { connectAsync } = useConnect()
+  const [open, setOpen] = useState(false)
+  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
+  const { login } = useAuth()
+  const docLink = useMemo(() => getDocLink(code), [code])
+
+  const handleClick = () => {
+    if (typeof __NEZHA_BRIDGE__ !== 'undefined') {
+      handleActive()
+    } else {
+      setOpen(true)
+    }
+  }
+
+  useEffect(() => {
+    if (account && !userProfile) setOpen(false)
+  }, [account, userProfile])
+
+  const wallets = useMemo(() => createWallets(chainId, connectAsync), [chainId, connectAsync])
 
   return (
     <Page>
@@ -604,7 +634,7 @@ export default function BridgeToken() {
                 <AddressInput address={addressTo} handleAddressTo={handleAddressTo} messageAddress={messageAddress} />
               )}
               {!account ? (
-                <WapperConnectBtn>Connect Wallet</WapperConnectBtn>
+                <WapperConnectBtn onClick={handleClick}>Connect Wallet</WapperConnectBtn>
               ) : (
                 <SwapButton
                   disabled={
@@ -652,6 +682,15 @@ export default function BridgeToken() {
               />
             </Content>
           </ModalBase>
+
+          <WalletModalV2
+            docText={t('Learn How to Connect')}
+            docLink={docLink}
+            isOpen={open}
+            wallets={wallets}
+            login={login}
+            onDismiss={() => setOpen(false)}
+          />
         </Flex>
       </Flex>
     </Page>
