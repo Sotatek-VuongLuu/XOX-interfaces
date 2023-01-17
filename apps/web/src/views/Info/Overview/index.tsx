@@ -64,6 +64,8 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const [currencyDatas, setCurrencyDatas] = useState<Array<any> | undefined>()
   const { chainId } = useActiveChainId()
   const allTokens = useAllTokens()
+  const [fetchingTokenId, setFetchingTokenId] = useState(false)
+  const [unsupported, setUnsupported] = useState(false)
 
   // const allPoolData = useAllPoolDataSWR()
   // const allPoolData = useAllPoolData()
@@ -140,11 +142,17 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
         tokenIds = { ...tokenIds, ...value }
       })
       setCoinmarketcapIds(tokenIds)
+      setFetchingTokenId(true)
     })
   }, [allTokens])
 
   useEffect(() => {
-    if (!coinmarketcapId) return
+    if (!coinmarketcapId) {
+      setUnsupported(true)
+      setChardData([])
+      return
+    }
+    setUnsupported(false)
 
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/data-api/v3/cryptocurrency/detail/chart`, {
@@ -166,6 +174,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       })
       .catch((err) => {
         console.warn(err)
+        setChardData([])
       })
   }, [filter, coinmarketcapId])
 
@@ -199,6 +208,9 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
               chainId={chainId}
               native={native}
               allTokens={allTokens}
+              fetchingTokenId={fetchingTokenId}
+              setFetchingTokenId={setFetchingTokenId}
+              unsupported={unsupported}
             />
           </ChartCardsContainer>
           <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} />

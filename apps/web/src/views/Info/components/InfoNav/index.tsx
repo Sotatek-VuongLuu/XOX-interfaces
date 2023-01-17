@@ -146,10 +146,11 @@ const InfoNav: React.FC<{ allTokens: any, textContentBanner?: string }> = ({ all
         </Text>
         <a
           href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
+          target="_blank" rel="noreferrer"
         >
           <Button className="get-xox">Get XOX</Button>
         </a>
-        <a href="/whitepaper">
+        <a href="/whitepaper" target="_blank" rel="noreferrer">
           <Button className="learn-more">Learn More</Button>
         </a>
       </MainContent>

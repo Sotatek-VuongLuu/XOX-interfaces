@@ -34,14 +34,14 @@ export const BarChartLoader: React.FC<React.PropsWithChildren> = () => {
   )
 }
 
-export const LineChartLoader: React.FC<React.PropsWithChildren> = () => {
+export const LineChartLoader: React.FC<React.PropsWithChildren & { unsupported?: boolean }> = ({ unsupported }) => {
   const { t } = useTranslation()
   return (
     <LoadingIndicator>
       <LineChartLoaderSVG />
       <LoadingText>
         <Text color="textSubtle" fontSize="20px">
-          {t('Loading chart data...')}
+          {unsupported ? 'This token has not been supported.' : t('Loading chart data...')}
         </Text>
       </LoadingText>
     </LoadingIndicator>

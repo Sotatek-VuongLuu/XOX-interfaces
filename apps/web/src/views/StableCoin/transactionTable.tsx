@@ -115,7 +115,7 @@ const Table = styled.div`
   grid-gap: 16px 25px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1fr 0.7fr;
+  grid-template-columns: 0.15fr 1.4fr 1fr 0.8fr;
   .table-header {
     margin-bottom: 16px;
   }
@@ -253,7 +253,7 @@ export const PageButtons = styled(Flex)`
 const SORT_FIELD = {
   timestamp: 'timestamp',
   amountUSD: 'amountUSD',
-  stableCoin: 'amountStable',
+  stableCoin: 'amountToken1',
 }
 
 const TableLoader: React.FC<React.PropsWithChildren> = () => {
@@ -351,14 +351,14 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(abs0)} ${symbolToken0}`}</Text>
+      >{`${formatAmount(abs1)} ${symbolToken0}`}</Text>
     </>
   )
 }
 
 const TransactionsTable: React.FC = () => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
-  const [sortDirection, setSortDirection] = useState<boolean>(false)
+  const [sortDirection, setSortDirection] = useState<boolean>(true)
   const [sortStable, setSortStable] = useState<boolean>(false)
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)
@@ -648,11 +648,6 @@ const TransactionsTable: React.FC = () => {
                 }
                 return null
               })}
-              {sortedTransactions.length === 0 ? (
-                <Flex justifyContent="center">
-                  <Text>{t('No Transactions')}</Text>
-                </Flex>
-              ) : undefined}
             </>
           ) : (
             <>
@@ -662,6 +657,11 @@ const TransactionsTable: React.FC = () => {
             </>
           )}
         </Table>
+        {sortedTransactions.length === 0 ? (
+          <Flex justifyContent="center" style={{margin: "100px 0"}}>
+            <Text>{t('No Transactions')}</Text>
+          </Flex>
+        ) : undefined}
       </CustomTableWrapper>
       {currentTransactions && currentTransactions?.length > 9 && (
         <PageButtons>

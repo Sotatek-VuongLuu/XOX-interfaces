@@ -15,6 +15,7 @@ import { addTransaction } from 'state/transactions/actions';
 import TransactionConfirmationModal, {
   TransactionErrorContent,
 } from 'components/TransactionConfirmationModal'
+import { ToastDescriptionWithTx } from 'components/Toast'
 import ConfirmSwapModal from '../Swap/components/ConfirmSwapModal'
 
 const WrapForm = styled.div`
@@ -173,8 +174,19 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
   const [amount, setAmount] = useState<any>();
   const [error, setError] = useState<any>();
   const {callWithGasPrice} = useCallWithGasPrice();
-  const { toastError } = useToast();
+  const { toastError, toastSuccess } = useToast();
   const symbol = 'BUSD';
+  const [txHas, setTxHas] = useState('');
+
+  const handleSucess = (response: any) => {
+    setTimeout(() => {
+      setPending(false);
+      setTxHas(response?.hash);
+      setWithdrawErrorMessage('');
+      addTransaction(response);
+      toastSuccess('Withdraw sucess', <ToastDescriptionWithTx txHash={response?.hash} txChainId={response?.chainId} />)
+    }, 2000);
+  }
 
   const handleWidthdraw = async() => {
     const fullDecimalWithdrawAmount = getDecimalAmount(new BigNumber(amount), 18);
@@ -192,13 +204,11 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
         gasLimit: calculateGasMargin(estimatedGas),
       },
     ).then((response: any) => {
-      setPending(false);
-      setWithdrawErrorMessage('');
-      addTransaction(response);
-      // onSuccess();
+      handleSucess(response);
     }).catch((error: any) => {
-      setPending(false);
+      setTxHas('');
       setWithdrawErrorMessage('Transaction rejected.');
+      setPending(false);
       if (error?.code === 'ACTION_REJECTED') {
         return
       }
@@ -225,9 +235,10 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
     <TransactionConfirmationModal
       title="Confirm Withdraw"
       content={confirmationContent}
-      pendingText="Pending"
+      pendingText={`Withdraw ${amount} ${isBUSD ? 'BUSD' : 'USDC'}`}
       attemptingTxn={pending}
-      hash={chainId.toString()}
+      hash={txHas}
+      iconGridLoader
     />,
     true,
     true,
@@ -239,7 +250,7 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Network</TextStyle>
         <BoxRight className='wrap-select'>
-          <NetworkSwitcher />
+          <NetworkSwitcher removeTxtHeader />
         </BoxRight>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
@@ -262,7 +273,7 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Amount</TextStyle>
         <BoxRight>
-          <input key={keyInput} defaultValue={amount} placeholder='0.00' onChange={(e:any) => {
+          <input type="number" key={keyInput} defaultValue={amount} placeholder='0.00' onChange={(e:any) => {
             setAmount(e?.target?.value);
             if(parseFloat(e?.target?.value) > priceAvailable){
               setError('Insufficient balance');

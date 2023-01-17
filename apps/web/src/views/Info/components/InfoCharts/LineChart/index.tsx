@@ -26,6 +26,7 @@ export type LineChartProps = {
   typeXAxis?: string
   showXAxis?: boolean
   hoverableChart?: boolean
+  unsupported?: boolean
 } & React.HTMLAttributes<HTMLDivElement>
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -54,6 +55,7 @@ const LineChart = ({
   typeXAxis,
   showXAxis,
   hoverableChart,
+  unsupported,
 }: LineChartProps) => {
   const minGap = useMemo(() => {
     return typeXAxis === '1M' ? 2 : 10
@@ -124,7 +126,7 @@ const LineChart = ({
   const { theme } = useTheme()
 
   if (!data || data.length === 0) {
-    return <LineChartLoader />
+    return <LineChartLoader unsupported={unsupported} />
   }
 
   return (

@@ -8,6 +8,8 @@ import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { useStableCoinSWR } from 'state/info/hooks'
+import ConnectWalletButton from 'components/ConnectWalletButton'
+import Trans from 'components/Trans'
 import InfoNav from '../Info/components/InfoNav'
 import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
@@ -47,6 +49,9 @@ const Box = styled.div`
   &.wrap-table {
     align-items: flex-start;
     max-width: calc(50% - 15px);
+  }
+  &.h-190{
+    min-height: 190px;
   }
   @media (max-width: 576px) {
     &.h-190 {
@@ -108,6 +113,29 @@ const TextStyle = styled(Text)`
   }
 `
 
+const ConnectWalletButtonWraper = styled(ConnectWalletButton)`
+  padding: 10px;
+  margin: 0 auto;
+  width: 100%;
+  max-width: 146px;
+  margin-top: 16px;
+  height: 37px;
+`
+const BoxWrapper = styled(Box)`
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  color: #ffffff;
+  align-items: center;
+
+  button {
+    max-width: 146px;
+    font-size: 14px;
+    font-weight: 700;
+    border-radius: 6px;
+  }
+`
+
 export default function StableCoin() {
   const { account, chainId } = useWeb3React()
   const [widthDraw, setWidthDraw] = useState(TYPE.default)
@@ -129,10 +157,11 @@ export default function StableCoin() {
       })
       const amountPoint = Number(dataParse[1]);
       const rewardPoint = Number(dataParse[2]);
-      setCurrentXOX(amountPoint);
       if(rewardPoint === 0 || rewardPoint){
         const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdEffect])) + rewardPoint;
         setCurrentReward(numberReward ? numberReward?.toFixed(6) : 0);
+        const totalCurrentXOXS = amountPoint+numberReward;
+        setCurrentXOX(totalCurrentXOXS ? totalCurrentXOXS.toFixed(6) : 0);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -149,7 +178,7 @@ export default function StableCoin() {
   return (
     <>
       <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
-      <Container>
+      <Container style={{marginBottom: 100}}>
         {widthDraw === TYPE.withdraw && (
           <>
             <Flex alignItems="center" style={{ gap: 10 }}>
@@ -254,6 +283,18 @@ export default function StableCoin() {
                       </Button>
                     </WrapText>
                     <img src="/images/1/tokens/XOX.png" alt="icon" />
+                  </Flex>
+                </Box>
+              </Row>
+            }
+            {
+              !account && <Row>
+                <Box className="h-190">
+                  <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{width: "100%",padding: '10px 0'}}>
+                    <div style={{color: 'rgba(255, 255, 255, 0.87)'}}>Please connect wallet to view your information</div>
+                    <ConnectWalletButtonWraper scale="sm">
+                      <Trans>Connect Wallet</Trans>
+                    </ConnectWalletButtonWraper>
                   </Flex>
                 </Box>
               </Row>

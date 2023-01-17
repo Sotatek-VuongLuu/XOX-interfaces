@@ -24,7 +24,7 @@ import ImportRow from './ImportRow'
 const InputWrapper = styled.div`
   position: relative;
   width: 100%;
-  max-height: 43px;
+  max-height: 54px;
 
   & input {
     width: 100%;
