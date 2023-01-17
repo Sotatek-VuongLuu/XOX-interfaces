@@ -25,15 +25,18 @@ import { chains } from 'utils/wagmi'
 
 import { ChainLogo } from './Logo/ChainLogo'
 
-const NetworkSelect = ({ switchNetwork, chainId }) => {
+const NetworkSelect = ({ switchNetwork, chainId, removeTxtHeader }) => {
   const { t } = useTranslation()
 
   return (
     <>
-      <Box px="16px" py="8px">
-        <Text color="textSubtle">{t('Select a Network')}</Text>
-      </Box>
-      <UserMenuDivider />
+      {
+        !removeTxtHeader && <><Box px="16px" py="8px">
+            <Text color="textSubtle">{t('Select a Network')}</Text>
+          </Box>
+          <UserMenuDivider />
+        </>
+      }
       {chains
         .filter((chain) => !chain.testnet || chain.id === chainId)
         .map((chain) => (
@@ -107,7 +110,7 @@ const WrongNetworkSelect = ({ switchNetwork, chainId }) => {
   )
 }
 
-export const NetworkSwitcher = () => {
+export const NetworkSwitcher = (props: any) => {
   const { t } = useTranslation()
   const { chainId, isWrongNetwork, isNotMatched } = useActiveChainId()
   const { pendingChainId, isLoading, canSwitch, switchNetworkAsync } = useSwitchNetwork()
@@ -160,7 +163,7 @@ export const NetworkSwitcher = () => {
           isNotMatched ? (
             <WrongNetworkSelect switchNetwork={switchNetworkAsync} chainId={chainId} />
           ) : (
-            <NetworkSelect switchNetwork={switchNetworkAsync} chainId={chainId} />
+            <NetworkSelect switchNetwork={switchNetworkAsync} chainId={chainId} removeTxtHeader={props?.removeTxtHeader} />
           )
         }
       </UserMenu>
