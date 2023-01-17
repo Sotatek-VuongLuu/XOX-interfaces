@@ -115,7 +115,7 @@ const Table = styled.div`
   grid-gap: 16px 25px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1fr 0.7fr;
+  grid-template-columns: 0.15fr 1.4fr 1fr 0.8fr;
   .table-header {
     margin-bottom: 16px;
   }
@@ -289,8 +289,8 @@ const DataRow: React.FC<
   const abs1 = Math.abs(transaction.amountToken1)
   const { chainId } = useActiveChainId();
   const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
-  const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOX' : transaction.token0Symbol
-  const symbolToken1 = transaction.token1Symbol === 'xox' ? 'XOX' : transaction.token1Symbol
+  const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOXS' : transaction.token0Symbol
+  const symbolToken1 = transaction.token1Symbol === 'xox' ? 'XOXS' : transaction.token1Symbol
 
   const outputTokenSymbol = transaction.amountToken0 < 0 ? symbolToken0 : symbolToken1
   const inputTokenSymbol = transaction.amountToken1 < 0 ? symbolToken0 : symbolToken1
@@ -358,7 +358,7 @@ const DataRow: React.FC<
 
 const TransactionsTable: React.FC = () => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
-  const [sortDirection, setSortDirection] = useState<boolean>(false)
+  const [sortDirection, setSortDirection] = useState<boolean>(true)
   const [sortStable, setSortStable] = useState<boolean>(false)
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)

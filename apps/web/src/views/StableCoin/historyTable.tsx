@@ -313,7 +313,7 @@ const DataRow: React.FC<
   const { chainId } = useActiveChainId();
   const abs0 = formatUnits(transaction?.amount, USD_DECIMALS[chainId]);
   const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
-  const symbolToken0 = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BUSD' : 'USDC';
+  const symbolToken0 = typePage === TYPE_HISTORY.stake ? 'XOXS' : (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BUSD' : 'USDC';
 
   return (
     <>
@@ -420,7 +420,7 @@ const DataRow: React.FC<
 
 const HistoryTable = ({typePage} : {typePage?: string}) => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
-  const [sortDirection, setSortDirection] = useState<boolean>(false)
+  const [sortDirection, setSortDirection] = useState<boolean>(true)
   const { account } = useActiveWeb3React()
   const [sortStable, setSortStable] = useState<boolean>(false)
   const [iconSortField, setIconSortField] = useState<any>(null)
