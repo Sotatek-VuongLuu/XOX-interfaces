@@ -15,9 +15,9 @@ const LiquidityBackgroundDesktop = () => {
           width="591"
           height="645"
           filterUnits="userSpaceOnUse"
-          color-interpolation-filters="sRGB"
+          colorInterpolationFilters="sRGB"
         >
-          <feFlood flood-opacity="0" result="BackgroundImageFix" />
+          <feFlood floodOpacity="0" result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"
@@ -39,8 +39,8 @@ const LiquidityBackgroundDesktop = () => {
           y2="531.999"
           gradientUnits="userSpaceOnUse"
         >
-          <stop stop-color="#6437FF" />
-          <stop offset="0.442708" stop-color="#9F59FF" stop-opacity="0" />
+          <stop stopColor="#6437FF" />
+          <stop offset="0.442708" stopColor="#9F59FF" stopOpacity="0" />
         </linearGradient>
       </defs>
     </svg>

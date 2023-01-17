@@ -4,12 +4,9 @@ import styled from 'styled-components'
 import {
   Button,
   Text,
-  ErrorIcon,
-  ArrowUpIcon,
   Flex,
   Box,
   Link,
-  Spinner,
   Modal,
   InjectedModalProps,
   ModalProps,
