@@ -95,7 +95,7 @@ const StyledModalBody = styled(ModalBody)`
     height: 310px !important;
 
     & > div > div {
-      width: calc(100% - 15px) !important;
+      width: calc(100% - 10px) !important;
     }
 
     button {

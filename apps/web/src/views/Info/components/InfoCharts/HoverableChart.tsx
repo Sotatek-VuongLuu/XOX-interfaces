@@ -25,6 +25,7 @@ interface HoverableChartProps {
   allTokens: any
   fetchingTokenId: boolean
   setFetchingTokenId: (b: boolean) => void
+  unsupported: boolean
 }
 
 const HoverableChart = ({
@@ -39,6 +40,7 @@ const HoverableChart = ({
   chainId,
   fetchingTokenId,
   allTokens,
+  unsupported,
   setFetchingTokenId,
 }: HoverableChartProps) => {
   const [hover, setHover] = useState<number | undefined>()
@@ -262,6 +264,7 @@ const HoverableChart = ({
               typeXAxis={filter}
               showXAxis={showX}
               hoverableChart
+              unsupported={unsupported}
             />
           </ResponsiveContainer>
         </div>
