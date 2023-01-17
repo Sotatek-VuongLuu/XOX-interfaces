@@ -184,5 +184,11 @@ export default {
     5: '0x445714666e014BbeB793Ba5d1f514De8989fc5d2',
     1: '', // TODO: change address
     56: '',
-  }
+  },
+  xoxToken: {
+    97: '0x1D5EB09cb8a70213E52DD1dc084b9E22Fc4dA4dd',
+    5: '0x0e3FA7D925eeE7C361aBafFba280c0b376644327',
+    1: '', // TODO: change address
+    56: '',
+  },
 }

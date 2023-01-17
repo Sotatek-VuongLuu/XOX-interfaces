@@ -141,6 +141,10 @@ export const getXOXTokenAddress = (chainId?: number) => {
   return getAddress(addresses.contractXOXToken, chainId)
 }
 
+export const getXOXTokenAddressBridge = (chainId?: number) => {
+  return getAddress(addresses.xoxToken, chainId)
+}
+
 export const getXOXPoolAddress = (chainId?: number) => {
   return getAddress(addresses.contractXOXPool, chainId)
 }

@@ -4,11 +4,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState, useCallback, useEffect, useMemo } from 'react'
-import { Currency } from '@pancakeswap/sdk'
-import { Flex, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
-import { useCurrency } from '../../hooks/Tokens'
-import { Field } from '../../state/swap/actions'
-import { useSwapState } from '../../state/swap/hooks'
+import { Flex, useModal } from '@pancakeswap/uikit'
 import Page from '../Page'
 import { useTranslation } from '@pancakeswap/localization'
 import { useSwitchNetwork } from 'hooks/useSwitchNetwork'
@@ -22,14 +18,12 @@ import AddressInput from './AddressInput'
 import { getAddress } from '@ethersproject/address'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
-import ConnectWalletButton from '../../components/ConnectWalletButton'
-import TransactionsModal from 'components/App/Transactions/TransactionsModal'
 import { XOX_ADDRESS } from 'config/constants/exchange'
 import { XOX } from '@pancakeswap/tokens'
 import styled from 'styled-components'
-import { parseUnits } from '@ethersproject/units'
+import { formatEther, parseEther, parseUnits } from '@ethersproject/units'
 import { getBridgeTokenAddress } from 'utils/addressHelpers'
-import { useBridgeTokenContract } from '../../hooks/useContract'
+import { useBridgeTokenContract, useXOXTokenContractPoolBridge } from '../../hooks/useContract'
 import ModalBase from '../Referral/components/Modal/ModalBase'
 import Reminder from './Reminder'
 // eslint-disable-next-line import/no-cycle
@@ -40,23 +34,9 @@ import { useActiveHandle } from 'hooks/useEagerConnect.bmp'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import useAuth from 'hooks/useAuth'
-
-const ButtonConnect = styled.button`
-  background: ${({ theme }) => theme.colors.secondary};
-  margin: 20px 0;
-  border-radius: 8px;
-  color: ${({ theme }) => theme.colors.white};
-  min-height: 54px;
-  width: 100%;
-  display: flex;
-  text-align: center;
-  align-items: center;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 18px;
-  justify-content: center;
-  border: none;
-`
+import { CONTRACT_BRIDGE_POOL } from './networks'
+import { GridLoader } from 'react-spinners'
+import truncateHash from '@pancakeswap/utils/truncateHash'
 
 const SwapButton = styled.button`
   background: ${({ disabled }) =>
@@ -205,7 +185,15 @@ const Content = styled.div`
     line-height: 22px;
     text-align: center;
     color: rgba(255, 255, 255, 0.87);
-    margin-bottom: 16px;
+  }
+
+  .noti_claim_pending_h3 {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.87);
+    margin: 16px 0px;
   }
   .noti_claim_pending_h2 {
     text-align: center;
@@ -251,14 +239,13 @@ export const getChainIdToByChainId = (chainId: any) => {
 export default function BridgeToken() {
   const { chainId } = useActiveChainId()
   const { switchNetworkAsync } = useSwitchNetwork()
-  const { isMobile } = useMatchBreakpoints()
   const [amountInput, setAmountInput] = useState('')
   const [defaultToken, setDefaultToken] = useState(XOX_ADDRESS[chainId])
   const [isShowDropFrom, setIsShowDropFrom] = useState(false)
   const [isShowDropTo, setIsShowDropTo] = useState(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [minAmount, setMinAmount] = useState<number>(0)
-  const [maxAmount, setMaxAmount] = useState<number>(0)
+  const [_, setMaxAmount] = useState<number>(0)
   const [messageAddress, setMessageAddress] = useState('')
   const {
     t,
@@ -268,18 +255,10 @@ export default function BridgeToken() {
   const [amountTo, setAmountTo] = useState<string>('')
   const [tokenB, setTokenB] = useState(XOX[getChainIdToByChainId(chainId)])
   const bridgeTokenContract = useBridgeTokenContract(chainId)
-
-  // swap state & price data
-  const {
-    [Field.INPUT]: { currencyId: inputCurrencyId },
-    [Field.OUTPUT]: { currencyId: outputCurrencyId },
-  } = useSwapState()
   const { address: account } = useAccount()
-
+  const contractXOX = useXOXTokenContractPoolBridge(false, getChainIdToByChainId(chainId))
   const balanceInput = useCurrencyBalance(account ?? undefined, XOX[chainId])
-  const inputCurrency = useCurrency(inputCurrencyId)
-  const outputCurrency = useCurrency(outputCurrencyId)
-
+  const [balancePool, setBalancePool] = useState('')
   const [chainIdSupport, setChainIdSupport] = useState(chainId)
   const [addressTo, setAddressTo] = useState(account)
   const [messageButton, setMessageButton] = useState('Enter an amount')
@@ -289,10 +268,18 @@ export default function BridgeToken() {
     XOX_ADDRESS[chainId] && tryParseAmount(amountInput, XOX[chainId]),
     getBridgeTokenAddress(chainId),
   )
+  const [modalReject, setModalReject] = useState<boolean>(false)
+  const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
 
-  const currencies: { [field in Field]?: Currency } = {
-    [Field.INPUT]: inputCurrency ?? undefined,
-    [Field.OUTPUT]: outputCurrency ?? undefined,
+  const handleGetBalancePool = async () => {
+    try {
+      setBalancePool('')
+      const amountPool = await contractXOX.balanceOf(CONTRACT_BRIDGE_POOL[getChainIdToByChainId(chainId)])
+      setBalancePool(formatEther(amountPool))
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('error>>>', error)
+    }
   }
 
   useEffect(() => {
@@ -317,6 +304,13 @@ export default function BridgeToken() {
       )
     ) {
       setMessageButton(`Insuficient Your ${addressTokenInput.symbol} Balance`)
+    } else if (
+      balancePool !== '-' &&
+      balancePool &&
+      amountTo &&
+      parseEther(Number(amountTo).toFixed(18)).gt(parseEther(balancePool))
+    ) {
+      setMessageButton('Insuficient Pool Balance')
     } else if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
       setMessageButton(`Approve ${addressTokenInput.symbol}`)
     } else if (approvalState === ApprovalState.PENDING) {
@@ -324,6 +318,7 @@ export default function BridgeToken() {
     } else if (amountTo === '0') {
       setMessageButton('Input Amount Not Allowed')
     } else setMessageButton('Bridge')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amountInput, approvalState, balanceInput, minAmount])
 
   // handle user type input
@@ -387,6 +382,7 @@ export default function BridgeToken() {
   // handle deposit STAND to contract
   const hanleConfirmSwap = async () => {
     setLoading(true)
+    setIsOpenLoadingClaimModal(true)
     try {
       const params = [addressTo, parseUnits(amountInput, addressTokenInput.decimals)]
       const gasFee = await bridgeTokenContract.estimateGas.deposit(...params)
@@ -401,8 +397,12 @@ export default function BridgeToken() {
         setAmountInput('')
       }
       setLoading(false)
-    } catch (error) {
+    } catch (error: any) {
       setLoading(false)
+      setIsOpenLoadingClaimModal(false)
+      if (error && error?.code === 'ACTION_REJECTED') {
+        setModalReject(true)
+      }
       // nothing
     }
   }
@@ -427,6 +427,13 @@ export default function BridgeToken() {
   }, [account, userProfile])
 
   const wallets = useMemo(() => createWallets(chainId, connectAsync), [chainId, connectAsync])
+
+  useEffect(() => {
+    if (chainId && account) {
+      handleGetBalancePool()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainId, account])
 
   return (
     <Page>
@@ -625,6 +632,7 @@ export default function BridgeToken() {
                 isTokenFrom={false}
                 inputChainId={getChainIdToByChainId(chainIdSupport)}
                 amount={amountTo}
+                balance={balancePool}
                 switchNetwork={switchNetwork}
                 tokenSymbol={tokenB?.symbol}
                 isShowDrop={isShowDropTo}
@@ -646,7 +654,7 @@ export default function BridgeToken() {
                   onClick={handleSwapButtonClick}
                 >
                   <span>{messageButton}</span>
-                  {approvalState === ApprovalState.PENDING && <span>Loader...</span>}
+                  {approvalState === ApprovalState.PENDING}
                 </SwapButton>
               )}
               <Reminder
@@ -664,7 +672,7 @@ export default function BridgeToken() {
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
 
-          <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Success">
+          <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Bridge Success">
             <Content>
               <div className="noti">
                 <span>{messageTx}</span>
@@ -691,6 +699,51 @@ export default function BridgeToken() {
             login={login}
             onDismiss={() => setOpen(false)}
           />
+
+          <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Bridge Confirm">
+            <Content>
+              <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
+                <img src="/images/reject_xox.png" alt="reject_xox" />
+              </div>
+              <div className="noti_claim_pending_h2">Transaction rejected.</div>
+              <div className="btn_dismiss_container">
+                <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
+                  Dismiss
+                </button>
+              </div>
+              <img
+                src="/images/close-one.svg"
+                alt="close-one"
+                className="x-close-icon"
+                aria-hidden="true"
+                onClick={() => setModalReject(false)}
+              />
+            </Content>
+          </ModalBase>
+
+          <ModalBase
+            open={isOpenLoadingClaimModal}
+            handleClose={() => setIsOpenLoadingClaimModal(false)}
+            title="Bridge Confirm"
+          >
+            <Content>
+              <div className="xox_loading" style={{ margin: '24px 0px' }}>
+                <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+              </div>
+              <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
+              <div className="noti_claim_pending_h3">
+                Bridging {amountInput} XOX and {amountTo} XOX
+              </div>
+              <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
+              <img
+                src="/images/close-one.svg"
+                alt="close-one"
+                className="x-close-icon"
+                aria-hidden="true"
+                onClick={() => setIsOpenLoadingClaimModal(false)}
+              />
+            </Content>
+          </ModalBase>
         </Flex>
       </Flex>
     </Page>

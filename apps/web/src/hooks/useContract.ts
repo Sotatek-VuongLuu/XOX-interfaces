@@ -12,7 +12,12 @@ import {
 import zapAbi from 'config/abi/zap.json'
 import { useProviderOrSigner } from 'hooks/useProviderOrSigner'
 import { useMemo } from 'react'
-import { getMulticallAddress, getPredictionsV1Address, getZapAddress, getBridgeTokenAddress } from 'utils/addressHelpers'
+import {
+  getMulticallAddress,
+  getPredictionsV1Address,
+  getZapAddress,
+  getBridgeTokenAddress,
+} from 'utils/addressHelpers'
 import {
   getAnniversaryAchievementContract,
   getBCakeFarmBoosterContract,
@@ -62,9 +67,10 @@ import {
   getTreasuryConTract,
   getContractXOXToken,
   getContractXOXPool,
+  getContractXOXTokenBridge,
 } from 'utils/contractHelpers'
 
-import { useSigner } from 'wagmi'
+import { useAccount, useProvider, useSigner } from 'wagmi'
 
 // Imports below migrated from Exchange useContract.ts
 import { Contract } from '@ethersproject/contracts'
@@ -77,7 +83,6 @@ import WETH_ABI from 'config/abi/weth.json'
 import BRIDGE_TOKEN_ABI from 'config/abi/bridgeTokenAddress.json'
 import { getContract } from 'utils'
 
-
 import { IPancakePair } from 'config/abi/types/IPancakePair'
 import { VaultKey } from 'state/types'
 import { useActiveChainId } from './useActiveChainId'
@@ -85,6 +90,21 @@ import { useActiveChainId } from './useActiveChainId'
 /**
  * Helper hooks to get specific contracts (by ABI)
  */
+
+export const getChainIdToByChainId = (chainId: any) => {
+  switch (chainId) {
+    case ChainId.GOERLI:
+      return ChainId.BSC_TESTNET
+    case ChainId.BSC_TESTNET:
+      return ChainId.GOERLI
+    case ChainId.ETHEREUM:
+      return ChainId.BSC
+    case ChainId.BSC:
+      return ChainId.ETHEREUM
+    default:
+      return chainId
+  }
+}
 
 export const useIfoV1Contract = (address: string) => {
   const { data: signer } = useSigner()
@@ -401,6 +421,22 @@ export const useXOXTokenContract = (withSignerIfPossible = true) => {
   const { chainId } = useActiveChainId()
   const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
   return useMemo(() => getContractXOXToken(providerOrSigner as any, chainId), [providerOrSigner, chainId])
+}
+
+export const useProviderOrSignerBridge = (withSignerIfPossible = true, chainId: ChainId) => {
+  const provider = useProvider({ chainId })
+  const { address, isConnected } = useAccount()
+  const { data: signer } = useSigner()
+
+  return useMemo(
+    () => (withSignerIfPossible && address && isConnected && signer ? signer : provider),
+    [address, isConnected, provider, signer, withSignerIfPossible],
+  )
+}
+
+export const useXOXTokenContractPoolBridge = (withSignerIfPossible: boolean, chainId: ChainId) => {
+  const providerOrSigner = useProviderOrSignerBridge(withSignerIfPossible, chainId)
+  return useMemo(() => getContractXOXTokenBridge(providerOrSigner as any, chainId), [providerOrSigner, chainId])
 }
 
 export const useXOXPoolContract = (withSignerIfPossible = true) => {
