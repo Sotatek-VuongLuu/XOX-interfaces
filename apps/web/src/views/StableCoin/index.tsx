@@ -254,7 +254,9 @@ export default function StableCoin() {
                 <HistoryTable typePage={TYPE_HISTORY.stake} />
               </Box>
               <Box className="wrap-table">
-                <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
+                {
+                  account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
+                }
               </Box>
             </Row>
           </>
@@ -306,7 +308,9 @@ export default function StableCoin() {
             }
             <Row style={{ marginTop: 24 }}>
               <Box className="wrap-table">
-                <HistoryTable typePage={TYPE_HISTORY.widthDraw} />
+                {
+                  account && <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
+                }
               </Box>
               <Box className="wrap-table">
                 <TransactionTable />
