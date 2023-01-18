@@ -143,7 +143,7 @@ export default function StableCoin() {
   const contractTreasuryXOX = useTreasuryXOX()
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
-  const chainIdLocal:any = useMultiChainId();
+  const chainIdLocal:any = useMultiChainId() || chainId;
   const [keyContainer, setKeyContainer] = useState(Math.random());
 
   // eslint-disable-next-line consistent-return
@@ -254,7 +254,9 @@ export default function StableCoin() {
                 <HistoryTable typePage={TYPE_HISTORY.stake} />
               </Box>
               <Box className="wrap-table">
-                <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
+                {
+                  account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
+                }
               </Box>
             </Row>
           </>
@@ -306,7 +308,9 @@ export default function StableCoin() {
             }
             <Row style={{ marginTop: 24 }}>
               <Box className="wrap-table">
-                <HistoryTable typePage={TYPE_HISTORY.widthDraw} />
+                {
+                  account && <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
+                }
               </Box>
               <Box className="wrap-table">
                 <TransactionTable />
