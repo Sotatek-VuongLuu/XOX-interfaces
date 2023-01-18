@@ -5,7 +5,7 @@ import { Flex, Button, Text, Select, Dropdown , useToast, useModal } from '@panc
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { ChainId } from '@pancakeswap/sdk'
-import { useTreasuryXOX } from 'hooks/useContract'
+import { useTokenContract, useTreasuryXOX } from 'hooks/useContract'
 import { getDecimalAmount } from '@pancakeswap/utils/formatBalance'
 import BigNumber from "bignumber.js";
 import { calculateGasMargin } from 'utils';
@@ -16,6 +16,7 @@ import TransactionConfirmationModal, {
   TransactionErrorContent,
 } from 'components/TransactionConfirmationModal'
 import { ToastDescriptionWithTx } from 'components/Toast'
+import { USD_ADDRESS } from 'config/constants/exchange'
 import ConfirmSwapModal from '../Swap/components/ConfirmSwapModal'
 import StableCoinModal from './StableCoinModal';
 
@@ -178,6 +179,7 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
   const { toastError, toastSuccess } = useToast();
   const symbol = 'BUSD';
   const [txHas, setTxHas] = useState('');
+  const tokenContract = useTokenContract(USD_ADDRESS[chainId], false);
 
   const handleSucess = (response: any) => {
     setTimeout(() => {
@@ -190,10 +192,12 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
   }
 
   const handleWidthdraw = async() => {
-    const fullDecimalWithdrawAmount = getDecimalAmount(new BigNumber(amount), 18);
+    const tokenDecimals = await tokenContract.decimals();
+    const fullDecimalWithdrawAmount = getDecimalAmount(new BigNumber(amount), tokenDecimals);
     const estimatedGas:any = await contractTreasuryXOX.estimateGas.claimFarmingReward(fullDecimalWithdrawAmount.toString()).catch((err) => {
-      console.log(err);
+      toastError('Error', err?.message || err);
     });
+    console.log(estimatedGas);
 
     onPresentConfirmModal();
     setPending(true);

@@ -143,7 +143,7 @@ export default function StableCoin() {
   const contractTreasuryXOX = useTreasuryXOX()
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
-  const chainIdLocal:any = useMultiChainId();
+  const chainIdLocal:any = useMultiChainId() || chainId;
   const [keyContainer, setKeyContainer] = useState(Math.random());
 
   // eslint-disable-next-line consistent-return
