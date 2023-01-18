@@ -10,37 +10,39 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { usePair } from 'hooks/usePairs'
 import { formatAmount } from 'utils/formatInfoNumbers'
 import { useLPApr } from 'state/swap/useLPApr'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+
 import { AppHeader } from '../../components/App'
 import { CommonBasesType } from '../../components/SearchModal/types'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 
 const ChoosePairCardBody = styled(CardBody)`
-  padding:24px 0 0 0;
+  padding: 24px 0 0 0;
 `
 const FlexCurrency = styled.div`
-  display:flex;
+  display: flex;
   align-items: flex-start;
   justify-content: space-between;
-  position:relative;
+  position: relative;
 `
 const PlusIcon = styled.div`
-  position:absolute;
-  top:20px;
-  left:50%;
-  z-index:99;
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  z-index: 99;
   transform: translate(-50%, -50%);
 `
 const BottomBox = styled.div`
-  display:flex;
-  align-items:center;
+  display: flex;
+  align-items: center;
   justify-content: space-between;
-  margin-top:24px;
-  font-size:16px;
-  color:#FFFFFFDE;
+  margin-top: 24px;
+  font-size: 16px;
+  color: #ffffffde;
 `
 const LiquidityFooter = styled(CardFooter)`
-  border-top:unset;
-  padding:24px 0;
+  border-top: unset;
+  padding: 24px 0;
 `
 export function ChoosePair({
   currencyA,
@@ -54,6 +56,7 @@ export function ChoosePair({
   onNext?: () => void
 }) {
   const { account } = useActiveWeb3React()
+  const { chainId } = useActiveChainId()
   const { t } = useTranslation()
   const isValid = !error
   const { handleCurrencyASelect, handleCurrencyBSelect } = useCurrencySelectRoute()
@@ -70,15 +73,17 @@ export function ChoosePair({
     <>
       <AppHeader
         title={t('Add Liquidity')}
-        subtitle={t('Receive LP tokens and earn 0.17% trading fees')}
+        subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
         helper={t(
-          'Liquidity providers earn a 0.17% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.',
+          `Liquidity providers earn a ${
+            chainId === 5 || chainId === 1 ? 0.3 : 0.25
+          }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
         )}
         backTo="/liquidity"
       />
       <ChoosePairCardBody>
         <Box>
-          <Text color="#ffffffde" size='18px' mb="34px">
+          <Text color="#ffffffde" size="18px" mb="34px">
             {t('Pool')}
           </Text>
           <FlexCurrency>

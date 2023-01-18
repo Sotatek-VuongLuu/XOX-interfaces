@@ -123,7 +123,7 @@ const listTag = [
     title: 'Only acquired by First Buying the governance token XOX then XOXS is received as a bonus. (no extra cost)',
   },
   {
-    title: 'Auto staking functionality with a minimum 8% APY',
+    title: 'Auto staking functionalities with a flexible APY.',
   },
   {
     title: 'Earned through giveaways, finishing tasks, community activities etc',

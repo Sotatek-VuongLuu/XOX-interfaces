@@ -1,4 +1,4 @@
-import {useState} from 'react';
+import { useState } from 'react'
 import { Currency, Pair } from '@pancakeswap/sdk'
 import {
   Button,
@@ -50,7 +50,7 @@ const PercentButton = styled(Button)`
   font-weight: 700;
   height: 27px;
   border-radius: 30px;
-  :hover{
+  :hover {
     background: #9072ff !important;
     color: #fff !important;
   }
@@ -60,10 +60,16 @@ const TextBalance = styled.div`
   right:17px;
   top 17px;
   z-index:99;
-  font-size:14px;
-  font-weight:400;
-  line-height:17px;
-  color:#FFFFFF99;
+  font-weight: 400;
+  font-size: 12px;
+  line-height: 15px;
+  color: rgba(255, 255, 255, 0.6);
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+  }
 `
 const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm' })<{ zapStyle?: ZapStyle }>`
   padding: 0;
@@ -75,6 +81,33 @@ const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm'
   &:hover {
     background: unset !important;
   }
+
+  .token-info img {
+    width: 16px;
+    height: unset;
+  }
+
+  #pair {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    .token-info img {
+      width: 24px;
+      height: unset;
+    }
+
+    #pair {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 22px;
+      color: rgba(255, 255, 255, 0.87);
+    }
+  }
+
   ${({ zapStyle, theme }) =>
     zapStyle &&
     css`
@@ -184,8 +217,8 @@ export default function CurrencyInputPanel({
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpoints()
   const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
-  const tokenAddress = token ? isAddress(token.address) : null;
-  const [activePercent, setActivePercent] = useState<any>(null);
+  const tokenAddress = token ? isAddress(token.address) : null
+  const [activePercent, setActivePercent] = useState<any>(null)
 
   const amountInDollar = useBUSDCurrencyAmount(
     showBUSD ? currency : undefined,
@@ -210,8 +243,8 @@ export default function CurrencyInputPanel({
         height = '112px'
         if (isShowPercent) {
           height = '122px'
-        } 
-      }else {
+        }
+      } else {
         height = '52px'
       }
     } else if (isShowDolar && isShowPercent) {
@@ -296,7 +329,7 @@ export default function CurrencyInputPanel({
               </Flex>
             </ForDolar>
           )}
-          <InputRow selected={disableCurrencySelect} style={{ paddingBottom: 15}}>
+          <InputRow selected={disableCurrencySelect} style={{ paddingBottom: 15 }}>
             {isShowPercent && (
               <Flex alignItems="center" justifyContent="start">
                 {showQuickInputButton &&
@@ -305,13 +338,17 @@ export default function CurrencyInputPanel({
                     <PercentButton
                       key={`btn_quickCurrency${percent}`}
                       onClick={() => {
-                        onPercentInput(percent);
-                        setActivePercent(percent);
+                        onPercentInput(percent)
+                        setActivePercent(percent)
                       }}
                       scale="xs"
                       mr="5px"
                       variant="secondary"
-                      style={{ textTransform: 'uppercase',background: activePercent === percent ? '#9072ff' : 'none', color: activePercent === percent ? '#fff' : '#9072ff' }}
+                      style={{
+                        textTransform: 'uppercase',
+                        background: activePercent === percent ? '#9072ff' : 'none',
+                        color: activePercent === percent ? '#fff' : '#9072ff',
+                      }}
                     >
                       {percent}%
                     </PercentButton>
@@ -321,12 +358,16 @@ export default function CurrencyInputPanel({
                     onClick={(e) => {
                       e.stopPropagation()
                       e.preventDefault()
-                      onMax?.();
-                      setActivePercent(0);
+                      onMax?.()
+                      setActivePercent(0)
                     }}
                     scale="xs"
                     variant="secondary"
-                    style={{ textTransform: 'uppercase', background: activePercent === 0 ? '#9072ff' : 'none', color: activePercent === 0 ? '#fff' : '#9072ff' }}
+                    style={{
+                      textTransform: 'uppercase',
+                      background: activePercent === 0 ? '#9072ff' : 'none',
+                      color: activePercent === 0 ? '#fff' : '#9072ff',
+                    }}
                   >
                     {t('Max')}
                   </PercentButton>
@@ -336,7 +377,7 @@ export default function CurrencyInputPanel({
           </InputRow>
           <CurrencySelectButton
             // style={isMobile && !account?{top:'23%'}:isShowPercent?{top:'60%'}: {top:'45%'}}
-            style={{bottom: (isMobile && isShowPercent) ? 50 : 15}}
+            style={{ bottom: isMobile && isShowPercent ? 50 : 15 }}
             className="open-currency-select-button"
             selected={!!currency}
             onClick={() => {
@@ -345,11 +386,11 @@ export default function CurrencyInputPanel({
               }
             }}
           >
-            <Flex alignItems="center" justifyContent="space-between">
+            <Flex alignItems="center" justifyContent="space-between" className="token-info">
               {pair ? (
-                <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} size={16} margin />
+                <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} margin />
               ) : currency ? (
-                <CurrencyLogo currency={currency} size="24px" style={{ marginRight: '8px' }} />
+                <CurrencyLogo currency={currency} style={{ marginRight: '8px' }} />
               ) : null}
               {pair ? (
                 <Text id="pair" bold>

@@ -9,7 +9,7 @@ const mapping = {
 
 const getTokenLogoURL = memoize(
   (token?: Token) => {
-    if (token && mapping[token.chainId]) {
+    if (token && token.address && mapping[token.chainId]) {
       return `https://assets-cdn.trustwallet.com/blockchains/${mapping[token.chainId]}/assets/${getAddress(
         token.address,
       )}/logo.png`
