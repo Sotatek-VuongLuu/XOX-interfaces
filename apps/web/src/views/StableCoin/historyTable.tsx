@@ -7,7 +7,7 @@ import truncateHash from '@pancakeswap/utils/truncateHash'
 import { Box, Flex, LinkExternal, Skeleton, Text, Button, Link, Select, Input } from '@pancakeswap/uikit'
 import { formatISO9075 } from 'date-fns'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import { useGetChainName, useProtocolTransactionsSWR, useWidthDrawStableCoinSWR, useStakeStableCoinSWR } from 'state/info/hooks'
+import { useGetChainName, useProtocolTransactionsSWR, useWidthDrawStableCoinSWR, useStakeStableCoinSWR, useMyWidthDrawStableCoinSWR } from 'state/info/hooks'
 import { Transaction, TransactionFrom, TransactionType } from 'state/info/types'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -431,7 +431,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
   const transactions = useProtocolTransactionsSWR();
-  const dataTable = (typePage === TYPE_HISTORY.stake) ? useStakeStableCoinSWR(account) : useWidthDrawStableCoinSWR(typePage === TYPE_HISTORY.myWidthDraw ? account : null);
+  const dataTable = (typePage === TYPE_HISTORY.stake) ? useStakeStableCoinSWR(account) : (typePage === TYPE_HISTORY.widthDraw) ? useWidthDrawStableCoinSWR() : useMyWidthDrawStableCoinSWR(account);
   const [currentTransactions, setCurrentTransactions] = useState([])
 
   const { t } = useTranslation()

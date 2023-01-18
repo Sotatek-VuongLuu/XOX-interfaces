@@ -98,13 +98,26 @@ export const useTransactionStableCoinSWR = () => {
   return stablecoin;
 }
 
-export const useWidthDrawStableCoinSWR = (address?: any) => {
+export const useWidthDrawStableCoinSWR = () => {
   const chainName = useGetChainName()
   const { chainId } = useActiveChainId()
   // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const type = 'swap'
   const { data: withdraw } = useSWRImmutable(
     [`info/protocol/updateStableCoinWidthDrawData/${type}`, chainName],
+    () => fetchWithdrawStableCoin(chainId, null),
+    SWR_SETTINGS, // update latest Transactions per 15s
+  )
+  return withdraw;
+}
+
+export const useMyWidthDrawStableCoinSWR = (address?: any) => {
+  const chainName = useGetChainName()
+  const { chainId } = useActiveChainId()
+  // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
+  const type = 'swap'
+  const { data: withdraw } = useSWRImmutable(
+    [`info/protocol/updateStableCoinMyWidthDrawData/${type}`, chainName],
     () => fetchWithdrawStableCoin(chainId, address),
     SWR_SETTINGS, // update latest Transactions per 15s
   )
