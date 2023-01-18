@@ -201,8 +201,6 @@ export default function Pool() {
 
   const stablePairs = useLPTokensWithBalanceByAccount(account)
 
-  console.log(tokenPairsWithLiquidityTokens, 'tokenPairsWithLiquidityTokens')
-
   // fetch the reserves for all V2 pools in which the user has a balance
   const liquidityTokensWithBalances = useMemo(
     () =>
