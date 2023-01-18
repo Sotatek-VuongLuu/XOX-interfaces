@@ -23,6 +23,7 @@ export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
 
 export const NETWORK_LINK: { [chainId in ChainId]?: any } = {
   [ChainId.RINKEBY]: 'https://rinkeby.etherscan.io',
+  [ChainId.GOERLI]: 'https://goerli.etherscan.io',
   [ChainId.BSC]: 'https://bscscan.com',
   [ChainId.BSC_TESTNET]: 'https://testnet.bscscan.com',
 }
