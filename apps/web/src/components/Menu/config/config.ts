@@ -90,7 +90,7 @@ const config: (
       icon: EarnIcon,
       fillIcon: EarnFillIcon,
       image: '/images/decorations/pe2.png',
-      supportChainIds: SUPPORT_ONLY_BSC,
+      // supportChainIds: SUPPORT_ONLY_BSC,
       items: [],
     },
     {
