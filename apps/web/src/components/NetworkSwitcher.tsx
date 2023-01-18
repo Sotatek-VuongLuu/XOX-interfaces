@@ -151,7 +151,7 @@ export const NetworkSwitcher = (props: any) => {
             t('Network')
           ) : foundChain ? (
             <>
-              <Box display={['none', null, null, null, null, 'block']}>{foundChain.name}</Box>
+              <Box className={props?.removeTxtHeader ? 'menu-mobile-withdraw' : ''} display={['none', null, null, null, null, 'block']}>{foundChain.name}</Box>
               <Box display={['block', null, null, null, null, 'none']}>{symbol}</Box>
             </>
           ) : (

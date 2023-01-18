@@ -103,6 +103,19 @@ const WrapText = styled.div`
   }
 `
 
+const TextConnectWallet = styled.div`
+  text-align: center;
+  line-height: 1.3;
+  br{
+    display: none;
+  }
+  @media (max-width: 576px) {
+    br{
+      display: block;
+    }
+  }
+`
+
 const TextStyle = styled(Text)`
   font-size: 14px;
   font-weight: 700;
@@ -298,7 +311,7 @@ export default function StableCoin() {
               !account && <Row>
                 <Box className="h-190">
                   <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{width: "100%",padding: '10px 0'}}>
-                    <div style={{color: 'rgba(255, 255, 255, 0.87)'}}>Please connect wallet to view your information</div>
+                    <TextConnectWallet style={{color: 'rgba(255, 255, 255, 0.87)'}}>Please connect wallet to <br/>view your information</TextConnectWallet>
                     <ConnectWalletButtonWraper scale="sm">
                       <Trans>Connect Wallet</Trans>
                     </ConnectWalletButtonWraper>
