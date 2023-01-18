@@ -42,9 +42,6 @@ export function useApproveCallback(
     if (amountToApprove.currency?.isNative) return ApprovalState.APPROVED
     // we might not have enough data to know whether or not we need to approve
     if (!currentAllowance) return ApprovalState.UNKNOWN
-
-    console.log(currentAllowance, amountToApprove, 'currentAllowance')
-
     // amountToApprove will be defined if currentAllowance is
     return currentAllowance.lessThan(amountToApprove)
       ? pendingApproval
@@ -112,7 +109,7 @@ export function useApproveCallback(
       })
       .catch((error: any) => {
         logError(error)
-        console.log('error',error?.code)
+        console.log('error', error?.code)
         console.error('Failed to approve token', error)
         if (error?.code === 'ACTION_REJECTED') {
           return
