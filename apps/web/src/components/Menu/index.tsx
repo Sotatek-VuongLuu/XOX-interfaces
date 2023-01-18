@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useRouter } from 'next/router'
 import {
   Menu as UikitMenu,
@@ -23,6 +23,8 @@ import { useMenuItems } from './hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { configLanding } from './config/config'
+import io from 'socket.io-client'
+import axios from 'axios'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;
@@ -71,6 +73,20 @@ const MenuItemsWrapper = styled(MenuItems)`
     border-bottom: none;
   }
 `
+const NotificationField = styled.div`
+  position:relative;
+
+`
+const RedDot = styled.div`
+  width:10px;
+  height:10px;
+  color:red;
+  background:red;
+  border-radius:50px;
+  position:absolute;
+  top:8px;
+  right:25px;
+`
 
 const Menu = (props) => {
   const { isDark, setTheme } = useTheme()
@@ -82,6 +98,9 @@ const Menu = (props) => {
   const { isDesktop } = useMatchBreakpoints()
   const { chainId } = useActiveChainId()
   const [openHeader, setOpenHeader] = useState<boolean>(false)
+  const [activeNotifi, setActiveNotifi] = useState<boolean>(false)
+  const host = 'http://52.220.205.189:4000'
+  const socket = io(host)
 
   const menuItemsLanding = useMemo(() => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
@@ -108,7 +127,29 @@ const Menu = (props) => {
   const handleCloseHeaderMenu = () => {
     return setOpenHeader(false)
   }
-
+  const getNotification = async () => {
+    const params = {
+      address: '0xF1BfE27f383F98bdDeb444A78B08c121954b4f62',
+      page: 1,
+      size: 20,
+    }
+    const result : any = await axios
+      .get(
+        `${process.env.NEXT_PUBLIC_API}/notifications?address=${params.address}&page=${params.page}&size=${params.size}`,
+      )
+      .catch((error) => {
+        console.warn(error)
+      })
+    if(result.data.data && result.data.data.length > 0) {
+      setActiveNotifi(true)
+    }
+  }
+  useEffect(() => {
+    console.log('getSocket')
+    socket.on('0xF1BfE27f383F98bdDeb444A78B08c121954b4f62', (...args) => {
+      console.log('args', args)
+    })
+  }, [])
   return (
     <>
       <ModalV2Wrapper closeOnOverlayClick isOpen={openHeader} onDismiss={handleCloseHeaderMenu}>
@@ -154,7 +195,14 @@ const Menu = (props) => {
           ) : (
             <>
               {/* <GlobalSettings mode={SettingsMode.GLOBAL} /> */}
-              {account ? isDesktop ? <NotificationIcon /> : <NotificationIcon size={25} /> : <></>}
+              {account ? (
+                <NotificationField onClick={() => getNotification()}>
+                  <RedDot />
+                  {isDesktop ? <NotificationIcon /> : <NotificationIcon size={25} />}
+                </NotificationField>
+              ) : (
+                <></>
+              )}
               <NetworkSwitcher />
               <UserMenu />
               {openHeader ? (
