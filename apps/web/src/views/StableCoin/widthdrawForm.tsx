@@ -92,6 +92,11 @@ const BoxRight = styled.div`
         >div{
           padding-right: 50px;
           width: 100%;
+          @media (max-width: 576px) {
+            >div{
+              display: block !important;
+            }
+          }
           +div{
             max-width: 330px;
             padding-right: 0;
@@ -107,6 +112,13 @@ const BoxRight = styled.div`
   @media(max-width: 576px){
     width: 100%;
     min-height: inherit;
+    .menu-mobile-withdraw{
+      margin-left: 10px;
+      display: block;
+      +div{
+        display: none;
+      }
+    }
   }
 `
 
