@@ -7,7 +7,7 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { useStableCoinSWR } from 'state/info/hooks'
+import { useStableCoinSWR, useMultiChainId } from 'state/info/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import InfoNav from '../Info/components/InfoNav'
@@ -143,42 +143,47 @@ export default function StableCoin() {
   const contractTreasuryXOX = useTreasuryXOX()
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
+  const chainIdLocal:any = useMultiChainId();
+  const [keyContainer, setKeyContainer] = useState(Math.random());
 
   // eslint-disable-next-line consistent-return
-  const handleCheckPendingRewardAll = async (accountId: string, chainIdEffect: any) => {
+  const handleCheckPendingRewardAll = async (accountId: any) => {
+    if(!accountId) return null;
     try {
       const [infosUser, res2] = await Promise.all([
-        contractTreasuryXOX.userInfo(account),
+        contractTreasuryXOX.userInfo(accountId),
         contractTreasuryXOX.pendingReward(accountId),
       ])
       const txPendingReward: any = res2
       const dataParse: any[] = infosUser.map((item) => {
-        return formatUnits(item, USD_DECIMALS[chainIdEffect])
+        return formatUnits(item, USD_DECIMALS[chainIdLocal])
       })
       const amountPoint = Number(dataParse[1]);
       const rewardPoint = Number(dataParse[2]);
       if(rewardPoint === 0 || rewardPoint){
-        const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdEffect])) + rewardPoint;
+        const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdLocal])) + rewardPoint;
         setCurrentReward(numberReward ? numberReward?.toFixed(6) : 0);
         const totalCurrentXOXS = amountPoint+numberReward;
         setCurrentXOX(totalCurrentXOXS ? totalCurrentXOXS.toFixed(6) : 0);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(`error>>>>>`, error)
+      console.log(`error>>>>>`, error);
+      setCurrentReward(0);
+      setCurrentXOX(0);
     }
   }
 
   useEffect(() => {
     if(account){
-      handleCheckPendingRewardAll(account, chainId);
+      handleCheckPendingRewardAll(account);
     }
-  }, [account, chainId]);
+  }, [account]);
 
   return (
     <>
       <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
-      <Container style={{marginBottom: 100}}>
+      <Container style={{marginBottom: 100}} key={`container-stablecoin${chainId}`}>
         {widthDraw === TYPE.withdraw && (
           <>
             <Flex alignItems="center" style={{ gap: 10 }}>

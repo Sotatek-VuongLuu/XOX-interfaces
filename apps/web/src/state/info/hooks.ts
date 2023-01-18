@@ -296,6 +296,12 @@ export const useMultiChainPath = () => {
   return chainName ? `/${chainName}` : ''
 }
 
+export const useMultiChainId = () => {
+  const router = useRouter()
+  const { chainId } = router.query;
+  return chainId
+}
+
 export const useStableSwapPath = () => {
   return checkIsStableSwap() ? '?type=stableSwap' : ''
 }

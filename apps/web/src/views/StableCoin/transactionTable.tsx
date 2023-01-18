@@ -286,7 +286,7 @@ const DataRow: React.FC<
 > = ({ transaction, index, page, perPage }) => {
   const { t } = useTranslation()
   const abs0 = Math.abs(transaction.amountToken0)
-  const abs1 = Math.abs(transaction.amountToken1)
+  const abs1 = Math.abs(transaction.amountToken1)/10
   const { chainId } = useActiveChainId();
   const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
   const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOX' : transaction.token0Symbol
