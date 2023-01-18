@@ -351,7 +351,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(abs1)} ${symbolToken0}`}</Text>
+      >{`${formatAmount(abs1)} ${symbolToken0}S`}</Text>
     </>
   )
 }
