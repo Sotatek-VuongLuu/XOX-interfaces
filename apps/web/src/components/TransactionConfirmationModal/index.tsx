@@ -102,7 +102,7 @@ function ConfirmationPendingContent({ pendingText, iconGridLoader }: { pendingTe
         <AutoColumn gap="12px" justify="center">
           <Text className="pending">{pendingText}</Text>
         </AutoColumn>
-        <Text className="confirm">{t('Confirm this transaction in your wallet.')}</Text>
+        <Text className="confirm" style={{marginBottom: 30}}>{t('Confirm this transaction in your wallet.')}</Text>
       </AutoColumn>
     </Wrapper>
   )
@@ -197,7 +197,7 @@ export function TransactionErrorContent({
       <AutoColumn justify="center">
         {/* <ErrorIcon color="failure" width="64px" /> */}
         <img alt="" src="/images/swap/icon-swap-error.svg" style={{ padding: '10px 0' }} />
-        <Text color="failure" style={{ textAlign: 'center', width: '85%', wordBreak: 'break-word' }}>
+        <Text color="failure" style={{ textAlign: 'center', width: '85%', wordBreak: 'break-word', color: 'rgba(255, 255, 255, 0.6)' }}>
           {message}
         </Text>
       </AutoColumn>

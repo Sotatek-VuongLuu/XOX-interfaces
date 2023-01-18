@@ -17,6 +17,7 @@ import TransactionConfirmationModal, {
 } from 'components/TransactionConfirmationModal'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import ConfirmSwapModal from '../Swap/components/ConfirmSwapModal'
+import StableCoinModal from './StableCoinModal';
 
 const WrapForm = styled.div`
   padding: 60px 0;
@@ -180,12 +181,12 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
 
   const handleSucess = (response: any) => {
     setTimeout(() => {
-      setPending(false);
-      setTxHas(response?.hash);
-      setWithdrawErrorMessage('');
-      addTransaction(response);
       toastSuccess('Withdraw sucess', <ToastDescriptionWithTx txHash={response?.hash} txChainId={response?.chainId} />)
-    }, 2000);
+    }, 3000);
+    setPending(false);
+    setTxHas(response?.hash);
+    setWithdrawErrorMessage('');
+    addTransaction(response);
   }
 
   const handleWidthdraw = async() => {
@@ -219,25 +220,13 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
     })
   }
 
-  const confirmationContent = useCallback(
-    () =>
-      withdrawErrorMessage ? (
-        <>
-          <TransactionErrorContent message={withdrawErrorMessage} />
-        </>
-      ) : (
-        <></>
-      ),
-    [withdrawErrorMessage],
-  )
-
   const [onPresentConfirmModal] = useModal(
-    <TransactionConfirmationModal
-      title="Confirm Withdraw"
-      content={confirmationContent}
-      pendingText={`Withdraw ${amount} ${isBUSD ? 'BUSD' : 'USDC'}`}
-      attemptingTxn={pending}
-      hash={txHas}
+    <StableCoinModal
+      isBUSD={isBUSD}
+      amount={amount}
+      txHas={txHas}
+      pending={pending}
+      withdrawErrorMessage={withdrawErrorMessage}
       iconGridLoader
     />,
     true,
