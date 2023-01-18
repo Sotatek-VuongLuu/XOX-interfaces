@@ -209,6 +209,14 @@ const Content = styled.div`
     color: rgba(255, 255, 255, 0.6);
   }
 
+  .noti_claim_pending_h4 {
+    text-align: center;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
   .btn_dismiss_container {
     display: flex;
     justify-content: center;
@@ -688,7 +696,7 @@ export default function BridgeToken() {
               <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
                 <img src="/images/reject_xox.png" alt="reject_xox" />
               </div>
-              <div className="noti_claim_pending_h2">Transaction rejected.</div>
+              <div className="noti_claim_pending_h4">Transaction rejected.</div>
               <div className="btn_dismiss_container">
                 <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
                   Dismiss
