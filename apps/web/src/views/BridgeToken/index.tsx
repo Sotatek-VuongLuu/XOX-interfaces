@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/no-duplicates */
 /* eslint-disable import/order */
@@ -34,7 +35,7 @@ import { useActiveHandle } from 'hooks/useEagerConnect.bmp'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import useAuth from 'hooks/useAuth'
-import { CONTRACT_BRIDGE_POOL } from './networks'
+import { CONTRACT_BRIDGE_POOL, NETWORK_LABEL, NETWORK_LINK } from './networks'
 import { GridLoader } from 'react-spinners'
 import truncateHash from '@pancakeswap/utils/truncateHash'
 
@@ -159,6 +160,7 @@ const Content = styled.div`
   .noti_claim_success {
     display: flex;
     justify-content: center;
+    margin-top: 24px;
   }
 
   .x-close-icon {
@@ -219,6 +221,37 @@ const Content = styled.div`
       cursor: pointer;
     }
   }
+
+  .submitted {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.87);
+  }
+  .view_on {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #3d8aff;
+    margin-bottom: 24px;
+  }
+
+  .btn_close {
+    text-align: center;
+    width: 100%;
+    padding: 12px 0px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #ffffff;
+    background: #313131;
+    border-radius: 6px;
+    cursor: pointer;
+  }
 `
 
 export const getChainIdToByChainId = (chainId: any) => {
@@ -234,6 +267,10 @@ export const getChainIdToByChainId = (chainId: any) => {
     default:
       return chainId
   }
+}
+
+export const linkTransaction = (chainId) => {
+  return `${NETWORK_LINK[chainId]}/tx/`
 }
 
 export default function BridgeToken() {
@@ -270,6 +307,7 @@ export default function BridgeToken() {
   )
   const [modalReject, setModalReject] = useState<boolean>(false)
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
+  const [txHash, setTxHash] = useState('')
 
   const handleGetBalancePool = async () => {
     try {
@@ -393,6 +431,8 @@ export default function BridgeToken() {
       setMessageTx(`Swap ${amountInput} ${addressTokenInput.symbol}`)
       if (tx?.transactionHash) {
         setIsOpenSuccessModal(true)
+        setIsOpenLoadingClaimModal(false)
+        setTxHash(tx?.transactionHash)
         setLoading(false)
         setAmountInput('')
       }
@@ -672,22 +712,18 @@ export default function BridgeToken() {
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
 
-          <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Bridge Success">
+          <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Confirm Bridge">
             <Content>
-              <div className="noti">
-                <span>{messageTx}</span>
-              </div>
               <div className="noti_claim_success">
                 <img src="/images/success_claim.png" alt="success_claim" />
               </div>
-              <img
-                src="/images/close-one.svg"
-                alt="close-one"
-                className="x-close-icon"
-                height={20}
-                width={20}
-                onClick={() => setIsOpenSuccessModal(false)}
-              />
+              <div className="submitted">Transaction Submitted</div>
+              <a href={`${linkTransaction(chainId)}${txHash}`} target="_blank" rel="noreferrer">
+                <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
+              </a>
+              <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)}>
+                Close
+              </div>
             </Content>
           </ModalBase>
 
