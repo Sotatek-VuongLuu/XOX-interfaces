@@ -148,6 +148,14 @@ const GridLeft = styled(Grid)`
     margin-bottom: 66px;
   }
 `
+const Image = styled.div`
+  width:100%;
+  height:100%;
+  background-image: url('/images/xox-desktop.gif');
+  background-size:95%;
+  background-repeat:no-repeat;
+  margin-left:-110px;
+`
 
 const WelcomeXOX = (): JSX.Element => {
   const { width: innerWidth } = useWindowSize()
@@ -187,12 +195,13 @@ const WelcomeXOX = (): JSX.Element => {
           </GridLeft>
           <Grid item xs={12} md={5} sx={{ position: 'relative', height: '385px' }}>
             {(isMobile || isTablet) && (
-              <Spline
-                scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-                onLoad={(e) => e.setZoom(0.5)}
-                height={600}
-                id="mb_3d"
-              />
+              // <Spline
+              //   scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
+              //   onLoad={(e) => e.setZoom(0.5)}
+              //   height={600}
+              //   id="mb_3d"
+              // />
+              <Image />
             )}
           </Grid>
         </Grid>

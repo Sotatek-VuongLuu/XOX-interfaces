@@ -33,6 +33,14 @@ const StyledSection = styled(PageSection)`
     padding: 0px 130px;
   }
 `
+const Image = styled.div`
+  width:100%;
+  height:74vh;
+  background-size:cover;
+  background-image: url('/images/xox-desktop.gif');
+  background-size:120%;
+  background-repeat:no-repeat;
+`
 
 const Home: React.FC<React.PropsWithChildren> = () => {
   const { width: innerWidth } = useWindowSize()
@@ -72,11 +80,12 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         </div>
 
         {innerWidth > 967 && (
-          <Spline
-            scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-            onLoad={(e) => e.setZoom(1)}
-            id="asset_3d"
-          />
+          // <Spline 
+          //   scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
+          //   onLoad={(e) => e.setZoom(1)}
+          //   id="asset_3d"
+          // />
+          <Image />
         )}
       </StyledSection>
 
