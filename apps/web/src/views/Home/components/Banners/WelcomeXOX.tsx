@@ -42,6 +42,11 @@ const Wrapper = styled.div`
 
 const LeftContent = styled.div`
   min-width: 600px;
+
+  @media screen and (max-width: 530px) {
+    min-width: unset;
+  }
+
   z-index: 2;
   .btn_group {
     display: grid;
@@ -75,6 +80,7 @@ const LeftContent = styled.div`
       }
     }
     @media screen and (max-width: 900px) {
+      min-width: unset;
       .get_xox {
         padding: 1px;
         .boxed-child {
@@ -148,23 +154,28 @@ const GridLeft = styled(Grid)`
   }
 `
 const Image = styled.div`
-  width:100%;
-  height:100%;
+  width: 100%;
+  height: 100%;
   background-image: url('/images/xox-desktop.gif');
-  background-size:95%;
-  background-repeat:no-repeat;
-  margin-left:-110px;
+  background-repeat: no-repeat;
+  margin-left: -110px;
+
+  @media screen and (max-width: 560px) {
+    background-size: 100%;
+    margin-left: 0;
+    margin-top: 50px;
+    transform: scale(1.5);
+  }
 `
 
 const WelcomeXOX = (): JSX.Element => {
-  const { width: innerWidth } = useWindowSize()
   const { isMobile, isTablet } = useMatchBreakpoints()
-  const route = useRouter()
+
   return (
     <Wrapper>
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
         <Grid container spacing={2} className="grid_welcome_container">
-          <GridLeft item xs={12} md={5}>
+          <GridLeft item xs={12} md={6}>
             <LeftContent>
               <Title className="title">XOX: The Next Gen Multichain DeFi Dapps & Web3 Solutions Provider</Title>
               <Feature className="feature">Revolutionary - Scalable - Sustainable</Feature>
@@ -186,7 +197,7 @@ const WelcomeXOX = (): JSX.Element => {
               </div>
             </LeftContent>
           </GridLeft>
-          <Grid item xs={12} md={5} sx={{ position: 'relative', height: '385px' }}>
+          <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'hidden' }}>
             {(isMobile || isTablet) && (
               // <Spline
               //   scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
