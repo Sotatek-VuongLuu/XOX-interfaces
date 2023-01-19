@@ -50,12 +50,6 @@ const ImageWrapper = styled.div`
       transform: scale(1.4) translateY(-30px);
     }
   }
-
-  @media (min-width: 1921px) {
-    img {
-      transform: scale(1) translateY(-30px);
-    }
-  }
 `
 
 const Home: React.FC<React.PropsWithChildren> = () => {
@@ -75,12 +69,12 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         innerProps={{
           style: {
             margin: '0',
-            width: '100%',
             height: innerWidth > 900 ? '74vh' : '88vh',
             display: 'grid',
             gridTemplateColumns: '1fr auto',
             alignItems: 'center',
             justifyContent: innerWidth > 900 ? 'space-around' : 'unset',
+            width: innerWidth > 900 ? 1400 : '100%',
           },
         }}
         containerProps={{
@@ -91,7 +85,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BallPurple src="/images/bg-pur.svg" />
-        <div style={{ width: innerWidth > 900 && 1400 }}>
+        <div>
           <WelcomeXOX />
         </div>
 
