@@ -103,7 +103,7 @@ const Wrapper = styled.div`
       position: absolute;
       height: 100%;
       width: 117px;
-      background: linear-gradient(90deg, black 0%, rgba(18, 18, 18, 0) 100%);
+      background: linear-gradient(90deg, black 20%, rgba(18, 18, 18, 0) 100%);
       z-index: 99;
     }
 
@@ -114,8 +114,15 @@ const Wrapper = styled.div`
       right: 0;
       top: 0;
       width: 117px;
-      background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 100%);
+      background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 80%);
       z-index: 99;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .slide_container {
+      width: 100vw;
+      margin: -20px;
     }
   }
 `
@@ -132,7 +139,7 @@ const SliderWrapper = styled.div`
     margin: 0 0 25px 0;
   }
   @media (max-width: 992px) {
-    padding: 0 20px 0 20px;
+    padding: 0;
   }
   .slide-option {
     margin: 0 0 50px 0;

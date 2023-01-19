@@ -20,7 +20,7 @@ const BGXOX = styled.img`
   position: absolute;
   z-index: -1;
   right: 0;
-  top: 23%;
+  top: 30%;
   mix-blend-mode: multiply;
 `
 
