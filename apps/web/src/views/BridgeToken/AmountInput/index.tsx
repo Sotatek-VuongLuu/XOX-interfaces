@@ -81,20 +81,19 @@ const AmountRow = styled.div`
 
   .tooltip {
     background: transparent;
-    padding: 7px 10px 7px 0;
+    padding: 7px 0 7px 0;
     font-size: 16px;
     color: ${({ theme }) => theme.colors.textSubTitle};
     font-weight: 400;
-    width: calc(100% - 250px);
-    div {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
+    width: calc(100%);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
     @media screen and (min-width: 576px) {
-      padding: 10px 8px 10px 0;
+      padding: 10px 0 10px 0;
       font-size: 18px;
-      width: calc(100% - 322px);
+      width: calc(100%);
     }
   }
 
