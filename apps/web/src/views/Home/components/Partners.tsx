@@ -153,6 +153,10 @@ const SliderWrapper = styled.div`
     justify-content: center;
     width: 100%;
     height: 120px;
+
+    @media (max-width: 560px) {
+      height: 100px;
+    }
   }
   div.highway-slider div.highway-barrier {
     overflow: hidden;
