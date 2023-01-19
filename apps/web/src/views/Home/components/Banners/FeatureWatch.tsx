@@ -85,7 +85,7 @@ const Main = styled(Grid)`
 const FeatureWatch = () => {
   const { width } = useWindowSize()
   return (
-    <Wrapper>
+    <Wrapper style={{ overflow: 'hidden' }}>
       <Main container spacing={2}>
         <Grid
           item

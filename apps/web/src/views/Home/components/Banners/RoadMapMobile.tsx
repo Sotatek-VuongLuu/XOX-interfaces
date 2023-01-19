@@ -112,7 +112,7 @@ const LineNotDash = styled.div`
 
 const RoadMapMobile = () => {
   return (
-    <Wrapper>
+    <Wrapper style={{ overflow: 'hidden' }}>
       <div className="main_content">
         {listRoadMap.map((item, index) => {
           return (
