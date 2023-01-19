@@ -131,11 +131,10 @@ const Reminder: React.FC<Props> = ({
     ) {
       return '0'
     }
-
-    const decimals = Math.max(gasFee.split('.')[1]?.length || 0, crosschainFee.split('.')[1]?.length || 0)
+    // const decimals = Math.max(gasFee.split('.')[1]?.length || 0, crosschainFee.split('.')[1]?.length || 0)
+    const decimals = 18
     const totalFeeParsed = parseUnits(gasFee, decimals).add(parseUnits(crosschainFee, decimals))
-    const amountToParsed = amount && amount !== ('.' || '') && parseUnits(Number(amount).toFixed(18 - decimals), decimals).sub(totalFeeParsed)
-
+    const amountToParsed = amount && amount !== ('.' || '') && parseUnits(amount, decimals).sub(totalFeeParsed)
     return amount && amount !== ('.' || '') && !amountToParsed.isNegative()
       ? Number(formatUnits(amountToParsed, decimals)).toFixed(6)
       : amount && amount !== ('.' || '')

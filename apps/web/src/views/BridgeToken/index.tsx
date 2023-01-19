@@ -455,6 +455,7 @@ export default function BridgeToken() {
     if (account) {
       switchNetworkAsync(getChainIdToByChainId(chainId))
       setAmountInput('');
+      setAmountTo('')
     }
     return null
   }
