@@ -1,16 +1,7 @@
 import { ReactElement, useCallback } from 'react'
 import { ChainId, Currency, Token } from '@pancakeswap/sdk'
 import styled from 'styled-components'
-import {
-  Button,
-  Text,
-  Flex,
-  Box,
-  Link,
-  Modal,
-  InjectedModalProps,
-  ModalProps,
-} from '@pancakeswap/uikit'
+import { Button, Text, Flex, Box, Link, Modal, InjectedModalProps, ModalProps } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { wrappedCurrency } from 'utils/wrappedCurrency'
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
@@ -62,7 +53,7 @@ const Wrapper = styled.div`
 const Section = styled(AutoColumn)``
 
 const ConfirmedIcon = styled(ColumnCenter)`
-  padding: 0 0 24px 0;
+  padding: 14px 0 34px 0;
 `
 const ButtonFooters = styled.div`
   display: flex;
@@ -102,7 +93,9 @@ function ConfirmationPendingContent({ pendingText, iconGridLoader }: { pendingTe
         <AutoColumn gap="12px" justify="center">
           <Text className="pending">{pendingText}</Text>
         </AutoColumn>
-        <Text className="confirm" style={{marginBottom: 30}}>{t('Confirm this transaction in your wallet.')}</Text>
+        <Text className="confirm" mb="32px">
+          {t('Confirm this transaction in your wallet.')}
+        </Text>
       </AutoColumn>
     </Wrapper>
   )

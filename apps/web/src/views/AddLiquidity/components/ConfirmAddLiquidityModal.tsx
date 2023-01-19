@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { Currency, CurrencyAmount, Fraction, Percent, Token } from '@pancakeswap/sdk'
-import { InjectedModalProps, Button } from '@pancakeswap/uikit'
+import { InjectedModalProps, Button, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import TransactionConfirmationModal, {
   ConfirmationModalContent,
@@ -93,17 +93,15 @@ const ConfirmAddLiquidityModal: React.FC<
         onClick={onAdd}
         mt="24px"
         mb="32px"
-        height={['37px', , '54px']}
+        height={['37px', , '43px']}
         style={{
           background: 'linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)',
           borderRadius: '8px',
-          fontWeight: 700,
-          fontSize: '18px',
-          lineHeight: '22px',
-          color: '#FFFFFF',
         }}
       >
-        {noLiquidity ? t('Create Pool & Supply') : t('Confirm Supply')}
+        <Text lineHeight={['17px', , '19px']} fontSize={['14px', , '16px']} fontWeight="700" color="#FFFFFF">
+          {noLiquidity ? t('Create Pool & Supply') : t('Confirm Supply')}
+        </Text>
       </Button>
     )
   }, [noLiquidity, onAdd, t])

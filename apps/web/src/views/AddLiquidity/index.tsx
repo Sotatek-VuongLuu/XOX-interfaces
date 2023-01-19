@@ -448,7 +448,6 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   const zapContract = useZapContract()
 
-  console.log(pair, 'pair')
   const [onPresentAddLiquidityModal] = useModal(
     <ConfirmAddLiquidityModal
       title={
@@ -746,7 +745,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   )}
                   backTo={canZap ? () => setSteps(Steps.Choose) : '/liquidity'}
                 />
-                <CardBody p={['18px', , '24px']}>
+                <CardBody p={['18px 0', , '24px 0']}>
                   <AutoColumn gap="16px">
                     {noLiquidity && (
                       <ColumnCenter>
@@ -788,11 +787,8 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                           )
                         }
                       }}
-                      onMax={() => {
-                        onFieldAInput(maxAmounts[Field.CURRENCY_A]?.toExact() ?? '')
-                      }}
                       showQuickInputButton
-                      showMaxButton={!atMaxAmounts[Field.CURRENCY_A]}
+                      showMaxButton
                       currency={currencies[Field.CURRENCY_A]}
                       id="add-liquidity-input-tokena"
                       showCommonBases
@@ -829,11 +825,8 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                           )
                         }
                       }}
-                      onMax={() => {
-                        onFieldBInput(maxAmounts[Field.CURRENCY_B]?.toExact() ?? '')
-                      }}
                       showQuickInputButton
-                      showMaxButton={!atMaxAmounts[Field.CURRENCY_B]}
+                      showMaxButton
                       currency={currencies[Field.CURRENCY_B]}
                       id="add-liquidity-input-tokenb"
                       showCommonBases
@@ -949,23 +942,30 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
                     <Text className="text-share">Price and pool share</Text>
 
-                    {parsedAmounts[Field.CURRENCY_A] && parsedAmounts[Field.CURRENCY_B] && (
+                    {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && price && (
                       <>
                         <CustomRowBetween>
                           <Text className="text-left">{`${currencies[Field.CURRENCY_A]?.symbol} per ${
                             currencies[Field.CURRENCY_B]?.symbol
                           }`}</Text>
-                          <Text className="text-right">{parsedAmounts[Field.CURRENCY_A].toSignificant(6)}</Text>
+                          <Text className="text-right">{price.invert().toSignificant(6)}</Text>
                         </CustomRowBetween>
 
                         <CustomRowBetween>
                           <Text className="text-left">{`${currencies[Field.CURRENCY_B]?.symbol} per ${
                             currencies[Field.CURRENCY_A]?.symbol
                           }`}</Text>
-                          <Text className="text-right">{parsedAmounts[Field.CURRENCY_B].toSignificant(6)}</Text>
+                          <Text className="text-right">{price.toSignificant(6)}</Text>
                         </CustomRowBetween>
                       </>
                     )}
+
+                    <CustomRowBetween>
+                      <Text className="text-left">{t('Share of Pool')}</Text>
+                      <Text className="text-right">
+                        {poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '-'}
+                      </Text>
+                    </CustomRowBetween>
 
                     <CustomRowBetween>
                       <Text className="text-left slippage">{t('Slippage Tolerance')}</Text>

@@ -69,6 +69,9 @@ const CustomRowBetweenWrapper = styled(CustomRowBetween)`
 `
 
 const AutoColumnWrapper = styled(AutoColumn)`
+  width: 503px;
+  max-width: 100%;
+
   .pool {
     margin: '8px 0';
   }
@@ -304,7 +307,9 @@ export const AddLiquidityModalHeader = ({
         </Text>
       </CustomRowBetween>
       <CustomRowBetween className="estimated">
-        <Text>Output is estimated. If the price changes by more than 0.8% your transaction will revert</Text>
+        <Text maxWidth="460px">
+          Output is estimated. If the price changes by more than 0.8% your transaction will revert
+        </Text>
       </CustomRowBetween>
       <CustomRowBetween>
         <Text className="text-left">{`${currencies[Field.CURRENCY_A]?.symbol} Deposited`}</Text>
