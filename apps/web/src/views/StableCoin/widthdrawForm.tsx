@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-shadow */
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useRef, useEffect} from 'react';
 import styled from 'styled-components'
 import { Flex, Button, Text, Select, Dropdown , useToast, useModal } from '@pancakeswap/uikit'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
@@ -77,6 +77,15 @@ const BoxRight = styled.div`
     padding-right: 80px;
     &:focus{
       outline: none;
+    }
+    &.no-border-text{
+      width: auto;
+      display: inline-flex;
+      border: none;
+      padding: 0;
+      height: inherit;
+      color: rgba(255,255,255,0.87);
+      font-weight: 700;
     }
   }
   &.wrap-select{
@@ -178,8 +187,10 @@ const ButtonRight = styled(Button)`
   top: 9px;
 `
 
-const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | string, onSuccess?: any}) => {
+const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: any, onSuccess?: any}) => {
   const [withdrawErrorMessage, setWithdrawErrorMessage] = useState('');
+  const inputRef = useRef(null);
+  const priceRef = useRef(null);
   const [pending, setPending] = useState(false);
   const { account, chainId } = useWeb3React();
   const contractTreasuryXOX = useTreasuryXOX();
@@ -193,15 +204,23 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
   const [txHas, setTxHas] = useState('');
   const tokenContract = useTokenContract(USD_ADDRESS[chainId], false);
 
+  useEffect(() => {
+    if(priceAvailable){
+      priceRef.current.value = `${parseFloat(priceAvailable)} ${isBUSD ? 'BUSD' : 'USDC'}`;
+    }
+  }, [priceAvailable]);
+
   const handleSucess = (response: any) => {
-    setTimeout(() => {
-      toastSuccess('Withdraw sucess', <ToastDescriptionWithTx txHash={response?.hash} txChainId={response?.chainId} />)
-    }, 3000);
     setPending(false);
     setTxHas(response?.hash);
     setWithdrawErrorMessage('');
+    priceRef.current.value = `${parseFloat(priceAvailable)-parseFloat(amount)} ${isBUSD ? 'BUSD' : 'USDC'}`;
     addTransaction(response);
-    onSuccess?.()
+    setTimeout(() => {
+      toastSuccess('Withdraw sucess', <ToastDescriptionWithTx txHash={response?.hash} txChainId={response?.chainId} />);
+      inputRef.current.value = "";
+      setAmount(0);
+    }, 3000);
   }
 
   const handleWidthdraw = async() => {
@@ -271,14 +290,14 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
         <TextStyle>Available</TextStyle>
         <BoxRight>
           <Flex alignItems="center" height={44}>
-            <TextStyle className='color-white'>{priceAvailable} {isBUSD ? 'BUSD' : 'USDC'}</TextStyle>
+            <TextStyle className='color-white'><input disabled className='no-border-text' ref={priceRef} defaultValue={`${priceAvailable} ${isBUSD ? 'BUSD' : 'USDC'}`} /></TextStyle>
           </Flex>
         </BoxRight>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Amount</TextStyle>
         <BoxRight>
-          <input type="number" key={keyInput} defaultValue={amount} placeholder='0.00' onChange={(e:any) => {
+          <input ref={inputRef} type="number" key={keyInput} defaultValue={amount} placeholder='0.00' onChange={(e:any) => {
             setAmount(e?.target?.value);
             if(parseFloat(e?.target?.value) > priceAvailable){
               setError('Insufficient balance');
