@@ -43,7 +43,7 @@ const SecuredBy = () => {
   const { width } = useWindowSize()
 
   return (
-    <Wrapper>
+    <Wrapper style={{ overflow: 'hidden' }}>
       <p className="title" data-aos="fade-up">
         Secured By
       </p>

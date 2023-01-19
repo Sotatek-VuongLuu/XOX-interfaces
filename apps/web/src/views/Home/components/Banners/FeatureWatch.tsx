@@ -85,7 +85,7 @@ const Main = styled(Grid)`
 const FeatureWatch = () => {
   const { width } = useWindowSize()
   return (
-    <Wrapper>
+    <Wrapper style={{ overflow: 'hidden' }}>
       <Main container spacing={2}>
         <Grid
           item
@@ -105,7 +105,7 @@ const FeatureWatch = () => {
               <img
                 src="/images/3D-XOS-logo.gif"
                 alt="xoxs"
-                style={{ marginLeft: -100, transform: 'scale(2.5)' }}
+                style={{ marginLeft: -100, transform: 'scale(2)' }}
                 data-aos="fade-right"
               />
             )}

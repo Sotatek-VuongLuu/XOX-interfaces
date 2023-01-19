@@ -191,7 +191,6 @@ const SliderWrapper = styled.div`
   }
   #infinite div.highway-barrier {
     box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3);
-   
   }
   #infinite div.highway-barrier ul.highway-lane {
     width: calc(144px * 20);
