@@ -20,7 +20,6 @@ import UpComing from './components/Banners/FeatureUpComing'
 import SecuredBy from './components/Banners/SecuredBy'
 import BGPartner from './components/Banners/BackgroundPartner'
 import FeatureSquare from './components/Banners/FeatureSquare'
-import Image from 'next/image'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
@@ -103,7 +102,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           //   id="asset_3d"
           // />
           <ImageWrapper>
-            <img src="/images/xox-desktop.gif" />
+            <img src="/images/xox-desktop.gif" alt="" />
           </ImageWrapper>
         )}
       </StyledSection>
