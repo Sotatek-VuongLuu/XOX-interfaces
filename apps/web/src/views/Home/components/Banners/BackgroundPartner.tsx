@@ -28,7 +28,7 @@ const BGXOXMobile = styled.img`
   position: absolute;
   z-index: -2;
   right: 0;
-  top: 14.1%;
+  top: 16.1%;
   mix-blend-mode: multiply;
 `
 
@@ -36,7 +36,7 @@ const BGMobile = styled.img`
   position: absolute;
   z-index: -2;
   right: 0;
-  top: 13.6%;
+  top: 15.6%;
   background: radial-gradient(50% 50% at 50% 50%, rgba(143, 0, 255, 0.3) 0%, rgba(82, 0, 255, 0) 100%);
 `
 
