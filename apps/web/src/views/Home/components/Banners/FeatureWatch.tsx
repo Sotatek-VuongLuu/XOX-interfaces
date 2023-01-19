@@ -105,7 +105,7 @@ const FeatureWatch = () => {
               <img
                 src="/images/3D-XOS-logo.gif"
                 alt="xoxs"
-                style={{ marginLeft: -100, transform: 'scale(2.5)' }}
+                style={{ marginLeft: -100, transform: 'scale(2)' }}
                 data-aos="fade-right"
               />
             )}
