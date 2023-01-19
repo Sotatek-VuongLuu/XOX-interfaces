@@ -168,7 +168,7 @@ export default function WithDrawLayout() {
         </Flex>
         <Row style={{marginTop: 25}}>
             <Box className='wrap-withdraw'>
-            <WidthdrawForm priceAvailable={currentReward} onSuccess={() => setWidthDraw(TYPE.default)} />
+            <WidthdrawForm priceAvailable={currentReward} />
             </Box>
         </Row>
       </Container>
