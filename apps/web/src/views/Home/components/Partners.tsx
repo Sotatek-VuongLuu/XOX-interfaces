@@ -103,7 +103,8 @@ const Wrapper = styled.div`
       position: absolute;
       height: 100%;
       width: 117px;
-      background: linear-gradient(90deg, black 20%, rgba(18, 18, 18, 0) 100%);
+      left: -1px;
+      background: linear-gradient(90deg, black 0%, black 20%, rgba(18, 18, 18, 0) 100%);
       z-index: 99;
     }
 
@@ -111,10 +112,10 @@ const Wrapper = styled.div`
       content: '';
       position: absolute;
       height: 100%;
-      right: 0;
+      right: -1px;
       top: 0;
       width: 117px;
-      background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 80%);
+      background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 80%, black 100%);
       z-index: 99;
     }
   }
