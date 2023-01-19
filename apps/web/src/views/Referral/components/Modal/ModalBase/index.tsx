@@ -6,15 +6,16 @@ interface IProps {
   onClick?: () => void
   open: boolean
   title: string
+  width?: number | string
 }
 
-const ModalBase: React.FC<React.PropsWithChildren<IProps>> = ({ open, handleClose, children, title }) => {
+const ModalBase: React.FC<React.PropsWithChildren<IProps>> = ({ open, handleClose, children, title, width = 327 }) => {
   const style = {
     position: 'absolute',
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    width: 327,
+    width,
     bgcolor: '#242424',
     border: 'none',
     boxShadow: 24,

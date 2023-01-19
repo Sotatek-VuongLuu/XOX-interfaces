@@ -118,7 +118,6 @@ export default function SwapCommitButton({
         setSwapState({ attemptingTxn: false, tradeToConfirm, swapErrorMessage: undefined, txHash: hash })
       })
       .catch((error) => {
-        console.log('error', error)
         let message = error?.message
         if (error?.message.length > 250) {
           message = 'Transaction failed.'

@@ -85,6 +85,7 @@ const WrapperItem = styled.div<IPropsWI>`
 
 const UpComingItem = ({ title, describe }) => {
   const [isShowReadMore, setIsShow] = useState(false)
+  const [readMore, setIsShowReadMore] = useState(describe.length > 260)
   const { width } = useWindowSize()
 
   return (
@@ -111,7 +112,12 @@ const UpComingItem = ({ title, describe }) => {
         ) : null
       ) : (
         <p className="describe" style={{ marginTop: 16 }}>
-          {describe}
+          {readMore ? `${describe.slice(0, 260)}...` : describe}{' '}
+          {describe.length > 260 ? (
+            <span onClick={() => setIsShowReadMore(!readMore)} style={{ cursor: 'pointer' }}>
+              {readMore ? <span className="expand">Read more</span> : <span className="expand">Read less</span>}
+            </span>
+          ) : null}
         </p>
       )}
     </WrapperItem>
