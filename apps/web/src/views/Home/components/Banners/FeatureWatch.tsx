@@ -1,12 +1,13 @@
 import { Box, Grid } from '@mui/material'
-import Spline from '@splinetool/react-spline'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 const LeftContent = styled.div`
-  @media screen and (max-width: 900px) {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 900px) {
+    align-items: center;
+    height: 100%;
   }
 `
 
@@ -85,7 +86,12 @@ const FeatureWatch = () => {
             {width < 900 ? (
               <img src="/images/3D-XOS-logo.gif" alt="xoxs" style={{ marginLeft: 20 }} data-aos="fade-right" />
             ) : (
-              <img src="/images/3D-XOS-logo.gif" alt="xoxs" style={{ marginLeft: 20 }} data-aos="fade-right" />
+              <img
+                src="/images/3D-XOS-logo.gif"
+                alt="xoxs"
+                style={{ marginLeft: 20, transform: 'scale(1.4)' }}
+                data-aos="fade-right"
+              />
             )}
           </LeftContent>
         </Grid>

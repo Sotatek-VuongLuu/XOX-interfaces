@@ -20,6 +20,7 @@ import UpComing from './components/Banners/FeatureUpComing'
 import SecuredBy from './components/Banners/SecuredBy'
 import BGPartner from './components/Banners/BackgroundPartner'
 import FeatureSquare from './components/Banners/FeatureSquare'
+import Image from 'next/image'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
@@ -33,13 +34,29 @@ const StyledSection = styled(PageSection)`
     padding: 0px 130px;
   }
 `
-const Image = styled.div`
-  width:100%;
-  height:74vh;
-  background-size:cover;
-  background-image: url('/images/xox-desktop.gif');
-  background-size:120%;
-  background-repeat:no-repeat;
+const ImageWrapper = styled.div`
+  width: 100%;
+  height: 74vh;
+  display: grid;
+  place-content: center;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    img {
+      transform: scale(2) translateY(-30px);
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.xxl} {
+    img {
+      transform: scale(1.4) translateY(-30px);
+    }
+  }
+
+  @media (min-width: 1921px) {
+    img {
+      transform: scale(1) translateY(-30px);
+    }
+  }
 `
 
 const Home: React.FC<React.PropsWithChildren> = () => {
@@ -61,10 +78,10 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             margin: '0',
             width: '100%',
             height: innerWidth > 900 ? '74vh' : '88vh',
-            display: 'flex',
+            display: 'grid',
+            gridTemplateColumns: '1fr auto',
             alignItems: 'center',
             justifyContent: innerWidth > 900 ? 'space-around' : 'unset',
-            overflow: 'hidden',
           },
         }}
         containerProps={{
@@ -75,17 +92,19 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BallPurple src="/images/bg-pur.svg" />
-        <div style={{ width: innerWidth > 900 && 1400 }}>
+        <div>
           <WelcomeXOX />
         </div>
 
         {innerWidth > 967 && (
-          // <Spline 
+          // <Spline
           //   scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
           //   onLoad={(e) => e.setZoom(1)}
           //   id="asset_3d"
           // />
-          <Image />
+          <ImageWrapper>
+            <img src="/images/xox-desktop.gif" />
+          </ImageWrapper>
         )}
       </StyledSection>
 

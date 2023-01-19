@@ -4,7 +4,6 @@
 import styled from 'styled-components'
 import { Box, Grid } from '@mui/material'
 import { useRouter } from 'next/router'
-import Spline from '@splinetool/react-spline'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
 
