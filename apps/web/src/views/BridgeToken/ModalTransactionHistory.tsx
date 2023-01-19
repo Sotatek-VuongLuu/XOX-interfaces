@@ -43,6 +43,14 @@ const Content = styled.div`
     display: inline-block;
     margin-right: 2px;
   }
+  div {
+    ::-webkit-scrollbar-corner {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 1400px) {
+    overflow-x: hidden;
+  }
 `
 
 const NoData = styled.div``
@@ -195,7 +203,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                       </TableCell>
                       <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
                         <Tooltip title={row.outAmount} placement="top-start">
-                          <span className="out_amount">{row.outAmount}</span>
+                          <span className="out_amount">{parseFloat(row.outAmount).toFixed(6)}</span>
                         </Tooltip>
                         <span>XOX</span>
                       </TableCell>
