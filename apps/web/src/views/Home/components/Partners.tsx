@@ -98,25 +98,25 @@ const Wrapper = styled.div`
 
   .slide_container {
     position: relative;
-    &::before {
-      content: '';
-      position: absolute;
-      height: 100%;
-      width: 117px;
-      background: linear-gradient(90deg, black 0%, rgba(18, 18, 18, 0) 100%);
-      z-index: 99;
-    }
+    // &::before {
+    //   content: '';
+    //   position: absolute;
+    //   height: 100%;
+    //   width: 117px;
+    //   background: linear-gradient(90deg, black 0%, rgba(18, 18, 18, 0) 100%);
+    //   z-index: 99;
+    // }
 
-    &::after {
-      content: '';
-      position: absolute;
-      height: 100%;
-      right: 0;
-      top: 0;
-      width: 117px;
-      background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 100%);
-      z-index: 99;
-    }
+    // &::after {
+    //   content: '';
+    //   position: absolute;
+    //   height: 100%;
+    //   right: 0;
+    //   top: 0;
+    //   width: 117px;
+    //   background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 100%);
+    //   z-index: 99;
+    // }
   }
 `
 
@@ -189,10 +189,10 @@ const SliderWrapper = styled.div`
       transform: scale(1);
     }
   }
-  #infinite div.highway-barrier {
-    box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3);
+  // #infinite div.highway-barrier {
+  //   box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3);
    
-  }
+  // }
   #infinite div.highway-barrier ul.highway-lane {
     width: calc(144px * 20);
     &:hover li.highway-car{
