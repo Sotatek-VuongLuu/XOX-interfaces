@@ -201,6 +201,7 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: number | 
     setTxHas(response?.hash);
     setWithdrawErrorMessage('');
     addTransaction(response);
+    onSuccess?.()
   }
 
   const handleWidthdraw = async() => {

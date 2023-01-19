@@ -10,6 +10,7 @@ import { useWeb3React } from '@pancakeswap/wagmi'
 import { useStableCoinSWR, useMultiChainId } from 'state/info/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
+import Link from 'next/link'
 import InfoNav from '../Info/components/InfoNav'
 import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
@@ -156,13 +157,15 @@ export default function StableCoin() {
   const contractTreasuryXOX = useTreasuryXOX()
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
-  const chainIdLocal:any = useMultiChainId() || chainId;
   const [keyContainer, setKeyContainer] = useState(Math.random());
 
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async (accountId: any) => {
     if(!accountId) return null;
     try {
+      const paramsString = window.location.search;
+      const searchParams = new URLSearchParams(paramsString);
+      const chainIdLocal = searchParams.get("chainId") || chainId;
       const [infosUser, res2] = await Promise.all([
         contractTreasuryXOX.userInfo(accountId),
         contractTreasuryXOX.pendingReward(accountId),
@@ -197,84 +200,6 @@ export default function StableCoin() {
     <>
       <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
       <Container style={{marginBottom: 100}} key={`container-stablecoin${chainId}`}>
-        {widthDraw === TYPE.withdraw && (
-          <>
-            <Flex alignItems="center" style={{ gap: 10 }}>
-              <Flex
-                onClick={() => setWidthDraw(TYPE.default)}
-                style={{ cursor: 'pointer', gap: 5 }}
-                alignItems="center"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M6 11.9961H18"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M12 18L6 12L12 6"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <TextStyle>Stable coin</TextStyle>
-              </Flex>
-              <TextStyle style={{ transform: 'translateY(1px)' }}>|</TextStyle>
-              <TextStyle className="primary">Withdraw reward</TextStyle>
-            </Flex>
-            <Row style={{marginTop: 25}}>
-              <Box className='wrap-withdraw'>
-                <WidthdrawForm priceAvailable={currentReward} onSuccess={() => setWidthDraw(TYPE.default)} />
-              </Box>
-            </Row>
-          </>
-        )}
-        {widthDraw === TYPE.history && (
-          <>
-            <Flex alignItems="center" style={{ gap: 10 }}>
-              <Flex
-                onClick={() => setWidthDraw(TYPE.default)}
-                style={{ cursor: 'pointer', gap: 5 }}
-                alignItems="center"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M6 11.9961H18"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M12 18L6 12L12 6"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <TextStyle>Stable coin</TextStyle>
-              </Flex>
-              <TextStyle>|</TextStyle>
-              <TextStyle className="primary">History</TextStyle>
-            </Flex>
-            <Row style={{ marginTop: 24 }}>
-              <Box className="wrap-table">
-                <HistoryTable typePage={TYPE_HISTORY.stake} />
-              </Box>
-              <Box className="wrap-table">
-                {
-                  account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
-                }
-              </Box>
-            </Row>
-          </>
-        )}
-        {widthDraw === TYPE.default && (
           <>
             {
               account && <Row>
@@ -283,9 +208,11 @@ export default function StableCoin() {
                     <WrapText>
                       <p>Your current XOXS</p>
                       <p className="number">{currentXOX}</p>
-                      <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
-                        View your history
-                      </Button>
+                      <Link href="/stable-coin/history">
+                        <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
+                          View your history
+                        </Button>
+                      </Link>
                     </WrapText>
                     <img src="/images/1/tokens/XOX.png" alt="icon" />
                   </Flex>
@@ -298,9 +225,11 @@ export default function StableCoin() {
                     <WrapText>
                       <p>Your current reward</p>
                       <p className="number">{currentReward}</p>
-                      <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.withdraw)}>
-                        Withdraw reward
-                      </Button>
+                      <Link href="/stable-coin/withdraw">
+                        <Button height={37} style={{ fontSize: 14 }}>
+                          Withdraw reward
+                        </Button>
+                      </Link>
                     </WrapText>
                     <img src="/images/1/tokens/XOX.png" alt="icon" />
                   </Flex>
@@ -321,16 +250,13 @@ export default function StableCoin() {
             }
             <Row style={{ marginTop: 24 }}>
               <Box className="wrap-table">
-                {
-                  account && <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
-                }
+                <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
               </Box>
               <Box className="wrap-table">
                 <TransactionTable />
               </Box>
             </Row>
           </>
-        )}
       </Container>
     </>
   )
