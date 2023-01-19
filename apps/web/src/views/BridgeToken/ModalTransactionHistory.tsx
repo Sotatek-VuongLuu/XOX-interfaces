@@ -11,6 +11,7 @@ import { getChainIdToByChainId } from '.'
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
   min-width: 337px;
+  padding-bottom: 20px;
 
   .x-close-icon {
     position: absolute;
@@ -45,6 +46,10 @@ export const shortenAddress = (address = '', start = 8, chars = 4) => {
 
 export const linkTransaction = (chainId) => {
   return `${NETWORK_LINK[chainId]}/tx/`
+}
+
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss }) => {
@@ -136,10 +141,10 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                   <TableCell style={{ minWidth: '150px' }} align="left">
                     Output Amount
                   </TableCell>
-                  <TableCell style={{ minWidth: '150px' }} align="left">
+                  <TableCell style={{ minWidth: '100px' }} align="left">
                     Type
                   </TableCell>
-                  <TableCell style={{ minWidth: '150px' }} align="left">
+                  <TableCell style={{ minWidth: '120px' }} align="left">
                     Status
                   </TableCell>
                   <TableCell style={{ minWidth: '150px' }} align="left" />
@@ -169,7 +174,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                           {row.txHash ? shortenAddress(row.txHash) : '........................'}
                         </TxHash>
                       </TableCell>
-                      <TableCell align="left">{row.amount}</TableCell>
+                      <TableCell align="left">{row.amount} XOX</TableCell>
                       <TableCell align="left">
                         <TxHash
                           href={
@@ -180,9 +185,25 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                           {row.txSwapHash ? shortenAddress(row.txSwapHash) : '........................'}
                         </TxHash>
                       </TableCell>
-                      <TableCell align="left">{row.outAmount}</TableCell>
+                      <TableCell align="left">
+                        <span
+                          className="out_amount"
+                          style={{
+                            textOverflow: 'ellipsis',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                          }}
+                        >
+                          {row.outAmount}
+                          XOX
+                        </span>
+                      </TableCell>
                       <TableCell align="left">{handleType(row.from, row.to, row.chainId)}</TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
+                      <TableCell align="left">
+                        {row.status === 'processing' || row.status === 'excuting'
+                          ? 'Processing'
+                          : capitalizeFirstLetter(row.status)}
+                      </TableCell>
                       <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
                         <span>{NETWORK_LABEL[row.chainId]}</span>
                         <span style={{ margin: '5px 10px 0px 10px' }}>
