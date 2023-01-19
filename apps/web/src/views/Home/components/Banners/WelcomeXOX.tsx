@@ -166,17 +166,11 @@ const WelcomeXOX = (): JSX.Element => {
         <Grid container spacing={2} className="grid_welcome_container">
           <GridLeft item xs={12} md={5}>
             <LeftContent>
-              <Title className="title">
-                XOX The Multichain
-                <br />
-                Defi Apps & Solutions
-                <br />
-                for Web3 Provider
-              </Title>
-              <Feature className="feature">Revolutionary - Scalable - Multichain</Feature>
+              <Title className="title">XOX: The Next Gen Multichain DeFi Dapps & Web3 Solutions Provider</Title>
+              <Feature className="feature">Revolutionary - Scalable - Sustainable</Feature>
               <Description className="description">
-                Swap, earn, and build on the leading decentralized Web3 <br />
-                crypto ecosystem.
+                Swap, stake, store, bridge, refer, invest and earn with ease on the leading Decentralized Blockchain
+                Ecosystem.
               </Description>
               <div className="btn_group">
                 <Button className="btn_read_doc" onClick={() => window.open('')}>

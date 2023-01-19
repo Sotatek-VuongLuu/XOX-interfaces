@@ -482,10 +482,9 @@ export default function BridgeToken() {
     } catch (error: any) {
       setLoading(false)
       setIsOpenLoadingClaimModal(false)
-      if (error && error?.code === 'ACTION_REJECTED') {
+      if (error?.message.includes('rejected')) {
         setModalReject(true)
       }
-      // nothing
     }
   }
 

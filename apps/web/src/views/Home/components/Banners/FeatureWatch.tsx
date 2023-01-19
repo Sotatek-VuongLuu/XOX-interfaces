@@ -12,6 +12,7 @@ const LeftContent = styled.div`
 `
 
 const RightContent = styled.div`
+  margin-left: 100px;
   .list {
     .main_content {
       display: flex;
@@ -30,6 +31,7 @@ const RightContent = styled.div`
     color: rgba(255, 255, 255, 0.87);
     line-height: 32px;
     @media screen and (max-width: 900px) {
+      margin-left: 0px;
       font-size: 16px;
       line-height: 19px;
     }
