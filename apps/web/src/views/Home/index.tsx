@@ -91,7 +91,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BallPurple src="/images/bg-pur.svg" />
-        <div>
+        <div style={{ width: innerWidth > 900 && 1400 }}>
           <WelcomeXOX />
         </div>
 
