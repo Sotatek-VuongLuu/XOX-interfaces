@@ -71,9 +71,9 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
   }, [dispatch])
 
   return (
-    <Modal title={t('Recent Transactions')} onDismiss={onDismiss}>
+    <Modal title={t('Recent Transactions')} pb="32px" onDismiss={onDismiss}>
       {account ? (
-        <ModalBody style={{maxWidth:'495px', width:'100%'}}>
+        <ModalBody style={{ maxWidth: '495px', width: '100%' }}>
           {hasTransactions ? (
             <>
               <AutoRow mb="1rem" style={{ justifyContent: 'space-between' }}>
@@ -94,13 +94,15 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
                 const pending = groupedTransactions.false ?? []
 
                 return (
-                  <div key={`transactions#${chainIdNumber}`}>
+                  <>
                     <Text fontSize="16px" lineHeight="19px" color="#FFFFFFDE" mb="16px">
                       {chains.find((c) => c.id === chainIdNumber)?.name ?? 'Unknown network'}
                     </Text>
-                    {renderTransactions(pending, chainIdNumber)}
-                    {renderTransactions(confirmed, chainIdNumber)}
-                  </div>
+                    <div key={`transactions#${chainIdNumber}`} style={{ maxHeight: '200px', overflow: 'auto' }}>
+                      {renderTransactions(pending, chainIdNumber)}
+                      {renderTransactions(confirmed, chainIdNumber)}
+                    </div>
+                  </>
                 )
               })}
             </>

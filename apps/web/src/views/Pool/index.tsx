@@ -2,8 +2,6 @@
 import { Ref, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Text, Flex, CardFooter, Button, AddIcon, useMatchBreakpoints } from '@pancakeswap/uikit'
-import LiquidityMainBackgroundDesktop from 'components/Svg/LiquidityMainBackgroundDesktop'
-import LiquidityConnectWallet from 'components/Svg/LiquidityConnectWallet'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from '@pancakeswap/localization'
@@ -15,15 +13,21 @@ import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundB
 import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { CurrencyLogo } from 'views/Info/components/CurrencyLogo'
+import { AppHeader } from 'components/App'
+import { ERC20Token } from '@pancakeswap/sdk'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { useDerivedMintInfo } from 'state/mint/hooks'
+import useSWR from 'swr'
+import { useCurrency } from 'hooks/Tokens'
 
+import Page from '../Page'
 import FullPositionCard, { StableFullPositionCard } from '../../components/PositionCard'
-import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
+import { useCurrencyBalances, useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import { usePairs, PairState } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import Page from '../Page'
 
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -100,7 +104,7 @@ const StyledLiquidityContainer = styled.div`
   // position: absolute;
   // top: 56px;
   // left: 0px;
-  margin-top: 58px;
+  margin-top: 10px;
   z-index: 9;
   padding: 0 28px;
   width: 100%;
@@ -178,6 +182,8 @@ const PoolWrapper = styled(Flex)`
   }
 `
 
+const fetcher = (url) => fetch(url).then((r) => r.json())
+
 export default function Pool() {
   const { address: account } = useAccount()
   const { isMobile } = useMatchBreakpoints()
@@ -185,6 +191,21 @@ export default function Pool() {
   const { chainId } = useActiveChainId()
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs()
+  const currencyA = useCurrency(USD_ADDRESS[chainId])
+  const currencyB = useCurrency(XOX_ADDRESS[chainId])
+  const balances = useCurrencyBalances(
+    account ?? undefined,
+    useMemo(() => [currencyA, currencyB], [chainId]),
+  )
+  const USDId = chainId === 1 || chainId === 5 ? 3408 : 4687
+  const { price } = useDerivedMintInfo(currencyA, currencyB)
+
+  const { data: USDPrice } = useSWR(
+    `${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/price?id=${USDId}`,
+    fetcher,
+  )
+
+  console.log(USDPrice?.data?.[USDId]?.quote?.USD?.price, price, 'USDPrice')
 
   const tokenPairsWithLiquidityTokens = useMemo(
     () => trackedTokenPairs.map((tokens) => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
@@ -340,10 +361,16 @@ export default function Pool() {
             </Text>
             <Flex flexDirection="column" alignItems="flex-end">
               <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.87)">
-                0
+                {formatAmountNumber(parseFloat(balances[0]?.toFixed()), 6) || 0}
               </Text>
               <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)" mt="8px">
-                ~$0.00
+                ~$
+                {balances[0]
+                  ? formatAmountNumber(
+                      parseFloat(balances[0]?.toFixed(6)) * parseFloat(USDPrice?.data?.[USDId]?.quote?.USD?.price || 1),
+                      2,
+                    )
+                  : 0}
               </Text>
             </Flex>
           </Flex>
@@ -354,10 +381,18 @@ export default function Pool() {
             </Text>
             <Flex flexDirection="column" alignItems="flex-end">
               <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.87)">
-                0
+                {formatAmountNumber(parseFloat(balances[1]?.toFixed()), 6) || 0}
               </Text>
               <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)" mt="8px">
-                ~$0.00
+                ~$
+                {price && balances[1]
+                  ? `${formatAmountNumber(
+                      parseFloat(balances[1]?.toFixed(6)) *
+                        parseFloat(price.invert().toFixed(6)) *
+                        parseFloat(USDPrice?.data?.[USDId]?.quote?.USD?.price || 1),
+                      2,
+                    )}`
+                  : '0'}
               </Text>
             </Flex>
           </Flex>
@@ -421,7 +456,7 @@ export default function Pool() {
           <BackgroundWrapper />
 
           <StyledLiquidityContainer>
-            <Header>
+            {/* <Header>
               <div>
                 <p className="title">Liquidity</p>
                 <p className="sub_title">Add liquidity to receive LP tokens</p>
@@ -434,7 +469,17 @@ export default function Pool() {
                   <img src="/images/liquidity/history-icon.svg" alt="" />
                 </span>
               </div>
-            </Header>
+            </Header> */}
+            <AppHeader
+              title="Liquidity"
+              subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
+              helper={t(
+                `Liquidity providers earn a ${
+                  chainId === 5 || chainId === 1 ? 0.3 : 0.25
+                }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+              )}
+              // backTo="/liquidity"
+            />
 
             <Body>
               {renderBody()}

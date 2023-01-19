@@ -33,6 +33,24 @@ const StyledSection = styled(PageSection)`
     padding: 0px 130px;
   }
 `
+const ImageWrapper = styled.div`
+  width: 100%;
+  height: 74vh;
+  display: grid;
+  place-content: center;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    img {
+      transform: scale(2) translateY(-30px);
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.xxl} {
+    img {
+      transform: scale(1.4) translateY(-30px);
+    }
+  }
+`
 
 const Home: React.FC<React.PropsWithChildren> = () => {
   const { width: innerWidth } = useWindowSize()
@@ -51,12 +69,12 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         innerProps={{
           style: {
             margin: '0',
-            width: '100%',
             height: innerWidth > 900 ? '74vh' : '88vh',
-            display: 'flex',
+            display: 'grid',
+            gridTemplateColumns: '1fr auto',
             alignItems: 'center',
             justifyContent: innerWidth > 900 ? 'space-around' : 'unset',
-            overflow: 'hidden',
+            width: innerWidth > 900 ? 1400 : '100%',
           },
         }}
         containerProps={{
@@ -67,16 +85,19 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BallPurple src="/images/bg-pur.svg" />
-        <div style={{ width: innerWidth > 900 && 1400 }}>
+        <div>
           <WelcomeXOX />
         </div>
 
         {innerWidth > 967 && (
-          <Spline
-            scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-            onLoad={(e) => e.setZoom(1)}
-            id="asset_3d"
-          />
+          // <Spline
+          //   scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
+          //   onLoad={(e) => e.setZoom(1)}
+          //   id="asset_3d"
+          // />
+          <ImageWrapper>
+            <img src="/images/xox-desktop.gif" alt="" />
+          </ImageWrapper>
         )}
       </StyledSection>
 

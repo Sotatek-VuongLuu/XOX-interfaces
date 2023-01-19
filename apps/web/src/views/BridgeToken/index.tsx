@@ -398,7 +398,7 @@ export default function BridgeToken() {
       setMessageButton('Input Amount Not Allowed')
     } else setMessageButton('Bridge')
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amountInput, approvalState, balanceInput, minAmount])
+  }, [amountInput, approvalState, balanceInput, minAmount, amountTo, balancePool])
 
   // handle user type input
   const handleUserInput = (value) => {
@@ -454,6 +454,7 @@ export default function BridgeToken() {
   const switchNetwork = () => {
     if (account) {
       switchNetworkAsync(getChainIdToByChainId(chainId))
+      setAmountInput('');
     }
     return null
   }
