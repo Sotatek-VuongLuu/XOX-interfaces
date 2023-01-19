@@ -47,7 +47,7 @@ const ImageWrapper = styled.div`
 
   ${({ theme }) => theme.mediaQueries.xxl} {
     img {
-      transform: scale(1.4) translateY(-30px);
+      transform: scale(1.6) translateY(-30px);
     }
   }
 `
