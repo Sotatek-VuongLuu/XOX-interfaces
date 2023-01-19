@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import { ModalContainer, ModalHeader, InjectedModalProps } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import axios from 'axios'
@@ -35,6 +35,14 @@ const StyledModalHeader = styled(ModalHeader)`
 
 const Content = styled.div`
   padding: 0 24px;
+  .out_amount {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100px;
+    display: inline-block;
+    margin-right: 2px;
+  }
 `
 
 const NoData = styled.div``
@@ -185,24 +193,27 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                           {row.txSwapHash ? shortenAddress(row.txSwapHash) : '........................'}
                         </TxHash>
                       </TableCell>
-                      <TableCell align="left">
-                        <span
-                          className="out_amount"
-                          style={{
-                            textOverflow: 'ellipsis',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                          }}
-                        >
-                          {row.outAmount}
-                          XOX
-                        </span>
+                      <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Tooltip title={row.outAmount} placement="top-start">
+                          <span className="out_amount">{row.outAmount}</span>
+                        </Tooltip>
+                        <span>XOX</span>
                       </TableCell>
                       <TableCell align="left">{handleType(row.from, row.to, row.chainId)}</TableCell>
                       <TableCell align="left">
-                        {row.status === 'processing' || row.status === 'excuting'
-                          ? 'Processing'
-                          : capitalizeFirstLetter(row.status)}
+                        <div
+                          style={
+                            row.status === 'completed'
+                              ? { color: '#6BB372' }
+                              : row.status === 'rejected'
+                              ? { color: '#F44336' }
+                              : (row.status === 'processing' || row.status === 'excuting') && { color: '#FFBD3C' }
+                          }
+                        >
+                          {row.status === 'processing' || row.status === 'excuting'
+                            ? 'Processing'
+                            : capitalizeFirstLetter(row.status)}
+                        </div>
                       </TableCell>
                       <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
                         <span>{NETWORK_LABEL[row.chainId]}</span>
