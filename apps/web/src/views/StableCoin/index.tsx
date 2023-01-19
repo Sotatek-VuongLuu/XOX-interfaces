@@ -157,13 +157,15 @@ export default function StableCoin() {
   const contractTreasuryXOX = useTreasuryXOX()
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
-  const chainIdLocal:any = useMultiChainId() || chainId;
   const [keyContainer, setKeyContainer] = useState(Math.random());
 
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async (accountId: any) => {
     if(!accountId) return null;
     try {
+      const paramsString = window.location.search;
+      const searchParams = new URLSearchParams(paramsString);
+      const chainIdLocal = searchParams.get("chainId") || chainId;
       const [infosUser, res2] = await Promise.all([
         contractTreasuryXOX.userInfo(accountId),
         contractTreasuryXOX.pendingReward(accountId),
