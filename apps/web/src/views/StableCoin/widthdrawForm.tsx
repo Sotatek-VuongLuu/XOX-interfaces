@@ -98,6 +98,7 @@ const BoxRight = styled.div`
       >div>div{
         width: 100%;
         justify-content: flex-start;
+        position: relative;
         >div{
           padding-right: 50px;
           width: 100%;
@@ -118,6 +119,9 @@ const BoxRight = styled.div`
           +div{
             max-width: 330px;
             padding-right: 0;
+            position: absolute !important;
+            top: 100% !important;
+            transform: translate(0px) !important;
           }
           svg{
             position: absolute;
