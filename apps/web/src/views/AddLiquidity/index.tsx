@@ -678,7 +678,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   return (
     <Page>
       <Flex
-        width={['328px', , '100%']}
+        width={['290px', , '100%']}
         marginTop="100px"
         marginBottom="100px"
         height="100%"

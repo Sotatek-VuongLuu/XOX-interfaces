@@ -163,7 +163,7 @@ const Background = styled.div<I>`
   z-index: -1;
   background: #242424;
 `
-const ConnectSub = styled.div`
+const ConnectSub = styled(Text)`
   text-align: center;
   margin-top: 25px;
   color: #ffffff61;
@@ -247,12 +247,26 @@ export default function Pool() {
         <>
           <Title>
             <div className="flex">
-              <span>Your Liquidity</span>
+              <Text
+                color="rgba(255, 255, 255, 0.87)"
+                fontSize={['14px', , '18px']}
+                fontWeight={400}
+                lineHeight={['17px', , '22px']}
+              >
+                Your liquidity
+              </Text>
               <span>
                 <img src="/images/liquidity/question-icon.svg" alt="" />
               </span>
             </div>
-            <ConnectSub>Connect to a wallet to view your liquidity</ConnectSub>
+            <ConnectSub
+              color="rgba(255, 255, 255, 0.87)"
+              fontSize={['12px', , '16px']}
+              fontWeight={400}
+              lineHeight={['14px', , '19px']}
+            >
+              Connect to a wallet to view your liquidity
+            </ConnectSub>
           </Title>
         </>
       )
@@ -421,7 +435,7 @@ export default function Pool() {
     <Page>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
-        width={['328px', , '559px']}
+        width={['290px', , '559px']}
         marginTop="100px"
         marginBottom="100px"
         height="100%"

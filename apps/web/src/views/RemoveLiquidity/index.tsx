@@ -775,7 +775,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     <Page>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
-        width={['328px', , '559px']}
+        width={['290px', , '559px']}
         marginTop="100px"
         marginBottom="100px"
         height="100%"
