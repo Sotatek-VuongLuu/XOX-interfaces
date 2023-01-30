@@ -73,7 +73,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
   return (
     <Modal title={t('Recent Transactions')} pb="32px" onDismiss={onDismiss}>
       {account ? (
-        <ModalBody style={{ maxWidth: '495px', width: '100%' }}>
+        <ModalBody style={{ width: '495px' }}>
           {hasTransactions ? (
             <>
               <AutoRow mb="1rem" style={{ justifyContent: 'space-between' }}>

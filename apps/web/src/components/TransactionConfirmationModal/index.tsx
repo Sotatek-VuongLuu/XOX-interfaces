@@ -186,11 +186,14 @@ export function TransactionErrorContent({
 }) {
   const { t } = useTranslation()
   return (
-    <Wrapper>
+    <Wrapper style={{ maxWidth: '800px' }}>
       <AutoColumn justify="center">
         {/* <ErrorIcon color="failure" width="64px" /> */}
         <img alt="" src="/images/swap/icon-swap-error.svg" style={{ padding: '10px 0' }} />
-        <Text color="failure" style={{ textAlign: 'center', width: '85%', wordBreak: 'break-word', color: 'rgba(255, 255, 255, 0.6)' }}>
+        <Text
+          color="failure"
+          style={{ textAlign: 'center', width: '85%', wordBreak: 'break-word', color: 'rgba(255, 255, 255, 0.6)' }}
+        >
           {message}
         </Text>
       </AutoColumn>

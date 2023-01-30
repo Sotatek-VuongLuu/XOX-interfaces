@@ -43,7 +43,9 @@ const AppHeader: React.FC<React.PropsWithChildren<Props>> = ({ title, subtitle, 
         <Flex flexDirection="column" width="100%">
           <Flex alignItems="center" justifyContent="space-between">
             <Flex>
-              <Heading as="h2">{title}</Heading>
+              <Heading as="h2" style={{ fontWeight: 700 }}>
+                {title}
+              </Heading>
             </Flex>
             {!noConfig && (
               <Flex alignItems="center">

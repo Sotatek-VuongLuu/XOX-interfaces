@@ -372,7 +372,7 @@ export default function CurrencyInputPanel({
                       {percent}%
                     </PercentButton>
                   ))}
-                {showMaxButton && (
+                {showMaxButton && showQuickInputButton && (
                   <PercentButton
                     onClick={(e) => {
                       e.stopPropagation()
