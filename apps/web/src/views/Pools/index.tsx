@@ -1,9 +1,10 @@
 import styled from 'styled-components'
-import { Flex, Text, Button } from '@pancakeswap/uikit'
-import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { Flex, Text, Button, useModal } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useState } from 'react'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
+import useWindowSize from 'hooks/useWindowSize'
+import ModalStake from './components/ModalStake'
 
 const NavWrapper = styled(Flex)`
   padding: 28px 24px 24px;
@@ -125,6 +126,7 @@ const Main = styled.div`
     padding: 24px 0px;
     .header_container {
       padding: 0px 21px;
+
       .header {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -134,6 +136,10 @@ const Main = styled.div`
           font-size: 18px;
           line-height: 22px;
           color: rgba(255, 255, 255, 0.87);
+          @media screen and (max-width: 576px) {
+            font-size: 14px;
+            line-height: 17px;
+          }
         }
         .name {
           font-weight: 500;
@@ -156,6 +162,15 @@ const Main = styled.div`
         .u_question {
           margin-left: 9px;
         }
+        .mb_mr {
+          margin-right: 50px;
+        }
+        @media screen and (max-width: 576px) {
+          grid-template-columns: 1fr;
+        }
+      }
+      @media screen and (max-width: 576px) {
+        padding: 0px 10px;
       }
     }
     .diver {
@@ -188,7 +203,6 @@ const Main = styled.div`
           font-size: 14px;
           line-height: 17px;
           color: rgba(255, 255, 255, 0.6);
-
           .xox_enable {
             color: #9072ff !important;
           }
@@ -199,6 +213,15 @@ const Main = styled.div`
           line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
           margin-top: 16px;
+          @media screen and (max-width: 576px) {
+            font-size: 18px;
+            line-height: 22px;
+          }
+        }
+
+        @media screen and (max-width: 576px) {
+          flex-direction: column;
+          align-items: flex-start;
         }
       }
 
@@ -217,6 +240,9 @@ const Main = styled.div`
           line-height: 19px;
           color: #ffffff;
           cursor: pointer;
+          @media screen and (max-width: 576px) {
+            width: 100%;
+          }
         }
       }
       .withdraw {
@@ -229,53 +255,45 @@ const Main = styled.div`
         line-height: 19px;
         color: #ffffff;
         cursor: pointer;
+        @media screen and (max-width: 576px) {
+          width: 100%;
+          margin-top: 16px;
+        }
+      }
+
+      .earned_mb {
+        margin: 16px 0px;
+      }
+      .name {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .value {
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+        color: rgba(255, 255, 255, 0.87);
+      }
+      .u_question {
+        margin-left: 9px;
+      }
+      .lp_mb {
+        margin-bottom: 16px;
+      }
+      @media screen and (max-width: 576px) {
+        grid-template-columns: 1fr;
+        padding: 21px 18px;
       }
     }
-  }
-`
-const Content = styled.div`
-  padding: 20px;
-  background: #303030;
-  border-radius: 10px;
-  width: 502px;
-  margin-top: 24px;
-  .flex {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-`
-
-const ButtonGroup = styled.div`
-  width: 100%;
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-top: 24px;
-
-  .btn {
-    background: #313131;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    flex: 1;
-    width: 100%;
-    padding: 12px 0px;
-  }
-`
-
-const GetLP = styled.div`
-  margin-top: 25px;
-  p {
-    display: flex;
-    justify-content: center;
   }
 `
 
 const Pools: React.FC<React.PropsWithChildren> = () => {
   const [enable, setEnable] = useState(false)
-  const [isShowModal, setIsShowModal] = useState(false)
+  const [onModalStake] = useModal(<ModalStake />)
+  const { width } = useWindowSize()
   return (
     <>
       <NavWrapper>
@@ -306,45 +324,60 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   </span>
                   <span className="pair">XOX - BUSD</span>
                 </div>
-                <div className="flex flex_direction">
-                  <span className="name">APR:</span>
-
-                  <span className="value">132.26%</span>
-                </div>
-                <div className="flex flex_direction">
-                  <span className="name">Earned:</span>
-
-                  <span className="value">0</span>
-                </div>
-                <div className="flex flex_direction">
-                  <span className="name">Liquidity</span>
-                  <span className="value _flex">
-                    <span>$135.249.453</span>
-                    <span className="u_question">
-                      <img src="/images/u_question-circle.svg" alt="u_question-circle" />
-                    </span>
-                  </span>
-                </div>
+                {width > 576 ? (
+                  <>
+                    <div className="flex flex_direction">
+                      <span className="name">APR:</span>
+                      <span className="value">132.26%</span>
+                    </div>
+                    <div className="flex flex_direction">
+                      <span className="name">Earned:</span>
+                      <span className="value">0</span>
+                    </div>
+                    <div className="flex flex_direction">
+                      <span className="name">Liquidity</span>
+                      <span className="value _flex">
+                        <span>$135.249.453</span>
+                        <span className="u_question">
+                          <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                        </span>
+                      </span>
+                    </div>
+                  </>
+                ) : (
+                  <div className="flex">
+                    <div className="flex flex_direction mb_mr">
+                      <span className="name">APR:</span>
+                      <span className="value">132.26%</span>
+                    </div>
+                    <div className="flex flex_direction">
+                      <span className="name">Earned:</span>
+                      <span className="value">0</span>
+                    </div>
+                  </div>
+                )}
               </div>
             </div>
             <div className="diver" />
             <div className="create_lp">
-              <div className="get_xox_lp">
-                <div>
-                  <p className="_flex">
-                    <span>Get XOX-BNB LP</span>
-                    <span style={{ marginLeft: 8 }}>
-                      <img src="/images/external-icon.svg" alt="external-icon" />
-                    </span>
-                  </p>
-                  <p className="_flex">
-                    <span>View Contract</span>
-                    <span style={{ marginLeft: 8 }}>
-                      <img src="/images/external-icon.svg" alt="external-icon" />
-                    </span>
-                  </p>
+              {width > 576 && (
+                <div className="get_xox_lp">
+                  <div>
+                    <p className="_flex">
+                      <span>Get XOX-BNB LP</span>
+                      <span style={{ marginLeft: 8 }}>
+                        <img src="/images/external-icon.svg" alt="external-icon" />
+                      </span>
+                    </p>
+                    <p className="_flex">
+                      <span>View Contract</span>
+                      <span style={{ marginLeft: 8 }}>
+                        <img src="/images/external-icon.svg" alt="external-icon" />
+                      </span>
+                    </p>
+                  </div>
                 </div>
-              </div>
+              )}
               <div>
                 <div className="rectangle _flex space_between">
                   <div>
@@ -372,55 +405,55 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       Enable
                     </button>
                   ) : (
-                    <button type="button" className="nable" onClick={() => setIsShowModal(true)}>
+                    <button type="button" className="nable" onClick={onModalStake}>
                       Stake LP
                     </button>
                   )}
                 </div>
               </div>
+              {width <= 576 && (
+                <>
+                  <div>
+                    <p className="flex space_between apr_mb">
+                      <span className="name">APR:</span>
+                      <span className="value">132.26%</span>
+                    </p>
+                    <p className="flex space_between earned_mb">
+                      <span className="name">Earned:</span>
+                      <span className="value">0</span>
+                    </p>
+                    <p className="flex space_between liquidity_mb">
+                      <span className="name">Liquidity:</span>
+                      <span className="_flex">
+                        <span className="value">$135.249.453</span>
+                        <span className="u_question">
+                          <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                        </span>
+                      </span>
+                    </p>
+                  </div>
+                  <div className="get_xox_lp">
+                    <div>
+                      <p className="_flex lp_mb">
+                        <span>Get XOX-BNB LP</span>
+                        <span style={{ marginLeft: 8 }}>
+                          <img src="/images/external-icon.svg" alt="external-icon" />
+                        </span>
+                      </p>
+                      <p className="_flex">
+                        <span>View Contract</span>
+                        <span style={{ marginLeft: 8 }}>
+                          <img src="/images/external-icon.svg" alt="external-icon" />
+                        </span>
+                      </p>
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
           </div>
         </Main>
       </NavWrapper>
-
-      <ModalBase
-        title="Stake LP Tokens"
-        open={isShowModal}
-        handleClose={() => setIsShowModal(false)}
-        width="fit-content"
-      >
-        <>
-          <Content>
-            <div className="flex">
-              <p>Stake</p>
-              <p>Balance: 0.0345678913678</p>
-            </div>
-            <div className="flex">
-              <p>0</p>
-              <p>XOX-BNB LP</p>
-            </div>
-            <div>
-              <p>~0.00 USD</p>
-            </div>
-          </Content>
-          <ButtonGroup>
-            <button type="button" className="btn cancel">
-              Cancel
-            </button>
-            <button type="button" className="btn confirm">
-              Confirm
-            </button>
-          </ButtonGroup>
-          <GetLP className="get_lp">
-            <p>
-              <span>Get XOX-BNB LP</span>
-              <span style={{ marginLeft: 8 }}>
-                <img src="/images/external-icon.svg" alt="external-icon" />
-              </span>
-            </p>
-          </GetLP>
-        </>
-      </ModalBase>
     </>
   )
 }
