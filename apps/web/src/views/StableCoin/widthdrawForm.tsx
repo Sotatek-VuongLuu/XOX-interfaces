@@ -98,17 +98,30 @@ const BoxRight = styled.div`
       >div>div{
         width: 100%;
         justify-content: flex-start;
+        position: relative;
         >div{
           padding-right: 50px;
           width: 100%;
           @media (max-width: 576px) {
             >div{
               display: block !important;
+              &:nth-child(2){
+                max-width: calc(100% - 25px);
+                margin: 0px;
+                >div{
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                }
+              }
             }
           }
           +div{
             max-width: 330px;
             padding-right: 0;
+            position: absolute !important;
+            top: 100% !important;
+            transform: translate(0px) !important;
           }
           svg{
             position: absolute;

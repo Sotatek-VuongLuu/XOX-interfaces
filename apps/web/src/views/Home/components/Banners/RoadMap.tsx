@@ -22,6 +22,10 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
 
+    @media screen and (min-width: 900px) {
+      padding: 0 20px;
+    }
+
     .timeline-item {
       width: 20%;
       overflow: visible;
