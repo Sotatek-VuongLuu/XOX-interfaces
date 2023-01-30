@@ -104,6 +104,15 @@ const BoxRight = styled.div`
           @media (max-width: 576px) {
             >div{
               display: block !important;
+              &:nth-child(2){
+                max-width: calc(100% - 25px);
+                margin: 0px;
+                >div{
+                  white-space: nowrap;
+                  text-overflow: ellipsis;
+                  overflow: hidden;
+                }
+              }
             }
           }
           +div{
