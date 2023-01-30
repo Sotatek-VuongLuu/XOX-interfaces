@@ -117,7 +117,7 @@ const FeaturePlant = () => {
   const { width } = useWindowSize()
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
-      <Grid container spacing={2}>
+      <Grid container spacing={2} style={{ overflow: 'hidden' }}>
         <Grid item xs={12} md={6}>
           <LeftContent data-aos="fade-right">
             <Title>XOX Dapp - An All-IN-One Solution.</Title>

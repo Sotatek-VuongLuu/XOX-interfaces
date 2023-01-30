@@ -69,7 +69,7 @@ const Wrapper = styled.div`
 
 const EconomyMobile = () => {
   return (
-    <Wrapper>
+    <Wrapper style={{ overflow: 'hidden' }}>
       <div className="title_container">
         <p className="title" data-aos="fade-right">
           Built and Available on every leading blockchain.

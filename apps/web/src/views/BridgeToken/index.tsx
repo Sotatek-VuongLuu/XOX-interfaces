@@ -453,7 +453,12 @@ export default function BridgeToken() {
   const switchNetwork = () => {
     if (account) {
       switchNetworkAsync(getChainIdToByChainId(chainId))
+<<<<<<< HEAD
       setAmountInput('')
+=======
+      setAmountInput('');
+      setAmountTo('')
+>>>>>>> 93e59a5f11f299ddd30ddb461262d917efc389d2
     }
     return null
   }

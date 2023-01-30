@@ -20,7 +20,7 @@ const GlobalStyle = createGlobalStyle`
 
   body {
     background-color: black;
-
+    width: 100vw;
     overflow-x: hidden;
 
     img {

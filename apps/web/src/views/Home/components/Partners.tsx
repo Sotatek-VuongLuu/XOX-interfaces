@@ -103,7 +103,8 @@ const Wrapper = styled.div`
       position: absolute;
       height: 100%;
       width: 117px;
-      background: linear-gradient(90deg, black 0%, rgba(18, 18, 18, 0) 100%);
+      left: -1px;
+      background: linear-gradient(90deg, black 0%, black 20%, rgba(18, 18, 18, 0) 100%);
       z-index: 99;
     }
 
@@ -111,11 +112,18 @@ const Wrapper = styled.div`
       content: '';
       position: absolute;
       height: 100%;
-      right: 0;
+      right: -1px;
       top: 0;
       width: 117px;
-      background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 100%);
+      background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 80%, black 100%);
       z-index: 99;
+    }
+  }
+
+  @media (max-width: 560px) {
+    .slide_container {
+      width: 100vw;
+      margin: -20px;
     }
   }
 `
@@ -132,7 +140,7 @@ const SliderWrapper = styled.div`
     margin: 0 0 25px 0;
   }
   @media (max-width: 992px) {
-    padding: 0 20px 0 20px;
+    padding: 0;
   }
   .slide-option {
     margin: 0 0 50px 0;
@@ -145,6 +153,10 @@ const SliderWrapper = styled.div`
     justify-content: center;
     width: 100%;
     height: 120px;
+
+    @media (max-width: 560px) {
+      height: 100px;
+    }
   }
   div.highway-slider div.highway-barrier {
     overflow: hidden;
@@ -191,7 +203,6 @@ const SliderWrapper = styled.div`
   }
   #infinite div.highway-barrier {
     box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3);
-   
   }
   #infinite div.highway-barrier ul.highway-lane {
     width: calc(144px * 20);

@@ -47,7 +47,7 @@ const ImageWrapper = styled.div`
 
   ${({ theme }) => theme.mediaQueries.xxl} {
     img {
-      transform: scale(1.4) translateY(-30px);
+      transform: scale(1.6) translateY(-30px);
     }
   }
 `
@@ -69,7 +69,6 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         innerProps={{
           style: {
             margin: '0',
-            height: innerWidth > 900 ? '74vh' : '88vh',
             display: 'grid',
             gridTemplateColumns: '1fr auto',
             alignItems: 'center',

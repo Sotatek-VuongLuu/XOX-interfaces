@@ -13,6 +13,10 @@ const LeftContent = styled.div`
 
 const RightContent = styled.div`
   margin-left: 100px;
+
+  @media (max-width: 560px) {
+    margin-left: 0px;
+  }
   .list {
     .main_content {
       display: flex;
@@ -81,17 +85,27 @@ const Main = styled(Grid)`
 const FeatureWatch = () => {
   const { width } = useWindowSize()
   return (
-    <Wrapper>
+    <Wrapper style={{ overflow: 'hidden' }}>
       <Main container spacing={2}>
-        <Grid item xs={12} md={4}>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          style={{ minHeight: '400px', display: 'flex', alignItems: 'center' }}
+        >
           <LeftContent>
             {width < 900 ? (
-              <img src="/images/3D-XOS-logo.gif" alt="xoxs" style={{ marginLeft: 20 }} data-aos="fade-right" />
+              <img
+                src="/images/3D-XOS-logo.gif"
+                alt="xoxs"
+                style={{ marginLeft: -50, transform: 'scale(2)' }}
+                data-aos="fade-right"
+              />
             ) : (
               <img
                 src="/images/3D-XOS-logo.gif"
                 alt="xoxs"
-                style={{ marginLeft: -100, transform: 'scale(2.5)' }}
+                style={{ marginLeft: -100, transform: 'scale(2)' }}
                 data-aos="fade-right"
               />
             )}
