@@ -5,6 +5,7 @@ import { useState } from 'react'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
 import useWindowSize from 'hooks/useWindowSize'
 import ModalStake from './components/ModalStake'
+import PairToken from './components/PairToken'
 
 const NavWrapper = styled(Flex)`
   padding: 28px 24px 24px;
@@ -130,17 +131,6 @@ const Main = styled.div`
       .header {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr 1fr;
-
-        .pair {
-          font-weight: 700;
-          font-size: 18px;
-          line-height: 22px;
-          color: rgba(255, 255, 255, 0.87);
-          @media screen and (max-width: 576px) {
-            font-size: 14px;
-            line-height: 17px;
-          }
-        }
         .name {
           font-weight: 500;
           font-size: 14px;
@@ -291,9 +281,11 @@ const Main = styled.div`
 `
 
 const Pools: React.FC<React.PropsWithChildren> = () => {
+  const { chainId } = useActiveChainId()
   const [enable, setEnable] = useState(false)
   const [onModalStake] = useModal(<ModalStake />)
   const { width } = useWindowSize()
+  const chainIdSupport = [97, 56]
   return (
     <>
       <NavWrapper>
@@ -319,10 +311,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
             <div className="header_container">
               <div className="header">
                 <div className="flex">
-                  <span>
-                    <img src="/images/pair.png" alt="pair" />
-                  </span>
-                  <span className="pair">XOX - BUSD</span>
+                  {chainIdSupport.includes(chainId) ? (
+                    <PairToken linkTokenSecond="/images/1/tokens/BUSD.png" symbolTokenSecond="BUSD" />
+                  ) : (
+                    <PairToken />
+                  )}
                 </div>
                 {width > 576 ? (
                   <>
