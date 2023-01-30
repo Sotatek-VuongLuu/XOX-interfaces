@@ -205,8 +205,6 @@ export default function Pool() {
     fetcher,
   )
 
-  console.log(USDPrice?.data?.[USDId]?.quote?.USD?.price, price, 'USDPrice')
-
   const tokenPairsWithLiquidityTokens = useMemo(
     () => trackedTokenPairs.map((tokens) => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
     [trackedTokenPairs],
