@@ -12,6 +12,9 @@ import {
 import { useTranslation, languageList } from '@pancakeswap/localization'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
 import useTheme from 'hooks/useTheme'
+// import io from 'socket.io-client'
+import io from "socket.io-client";
+import axios from 'axios'
 import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import styled from 'styled-components'
@@ -23,8 +26,6 @@ import { useMenuItems } from './hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { configLanding } from './config/config'
-import io from 'socket.io-client'
-import axios from 'axios'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;
@@ -74,18 +75,17 @@ const MenuItemsWrapper = styled(MenuItems)`
   }
 `
 const NotificationField = styled.div`
-  position:relative;
-
+  position: relative;
 `
 const RedDot = styled.div`
-  width:10px;
-  height:10px;
-  color:red;
-  background:red;
-  border-radius:50px;
-  position:absolute;
-  top:8px;
-  right:25px;
+  width: 10px;
+  height: 10px;
+  color: red;
+  background: red;
+  border-radius: 50px;
+  position: absolute;
+  top: 8px;
+  right: 25px;
 `
 
 const Menu = (props) => {
@@ -99,9 +99,8 @@ const Menu = (props) => {
   const { chainId } = useActiveChainId()
   const [openHeader, setOpenHeader] = useState<boolean>(false)
   const [activeNotifi, setActiveNotifi] = useState<boolean>(false)
-  const host = 'http://52.220.205.189:4000'
-  const socket = io(host)
-
+  const host = 'ws://52.220.205.189:4000'
+  const socket = io(host, {})
   const menuItemsLanding = useMemo(() => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
   }, [t, isDark, currentLanguage.code, chainId])
@@ -128,27 +127,32 @@ const Menu = (props) => {
     return setOpenHeader(false)
   }
   const getNotification = async () => {
+    setActiveNotifi(false)
     const params = {
-      address: '0xF1BfE27f383F98bdDeb444A78B08c121954b4f62',
+      address: account,
       page: 1,
       size: 20,
     }
-    const result : any = await axios
+    const result: any = await axios
       .get(
         `${process.env.NEXT_PUBLIC_API}/notifications?address=${params.address}&page=${params.page}&size=${params.size}`,
       )
       .catch((error) => {
         console.warn(error)
       })
-    if(result.data.data && result.data.data.length > 0) {
-      setActiveNotifi(true)
-    }
+      console.log('result',result)
+    // if (result.data.data && result.data.data.length > 0) {
+    //   setActiveNotifi(true)
+    // }
   }
+ 
   useEffect(() => {
-    console.log('getSocket')
-    socket.on('0xF1BfE27f383F98bdDeb444A78B08c121954b4f62', (...args) => {
-      console.log('args', args)
-    })
+    socket.on('connect', () => {
+      console.log('connected socket')
+    });
+    socket.on(account, (...args) => {
+      console.log('args',args)
+    });
   }, [])
   return (
     <>
@@ -197,7 +201,7 @@ const Menu = (props) => {
               {/* <GlobalSettings mode={SettingsMode.GLOBAL} /> */}
               {account ? (
                 <NotificationField onClick={() => getNotification()}>
-                  <RedDot />
+                  {activeNotifi && <RedDot />}
                   {isDesktop ? <NotificationIcon /> : <NotificationIcon size={25} />}
                 </NotificationField>
               ) : (
