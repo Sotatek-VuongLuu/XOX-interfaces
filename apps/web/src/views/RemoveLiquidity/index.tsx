@@ -290,7 +290,9 @@ const ButtonWrapper = styled.div`
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    height: 43px;
+    button {
+      height: 43px;
+    }
   }
 `
 
@@ -773,7 +775,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     <Page>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
-        width={['328px', , '559px']}
+        width={['290px', , '559px']}
         marginTop="100px"
         marginBottom="100px"
         height="100%"
@@ -956,7 +958,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                     onMax={() => {
                       onUserInput(Field.LIQUIDITY_PERCENT, '100')
                     }}
-                    showQuickInputButton
+                    // showQuickInputButton
                     showMaxButton={!atMaxAmount}
                     disableCurrencySelect
                     currency={pair?.liquidityToken}
@@ -1070,6 +1072,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                       disabled={approval !== ApprovalState.NOT_APPROVED || (!isZap && signatureData !== null)}
                       width="100%"
                       mr="0.5rem"
+                      style={{ fontWeight: 700 }}
                     >
                       {approval === ApprovalState.PENDING ? (
                         <Dots>{t('Approving')}</Dots>
@@ -1099,6 +1102,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                         (!isZap && signatureData === null && approval !== ApprovalState.APPROVED) ||
                         (isZap && approval !== ApprovalState.APPROVED)
                       }
+                      style={{ fontWeight: 700 }}
                     >
                       {error || t('Remove')}
                     </Button>

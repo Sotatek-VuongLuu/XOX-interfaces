@@ -54,9 +54,7 @@ const PercentButton = styled(Button)`
   }
 `
 const TextBalance = styled.div`
-  position:absolute;
-  right:17px;
-  top 17px;
+  margin-left: 10px;
   z-index:99;
   font-weight: 400;
   font-size: 12px;
@@ -153,7 +151,6 @@ const Overlay = styled.div`
 `
 
 const NumericalInputWrapper = styled(NumericalInput)`
-  padding-right: 155px;
   font-size: 18px;
   @media screen and (max-width: 576px) {
     font-size: 16px;
@@ -291,28 +288,6 @@ export default function CurrencyInputPanel({
         </Flex>
       </Flex>
       <InputPanel>
-        {account && (
-          <TextBalance
-            onClick={
-              !disabled &&
-              (onMax ||
-                (() => {
-                  setAutoChange(true)
-                  onPercentInput(100)
-                  setActivePercent(100)
-                }))
-            }
-            color="textSubtle"
-            // fontSize="14px"
-            style={{ display: 'inline', cursor: 'pointer' }}
-          >
-            {!hideBalance && !!currency
-              ? t('Balance: %balance%', {
-                  balance: formatAmountNumber(parseFloat(selectedCurrencyBalance?.toFixed()) || 0, 6) ?? t('Loading'),
-                })
-              : ' -'}
-          </TextBalance>
-        )}
         <Container as="label" zapStyle={zapStyle} error={error} style={{ height: checkHeightInput() }}>
           <LabelRow>
             <NumericalInputWrapper
@@ -335,6 +310,29 @@ export default function CurrencyInputPanel({
               //     : { marginTop: '-10px' }
               // }
             />
+            {account && (
+              <TextBalance
+                onClick={
+                  !disabled &&
+                  (onMax ||
+                    (() => {
+                      setAutoChange(true)
+                      onPercentInput(100)
+                      setActivePercent(100)
+                    }))
+                }
+                color="textSubtle"
+                // fontSize="14px"
+                style={{ display: 'inline', cursor: 'pointer' }}
+              >
+                {!hideBalance && !!currency
+                  ? t('Balance: %balance%', {
+                      balance:
+                        formatAmountNumber(parseFloat(selectedCurrencyBalance?.toFixed()) || 0, 6) ?? t('Loading'),
+                    })
+                  : ' -'}
+              </TextBalance>
+            )}
           </LabelRow>
           {isShowDolar && (
             <ForDolar style={isShowPercent ? { bottom: '58px' } : { bottom: '22px' }}>
@@ -372,7 +370,7 @@ export default function CurrencyInputPanel({
                       {percent}%
                     </PercentButton>
                   ))}
-                {showMaxButton && (
+                {showMaxButton && showQuickInputButton && (
                   <PercentButton
                     onClick={(e) => {
                       e.stopPropagation()

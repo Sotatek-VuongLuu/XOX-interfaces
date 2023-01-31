@@ -43,7 +43,9 @@ const AppHeader: React.FC<React.PropsWithChildren<Props>> = ({ title, subtitle, 
         <Flex flexDirection="column" width="100%">
           <Flex alignItems="center" justifyContent="space-between">
             <Flex>
-              <Heading as="h2">{title}</Heading>
+              <Text color="rgba(255, 255, 255, 0.87)" fontSize={['16px', , '24px']} fontWeight={700} lineHeight={["19px", , "29px"]}>
+                {title}
+              </Text>
             </Flex>
             {!noConfig && (
               <Flex alignItems="center">
@@ -56,7 +58,7 @@ const AppHeader: React.FC<React.PropsWithChildren<Props>> = ({ title, subtitle, 
           </Flex>
           {subtitle && (
             <Flex mt="8px" alignItems="center">
-              <Text color="textSubtle" fontSize="14px">
+              <Text color="textSubtle" fontSize={['12px', , '14px']}>
                 {subtitle}
               </Text>
             </Flex>
