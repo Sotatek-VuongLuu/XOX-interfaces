@@ -353,6 +353,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const contractPair = useXOXPoolContract()
   const provider = useProvider({ chainId })
   const [balanceLP, setBalanceLP] = useState<any>()
+  const [isUnStake, setIsUnStake] = useState(false)
 
   const handleGetDataFarming = async () => {
     try {
