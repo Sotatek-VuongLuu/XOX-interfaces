@@ -2,8 +2,8 @@ import React, { useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { ChainId } from '@pancakeswap/sdk'
 import { formatUnits, parseEther, parseUnits } from 'ethers/lib/utils'
-import { fetchBridgeTokenFee } from '../../context/globalData'
 import debounce from 'lodash/debounce'
+import { fetchBridgeTokenFee } from '../../context/globalData'
 
 const Wrapper = styled.div`
   border-radius: 8px;
