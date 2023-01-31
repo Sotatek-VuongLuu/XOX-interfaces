@@ -54,6 +54,7 @@ const ImageWrapper = styled.div`
 
 const Home: React.FC<React.PropsWithChildren> = () => {
   const { width: innerWidth } = useWindowSize()
+  const widthResize = innerWidth > 1400 ? 1400 : innerWidth > 900 ? 1200 : '100%';
   useEffect(() => {
     AOS.init({ duration: 2000 })
   }, [])
@@ -73,7 +74,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             gridTemplateColumns: '1fr auto',
             alignItems: 'center',
             justifyContent: innerWidth > 900 ? 'space-around' : 'unset',
-            width: innerWidth > 900 ? 1400 : '100%',
+            width: widthResize,
           },
         }}
         containerProps={{
@@ -110,7 +111,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       >
         <BackgroudWatch />
 
-        <div style={{ width: innerWidth > 900 && 1400 }}>
+        <div style={{ width: widthResize }}>
           <FeatureEconomy />
           <FeatureSquare />
           <FeatureWatch />
@@ -120,7 +121,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       </StyledSection>
 
       <StyledSection
-        innerProps={{ style: { margin: '0', width: innerWidth < 900 && '100%' } }}
+        innerProps={{ style: { margin: '0', width: widthResize } }}
         containerProps={{
           id: 'home',
         }}
@@ -128,7 +129,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         <BGPartner />
-        <div style={{ width: innerWidth > 900 && 1400 }}>
+        <div style={{ width: widthResize }}>
           <Partners />
           <SecuredBy />
           <UpComing />
