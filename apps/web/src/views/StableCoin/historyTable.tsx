@@ -17,6 +17,7 @@ import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import axios from 'axios'
+import Image from 'next/future/image'
 import { Arrow, ClickableColumnHeader } from '../Info/components/InfoTables/shared'
 
 export const TYPE_HISTORY = {
@@ -315,6 +316,11 @@ const DataRow: React.FC<
   const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
   const symbolToken0 = typePage === TYPE_HISTORY.stake ? 'XOXS' : (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BUSD' : 'USDC';
 
+  const onImageError = (e: any) => {
+    // eslint-disable-next-line no-param-reassign
+    e.target.src = 'images/default_avatar.jpg'
+  }
+
   return (
     <>
       <Text
@@ -358,7 +364,7 @@ const DataRow: React.FC<
           lineHeight="19px"
           color="rgba(255, 255, 255, 0.87)"
         >
-          {transaction?.avatar ? <img src={transaction?.avatar} alt="avatar" /> : <img src="images/default_avatar.jpg" alt="imagess" />}
+          {transaction?.avatar ? <img src={transaction?.avatar} alt="avatar" onError={onImageError} /> : <img src="images/default_avatar.jpg" alt="imagess" />}
           {transaction?.username}
         </Text>
       }
