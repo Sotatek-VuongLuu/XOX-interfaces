@@ -73,11 +73,12 @@ const Wrapper = styled(Box)`
 `
 const WrapText = styled.div`
   @media(min-width: 900px){
-    transform: translate(-320px);
+    transform: translate(-430px);
     width: 500px;
   }
   @media(min-width: 1400px){
-    transform: translate(-490px);
+    transform: translate(-610px);
+    width: 700px;
   }
 `
 
@@ -90,7 +91,7 @@ const FeatureEconomy = () => {
       ) : (
         <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={10}>
+            <Grid item xs={12} md={11}>
               <div className="main_card_content">
                 <img src="/images/chain_4.svg" alt="token-card" className="chain_4" />
 
@@ -101,7 +102,7 @@ const FeatureEconomy = () => {
                 <img src="/images/chain_1.svg" alt="token-card" className="chain_1" />
               </div>
             </Grid>
-            <Grid item xs={12} md={2}>
+            <Grid item xs={12} md={1}>
               <WrapText className="paragraph">
                 <p className="title">Built and Available on every leading blockchain.</p>
                 <p className="description">
