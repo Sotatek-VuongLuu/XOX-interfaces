@@ -392,7 +392,7 @@ export default function BridgeToken() {
     } else if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
       setMessageButton(`Approve ${addressTokenInput.symbol}`)
     } else if (approvalState === ApprovalState.PENDING) {
-      setMessageButton('Approving')
+      setMessageButton('Approving...')
     } else if (amountTo === '0') {
       setMessageButton('Input Amount Not Allowed')
     } else setMessageButton('Bridge')

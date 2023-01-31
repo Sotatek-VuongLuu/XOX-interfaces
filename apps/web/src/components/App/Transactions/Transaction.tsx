@@ -16,7 +16,7 @@ const TransactionState = styled.div<{ pending: boolean; success?: boolean }>`
   color: ${({ theme }) => theme.colors.primary};
 `
 const TransactionText = styled(LinkExternal)`
-  color: #ffffffde;
+  color: #9072FF;
   font-weight: 400;
   margin-right: 50px;
 `

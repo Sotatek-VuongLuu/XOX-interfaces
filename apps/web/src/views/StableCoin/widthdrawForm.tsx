@@ -12,9 +12,6 @@ import { calculateGasMargin } from 'utils';
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
 import { TransactionResponse } from '@ethersproject/providers'
 import { addTransaction } from 'state/transactions/actions';
-import TransactionConfirmationModal, {
-  TransactionErrorContent,
-} from 'components/TransactionConfirmationModal'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { USD_ADDRESS } from 'config/constants/exchange'
 import ConfirmSwapModal from '../Swap/components/ConfirmSwapModal'

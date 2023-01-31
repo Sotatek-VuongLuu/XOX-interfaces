@@ -71,6 +71,16 @@ const Wrapper = styled(Box)`
     }
   }
 `
+const WrapText = styled.div`
+  @media(min-width: 900px){
+    transform: translate(-430px);
+    width: 500px;
+  }
+  @media(min-width: 1400px){
+    transform: translate(-610px);
+    width: 700px;
+  }
+`
 
 const FeatureEconomy = () => {
   const { width } = useWindowSize()
@@ -81,7 +91,7 @@ const FeatureEconomy = () => {
       ) : (
         <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
           <Grid container spacing={2}>
-            <Grid item xs={12} md={8}>
+            <Grid item xs={12} md={11}>
               <div className="main_card_content">
                 <img src="/images/chain_4.svg" alt="token-card" className="chain_4" />
 
@@ -92,14 +102,14 @@ const FeatureEconomy = () => {
                 <img src="/images/chain_1.svg" alt="token-card" className="chain_1" />
               </div>
             </Grid>
-            <Grid item xs={12} md={4}>
-              <div className="paragraph">
+            <Grid item xs={12} md={1}>
+              <WrapText className="paragraph">
                 <p className="title">Built and Available on every leading blockchain.</p>
                 <p className="description">
                   Creating A Truly Decentralized Multichain Ecosystem with Unlimited possibilities. Supporting Defi and
                   Web3 global adoption for a better future.
                 </p>
-              </div>
+              </WrapText>
             </Grid>
           </Grid>
         </Wrapper>
