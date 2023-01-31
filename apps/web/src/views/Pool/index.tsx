@@ -49,11 +49,11 @@ const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
 
 const BackgroundWrapper = styled.div`
   position: absolute;
-  top: 200px;
+  top: 150px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: calc(100% - 200px);
+  height: calc(100% - 150px);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background: #242424;
@@ -510,11 +510,15 @@ export default function Pool() {
             </Body>
             <StyledCardFooter style={{ textAlign: 'center' }}>
               {account ? (
-                <Link href="/add" passHref>
-                  <ButtonWrapper id="join-pool-button" width="100%">
-                    {t('Add Liquidity')}
-                  </ButtonWrapper>
-                </Link>
+                <>
+                  {allV2PairsWithLiquidity.length === 0 && (
+                    <Link href="/add" passHref>
+                      <ButtonWrapper id="join-pool-button" width="100%">
+                        {t('Add Liquidity')}
+                      </ButtonWrapper>
+                    </Link>
+                  )}
+                </>
               ) : (
                 <ConnectWalletButtonWrapper />
               )}

@@ -301,8 +301,8 @@ const zapSupportedChainId = [ChainId.BSC, ChainId.BSC_TESTNET]
 export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, currencyIdB }) {
   const router = useRouter()
   const native = useNativeCurrency()
-  const [zapMode] = useZapModeManager()
-  const [temporarilyZapMode, setTemporarilyZapMode] = useState(true)
+  const zapMode = false
+  const [temporarilyZapMode, setTemporarilyZapMode] = useState(false)
   const { account, chainId, isWrongNetwork } = useActiveWeb3React()
   const library = useWeb3LibraryContext()
   const { toastError } = useToast()
@@ -884,7 +884,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                           <Text className="text-amount">{formattedAmounts[Field.CURRENCY_A] || '-'}</Text>
                         </Flex>
                         <Flex alignItems="center">
-                          {zapModeStatus && (
+                          {/* {zapModeStatus && (
                             <Flex mr="9px">
                               <Checkbox
                                 disabled={isZapOutA}
@@ -893,7 +893,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                                 onChange={(e) => setRemovalCheckedA(e.target.checked)}
                               />
                             </Flex>
-                          )}
+                          )} */}
                           <CurrencyLogo currency={currencyA} />
                           <Text className="text-symbol" id="remove-liquidity-tokena-symbol" ml="8px">
                             {currencyA?.symbol}
@@ -905,7 +905,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                           <Text className="text-amount">{formattedAmounts[Field.CURRENCY_B] || '-'}</Text>
                         </Flex>
                         <Flex alignItems="center">
-                          {zapModeStatus && (
+                          {/* {zapModeStatus && (
                             <Flex mr="9px">
                               <Checkbox
                                 disabled={isZapOutB}
@@ -914,7 +914,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                                 onChange={(e) => setRemovalCheckedB(e.target.checked)}
                               />
                             </Flex>
-                          )}
+                          )} */}
                           <CurrencyLogo currency={currencyB} />
                           <Text className="text-symbol" id="remove-liquidity-tokenb-symbol" ml="8px">
                             {currencyB?.symbol}
@@ -972,18 +972,18 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                     <ArrowDownIcon width="24px" my="16px" />
                   </ColumnCenter>
                   <CurrencyInputPanel
-                    beforeButton={
-                      zapModeStatus && (
-                        <ZapCheckbox
-                          disabled={!removalCheckedB && removalCheckedA}
-                          checked={removalCheckedA}
-                          onChange={(e) => {
-                            setRemovalCheckedA(e.target.checked)
-                          }}
-                        />
-                      )
-                    }
-                    zapStyle="zap"
+                    // beforeButton={
+                    //   zapModeStatus && (
+                    //     <ZapCheckbox
+                    //       disabled={!removalCheckedB && removalCheckedA}
+                    //       checked={removalCheckedA}
+                    //       onChange={(e) => {
+                    //         setRemovalCheckedA(e.target.checked)
+                    //       }}
+                    //     />
+                    //   )
+                    // }
+                    // zapStyle="zap"
                     hideBalance
                     disabled={isZap && !removalCheckedA}
                     value={formattedAmounts[Field.CURRENCY_A]}
@@ -1001,18 +1001,18 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                     <AddIcon width="24px" my="16px" />
                   </ColumnCenter>
                   <CurrencyInputPanel
-                    beforeButton={
-                      zapModeStatus && (
-                        <ZapCheckbox
-                          disabled={!removalCheckedA && removalCheckedB}
-                          checked={removalCheckedB}
-                          onChange={(e) => {
-                            setRemovalCheckedB(e.target.checked)
-                          }}
-                        />
-                      )
-                    }
-                    zapStyle="zap"
+                    // beforeButton={
+                    //   zapModeStatus && (
+                    //     <ZapCheckbox
+                    //       disabled={!removalCheckedA && removalCheckedB}
+                    //       checked={removalCheckedB}
+                    //       onChange={(e) => {
+                    //         setRemovalCheckedB(e.target.checked)
+                    //       }}
+                    //     />
+                    //   )
+                    // }
+                    // zapStyle="zap"
                     hideBalance
                     disabled={isZap && !removalCheckedB}
                     value={formattedAmounts[Field.CURRENCY_B]}
