@@ -199,6 +199,8 @@ export default function Pool() {
   )
   const USDId = chainId === 1 || chainId === 5 ? 3408 : 4687
   const { price } = useDerivedMintInfo(currencyA, currencyB)
+  const [hiddenButton, setHiddenButton] = useState(false);
+
 
   const { data: USDPrice } = useSWR(
     `${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/price?id=${USDId}`,
@@ -277,6 +279,7 @@ export default function Pool() {
     if (allV2PairsWithLiquidity?.length > 0) {
       positionCards = allV2PairsWithLiquidity.map((v2Pair, index) => (
         <FullPositionCard
+          setHiddenButton={setHiddenButton}
           key={v2Pair.liquidityToken.address}
           pair={v2Pair}
           mb={Boolean(stablePairs?.length) || index < allV2PairsWithLiquidity.length - 1 ? '16px' : 0}
@@ -511,7 +514,7 @@ export default function Pool() {
             <StyledCardFooter style={{ textAlign: 'center' }}>
               {account ? (
                 <>
-                  {allV2PairsWithLiquidity.length === 0 && (
+                  {!hiddenButton && (
                     <Link href="/add" passHref>
                       <ButtonWrapper id="join-pool-button" width="100%">
                         {t('Add Liquidity')}

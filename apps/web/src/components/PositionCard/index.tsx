@@ -216,6 +216,7 @@ interface PositionCardProps extends CardProps {
   totalUSDValue: number
   userPoolBalance: CurrencyAmount<Currency>
   poolTokenPercentage: Percent
+  setHiddenButton: (b: boolean) => void
 }
 
 const useTokensDeposited = ({ pair, totalPoolTokens, userPoolBalance }) => {
@@ -416,6 +417,7 @@ function FullPositionCard({
   totalUSDValue,
   userPoolBalance,
   poolTokenPercentage,
+  setHiddenButton,
   ...props
 }: PositionCardProps) {
   const isStableLP = useContext(StableConfigContext)
@@ -436,7 +438,10 @@ function FullPositionCard({
         justifyContent="space-between"
         className="button"
         role="button"
-        onClick={() => setShowMore(!showMore)}
+        onClick={() => {
+          setShowMore(!showMore)
+          setHiddenButton && setHiddenButton(!showMore)
+        }}
         p="16px"
       >
         <Flex flexDirection="column">

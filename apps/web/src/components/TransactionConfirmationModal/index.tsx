@@ -13,7 +13,6 @@ import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToW
 
 const Wrapper = styled.div`
   width: 100%;
-  min-width: 250px;
 
   .waiting {
     font-weight: 500;
@@ -117,7 +116,7 @@ export function TransactionSubmittedContent({
   const token: Token | undefined = wrappedCurrency(currencyToAdd, chainId)
 
   return (
-    <Wrapper>
+    <Wrapper style={{maxWidth: '100%', width: '300px'}}>
       <Section>
         <ConfirmedIcon>
           <ConfirmImg>
