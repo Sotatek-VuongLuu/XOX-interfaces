@@ -152,3 +152,7 @@ export const getXOXPoolAddress = (chainId?: number) => {
 export const getBridgeTokenAddress = (chainId?: number) => {
   return getAddress(addresses.contractBridgeToken, chainId)
 }
+
+export const getContractFarmingLPAddress = (chainId?: number) => {
+  return getAddress(addresses.farmingLP, chainId)
+}

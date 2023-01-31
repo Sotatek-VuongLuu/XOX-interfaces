@@ -37,7 +37,6 @@ import { AppState } from 'state'
 import useAuth from 'hooks/useAuth'
 import { CONTRACT_BRIDGE_POOL, NETWORK_LABEL, NETWORK_LINK } from './networks'
 import { GridLoader } from 'react-spinners'
-import truncateHash from '@pancakeswap/utils/truncateHash'
 import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
 import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
@@ -454,7 +453,7 @@ export default function BridgeToken() {
   const switchNetwork = () => {
     if (account) {
       switchNetworkAsync(getChainIdToByChainId(chainId))
-      setAmountInput('');
+      setAmountInput('')
       setAmountTo('')
     }
     return null
