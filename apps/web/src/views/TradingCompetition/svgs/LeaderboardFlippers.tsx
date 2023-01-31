@@ -174,6 +174,7 @@ const RibbonDownMid: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
         />
         <mask
           id="leaderboard_flippers_mask0"
+          // eslint-disable-next-line react/no-unknown-property
           mask-type="alpha"
           maskUnits="userSpaceOnUse"
           x="55"
@@ -200,6 +201,7 @@ const RibbonDownMid: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
         </g>
         <mask
           id="leaderboard_flippers_mask1"
+          // eslint-disable-next-line react/no-unknown-property
           mask-type="alpha"
           maskUnits="userSpaceOnUse"
           x="79"
