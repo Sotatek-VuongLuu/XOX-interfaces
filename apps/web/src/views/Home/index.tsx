@@ -61,6 +61,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
   return (
     <>
       <PageMeta />
+      {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx global>{`
         #home .page-bg {
           background: black;

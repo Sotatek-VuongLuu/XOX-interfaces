@@ -93,6 +93,7 @@ const Hero = () => {
 
   return (
     <>
+      {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx global>
         {`
           .slide-svg-dark {
