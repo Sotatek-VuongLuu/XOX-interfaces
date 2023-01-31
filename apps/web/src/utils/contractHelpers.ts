@@ -47,6 +47,7 @@ import {
   getXOXTokenAddress,
   getXOXPoolAddress,
   getXOXTokenAddressBridge,
+  getContractFarmingLPAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -105,6 +106,7 @@ import treasuryAbi from 'config/abi/treasuryXOX.json'
 import xoxTokenAbi from 'config/abi/erc20XOXToken.json'
 import xoxPoolAbi from 'config/abi/erc20XOXPool.json'
 import xoxBridgeAbi from 'config/abi/xoxBridge.json'
+import XOXFarmingLPAbi from 'config/abi/XOXFarmingLP.json'
 
 // Types
 import type {
@@ -159,6 +161,7 @@ import type {
   Erc20XOXToken,
   Erc20XOXPool,
   XoxBridge,
+  XOXFarmingLP,
 } from 'config/abi/types'
 import { ChainId } from '@pancakeswap/sdk'
 
@@ -434,6 +437,15 @@ export const getContractXOXTokenBridge = (signer?: Signer | Provider, chainId?: 
     chainId,
     signer,
   }) as XoxBridge
+}
+
+export const getContractFarmingLP = (signer?: Signer | Provider, chainId?: number) => {
+  return getContract({
+    abi: XOXFarmingLPAbi,
+    address: getContractFarmingLPAddress(chainId),
+    chainId,
+    signer,
+  }) as XOXFarmingLP
 }
 
 export const getContractXOXPool = (signer?: Signer | Provider, chainId?: number) => {

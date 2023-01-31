@@ -1,11 +1,15 @@
 import styled from 'styled-components'
 import { Flex, Text, Button, useModal } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
 import useWindowSize from 'hooks/useWindowSize'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
+import { TryCatch } from '@sentry/browser'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { getContractFarmingLPAddress } from 'utils/addressHelpers'
 
 const NavWrapper = styled(Flex)`
   padding: 28px 24px 24px;
@@ -281,11 +285,35 @@ const Main = styled.div`
 `
 
 const Pools: React.FC<React.PropsWithChildren> = () => {
+  const [aprPercent, setAprPercent] = useState<null | number>(null)
   const { chainId } = useActiveChainId()
+  const { account } = useActiveWeb3React()
   const [enable, setEnable] = useState(false)
   const [onModalStake] = useModal(<ModalStake />)
   const { width } = useWindowSize()
   const chainIdSupport = [97, 56]
+  const contractFarmingLP = useContractFarmingLP()
+  const contractPair = useXOXPoolContract()
+
+  const handleGetDataFarming = async () => {
+    try {
+      const addressFarming = await getContractFarmingLPAddress(chainId)
+      const amountFarming = await contractPair.balanceOf(addressFarming)
+      const bonusEBlock = await contractFarmingLP.bonusEndBlock()
+      const bonusSBlock = await contractFarmingLP.startBlock()
+      const rewardPBlock = await contractFarmingLP.rewardPerBlock()
+
+      console.log(`amountFarming`, amountFarming)
+    } catch (error) {
+      console.log(`error`, error)
+    }
+  }
+
+  useEffect(() => {
+    if (!account || !chainId) return
+    handleGetDataFarming()
+  }, [chainId, account])
+
   return (
     <>
       <NavWrapper>
