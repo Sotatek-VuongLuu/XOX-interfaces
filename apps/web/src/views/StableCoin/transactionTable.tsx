@@ -788,7 +788,7 @@ const TransactionsTable: React.FC = () => {
               onOptionChange={(option: any) => setPerPage(option.value)}
               className="select-page"
             />
-            <Text className="go-page">Go to page</Text>
+            <Text className="go-page" style={{whiteSpace: 'nowrap'}}>Go to page</Text>
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}

@@ -13,7 +13,7 @@ import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToW
 
 const Wrapper = styled.div`
   width: 100%;
-  min-width: 200px;
+  min-width: 250px;
 
   .waiting {
     font-weight: 500;

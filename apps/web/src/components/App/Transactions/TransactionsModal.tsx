@@ -73,7 +73,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
   return (
     <Modal title={t('Recent Transactions')} pb="32px" onDismiss={onDismiss}>
       {account ? (
-        <ModalBody style={{ width: '495px' }}>
+        <ModalBody style={{ width: hasTransactions ? '495px' : 'unset' }}>
           {hasTransactions ? (
             <>
               <AutoRow mb="1rem" style={{ justifyContent: 'space-between' }}>
@@ -84,27 +84,29 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
                   {t('Clear all')}
                 </RecentButton>
               </AutoRow>
-              {Object.entries(sortedRecentTransactions).map(([chainId, transactions]) => {
-                const chainIdNumber = Number(chainId)
-                const groupedTransactions = groupBy(Object.values(transactions), (trxDetails) =>
-                  Boolean(trxDetails.receipt),
-                )
+              <div style={{ height: '200px', overflowY: 'auto', overflowX: 'hidden' }}>
+                {Object.entries(sortedRecentTransactions).map(([chainId, transactions]) => {
+                  const chainIdNumber = Number(chainId)
+                  const groupedTransactions = groupBy(Object.values(transactions), (trxDetails) =>
+                    Boolean(trxDetails.receipt),
+                  )
 
-                const confirmed = groupedTransactions.true ?? []
-                const pending = groupedTransactions.false ?? []
+                  const confirmed = groupedTransactions.true ?? []
+                  const pending = groupedTransactions.false ?? []
 
-                return (
-                  <>
-                    <Text fontSize="16px" lineHeight="19px" color="#FFFFFFDE" mb="16px">
-                      {chains.find((c) => c.id === chainIdNumber)?.name ?? 'Unknown network'}
-                    </Text>
-                    <div key={`transactions#${chainIdNumber}`} style={{ maxHeight: '200px', overflow: 'auto' }}>
-                      {renderTransactions(pending, chainIdNumber)}
-                      {renderTransactions(confirmed, chainIdNumber)}
-                    </div>
-                  </>
-                )
-              })}
+                  return (
+                    <>
+                      <Text fontSize="16px" lineHeight="19px" color="#FFFFFFDE" mb="8px" mt="8px">
+                        {chains.find((c) => c.id === chainIdNumber)?.name ?? 'Unknown network'}
+                      </Text>
+                      <div key={`transactions#${chainIdNumber}`}>
+                        {renderTransactions(pending, chainIdNumber)}
+                        {renderTransactions(confirmed, chainIdNumber)}
+                      </div>
+                    </>
+                  )
+                })}
+              </div>
             </>
           ) : (
             <NoTransaction>
