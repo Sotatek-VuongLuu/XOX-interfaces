@@ -440,7 +440,7 @@ function FullPositionCard({
         role="button"
         onClick={() => {
           setShowMore(!showMore)
-          setHiddenButton && setHiddenButton(!showMore)
+          if(setHiddenButton) setHiddenButton(!showMore)
         }}
         p="16px"
       >
