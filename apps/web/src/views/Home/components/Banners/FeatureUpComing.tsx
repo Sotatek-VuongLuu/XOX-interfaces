@@ -128,7 +128,7 @@ const UpComing = () => {
   return (
     <Wrapper>
       <div className="title" data-aos="fade-up">
-        Upcoming Utilities
+        Upcoming Developments
       </div>
       <p className="decoration" data-aos="fade-up" data-aos-duration="2300">
         Every utility is current under development and they are gonna be gradually implemented once ready. Adding

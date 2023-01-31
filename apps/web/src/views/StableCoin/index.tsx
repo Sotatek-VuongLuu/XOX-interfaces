@@ -241,7 +241,7 @@ export default function StableCoin() {
                 <Box className="h-190">
                   <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{width: "100%",padding: '10px 0'}}>
                     <TextConnectWallet style={{color: 'rgba(255, 255, 255, 0.87)'}}>Please connect wallet to <br/>view your information</TextConnectWallet>
-                    <ConnectWalletButtonWraper scale="sm">
+                    <ConnectWalletButtonWraper scale="sm" style={{whiteSpace: 'nowrap'}}>
                       <Trans>Connect Wallet</Trans>
                     </ConnectWalletButtonWraper>
                   </Flex>
