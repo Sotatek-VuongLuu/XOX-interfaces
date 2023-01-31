@@ -41,6 +41,7 @@ const Wrapper = styled.div`
       .line {
         background: linear-gradient(180deg, #000000 0%, #9072ff 100%);
         bottom: 0;
+        opacity: 0.25;
       }
       .milestone {
         left: 0;
@@ -66,6 +67,7 @@ const Wrapper = styled.div`
       .line {
         background: linear-gradient(0deg, #000000 0%, #9072ff 100%);
         top: 0;
+        opacity: 0.25;
       }
       .milestone {
         top: 0;

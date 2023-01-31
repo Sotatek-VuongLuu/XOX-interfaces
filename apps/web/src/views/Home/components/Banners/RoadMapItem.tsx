@@ -67,7 +67,7 @@ const Line = styled.div`
 `
 
 const LineNotDone = styled.div`
-  height: 4px;
+  height: 8px;
   width: 100%;
   transform: translateY(50%);
   left: 0;
