@@ -11,7 +11,6 @@ const mapping = {
 
 const getTokenLogoURL = memoize(
   (token?: Token) => {
-    console.log(token.symbol)
     if (token && token.symbol.toLocaleUpperCase() === 'XOX') {
       return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`
     }
