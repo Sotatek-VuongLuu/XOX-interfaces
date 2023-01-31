@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect, useState, useCallback } from 'react'
 import styled from 'styled-components'
 import { ChainId } from '@pancakeswap/sdk'
 import { formatUnits, parseEther, parseUnits } from 'ethers/lib/utils'
 import { fetchBridgeTokenFee } from '../../context/globalData'
+import debounce from 'lodash/debounce'
 
 const Wrapper = styled.div`
   border-radius: 8px;
@@ -72,46 +73,48 @@ const Reminder: React.FC<Props> = ({
   const [bridgeTokenFee, setBridgeTokenFee] = useState<BridgeTokenFee>(initialBridgeTokenFee)
   const addressTokenOutput = tokenOutput?.address
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        if (!chainId) {
-          setBridgeTokenFee(initialBridgeTokenFee)
-          setAmountTo('')
-          return
-        }
-        const res = await fetchBridgeTokenFee(chainId, amount && amount !== ('.' || '') ? amount : '0')
-        const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data || bridgeTokenFee
-        // const bridgeTokenFee: BridgeTokenFee = {
-        //   gasFee: '0.13681800000000000014',
-        //   minCrossChainFee: '0.01',
-        //   minAmount: '0.15681800000000000014',
-        //   maxAmount: '2000000',
-        // }
-        if (bridgeTokenFeeCurrent) {
-          setBridgeTokenFee((prev) => ({
-            ...prev,
-            ...bridgeTokenFeeCurrent,
-          }))
-          setAmountTo(
-            getAmountTo(
-              bridgeTokenFeeCurrent.gasFee,
-              bridgeTokenFeeCurrent.minCrossChainFee,
-              bridgeTokenFeeCurrent.minAmount,
-            ),
-          )
-          onBridgeTokenFeeChange(bridgeTokenFeeCurrent.minAmount, bridgeTokenFeeCurrent.maxAmount)
-        }
-      } catch (error) {
-        // eslint-disable-next-line no-console
-        console.log('error>>', error)
-      }
-    }
+  const debounceFn = useCallback(debounce(fetchData, 1000), [])
 
-    fetchData()
+  useEffect(() => {
+    debounceFn(amount)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, amount, addressTokenOutput])
 
+  async function fetchData(amountBri) {
+    try {
+      if (!chainId) {
+        setBridgeTokenFee(initialBridgeTokenFee)
+        setAmountTo('')
+        return
+      }
+      
+      const res = await fetchBridgeTokenFee(chainId, amountBri && amountBri !== ('.' || '') ? amountBri : '0')
+      const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data || bridgeTokenFee
+      // const bridgeTokenFee: BridgeTokenFee = {
+      //   gasFee: '0.13681800000000000014',
+      //   minCrossChainFee: '0.01',
+      //   minAmount: '0.15681800000000000014',
+      //   maxAmount: '2000000',
+      // }
+      if (bridgeTokenFeeCurrent) {
+        setBridgeTokenFee((prev) => ({
+          ...prev,
+          ...bridgeTokenFeeCurrent,
+        }))
+        const amountTo = await getAmountTo(
+          bridgeTokenFeeCurrent.gasFee,
+          bridgeTokenFeeCurrent.minCrossChainFee,
+          bridgeTokenFeeCurrent.minAmount,
+          amountBri
+        )
+        setAmountTo(amountTo)
+        onBridgeTokenFeeChange(bridgeTokenFeeCurrent.minAmount, bridgeTokenFeeCurrent.maxAmount)
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log('error>>', error)
+    }
+  }
   const formatNumberStr = (numberStr: string) => {
     if (!numberStr) {
       return '0.000'
@@ -123,21 +126,21 @@ const Reminder: React.FC<Props> = ({
     })
   }
 
-  const getAmountTo = (gasFee: string, crosschainFee: string, minAmount: string) => {
+  const getAmountTo = async (gasFee: string, crosschainFee: string, minAmount: string, amountBri: any) => {
     if (
-      amount &&
-      amount !== ('.' || '') &&
-      parseUnits(amount, tokenInput.decimals).lt(parseUnits(Number(minAmount).toFixed(3), tokenInput.decimals))
+      amountBri &&
+      amountBri !== ('.' || '') &&
+      parseUnits(amountBri, tokenInput.decimals).lt(parseUnits(Number(minAmount).toFixed(3), tokenInput.decimals))
     ) {
       return '0'
     }
     // const decimals = Math.max(gasFee.split('.')[1]?.length || 0, crosschainFee.split('.')[1]?.length || 0)
     const decimals = 18
     const totalFeeParsed = parseUnits(gasFee, decimals).add(parseUnits(crosschainFee, decimals))
-    const amountToParsed = amount && amount !== ('.' || '') && parseUnits(amount, decimals).sub(totalFeeParsed)
-    return amount && amount !== ('.' || '') && !amountToParsed.isNegative()
+    const amountToParsed = amountBri && amountBri !== ('.' || '') && parseUnits(amountBri, decimals).sub(totalFeeParsed)
+    return amountBri && amountBri !== ('.' || '') && !amountToParsed.isNegative()
       ? Number(formatUnits(amountToParsed, decimals)).toFixed(6)
-      : amount && amount !== ('.' || '')
+      : amountBri && amountBri !== ('.' || '')
       ? '0'
       : ''
   }
