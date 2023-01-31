@@ -6,6 +6,7 @@ import { DropdownMenuItems } from "../DropdownMenu/types";
 export type MenuItemsType = {
   label: string;
   href: string;
+  activeHref?: string[];
   icon?: ElementType<any>;
   fillIcon?: ElementType<any>;
   items?: DropdownMenuItems[];

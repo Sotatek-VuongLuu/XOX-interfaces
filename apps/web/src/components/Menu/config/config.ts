@@ -10,7 +10,6 @@ import {
   TokenomicsFill,
 } from '@pancakeswap/uikit'
 import { ContextApi } from '@pancakeswap/localization'
-import { SUPPORT_ONLY_BSC } from 'config/constants/supportChains'
 import SwapIcon from 'components/Svg/SwapIcon'
 import BridgeIcon from 'components/Svg/BridgeIcon'
 import LiquidityIcon from 'components/Svg/LiquidityIcon'
@@ -73,6 +72,7 @@ const config: (
       icon: SwapIcon,
       fillIcon: SwapFillIcon,
       href: '/liquidity',
+      activeHref: ['/liquidity', '/add', '/remove'],
       showItemsOnMobile: false,
       items: [],
     },

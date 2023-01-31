@@ -177,7 +177,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   const { account, chainId, isWrongNetwork } = useActiveWeb3React()
   const { isMobile } = useMatchBreakpoints()
   const addPair = usePairAdder()
-  const [zapMode] = useZapModeManager()
+  const zapMode = false
   const expertMode = useIsExpertMode()
   const zapAddress = getZapAddress(chainId)
 
@@ -451,7 +451,13 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   const [onPresentAddLiquidityModal] = useModal(
     <ConfirmAddLiquidityModal
       title={
-        noLiquidity ? t('You are creating a pool') : attemptingTxn || txHash ? t('Confirm') : t('You will receive')
+        noLiquidity
+          ? t('You are creating a pool')
+          : attemptingTxn
+          ? t('Confirm')
+          : txHash
+          ? 'Transaction Submitted'
+          : t('You will receive')
       }
       customOnDismiss={handleDismissConfirmation}
       attemptingTxn={attemptingTxn}
@@ -726,7 +732,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   chainId === 5 || chainId === 1 ? 0.3 : 0.25
                 }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
               )}
-              backTo={canZap ? () => setSteps(Steps.Choose) : '/liquidity'}
+              backTo="/liquidity"
             />
             <CardBody p={['18px 0', , '24px 0']}>
               <AutoColumn gap="16px">

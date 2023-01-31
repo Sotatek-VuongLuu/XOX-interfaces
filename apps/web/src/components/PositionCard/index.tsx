@@ -216,6 +216,7 @@ interface PositionCardProps extends CardProps {
   totalUSDValue: number
   userPoolBalance: CurrencyAmount<Currency>
   poolTokenPercentage: Percent
+  setHiddenButton: (b: boolean) => void
 }
 
 const useTokensDeposited = ({ pair, totalPoolTokens, userPoolBalance }) => {
@@ -352,12 +353,12 @@ function MinimalPositionCardView({
               <CustomRowFixed>
                 <Flex flexDirection="column" alignItems="flex-end">
                   <Text className="text-right">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Text>
-                  {Number.isFinite(totalUSDValue) && (
+                  {/* {Number.isFinite(totalUSDValue) && (
                     <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })} USD)`}</Text>
-                  )}
+                  )} */}
                 </Flex>
               </CustomRowFixed>
             </CustomFixedHeightRow>
@@ -416,6 +417,7 @@ function FullPositionCard({
   totalUSDValue,
   userPoolBalance,
   poolTokenPercentage,
+  setHiddenButton,
   ...props
 }: PositionCardProps) {
   const isStableLP = useContext(StableConfigContext)
@@ -436,7 +438,10 @@ function FullPositionCard({
         justifyContent="space-between"
         className="button"
         role="button"
-        onClick={() => setShowMore(!showMore)}
+        onClick={() => {
+          setShowMore(!showMore)
+          if(setHiddenButton) setHiddenButton(!showMore)
+        }}
         p="16px"
       >
         <Flex flexDirection="column">
@@ -455,12 +460,12 @@ function FullPositionCard({
           {/* <Text fontSize="14px" color="textSubtle">
             {userPoolBalance?.toSignificant(4)}
           </Text> */}
-          {Number.isFinite(totalUSDValue) && (
+          {/* {Number.isFinite(totalUSDValue) && (
             <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })} USD)`}</Text>
-          )}
+          )} */}
         </Flex>
         {showMore ? <ChevronUpIcon fill="#8E8E8E" /> : <ChevronDownIcon fill="#8E8E8E" />}
       </Flex>
