@@ -1,6 +1,15 @@
 import { InjectedModalProps, ModalContainer, ModalHeader, NumericalInput } from '@pancakeswap/uikit'
-import { useState } from 'react'
+import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
+import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { getContractFarmingLPAddress } from 'utils/addressHelpers'
+import { XOX_ADDRESS, XOX_LP } from 'config/constants/exchange'
+import { XOX, XOXLP } from '@pancakeswap/tokens'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { parseUnits } from '@ethersproject/units'
+import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -203,9 +212,98 @@ const NumericalInputStyled = styled(NumericalInput)`
   }
 `
 
-const ModalStake: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss }) => {
+interface Props extends InjectedModalProps {
+  balanceLP: any
+  totalSupply: any
+  reverse: any
+}
+
+const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balanceLP, totalSupply, reverse }) => {
+  const chainIdSupport = [97, 56]
+  const { chainId } = useActiveChainId()
+  const { account } = useActiveWeb3React()
   const listTimesPercents = ['25%', '50%', '75%', 'MAX']
   const [amount, setAmount] = useState('')
+  const [messageButton, setMessageButton] = useState('Enter an amount')
+  const contractFarmingLP = useContractFarmingLP()
+  // const contractPair = useXOXPoolContract()
+  const [amountUSD, setAmountUSD] = useState<any>()
+  const [approvalState, approveCallback] = useApproveCallback(
+    XOX_LP[chainId] && tryParseAmount(amount, XOXLP[chainId]),
+    getContractFarmingLPAddress(chainId),
+  )
+
+  useEffect(() => {
+    if (amount === '' || Number(amount) === 0 || amount === '.') {
+      setMessageButton('Enter an amount')
+    } else if (
+      account &&
+      balanceLP &&
+      // parseEther(amountInput).gt(parseEther(balanceInput?.toExact())) &&
+      parseUnits(amount, 18).gt(parseUnits(balanceLP, 18))
+    ) {
+      setMessageButton(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} Balance`)
+    } else if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
+      setMessageButton(`Approve ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'}`)
+    } else if (approvalState === ApprovalState.PENDING) {
+      setMessageButton('Approving')
+    } else setMessageButton('Confirm')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amount, approvalState, balanceLP])
+
+  const handleApprove = useCallback(async () => {
+    await approveCallback()
+  }, [approveCallback])
+
+  const handleConfirmDeposit = async () => {
+    try {
+      const gasFee = await contractFarmingLP.estimateGas.deposit(parseUnits(amount, 18))
+      const txDeposit = await contractFarmingLP.deposit(parseUnits(amount, 18), {
+        gasLimit: gasFee,
+      })
+      const tx = await txDeposit.wait(1)
+      if (tx?.transactionHash) {
+        // eslint-disable-next-line no-console
+        console.log(`tx?.transactionHash`, tx?.transactionHash)
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>`, error)
+    }
+  }
+
+  const handlePercent = (item: string) => {
+    switch (item) {
+      case '25%':
+        setAmount((Number(balanceLP) * 0.25).toString())
+        break
+      case '50%':
+        setAmount((Number(balanceLP) * 0.5).toString())
+        break
+      case '75%':
+        setAmount((Number(balanceLP) * 0.75).toString())
+        break
+      case 'MAX':
+        setAmount(balanceLP)
+        break
+      default:
+        break
+    }
+  }
+
+  const handleButtonClick = () => {
+    if (approvalState === ApprovalState.NOT_APPROVED || approvalState === ApprovalState.UNKNOWN) {
+      handleApprove()
+      return
+    }
+    handleConfirmDeposit()
+  }
+
+  useEffect(() => {
+    const amountUsd = (Number(amount) * reverse) / totalSupply
+    setAmountUSD(amountUsd)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amount])
 
   return (
     <StyledModalContainer>
@@ -214,19 +312,19 @@ const ModalStake: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onD
         <Content>
           <div className="flex stake">
             <p>Stake</p>
-            <p>Balance: 0.0345678913678</p>
+            <p>Balance: {balanceLP}</p>
           </div>
           <div className="flex token_lp">
             <NumericalInputStyled value={amount} onUserInput={(value) => setAmount(value)} placeholder="0" />
-            <p>XOX-BNB LP</p>
+            <p>{chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</p>
           </div>
           <div className="token_usd">
-            <p>~0.00 USD</p>
+            <p>~{amountUSD} USD</p>
           </div>
           <div className="percent">
             {listTimesPercents.map((item) => {
               return (
-                <button className="item_percent_btn" type="button">
+                <button className="item_percent_btn" type="button" key={item} onClick={() => handlePercent(item)}>
                   {item}
                 </button>
               )
@@ -237,13 +335,13 @@ const ModalStake: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onD
           <button type="button" className="btn cancel" onClick={onDismiss}>
             Cancel
           </button>
-          <button type="button" className="btn confirm" disabled={!amount}>
-            Confirm
+          <button type="button" className="btn confirm" disabled={!amount} onClick={handleButtonClick}>
+            {messageButton}
           </button>
         </ButtonGroup>
         <GetLP className="get_lp">
           <p>
-            <span>Get XOX-BNB LP</span>
+            <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
             <span style={{ marginLeft: 8 }}>
               <img src="/images/external-icon.svg" alt="external-icon" />
             </span>

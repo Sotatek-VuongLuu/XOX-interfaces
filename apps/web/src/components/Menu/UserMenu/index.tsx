@@ -137,8 +137,6 @@ const UserMenu = () => {
     dispatch(updateOpenFormReferral({ openFormReferral: true }))
   }
 
-  console.log(`account`, account)
-
   const chainName = useCallback(() => {
     switch (chainId) {
       case 1:
