@@ -732,7 +732,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   chainId === 5 || chainId === 1 ? 0.3 : 0.25
                 }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
               )}
-              backTo={'/liquidity'}
+              backTo="/liquidity"
             />
             <CardBody p={['18px 0', , '24px 0']}>
               <AutoColumn gap="16px">
