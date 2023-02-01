@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import { parseUnits } from '@ethersproject/units'
 import { useContractFarmingLP } from 'hooks/useContract'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { Tooltip } from '@mui/material'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -28,6 +29,22 @@ const Content = styled.div`
   border-radius: 10px;
   width: 100%;
   margin-top: 24px;
+
+  .balance_container {
+    text-align: right;
+    display: flex;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .balanceLP {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100px;
+  }
   .flex {
     display: flex;
     justify-content: space-between;
@@ -275,14 +292,24 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, bal
         <Content>
           <div className="flex stake">
             <p>Stake</p>
-            <p>Balance: {balanceLP}</p>
+            <Tooltip title={balanceLP} placement="top">
+              <span aria-hidden="true" className="balance_container">
+                Balance:&nbsp;
+                <span className="balanceLP">${balanceLP}</span>
+              </span>
+            </Tooltip>
           </div>
           <div className="flex token_lp">
             <NumericalInputStyled value={amount} onUserInput={(value) => setAmount(value)} placeholder="0" />
             <p>{chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</p>
           </div>
           <div className="token_usd">
-            <p>~{amountUSD} USD</p>
+            <Tooltip title={`${amountUSD}USD`} placement="top-start">
+              <p style={{ display: 'flex' }}>
+                <span className="balanceLP">~{amountUSD}</span>
+                <span>USD</span>
+              </p>
+            </Tooltip>
           </div>
           <div className="percent">
             {listTimesPercents.map((item) => {

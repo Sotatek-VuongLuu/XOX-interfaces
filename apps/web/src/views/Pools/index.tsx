@@ -12,6 +12,7 @@ import { useProvider } from 'wagmi'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { getUserFarmingData } from 'services/pools'
 import { NETWORK_LINK } from 'views/BridgeToken/networks'
+import { Tooltip } from '@mui/material'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
@@ -152,6 +153,16 @@ const Main = styled.div`
           font-size: 14px;
           line-height: 17px;
           color: rgba(255, 255, 255, 0.87);
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 100px;
+        }
+        .liquidity {
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 100px;
         }
         .flex_direction {
           flex-direction: column;
@@ -160,6 +171,7 @@ const Main = styled.div`
 
         .u_question {
           margin-left: 9px;
+          min-width: 20px;
         }
         .mb_mr {
           margin-right: 50px;
@@ -212,6 +224,10 @@ const Main = styled.div`
           line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
           margin-top: 16px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 130px;
           @media screen and (max-width: 576px) {
             font-size: 18px;
             line-height: 22px;
@@ -223,6 +239,10 @@ const Main = styled.div`
           line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
           margin-top: 16px;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 100px;
           @media screen and (max-width: 576px) {
             font-size: 18px;
             line-height: 22px;
@@ -288,9 +308,14 @@ const Main = styled.div`
         font-size: 14px;
         line-height: 17px;
         color: rgba(255, 255, 255, 0.87);
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        overflow: hidden;
+        max-width: 100px;
       }
       .u_question {
         margin-left: 9px;
+        min-width: 20px;
       }
       .lp_mb {
         margin-bottom: 16px;
@@ -356,7 +381,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const contractPair = useXOXPoolContract()
   const provider = useProvider({ chainId })
   const [balanceLP, setBalanceLP] = useState<any>()
-  const [isUnStake, setIsUnStake] = useState(false)
 
   const handleGetDataFarming = async () => {
     try {
@@ -421,11 +445,29 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       })
   }, [account, chainId, provider])
 
+  const handleWithdraw = async () => {
+    try {
+      const gasFee = await contractFarmingLP.estimateGas.withdraw(0)
+      const txWithdraw = await contractFarmingLP.withdraw(0, {
+        gasLimit: gasFee,
+      })
+      const tx = await txWithdraw.wait(1)
+      if (tx?.transactionHash) {
+        // eslint-disable-next-line no-console
+        console.log(`tx?.transactionHash`, tx?.transactionHash)
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>`, error)
+    }
+  }
+
   const getDataFarming = async () => {
     try {
       const data = await getUserFarmingData(chainId, account)
+      console.log(`data`, data)
     } catch (error) {
-      console.warn(error)
+      console.log(error)
     }
   }
 
@@ -434,10 +476,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     <ModalUnStake balanceLP={userStaked} totalSupply={totalSupplyLP} reverse={reserve} />,
   )
 
+  getDataFarming()
   useEffect(() => {
     if (!account || !chainId) return
     handleGetDataFarming()
-    getDataFarming()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
 
@@ -476,16 +518,22 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <>
                     <div className="flex flex_direction">
                       <span className="name">APR:</span>
-                      <span className="value">{aprPercent || '-'}%</span>
+                      <Tooltip title={`${aprPercent}%`} placement="top">
+                        <span className="value">{aprPercent || '-'}%</span>
+                      </Tooltip>
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
-                      <span className="value">0</span>
+                      <Tooltip title="0" placement="top">
+                        <span className="value">0</span>
+                      </Tooltip>
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Liquidity</span>
-                      <span className="value _flex">
-                        <span>${liquidity || '-'}</span>
+                      <span className="value _flex ">
+                        <Tooltip title={`%${liquidity}`} placement="top">
+                          <span className="liquidity">${liquidity || '-'}</span>
+                        </Tooltip>
                         <span className="u_question">
                           <img src="/images/u_question-circle.svg" alt="u_question-circle" />
                         </span>
@@ -496,7 +544,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div className="flex">
                     <div className="flex flex_direction mb_mr">
                       <span className="name">APR:</span>
-                      <span className="value">{aprPercent || '-'}%</span>
+                      <Tooltip title={aprPercent} placement="top">
+                        <span className="value">{aprPercent || '-'}%</span>
+                      </Tooltip>
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
@@ -538,9 +588,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                 <div className="rectangle _flex space_between">
                   <div>
                     <p className="current_XOX_reward">Current XOX reward</p>
-                    <p className="current_XOX_reward_value">{pendingRewardOfUser || '-'}</p>
+                    <Tooltip title={pendingRewardOfUser} placement="top">
+                      <p className="current_XOX_reward_value">{pendingRewardOfUser || '-'}</p>
+                    </Tooltip>
                   </div>
-                  <button type="button" className="withdraw">
+                  <button type="button" className="withdraw" onClick={handleWithdraw}>
                     Withdraw
                   </button>
                 </div>
@@ -552,7 +604,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       ? `Stake ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`
                       : 'Enable Farm'}
                   </p>
-                  {enable && userStaked && <p className="user_stake">{enable ? userStaked || null : null}</p>}
+                  {enable && userStaked && (
+                    <Tooltip title={userStaked} placement="top">
+                      <p className="user_stake">{enable ? userStaked || null : null}</p>
+                    </Tooltip>
+                  )}
                   {!enable ? (
                     <button type="button" className="nable mt" onClick={() => setEnable(true)}>
                       Enable
@@ -583,16 +639,22 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div>
                     <p className="flex space_between apr_mb">
                       <span className="name">APR:</span>
-                      <span className="value">{aprPercent || '-'}%</span>
+                      <Tooltip title={aprPercent} placement="top">
+                        <span className="value">{aprPercent || '-'}%</span>
+                      </Tooltip>
                     </p>
                     <p className="flex space_between earned_mb">
                       <span className="name">Earned:</span>
-                      <span className="value">0</span>
+                      <Tooltip title="0" placement="top">
+                        <span className="value">0</span>
+                      </Tooltip>
                     </p>
                     <p className="flex space_between liquidity_mb">
                       <span className="name">Liquidity:</span>
                       <span className="_flex">
-                        <span className="value">${liquidity || '-'}</span>
+                        <Tooltip title={liquidity} placement="top">
+                          <span className="value">${liquidity || '-'}</span>
+                        </Tooltip>
                         <span className="u_question">
                           <img src="/images/u_question-circle.svg" alt="u_question-circle" />
                         </span>
