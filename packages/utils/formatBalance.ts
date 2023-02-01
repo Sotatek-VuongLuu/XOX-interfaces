@@ -98,3 +98,14 @@ export const formatLpBalance = (balance: BigNumber, decimals: number) => {
 export const formatAmountNumber = (number: number, decimals = 2) => {
   return parseInt((number * 10 ** decimals).toString()) / 10 ** decimals
 }
+
+export const formatAmountString = (number: any, decimals = 2) => {
+  if (!number) return 0
+  let result = 0
+  try {
+    result = parseInt((parseFloat(number.toFixed(8)) * 10 ** decimals).toString()) / 10 ** decimals
+  } catch (error) {
+    result = parseInt((parseFloat(number.toFixed()) * 10 ** decimals).toString()) / 10 ** decimals
+  }
+  return result.toString()
+}
