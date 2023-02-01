@@ -9,6 +9,7 @@ import TransactionConfirmationModal, {
 import { Field } from 'state/burn/actions'
 import _toNumber from 'lodash/toNumber'
 import { AddLiquidityModalHeader, PairDistribution } from './common'
+import { formatAmountString } from '@pancakeswap/utils/formatBalance'
 
 interface ConfirmAddLiquidityModalProps {
   title: string
@@ -56,8 +57,8 @@ const ConfirmAddLiquidityModal: React.FC<
 
   // Calculate distribution percentage for display
   if (isStable && parsedAmounts[Field.CURRENCY_A] && parsedAmounts[Field.CURRENCY_B]) {
-    const amountCurrencyA = _toNumber(parsedAmounts[Field.CURRENCY_A].toSignificant(6))
-    const amountCurrencyB = _toNumber(parsedAmounts[Field.CURRENCY_B].toSignificant(6))
+    const amountCurrencyA = _toNumber(formatAmountString(parsedAmounts[Field.CURRENCY_A], 6))
+    const amountCurrencyB = _toNumber(formatAmountString(parsedAmounts[Field.CURRENCY_B], 6))
 
     percent = amountCurrencyA / (amountCurrencyA + amountCurrencyB)
   }
@@ -71,16 +72,16 @@ const ConfirmAddLiquidityModal: React.FC<
         poolTokenPercentage={poolTokenPercentage}
         price={price}
         noLiquidity={noLiquidity}
-        currencyAValue={parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}
-        currencyBValue={parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}
+        currencyAValue={formatAmountString(parsedAmounts[Field.CURRENCY_A], 6)}
+        currencyBValue={formatAmountString(parsedAmounts[Field.CURRENCY_B], 6)}
       >
         <PairDistribution
           title={t('Input')}
           percent={percent}
           currencyA={currencies[Field.CURRENCY_A]}
-          currencyAValue={parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}
+          currencyAValue={formatAmountString(parsedAmounts[Field.CURRENCY_A], 6)}
           currencyB={currencies[Field.CURRENCY_B]}
-          currencyBValue={parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}
+          currencyBValue={formatAmountString(parsedAmounts[Field.CURRENCY_B], 6)}
         />
       </AddLiquidityModalHeader>
     )
