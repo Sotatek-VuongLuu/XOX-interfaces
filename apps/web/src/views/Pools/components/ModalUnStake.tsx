@@ -2,21 +2,16 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import { InjectedModalProps, ModalContainer, ModalHeader, NumericalInput } from '@pancakeswap/uikit'
-import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { getContractFarmingLPAddress } from 'utils/addressHelpers'
-import { XOX_LP } from 'config/constants/exchange'
-import { XOXLP } from '@pancakeswap/tokens'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { parseUnits } from '@ethersproject/units'
 import { useContractFarmingLP } from 'hooks/useContract'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { Tooltip } from '@mui/material'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
-import { NETWORK_LABEL } from 'views/BridgeToken/networks'
 import { GridLoader } from 'react-spinners'
+import { NETWORK_LABEL } from 'views/BridgeToken/networks'
 import { linkTransactionTx } from '..'
 import { Content } from './style'
 
@@ -36,7 +31,7 @@ const StyledModalHeader = styled(ModalHeader)`
   margin-bottom: 15px;
 `
 
-const ContentStake = styled.div`
+const ContentUnStake = styled.div`
   padding: 20px;
   background: #303030;
   border-radius: 10px;
@@ -190,21 +185,6 @@ const ButtonGroup = styled.div`
   }
 `
 
-const GetLP = styled.div`
-  margin-top: 25px;
-  p {
-    display: flex;
-    justify-content: center;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    color: #9072ff;
-    @media screen and (max-width: 576px) {
-      font-size: 14px;
-      line-height: 17px;
-    }
-  }
-`
 const ContentContainer = styled.div`
   padding: 0px 27px 27px;
 
@@ -243,55 +223,28 @@ interface Props extends InjectedModalProps {
   reverse: any
 }
 
-const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balanceLP, totalSupply, reverse }) => {
+const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balanceLP, totalSupply, reverse }) => {
   const chainIdSupport = [97, 56]
   const { chainId } = useActiveChainId()
-  const { account } = useActiveWeb3React()
   const listTimesPercents = ['25%', '50%', '75%', 'MAX']
   const [amount, setAmount] = useState('')
-  const [messageButton, setMessageButton] = useState('Enter an amount')
+  const { account } = useActiveWeb3React()
+  const [messageButton, setMessageButton] = useState('Confirm')
   const contractFarmingLP = useContractFarmingLP()
-  // const contractPair = useXOXPoolContract()
   const [amountUSD, setAmountUSD] = useState<any>()
-  const [approvalState, approveCallback] = useApproveCallback(
-    XOX_LP[chainId] && tryParseAmount(amount, XOXLP[chainId]),
-    getContractFarmingLPAddress(chainId),
-  )
   const [modalReject, setModalReject] = useState<boolean>(false)
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')
 
-  useEffect(() => {
-    if (amount === '' || Number(amount) === 0 || amount === '.') {
-      setMessageButton('Enter an amount')
-    } else if (
-      account &&
-      balanceLP &&
-      // parseEther(amountInput).gt(parseEther(balanceInput?.toExact())) &&
-      parseUnits(amount, 18).gt(parseUnits(balanceLP, 18))
-    ) {
-      setMessageButton(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} Balance`)
-    } else if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
-      setMessageButton(`Approve ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'}`)
-    } else if (approvalState === ApprovalState.PENDING) {
-      setMessageButton('Approving')
-    } else setMessageButton('Confirm')
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amount, approvalState, balanceLP])
-
-  const handleApprove = useCallback(async () => {
-    await approveCallback()
-  }, [approveCallback])
-
-  const handleConfirmDeposit = async () => {
+  const handleConfirmWithdraw = async () => {
     try {
       setIsOpenLoadingClaimModal(true)
-      const gasFee = await contractFarmingLP.estimateGas.deposit(parseUnits(amount, 18))
-      const txDeposit = await contractFarmingLP.deposit(parseUnits(amount, 18), {
+      const gasFee = await contractFarmingLP.estimateGas.withdraw(parseUnits(amount, 18))
+      const txWithdraw = await contractFarmingLP.withdraw(parseUnits(amount, 18), {
         gasLimit: gasFee,
       })
-      const tx = await txDeposit.wait(1)
+      const tx = await txWithdraw.wait(1)
       if (tx?.transactionHash) {
         // eslint-disable-next-line no-console
         setIsOpenLoadingClaimModal(false)
@@ -328,12 +281,22 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balan
   }
 
   const handleButtonClick = () => {
-    if (approvalState === ApprovalState.NOT_APPROVED || approvalState === ApprovalState.UNKNOWN) {
-      handleApprove()
-      return
-    }
-    handleConfirmDeposit()
+    handleConfirmWithdraw()
   }
+
+  useEffect(() => {
+    if (amount === '' || Number(amount) === 0 || amount === '.') {
+      setMessageButton('Enter an amount')
+    } else if (
+      account &&
+      balanceLP &&
+      // parseEther(amountInput).gt(parseEther(balanceInput?.toExact())) &&
+      parseUnits(amount, 18).gt(parseUnits(balanceLP, 18))
+    ) {
+      setMessageButton(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} Balance`)
+    } else setMessageButton('Confirm')
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amount, balanceLP])
 
   useEffect(() => {
     const amountUsd = (Number(amount) * reverse) / totalSupply
@@ -344,9 +307,9 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balan
   return (
     <>
       <StyledModalContainer>
-        <StyledModalHeader>Stake LP Tokens</StyledModalHeader>
+        <StyledModalHeader>UnStake LP Tokens</StyledModalHeader>
         <ContentContainer>
-          <ContentStake>
+          <ContentUnStake>
             <div className="flex stake">
               <p>Stake</p>
               <Tooltip title={balanceLP} placement="top">
@@ -377,7 +340,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balan
                 )
               })}
             </div>
-          </ContentStake>
+          </ContentUnStake>
           <ButtonGroup>
             <button type="button" className="btn cancel" onClick={onDismiss}>
               Cancel
@@ -386,16 +349,6 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balan
               {messageButton}
             </button>
           </ButtonGroup>
-          <GetLP className="get_lp">
-            <a href="/liquidity" target="_blank" rel="noreferrer">
-              <p>
-                <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
-                <span style={{ marginLeft: 8 }}>
-                  <img src="/images/external-icon.svg" alt="external-icon" />
-                </span>
-              </p>
-            </a>
-          </GetLP>
         </ContentContainer>
       </StyledModalContainer>
       <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Farming Confirm">
@@ -429,7 +382,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balan
           </div>
           <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
           <div className="noti_claim_pending_h3">
-            Stake {amount} {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'}
+            UnStake {amount} {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'}
           </div>
           <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
           <img
@@ -459,4 +412,4 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balan
   )
 }
 
-export default ModalStake
+export default ModalUnStake

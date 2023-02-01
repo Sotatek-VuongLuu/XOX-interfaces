@@ -193,7 +193,14 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                           {row.txHash ? shortenAddress(row.txHash) : '........................'}
                         </TxHash>
                       </TableCell>
-                      <TableCell align="left">{parseFloat(row.amount)} XOX</TableCell>
+                      <TableCell align="left">
+                        <div style={{ display: 'flex' }}>
+                          <Tooltip title={row.amount} placement="top-start">
+                            <span className="out_amount">{parseFloat(row.amount)}</span>
+                          </Tooltip>
+                          <span>XOX</span>
+                        </div>
+                      </TableCell>
                       <TableCell align="left">
                         <TxHash
                           href={

@@ -20,7 +20,7 @@ export const GRAPH_API_PREDICTION_V1 = 'https://api.thegraph.com/subgraphs/name/
 export const INFO_CLIENT = 'dev-subgraph.xoxnet.sotatek.works'
 export const INFO_CLIENT_XOX_BSC = ''
 export const INFO_CLIENT_XOX_BSC_TESTNET = 'dev-subgraph.xoxnet.sotatek.works'
-  
+
 export const INFO_NR_CLIENT = 'dev-subgraph.xoxnet.sotatek.works'
 export const INFO_NR_CLIENT_XOX_BSC = ''
 export const INFO_NR_CLIENT_XOX_BSC_TESTNET = 'dev-subgraph.xoxnet.sotatek.works'
@@ -60,6 +60,6 @@ export const BLOCKS_CLIENT_WITH_CHAIN = {
 export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
   [ChainId.BSC]: '',
   [ChainId.ETHEREUM]: '',
-  [ChainId.BSC_TESTNET]: 'dev-subgraph.xoxnet.sotatek.works',
+  [ChainId.BSC_TESTNET]: 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/subgraph2',
   [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.24',
 }
