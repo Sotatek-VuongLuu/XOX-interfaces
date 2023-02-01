@@ -135,6 +135,7 @@ export function useApproveCallbackFromTrade(
     () => (trade ? computeSlippageAdjustedAmounts(trade, allowedSlippage)[Field.INPUT] : undefined),
     [trade, allowedSlippage],
   )
+
   const routerAddress = isRouterNormal ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId]
   return useApproveCallback(amountToApprove, routerAddress)
 }

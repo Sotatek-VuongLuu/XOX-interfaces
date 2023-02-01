@@ -19,6 +19,7 @@ import { logError } from 'utils/sentry'
 import styled from 'styled-components'
 import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
 import { useTranslation } from '@pancakeswap/localization'
+import { formatAmountString } from '@pancakeswap/utils/formatBalance'
 import { useZapContract } from 'hooks/useContract'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getZapAddress } from 'utils/addressHelpers'
@@ -69,7 +70,6 @@ import { ChoosePair } from './ChoosePair'
 import { formatAmount } from '../../utils/formatInfoNumbers'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
-import { formatAmountString } from '@pancakeswap/utils/formatBalance'
 
 const MainBackground = styled.div`
   position: absolute;

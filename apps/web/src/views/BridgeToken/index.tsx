@@ -345,6 +345,7 @@ export default function BridgeToken() {
     XOX_ADDRESS[chainId] && tryParseAmount(amountInput, XOX[chainId]),
     getBridgeTokenAddress(chainId),
   )
+
   const [modalReject, setModalReject] = useState<boolean>(false)
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')
