@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { Modal, ModalBody, Text, Button, Flex, InjectedModalProps } from '@pancakeswap/uikit'
+import { Modal, ModalBody, Text, Button, Flex, InjectedModalProps, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import isEmpty from 'lodash/isEmpty'
 import groupBy from 'lodash/groupBy'
@@ -47,11 +47,11 @@ const NoTransactionText = styled(Text)`
   margin-top: 16px;
   color: #ffffff99;
 `
-function renderTransactions(transactions: TransactionDetails[], chainId: number) {
+function renderTransactions(transactions: TransactionDetails[], chainId: number, hiddenIcon: boolean) {
   return (
     <Flex flexDirection="column" mb="8px">
       {transactions.map((tx) => {
-        return <Transaction key={tx.hash + tx.addedTime} tx={tx} chainId={chainId} />
+        return <Transaction key={tx.hash + tx.addedTime} tx={tx} chainId={chainId} hiddenIcon={hiddenIcon} />
       })}
     </Flex>
   )
@@ -61,6 +61,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
   const { address: account } = useAccount()
   const dispatch = useAppDispatch()
   const sortedRecentTransactions = useAllSortedRecentTransactions()
+  const { isMobile } = useMatchBreakpoints()
 
   const { t } = useTranslation()
 
@@ -100,8 +101,8 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
                         {chains.find((c) => c.id === chainIdNumber)?.name ?? 'Unknown network'}
                       </Text>
                       <div key={`transactions#${chainIdNumber}`}>
-                        {renderTransactions(pending, chainIdNumber)}
-                        {renderTransactions(confirmed, chainIdNumber)}
+                        {renderTransactions(pending, chainIdNumber, isMobile)}
+                        {renderTransactions(confirmed, chainIdNumber, isMobile)}
                       </div>
                     </>
                   )

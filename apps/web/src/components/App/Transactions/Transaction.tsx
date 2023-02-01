@@ -27,7 +27,7 @@ const IconWrapper = styled.div<{ pending: boolean; success?: boolean }>`
   display: flex;
 `
 
-export default function Transaction({ tx, chainId }: { tx: TransactionDetails; chainId: number }) {
+export default function Transaction({ tx, chainId, hiddenIcon = false }: { tx: TransactionDetails; chainId: number; hiddenIcon?: boolean }) {
   const summary = tx?.summary
   const pending = !tx?.receipt
   const success = !pending && tx && (tx.receipt?.status === 1 || typeof tx.receipt?.status === 'undefined')
@@ -36,7 +36,7 @@ export default function Transaction({ tx, chainId }: { tx: TransactionDetails; c
 
   return (
     <TransactionState pending={pending} success={success}>
-      <TransactionText href={getBlockExploreLink(tx.hash, 'transaction', chainId)}>
+      <TransactionText href={getBlockExploreLink(tx.hash, 'transaction', chainId)} hiddenIcon={hiddenIcon}>
         {summary ?? tx.hash}
       </TransactionText>
       <IconWrapper pending={pending} success={success}>
