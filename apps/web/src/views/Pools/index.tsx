@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 import styled from 'styled-components'
 import { Flex, Text, Button, useModal } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -11,11 +13,14 @@ import { USD_DECIMALS } from 'config/constants/exchange'
 import { useProvider } from 'wagmi'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { getUserFarmingData } from 'services/pools'
-import { NETWORK_LINK } from 'views/BridgeToken/networks'
+import { NETWORK_LABEL, NETWORK_LINK } from 'views/BridgeToken/networks'
+import ModalBase from 'views/Referral/components/Modal/ModalBase'
+import { GridLoader } from 'react-spinners'
 import { Tooltip } from '@mui/material'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
+import { Content } from './components/style'
 
 const NavWrapper = styled(Flex)`
   padding: 28px 24px 24px;
@@ -365,6 +370,10 @@ export const linkTransaction = (chainId) => {
   return `${NETWORK_LINK[chainId]}/address/`
 }
 
+export const linkTransactionTx = (chainId) => {
+  return `${NETWORK_LINK[chainId]}/tx/`
+}
+
 const Pools: React.FC<React.PropsWithChildren> = () => {
   const [aprPercent, setAprPercent] = useState<null | number>(null)
   const [pendingRewardOfUser, setPendingRewardOfUser] = useState<null | string>(null)
@@ -381,6 +390,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const contractPair = useXOXPoolContract()
   const provider = useProvider({ chainId })
   const [balanceLP, setBalanceLP] = useState<any>()
+  const [modalReject, setModalReject] = useState<boolean>(false)
+  const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
+  const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
+  const [txHash, setTxHash] = useState('')
 
   const handleGetDataFarming = async () => {
     try {
@@ -447,6 +460,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleWithdraw = async () => {
     try {
+      setIsOpenLoadingClaimModal(true)
       const gasFee = await contractFarmingLP.estimateGas.withdraw(0)
       const txWithdraw = await contractFarmingLP.withdraw(0, {
         gasLimit: gasFee,
@@ -454,11 +468,16 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       const tx = await txWithdraw.wait(1)
       if (tx?.transactionHash) {
         // eslint-disable-next-line no-console
-        console.log(`tx?.transactionHash`, tx?.transactionHash)
+        setIsOpenSuccessModal(true)
+        setTxHash(tx?.transactionHash)
       }
-    } catch (error) {
+    } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log(`error>>>`, error)
+      setIsOpenLoadingClaimModal(false)
+      if (error?.message.includes('rejected')) {
+        setModalReject(true)
+      }
     }
   }
 
@@ -691,6 +710,61 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           </div>
         </Main>
       </NavWrapper>
+      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Farming Confirm">
+        <Content>
+          <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
+            <img src="/images/reject_xox.png" alt="reject_xox" />
+          </div>
+          <div className="noti_claim_pending_h4">Transaction rejected.</div>
+          <div className="btn_dismiss_container">
+            <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
+              Dismiss
+            </button>
+          </div>
+          <img
+            src="/images/close-one.svg"
+            alt="close-one"
+            className="x-close-icon"
+            aria-hidden="true"
+            onClick={() => setModalReject(false)}
+          />
+        </Content>
+      </ModalBase>
+      <ModalBase
+        open={isOpenLoadingClaimModal}
+        handleClose={() => setIsOpenLoadingClaimModal(false)}
+        title="Farming Confirm"
+      >
+        <Content>
+          <div className="xox_loading" style={{ margin: '24px 0px' }}>
+            <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+          </div>
+          <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
+          <div className="noti_claim_pending_h3">Withdraw {pendingRewardOfUser} XOX</div>
+          <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
+          <img
+            src="/images/close-one.svg"
+            alt="close-one"
+            className="x-close-icon"
+            aria-hidden="true"
+            onClick={() => setIsOpenLoadingClaimModal(false)}
+          />
+        </Content>
+      </ModalBase>
+      <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Confirm Bridge">
+        <Content>
+          <div className="noti_claim_success">
+            <img src="/images/success_claim.png" alt="success_claim" />
+          </div>
+          <div className="submitted">Transaction Submitted</div>
+          <a href={`${linkTransactionTx(chainId)}${txHash}`} target="_blank" rel="noreferrer">
+            <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
+          </a>
+          <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)} role="button">
+            Close
+          </div>
+        </Content>
+      </ModalBase>
     </>
   )
 }
