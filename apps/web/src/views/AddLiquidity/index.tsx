@@ -947,7 +947,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
                 <CustomRowBetween>
                   <Text className="text-left">{t('Share of Pool')}</Text>
-                  <Text className="text-right">{poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '-'}</Text>
+                  <Text className="text-right">{poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '0%'}</Text>
                 </CustomRowBetween>
 
                 <CustomRowBetween>

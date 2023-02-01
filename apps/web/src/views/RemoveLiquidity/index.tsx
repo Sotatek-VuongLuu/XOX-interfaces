@@ -76,6 +76,7 @@ const BorderCard = styled.div`
 `
 
 const AmountWrapper = styled(RowBetween)`
+  margin-bottom: 0;
   div {
     font-weight: 400;
     font-size: 12px;
@@ -129,6 +130,7 @@ const CustomCardBody = styled(CardBody)`
     height: 27px;
     border: 1px solid #9072ff;
     border-radius: 40px;
+    padding: 0 12px;
   }
 
   .text-symbol {
@@ -178,7 +180,12 @@ const CustomCardBody = styled(CardBody)`
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    padding: 32px 24px;
+    padding: 16px 0 32px 0;
+
+    .btn-percent {
+      padding: 0 24px;
+    }
+
     .amount {
       font-weight: 500;
       font-size: 40px;
@@ -236,6 +243,7 @@ const StyledLiquidityContainer = styled.div`
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: 560px;
+    padding: 0 28px;
   }
 `
 
@@ -869,7 +877,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
               </AutoColumn>
               {!showDetailed && (
                 <>
-                  <ColumnCenter style={{ margin: '8px auto' }}>
+                  <ColumnCenter style={{ margin: '16px auto' }}>
                     <ArrowDownIcon color="textSubtle" width="24px" />
                   </ColumnCenter>
                   <AutoColumn gap="10px">
@@ -969,7 +977,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                     showCommonBases
                     commonBasesType={CommonBasesType.LIQUIDITY}
                   />
-                  <ColumnCenter style={{ margin: '8px auto' }}>
+                  <ColumnCenter style={{ margin: '16px auto' }}>
                     <ArrowDownIcon width="24px" my="16px" />
                   </ColumnCenter>
                   <CurrencyInputPanel
@@ -999,7 +1007,11 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                     commonBasesType={CommonBasesType.LIQUIDITY}
                   />
                   <ColumnCenter>
-                    <AddIcon width="24px" my="16px" />
+                    <AddIcon
+                      width="30px"
+                      my="16px"
+                      style={{ borderRadius: '50%', background: '#303030', padding: '3px' }}
+                    />
                   </ColumnCenter>
                   <CurrencyInputPanel
                     // beforeButton={
