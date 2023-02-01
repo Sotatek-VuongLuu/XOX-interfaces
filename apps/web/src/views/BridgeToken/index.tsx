@@ -41,6 +41,8 @@ import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDeskto
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
 import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
 import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
+import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 
 const SwapButton = styled.button`
   background: ${({ disabled }) =>
@@ -294,6 +296,18 @@ const Wrapper = styled(Flex)`
   justify-content: center;
 `
 
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: 0;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+  }
+`
+
 export const getChainIdToByChainId = (chainId: any) => {
   switch (chainId) {
     case ChainId.GOERLI:
@@ -521,6 +535,7 @@ export default function BridgeToken() {
 
   return (
     <Page>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
         width={['328px', , '559px']}
         marginTop="40px"
