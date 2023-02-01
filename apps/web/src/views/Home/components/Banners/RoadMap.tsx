@@ -116,7 +116,7 @@ const RoadMap = () => {
     <Wrapper style={{ overflow: 'hidden' }}>
       <Title data-aos="fade-up">Road map</Title>
       <Description data-aos="fade-up" data-aos-duration="2300">
-        Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.
+        Building The Road For Web3 & Blockchain Mass Adoption
       </Description>
 
       {width < 970 ? (
