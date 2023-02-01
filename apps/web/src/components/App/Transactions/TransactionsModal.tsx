@@ -49,7 +49,7 @@ const NoTransactionText = styled(Text)`
 `
 function renderTransactions(transactions: TransactionDetails[], chainId: number) {
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" mb="8px">
       {transactions.map((tx) => {
         return <Transaction key={tx.hash + tx.addedTime} tx={tx} chainId={chainId} />
       })}
@@ -73,7 +73,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
   return (
     <Modal title={t('Recent Transactions')} pb="32px" onDismiss={onDismiss}>
       {account ? (
-        <ModalBody style={{ width: hasTransactions ? '495px' : 'unset' }}>
+        <ModalBody style={{ width: hasTransactions ? '495px' : 'unset', maxWidth: '100%' }}>
           {hasTransactions ? (
             <>
               <AutoRow mb="1rem" style={{ justifyContent: 'space-between' }}>
@@ -96,7 +96,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
 
                   return (
                     <>
-                      <Text fontSize="16px" lineHeight="19px" color="#FFFFFFDE" mb="8px" mt="8px">
+                      <Text fontSize="16px" lineHeight="19px" color="#FFFFFFDE">
                         {chains.find((c) => c.id === chainIdNumber)?.name ?? 'Unknown network'}
                       </Text>
                       <div key={`transactions#${chainIdNumber}`}>
