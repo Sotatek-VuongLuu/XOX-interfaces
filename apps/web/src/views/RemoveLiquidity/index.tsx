@@ -66,6 +66,7 @@ import ConfirmLiquidityModal from '../Swap/components/ConfirmRemoveLiquidityModa
 import { logError } from '../../utils/sentry'
 import { formatAmount } from '../../utils/formatInfoNumbers'
 import { CommonBasesType } from '../../components/SearchModal/types'
+import { formatAmountString } from '@pancakeswap/utils/formatBalance'
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
@@ -373,11 +374,11 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
       ? '<1'
       : parsedAmounts[Field.LIQUIDITY_PERCENT].toFixed(0),
     [Field.LIQUIDITY]:
-      independentField === Field.LIQUIDITY ? typedValue : parsedAmounts[Field.LIQUIDITY]?.toSignificant(6) ?? '',
+      independentField === Field.LIQUIDITY ? typedValue : formatAmountString(parsedAmounts[Field.LIQUIDITY], 6) ?? '',
     [Field.CURRENCY_A]:
-      independentField === Field.CURRENCY_A ? typedValue : parsedAmounts[Field.CURRENCY_A]?.toSignificant(6) ?? '',
+      independentField === Field.CURRENCY_A ? typedValue : formatAmountString(parsedAmounts[Field.CURRENCY_A], 6) ?? '',
     [Field.CURRENCY_B]:
-      independentField === Field.CURRENCY_B ? typedValue : parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) ?? '',
+      independentField === Field.CURRENCY_B ? typedValue : formatAmountString(parsedAmounts[Field.CURRENCY_B], 6) ?? '',
   }
 
   const atMaxAmount = parsedAmounts[Field.LIQUIDITY_PERCENT]?.equalTo(new Percent('1'))
@@ -1045,10 +1046,12 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                   <Text className="text-price">{t('Prices')}</Text>
                   <Flex flexDirection="column" alignItems="flex-end">
                     <Text>
-                      1 {currencyA?.symbol} = {tokenA ? pair.priceOf(tokenA).toSignificant(6) : '-'} {currencyB?.symbol}
+                      1 {currencyA?.symbol} = {tokenA ? formatAmountString(pair.priceOf(tokenA), 6) : '-'}{' '}
+                      {currencyB?.symbol}
                     </Text>
                     <Text>
-                      1 {currencyB?.symbol} ={tokenB ? pair.priceOf(tokenB).toSignificant(6) : '-'} {currencyA?.symbol}
+                      1 {currencyB?.symbol} ={tokenB ? formatAmountString(pair.priceOf(tokenB), 6) : '-'}{' '}
+                      {currencyA?.symbol}
                     </Text>
                   </Flex>
                 </Flex>

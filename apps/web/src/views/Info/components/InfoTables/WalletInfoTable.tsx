@@ -22,7 +22,7 @@ import { getDefaultProvider } from '@ethersproject/providers'
 import { CurrencyLogo } from 'components/Logo'
 import { ERC20Token, PAIR_XOX_BUSD } from '@pancakeswap/sdk'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useERC20 } from 'hooks/useContract'
 import InfoPieChart from '../InfoCharts/PieChart'
 
@@ -235,10 +235,10 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const getXOXPrice = () => {
     Promise.all([contractUSD.balanceOf(PAIR_XOX_BUSD[chainId]), contractXOX.balanceOf(PAIR_XOX_BUSD[chainId])])
       .then((balances) => {
-        const baseTokenPrice = parseFloat(formatBigNumber(balances[0]))
+        const baseTokenPrice = parseFloat(formatBigNumber(balances[0], 2, USD_DECIMALS[chainId]))
         const XoxPrice = parseFloat(formatBigNumber(balances[1]))
         if (baseTokenPrice === 0) return
-        setRateXOX(XoxPrice / baseTokenPrice)
+        setRateXOX(baseTokenPrice / XoxPrice)
       })
       .catch((e) => console.warn(e))
   }

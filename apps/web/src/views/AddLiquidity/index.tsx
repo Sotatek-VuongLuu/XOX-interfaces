@@ -69,6 +69,7 @@ import { ChoosePair } from './ChoosePair'
 import { formatAmount } from '../../utils/formatInfoNumbers'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
+import { formatAmountString } from '@pancakeswap/utils/formatBalance'
 
 const MainBackground = styled.div`
   position: absolute;
@@ -293,7 +294,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
           (independentField === Field.CURRENCY_B && !zapTokenCheckedB))
           ? ''
           : typedValue,
-      [dependentField]: noLiquidity ? otherTypedValue : parsedAmounts[dependentField]?.toSignificant(6) ?? '',
+      [dependentField]: noLiquidity ? otherTypedValue : formatAmountString(parsedAmounts[dependentField], 6) ?? '',
     }),
     [
       canZap,
@@ -933,21 +934,23 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                       <Text className="text-left">{`${currencies[Field.CURRENCY_A]?.symbol} per ${
                         currencies[Field.CURRENCY_B]?.symbol
                       }`}</Text>
-                      <Text className="text-right">{price.invert().toSignificant(6)}</Text>
+                      <Text className="text-right">{formatAmountString(price.invert(), 6)}</Text>
                     </CustomRowBetween>
 
                     <CustomRowBetween>
                       <Text className="text-left">{`${currencies[Field.CURRENCY_B]?.symbol} per ${
                         currencies[Field.CURRENCY_A]?.symbol
                       }`}</Text>
-                      <Text className="text-right">{price.toSignificant(6)}</Text>
+                      <Text className="text-right">{formatAmountString(price, 6)}</Text>
                     </CustomRowBetween>
                   </>
                 )}
 
                 <CustomRowBetween>
                   <Text className="text-left">{t('Share of Pool')}</Text>
-                  <Text className="text-right">{poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '0%'}</Text>
+                  <Text className="text-right">
+                    {poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '0%'}
+                  </Text>
                 </CustomRowBetween>
 
                 <CustomRowBetween>
