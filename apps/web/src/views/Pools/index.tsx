@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Flex, Text, Button, useModal } from '@pancakeswap/uikit'
+import { Flex, Text, Button, useModal, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useEffect, useState } from 'react'
 import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
@@ -11,6 +11,8 @@ import { USD_DECIMALS } from 'config/constants/exchange'
 import { useProvider } from 'wagmi'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { NETWORK_LINK } from 'views/BridgeToken/networks'
+import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 
@@ -333,6 +335,18 @@ const Main = styled.div`
   }
 `
 
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+  }
+`
+
 export const linkTransaction = (chainId) => {
   return `${NETWORK_LINK[chainId]}/address/`
 }
@@ -354,6 +368,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const provider = useProvider({ chainId })
   const [balanceLP, setBalanceLP] = useState<any>()
   const [isUnStake, setIsUnStake] = useState(false)
+  const { isMobile } = useMatchBreakpoints()
 
   const handleGetDataFarming = async () => {
     try {
@@ -428,6 +443,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   return (
     <>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <NavWrapper>
         <Banner>
           <Text className="title" marginBottom="16px">

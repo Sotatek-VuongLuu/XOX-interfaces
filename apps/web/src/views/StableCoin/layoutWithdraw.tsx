@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useMemo } from 'react'
-import { Flex, Button, Text } from '@pancakeswap/uikit'
+import { Flex, Button, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useAllTokens } from 'hooks/Tokens'
 import styled from 'styled-components'
 import { useTreasuryXOX } from 'hooks/useContract'
@@ -10,6 +10,8 @@ import { useWeb3React } from '@pancakeswap/wagmi'
 import {useMultiChainId } from 'state/info/hooks'
 import Trans from 'components/Trans'
 import Link from 'next/link'
+import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import InfoNav from '../Info/components/InfoNav'
 import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
@@ -88,6 +90,17 @@ const TextStyle = styled(Text)`
     color: ${({ theme }) => theme.colors.violet};
   }
 `
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+  }
+`
 
 export default function WithDrawLayout() {
   const { account, chainId } = useWeb3React()
@@ -98,6 +111,7 @@ export default function WithDrawLayout() {
   const [currentReward, setCurrentReward] = useState<number | string>(0)
   const chainIdLocal:any = useMultiChainId() || chainId;
   const [keyContainer, setKeyContainer] = useState(Math.random());
+  const { isMobile } = useMatchBreakpoints()
 
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async (accountId: any) => {
@@ -135,6 +149,7 @@ export default function WithDrawLayout() {
 
   return (
     <>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
       <Container style={{marginBottom: 100}} key={`container-stablecoin${chainId}`}>
         <Flex alignItems="center" style={{ gap: 10 }}>

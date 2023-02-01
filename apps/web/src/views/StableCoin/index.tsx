@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useMemo } from 'react'
-import { Flex, Button, Text } from '@pancakeswap/uikit'
+import { Flex, Button, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useAllTokens } from 'hooks/Tokens'
 import styled from 'styled-components'
 import { useTreasuryXOX } from 'hooks/useContract'
@@ -11,6 +11,8 @@ import { useStableCoinSWR, useMultiChainId } from 'state/info/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import Link from 'next/link'
+import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import InfoNav from '../Info/components/InfoNav'
 import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
@@ -150,6 +152,18 @@ const BoxWrapper = styled(Box)`
   }
 `
 
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+  }
+`
+
 export default function StableCoin() {
   const { account, chainId } = useWeb3React()
   const [widthDraw, setWidthDraw] = useState(TYPE.default)
@@ -158,6 +172,7 @@ export default function StableCoin() {
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
   const [keyContainer, setKeyContainer] = useState(Math.random());
+  const { isMobile } = useMatchBreakpoints()
 
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async (accountId: any) => {
@@ -198,6 +213,7 @@ export default function StableCoin() {
 
   return (
     <>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
       <Container style={{marginBottom: 100}} key={`container-stablecoin${chainId}`}>
           <>
