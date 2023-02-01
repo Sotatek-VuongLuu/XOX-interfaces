@@ -129,6 +129,7 @@ const CustomCardBody = styled(CardBody)`
     height: 27px;
     border: 1px solid #9072ff;
     border-radius: 40px;
+    padding: 0 12px;
   }
 
   .text-symbol {
@@ -179,6 +180,11 @@ const CustomCardBody = styled(CardBody)`
 
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 32px 24px;
+
+    .btn-percent {
+      padding: 0 24px;
+    }
+    
     .amount {
       font-weight: 500;
       font-size: 40px;
