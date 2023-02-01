@@ -1006,6 +1006,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                     id="remove-liquidity-tokena"
                     showCommonBases
                     commonBasesType={CommonBasesType.LIQUIDITY}
+                    disableCurrencySelect
                   />
                   <ColumnCenter>
                     <AddIcon
@@ -1038,6 +1039,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                     id="remove-liquidity-tokenb"
                     showCommonBases
                     commonBasesType={CommonBasesType.LIQUIDITY}
+                    disableCurrencySelect
                   />
                 </Box>
               )}

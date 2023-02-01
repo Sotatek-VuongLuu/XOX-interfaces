@@ -458,6 +458,8 @@ export default function AddLiquidity({ currencyA, currencyB }) {
           ? t('Confirm add liquidity')
           : txHash
           ? 'Transaction Submitted'
+          : liquidityErrorMessage
+          ? 'Confirm add liquidity'
           : t('You will receive')
       }
       customOnDismiss={handleDismissConfirmation}
