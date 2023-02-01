@@ -340,8 +340,12 @@ export default function CurrencyInputPanel({
                 <Flex maxWidth="200px">
                   <Text fontSize="12px" color="textSubtle">
                     ~
-                    {amountInDollar.toString().length > 10
-                      ? `${amountInDollar.toString().substring(0, 10)}...`
+                    {isMobile
+                      ? amountInDollar.toString().length > 10
+                        ? `${amountInDollar.toString().substring(0, 10)}...`
+                        : formatNumber(amountInDollar)
+                      : amountInDollar.toString().length > 30
+                      ? `${amountInDollar.toString().substring(0, 30)}...`
                       : formatNumber(amountInDollar)}{' '}
                     USD
                   </Text>
