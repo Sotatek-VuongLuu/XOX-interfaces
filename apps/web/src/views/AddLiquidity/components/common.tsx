@@ -8,6 +8,7 @@ import { AutoRow, CustomRowBetween, RowBetween } from 'components/Layout/Row'
 import { Field } from 'state/burn/actions'
 import { DoubleCurrencyLogo, CurrencyLogo } from 'components/Logo'
 import { getLPSymbol, getLPSymbol2 } from 'utils/getLpSymbol'
+import { formatAmountString } from '@pancakeswap/utils/formatBalance'
 
 const Dot = styled(Box)<{ scale?: 'sm' | 'md' }>`
   width: 12px;
@@ -17,11 +18,13 @@ const Dot = styled(Box)<{ scale?: 'sm' | 'md' }>`
 
 const CustomRowBetweenWrapper = styled(CustomRowBetween)`
   display: flex;
-  flex-direction: column;
-  align-items: unset;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
 
   .pair {
-    margin-top: 8px;
+    margin-top: 0;
+    margin-left: 8px;
   }
 
   .liquidity-minted {
@@ -275,7 +278,7 @@ export const AddLiquidityModalHeader = ({
     <AutoColumnWrapper gap="8px">
       <AutoColumn>
         <CustomRowBetweenWrapper>
-          <Text className="liquidity-minted">{liquidityMinted?.toSignificant(6)}</Text>
+          <Text className="liquidity-minted">{formatAmountString(liquidityMinted, 6)}</Text>
           <AutoRow className="pair logo">
             <DoubleCurrencyLogo
               currency0={currencies[Field.CURRENCY_A]}
@@ -308,7 +311,7 @@ export const AddLiquidityModalHeader = ({
       </CustomRowBetween>
       <CustomRowBetween className="estimated">
         <Text maxWidth="460px">
-          Output is estimated. If the price changes by more than 0.8% your transaction will revert
+          Output is estimated. If the price changes by more than {allowedSlippage / 100}% your transaction will revert
         </Text>
       </CustomRowBetween>
       <CustomRowBetween>
@@ -334,13 +337,13 @@ export const AddLiquidityModalHeader = ({
           <Text className="text-left">{t('Rates')}</Text>
           <Flex flexDirection="column">
             <Text className="text-right" mb="8px">
-              {`1 ${currencies[Field.CURRENCY_A]?.symbol} = ${price?.toSignificant(4)} ${
+              {`1 ${currencies[Field.CURRENCY_A]?.symbol} = ${formatAmountString(price, 6)} ${
                 currencies[Field.CURRENCY_B]?.symbol
               }`}
             </Text>
 
             <Text className="text-right">
-              {`1 ${currencies[Field.CURRENCY_B]?.symbol} = ${price?.invert().toSignificant(4)} ${
+              {`1 ${currencies[Field.CURRENCY_B]?.symbol} = ${formatAmountString(price?.invert(), 6)} ${
                 currencies[Field.CURRENCY_A]?.symbol
               }`}
             </Text>
@@ -350,7 +353,7 @@ export const AddLiquidityModalHeader = ({
       </AutoColumn>
       <CustomRowBetween>
         <Text className="text-left">{t('Share of Pool')}</Text>
-        <Text className="text-right">{noLiquidity ? '100' : poolTokenPercentage?.toSignificant(4)}%</Text>
+        <Text className="text-right">{noLiquidity ? '100' : formatAmountString(poolTokenPercentage, 6)}%</Text>
       </CustomRowBetween>
       {/* {!noLiquidity && (
         <CustomRowBetween>
