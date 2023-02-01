@@ -125,6 +125,9 @@ const Title = styled.div`
     color: rgba(255, 255, 255);
     margin-bottom: 16px;
   }
+
+  span {
+  }
 `
 
 const Header = styled.div`
@@ -317,7 +320,14 @@ export default function Pool() {
         <>
           <Title>
             <div className="flex">
-              <span>Your Liquidity</span>
+              <Text
+                color="rgba(255, 255, 255, 0.87)"
+                fontSize={['14px', , '18px']}
+                fontWeight={400}
+                lineHeight={['17px', , '22px']}
+              >
+                Your liquidity
+              </Text>
             </div>
           </Title>
           {positionCards}

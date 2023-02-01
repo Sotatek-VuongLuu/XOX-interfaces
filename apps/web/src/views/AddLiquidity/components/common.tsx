@@ -102,6 +102,7 @@ const AutoColumnWrapper = styled(AutoColumn)`
     font-size: 14px;
     line-height: 17px;
     color: #ffffff;
+    text-align: right;
   }
 
   .logo img {

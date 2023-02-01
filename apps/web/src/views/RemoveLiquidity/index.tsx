@@ -513,7 +513,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     })
       .then((response) => {
         setLiquidityState({ attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response.hash })
-        const amount = parsedAmounts[Field.LIQUIDITY].toSignificant(3)
+        const amount = formatAmountString(parsedAmounts[Field.LIQUIDITY], 3)
         const symbol = getLPSymbol(pair.token0.symbol, pair.token1.symbol, chainId)
         addTransaction(response, {
           summary: `Remove ${amount} ${symbol}`,
@@ -666,8 +666,8 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
       })
         .then((response: TransactionResponse) => {
           setLiquidityState({ attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response.hash })
-          const amountA = parsedAmounts[Field.CURRENCY_A]?.toSignificant(3)
-          const amountB = parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)
+          const amountA = formatAmountString(parsedAmounts[Field.CURRENCY_A], 3)
+          const amountB = formatAmountString(parsedAmounts[Field.CURRENCY_B], 3)
           addTransaction(response, {
             summary: `Remove ${amountA} ${currencyA?.symbol} and ${amountB} ${currencyB?.symbol}`,
             translatableSummary: {
@@ -695,9 +695,9 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   }
 
   const pendingText = t('Removing %amountA% %symbolA% and %amountB% %symbolB%', {
-    amountA: parsedAmounts[Field.CURRENCY_A]?.toSignificant(6) ?? '',
+    amountA: formatAmountString(parsedAmounts[Field.CURRENCY_A], 6) ?? '',
     symbolA: currencyA?.symbol ?? '',
-    amountB: parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) ?? '',
+    amountB: formatAmountString(parsedAmounts[Field.CURRENCY_B], 6) ?? '',
     symbolB: currencyB?.symbol ?? '',
   })
 
@@ -755,7 +755,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
 
   const [onPresentRemoveLiquidity] = useModal(
     <ConfirmLiquidityModal
-      title={t('You will receive')}
+      title={t('Confirm remove liquidity')}
       customOnDismiss={handleDismissConfirmation}
       attemptingTxn={attemptingTxn}
       hash={txHash || ''}
