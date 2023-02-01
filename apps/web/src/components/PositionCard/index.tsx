@@ -90,6 +90,13 @@ const CustomCard = styled(Card)`
     color: #ffffff;
   }
 
+  .text-elipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80px;
+  }
+
   .text-logo {
     margin-right: 8px;
   }
@@ -111,6 +118,12 @@ const CustomCard = styled(Card)`
     .text-right {
       font-size: 18px;
       line-height: 22px;
+    }
+
+    .text-elipsis {
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: unset;
     }
   }
 `
@@ -186,10 +199,49 @@ const CustomCardMinimal = styled(Card)`
     padding: 20px 17px;
   }
 
+  .text-left {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+  }
+
+  .text-right {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: right;
+    color: #ffffff;
+  }
+
+  .text-elipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80px;
+  }
+
   ${({ theme }) => theme.mediaQueries.md} {
     .lp-token-text {
       font-size: 16px;
       line-height: 19px;
+    }
+
+    .text-left {
+      font-size: 16px;
+      line-height: 19px;
+    }
+
+    .text-right {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    .text-elipsis {
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: unset;
+      width: auto;
     }
   }
 `
@@ -352,7 +404,7 @@ function MinimalPositionCardView({
               </CustomRowFixed>
               <CustomRowFixed>
                 <Flex flexDirection="column" alignItems="flex-end">
-                  <Text className="text-right">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Text>
+                  <Text className="text-right text-elipsis">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Text>
                   {/* {Number.isFinite(totalUSDValue) && (
                     <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
                       minimumFractionDigits: 2,

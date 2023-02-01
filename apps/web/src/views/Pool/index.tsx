@@ -111,6 +111,7 @@ const StyledLiquidityContainer = styled.div`
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: 560px;
+    padding: 0 28px;
   }
 `
 
@@ -180,6 +181,21 @@ const PoolWrapper = styled(Flex)`
     margin-top: 24px;
     margin-bottom: 8px;
   }
+
+  @media (max-width: 560px) {
+    .text-elipsis {
+      width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: right;
+    }
+    .pair-icon,
+    .pair-balance {
+      display: grid;
+      grid-template-columns: 1fr 30px 1fr;
+    }
+  }
 `
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
@@ -199,8 +215,7 @@ export default function Pool() {
   )
   const USDId = chainId === 1 || chainId === 5 ? 3408 : 4687
   const { price } = useDerivedMintInfo(currencyA, currencyB)
-  const [hiddenButton, setHiddenButton] = useState(false);
-
+  const [hiddenButton, setHiddenButton] = useState(false)
 
   const { data: USDPrice } = useSWR(
     `${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/price?id=${USDId}`,
@@ -257,9 +272,6 @@ export default function Pool() {
               >
                 Your liquidity
               </Text>
-              <span>
-                <img src="/images/liquidity/question-icon.svg" alt="" />
-              </span>
             </div>
             <ConnectSub
               color="rgba(255, 255, 255, 0.87)"
@@ -306,9 +318,6 @@ export default function Pool() {
           <Title>
             <div className="flex">
               <span>Your Liquidity</span>
-              <span>
-                <img src="/images/liquidity/question-icon.svg" alt="" />
-              </span>
             </div>
           </Title>
           {positionCards}
@@ -375,10 +384,23 @@ export default function Pool() {
               Balance
             </Text>
             <Flex flexDirection="column" alignItems="flex-end">
-              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.87)">
+              <Text
+                fontWeight="400"
+                fontSize="12px"
+                lineHeight="15px"
+                color="rgba(255, 255, 255, 0.87)"
+                className="text-elipsis"
+              >
                 {formatAmountNumber(parseFloat(balances[0]?.toFixed()), 6) || 0}
               </Text>
-              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)" mt="8px">
+              <Text
+                fontWeight="400"
+                fontSize="12px"
+                lineHeight="15px"
+                color="rgba(255, 255, 255, 0.6)"
+                mt="8px"
+                className="text-elipsis"
+              >
                 ~$
                 {balances[0]
                   ? formatAmountNumber(
@@ -395,10 +417,23 @@ export default function Pool() {
               Balance
             </Text>
             <Flex flexDirection="column" alignItems="flex-end">
-              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.87)">
+              <Text
+                fontWeight="400"
+                fontSize="12px"
+                lineHeight="15px"
+                color="rgba(255, 255, 255, 0.87)"
+                className="text-elipsis"
+              >
                 {formatAmountNumber(parseFloat(balances[1]?.toFixed()), 6) || 0}
               </Text>
-              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)" mt="8px">
+              <Text
+                fontWeight="400"
+                fontSize="12px"
+                lineHeight="15px"
+                color="rgba(255, 255, 255, 0.6)"
+                mt="8px"
+                className="text-elipsis"
+              >
                 ~$
                 {price && balances[1]
                   ? `${formatAmountNumber(
