@@ -73,14 +73,14 @@ const Reminder: React.FC<Props> = ({
   const [bridgeTokenFee, setBridgeTokenFee] = useState<BridgeTokenFee>(initialBridgeTokenFee)
   const addressTokenOutput = tokenOutput?.address
 
-  const debounceFn = useCallback(debounce(fetchData, 1000), [])
+  const debounceFn = useCallback(debounce(fetchData, 300), [])
 
   useEffect(() => {
-    debounceFn(amount)
+    debounceFn(amount, chainId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, amount, addressTokenOutput])
 
-  async function fetchData(amountBri) {
+  async function fetchData(amountBri, chainIdBri) {
     try {
       if (!chainId) {
         setBridgeTokenFee(initialBridgeTokenFee)
@@ -88,7 +88,7 @@ const Reminder: React.FC<Props> = ({
         return
       }
       
-      const res = await fetchBridgeTokenFee(chainId, amountBri && amountBri !== ('.' || '') ? amountBri : '0')
+      const res = await fetchBridgeTokenFee(chainIdBri, amountBri && amountBri !== ('.' || '') ? amountBri : '0')
       const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data || bridgeTokenFee
       // const bridgeTokenFee: BridgeTokenFee = {
       //   gasFee: '0.13681800000000000014',
