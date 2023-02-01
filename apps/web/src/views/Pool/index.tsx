@@ -272,9 +272,6 @@ export default function Pool() {
               >
                 Your liquidity
               </Text>
-              <span>
-                <img src="/images/liquidity/question-icon.svg" alt="" />
-              </span>
             </div>
             <ConnectSub
               color="rgba(255, 255, 255, 0.87)"
@@ -321,9 +318,6 @@ export default function Pool() {
           <Title>
             <div className="flex">
               <span>Your Liquidity</span>
-              <span>
-                <img src="/images/liquidity/question-icon.svg" alt="" />
-              </span>
             </div>
           </Title>
           {positionCards}
