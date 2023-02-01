@@ -111,6 +111,7 @@ const StyledLiquidityContainer = styled.div`
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: 560px;
+    padding: 0 28px;
   }
 `
 
