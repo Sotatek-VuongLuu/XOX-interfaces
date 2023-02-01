@@ -32,8 +32,11 @@ const StyledModalHeader = styled(ModalHeader)`
   width: 100%;
   margin-bottom: 15px;
 `
+interface IContentProps {
+  isHistoryData?: boolean
+}
 
-const Content = styled.div`
+const Content = styled.div<IContentProps>`
   padding: 0 24px;
   .out_amount {
     text-overflow: ellipsis;
@@ -49,7 +52,7 @@ const Content = styled.div`
     }
   }
   @media screen and (min-width: 1400px) {
-    overflow-x: hidden;
+    overflow-x: ${({ isHistoryData }) => (isHistoryData ? 'hidden' : 'unset')};
   }
 `
 
@@ -128,7 +131,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
         onClick={onDismiss}
         aria-hidden="true"
       />
-      <Content>
+      <Content isHistoryData={historyData.length !== 0}>
         {historyData && historyData.length !== 0 ? (
           <TableContainer component={Paper} sx={{ height: '165px', background: '#242424', boxShadow: 'none' }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">

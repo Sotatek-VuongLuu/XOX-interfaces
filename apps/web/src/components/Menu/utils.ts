@@ -36,8 +36,5 @@ const getActiveByMultiMenuItem = ({
   href: string
   activeHref?: string[]
 }) => {
-  console.log(pathname,
-    href,
-    activeHref)
   return activeHref ? activeHref.some((link) => pathname.startsWith(link)) : pathname.startsWith(href)
 }

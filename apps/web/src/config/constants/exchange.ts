@@ -60,6 +60,14 @@ export const XOX_ADDRESS: ChainMap<string> = {
   [ChainId.BSC_TESTNET]: '0x1D5EB09cb8a70213E52DD1dc084b9E22Fc4dA4dd',
 }
 
+export const XOX_LP: ChainMap<string> = {
+  [ChainId.ETHEREUM]: '',
+  [ChainId.RINKEBY]: '',
+  [ChainId.GOERLI]: '0xbCda2cb851062e2CdB3D237f206Ab98F2188e4aC',
+  [ChainId.BSC]: '',
+  [ChainId.BSC_TESTNET]: '0xF38Df69bF602EAABD10f13B74Eaeb363428B26fa',
+}
+
 export const USD_ADDRESS: ChainMap<string> = {
   [ChainId.ETHEREUM]: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
   [ChainId.RINKEBY]: '',

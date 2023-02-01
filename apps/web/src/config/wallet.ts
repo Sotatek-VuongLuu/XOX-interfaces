@@ -40,9 +40,9 @@ const walletsConfig = ({
       icon: '/images/wallets/metamask2.png',
       installed: typeof window !== 'undefined' && Boolean(window.ethereum?.isMetaMask) && metaMaskConnector.ready,
       connectorId: ConnectorNames.MetaMask,
-      deepLink: `https://metamask.app.link/dapp/${process.env.NEXT_PUBLIC_API_SITE_DOMAIN}/swap/`,
+      deepLink: `https://metamask.app.link/dapp/${process.env.NEXT_PUBLIC_SITE_DOMAIN}/swap/`,
       qrCode,
-      downloadLink: `https://metamask.app.link/dapp/${process.env.NEXT_PUBLIC_API_SITE_DOMAIN}/swap/`,
+      downloadLink: `https://metamask.app.link/dapp/${process.env.NEXT_PUBLIC_SITE_DOMAIN}/swap/`,
     },
     {
       id: 'trust',
@@ -53,7 +53,7 @@ const walletsConfig = ({
         typeof window !== 'undefined' &&
         !(window.ethereum as ExtendEthereum)?.isSafePal && // SafePal has isTrust flag
         (Boolean(window.ethereum?.isTrust) || Boolean((window.ethereum as ExtendEthereum)?.isTrustWallet)),
-      deepLink: `https://link.trustwallet.com/open_url?coin_id=20000714&url=https://${process.env.NEXT_PUBLIC_API_SITE_DOMAIN}/swap/`,
+      deepLink: `https://link.trustwallet.com/open_url?coin_id=20000714&url=https://${process.env.NEXT_PUBLIC_SITE_DOMAIN}/swap/`,
       downloadLink: {
         desktop: 'https://chrome.google.com/webstore/detail/trust-wallet/egjidjbpglichdcondbcbdnbeeppgdph/related',
       },

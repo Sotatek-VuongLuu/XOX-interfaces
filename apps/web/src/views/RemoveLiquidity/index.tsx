@@ -111,7 +111,7 @@ const CustomLightGreyCard = styled(LightGreyCard)`
 `
 
 const CustomCardBody = styled(CardBody)`
-  padding: 24px 18px;
+  padding: 24px 0;
 
   .amount {
     font-weight: 700;
@@ -231,7 +231,7 @@ const StyledLiquidityContainer = styled.div`
   // left: 0px;
   margin-top: 10px;
   z-index: 9;
-  padding: 0 28px;
+  padding: 0 20px;
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -250,11 +250,11 @@ const SwapBackgroundWrapper = styled.div`
 
 const BackgroundWrapper = styled.div`
   position: absolute;
-  top: 200px;
+  top: 150px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: calc(100% - 200px);
+  height: calc(100% - 150px);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background: #242424;
@@ -282,7 +282,7 @@ const MainBackground = styled.div`
 
 const ButtonWrapper = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr;
   gap: 16px;
 
   button {
@@ -290,6 +290,7 @@ const ButtonWrapper = styled.div`
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
+    grid-template-columns: 1fr 1fr;
     button {
       height: 43px;
     }
@@ -775,7 +776,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     <Page>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
-        width={['290px', , '559px']}
+        width={['330px', , '559px']}
         marginTop="100px"
         marginBottom="100px"
         height="100%"
@@ -1071,7 +1072,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                       onClick={isZap ? approveCallback : onAttemptToApprove}
                       disabled={approval !== ApprovalState.NOT_APPROVED || (!isZap && signatureData !== null)}
                       width="100%"
-                      mr="0.5rem"
+                      mr={['0', , '0.5rem']}
                       style={{ fontWeight: 700 }}
                     >
                       {approval === ApprovalState.PENDING ? (

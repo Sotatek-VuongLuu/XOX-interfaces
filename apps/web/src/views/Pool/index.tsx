@@ -106,7 +106,7 @@ const StyledLiquidityContainer = styled.div`
   // left: 0px;
   margin-top: 10px;
   z-index: 9;
-  padding: 0 28px;
+  padding: 0 20px;
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -155,7 +155,7 @@ const Background = styled.div<I>`
   position: absolute;
   top: 56px;
   left: 2px;
-  padding: 0 28px;
+  padding: 0 20px;
   width: 556px;
   // height: 500px;
 
@@ -438,7 +438,7 @@ export default function Pool() {
     <Page>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
-        width={['290px', , '559px']}
+        width={['330px', , '559px']}
         marginTop="100px"
         marginBottom="100px"
         height="100%"

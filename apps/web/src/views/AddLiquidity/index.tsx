@@ -454,7 +454,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
         noLiquidity
           ? t('You are creating a pool')
           : attemptingTxn
-          ? t('Confirm')
+          ? t('Confirm add liquidity')
           : txHash
           ? 'Transaction Submitted'
           : t('You will receive')
