@@ -540,7 +540,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       </NavWrapper>
 
       <NavWrapper>
-        <Main>
+        <Main className='border-gradient-style'>
           <div className="content_container">
             <div className="header_container">
               <div className="header">

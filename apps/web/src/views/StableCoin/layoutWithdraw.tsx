@@ -35,6 +35,14 @@ const Row = styled.div`
     flex-direction: column;
   }
 `
+const WrapperBorder = styled.div`
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px #00000080;
+  flex: 1;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+`
 
 const Box = styled.div`
   padding: 17px 30px;
@@ -45,6 +53,7 @@ const Box = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+  max-width: 100%;
   img {
     max-width: 60px;
   }
@@ -182,9 +191,11 @@ export default function WithDrawLayout() {
             <TextStyle className="primary">Withdraw reward</TextStyle>
         </Flex>
         <Row style={{marginTop: 25}}>
-            <Box className='wrap-withdraw'>
-            <WidthdrawForm priceAvailable={currentReward} />
-            </Box>
+            <WrapperBorder className='border-gradient-style'>
+              <Box className='wrap-withdraw'>
+                <WidthdrawForm priceAvailable={currentReward} />
+              </Box>
+            </WrapperBorder>
         </Row>
       </Container>
     </>

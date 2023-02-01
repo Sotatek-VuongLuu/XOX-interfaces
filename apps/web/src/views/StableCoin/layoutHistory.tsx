@@ -37,6 +37,15 @@ const Row = styled.div`
   }
 `
 
+const WrapperBorder = styled.div`
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px #00000080;
+  flex: 1;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+`
+
 const Box = styled.div`
   padding: 17px 30px;
   border-radius: 10px;
@@ -51,7 +60,6 @@ const Box = styled.div`
   }
   &.wrap-table {
     align-items: flex-start;
-    max-width: calc(50% - 15px);
   }
   &.h-190{
     min-height: 190px;
@@ -187,16 +195,20 @@ export default function LayoutHistory() {
             <TextStyle className="primary">History</TextStyle>
         </Flex>
         <Row style={{ marginTop: 24 }}>
-            <Box className="wrap-table">
-                {
-                    account && <HistoryTable typePage={TYPE_HISTORY.stake} />
-                }
-            </Box>
-            <Box className="wrap-table">
-            {
-                account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
-            }
-            </Box>
+            <WrapperBorder className='border-gradient-style'>
+              <Box className="wrap-table">
+                  {
+                      account && <HistoryTable typePage={TYPE_HISTORY.stake} />
+                  }
+              </Box>
+            </WrapperBorder>
+            <WrapperBorder className='border-gradient-style'>
+              <Box className="wrap-table">
+              {
+                  account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
+              }
+              </Box>
+            </WrapperBorder>
         </Row>
       </Container>
     </>
