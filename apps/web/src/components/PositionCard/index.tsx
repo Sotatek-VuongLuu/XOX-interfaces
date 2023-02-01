@@ -36,6 +36,7 @@ import { DoubleCurrencyLogo } from '../Logo'
 import { RowBetween, RowFixed } from '../Layout/Row'
 import Dots from '../Loader/Dots'
 import { formatAmount } from '../../utils/formatInfoNumbers'
+import { formatAmountString } from '@pancakeswap/utils/formatBalance'
 
 const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -319,6 +320,7 @@ const withLPValuesFactory =
     const currency0 = props.showUnwrapped ? props.pair.token0 : unwrappedToken(props.pair.token0)
     const currency1 = props.showUnwrapped ? props.pair.token1 : unwrappedToken(props.pair.token1)
 
+    console.log(props.pair.liquidityToken, 'props.pair.liquidityToken')
     const userPoolBalance = useTokenBalance(account ?? undefined, props.pair.liquidityToken)
 
     const totalPoolTokens = useTotalSupply(props.pair.liquidityToken)
@@ -404,7 +406,9 @@ function MinimalPositionCardView({
               </CustomRowFixed>
               <CustomRowFixed>
                 <Flex flexDirection="column" alignItems="flex-end">
-                  <Text className="text-right text-elipsis">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}213123213</Text>
+                  <Text className="text-right text-elipsis">
+                    {userPoolBalance ? formatAmountString(userPoolBalance, 6) : '-'}
+                  </Text>
                   {/* {Number.isFinite(totalUSDValue) && (
                     <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
@@ -434,7 +438,7 @@ function MinimalPositionCardView({
                 <Text className="text-left">{currency0.symbol}</Text>
                 {token0Deposited ? (
                   <CustomRowFixed>
-                    <Text className="text-right">{token0Deposited?.toSignificant(6)}</Text>
+                    <Text className="text-right">{formatAmountString(token0Deposited, 6)}</Text>
                   </CustomRowFixed>
                 ) : (
                   '-'
@@ -446,7 +450,7 @@ function MinimalPositionCardView({
                 <Text className="text-left">{currency1.symbol}</Text>
                 {token1Deposited ? (
                   <CustomRowFixed>
-                    <Text className="text-right">{token1Deposited?.toSignificant(6)}</Text>
+                    <Text className="text-right">{formatAmountString(token1Deposited, 6)}</Text>
                   </CustomRowFixed>
                 ) : (
                   '-'
@@ -492,7 +496,7 @@ function FullPositionCard({
         role="button"
         onClick={() => {
           setShowMore(!showMore)
-          if(setHiddenButton) setHiddenButton(!showMore)
+          if (setHiddenButton) setHiddenButton(!showMore)
         }}
         p="16px"
       >
@@ -531,7 +535,7 @@ function FullPositionCard({
               </CustomRowFixed>
               {token0Deposited ? (
                 <CustomRowFixed>
-                  <Text className="text-right text-logo">{token0Deposited?.toSignificant(6)}</Text>
+                  <Text className="text-right text-logo">{formatAmountString(token0Deposited, 6)}</Text>
                   <CurrencyLogo currency={currency0} />
                 </CustomRowFixed>
               ) : (
@@ -547,7 +551,7 @@ function FullPositionCard({
               </CustomRowFixed>
               {token1Deposited ? (
                 <CustomRowFixed>
-                  <Text className="text-right text-logo">{token1Deposited?.toSignificant(6)}</Text>
+                  <Text className="text-right text-logo">{formatAmountString(token1Deposited, 6)}</Text>
                   <CurrencyLogo currency={currency1} />
                 </CustomRowFixed>
               ) : (
@@ -569,7 +573,7 @@ function FullPositionCard({
 
           <CustomRow>
             <Text className="text-left">{t('Your pool tokens')}</Text>
-            <Text className="text-right">{userPoolBalance?.toSignificant(6)}</Text>
+            <Text className="text-right">{formatAmountString(userPoolBalance, 6)}</Text>
           </CustomRow>
 
           <CustomRow>
