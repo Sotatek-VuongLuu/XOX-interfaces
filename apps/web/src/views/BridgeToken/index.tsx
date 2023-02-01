@@ -342,9 +342,12 @@ export default function BridgeToken() {
   const [messageTx, setMessageTx] = useState('')
   const [loading, setLoading] = useState(false)
   const [approvalState, approveCallback] = useApproveCallback(
-    XOX_ADDRESS[chainId] && tryParseAmount(amountInput, XOX[chainId]),
+    tryParseAmount(amountInput, XOX[chainId]),
     getBridgeTokenAddress(chainId),
   )
+
+  console.log(`tryParseAmount(amountInput, XOX[chainId]),`, tryParseAmount(amountInput, XOX[chainId]))
+
   const [modalReject, setModalReject] = useState<boolean>(false)
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')

@@ -412,7 +412,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')
   const [earned, setEarned] = useState<any>(null)
-  console.log(`earned`, earned)
 
   const handleGetDataFarming = async () => {
     try {
