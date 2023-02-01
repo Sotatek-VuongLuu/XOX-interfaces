@@ -341,11 +341,11 @@ export default function CurrencyInputPanel({
                   <Text fontSize="12px" color="textSubtle">
                     ~
                     {isMobile
-                      ? amountInDollar.toString().length > 10
-                        ? `${amountInDollar.toString().substring(0, 10)}...`
+                      ? formatNumber(amountInDollar).length > 10
+                        ? `${formatNumber(amountInDollar).substring(0, 10)}...`
                         : formatNumber(amountInDollar)
-                      : amountInDollar.toString().length > 30
-                      ? `${amountInDollar.toString().substring(0, 30)}...`
+                      : formatNumber(amountInDollar).length > 30
+                      ? `${formatNumber(amountInDollar).substring(0, 30)}...`
                       : formatNumber(amountInDollar)}{' '}
                     USD
                   </Text>
