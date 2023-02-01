@@ -4,20 +4,27 @@
 import styled from 'styled-components'
 import { Flex, Text, Button, useModal } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
 import useWindowSize from 'hooks/useWindowSize'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getContractFarmingLPAddress, getXOXPoolAddress } from 'utils/addressHelpers'
 import { formatEther, formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
-import { useProvider } from 'wagmi'
+import { useConnect, useProvider } from 'wagmi'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { getUserFarmingData } from 'services/pools'
 import { NETWORK_LABEL, NETWORK_LINK } from 'views/BridgeToken/networks'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
 import { GridLoader } from 'react-spinners'
 import { Tooltip } from '@mui/material'
+import { useActiveHandle } from 'hooks/useEagerConnect.bmp'
+import { useSelector } from 'react-redux'
+import useAuth from 'hooks/useAuth'
+import { AppState } from 'state'
+import { createWallets, getDocLink } from 'config/wallet'
+import { useTranslation } from '@pancakeswap/localization'
+import { WalletModalV2 } from '@pancakeswap/ui-wallets'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
@@ -294,6 +301,15 @@ const Main = styled.div`
         line-height: 19px;
         color: #ffffff;
         cursor: pointer;
+        &:disabled,
+        button[disabled] {
+          font-weight: 700;
+          font-size: 16px;
+          line-height: 19px;
+          background: #313131;
+          color: rgba(255, 255, 255, 0.38);
+          cursor: not-allowed;
+        }
         @media screen and (max-width: 576px) {
           width: 100%;
           margin-top: 16px;
@@ -377,7 +393,7 @@ export const linkTransactionTx = (chainId) => {
 
 const Pools: React.FC<React.PropsWithChildren> = () => {
   const [aprPercent, setAprPercent] = useState<null | number>(null)
-  const [pendingRewardOfUser, setPendingRewardOfUser] = useState<null | string>(null)
+  const [pendingRewardOfUser, setPendingRewardOfUser] = useState<any>(null)
   const [liquidity, setLiquidity] = useState<null | number>(null)
   const [totalSupplyLP, setTotalSupplyLP] = useState<any>(null)
   const [userStaked, setUserStaked] = useState<null | string>()
@@ -395,6 +411,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')
+  const [earned, setEarned] = useState<any>(null)
 
   const handleGetDataFarming = async () => {
     try {
@@ -418,7 +435,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       const totalSupply = Number(formatEther(totalSupplyBN._hex))
       setTotalSupplyLP(totalSupply)
       setReserve(reserves1)
-      setPendingRewardOfUser(formatEther(pendingReward._hex))
+      setPendingRewardOfUser(Number(formatEther(pendingReward._hex)))
       const balanceOfFarming = Number(formatEther(amountFarmingBN._hex))
 
       if (!balanceOfFarming) {
@@ -482,11 +499,33 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     }
   }
 
+  const {
+    t,
+    currentLanguage: { code },
+  } = useTranslation()
+
+  const handleActive = useActiveHandle()
+  const { connectAsync } = useConnect()
+  const [open, setOpen] = useState(false)
+  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
+  const { login } = useAuth()
+  const docLink = useMemo(() => getDocLink(code), [code])
+  const wallets = useMemo(() => createWallets(chainId, connectAsync), [chainId, connectAsync])
+
+  const handleClick = () => {
+    if (typeof __NEZHA_BRIDGE__ !== 'undefined') {
+      handleActive()
+    } else {
+      setOpen(true)
+    }
+  }
+
   const getDataFarming = async () => {
     try {
       const data = await getUserFarmingData(chainId, account)
-      console.log(`data`, data)
+      setEarned(formatEther(data?.userFarmingDatas[0].amount))
     } catch (error) {
+      // eslint-disable-next-line no-console
       console.log(error)
     }
   }
@@ -496,10 +535,16 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     <ModalUnStake balanceLP={userStaked} totalSupply={totalSupplyLP} reverse={reserve} />,
   )
 
-  getDataFarming()
+  useEffect(() => {
+    if (account && !userProfile) {
+      setOpen(false)
+    }
+  }, [account, userProfile])
+
   useEffect(() => {
     if (!account || !chainId) return
     handleGetDataFarming()
+    getDataFarming()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
 
@@ -544,8 +589,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
-                      <Tooltip title="0" placement="top">
-                        <span className="value">0</span>
+                      <Tooltip title={earned} placement="top">
+                        <span className="value">{earned}</span>
                       </Tooltip>
                     </div>
                     <div className="flex flex_direction">
@@ -570,7 +615,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
-                      <span className="value">0</span>
+                      <Tooltip title={earned} placement="top">
+                        <span className="value">{earned || '-'}</span>
+                      </Tooltip>
                     </div>
                   </div>
                 )}
@@ -612,7 +659,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       <p className="current_XOX_reward_value">{pendingRewardOfUser || '-'}</p>
                     </Tooltip>
                   </div>
-                  <button type="button" className="withdraw" onClick={handleWithdraw}>
+                  <button type="button" className="withdraw" onClick={handleWithdraw} disabled={!pendingRewardOfUser}>
                     Withdraw
                   </button>
                 </div>
@@ -630,9 +677,15 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     </Tooltip>
                   )}
                   {!enable ? (
-                    <button type="button" className="nable mt" onClick={() => setEnable(true)}>
-                      Enable
-                    </button>
+                    account ? (
+                      <button type="button" className="nable mt" onClick={() => setEnable(true)}>
+                        Enable
+                      </button>
+                    ) : (
+                      <button type="button" className="nable mt" onClick={handleClick}>
+                        Connect Wallet
+                      </button>
+                    )
                   ) : enable && userStaked ? (
                     <div className="group_btn_stake">
                       {enable && userStaked && (
@@ -665,8 +718,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     </p>
                     <p className="flex space_between earned_mb">
                       <span className="name">Earned:</span>
-                      <Tooltip title="0" placement="top">
-                        <span className="value">0</span>
+                      <Tooltip title={earned} placement="top">
+                        <span className="value">{earned}</span>
                       </Tooltip>
                     </p>
                     <p className="flex space_between liquidity_mb">
@@ -766,6 +819,14 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           </div>
         </Content>
       </ModalBase>
+      <WalletModalV2
+        docText={t('Learn How to Connect')}
+        docLink={docLink}
+        isOpen={open}
+        wallets={wallets}
+        login={login}
+        onDismiss={() => setOpen(false)}
+      />
     </>
   )
 }

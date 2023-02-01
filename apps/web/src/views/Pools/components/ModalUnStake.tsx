@@ -182,6 +182,7 @@ const ButtonGroup = styled.div`
     line-height: 19px;
     background: #313131;
     color: rgba(255, 255, 255, 0.38);
+    cursor: not-allowed;
   }
 `
 
