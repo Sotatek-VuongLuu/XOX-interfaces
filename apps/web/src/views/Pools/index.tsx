@@ -10,9 +10,11 @@ import { formatEther, formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useProvider } from 'wagmi'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
+import { getUserFarmingData } from 'services/pools'
 import { NETWORK_LINK } from 'views/BridgeToken/networks'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
+import ModalUnStake from './components/ModalUnStake'
 
 const NavWrapper = styled(Flex)`
   padding: 28px 24px 24px;
@@ -304,6 +306,7 @@ const Main = styled.div`
           background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
           border-radius: 6px;
           padding: 2px;
+          cursor: pointer;
           .inner_container {
             display: flex;
             background: #1d1d1d;
@@ -418,13 +421,25 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       })
   }, [account, chainId, provider])
 
+  const getDataFarming = async () => {
+    try {
+      const data = await getUserFarmingData(chainId, account)
+    } catch (error) {
+      console.warn(error)
+    }
+  }
+
+  const [onModalStake] = useModal(<ModalStake balanceLP={balanceLP} totalSupply={totalSupplyLP} reverse={reserve} />)
+  const [onModalUnStake] = useModal(
+    <ModalUnStake balanceLP={userStaked} totalSupply={totalSupplyLP} reverse={reserve} />,
+  )
+
   useEffect(() => {
     if (!account || !chainId) return
     handleGetDataFarming()
+    getDataFarming()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
-
-  const [onModalStake] = useModal(<ModalStake balanceLP={balanceLP} totalSupply={totalSupplyLP} reverse={reserve} />)
 
   return (
     <>
@@ -545,7 +560,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   ) : enable && userStaked ? (
                     <div className="group_btn_stake">
                       {enable && userStaked && (
-                        <div className="container_unstake_border">
+                        // eslint-disable-next-line jsx-a11y/interactive-supports-focus, jsx-a11y/click-events-have-key-events
+                        <div className="container_unstake_border" onClick={onModalUnStake} role="button">
                           <div className="inner_container">
                             <span>Unstake</span>
                           </div>
