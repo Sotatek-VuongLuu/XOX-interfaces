@@ -574,6 +574,7 @@ const ReferralFriend = ({
         <Grid container spacing={2}>
           <Grid item xs={12} lg={4}>
             {account && (
+              <div className="border-gradient-style">
               <WrapperLeft>
                 <p className="title">Referral friends</p>
                 {listFriends.length !== 0 ? (
@@ -659,6 +660,7 @@ const ReferralFriend = ({
                   <div className="no-data">No Data</div>
                 )}
               </WrapperLeft>
+              </div>
             )}
           </Grid>
 

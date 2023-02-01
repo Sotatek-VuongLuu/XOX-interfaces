@@ -87,6 +87,27 @@ const GlobalStyle = createGlobalStyle`
     text-fill-color: transparent !important;
   }
 
+  .border-gradient-style{
+    position: relative;
+    &::before{
+      content: "";
+      position: absolute;
+      top: -2px;
+      right: -2px;
+      bottom: -2px;
+      left: -2px;
+      background-image: linear-gradient(179.95deg, #6034FF 0.08%, rgba(163, 90, 255, 0) 99.95%);
+      z-index: 1;
+      border-radius: 10px;
+    }
+    >div{
+      background: #242424;
+      z-index: 9;
+      border-radius: 10px;
+      position: relative;
+    }
+  }
+
 `
 
 export default GlobalStyle

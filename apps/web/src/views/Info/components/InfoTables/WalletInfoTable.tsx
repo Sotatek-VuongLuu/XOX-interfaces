@@ -180,7 +180,7 @@ const SORT_FIELD = {
   amountToken1: 'amountToken1',
 }
 
-const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyDatas, native, allTokens }) => {
+const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyDatas, native, allTokens, className }) => {
   const [tokensBalance, setTokensBalance] = useState<any>([])
 
   const { address: account } = useAccount()
@@ -325,7 +325,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   }, [balanceNative, tokensBalance, chainId])
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <TableWrapper>
         <Flex justifyContent="space-between" alignItems="flex-end">
           <Text

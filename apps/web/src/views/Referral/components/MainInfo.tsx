@@ -551,51 +551,53 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
       <Grid container spacing={2}>
         <Grid item xs={12} lg={4}>
           <div>
-            <First account={account}>
-              <div className="tab_filter">
-                {filterTime.map((item) => {
-                  return (
-                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
-                    <div
-                      key={item}
-                      onClick={() => handleOnChangeRankTab(item)}
-                      className={tabLeaderBoard === item ? 'tab_item active' : 'tab_item'}
-                    >
-                      {item}
-                    </div>
-                  )
-                })}
-              </div>
-
-              <div className="learder_board">
-                {listUserRanks &&
-                  listUserRanks.length > 0 &&
-                  listUserRanks?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
-                    // eslint-disable-next-line react/no-array-index-key
-                    return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
+            <div className="border-gradient-style">
+              <First account={account}>
+                <div className="tab_filter">
+                  {filterTime.map((item) => {
+                    return (
+                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                      <div
+                        key={item}
+                        onClick={() => handleOnChangeRankTab(item)}
+                        className={tabLeaderBoard === item ? 'tab_item active' : 'tab_item'}
+                      >
+                        {item}
+                      </div>
+                    )
                   })}
-                {listUserRanks.length === 0 && <NoDataWraper>No data</NoDataWraper>}
-              </div>
-
-              {!rankOfUser.rank ? null : rankOfUser.rank <= 6 ? null : (
-                <div className="dot">
-                  <div className="dot_item" />
-                  <div className="dot_item" />
-                  <div className="dot_item" />
                 </div>
-              )}
 
-              {account ? (
-                rankOfUser.rank ? (
-                  [1, 2, 3, 4, 5].includes(rankOfUser.rank) ? null : (
-                    <LeaderBoardItem item={rankOfUser} mb={false} />
-                  )
-                ) : null
-              ) : null}
-            </First>
+                <div className="learder_board">
+                  {listUserRanks &&
+                    listUserRanks.length > 0 &&
+                    listUserRanks?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
+                      // eslint-disable-next-line react/no-array-index-key
+                      return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
+                    })}
+                  {listUserRanks.length === 0 && <NoDataWraper>No data</NoDataWraper>}
+                </div>
+
+                {!rankOfUser.rank ? null : rankOfUser.rank <= 6 ? null : (
+                  <div className="dot">
+                    <div className="dot_item" />
+                    <div className="dot_item" />
+                    <div className="dot_item" />
+                  </div>
+                )}
+
+                {account ? (
+                  rankOfUser.rank ? (
+                    [1, 2, 3, 4, 5].includes(rankOfUser.rank) ? null : (
+                      <LeaderBoardItem item={rankOfUser} mb={false} />
+                    )
+                  ) : null
+                ) : null}
+              </First>
+            </div>
 
             {account && (
-              <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint}>
+              <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint} className="border-gradient-style">
                 <div className="total_point">
                   <p className="title">Your current total points</p>
                   <div className="total_point_bar">
@@ -616,7 +618,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
               </Second>
             )}
             {!account && (
-              <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint}>
+              <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint} className="border-gradient-style">
                 <div className="total_point" style={{ height: '203px', padding: '58px 0' }}>
                   <SubTitle className="please-connec">Please connect wallet to view your referral information</SubTitle>
                   <ConnectBox>
@@ -632,7 +634,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
           </div>
         </Grid>
         <Grid item xs={12} lg={8}>
-          <WrapperRight subTabIndex={subTabIndex}>
+          <WrapperRight subTabIndex={subTabIndex} className="border-gradient-style">
             <div className="container">
               <div className="filter">
                 {subTab.map((item, index) => {

@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useMemo } from 'react'
-import { Flex, Button, Text } from '@pancakeswap/uikit'
+import { Flex, Button, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useAllTokens } from 'hooks/Tokens'
 import styled from 'styled-components'
 import { useTreasuryXOX } from 'hooks/useContract'
@@ -11,6 +11,8 @@ import { useStableCoinSWR, useMultiChainId } from 'state/info/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import Link from 'next/link'
+import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import InfoNav from '../Info/components/InfoNav'
 import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
@@ -35,6 +37,15 @@ const Row = styled.div`
   }
 `
 
+const WrapperBorder = styled.div`
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px #00000080;
+  flex: 1;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+`
+
 const Box = styled.div`
   padding: 17px 30px;
   border-radius: 10px;
@@ -49,7 +60,6 @@ const Box = styled.div`
   }
   &.wrap-table {
     align-items: flex-start;
-    max-width: calc(50% - 15px);
   }
   &.h-190{
     min-height: 190px;
@@ -127,6 +137,18 @@ const TextStyle = styled(Text)`
   }
 `
 
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+  }
+`
+
 export default function LayoutHistory() {
   const { account, chainId } = useWeb3React()
   const [widthDraw, setWidthDraw] = useState(TYPE.default)
@@ -136,9 +158,11 @@ export default function LayoutHistory() {
   const [currentReward, setCurrentReward] = useState<number | string>(0)
   const chainIdLocal:any = useMultiChainId() || chainId;
   const [keyContainer, setKeyContainer] = useState(Math.random());
+  const { isMobile } = useMatchBreakpoints()
 
   return (
     <>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
       <Container style={{marginBottom: 100}} key={`container-stablecoin${chainId}`}>
         <Flex alignItems="center" style={{ gap: 10 }}>
@@ -171,16 +195,20 @@ export default function LayoutHistory() {
             <TextStyle className="primary">History</TextStyle>
         </Flex>
         <Row style={{ marginTop: 24 }}>
-            <Box className="wrap-table">
-                {
-                    account && <HistoryTable typePage={TYPE_HISTORY.stake} />
-                }
-            </Box>
-            <Box className="wrap-table">
-            {
-                account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
-            }
-            </Box>
+            <WrapperBorder className='border-gradient-style'>
+              <Box className="wrap-table">
+                  {
+                      account && <HistoryTable typePage={TYPE_HISTORY.stake} />
+                  }
+              </Box>
+            </WrapperBorder>
+            <WrapperBorder className='border-gradient-style'>
+              <Box className="wrap-table">
+              {
+                  account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
+              }
+              </Box>
+            </WrapperBorder>
         </Row>
       </Container>
     </>
