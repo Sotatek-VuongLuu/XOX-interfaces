@@ -412,6 +412,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')
   const [earned, setEarned] = useState<any>(null)
+  console.log(`earned`, earned)
 
   const handleGetDataFarming = async () => {
     try {
@@ -590,13 +591,13 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
                       <Tooltip title={earned} placement="top">
-                        <span className="value">{earned}</span>
+                        <span className="value">{earned || '-'}</span>
                       </Tooltip>
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Liquidity</span>
                       <span className="value _flex ">
-                        <Tooltip title={`%${liquidity}`} placement="top">
+                        <Tooltip title={`$${liquidity}`} placement="top">
                           <span className="liquidity">${liquidity || '-'}</span>
                         </Tooltip>
                         <span className="u_question">
@@ -655,7 +656,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                 <div className="rectangle _flex space_between">
                   <div>
                     <p className="current_XOX_reward">Current XOX reward</p>
-                    <Tooltip title={pendingRewardOfUser} placement="top">
+                    <Tooltip title={pendingRewardOfUser || null} placement="top">
                       <p className="current_XOX_reward_value">{pendingRewardOfUser || '-'}</p>
                     </Tooltip>
                   </div>
@@ -719,13 +720,13 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     <p className="flex space_between earned_mb">
                       <span className="name">Earned:</span>
                       <Tooltip title={earned} placement="top">
-                        <span className="value">{earned}</span>
+                        <span className="value">{earned || '-'}</span>
                       </Tooltip>
                     </p>
                     <p className="flex space_between liquidity_mb">
                       <span className="name">Liquidity:</span>
                       <span className="_flex">
-                        <Tooltip title={liquidity} placement="top">
+                        <Tooltip title={`$${liquidity}`} placement="top">
                           <span className="value">${liquidity || '-'}</span>
                         </Tooltip>
                         <span className="u_question">
