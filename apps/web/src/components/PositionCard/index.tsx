@@ -404,7 +404,7 @@ function MinimalPositionCardView({
               </CustomRowFixed>
               <CustomRowFixed>
                 <Flex flexDirection="column" alignItems="flex-end">
-                  <Text className="text-right text-elipsis">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}213123213</Text>
+                  <Text className="text-right text-elipsis">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Text>
                   {/* {Number.isFinite(totalUSDValue) && (
                     <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
