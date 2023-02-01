@@ -116,7 +116,7 @@ export function TransactionSubmittedContent({
   const token: Token | undefined = wrappedCurrency(currencyToAdd, chainId)
 
   return (
-    <Wrapper style={{maxWidth: '100%', width: '300px'}}>
+    <Wrapper style={{ maxWidth: '100%', width: '300px' }}>
       <Section>
         <ConfirmedIcon>
           <ConfirmImg>
@@ -186,7 +186,7 @@ export function TransactionErrorContent({
   const { t } = useTranslation()
   return (
     <Wrapper style={{ maxWidth: '800px' }}>
-      <AutoColumn justify="center">
+      <AutoColumn justify="center" style={{ width: '300px', maxWidth: '100%' }}>
         {/* <ErrorIcon color="failure" width="64px" /> */}
         <img alt="" src="/images/swap/icon-swap-error.svg" style={{ padding: '10px 0' }} />
         <Text
