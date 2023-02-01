@@ -387,12 +387,14 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balan
             </button>
           </ButtonGroup>
           <GetLP className="get_lp">
-            <p>
-              <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
-              <span style={{ marginLeft: 8 }}>
-                <img src="/images/external-icon.svg" alt="external-icon" />
-              </span>
-            </p>
+            <a href="/liquidity" target="_blank" rel="noreferrer">
+              <p>
+                <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
+                <span style={{ marginLeft: 8 }}>
+                  <img src="/images/external-icon.svg" alt="external-icon" />
+                </span>
+              </p>
+            </a>
           </GetLP>
         </ContentContainer>
       </StyledModalContainer>
