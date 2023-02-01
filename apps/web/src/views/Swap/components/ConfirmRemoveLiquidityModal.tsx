@@ -152,7 +152,7 @@ const ConfirmRemoveLiquidityModal: React.FC<
           {isZap && (
             <ZapErrorMessages isSingleToken zapMode={isZap} toggleZapMode={toggleZapMode} onModalDismiss={onDismiss} />
           )}
-          <TransactionErrorContent onDismiss={onDismiss} message={liquidityErrorMessage} />
+          <TransactionErrorContent onDismiss={onDismiss} message={"Transaction rejected."} />
         </>
       ) : (
         <ConfirmationModalContent topContent={modalHeader} bottomContent={modalBottom} />

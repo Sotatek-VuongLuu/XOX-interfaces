@@ -18,13 +18,11 @@ const Dot = styled(Box)<{ scale?: 'sm' | 'md' }>`
 
 const CustomRowBetweenWrapper = styled(CustomRowBetween)`
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
+  flex-direction: column;
+  align-items: unset;
 
   .pair {
-    margin-top: 0;
-    margin-left: 8px;
+    margin-top: 8px;
   }
 
   .liquidity-minted {

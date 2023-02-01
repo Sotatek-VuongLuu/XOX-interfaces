@@ -55,7 +55,7 @@ const PercentButton = styled(Button)`
 `
 const TextBalance = styled.div`
   margin-left: 10px;
-  z-index:99;
+  z-index: 99;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
@@ -339,7 +339,11 @@ export default function CurrencyInputPanel({
               <Flex justifyContent="flex-end" mr="1rem">
                 <Flex maxWidth="200px">
                   <Text fontSize="12px" color="textSubtle">
-                    ~{formatNumber(amountInDollar)} USD
+                    ~
+                    {amountInDollar.toString().length > 10
+                      ? `${amountInDollar.toString().substring(0, 10)}...`
+                      : formatNumber(amountInDollar)}{' '}
+                    USD
                   </Text>
                 </Flex>
               </Flex>
