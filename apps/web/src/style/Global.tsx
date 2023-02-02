@@ -107,7 +107,15 @@ const GlobalStyle = createGlobalStyle`
       position: relative;
     }
   }
-
+ #u_question_farming {
+  div {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    max-width: max-content;
+    color: rgba(255, 255, 255, 0.87);
+  }
+ }
 `
 
 export default GlobalStyle
