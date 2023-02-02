@@ -1,4 +1,4 @@
-import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow } from '@mui/material'
+import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import { ModalContainer, ModalHeader, InjectedModalProps } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import axios from 'axios'
@@ -11,6 +11,7 @@ import { getChainIdToByChainId } from '.'
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
   min-width: 337px;
+  padding-bottom: 20px;
 
   .x-close-icon {
     position: absolute;
@@ -31,9 +32,28 @@ const StyledModalHeader = styled(ModalHeader)`
   width: 100%;
   margin-bottom: 15px;
 `
+interface IContentProps {
+  isHistoryData?: boolean
+}
 
-const Content = styled.div`
+const Content = styled.div<IContentProps>`
   padding: 0 24px;
+  .out_amount {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    max-width: 100px;
+    display: inline-block;
+    margin-right: 2px;
+  }
+  div {
+    ::-webkit-scrollbar-corner {
+      display: none;
+    }
+  }
+  @media screen and (min-width: 1400px) {
+    overflow-x: ${({ isHistoryData }) => (isHistoryData ? 'hidden' : 'unset')};
+  }
 `
 
 const NoData = styled.div``
@@ -45,6 +65,10 @@ export const shortenAddress = (address = '', start = 8, chars = 4) => {
 
 export const linkTransaction = (chainId) => {
   return `${NETWORK_LINK[chainId]}/tx/`
+}
+
+export function capitalizeFirstLetter(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1)
 }
 
 const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss }) => {
@@ -107,7 +131,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
         onClick={onDismiss}
         aria-hidden="true"
       />
-      <Content>
+      <Content isHistoryData={historyData.length !== 0}>
         {historyData && historyData.length !== 0 ? (
           <TableContainer component={Paper} sx={{ height: '165px', background: '#242424', boxShadow: 'none' }}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -136,10 +160,10 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                   <TableCell style={{ minWidth: '150px' }} align="left">
                     Output Amount
                   </TableCell>
-                  <TableCell style={{ minWidth: '150px' }} align="left">
+                  <TableCell style={{ minWidth: '100px' }} align="left">
                     Type
                   </TableCell>
-                  <TableCell style={{ minWidth: '150px' }} align="left">
+                  <TableCell style={{ minWidth: '120px' }} align="left">
                     Status
                   </TableCell>
                   <TableCell style={{ minWidth: '150px' }} align="left" />
@@ -169,7 +193,14 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                           {row.txHash ? shortenAddress(row.txHash) : '........................'}
                         </TxHash>
                       </TableCell>
-                      <TableCell align="left">{row.amount}</TableCell>
+                      <TableCell align="left">
+                        <div style={{ display: 'flex' }}>
+                          <Tooltip title={row.amount} placement="top-start">
+                            <span className="out_amount">{parseFloat(row.amount)}</span>
+                          </Tooltip>
+                          <span>XOX</span>
+                        </div>
+                      </TableCell>
                       <TableCell align="left">
                         <TxHash
                           href={
@@ -180,9 +211,28 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                           {row.txSwapHash ? shortenAddress(row.txSwapHash) : '........................'}
                         </TxHash>
                       </TableCell>
-                      <TableCell align="left">{row.outAmount}</TableCell>
+                      <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                        <Tooltip title={row.outAmount} placement="top-start">
+                          <span className="out_amount">{parseFloat(row.outAmount)}</span>
+                        </Tooltip>
+                        <span>XOX</span>
+                      </TableCell>
                       <TableCell align="left">{handleType(row.from, row.to, row.chainId)}</TableCell>
-                      <TableCell align="left">{row.status}</TableCell>
+                      <TableCell align="left">
+                        <div
+                          style={
+                            row.status === 'completed'
+                              ? { color: '#6BB372' }
+                              : row.status === 'rejected'
+                              ? { color: '#F44336' }
+                              : (row.status === 'processing' || row.status === 'excuting') && { color: '#FFBD3C' }
+                          }
+                        >
+                          {row.status === 'processing' || row.status === 'excuting'
+                            ? 'Processing'
+                            : capitalizeFirstLetter(row.status)}
+                        </div>
+                      </TableCell>
                       <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
                         <span>{NETWORK_LABEL[row.chainId]}</span>
                         <span style={{ margin: '5px 10px 0px 10px' }}>

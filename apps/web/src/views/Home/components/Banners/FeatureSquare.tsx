@@ -182,7 +182,7 @@ const Wrapper = styled.div`
 const FeatureSquare = () => {
   return (
     <Wrapper>
-      <div className="title">
+      <div className="title" style={{ overflow: 'hidden' }}>
         <p className="heart" data-aos="fade-right">
           The Heart of the XOX Ecosystem
         </p>

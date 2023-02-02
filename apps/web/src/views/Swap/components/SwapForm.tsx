@@ -59,15 +59,15 @@ const ReferralCode = styled.div`
   margin-bottom: 10px;
 `
 const ReferralInput = styled.input`
-  background:unset;
-  width:124px;
-  height:37px;
-  border:1px solid #444444;
-  padding 0 12px;
-  color:#FFFFFFDE;
-  border-radius:4px;
-  text-transform:uppercase;
-  font-size:14px;
+  background: unset;
+  width: 124px;
+  height: 37px;
+  border: 1px solid #444444;
+  padding: 0 12px;
+  color: #ffffffde;
+  border-radius: 4px;
+  text-transform: uppercase;
+  font-size: 14px;
 `
 const ErrorReferral = styled.div`
   font-size: 12px;

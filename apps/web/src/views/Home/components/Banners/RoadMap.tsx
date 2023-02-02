@@ -22,6 +22,10 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
 
+    @media screen and (min-width: 900px) {
+      padding: 0 20px;
+    }
+
     .timeline-item {
       width: 20%;
       overflow: visible;
@@ -37,6 +41,7 @@ const Wrapper = styled.div`
       .line {
         background: linear-gradient(180deg, #000000 0%, #9072ff 100%);
         bottom: 0;
+        opacity: 0.25;
       }
       .milestone {
         left: 0;
@@ -62,6 +67,7 @@ const Wrapper = styled.div`
       .line {
         background: linear-gradient(0deg, #000000 0%, #9072ff 100%);
         top: 0;
+        opacity: 0.25;
       }
       .milestone {
         top: 0;
@@ -107,10 +113,10 @@ const Title = styled.div`
 const RoadMap = () => {
   const { width } = useWindowSize()
   return (
-    <Wrapper>
-      <Title data-aos="fade-up">Road map</Title>
+    <Wrapper style={{ overflow: 'hidden' }}>
+      <Title data-aos="fade-up">Development map</Title>
       <Description data-aos="fade-up" data-aos-duration="2300">
-        Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis.
+        Building The Road For Web3 & Blockchain Mass Adoption
       </Description>
 
       {width < 970 ? (

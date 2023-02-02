@@ -286,7 +286,7 @@ const DataRow: React.FC<
 > = ({ transaction, index, page, perPage }) => {
   const { t } = useTranslation()
   const abs0 = Math.abs(transaction.amountToken0)
-  const abs1 = Math.abs(transaction.amountToken1)
+  const abs1 = Math.abs(transaction.amountToken1)/10
   const { chainId } = useActiveChainId();
   const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
   const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOX' : transaction.token0Symbol
@@ -351,7 +351,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(abs1)} ${symbolToken0}`}</Text>
+      >{`${formatAmount(abs1)} ${symbolToken0}S`}</Text>
     </>
   )
 }
@@ -788,7 +788,7 @@ const TransactionsTable: React.FC = () => {
               onOptionChange={(option: any) => setPerPage(option.value)}
               className="select-page"
             />
-            <Text className="go-page">Go to page</Text>
+            <Text className="go-page" style={{whiteSpace: 'nowrap'}}>Go to page</Text>
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}

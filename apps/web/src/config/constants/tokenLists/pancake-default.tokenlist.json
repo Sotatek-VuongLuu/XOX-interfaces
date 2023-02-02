@@ -145,7 +145,7 @@
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 97,
-      "logoURI": "https://dev.xoxnet.io/images/xox_logo.svg"
+      "logoURI": ""
     },
 
     {
@@ -283,7 +283,7 @@
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 5,
-      "logoURI": "https://dev.xoxnet.io/images/xox_logo.svg"
+      "logoURI": ""
     }
   ]
 }

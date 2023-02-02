@@ -3,11 +3,15 @@ import Link from "./Link";
 import { LinkProps } from "./types";
 import OpenNewIcon from "../Svg/Icons/OpenNew";
 
-const LinkExternal: React.FC<React.PropsWithChildren<LinkProps>> = ({ children, ...props }) => {
+const LinkExternal: React.FC<React.PropsWithChildren<LinkProps> & { hiddenIcon?: boolean }> = ({
+  children,
+  hiddenIcon = false,
+  ...props
+}) => {
   return (
     <Link external {...props}>
       {children}
-      <OpenNewIcon color={props.color ? props.color : "#9072FF"} ml="4px" />
+      {!hiddenIcon && <OpenNewIcon color={props.color ? props.color : "#9072FF"} ml="4px" />}
     </Link>
   );
 };

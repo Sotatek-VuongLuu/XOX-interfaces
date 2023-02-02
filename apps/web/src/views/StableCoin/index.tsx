@@ -1,15 +1,18 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useMemo } from 'react'
-import { Flex, Button, Text } from '@pancakeswap/uikit'
+import { Flex, Button, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useAllTokens } from 'hooks/Tokens'
 import styled from 'styled-components'
 import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { useStableCoinSWR } from 'state/info/hooks'
+import { useStableCoinSWR, useMultiChainId } from 'state/info/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
+import Link from 'next/link'
+import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import InfoNav from '../Info/components/InfoNav'
 import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
@@ -34,8 +37,16 @@ const Row = styled.div`
   }
 `
 
+const WrapperBorder = styled.div`
+  border-radius: 10px;
+  box-shadow: 0px 0px 16px #00000080;
+  flex: 1;
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+`
+
 const Box = styled.div`
-  padding: 17px 30px;
   border-radius: 10px;
   background: ${({ theme }) => theme.colors.bgBox};
   box-shadow: 0px 0px 16px #00000080;
@@ -43,12 +54,12 @@ const Box = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+  padding: 17px 30px;
   img {
     max-width: 60px;
   }
   &.wrap-table {
     align-items: flex-start;
-    max-width: calc(50% - 15px);
   }
   &.h-190{
     min-height: 190px;
@@ -103,6 +114,19 @@ const WrapText = styled.div`
   }
 `
 
+const TextConnectWallet = styled.div`
+  text-align: center;
+  line-height: 1.3;
+  br{
+    display: none;
+  }
+  @media (max-width: 576px) {
+    br{
+      display: block;
+    }
+  }
+`
+
 const TextStyle = styled(Text)`
   font-size: 14px;
   font-weight: 700;
@@ -136,6 +160,26 @@ const BoxWrapper = styled(Box)`
   }
 `
 
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+    height: auto;
+    object-fit: cover;
+  }
+`
+
+export const formatNumberDecimal = (n: any, decimal?: number) => {
+  const nString = n.toString();
+  const nSlice = decimal || 6;
+  return `${nString.split(".")[0]  }.${  nString.split(".")[1].slice(0, nSlice)}`;
+}
+
 export default function StableCoin() {
   const { account, chainId } = useWeb3React()
   const [widthDraw, setWidthDraw] = useState(TYPE.default)
@@ -143,172 +187,120 @@ export default function StableCoin() {
   const contractTreasuryXOX = useTreasuryXOX()
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
+  const [keyContainer, setKeyContainer] = useState(Math.random());
+  const { isMobile } = useMatchBreakpoints()
 
   // eslint-disable-next-line consistent-return
-  const handleCheckPendingRewardAll = async (accountId: string, chainIdEffect: any) => {
+  const handleCheckPendingRewardAll = async (accountId: any) => {
+    if(!accountId) return null;
     try {
+      const paramsString = window.location.search;
+      const searchParams = new URLSearchParams(paramsString);
+      const chainIdLocal = searchParams.get("chainId") || chainId;
       const [infosUser, res2] = await Promise.all([
-        contractTreasuryXOX.userInfo(account),
+        contractTreasuryXOX.userInfo(accountId),
         contractTreasuryXOX.pendingReward(accountId),
       ])
       const txPendingReward: any = res2
       const dataParse: any[] = infosUser.map((item) => {
-        return formatUnits(item, USD_DECIMALS[chainIdEffect])
+        return formatUnits(item, USD_DECIMALS[chainIdLocal])
       })
       const amountPoint = Number(dataParse[1]);
       const rewardPoint = Number(dataParse[2]);
       if(rewardPoint === 0 || rewardPoint){
-        const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdEffect])) + rewardPoint;
-        setCurrentReward(numberReward ? numberReward?.toFixed(6) : 0);
+        const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdLocal])) + rewardPoint;
+        setCurrentReward(numberReward ? formatNumberDecimal(numberReward) : 0);
         const totalCurrentXOXS = amountPoint+numberReward;
-        setCurrentXOX(totalCurrentXOXS ? totalCurrentXOXS.toFixed(6) : 0);
+        setCurrentXOX(totalCurrentXOXS ? formatNumberDecimal(totalCurrentXOXS) : 0);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(`error>>>>>`, error)
+      console.log(`error>>>>>`, error);
+      setCurrentReward(0);
+      setCurrentXOX(0);
     }
   }
 
   useEffect(() => {
     if(account){
-      handleCheckPendingRewardAll(account, chainId);
+      handleCheckPendingRewardAll(account);
     }
-  }, [account, chainId]);
+  }, [account]);
 
   return (
     <>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
-      <Container style={{marginBottom: 100}}>
-        {widthDraw === TYPE.withdraw && (
-          <>
-            <Flex alignItems="center" style={{ gap: 10 }}>
-              <Flex
-                onClick={() => setWidthDraw(TYPE.default)}
-                style={{ cursor: 'pointer', gap: 5 }}
-                alignItems="center"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M6 11.9961H18"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M12 18L6 12L12 6"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <TextStyle>Stable coin</TextStyle>
-              </Flex>
-              <TextStyle style={{ transform: 'translateY(1px)' }}>|</TextStyle>
-              <TextStyle className="primary">Withdraw reward</TextStyle>
-            </Flex>
-            <Row style={{marginTop: 25}}>
-              <Box className='wrap-withdraw'>
-                <WidthdrawForm priceAvailable={currentReward} onSuccess={() => setWidthDraw(TYPE.default)} />
-              </Box>
-            </Row>
-          </>
-        )}
-        {widthDraw === TYPE.history && (
-          <>
-            <Flex alignItems="center" style={{ gap: 10 }}>
-              <Flex
-                onClick={() => setWidthDraw(TYPE.default)}
-                style={{ cursor: 'pointer', gap: 5 }}
-                alignItems="center"
-              >
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path
-                    d="M6 11.9961H18"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                  <path
-                    d="M12 18L6 12L12 6"
-                    stroke="#8E8E8E"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-                <TextStyle>Stable coin</TextStyle>
-              </Flex>
-              <TextStyle>|</TextStyle>
-              <TextStyle className="primary">History</TextStyle>
-            </Flex>
-            <Row style={{ marginTop: 24 }}>
-              <Box className="wrap-table">
-                <HistoryTable typePage={TYPE_HISTORY.stake} />
-              </Box>
-              <Box className="wrap-table">
-                <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
-              </Box>
-            </Row>
-          </>
-        )}
-        {widthDraw === TYPE.default && (
+      <Container style={{marginBottom: 100}} key={`container-stablecoin${chainId}`}>
           <>
             {
               account && <Row>
-                <Box className="h-190">
-                  <Flex justifyContent="space-between" alignItems="center" width="100%">
-                    <WrapText>
-                      <p>Your current XOXS</p>
-                      <p className="number">{currentXOX}</p>
-                      <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
-                        View your history
-                      </Button>
-                    </WrapText>
-                    <img src="/images/1/tokens/XOX.png" alt="icon" />
-                  </Flex>
-                </Box>
-                <Box className="h-190">
-                  <Earned address={account} />
-                </Box>
-                <Box className="h-190">
-                  <Flex justifyContent="space-between" alignItems="center" width="100%">
-                    <WrapText>
-                      <p>Your current reward</p>
-                      <p className="number">{currentReward}</p>
-                      <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.withdraw)}>
-                        Withdraw reward
-                      </Button>
-                    </WrapText>
-                    <img src="/images/1/tokens/XOX.png" alt="icon" />
-                  </Flex>
-                </Box>
+                <WrapperBorder className='border-gradient-style'>
+                  <Box className="h-190">
+                    <Flex justifyContent="space-between" alignItems="center" width="100%">
+                      <WrapText>
+                        <p>Your current XOXS</p>
+                        <p className="number">{currentXOX}</p>
+                        <Link href="/stable-coin/history">
+                          <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
+                            View your history
+                          </Button>
+                        </Link>
+                      </WrapText>
+                      <img src="/images/1/tokens/XOX.png" alt="icon" />
+                    </Flex>
+                  </Box>
+                </WrapperBorder>
+                <WrapperBorder className='border-gradient-style'>
+                  <Box className="h-190">
+                    <Earned address={account} />
+                  </Box>
+                </WrapperBorder>
+                <WrapperBorder className='border-gradient-style'>
+                  <Box className="h-190">
+                    <Flex justifyContent="space-between" alignItems="center" width="100%">
+                      <WrapText>
+                        <p>Your current reward</p>
+                        <p className="number">{currentReward}</p>
+                        <Link href="/stable-coin/withdraw">
+                          <Button height={37} style={{ fontSize: 14 }}>
+                            Withdraw reward
+                          </Button>
+                        </Link>
+                      </WrapText>
+                      <img src="/images/1/tokens/XOX.png" alt="icon" />
+                    </Flex>
+                  </Box>
+                </WrapperBorder>
               </Row>
             }
             {
               !account && <Row>
-                <Box className="h-190">
-                  <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{width: "100%",padding: '10px 0'}}>
-                    <div style={{color: 'rgba(255, 255, 255, 0.87)'}}>Please connect wallet to view your information</div>
-                    <ConnectWalletButtonWraper scale="sm">
-                      <Trans>Connect Wallet</Trans>
-                    </ConnectWalletButtonWraper>
-                  </Flex>
-                </Box>
+                <WrapperBorder className='border-gradient-style'>
+                  <Box className="h-190">
+                    <Flex flexDirection="column" justifyContent="center" alignItems="center" style={{width: "100%",padding: '10px 0'}}>
+                      <TextConnectWallet style={{color: 'rgba(255, 255, 255, 0.87)'}}>Please connect wallet to <br/>view your information</TextConnectWallet>
+                      <ConnectWalletButtonWraper scale="sm" style={{whiteSpace: 'nowrap'}}>
+                        <Trans>Connect Wallet</Trans>
+                      </ConnectWalletButtonWraper>
+                    </Flex>
+                  </Box>
+                </WrapperBorder>
               </Row>
             }
-            <Row style={{ marginTop: 24 }}>
-              <Box className="wrap-table">
-                <HistoryTable typePage={TYPE_HISTORY.widthDraw} />
-              </Box>
-              <Box className="wrap-table">
-                <TransactionTable />
-              </Box>
+            <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
+              <WrapperBorder className='border-gradient-style'>
+                <Box className="wrap-table">
+                  <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
+                </Box>
+              </WrapperBorder>
+              <WrapperBorder className='border-gradient-style'>
+                <Box className="wrap-table">
+                    <TransactionTable />
+                </Box>
+              </WrapperBorder>
             </Row>
           </>
-        )}
       </Container>
     </>
   )

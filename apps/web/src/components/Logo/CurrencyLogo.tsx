@@ -29,7 +29,6 @@ export default function CurrencyLogo({
 
     if (currency?.isToken) {
       const tokenLogoURL = getTokenLogoURL(currency)
-
       if (currency instanceof WrappedTokenInfo) {
         if (!tokenLogoURL) return [...uriLocations]
         return [...uriLocations, tokenLogoURL]

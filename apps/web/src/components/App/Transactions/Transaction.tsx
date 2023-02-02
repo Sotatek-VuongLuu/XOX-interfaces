@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { CheckmarkIcon, CloseIcon, LinkExternal } from '@pancakeswap/uikit'
+import { CheckmarkIcon, CloseIcon, ErrorIcon, LinkExternal } from '@pancakeswap/uikit'
 import { getBlockExploreLink } from 'utils'
 import { TransactionDetails } from 'state/transactions/reducer'
 import CircleLoader from '../../Loader/CircleLoader'
@@ -12,11 +12,13 @@ const TransactionState = styled.div<{ pending: boolean; success?: boolean }>`
   font-weight: 400;
   line-height: 24px;
   font-size: 16px;
+  margin-bottom: 8px;
   color: ${({ theme }) => theme.colors.primary};
 `
 const TransactionText = styled(LinkExternal)`
-  color: #ffffffde;
+  color: #9072FF;
   font-weight: 400;
+  margin-right: 10px;
 `
 
 const IconWrapper = styled.div<{ pending: boolean; success?: boolean }>`
@@ -25,7 +27,7 @@ const IconWrapper = styled.div<{ pending: boolean; success?: boolean }>`
   display: flex;
 `
 
-export default function Transaction({ tx, chainId }: { tx: TransactionDetails; chainId: number }) {
+export default function Transaction({ tx, chainId, hiddenIcon = false }: { tx: TransactionDetails; chainId: number; hiddenIcon?: boolean }) {
   const summary = tx?.summary
   const pending = !tx?.receipt
   const success = !pending && tx && (tx.receipt?.status === 1 || typeof tx.receipt?.status === 'undefined')
@@ -34,11 +36,11 @@ export default function Transaction({ tx, chainId }: { tx: TransactionDetails; c
 
   return (
     <TransactionState pending={pending} success={success}>
-      <TransactionText href={getBlockExploreLink(tx.hash, 'transaction', chainId)}>
+      <TransactionText href={getBlockExploreLink(tx.hash, 'transaction', chainId)} hiddenIcon={hiddenIcon}>
         {summary ?? tx.hash}
       </TransactionText>
       <IconWrapper pending={pending} success={success}>
-        {pending ? <CircleLoader /> : success ? <CheckmarkIcon color="success" /> : <CloseIcon color="failure" />}
+        {pending ? <CircleLoader /> : success ? <CheckmarkIcon color="success" /> : <ErrorIcon color="failure" />}
       </IconWrapper>
     </TransactionState>
   )

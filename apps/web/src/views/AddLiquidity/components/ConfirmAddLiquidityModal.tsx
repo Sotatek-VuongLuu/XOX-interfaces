@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import { Currency, CurrencyAmount, Fraction, Percent, Token } from '@pancakeswap/sdk'
-import { InjectedModalProps, Button } from '@pancakeswap/uikit'
+import { InjectedModalProps, Button, Text } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import TransactionConfirmationModal, {
   ConfirmationModalContent,
@@ -9,6 +9,7 @@ import TransactionConfirmationModal, {
 import { Field } from 'state/burn/actions'
 import _toNumber from 'lodash/toNumber'
 import { AddLiquidityModalHeader, PairDistribution } from './common'
+import { formatAmountString } from '@pancakeswap/utils/formatBalance'
 
 interface ConfirmAddLiquidityModalProps {
   title: string
@@ -56,8 +57,8 @@ const ConfirmAddLiquidityModal: React.FC<
 
   // Calculate distribution percentage for display
   if (isStable && parsedAmounts[Field.CURRENCY_A] && parsedAmounts[Field.CURRENCY_B]) {
-    const amountCurrencyA = _toNumber(parsedAmounts[Field.CURRENCY_A].toSignificant(6))
-    const amountCurrencyB = _toNumber(parsedAmounts[Field.CURRENCY_B].toSignificant(6))
+    const amountCurrencyA = _toNumber(formatAmountString(parsedAmounts[Field.CURRENCY_A], 6))
+    const amountCurrencyB = _toNumber(formatAmountString(parsedAmounts[Field.CURRENCY_B], 6))
 
     percent = amountCurrencyA / (amountCurrencyA + amountCurrencyB)
   }
@@ -71,16 +72,16 @@ const ConfirmAddLiquidityModal: React.FC<
         poolTokenPercentage={poolTokenPercentage}
         price={price}
         noLiquidity={noLiquidity}
-        currencyAValue={parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}
-        currencyBValue={parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}
+        currencyAValue={formatAmountString(parsedAmounts[Field.CURRENCY_A], 6)}
+        currencyBValue={formatAmountString(parsedAmounts[Field.CURRENCY_B], 6)}
       >
         <PairDistribution
           title={t('Input')}
           percent={percent}
           currencyA={currencies[Field.CURRENCY_A]}
-          currencyAValue={parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)}
+          currencyAValue={formatAmountString(parsedAmounts[Field.CURRENCY_A], 6)}
           currencyB={currencies[Field.CURRENCY_B]}
-          currencyBValue={parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)}
+          currencyBValue={formatAmountString(parsedAmounts[Field.CURRENCY_B], 6)}
         />
       </AddLiquidityModalHeader>
     )
@@ -93,17 +94,15 @@ const ConfirmAddLiquidityModal: React.FC<
         onClick={onAdd}
         mt="24px"
         mb="32px"
-        height={['37px', , '54px']}
+        height={['37px', , '43px']}
         style={{
           background: 'linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)',
           borderRadius: '8px',
-          fontWeight: 700,
-          fontSize: '18px',
-          lineHeight: '22px',
-          color: '#FFFFFF',
         }}
       >
-        {noLiquidity ? t('Create Pool & Supply') : t('Confirm Supply')}
+        <Text lineHeight={['17px', , '19px']} fontSize={['14px', , '16px']} fontWeight="700" color="#FFFFFF">
+          {noLiquidity ? t('Create Pool & Supply') : t('Confirm Supply')}
+        </Text>
       </Button>
     )
   }, [noLiquidity, onAdd, t])
@@ -111,7 +110,7 @@ const ConfirmAddLiquidityModal: React.FC<
   const confirmationContent = useCallback(
     () =>
       liquidityErrorMessage ? (
-        <TransactionErrorContent onDismiss={onDismiss} message={liquidityErrorMessage} />
+        <TransactionErrorContent onDismiss={onDismiss} message={'Transaction rejected.'} />
       ) : (
         <ConfirmationModalContent topContent={modalHeader} bottomContent={modalBottom} />
       ),
@@ -128,6 +127,7 @@ const ConfirmAddLiquidityModal: React.FC<
       hash={hash}
       content={confirmationContent}
       pendingText={pendingText}
+      currencyToAdd={currencyToAdd}
     />
   )
 }

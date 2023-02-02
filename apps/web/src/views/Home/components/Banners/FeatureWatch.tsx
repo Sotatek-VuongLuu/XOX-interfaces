@@ -1,16 +1,22 @@
 import { Box, Grid } from '@mui/material'
-import Spline from '@splinetool/react-spline'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 const LeftContent = styled.div`
-  @media screen and (max-width: 900px) {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  @media screen and (min-width: 900px) {
+    align-items: center;
+    height: 100%;
   }
 `
 
 const RightContent = styled.div`
+  margin-left: 100px;
+
+  @media (max-width: 560px) {
+    margin-left: 0px;
+  }
   .list {
     .main_content {
       display: flex;
@@ -29,6 +35,7 @@ const RightContent = styled.div`
     color: rgba(255, 255, 255, 0.87);
     line-height: 32px;
     @media screen and (max-width: 900px) {
+      margin-left: 0px;
       font-size: 16px;
       line-height: 19px;
     }
@@ -78,18 +85,33 @@ const Main = styled(Grid)`
 const FeatureWatch = () => {
   const { width } = useWindowSize()
   return (
-    <Wrapper>
+    <Wrapper style={{ overflow: 'hidden' }}>
       <Main container spacing={2}>
-        <Grid item xs={12} md={6}>
+        <Grid
+          item
+          xs={12}
+          md={4}
+          style={{ minHeight: '400px', display: 'flex', alignItems: 'center' }}
+        >
           <LeftContent>
             {width < 900 ? (
-              <img src="/images/xoxs_mobile.png" alt="xoxs" style={{ marginLeft: 20 }} data-aos="fade-right" />
+              <img
+                src="/images/3D-XOS-logo.gif"
+                alt="xoxs"
+                style={{ marginLeft: -50, transform: 'scale(2)' }}
+                data-aos="fade-right"
+              />
             ) : (
-              <img src="/images/xoxs.png" alt="xoxs" style={{ marginLeft: 20 }} data-aos="fade-right" />
+              <img
+                src="/images/3D-XOS-logo.gif"
+                alt="xoxs"
+                style={{ marginLeft: -100, transform: 'scale(2)' }}
+                data-aos="fade-right"
+              />
             )}
           </LeftContent>
         </Grid>
-        <Grid item xs={12} md={6}>
+        <Grid item xs={12} md={8}>
           <RightContent data-aos="fade-left">
             <Title>Meet XOXS. Our Hybrid Multichain Stable Coin.</Title>
             <Paragraph style={{ margin: '24px 0' }}>

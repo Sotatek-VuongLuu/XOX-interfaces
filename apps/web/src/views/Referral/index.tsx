@@ -3,7 +3,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import { formatUnits } from '@ethersproject/units'
 import { Box } from '@mui/material'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useWeb3React } from '@pancakeswap/wagmi'
+import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useTreasuryXOX } from 'hooks/useContract'
 import { useEffect, useState } from 'react'
@@ -29,6 +32,20 @@ const Wrapper = styled(Box)`
   }
 `
 
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+    height: auto;
+    object-fit: cover;
+  }
+`
+
 export default function Refferal() {
   const { account, chainId } = useWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
@@ -38,6 +55,7 @@ export default function Refferal() {
   const [isClaimAll, setIsClaimAll] = useState<boolean>(true)
   const [volumnTotalEarn, setVolumnTotalEarn] = useState<string>('')
   const [totalAmountUnClaimOfUser, setTotalAmountUnClaimOfUser] = useState<number | string>(0)
+  const { isMobile } = useMatchBreakpoints()
 
   // eslint-disable-next-line consistent-return
   const handleGetCurrentPoint = async () => {
@@ -150,6 +168,7 @@ export default function Refferal() {
 
   return (
     <>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Wrapper>
         <Box>
           <Banner />

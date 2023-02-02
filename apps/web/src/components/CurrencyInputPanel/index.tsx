@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Currency, Pair } from '@pancakeswap/sdk'
 import {
   Button,
@@ -17,15 +17,13 @@ import { useTranslation } from '@pancakeswap/localization'
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 
 import { useBUSDCurrencyAmount } from 'hooks/useBUSDPrice'
-import { formatNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatNumber } from '@pancakeswap/utils/formatBalance'
 import { StablePair } from 'views/AddLiquidity/AddStableLiquidity/hooks/useStableLPDerivedMintInfo'
 
 import { useAccount } from 'wagmi'
 import { useCurrencyBalance } from '../../state/wallet/hooks'
 import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
 import { CurrencyLogo, DoubleCurrencyLogo } from '../Logo'
-
-import AddToWalletButton from '../AddToWallet/AddToWalletButton'
 
 const ForDolar = styled.div`
   position: absolute;
@@ -56,10 +54,8 @@ const PercentButton = styled(Button)`
   }
 `
 const TextBalance = styled.div`
-  position:absolute;
-  right:17px;
-  top 17px;
-  z-index:99;
+  margin-left: 10px;
+  z-index: 99;
   font-weight: 400;
   font-size: 12px;
   line-height: 15px;
@@ -155,7 +151,6 @@ const Overlay = styled.div`
 `
 
 const NumericalInputWrapper = styled(NumericalInput)`
-  padding-right: 155px;
   font-size: 18px;
   @media screen and (max-width: 576px) {
     font-size: 16px;
@@ -219,6 +214,7 @@ export default function CurrencyInputPanel({
   const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
   const tokenAddress = token ? isAddress(token.address) : null
   const [activePercent, setActivePercent] = useState<any>(null)
+  const [autoChange, setAutoChange] = useState(false)
 
   const amountInDollar = useBUSDCurrencyAmount(
     showBUSD ? currency : undefined,
@@ -254,6 +250,15 @@ export default function CurrencyInputPanel({
     }
     return height
   }
+
+  useEffect(() => {
+    if (autoChange) {
+      setAutoChange(false)
+      return
+    }
+    setActivePercent(null)
+  }, [value])
+
   return (
     <Box position="relative" id={id}>
       <Flex alignItems="center" justifyContent="space-between">
@@ -283,18 +288,6 @@ export default function CurrencyInputPanel({
         </Flex>
       </Flex>
       <InputPanel>
-        {account && (
-          <TextBalance
-            onClick={!disabled && onMax}
-            color="textSubtle"
-            // fontSize="14px"
-            style={{ display: 'inline', cursor: 'pointer' }}
-          >
-            {!hideBalance && !!currency
-              ? t('Balance: %balance%', { balance: selectedCurrencyBalance?.toSignificant(6) ?? t('Loading') })
-              : ' -'}
-          </TextBalance>
-        )}
         <Container as="label" zapStyle={zapStyle} error={error} style={{ height: checkHeightInput() }}>
           <LabelRow>
             <NumericalInputWrapper
@@ -317,13 +310,44 @@ export default function CurrencyInputPanel({
               //     : { marginTop: '-10px' }
               // }
             />
+            {account && (
+              <TextBalance
+                onClick={
+                  !disabled &&
+                  (onMax ||
+                    (() => {
+                      setAutoChange(true)
+                      onPercentInput(100)
+                      setActivePercent(100)
+                    }))
+                }
+                color="textSubtle"
+                // fontSize="14px"
+                style={{ display: 'inline', cursor: 'pointer' }}
+              >
+                {!hideBalance && !!currency
+                  ? t('Balance: %balance%', {
+                      balance:
+                        formatAmountNumber(parseFloat(selectedCurrencyBalance?.toFixed()) || 0, 6) ?? t('Loading'),
+                    })
+                  : ' -'}
+              </TextBalance>
+            )}
           </LabelRow>
           {isShowDolar && (
             <ForDolar style={isShowPercent ? { bottom: '58px' } : { bottom: '22px' }}>
               <Flex justifyContent="flex-end" mr="1rem">
                 <Flex maxWidth="200px">
                   <Text fontSize="12px" color="textSubtle">
-                    ~{formatNumber(amountInDollar)} USD
+                    ~
+                    {isMobile
+                      ? formatNumber(amountInDollar).length > 10
+                        ? `${formatNumber(amountInDollar).substring(0, 10)}...`
+                        : formatNumber(amountInDollar)
+                      : formatNumber(amountInDollar).length > 30
+                      ? `${formatNumber(amountInDollar).substring(0, 30)}...`
+                      : formatNumber(amountInDollar)}{' '}
+                    USD
                   </Text>
                 </Flex>
               </Flex>
@@ -339,6 +363,7 @@ export default function CurrencyInputPanel({
                       key={`btn_quickCurrency${percent}`}
                       onClick={() => {
                         onPercentInput(percent)
+                        setAutoChange(true)
                         setActivePercent(percent)
                       }}
                       scale="xs"
@@ -353,20 +378,22 @@ export default function CurrencyInputPanel({
                       {percent}%
                     </PercentButton>
                   ))}
-                {showMaxButton && (
+                {showMaxButton && showQuickInputButton && (
                   <PercentButton
                     onClick={(e) => {
                       e.stopPropagation()
                       e.preventDefault()
+                      setAutoChange(true)
+                      onPercentInput(100)
+                      setActivePercent(100)
                       onMax?.()
-                      setActivePercent(0)
                     }}
                     scale="xs"
                     variant="secondary"
                     style={{
                       textTransform: 'uppercase',
-                      background: activePercent === 0 ? '#9072ff' : 'none',
-                      color: activePercent === 0 ? '#fff' : '#9072ff',
+                      background: activePercent === 100 ? '#9072ff' : 'none',
+                      color: activePercent === 100 ? '#fff' : '#9072ff',
                     }}
                   >
                     {t('Max')}
@@ -377,7 +404,7 @@ export default function CurrencyInputPanel({
           </InputRow>
           <CurrencySelectButton
             // style={isMobile && !account?{top:'23%'}:isShowPercent?{top:'60%'}: {top:'45%'}}
-            style={{ bottom: isMobile && isShowPercent ? 50 : 15 }}
+            style={{ bottom: isMobile && isShowPercent ? 50 : 15, cursor: disableCurrencySelect ? 'unset' : 'cursor' }}
             className="open-currency-select-button"
             selected={!!currency}
             onClick={() => {

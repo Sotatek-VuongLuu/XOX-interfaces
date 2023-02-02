@@ -7,7 +7,7 @@ import truncateHash from '@pancakeswap/utils/truncateHash'
 import { Box, Flex, LinkExternal, Skeleton, Text, Button, Link, Select, Input } from '@pancakeswap/uikit'
 import { formatISO9075 } from 'date-fns'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import { useGetChainName, useProtocolTransactionsSWR, useWidthDrawStableCoinSWR, useStakeStableCoinSWR } from 'state/info/hooks'
+import { useGetChainName, useProtocolTransactionsSWR, useWidthDrawStableCoinSWR, useStakeStableCoinSWR, useMyWidthDrawStableCoinSWR } from 'state/info/hooks'
 import { Transaction, TransactionFrom, TransactionType } from 'state/info/types'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -315,6 +315,11 @@ const DataRow: React.FC<
   const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
   const symbolToken0 = typePage === TYPE_HISTORY.stake ? 'XOXS' : (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BUSD' : 'USDC';
 
+  const onImageError = (e: any) => {
+    // eslint-disable-next-line no-param-reassign
+    e.target.src = 'images/default_avatar.jpg'
+  }
+
   return (
     <>
       <Text
@@ -358,7 +363,7 @@ const DataRow: React.FC<
           lineHeight="19px"
           color="rgba(255, 255, 255, 0.87)"
         >
-          {transaction?.avatar ? <img src={transaction?.avatar} alt="avatar" /> : <img src="images/default_avatar.jpg" alt="imagess" />}
+          {transaction?.avatar ? <img src={transaction?.avatar} alt="avatar" onError={onImageError} /> : <img src="images/default_avatar.jpg" alt="imagess" />}
           {transaction?.username}
         </Text>
       }
@@ -431,7 +436,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
   const transactions = useProtocolTransactionsSWR();
-  const dataTable = (typePage === TYPE_HISTORY.stake) ? useStakeStableCoinSWR(account) : useWidthDrawStableCoinSWR(typePage === TYPE_HISTORY.myWidthDraw ? account : null);
+  const dataTable = (typePage === TYPE_HISTORY.stake) ? useStakeStableCoinSWR(account) : (typePage === TYPE_HISTORY.widthDraw) ? useWidthDrawStableCoinSWR() : useMyWidthDrawStableCoinSWR(account);
   const [currentTransactions, setCurrentTransactions] = useState([])
 
   const { t } = useTranslation()
@@ -887,7 +892,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
               onOptionChange={(option: any) => setPerPage(option.value)}
               className="select-page"
             />
-            <Text className="go-page">Go to page</Text>
+            <Text className="go-page" style={{whiteSpace: 'nowrap'}}>Go to page</Text>
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}

@@ -1,5 +1,5 @@
 /* eslint-disable import/order */
-import { Flex } from '@pancakeswap/uikit'
+import { Flex, useMatchBreakpoints } from '@pancakeswap/uikit'
 import Page from 'components/Layout/Page'
 import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
@@ -13,6 +13,8 @@ import useNativeCurrency from 'hooks/useNativeCurrency'
 import { useAllTokens } from 'hooks/Tokens'
 import HoverableChart from '../components/InfoCharts/HoverableChart'
 import InfoNav from '../components/InfoNav'
+import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 
 export const ChartCardsContainer = styled(Flex)`
   justify-content: space-between;
@@ -55,6 +57,20 @@ export const PageContainer = styled(Flex)`
   }
 `
 
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: -1;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+    height: auto;
+    object-fit: cover;
+  }
+`
+
 const Overview: React.FC<React.PropsWithChildren> = () => {
   const native = useNativeCurrency()
   const [coinmarketcapIds, setCoinmarketcapIds] = useState<any>()
@@ -66,6 +82,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const allTokens = useAllTokens()
   const [fetchingTokenId, setFetchingTokenId] = useState(false)
   const [unsupported, setUnsupported] = useState(false)
+  const { isMobile } = useMatchBreakpoints()
 
   // const allPoolData = useAllPoolDataSWR()
   // const allPoolData = useAllPoolData()
@@ -193,29 +210,32 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
 
   return (
     <Page>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <InfoNav allTokens={allTokens} />
       <PageContainer>
         <div>
           <ChartCardsContainer>
-            <HoverableChart
-              chartData={chartData}
-              valueProperty="priceUSD"
-              ChartComponent={LineChart}
-              filter={filter}
-              setFilter={setFilter}
-              currencyDatas={currencyDatas}
-              setCoinmarketcapId={setCoinmarketcapId}
-              chainId={chainId}
-              native={native}
-              allTokens={allTokens}
-              fetchingTokenId={fetchingTokenId}
-              setFetchingTokenId={setFetchingTokenId}
-              unsupported={unsupported}
-            />
+            <div className='border-gradient-style'>
+              <HoverableChart
+                chartData={chartData}
+                valueProperty="priceUSD"
+                ChartComponent={LineChart}
+                filter={filter}
+                setFilter={setFilter}
+                currencyDatas={currencyDatas}
+                setCoinmarketcapId={setCoinmarketcapId}
+                chainId={chainId}
+                native={native}
+                allTokens={allTokens}
+                fetchingTokenId={fetchingTokenId}
+                setFetchingTokenId={setFetchingTokenId}
+                unsupported={unsupported}
+              />
+            </div>
           </ChartCardsContainer>
-          <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} />
+          <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} className='border-gradient-style' />
         </div>
-        <div>
+        <div className='border-gradient-style'>
           <TransactionTable />
         </div>
       </PageContainer>

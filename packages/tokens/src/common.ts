@@ -36,12 +36,38 @@ export const XOX_GOERLI = new ERC20Token(
   'http://localhost:3001/swap?chainId=5',
 )
 
+export const XOX_BUSD_TESTNET = new ERC20Token(
+  ChainId.BSC_TESTNET,
+  '0xF38Df69bF602EAABD10f13B74Eaeb363428B26fa',
+  18,
+  'XOX-BUSD',
+  'XOX-BUSD',
+  'http://localhost:3001/pools?chainId=97',
+)
+
+export const XOX_USDC_TESTNET = new ERC20Token(
+  ChainId.GOERLI,
+  '0xbCda2cb851062e2CdB3D237f206Ab98F2188e4aC',
+  18,
+  'XOX-USDC',
+  'XOX-USDC',
+  'http://localhost:3001/pools?chainId=5',
+)
+
 export const XOX: Record<ChainId, ERC20Token> = {
   [ChainId.ETHEREUM]: XOX_MAINNET,
   [ChainId.RINKEBY]: XOX_GOERLI,
   [ChainId.GOERLI]: XOX_GOERLI,
   [ChainId.BSC]: XOX_BSC_MAINNET,
   [ChainId.BSC_TESTNET]: XOX_BSC_TESTNET,
+}
+
+export const XOXLP: Record<ChainId, ERC20Token> = {
+  [ChainId.ETHEREUM]: XOX_USDC_TESTNET,
+  [ChainId.RINKEBY]: XOX_USDC_TESTNET,
+  [ChainId.GOERLI]: XOX_USDC_TESTNET,
+  [ChainId.BSC]: XOX_BUSD_TESTNET,
+  [ChainId.BSC_TESTNET]: XOX_BUSD_TESTNET,
 }
 
 export const CAKE_MAINNET = new ERC20Token(

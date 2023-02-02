@@ -10,6 +10,7 @@ import {
   Modal,
   InjectedModalProps,
   ModalProps,
+  useMatchBreakpoints,
 } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { wrappedCurrency } from 'utils/wrappedCurrency'
@@ -22,7 +23,6 @@ import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToW
 
 const Wrapper = styled.div`
   width: 100%;
-  min-width: 300px;
 
   .waiting {
     font-weight: 500;
@@ -62,7 +62,7 @@ const Wrapper = styled.div`
 const Section = styled(AutoColumn)``
 
 const ConfirmedIcon = styled(ColumnCenter)`
-  padding: 0 0 24px 0;
+  padding: 14px 0 34px 0;
 `
 const ButtonFooters = styled.div`
   display: flex;
@@ -102,7 +102,9 @@ function ConfirmationPendingContent({ pendingText, iconGridLoader }: { pendingTe
         <AutoColumn gap="12px" justify="center">
           <Text className="pending">{pendingText}</Text>
         </AutoColumn>
-        <Text className="confirm">{t('Confirm this transaction in your wallet.')}</Text>
+        <Text className="confirm" mb="32px">
+          {t('Confirm this transaction in your wallet.')}
+        </Text>
       </AutoColumn>
     </Wrapper>
   )
@@ -120,11 +122,12 @@ export function TransactionSubmittedContent({
   currencyToAdd?: Currency | undefined
 }) {
   const { t } = useTranslation()
+  const { isMobile } = useMatchBreakpoints()
 
   const token: Token | undefined = wrappedCurrency(currencyToAdd, chainId)
 
   return (
-    <Wrapper>
+    <Wrapper style={{ maxWidth: '100%' }}>
       <Section>
         <ConfirmedIcon>
           <ConfirmImg>
@@ -146,7 +149,7 @@ export function TransactionSubmittedContent({
               })}
             </Link>
           )}
-          <ButtonFooters>
+          <ButtonFooters style={{ width: isMobile ? 'auto' : '400px', maxWidth: '100%' }}>
             <Button onClick={onDismiss} maxWidth="200px" style={{ height: '37px', background: '#313131' }}>
               {t('Close')}
             </Button>
@@ -193,11 +196,14 @@ export function TransactionErrorContent({
 }) {
   const { t } = useTranslation()
   return (
-    <Wrapper>
-      <AutoColumn justify="center">
+    <Wrapper style={{ maxWidth: '800px' }}>
+      <AutoColumn justify="center" style={{ width: '300px', maxWidth: '100%' }}>
         {/* <ErrorIcon color="failure" width="64px" /> */}
         <img alt="" src="/images/swap/icon-swap-error.svg" style={{ padding: '10px 0' }} />
-        <Text color="failure" style={{ textAlign: 'center', width: '85%', wordBreak: 'break-word' }}>
+        <Text
+          color="failure"
+          style={{ textAlign: 'center', width: '85%', wordBreak: 'break-word', color: 'rgba(255, 255, 255, 0.6)' }}
+        >
           {message}
         </Text>
       </AutoColumn>

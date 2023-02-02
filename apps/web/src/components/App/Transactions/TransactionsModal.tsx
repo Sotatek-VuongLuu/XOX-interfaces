@@ -1,5 +1,5 @@
 import { useCallback } from 'react'
-import { Modal, ModalBody, Text, Button, Flex, InjectedModalProps } from '@pancakeswap/uikit'
+import { Modal, ModalBody, Text, Button, Flex, InjectedModalProps, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import isEmpty from 'lodash/isEmpty'
 import groupBy from 'lodash/groupBy'
@@ -47,11 +47,11 @@ const NoTransactionText = styled(Text)`
   margin-top: 16px;
   color: #ffffff99;
 `
-function renderTransactions(transactions: TransactionDetails[], chainId: number) {
+function renderTransactions(transactions: TransactionDetails[], chainId: number, hiddenIcon: boolean) {
   return (
-    <Flex flexDirection="column">
+    <Flex flexDirection="column" mb="8px">
       {transactions.map((tx) => {
-        return <Transaction key={tx.hash + tx.addedTime} tx={tx} chainId={chainId} />
+        return <Transaction key={tx.hash + tx.addedTime} tx={tx} chainId={chainId} hiddenIcon={hiddenIcon} />
       })}
     </Flex>
   )
@@ -61,6 +61,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
   const { address: account } = useAccount()
   const dispatch = useAppDispatch()
   const sortedRecentTransactions = useAllSortedRecentTransactions()
+  const { isMobile } = useMatchBreakpoints()
 
   const { t } = useTranslation()
 
@@ -71,9 +72,9 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
   }, [dispatch])
 
   return (
-    <Modal title={t('Recent Transactions')} onDismiss={onDismiss}>
+    <Modal title={t('Recent Transactions')} pb="32px" onDismiss={onDismiss}>
       {account ? (
-        <ModalBody style={{maxWidth:'495px', width:'100%'}}>
+        <ModalBody style={{ width: hasTransactions ? '495px' : 'unset', maxWidth: '100%' }}>
           {hasTransactions ? (
             <>
               <AutoRow mb="1rem" style={{ justifyContent: 'space-between' }}>
@@ -84,25 +85,29 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
                   {t('Clear all')}
                 </RecentButton>
               </AutoRow>
-              {Object.entries(sortedRecentTransactions).map(([chainId, transactions]) => {
-                const chainIdNumber = Number(chainId)
-                const groupedTransactions = groupBy(Object.values(transactions), (trxDetails) =>
-                  Boolean(trxDetails.receipt),
-                )
+              <div style={{ height: '200px', overflowY: 'auto', overflowX: 'hidden' }}>
+                {Object.entries(sortedRecentTransactions).map(([chainId, transactions]) => {
+                  const chainIdNumber = Number(chainId)
+                  const groupedTransactions = groupBy(Object.values(transactions), (trxDetails) =>
+                    Boolean(trxDetails.receipt),
+                  )
 
-                const confirmed = groupedTransactions.true ?? []
-                const pending = groupedTransactions.false ?? []
+                  const confirmed = groupedTransactions.true ?? []
+                  const pending = groupedTransactions.false ?? []
 
-                return (
-                  <div key={`transactions#${chainIdNumber}`}>
-                    <Text fontSize="16px" lineHeight="19px" color="#FFFFFFDE" mb="16px">
-                      {chains.find((c) => c.id === chainIdNumber)?.name ?? 'Unknown network'}
-                    </Text>
-                    {renderTransactions(pending, chainIdNumber)}
-                    {renderTransactions(confirmed, chainIdNumber)}
-                  </div>
-                )
-              })}
+                  return (
+                    <>
+                      <Text fontSize="16px" lineHeight="19px" color="#FFFFFFDE">
+                        {chains.find((c) => c.id === chainIdNumber)?.name ?? 'Unknown network'}
+                      </Text>
+                      <div key={`transactions#${chainIdNumber}`}>
+                        {renderTransactions(pending, chainIdNumber, isMobile)}
+                        {renderTransactions(confirmed, chainIdNumber, isMobile)}
+                      </div>
+                    </>
+                  )
+                })}
+              </div>
             </>
           ) : (
             <NoTransaction>

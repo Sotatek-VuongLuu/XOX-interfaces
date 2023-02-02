@@ -22,7 +22,7 @@ import { getDefaultProvider } from '@ethersproject/providers'
 import { CurrencyLogo } from 'components/Logo'
 import { ERC20Token, PAIR_XOX_BUSD } from '@pancakeswap/sdk'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useERC20 } from 'hooks/useContract'
 import InfoPieChart from '../InfoCharts/PieChart'
 
@@ -180,7 +180,7 @@ const SORT_FIELD = {
   amountToken1: 'amountToken1',
 }
 
-const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyDatas, native, allTokens }) => {
+const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyDatas, native, allTokens, className }) => {
   const [tokensBalance, setTokensBalance] = useState<any>([])
 
   const { address: account } = useAccount()
@@ -235,10 +235,10 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const getXOXPrice = () => {
     Promise.all([contractUSD.balanceOf(PAIR_XOX_BUSD[chainId]), contractXOX.balanceOf(PAIR_XOX_BUSD[chainId])])
       .then((balances) => {
-        const baseTokenPrice = parseFloat(formatBigNumber(balances[0]))
+        const baseTokenPrice = parseFloat(formatBigNumber(balances[0], 2, USD_DECIMALS[chainId]))
         const XoxPrice = parseFloat(formatBigNumber(balances[1]))
         if (baseTokenPrice === 0) return
-        setRateXOX(XoxPrice / baseTokenPrice)
+        setRateXOX(baseTokenPrice / XoxPrice)
       })
       .catch((e) => console.warn(e))
   }
@@ -295,37 +295,27 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     )
     const xoxBalance = balanceXOX ? formatAmountNumber(balanceXOX.balance * tokenRateXOX(balanceXOX.symbol)) : 0
     const result = [
-      {
-        name: native.symbol,
-        value: nativeBalance,
-      },
-      {
-        name: 'XOX',
-        value: xoxBalance,
-      },
+      ['Label', 'Value', { role: 'tooltip', type: 'string', p: { html: true } }],
+      [native.symbol, nativeBalance, `${native.symbol}: $${nativeBalance}`],
+      ['XOX', xoxBalance, `XOX: $${xoxBalance}`],
     ]
     let sum = 0
     tokensBalance.forEach((balance: any) => {
       if (balance.contractAddress.toLowerCase() === USD_ADDRESS[chainId].toLowerCase()) {
-        result.push({
-          name: balance.symbol,
-          value: formatAmountNumber(balance.balance * tokenRateUSD(balance.symbol)),
-        })
+        const balanceUSD = formatAmountNumber(balance.balance * tokenRateUSD(balance.symbol))
+        result.push([balance.symbol, balanceUSD, `${balance.symbol}: $${balanceUSD}`])
       } else if (balance.contractAddress.toLowerCase() !== XOX_ADDRESS[chainId].toLowerCase()) {
         sum += formatAmountNumber(balance.balance * tokenRateUSD(balance.symbol))
       }
     })
-    result.push({
-      name: 'Others',
-      value: sum,
-    })
-    total = nativeBalance + xoxBalance + result[2].value + sum
+    result.push(['Others', sum, `Others: $${sum}`])
+    total = nativeBalance + xoxBalance + result[2][1] + sum
     setTotalAsset(total)
     setDataChart(result)
   }, [balanceNative, tokensBalance, chainId])
 
   return (
-    <Wrapper>
+    <Wrapper className={className}>
       <TableWrapper>
         <Flex justifyContent="space-between" alignItems="flex-end">
           <Text

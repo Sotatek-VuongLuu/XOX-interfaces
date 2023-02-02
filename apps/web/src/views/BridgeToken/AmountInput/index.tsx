@@ -2,8 +2,9 @@
 import React, { useState } from 'react'
 import { ChainId } from '@pancakeswap/sdk'
 import styled from 'styled-components'
+import { Tooltip } from '@mui/material'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { NumericalInput } from '@pancakeswap/uikit'
+import { NumericalInput, useMatchBreakpoints } from '@pancakeswap/uikit'
 import SelectNetworkButton from './SelectNetworkButton'
 import SelectTokenButton from './SelectTokenButton'
 import { NETWORK_LABEL } from '../networks'
@@ -20,7 +21,11 @@ const Wrapper = styled.div`
   }
 `
 
-const TextRow = styled.div`
+interface IPropsTextRow {
+  isMobile?: boolean
+}
+
+const TextRow = styled.div<IPropsTextRow>`
   color: #fff;
   display: flex;
   justify-content: space-between;
@@ -29,16 +34,40 @@ const TextRow = styled.div`
   font-size: 16px;
   margin-bottom: 8px;
   color: ${({ theme }) => theme.colors.textSubtle};
-  .balance {
-    cursor: pointer;
+
+  .label {
+    min-width: ${({ isMobile }) => isMobile && '60px'};
+  }
+
+  .balance_container {
     font-weight: 400;
     text-align: right;
-    div {
+    display: flex;
+    white-space: nowrap;
+    flex-direction: ${({ isMobile }) => (isMobile ? 'column' : 'row')};
+    cursor: pointer;
+    .balance {
       text-overflow: ellipsis;
       white-space: nowrap;
       overflow: hidden;
+      max-width: 139px;
     }
   }
+
+  .balance_pool_container {
+    font-weight: 400;
+    text-align: right;
+    display: flex;
+    white-space: nowrap;
+    flex-direction: ${({ isMobile }) => (isMobile ? 'column' : 'row')};
+    .balance_pool {
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 139px;
+    }
+  }
+
   @media (max-width: 576px) {
     font-size: 14px;
   }
@@ -52,20 +81,19 @@ const AmountRow = styled.div`
 
   .tooltip {
     background: transparent;
-    padding: 7px 10px 7px 0;
+    padding: 7px 0 7px 0;
     font-size: 16px;
     color: ${({ theme }) => theme.colors.textSubTitle};
     font-weight: 400;
-    width: calc(100% - 250px);
-    div {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-    }
+    width: calc(100%);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+
     @media screen and (min-width: 576px) {
-      padding: 10px 8px 10px 0;
+      padding: 10px 0 10px 0;
       font-size: 18px;
-      width: calc(100% - 322px);
+      width: calc(100%);
     }
   }
 
@@ -142,21 +170,32 @@ const AmountInput: React.FC<Props> = ({
   const getInputLabel = () => {
     return (isTokenFrom && 'From') || 'To (est)'
   }
+  const { isMobile } = useMatchBreakpoints()
 
   return (
     <Wrapper>
-      <TextRow>
-        <span>{getInputLabel()}</span>
+      <TextRow isMobile={isMobile}>
+        <span className="label">{getInputLabel()}</span>
         {isTokenFrom && (
-          <span className="balance" onClick={() => balance !== '-' && handleBalanceMax(balance)} aria-hidden="true">
-            Balance: ${balance}
-          </span>
+          <Tooltip title={balance} placement="top">
+            <span
+              aria-hidden="true"
+              className="balance_container"
+              onClick={() => balance !== '-' && handleBalanceMax(balance)}
+            >
+              Balance:&nbsp;
+              <span className="balance">${balance}</span>
+            </span>
+          </Tooltip>
         )}
 
         {!isTokenFrom && (
-          <span className="balance" aria-hidden="true">
-            {NETWORK_LABEL[getChainIdToByChainId(chainId)]} Pool balance: ${balance}
-          </span>
+          <Tooltip title={balance} placement="top">
+            <span aria-hidden="true" className="balance_pool_container">
+              {NETWORK_LABEL[getChainIdToByChainId(chainId)]} Pool balance: &nbsp;
+              <span className="balance_pool"> ${balance}</span>
+            </span>
+          </Tooltip>
         )}
       </TextRow>
 

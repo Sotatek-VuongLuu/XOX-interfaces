@@ -10,7 +10,6 @@ import {
   LogoutIcon,
   UserMenu as UIKitUserMenu,
   UserMenuDivider,
-  UserMenuVariant,
   WalletFilledIcon,
 } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'

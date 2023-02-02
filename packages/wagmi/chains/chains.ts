@@ -101,8 +101,8 @@ export const bscTest: Chain = {
     symbol: 'tBNB',
   },
   rpcUrls: {
-    public: 'https://data-seed-prebsc-1-s3.binance.org:8545',
-    default: 'https://data-seed-prebsc-1-s3.binance.org:8545',
+    public: 'https://nd-725-482-373.p2pify.com/973ba2e9bd193ab8bc77aca52a003ab7',
+    default: 'https://nd-725-482-373.p2pify.com/973ba2e9bd193ab8bc77aca52a003ab7',
   },
   blockExplorers: {
     default: { name: 'BscScan', url: 'https://testnet.bscscan.com' },

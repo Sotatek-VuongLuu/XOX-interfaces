@@ -1,10 +1,11 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable import/no-cycle */
 /* eslint-disable import/no-duplicates */
 /* eslint-disable import/order */
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState, useCallback, useEffect, useMemo } from 'react'
-import { Flex, useModal } from '@pancakeswap/uikit'
+import { Flex, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
 import Page from '../Page'
 import { useTranslation } from '@pancakeswap/localization'
 import { useSwitchNetwork } from 'hooks/useSwitchNetwork'
@@ -34,9 +35,14 @@ import { useActiveHandle } from 'hooks/useEagerConnect.bmp'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import useAuth from 'hooks/useAuth'
-import { CONTRACT_BRIDGE_POOL } from './networks'
+import { CONTRACT_BRIDGE_POOL, NETWORK_LABEL, NETWORK_LINK } from './networks'
 import { GridLoader } from 'react-spinners'
-import truncateHash from '@pancakeswap/utils/truncateHash'
+import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
+import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
+import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
+import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
+import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 
 const SwapButton = styled.button`
   background: ${({ disabled }) =>
@@ -159,6 +165,7 @@ const Content = styled.div`
   .noti_claim_success {
     display: flex;
     justify-content: center;
+    margin-top: 24px;
   }
 
   .x-close-icon {
@@ -203,6 +210,14 @@ const Content = styled.div`
     color: rgba(255, 255, 255, 0.6);
   }
 
+  .noti_claim_pending_h4 {
+    text-align: center;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
   .btn_dismiss_container {
     display: flex;
     justify-content: center;
@@ -219,6 +234,80 @@ const Content = styled.div`
       cursor: pointer;
     }
   }
+
+  .submitted {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    margin-top: 24px;
+    margin-bottom: 8px;
+    text-align: center;
+    color: rgba(255, 255, 255, 0.87);
+  }
+  .view_on {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 24px;
+    text-align: center;
+    color: #3d8aff;
+    margin-bottom: 24px;
+  }
+
+  .btn_close {
+    text-align: center;
+    width: 100%;
+    padding: 12px 0px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #ffffff;
+    background: #313131;
+    border-radius: 6px;
+    cursor: pointer;
+  }
+`
+
+const SwapBackgroundWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: 100%;
+`
+
+const BackgroundWrapper = styled.div`
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: calc(100% - 200px);
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  background: #242424;
+`
+
+const Wrapper = styled(Flex)`
+  width: 100%;
+  height: fit-content;
+  z-index: 0;
+  align-items: center;
+  justify-content: center;
+`
+
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: 0;
+  top: -50px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+    height: auto;
+    object-fit: cover;
+  }
 `
 
 export const getChainIdToByChainId = (chainId: any) => {
@@ -234,6 +323,10 @@ export const getChainIdToByChainId = (chainId: any) => {
     default:
       return chainId
   }
+}
+
+export const linkTransaction = (chainId) => {
+  return `${NETWORK_LINK[chainId]}/tx/`
 }
 
 export default function BridgeToken() {
@@ -268,9 +361,11 @@ export default function BridgeToken() {
     XOX_ADDRESS[chainId] && tryParseAmount(amountInput, XOX[chainId]),
     getBridgeTokenAddress(chainId),
   )
+
   const [modalReject, setModalReject] = useState<boolean>(false)
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
-
+  const [txHash, setTxHash] = useState('')
+  const { isMobile } = useMatchBreakpoints()
   const handleGetBalancePool = async () => {
     try {
       setBalancePool('')
@@ -314,12 +409,12 @@ export default function BridgeToken() {
     } else if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
       setMessageButton(`Approve ${addressTokenInput.symbol}`)
     } else if (approvalState === ApprovalState.PENDING) {
-      setMessageButton('Approving')
+      setMessageButton('Approving...')
     } else if (amountTo === '0') {
       setMessageButton('Input Amount Not Allowed')
     } else setMessageButton('Bridge')
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amountInput, approvalState, balanceInput, minAmount])
+  }, [amountInput, approvalState, balanceInput, minAmount, amountTo, balancePool])
 
   // handle user type input
   const handleUserInput = (value) => {
@@ -375,6 +470,8 @@ export default function BridgeToken() {
   const switchNetwork = () => {
     if (account) {
       switchNetworkAsync(getChainIdToByChainId(chainId))
+      setAmountInput('')
+      setAmountTo('')
     }
     return null
   }
@@ -393,6 +490,8 @@ export default function BridgeToken() {
       setMessageTx(`Swap ${amountInput} ${addressTokenInput.symbol}`)
       if (tx?.transactionHash) {
         setIsOpenSuccessModal(true)
+        setIsOpenLoadingClaimModal(false)
+        setTxHash(tx?.transactionHash)
         setLoading(false)
         setAmountInput('')
       }
@@ -400,10 +499,9 @@ export default function BridgeToken() {
     } catch (error: any) {
       setLoading(false)
       setIsOpenLoadingClaimModal(false)
-      if (error && error?.code === 'ACTION_REJECTED') {
+      if (error?.message.includes('rejected')) {
         setModalReject(true)
       }
-      // nothing
     }
   }
 
@@ -423,7 +521,10 @@ export default function BridgeToken() {
   }
 
   useEffect(() => {
-    if (account && !userProfile) setOpen(false)
+    setMessageAddress('')
+    if (account && !userProfile) {
+      setOpen(false)
+    }
   }, [account, userProfile])
 
   const wallets = useMemo(() => createWallets(chainId, connectAsync), [chainId, connectAsync])
@@ -437,122 +538,37 @@ export default function BridgeToken() {
 
   return (
     <Page>
-      <Flex width={['328px', , '100%']} height="100%" justifyContent="center" position="relative">
-        <Flex flexDirection="column" position="relative">
-          <WapperBg>
-            <svg
-              className="desktop"
-              width="591"
-              height="760"
-              viewBox="0 0 591 760"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g filter="url(#filter0_d_8007_30311)">
-                <path
-                  d="M570.777 45.4999L531.696 17.8377C530.007 16.6421 527.988 16 525.919 16H65.085C63.0154 16 60.9969 16.6421 59.3077 17.8377L20.2262 45.4999C17.5778 47.3745 16.0035 50.4175 16.0035 53.6622L16.0002 711.511V734C16.0002 739.523 20.4774 744 26.0002 744H61.9007H529.096H564.997C570.52 744 574.997 739.523 574.997 734V711.511L575 53.6622C575 50.4175 573.426 47.3745 570.777 45.4999Z"
-                  fill="#242424"
-                />
-                <path
-                  d="M569.911 46.7242L530.829 19.0621C529.393 18.0458 527.678 17.5 525.919 17.5H65.085C63.3259 17.5 61.6101 18.0458 60.1742 19.0621L21.0928 46.7243C18.8417 48.3177 17.5035 50.9042 17.5035 53.6622L17.5002 711.511V734C17.5002 738.694 21.3058 742.5 26.0002 742.5H61.9007H529.096H564.997C569.691 742.5 573.497 738.694 573.497 734V711.511L573.5 53.6622C573.5 50.9042 572.162 48.3176 569.911 46.7242Z"
-                  stroke="url(#paint0_linear_8007_30311)"
-                  strokeWidth="3"
-                />
-              </g>
-              <defs>
-                <filter
-                  id="filter0_d_8007_30311"
-                  x="0.000244141"
-                  y="0"
-                  width="591"
-                  height="760"
-                  filterUnits="userSpaceOnUse"
-                  colorInterpolationFilters="sRGB"
-                >
-                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                  <feColorMatrix
-                    in="SourceAlpha"
-                    type="matrix"
-                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha"
-                  />
-                  <feOffset />
-                  <feGaussianBlur stdDeviation="8" />
-                  <feComposite in2="hardAlpha" operator="out" />
-                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" />
-                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8007_30311" />
-                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_8007_30311" result="shape" />
-                </filter>
-                <linearGradient
-                  id="paint0_linear_8007_30311"
-                  x1="254.5"
-                  y1="16"
-                  x2="253.029"
-                  y2="531.999"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#6437FF" />
-                  <stop offset="0.442708" stopColor="#9F59FF" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-            </svg>
-            <svg
-              className="mobile"
-              width="359"
-              height="796"
-              viewBox="0 0 359 796"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
-              <g filter="url(#filter0_d_8041_24639)">
-                <path
-                  d="M338.515 31.9991L318.508 17.8376C316.819 16.642 314.8 15.9999 312.731 15.9999H46.0397C43.9701 15.9999 41.9516 16.642 40.2624 17.8376L20.2546 31.9994C17.6063 33.8739 16.0321 36.9167 16.0319 40.1612L16 760.501V769.489C16 775.012 20.4772 779.489 26 779.489H42.8266H315.879H332.706C338.229 779.489 342.706 775.012 342.706 769.489V760.501L342.738 40.1617C342.738 36.9169 341.164 33.8737 338.515 31.9991Z"
-                  fill="#242424"
-                />
-                <path
-                  d="M337.649 33.2234L317.642 19.062C316.206 18.0457 314.49 17.4999 312.731 17.4999H46.0397C44.2806 17.4999 42.5648 18.0457 41.129 19.062L40.2624 17.8376L41.129 19.062L21.1212 33.2238C18.8702 34.8171 17.5321 37.4034 17.5319 40.1613L17.5 760.501V760.501V769.489C17.5 774.183 21.3056 777.989 26 777.989H42.8266H315.879H332.706C337.4 777.989 341.206 774.183 341.206 769.489V760.501L341.238 40.1617C341.238 37.4035 339.9 34.8168 337.649 33.2234Z"
-                  stroke="url(#paint0_linear_8041_24639)"
-                  strokeWidth="3"
-                />
-              </g>
-              <defs>
-                <filter
-                  id="filter0_d_8041_24639"
-                  x="0"
-                  y="0"
-                  width="358.738"
-                  height="795.489"
-                  filterUnits="userSpaceOnUse"
-                  colorInterpolationFilters="sRGB"
-                >
-                  <feFlood floodOpacity="0" result="BackgroundImageFix" />
-                  <feColorMatrix
-                    in="SourceAlpha"
-                    type="matrix"
-                    values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-                    result="hardAlpha"
-                  />
-                  <feOffset />
-                  <feGaussianBlur stdDeviation="8" />
-                  <feComposite in2="hardAlpha" operator="out" />
-                  <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" />
-                  <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_8041_24639" />
-                  <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_8041_24639" result="shape" />
-                </filter>
-                <linearGradient
-                  id="paint0_linear_8041_24639"
-                  x1="155.422"
-                  y1="16.0008"
-                  x2="154.562"
-                  y2="317.576"
-                  gradientUnits="userSpaceOnUse"
-                >
-                  <stop stopColor="#6437FF" />
-                  <stop offset="0.442708" stopColor="#9F59FF" stopOpacity="0" />
-                </linearGradient>
-              </defs>
-            </svg>
-          </WapperBg>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+      <Flex
+        width={['328px', , '559px']}
+        marginTop="40px"
+        justifyContent="center"
+        alignItems="center"
+        position="relative"
+      >
+        <Wrapper flex="column" position="relative">
+          {isMobile ? (
+            <>
+              <SwapBackgroundWrapper>
+                <LiquidityBackgroundMobile />
+              </SwapBackgroundWrapper>
+
+              <SwapBackgroundWrapper>
+                <LiquidityBackgroundBorderMobile />
+              </SwapBackgroundWrapper>
+            </>
+          ) : (
+            <>
+              <SwapBackgroundWrapper>
+                <LiquidityBackgroundDesktop />
+              </SwapBackgroundWrapper>
+
+              <SwapBackgroundWrapper>
+                <LiquidityBackgroundBorderDesktop />
+              </SwapBackgroundWrapper>
+            </>
+          )}
+          <BackgroundWrapper />
           <StyledSwapContainer>
             <StyledInputCurrencyWrapper>
               <StyledHeader>
@@ -671,26 +687,20 @@ export default function BridgeToken() {
               />
             </StyledInputCurrencyWrapper>
           </StyledSwapContainer>
-
-          <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Bridge Success">
+          <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Confirm Bridge">
             <Content>
-              <div className="noti">
-                <span>{messageTx}</span>
-              </div>
               <div className="noti_claim_success">
                 <img src="/images/success_claim.png" alt="success_claim" />
               </div>
-              <img
-                src="/images/close-one.svg"
-                alt="close-one"
-                className="x-close-icon"
-                height={20}
-                width={20}
-                onClick={() => setIsOpenSuccessModal(false)}
-              />
+              <div className="submitted">Transaction Submitted</div>
+              <a href={`${linkTransaction(chainId)}${txHash}`} target="_blank" rel="noreferrer">
+                <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
+              </a>
+              <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)}>
+                Close
+              </div>
             </Content>
           </ModalBase>
-
           <WalletModalV2
             docText={t('Learn How to Connect')}
             docLink={docLink}
@@ -699,13 +709,12 @@ export default function BridgeToken() {
             login={login}
             onDismiss={() => setOpen(false)}
           />
-
           <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Bridge Confirm">
             <Content>
               <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
                 <img src="/images/reject_xox.png" alt="reject_xox" />
               </div>
-              <div className="noti_claim_pending_h2">Transaction rejected.</div>
+              <div className="noti_claim_pending_h4">Transaction rejected.</div>
               <div className="btn_dismiss_container">
                 <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
                   Dismiss
@@ -720,7 +729,6 @@ export default function BridgeToken() {
               />
             </Content>
           </ModalBase>
-
           <ModalBase
             open={isOpenLoadingClaimModal}
             handleClose={() => setIsOpenLoadingClaimModal(false)}
@@ -744,7 +752,7 @@ export default function BridgeToken() {
               />
             </Content>
           </ModalBase>
-        </Flex>
+        </Wrapper>
       </Flex>
     </Page>
   )

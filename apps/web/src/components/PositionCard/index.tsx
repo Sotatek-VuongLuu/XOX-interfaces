@@ -36,6 +36,7 @@ import { DoubleCurrencyLogo } from '../Logo'
 import { RowBetween, RowFixed } from '../Layout/Row'
 import Dots from '../Loader/Dots'
 import { formatAmount } from '../../utils/formatInfoNumbers'
+import { formatAmountString } from '@pancakeswap/utils/formatBalance'
 
 const FixedHeightRow = styled(RowBetween)`
   height: 24px;
@@ -90,6 +91,13 @@ const CustomCard = styled(Card)`
     color: #ffffff;
   }
 
+  .text-elipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80px;
+  }
+
   .text-logo {
     margin-right: 8px;
   }
@@ -111,6 +119,12 @@ const CustomCard = styled(Card)`
     .text-right {
       font-size: 18px;
       line-height: 22px;
+    }
+
+    .text-elipsis {
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: unset;
     }
   }
 `
@@ -186,10 +200,49 @@ const CustomCardMinimal = styled(Card)`
     padding: 20px 17px;
   }
 
+  .text-left {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+  }
+
+  .text-right {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: right;
+    color: #ffffff;
+  }
+
+  .text-elipsis {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80px;
+  }
+
   ${({ theme }) => theme.mediaQueries.md} {
     .lp-token-text {
       font-size: 16px;
       line-height: 19px;
+    }
+
+    .text-left {
+      font-size: 16px;
+      line-height: 19px;
+    }
+
+    .text-right {
+      font-size: 18px;
+      line-height: 22px;
+    }
+
+    .text-elipsis {
+      white-space: nowrap;
+      overflow: visible;
+      text-overflow: unset;
+      width: auto;
     }
   }
 `
@@ -266,6 +319,7 @@ const withLPValuesFactory =
     const currency0 = props.showUnwrapped ? props.pair.token0 : unwrappedToken(props.pair.token0)
     const currency1 = props.showUnwrapped ? props.pair.token1 : unwrappedToken(props.pair.token1)
 
+    console.log(props.pair.liquidityToken, 'props.pair.liquidityToken')
     const userPoolBalance = useTokenBalance(account ?? undefined, props.pair.liquidityToken)
 
     const totalPoolTokens = useTotalSupply(props.pair.liquidityToken)
@@ -318,8 +372,8 @@ function MinimalPositionCardView({
   currency1,
   token0Deposited,
   token1Deposited,
-  totalUSDValue,
   userPoolBalance,
+  poolTokenPercentage,
 }: PositionCardProps) {
   const isStableLP = useContext(StableConfigContext)
 
@@ -351,13 +405,15 @@ function MinimalPositionCardView({
               </CustomRowFixed>
               <CustomRowFixed>
                 <Flex flexDirection="column" alignItems="flex-end">
-                  <Text className="text-right">{userPoolBalance ? userPoolBalance.toSignificant(4) : '-'}</Text>
-                  {Number.isFinite(totalUSDValue) && (
+                  <Text className="text-right text-elipsis">
+                    {userPoolBalance ? formatAmountString(userPoolBalance, 6) : '-'}
+                  </Text>
+                  {/* {Number.isFinite(totalUSDValue) && (
                     <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
                     })} USD)`}</Text>
-                  )}
+                  )} */}
                 </Flex>
               </CustomRowFixed>
             </CustomFixedHeightRow>
@@ -370,18 +426,12 @@ function MinimalPositionCardView({
                 <Text>{formatAmount(poolData.lpApr7d)}%</Text>
               </CustomFixedHeightRow>
             )}
-            {/* <CustomFixedHeightRow>
-                  <Text color="textSubtle" small>
-                    {t('Share of Pool')}:
-                  </Text>
-                  <Text>{poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '-'}</Text>
-                </CustomFixedHeightRow> */}
             {isStableLP ? null : (
               <CustomFixedHeightRow>
                 <Text className="text-left">{currency0.symbol}</Text>
                 {token0Deposited ? (
                   <CustomRowFixed>
-                    <Text className="text-right">{token0Deposited?.toSignificant(6)}</Text>
+                    <Text className="text-right">{formatAmountString(token0Deposited, 6)}</Text>
                   </CustomRowFixed>
                 ) : (
                   '-'
@@ -393,13 +443,23 @@ function MinimalPositionCardView({
                 <Text className="text-left">{currency1.symbol}</Text>
                 {token1Deposited ? (
                   <CustomRowFixed>
-                    <Text className="text-right">{token1Deposited?.toSignificant(6)}</Text>
+                    <Text className="text-right">{formatAmountString(token1Deposited, 6)}</Text>
                   </CustomRowFixed>
                 ) : (
                   '-'
                 )}
               </CustomFixedHeightRow>
             )}
+            <CustomFixedHeightRow>
+              <Text className="text-left">{t('Share of Pool')}:</Text>
+              <Text className="text-right">
+                {poolTokenPercentage
+                  ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
+                    ? `${formatAmountString(poolTokenPercentage)}%`
+                    : '<0.01%'
+                  : '0%'}
+              </Text>
+            </CustomFixedHeightRow>
           </AutoColumn>
         </AutoColumn>
       </CardBody>
@@ -455,12 +515,12 @@ function FullPositionCard({
           {/* <Text fontSize="14px" color="textSubtle">
             {userPoolBalance?.toSignificant(4)}
           </Text> */}
-          {Number.isFinite(totalUSDValue) && (
+          {/* {Number.isFinite(totalUSDValue) && (
             <Text small color="textSubtle">{`(~${totalUSDValue.toLocaleString(undefined, {
               minimumFractionDigits: 2,
               maximumFractionDigits: 2,
             })} USD)`}</Text>
-          )}
+          )} */}
         </Flex>
         {showMore ? <ChevronUpIcon fill="#8E8E8E" /> : <ChevronDownIcon fill="#8E8E8E" />}
       </Flex>
@@ -474,7 +534,7 @@ function FullPositionCard({
               </CustomRowFixed>
               {token0Deposited ? (
                 <CustomRowFixed>
-                  <Text className="text-right text-logo">{token0Deposited?.toSignificant(6)}</Text>
+                  <Text className="text-right text-logo">{formatAmountString(token0Deposited, 6)}</Text>
                   <CurrencyLogo currency={currency0} />
                 </CustomRowFixed>
               ) : (
@@ -490,7 +550,7 @@ function FullPositionCard({
               </CustomRowFixed>
               {token1Deposited ? (
                 <CustomRowFixed>
-                  <Text className="text-right text-logo">{token1Deposited?.toSignificant(6)}</Text>
+                  <Text className="text-right text-logo">{formatAmountString(token1Deposited, 6)}</Text>
                   <CurrencyLogo currency={currency1} />
                 </CustomRowFixed>
               ) : (
@@ -512,15 +572,17 @@ function FullPositionCard({
 
           <CustomRow>
             <Text className="text-left">{t('Your pool tokens')}</Text>
-            <Text className="text-right">{userPoolBalance?.toSignificant(6)}</Text>
+            <Text className="text-right">{formatAmountString(userPoolBalance, 6)}</Text>
           </CustomRow>
 
           <CustomRow>
             <Text className="text-left">{t('Your pool share')}</Text>
             <Text className="text-right">
               {poolTokenPercentage
-                ? `${poolTokenPercentage.toFixed(2) === '0.00' ? '<0.01' : poolTokenPercentage.toFixed(2)}%`
-                : '-'}
+                ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
+                  ? `${formatAmountString(poolTokenPercentage)}%`
+                  : '<0.01%'
+                : '0%'}
             </Text>
           </CustomRow>
 

@@ -2,8 +2,6 @@
 import { Ref, useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { Text, Flex, CardFooter, Button, AddIcon, useMatchBreakpoints } from '@pancakeswap/uikit'
-import LiquidityMainBackgroundDesktop from 'components/Svg/LiquidityMainBackgroundDesktop'
-import LiquidityConnectWallet from 'components/Svg/LiquidityConnectWallet'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from '@pancakeswap/localization'
@@ -15,15 +13,21 @@ import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundB
 import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { CurrencyLogo } from 'views/Info/components/CurrencyLogo'
+import { AppHeader } from 'components/App'
+import { ERC20Token } from '@pancakeswap/sdk'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { useDerivedMintInfo } from 'state/mint/hooks'
+import useSWR from 'swr'
+import { useCurrency } from 'hooks/Tokens'
 
+import Page from '../Page'
 import FullPositionCard, { StableFullPositionCard } from '../../components/PositionCard'
-import { useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
+import { useCurrencyBalances, useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import { usePairs, PairState } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import Page from '../Page'
 
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -45,11 +49,11 @@ const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
 
 const BackgroundWrapper = styled.div`
   position: absolute;
-  top: 200px;
+  top: 150px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: calc(100% - 200px);
+  height: calc(100% - 150px);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
   background: #242424;
@@ -64,6 +68,8 @@ const MainBackground = styled.div`
   bottom: 0;
   svg {
     width: 100vw;
+    height: auto;
+    object-fit: cover;
   }
 `
 
@@ -100,13 +106,14 @@ const StyledLiquidityContainer = styled.div`
   // position: absolute;
   // top: 56px;
   // left: 0px;
-  margin-top: 58px;
+  margin-top: 10px;
   z-index: 9;
-  padding: 0 28px;
+  padding: 0 20px;
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: 560px;
+    padding: 0 28px;
   }
 `
 
@@ -119,6 +126,9 @@ const Title = styled.div`
     font-size: 18px;
     color: rgba(255, 255, 255);
     margin-bottom: 16px;
+  }
+
+  span {
   }
 `
 
@@ -151,7 +161,7 @@ const Background = styled.div<I>`
   position: absolute;
   top: 56px;
   left: 2px;
-  padding: 0 28px;
+  padding: 0 20px;
   width: 556px;
   // height: 500px;
 
@@ -159,7 +169,7 @@ const Background = styled.div<I>`
   z-index: -1;
   background: #242424;
 `
-const ConnectSub = styled.div`
+const ConnectSub = styled(Text)`
   text-align: center;
   margin-top: 25px;
   color: #ffffff61;
@@ -176,7 +186,24 @@ const PoolWrapper = styled(Flex)`
     margin-top: 24px;
     margin-bottom: 8px;
   }
+
+  @media (max-width: 560px) {
+    .text-elipsis {
+      width: 80px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      text-align: right;
+    }
+    .pair-icon,
+    .pair-balance {
+      display: grid;
+      grid-template-columns: 1fr 30px 1fr;
+    }
+  }
 `
+
+const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Pool() {
   const { address: account } = useAccount()
@@ -185,6 +212,19 @@ export default function Pool() {
   const { chainId } = useActiveChainId()
   // fetch the user's balances of all tracked V2 LP tokens
   const trackedTokenPairs = useTrackedTokenPairs()
+  const currencyA = useCurrency(USD_ADDRESS[chainId])
+  const currencyB = useCurrency(XOX_ADDRESS[chainId])
+  const balances = useCurrencyBalances(
+    account ?? undefined,
+    useMemo(() => [currencyA, currencyB], [chainId]),
+  )
+  const USDId = chainId === 1 || chainId === 5 ? 3408 : 4687
+  const { price } = useDerivedMintInfo(currencyA, currencyB)
+
+  const { data: USDPrice } = useSWR(
+    `${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/price?id=${USDId}`,
+    fetcher,
+  )
 
   const tokenPairsWithLiquidityTokens = useMemo(
     () => trackedTokenPairs.map((tokens) => ({ liquidityToken: toV2LiquidityToken(tokens), tokens })),
@@ -200,8 +240,6 @@ export default function Pool() {
   )
 
   const stablePairs = useLPTokensWithBalanceByAccount(account)
-
-  console.log(tokenPairsWithLiquidityTokens, 'tokenPairsWithLiquidityTokens')
 
   // fetch the reserves for all V2 pools in which the user has a balance
   const liquidityTokensWithBalances = useMemo(
@@ -230,12 +268,23 @@ export default function Pool() {
         <>
           <Title>
             <div className="flex">
-              <span>Your Liquidity</span>
-              <span>
-                <img src="/images/liquidity/question-icon.svg" alt="" />
-              </span>
+              <Text
+                color="rgba(255, 255, 255, 0.87)"
+                fontSize={['14px', , '18px']}
+                fontWeight={400}
+                lineHeight={['17px', , '22px']}
+              >
+                Your liquidity
+              </Text>
             </div>
-            <ConnectSub>Connect to a wallet to view your liquidity</ConnectSub>
+            <ConnectSub
+              color="rgba(255, 255, 255, 0.87)"
+              fontSize={['12px', , '16px']}
+              fontWeight={400}
+              lineHeight={['14px', , '19px']}
+            >
+              Connect to a wallet to view your liquidity
+            </ConnectSub>
           </Title>
         </>
       )
@@ -271,10 +320,14 @@ export default function Pool() {
         <>
           <Title>
             <div className="flex">
-              <span>Your Liquidity</span>
-              <span>
-                <img src="/images/liquidity/question-icon.svg" alt="" />
-              </span>
+              <Text
+                color="rgba(255, 255, 255, 0.87)"
+                fontSize={['14px', , '18px']}
+                fontWeight={400}
+                lineHeight={['17px', , '22px']}
+              >
+                Your liquidity
+              </Text>
             </div>
           </Title>
           {positionCards}
@@ -341,11 +394,30 @@ export default function Pool() {
               Balance
             </Text>
             <Flex flexDirection="column" alignItems="flex-end">
-              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.87)">
-                0
+              <Text
+                fontWeight="400"
+                fontSize="12px"
+                lineHeight="15px"
+                color="rgba(255, 255, 255, 0.87)"
+                className="text-elipsis"
+              >
+                {formatAmountNumber(parseFloat(balances[0]?.toFixed()), 6) || 0}
               </Text>
-              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)" mt="8px">
-                ~$0.00
+              <Text
+                fontWeight="400"
+                fontSize="12px"
+                lineHeight="15px"
+                color="rgba(255, 255, 255, 0.6)"
+                mt="8px"
+                className="text-elipsis"
+              >
+                ~$
+                {balances[0]
+                  ? formatAmountNumber(
+                      parseFloat(balances[0]?.toFixed(6)) * parseFloat(USDPrice?.data?.[USDId]?.quote?.USD?.price || 1),
+                      2,
+                    )
+                  : 0}
               </Text>
             </Flex>
           </Flex>
@@ -355,11 +427,32 @@ export default function Pool() {
               Balance
             </Text>
             <Flex flexDirection="column" alignItems="flex-end">
-              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.87)">
-                0
+              <Text
+                fontWeight="400"
+                fontSize="12px"
+                lineHeight="15px"
+                color="rgba(255, 255, 255, 0.87)"
+                className="text-elipsis"
+              >
+                {formatAmountNumber(parseFloat(balances[1]?.toFixed()), 6) || 0}
               </Text>
-              <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)" mt="8px">
-                ~$0.00
+              <Text
+                fontWeight="400"
+                fontSize="12px"
+                lineHeight="15px"
+                color="rgba(255, 255, 255, 0.6)"
+                mt="8px"
+                className="text-elipsis"
+              >
+                ~$
+                {price && balances[1]
+                  ? `${formatAmountNumber(
+                      parseFloat(balances[1]?.toFixed(6)) *
+                        parseFloat(price.invert().toFixed(6)) *
+                        parseFloat(USDPrice?.data?.[USDId]?.quote?.USD?.price || 1),
+                      2,
+                    )}`
+                  : '0'}
               </Text>
             </Flex>
           </Flex>
@@ -390,7 +483,7 @@ export default function Pool() {
     <Page>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
-        width={['328px', , '559px']}
+        width={['330px', , '559px']}
         marginTop="100px"
         marginBottom="100px"
         height="100%"
@@ -423,7 +516,7 @@ export default function Pool() {
           <BackgroundWrapper />
 
           <StyledLiquidityContainer>
-            <Header>
+            {/* <Header>
               <div>
                 <p className="title">Liquidity</p>
                 <p className="sub_title">Add liquidity to receive LP tokens</p>
@@ -436,7 +529,17 @@ export default function Pool() {
                   <img src="/images/liquidity/history-icon.svg" alt="" />
                 </span>
               </div>
-            </Header>
+            </Header> */}
+            <AppHeader
+              title="Liquidity"
+              subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
+              helper={t(
+                `Liquidity providers earn a ${
+                  chainId === 5 || chainId === 1 ? 0.3 : 0.25
+                }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+              )}
+              // backTo="/liquidity"
+            />
 
             <Body>
               {renderBody()}
@@ -455,11 +558,15 @@ export default function Pool() {
             </Body>
             <StyledCardFooter style={{ textAlign: 'center' }}>
               {account ? (
-                <Link href="/add" passHref>
-                  <ButtonWrapper id="join-pool-button" width="100%">
-                    {t('Add Liquidity')}
-                  </ButtonWrapper>
-                </Link>
+                <>
+                  {allV2PairsWithLiquidity.length === 0 && (
+                    <Link href="/add" passHref>
+                      <ButtonWrapper id="join-pool-button" width="100%">
+                        {t('Add Liquidity')}
+                      </ButtonWrapper>
+                    </Link>
+                  )}
+                </>
               ) : (
                 <ConnectWalletButtonWrapper />
               )}
