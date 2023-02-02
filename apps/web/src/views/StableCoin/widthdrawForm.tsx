@@ -16,6 +16,7 @@ import { ToastDescriptionWithTx } from 'components/Toast'
 import { USD_ADDRESS } from 'config/constants/exchange'
 import ConfirmSwapModal from '../Swap/components/ConfirmSwapModal'
 import StableCoinModal from './StableCoinModal';
+// eslint-disable-next-line import/no-cycle
 import {formatNumberDecimal} from './index';
 
 const WrapForm = styled.div`
