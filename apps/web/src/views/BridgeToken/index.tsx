@@ -698,7 +698,7 @@ export default function BridgeToken() {
               </div>
               <div className="submitted">Transaction Submitted</div>
               <a href={`${linkTransaction(chainId)}${txHash}`} target="_blank" rel="noreferrer">
-                <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
+                <div className="view_on">View on {chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}</div>
               </a>
               <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)}>
                 Close
