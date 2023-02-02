@@ -286,6 +286,8 @@ const MainBackground = styled.div`
   bottom: 0;
   svg {
     width: 100vw;
+    height: auto;
+    object-fit: cover;
   }
 `
 
