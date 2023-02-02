@@ -193,16 +193,26 @@ const ContentContainer = styled.div`
     padding: 0px 24px 24px;
   }
 `
-const NumericalInputStyled = styled(NumericalInput)`
+
+interface INumericalInputStyledProps {
+  amount?: string
+}
+export const NumericalInputStyled = styled(NumericalInput)<INumericalInputStyledProps>`
   background: transparent;
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  color: rgba(255, 255, 255, 0.38);
+  color: ${({ amount }) =>
+    amount !== '' && Number(amount) !== 0 && amount !== '.'
+      ? `rgba(255, 255, 255, 0.87)`
+      : `rgba(255, 255, 255, 0.38)`};
   width: auto;
   ${(props) => props.disabled === true && ' pointer-events: none'};
   & {
-    -webkit-text-fill-color: rgba(255, 255, 255, 0.38);
+    -webkit-text-fill-color: ${({ amount }) =>
+      amount !== '' && Number(amount) !== 0 && amount !== '.'
+        ? `rgba(255, 255, 255, 0.87)`
+        : `rgba(255, 255, 255, 0.38)`};
     ::placeholder {
       -webkit-text-fill-color: rgba(255, 255, 255, 0.38);
     }
@@ -222,9 +232,16 @@ interface Props extends InjectedModalProps {
   balanceLP: any
   totalSupply: any
   reverse: any
+  handleCallbackAfterSuccess?: () => void
 }
 
-const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, balanceLP, totalSupply, reverse }) => {
+const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
+  onDismiss,
+  balanceLP,
+  totalSupply,
+  reverse,
+  handleCallbackAfterSuccess,
+}) => {
   const chainIdSupport = [97, 56]
   const { chainId } = useActiveChainId()
   const listTimesPercents = ['25%', '50%', '75%', 'MAX']
@@ -251,6 +268,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, bal
         setIsOpenLoadingClaimModal(false)
         setTxHash(tx?.transactionHash)
         setIsOpenSuccessModal(true)
+        handleCallbackAfterSuccess()
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -286,16 +304,16 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, bal
   }
 
   useEffect(() => {
-    if (amount === '' || Number(amount) === 0 || amount === '.') {
-      setMessageButton('Enter an amount')
-    } else if (
-      account &&
-      balanceLP &&
-      // parseEther(amountInput).gt(parseEther(balanceInput?.toExact())) &&
-      parseUnits(amount, 18).gt(parseUnits(balanceLP, 18))
-    ) {
-      setMessageButton(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} Balance`)
-    } else setMessageButton('Confirm')
+    if (amount !== '' && Number(amount) !== 0 && amount !== '.') {
+      if (
+        account &&
+        balanceLP &&
+        // parseEther(amountInput).gt(parseEther(balanceInput?.toExact())) &&
+        parseUnits(amount, 18).gt(parseUnits(balanceLP, 18))
+      ) {
+        setMessageButton(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} Balance`)
+      } else setMessageButton('Confirm')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount, balanceLP])
 
@@ -308,20 +326,25 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, bal
   return (
     <>
       <StyledModalContainer>
-        <StyledModalHeader>UnStake LP Tokens</StyledModalHeader>
+        <StyledModalHeader>Unstake LP Tokens</StyledModalHeader>
         <ContentContainer>
           <ContentUnStake>
             <div className="flex stake">
-              <p>Stake</p>
+              <p>Untake</p>
               <Tooltip title={balanceLP} placement="top">
                 <span aria-hidden="true" className="balance_container">
                   Balance:&nbsp;
-                  <span className="balanceLP">${balanceLP}</span>
+                  <span className="balanceLP">{balanceLP}</span>
                 </span>
               </Tooltip>
             </div>
             <div className="flex token_lp">
-              <NumericalInputStyled value={amount} onUserInput={(value) => setAmount(value)} placeholder="0" />
+              <NumericalInputStyled
+                value={amount}
+                amount={amount}
+                onUserInput={(value) => setAmount(value)}
+                placeholder="0"
+              />
               <p>{chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</p>
             </div>
             <div className="token_usd">
@@ -346,13 +369,18 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, bal
             <button type="button" className="btn cancel" onClick={onDismiss}>
               Cancel
             </button>
-            <button type="button" className="btn confirm" disabled={!amount} onClick={handleButtonClick}>
+            <button
+              type="button"
+              className="btn confirm"
+              disabled={amount === '' || Number(amount) === 0 || amount === '.' || Number(balanceLP) === 0}
+              onClick={handleButtonClick}
+            >
               {messageButton}
             </button>
           </ButtonGroup>
         </ContentContainer>
       </StyledModalContainer>
-      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Farming Confirm">
+      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Confirm Farming">
         <Content>
           <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
             <img src="/images/reject_xox.png" alt="reject_xox" />
@@ -375,7 +403,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, bal
       <ModalBase
         open={isOpenLoadingClaimModal}
         handleClose={() => setIsOpenLoadingClaimModal(false)}
-        title="Farming Confirm"
+        title="Confirm Farming"
       >
         <Content>
           <div className="xox_loading" style={{ margin: '24px 0px' }}>
@@ -383,7 +411,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, bal
           </div>
           <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
           <div className="noti_claim_pending_h3">
-            UnStake {amount} {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'}
+            Unstake {amount} {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'}
           </div>
           <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
           <img
@@ -395,7 +423,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, bal
           />
         </Content>
       </ModalBase>
-      <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Confirm Bridge">
+      <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Confirm Farming">
         <Content>
           <div className="noti_claim_success">
             <img src="/images/success_claim.png" alt="success_claim" />
@@ -404,8 +432,10 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({ onDismiss, bal
           <a href={`${linkTransactionTx(chainId)}${txHash}`} target="_blank" rel="noreferrer">
             <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
           </a>
-          <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)} role="button">
-            Close
+          <div className="btn_dismiss_container">
+            <button className="btn_dismiss bg" type="button" onClick={() => setIsOpenSuccessModal(false)}>
+              Close
+            </button>
           </div>
         </Content>
       </ModalBase>
