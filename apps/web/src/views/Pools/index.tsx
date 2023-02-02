@@ -410,6 +410,14 @@ const MainBackground = styled.div`
   }
 `
 
+const CustomButton = styled(Button)`
+  height: 37px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: 43px;
+  }
+`
+
 export const linkTransaction = (chainId) => {
   return `${NETWORK_LINK[chainId]}/address/`
 }
@@ -736,9 +744,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       </p>
                     </Tooltip>
                   </div>
-                  <button type="button" className="withdraw" onClick={handleWithdraw} disabled={!pendingRewardOfUser}>
+                  <CustomButton type="button" className="withdraw" onClick={handleWithdraw} disabled={!pendingRewardOfUser}>
                     Withdraw
-                  </button>
+                  </CustomButton>
                 </div>
               </div>
               <div>
@@ -759,13 +767,13 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   )}
                   {!enable ? (
                     account ? (
-                      <button type="button" className="nable mt" onClick={() => setEnable(true)}>
+                      <CustomButton type="button" className="nable mt" onClick={() => setEnable(true)}>
                         Enable
-                      </button>
+                      </CustomButton>
                     ) : (
-                      <button type="button" className="nable mt" onClick={handleClick}>
+                      <CustomButton type="button" className="nable mt" onClick={handleClick}>
                         Connect Wallet
-                      </button>
+                      </CustomButton>
                     )
                   ) : enable && userStaked ? (
                     <div className="group_btn_stake">
@@ -777,14 +785,14 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           </div>
                         </div>
                       )}
-                      <button type="button" className="nable" onClick={onModalStake}>
+                      <CustomButton type="button" className="nable" onClick={onModalStake}>
                         Stake LP
-                      </button>
+                      </CustomButton>
                     </div>
                   ) : (
-                    <button type="button" className="nable mt" onClick={onModalStake}>
+                    <CustomButton type="button" className="nable mt" onClick={onModalStake}>
                       Stake LP
-                    </button>
+                    </CustomButton>
                   )}
                 </div>
               </div>
