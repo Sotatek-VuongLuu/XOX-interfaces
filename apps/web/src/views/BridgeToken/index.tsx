@@ -5,7 +5,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState, useCallback, useEffect, useMemo } from 'react'
-import { Flex, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
+import { Flex, Button as PancakeButton, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
 import Page from '../Page'
 import { useTranslation } from '@pancakeswap/localization'
 import { useSwitchNetwork } from 'hooks/useSwitchNetwork'
@@ -44,7 +44,7 @@ import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundB
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 
-const SwapButton = styled.button`
+const SwapButton = styled(PancakeButton)`
   background: ${({ disabled }) =>
     disabled ? 'rgba(255, 255, 255, 0.05) ' : 'linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)'};
   color: ${({ theme, disabled }) => (disabled ? 'rgba(255, 255, 255, 0.38)' : theme.colors.white)};
