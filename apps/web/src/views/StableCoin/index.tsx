@@ -169,8 +169,16 @@ const MainBackground = styled.div`
   bottom: 0;
   svg {
     width: 100vw;
+    height: auto;
+    object-fit: cover;
   }
 `
+
+export const formatNumberDecimal = (n: any, decimal?: number) => {
+  const nString = n.toString();
+  const nSlice = decimal || 6;
+  return `${nString.split(".")[0]  }.${  nString.split(".")[1].slice(0, nSlice)}`;
+}
 
 export default function StableCoin() {
   const { account, chainId } = useWeb3React()
@@ -201,9 +209,9 @@ export default function StableCoin() {
       const rewardPoint = Number(dataParse[2]);
       if(rewardPoint === 0 || rewardPoint){
         const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdLocal])) + rewardPoint;
-        setCurrentReward(numberReward ? numberReward?.toFixed(6) : 0);
+        setCurrentReward(numberReward ? formatNumberDecimal(numberReward) : 0);
         const totalCurrentXOXS = amountPoint+numberReward;
-        setCurrentXOX(totalCurrentXOXS ? totalCurrentXOXS.toFixed(6) : 0);
+        setCurrentXOX(totalCurrentXOXS ? formatNumberDecimal(totalCurrentXOXS) : 0);
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -280,7 +288,7 @@ export default function StableCoin() {
                 </WrapperBorder>
               </Row>
             }
-            <Row style={{ marginTop: 24 }}>
+            <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
               <WrapperBorder className='border-gradient-style'>
                 <Box className="wrap-table">
                   <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />

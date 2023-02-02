@@ -29,8 +29,7 @@ import { useRouter } from 'next/router'
 import { callWithEstimateGas } from 'utils/calls'
 import { SUPPORT_ZAP } from 'config/constants/supportChains'
 import { ContractMethodName } from 'utils/types'
-import { transactionErrorToUserReadableMessage } from 'utils/transactionErrorToUserReadableMessage'
-import { ROUTER_ADDRESS, ROUTER_XOX } from 'config/constants/exchange'
+import { ROUTER_XOX } from 'config/constants/exchange'
 import { useLPApr } from 'state/swap/useLPApr'
 import SwapbackgroundDesktop from 'components/Svg/SwapBackgroundDesktop'
 import SwapbackgroundDesktopNone from 'components/Svg/SwapBackgroundDesktopNone'
@@ -38,8 +37,6 @@ import SwapbackgroundMobile from 'components/Svg/SwapBackgroundMobile'
 import SwapbackgroundMobileNone from 'components/Svg/SwapBackgroundMobileNone'
 import SwapbackgroundMobileNone2 from 'components/Svg/SwapBackgroundMobileNone2'
 import SwapbackgroundDesktopNone2 from 'components/Svg/SwapBackgroundDesktopNone2'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
-import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 import { CustomRowBetween, RowBetween, RowFixed } from 'components/Layout/Row'
 
 import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
@@ -51,13 +48,7 @@ import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { Field } from '../../state/mint/actions'
 import { useDerivedMintInfo, useMintActionHandlers, useMintState, useZapIn } from '../../state/mint/hooks'
 import { useTransactionAdder } from '../../state/transactions/hooks'
-import {
-  useGasPrice,
-  useIsExpertMode,
-  usePairAdder,
-  useUserSlippageTolerance,
-  useZapModeManager,
-} from '../../state/user/hooks'
+import { useGasPrice, useIsExpertMode, usePairAdder, useUserSlippageTolerance } from '../../state/user/hooks'
 import { calculateGasMargin } from '../../utils'
 import { calculateSlippageAmount, useRouterContractXOX } from '../../utils/exchange'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
@@ -66,22 +57,11 @@ import Dots from '../../components/Loader/Dots'
 import Page from '../Page'
 import ConfirmAddLiquidityModal from './components/ConfirmAddLiquidityModal'
 import ConfirmZapInModal from './components/ConfirmZapInModal'
-import { ChoosePair } from './ChoosePair'
 import { formatAmount } from '../../utils/formatInfoNumbers'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
+import { MinimalPositionCard } from 'components/PositionCard'
 
-const MainBackground = styled.div`
-  position: absolute;
-  z-index: 0;
-  top: -50px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  svg {
-    width: 100vw;
-  }
-`
 const Wrapper = styled(Flex)`
   width: 100%;
   max-width: 591px;
@@ -414,10 +394,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
         }
         setLiquidityState({
           attemptingTxn: false,
-          liquidityErrorMessage:
-            err && err.code !== 4001
-              ? t('Add liquidity failed: %message%', { message: transactionErrorToUserReadableMessage(err, t) })
-              : undefined,
+          liquidityErrorMessage: t('Transaction rejected.'),
           txHash: undefined,
         })
       })
@@ -581,10 +558,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
         }
         setLiquidityState({
           attemptingTxn: false,
-          liquidityErrorMessage:
-            err && err.code !== 4001
-              ? t('Add liquidity failed: %message%', { message: transactionErrorToUserReadableMessage(err, t) })
-              : undefined,
+          liquidityErrorMessage: t('Transaction rejected.'),
           txHash: undefined,
         })
       })
@@ -951,7 +925,11 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                 <CustomRowBetween>
                   <Text className="text-left">{t('Share of Pool')}</Text>
                   <Text className="text-right">
-                    {poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '0%'}
+                    {poolTokenPercentage
+                      ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
+                        ? `${formatAmountString(poolTokenPercentage)}%`
+                        : '<0.01%'
+                      : '0%'}
                   </Text>
                 </CustomRowBetween>
 
@@ -1041,6 +1019,12 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   </AutoColumn>
                 )}
               </AutoColumn>
+
+              {pair ? (
+                <AutoColumn style={{ width: '100%', marginTop: '24px' }}>
+                  <MinimalPositionCard showUnwrapped={oneCurrencyIsWNATIVE} pair={pair} />
+                </AutoColumn>
+              ) : null}
             </CardBody>
           </LiquidityBody>
         </Wrapper>

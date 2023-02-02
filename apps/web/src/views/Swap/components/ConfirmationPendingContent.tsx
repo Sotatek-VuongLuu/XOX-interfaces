@@ -41,7 +41,7 @@ function ConfirmationPendingContent({ trade }: { trade: Trade<Currency, Currency
             {pendingText}
           </Text>
         </AutoColumn>
-        <Text small color="textSubtle" textAlign="center">
+        <Text small color="textSubtle" textAlign="center" mb="32px">
           {t('Confirm this transaction in your wallet')}
         </Text>
       </AutoColumn>

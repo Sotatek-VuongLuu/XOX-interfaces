@@ -1,7 +1,7 @@
 import React from 'react'
-import { PieChart, Pie, Cell, ResponsiveContainer, LabelList, Tooltip } from 'recharts'
 import styled from 'styled-components'
 import { formatAmount } from 'utils/formatInfoNumbers'
+import { Chart } from 'react-google-charts'
 
 const RADIAN = Math.PI / 180
 
@@ -18,7 +18,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <CustomTooltipStyle>
-        <p className="label">{`${payload[0].name}: $${formatAmount(payload[0].value, {displayThreshold: 2})}`}</p>
+        <p className="label">{`${payload[0].name}: $${formatAmount(payload[0].value, { displayThreshold: 2 })}`}</p>
       </CustomTooltipStyle>
     )
   }
@@ -39,28 +39,43 @@ export default function InfoPieChart({ data, colors, total }) {
     )
   }
 
+  const options = {
+    title: '',
+    is3D: true,
+    slices: {
+      0: { color: '#9072FF', offset: 0.1 },
+      1: { color: '#5F35EB', offset: 0.1 },
+      2: { color: '#89DDEF', offset: 0.1 },
+      3: { color: '#90F0B1' },
+    },
+    backgroundColor: '#242424',
+    legend: { textStyle: { color: '#ffffff' } },
+    labelTextColor: '#ffffff',
+  }
+
   return (
-    <ResponsiveContainer width="100%" height={220}>
+    <>
       {total > 0 ? (
-        <PieChart
-        // onMouseEnter={renderCustomizedLabel}
-        >
-          <Pie
-            data={data}
-            outerRadius={95}
-            fill="#8884d8"
-            dataKey="value"
-            startAngle={90}
-            endAngle={-270}
-            onMouseOver={renderCustomizedLabel}
-          >
-            {data.map((_: any, index: number) => (
-              <Cell key={colors[index % colors.length]} fill={colors[index % colors.length]} />
-            ))}
-          </Pie>
-          <Tooltip content={<CustomTooltip />} />
-        </PieChart>
+        <Chart chartType="PieChart" data={data} options={options} width="100%" height="200px" />
       ) : (
+        // <PieChart
+        // // onMouseEnter={renderCustomizedLabel}
+        // >
+        //   <Pie
+        //     data={data}
+        //     outerRadius={95}
+        //     fill="#8884d8"
+        //     dataKey="value"
+        //     startAngle={90}
+        //     endAngle={-270}
+        //     onMouseOver={renderCustomizedLabel}
+        //   >
+        //     {data.map((_: any, index: number) => (
+        //       <Cell key={colors[index % colors.length]} fill={colors[index % colors.length]} />
+        //     ))}
+        //   </Pie>
+        //   <Tooltip content={<CustomTooltip />} />
+        // </PieChart>
         <div
           style={{
             fontSize: '16px',
@@ -72,12 +87,12 @@ export default function InfoPieChart({ data, colors, total }) {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '100%',
+            height: '200px',
           }}
         >
           No data
         </div>
       )}
-    </ResponsiveContainer>
+    </>
   )
 }
