@@ -18,7 +18,7 @@ const TransactionState = styled.div<{ pending: boolean; success?: boolean }>`
 const TransactionText = styled(LinkExternal)`
   color: #9072FF;
   font-weight: 400;
-  margin-right: 50px;
+  margin-right: 10px;
 `
 
 const IconWrapper = styled.div<{ pending: boolean; success?: boolean }>`
