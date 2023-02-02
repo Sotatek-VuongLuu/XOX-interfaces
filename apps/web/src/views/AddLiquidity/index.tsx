@@ -48,12 +48,7 @@ import useTransactionDeadline from '../../hooks/useTransactionDeadline'
 import { Field } from '../../state/mint/actions'
 import { useDerivedMintInfo, useMintActionHandlers, useMintState, useZapIn } from '../../state/mint/hooks'
 import { useTransactionAdder } from '../../state/transactions/hooks'
-import {
-  useGasPrice,
-  useIsExpertMode,
-  usePairAdder,
-  useUserSlippageTolerance,
-} from '../../state/user/hooks'
+import { useGasPrice, useIsExpertMode, usePairAdder, useUserSlippageTolerance } from '../../state/user/hooks'
 import { calculateGasMargin } from '../../utils'
 import { calculateSlippageAmount, useRouterContractXOX } from '../../utils/exchange'
 import { maxAmountSpend } from '../../utils/maxAmountSpend'
@@ -65,6 +60,7 @@ import ConfirmZapInModal from './components/ConfirmZapInModal'
 import { formatAmount } from '../../utils/formatInfoNumbers'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
+import { MinimalPositionCard } from 'components/PositionCard'
 
 const Wrapper = styled(Flex)`
   width: 100%;
@@ -929,7 +925,11 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                 <CustomRowBetween>
                   <Text className="text-left">{t('Share of Pool')}</Text>
                   <Text className="text-right">
-                    {poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '0%'}
+                    {poolTokenPercentage
+                      ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
+                        ? `${formatAmountString(poolTokenPercentage)}%`
+                        : '< 0.01%'
+                      : '0%'}
                   </Text>
                 </CustomRowBetween>
 
@@ -1019,6 +1019,12 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   </AutoColumn>
                 )}
               </AutoColumn>
+
+              {pair ? (
+                <AutoColumn style={{ width: '100%', marginTop: '24px' }}>
+                  <MinimalPositionCard showUnwrapped={oneCurrencyIsWNATIVE} pair={pair} />
+                </AutoColumn>
+              ) : null}
             </CardBody>
           </LiquidityBody>
         </Wrapper>

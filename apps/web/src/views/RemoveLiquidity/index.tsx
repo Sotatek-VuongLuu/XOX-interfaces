@@ -837,7 +837,6 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                 assetA: currencyA?.symbol ?? '',
                 assetB: currencyB?.symbol ?? '',
               })}
-              noConfig
             />
 
             <CustomCardBody>

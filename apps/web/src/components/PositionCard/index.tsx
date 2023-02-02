@@ -372,8 +372,8 @@ function MinimalPositionCardView({
   currency1,
   token0Deposited,
   token1Deposited,
-  totalUSDValue,
   userPoolBalance,
+  poolTokenPercentage,
 }: PositionCardProps) {
   const isStableLP = useContext(StableConfigContext)
 
@@ -426,12 +426,6 @@ function MinimalPositionCardView({
                 <Text>{formatAmount(poolData.lpApr7d)}%</Text>
               </CustomFixedHeightRow>
             )}
-            {/* <CustomFixedHeightRow>
-                  <Text color="textSubtle" small>
-                    {t('Share of Pool')}:
-                  </Text>
-                  <Text>{poolTokenPercentage ? `${poolTokenPercentage.toFixed(6)}%` : '-'}</Text>
-                </CustomFixedHeightRow> */}
             {isStableLP ? null : (
               <CustomFixedHeightRow>
                 <Text className="text-left">{currency0.symbol}</Text>
@@ -456,6 +450,16 @@ function MinimalPositionCardView({
                 )}
               </CustomFixedHeightRow>
             )}
+            <CustomFixedHeightRow>
+              <Text className="text-left">{t('Share of Pool')}:</Text>
+              <Text className="text-right">
+                {poolTokenPercentage
+                  ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
+                    ? `${formatAmountString(poolTokenPercentage)}%`
+                    : '< 0.01%'
+                  : '0%'}
+              </Text>
+            </CustomFixedHeightRow>
           </AutoColumn>
         </AutoColumn>
       </CardBody>
@@ -575,8 +579,10 @@ function FullPositionCard({
             <Text className="text-left">{t('Your pool share')}</Text>
             <Text className="text-right">
               {poolTokenPercentage
-                ? `${poolTokenPercentage.toFixed(2) === '0.00' ? '<0.01' : poolTokenPercentage.toFixed(2)}%`
-                : '-'}
+                ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
+                  ? `${formatAmountString(poolTokenPercentage)}%`
+                  : '< 0.01%'
+                : '0%'}
             </Text>
           </CustomRow>
 
