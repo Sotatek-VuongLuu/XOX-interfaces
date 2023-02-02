@@ -142,6 +142,10 @@ export const Content = styled.div`
     text-align: center;
     color: #3d8aff;
     margin-bottom: 24px;
+
+    &:hover {
+      text-decoration: underline;
+    }
   }
 
   .btn_close {
