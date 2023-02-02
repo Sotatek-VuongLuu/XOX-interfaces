@@ -87,7 +87,7 @@ export default function InfoPieChart({ data, colors, total }) {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
-            height: '100%',
+            height: '200px',
           }}
         >
           No data
