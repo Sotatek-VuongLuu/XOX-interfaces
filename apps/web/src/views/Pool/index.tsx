@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { Ref, useEffect, useMemo, useRef, useState } from 'react'
+import { useMemo } from 'react'
 import styled from 'styled-components'
 import { Text, Flex, CardFooter, Button, AddIcon, useMatchBreakpoints } from '@pancakeswap/uikit'
 import Link from 'next/link'
@@ -13,11 +13,9 @@ import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundB
 import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { CurrencyLogo } from 'views/Info/components/CurrencyLogo'
 import { AppHeader } from 'components/App'
-import { ERC20Token } from '@pancakeswap/sdk'
 import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 import { useDerivedMintInfo } from 'state/mint/hooks'
 import useSWR from 'swr'
@@ -28,6 +26,8 @@ import FullPositionCard, { StableFullPositionCard } from '../../components/Posit
 import { useCurrencyBalances, useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import { usePairs, PairState } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
+import { CurrencyLogo } from 'components/Logo'
+import { Token } from '@pancakeswap/sdk'
 
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -354,7 +354,16 @@ export default function Pool() {
             border="1px solid #444444"
             borderRadius="8px"
           >
-            <CurrencyLogo address={USD_ADDRESS[chainId]} chainName={chainId === 1 || chainId === 5 ? 'ETH' : 'BSC'} />
+            <CurrencyLogo
+              currency={
+                new Token(
+                  chainId === 1 || chainId === 5 ? 1 : 56,
+                  USD_ADDRESS[chainId === 1 || chainId === 5 ? 1 : 56],
+                  18,
+                  '',
+                )
+              }
+            />
             <Text
               fontWeight="400"
               fontSize={['16px', , '18px']}
@@ -376,7 +385,7 @@ export default function Pool() {
             border="1px solid #444444"
             borderRadius="8px"
           >
-            <CurrencyLogo address={XOX_ADDRESS[chainId]} chainName={chainId === 1 || chainId === 5 ? 'ETH' : 'BSC'} />
+            <CurrencyLogo currency={new Token(chainId, XOX_ADDRESS[chainId], 18, '')} />
             <Text
               fontWeight="400"
               fontSize={['16px', , '18px']}
