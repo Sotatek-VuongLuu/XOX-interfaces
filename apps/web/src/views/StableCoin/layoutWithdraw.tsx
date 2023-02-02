@@ -138,9 +138,9 @@ export default function WithDrawLayout() {
       const rewardPoint = Number(dataParse[2]);
       if(rewardPoint === 0 || rewardPoint){
         const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdLocal])) + rewardPoint;
-        setCurrentReward(numberReward ? numberReward?.toFixed(6) : 0);
+        setCurrentReward(numberReward || 0);
         const totalCurrentXOXS = amountPoint+numberReward;
-        setCurrentXOX(totalCurrentXOXS ? totalCurrentXOXS.toFixed(6) : 0);
+        setCurrentXOX(totalCurrentXOXS || 0);
       }
     } catch (error) {
       // eslint-disable-next-line no-console

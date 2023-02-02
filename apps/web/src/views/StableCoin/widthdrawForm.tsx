@@ -16,6 +16,7 @@ import { ToastDescriptionWithTx } from 'components/Toast'
 import { USD_ADDRESS } from 'config/constants/exchange'
 import ConfirmSwapModal from '../Swap/components/ConfirmSwapModal'
 import StableCoinModal from './StableCoinModal';
+import {formatNumberDecimal} from './index';
 
 const WrapForm = styled.div`
   padding: 60px 0;
@@ -216,7 +217,7 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: any, onSu
 
   useEffect(() => {
     if(priceAvailable){
-      priceRef.current.value = `${parseFloat(priceAvailable)} ${isBUSD ? 'BUSD' : 'USDC'}`;
+      priceRef.current.value = `${formatNumberDecimal(parseFloat(priceAvailable))} ${isBUSD ? 'BUSD' : 'USDC'}`;
     }
   }, [priceAvailable]);
 
@@ -224,10 +225,10 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: any, onSu
     setPending(false);
     setTxHas(response?.hash);
     setWithdrawErrorMessage('');
-    priceRef.current.value = `${parseFloat(priceAvailable)-parseFloat(amount)} ${isBUSD ? 'BUSD' : 'USDC'}`;
+    priceRef.current.value = `${formatNumberDecimal(parseFloat(priceAvailable)-parseFloat(amount))} ${isBUSD ? 'BUSD' : 'USDC'}`;
     addTransaction(response);
     setTimeout(() => {
-      toastSuccess('Withdraw sucess', <ToastDescriptionWithTx txHash={response?.hash} txChainId={response?.chainId} />);
+      toastSuccess('Transaction receipt', <ToastDescriptionWithTx txHash={response?.hash} txChainId={response?.chainId} />);
       inputRef.current.value = "";
       setAmount(0);
     }, 3000);
