@@ -702,7 +702,7 @@ export default function BridgeToken() {
                 target="_blank"
                 rel="noreferrer"
                 color="#9072FF"
-                style={{ marginBottom: '24px' }}
+                style={{ margin: '0 auto 24px' }}
               >
                 View on {chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}
               </LinkExternal>
