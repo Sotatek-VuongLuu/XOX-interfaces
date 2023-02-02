@@ -116,7 +116,7 @@ export function TransactionSubmittedContent({
   const token: Token | undefined = wrappedCurrency(currencyToAdd, chainId)
 
   return (
-    <Wrapper style={{ maxWidth: '100%', width: '300px' }}>
+    <Wrapper style={{ maxWidth: '100%' }}>
       <Section>
         <ConfirmedIcon>
           <ConfirmImg>
@@ -138,7 +138,7 @@ export function TransactionSubmittedContent({
               })}
             </Link>
           )}
-          <ButtonFooters>
+          <ButtonFooters style={{ width: '416px' }}>
             <Button onClick={onDismiss} maxWidth="200px" style={{ height: '37px', background: '#313131' }}>
               {t('Close')}
             </Button>
