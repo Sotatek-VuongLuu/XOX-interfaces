@@ -130,6 +130,12 @@ const CustomCardBody = styled(CardBody)`
     padding: 0 12px;
   }
 
+  .btn-percent.active {
+    background: #9072ff !important;
+    color: #ffffff;
+    box-shadow: none;
+  }
+
   .text-symbol {
     font-weight: 400;
     font-size: 14px;
@@ -316,6 +322,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   const { toastError } = useToast()
   const [tokenA, tokenB] = useMemo(() => [currencyA?.wrapped, currencyB?.wrapped], [currencyA, currencyB])
   const { isMobile } = useMatchBreakpoints()
+  const [btnPercent, setBtnPercent] = useState<number>()
 
   const { t } = useTranslation()
   const gasPrice = useGasPrice()
@@ -446,6 +453,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   const onUserInput = useCallback(
     (field: Field, value: string) => {
       setSignatureData(null)
+      setBtnPercent(undefined)
       return _onUserInput(field, value)
     },
     [_onUserInput],
@@ -772,9 +780,6 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     'removeLiquidityModal',
   )
 
-  const isZapOutA = isZap && !removalCheckedB && removalCheckedA
-  const isZapOutB = isZap && !removalCheckedA && removalCheckedB
-
   return (
     <Page>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
@@ -854,16 +859,40 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                       onValueChanged={handleChangePercent}
                     />
                     <Flex flexWrap="wrap" justifyContent="space-between">
-                      <Button className="btn-percent" onClick={() => onUserInput(Field.LIQUIDITY_PERCENT, '25')}>
+                      <Button
+                        className={`btn-percent ${btnPercent === 25 ? 'active' : ''}`}
+                        onClick={() => {
+                          onUserInput(Field.LIQUIDITY_PERCENT, '25')
+                          setBtnPercent(25)
+                        }}
+                      >
                         25%
                       </Button>
-                      <Button className="btn-percent" onClick={() => onUserInput(Field.LIQUIDITY_PERCENT, '50')}>
+                      <Button
+                        className={`btn-percent ${btnPercent === 50 ? 'active' : ''}`}
+                        onClick={() => {
+                          onUserInput(Field.LIQUIDITY_PERCENT, '50')
+                          setBtnPercent(50)
+                        }}
+                      >
                         50%
                       </Button>
-                      <Button className="btn-percent" onClick={() => onUserInput(Field.LIQUIDITY_PERCENT, '75')}>
+                      <Button
+                        className={`btn-percent ${btnPercent === 75 ? 'active' : ''}`}
+                        onClick={() => {
+                          onUserInput(Field.LIQUIDITY_PERCENT, '75')
+                          setBtnPercent(75)
+                        }}
+                      >
                         75%
                       </Button>
-                      <Button className="btn-percent" onClick={() => onUserInput(Field.LIQUIDITY_PERCENT, '100')}>
+                      <Button
+                        className={`btn-percent ${btnPercent === 100 ? 'active' : ''}`}
+                        onClick={() => {
+                          onUserInput(Field.LIQUIDITY_PERCENT, '100')
+                          setBtnPercent(100)
+                        }}
+                      >
                         {t('Max')}
                       </Button>
                     </Flex>
