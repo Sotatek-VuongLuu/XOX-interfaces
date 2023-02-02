@@ -9,6 +9,7 @@ import SelectNetworkButton from './SelectNetworkButton'
 import SelectTokenButton from './SelectTokenButton'
 import { NETWORK_LABEL } from '../networks'
 import { getChainIdToByChainId } from '..'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 
 const Wrapper = styled.div`
   border-radius: 8px;
@@ -45,13 +46,8 @@ const TextRow = styled.div<IPropsTextRow>`
     display: flex;
     white-space: nowrap;
     flex-direction: ${({ isMobile }) => (isMobile ? 'column' : 'row')};
+    align-items: ${({ isMobile }) => (isMobile ? 'flex-end' : 'center')};
     cursor: pointer;
-    .balance {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      max-width: 139px;
-    }
   }
 
   .balance_pool_container {
@@ -60,12 +56,7 @@ const TextRow = styled.div<IPropsTextRow>`
     display: flex;
     white-space: nowrap;
     flex-direction: ${({ isMobile }) => (isMobile ? 'column' : 'row')};
-    .balance_pool {
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      overflow: hidden;
-      max-width: 139px;
-    }
+    align-items: ${({ isMobile }) => (isMobile ? 'flex-end' : 'center')};
   }
 
   @media (max-width: 576px) {
@@ -177,25 +168,23 @@ const AmountInput: React.FC<Props> = ({
       <TextRow isMobile={isMobile}>
         <span className="label">{getInputLabel()}</span>
         {isTokenFrom && (
-          <Tooltip title={balance} placement="top">
-            <span
-              aria-hidden="true"
-              className="balance_container"
-              onClick={() => balance !== '-' && handleBalanceMax(balance)}
-            >
-              Balance:&nbsp;
-              <span className="balance">${balance}</span>
-            </span>
-          </Tooltip>
+          <span
+            aria-hidden="true"
+            className="balance_container"
+            onClick={() => balance !== '-' && handleBalanceMax(balance)}
+          >
+            Balance
+            {isMobile ? '' : ':'}
+            <span className="balance">&nbsp;{formatAmountNumber(balance, 6)}</span>
+          </span>
         )}
 
         {!isTokenFrom && (
-          <Tooltip title={balance} placement="top">
-            <span aria-hidden="true" className="balance_pool_container">
-              {NETWORK_LABEL[getChainIdToByChainId(chainId)]} Pool balance: &nbsp;
-              <span className="balance_pool"> ${balance}</span>
-            </span>
-          </Tooltip>
+          <span aria-hidden="true" className="balance_pool_container">
+            {NETWORK_LABEL[getChainIdToByChainId(chainId)]} Pool balance
+            {isMobile ? '' : ':'}
+            <span className="balance_pool">&nbsp;{formatAmountNumber(balance, 6)}</span>
+          </span>
         )}
       </TextRow>
 

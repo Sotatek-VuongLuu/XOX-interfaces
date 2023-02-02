@@ -1,6 +1,5 @@
 import { useTranslation } from "@pancakeswap/localization";
-import { Text } from "../../../../../components/Text";
-import { Button } from "../../../../../components/Button";
+import { Button, Text } from "../../../../../components";
 import { StyledActionContainer, ActionContent, ActionTitles } from "./styles";
 
 interface EnableStakeActionProps {

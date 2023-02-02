@@ -152,7 +152,7 @@ const CustomCardBody = styled(CardBody)`
 
   .currencyx img {
     width: 18px;
-    height: unset;
+    height: 18px;
   }
 
   .text-price {
@@ -207,7 +207,7 @@ const CustomCardBody = styled(CardBody)`
 
     .currencyx img {
       width: 24px;
-      height: unset;
+      height: 24px;
     }
 
     .text-price {

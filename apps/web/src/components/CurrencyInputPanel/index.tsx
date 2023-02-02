@@ -80,7 +80,7 @@ const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm'
 
   .token-info img {
     width: 16px;
-    height: unset;
+    height: 16px;
   }
 
   #pair {
@@ -93,7 +93,7 @@ const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm'
   ${({ theme }) => theme.mediaQueries.md} {
     .token-info img {
       width: 24px;
-      height: unset;
+      height: 24px;
     }
 
     #pair {

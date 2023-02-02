@@ -65,7 +65,7 @@ const CustomCard = styled(Card)`
 
   img {
     width: 18px;
-    height: unset;
+    height: 18px;
   }
 
   .pair-token {
@@ -108,7 +108,7 @@ const CustomCard = styled(Card)`
 
     img {
       width: 20px;
-      height: unset;
+      height: 20px;
     }
 
     .text-left {
