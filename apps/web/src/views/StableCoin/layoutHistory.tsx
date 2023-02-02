@@ -194,7 +194,7 @@ export default function LayoutHistory() {
             <TextStyle>|</TextStyle>
             <TextStyle className="primary">History</TextStyle>
         </Flex>
-        <Row style={{ marginTop: 24 }}>
+        <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
             <WrapperBorder className='border-gradient-style'>
               <Box className="wrap-table">
                   {
