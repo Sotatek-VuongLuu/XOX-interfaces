@@ -137,6 +137,7 @@ export default function SwapModalFooter({
           onClick={onConfirm}
           disabled={disabledConfirm}
           mt="12px"
+          mb="32px"
           id="confirm-swap-or-send"
           width="100%"
         >

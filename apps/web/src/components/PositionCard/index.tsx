@@ -456,7 +456,7 @@ function MinimalPositionCardView({
                 {poolTokenPercentage
                   ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
                     ? `${formatAmountString(poolTokenPercentage)}%`
-                    : '< 0.01%'
+                    : '<0.01%'
                   : '0%'}
               </Text>
             </CustomFixedHeightRow>
@@ -581,7 +581,7 @@ function FullPositionCard({
               {poolTokenPercentage
                 ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
                   ? `${formatAmountString(poolTokenPercentage)}%`
-                  : '< 0.01%'
+                  : '<0.01%'
                 : '0%'}
             </Text>
           </CustomRow>

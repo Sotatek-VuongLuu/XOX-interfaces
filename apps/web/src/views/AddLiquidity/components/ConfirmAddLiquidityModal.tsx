@@ -110,7 +110,7 @@ const ConfirmAddLiquidityModal: React.FC<
   const confirmationContent = useCallback(
     () =>
       liquidityErrorMessage ? (
-        <TransactionErrorContent onDismiss={onDismiss} message={"Transaction rejected."} />
+        <TransactionErrorContent onDismiss={onDismiss} message={'Transaction rejected.'} />
       ) : (
         <ConfirmationModalContent topContent={modalHeader} bottomContent={modalBottom} />
       ),
@@ -127,6 +127,7 @@ const ConfirmAddLiquidityModal: React.FC<
       hash={hash}
       content={confirmationContent}
       pendingText={pendingText}
+      currencyToAdd={currencyToAdd}
     />
   )
 }

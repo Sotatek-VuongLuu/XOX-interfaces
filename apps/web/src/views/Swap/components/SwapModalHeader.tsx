@@ -11,15 +11,14 @@ import { RowBetween, RowFixed } from 'components/Layout/Row'
 import truncateHash from '@pancakeswap/utils/truncateHash'
 import { TruncatedText, SwapShowAcceptChanges } from './styleds'
 
-
 const RowPrice = styled(RowBetween)`
-  background : ${({ theme }) => theme.colors.dark3};
+  background: ${({ theme }) => theme.colors.dark3};
   padding: 24px 17px;
   border-radius: 10px;
-  width:100%;
+  width: 100%;
   @media (max-width: 574px) {
     padding: 16px;
-    margin-bottom:0;
+    margin-bottom: 0;
   }
 `
 export default function SwapModalHeader({
@@ -83,13 +82,11 @@ export default function SwapModalHeader({
           </TruncatedText>
         </RowFixed>
         <RowFixed gap="4px">
-        <CurrencyLogo currency={trade.inputAmount.currency} size="18px" />
-          <Text fontSize="18px">
-            {trade.inputAmount.currency.symbol}
-          </Text>
+          <CurrencyLogo currency={trade.inputAmount.currency} size="18px" />
+          <Text fontSize="18px">{trade.inputAmount.currency.symbol}</Text>
         </RowFixed>
       </RowPrice>
-      <RowFixed style={{display:'flex', alignItems:'center', justifyContent:'center', width:'100%'}}>
+      <RowFixed style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
         <ArrowDownIcon width="16px" ml="4px" />
       </RowFixed>
       <RowPrice align="flex-end">
@@ -107,16 +104,14 @@ export default function SwapModalHeader({
             {trade.outputAmount.toSignificant(6)}
           </TruncatedText>
         </RowFixed>
-        <RowFixed gap='4px'>
-        <CurrencyLogo currency={trade.outputAmount.currency} size="18px" />
-          <Text fontSize="18px">
-            {trade.outputAmount.currency.symbol}
-          </Text>
+        <RowFixed gap="4px">
+          <CurrencyLogo currency={trade.outputAmount.currency} size="18px" />
+          <Text fontSize="18px">{trade.outputAmount.currency.symbol}</Text>
         </RowFixed>
       </RowPrice>
       {showAcceptChanges ? (
         <SwapShowAcceptChanges justify="flex-start" gap="0px">
-          <RowBetween style={{marginBottom:'0'}}>
+          <RowBetween style={{ marginBottom: '0' }}>
             <RowFixed>
               <ErrorIcon mr="8px" />
               <Text bold> {t('Price Updated')}</Text>
@@ -127,9 +122,7 @@ export default function SwapModalHeader({
       ) : null}
       <AutoColumn justify="flex-start" gap="sm">
         <RowFixed style={{ width: '100%' }}>
-          <Text style={{color:'#FFFFFFDE', fontSize:'18px'}}>
-            {t('Slippage Tolerance')}
-          </Text>
+          <Text style={{ color: '#FFFFFFDE', fontSize: '18px' }}>{t('Slippage Tolerance')}</Text>
           <Text bold color="#9072FF" ml="auto" textAlign="end">
             {`${allowedSlippage / 100}%`}
           </Text>

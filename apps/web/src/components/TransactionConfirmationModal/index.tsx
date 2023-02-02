@@ -1,7 +1,17 @@
 import { ReactElement, useCallback } from 'react'
 import { ChainId, Currency, Token } from '@pancakeswap/sdk'
 import styled from 'styled-components'
-import { Button, Text, Flex, Box, Link, Modal, InjectedModalProps, ModalProps } from '@pancakeswap/uikit'
+import {
+  Button,
+  Text,
+  Flex,
+  Box,
+  Link,
+  Modal,
+  InjectedModalProps,
+  ModalProps,
+  useMatchBreakpoints,
+} from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { wrappedCurrency } from 'utils/wrappedCurrency'
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
@@ -112,6 +122,7 @@ export function TransactionSubmittedContent({
   currencyToAdd?: Currency | undefined
 }) {
   const { t } = useTranslation()
+  const { isMobile } = useMatchBreakpoints()
 
   const token: Token | undefined = wrappedCurrency(currencyToAdd, chainId)
 
@@ -138,7 +149,7 @@ export function TransactionSubmittedContent({
               })}
             </Link>
           )}
-          <ButtonFooters style={{ width: '416px' }}>
+          <ButtonFooters style={{ width: isMobile ? 'auto' : '400px', maxWidth: '100%' }}>
             <Button onClick={onDismiss} maxWidth="200px" style={{ height: '37px', background: '#313131' }}>
               {t('Close')}
             </Button>
