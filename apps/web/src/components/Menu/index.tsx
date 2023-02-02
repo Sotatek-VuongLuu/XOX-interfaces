@@ -287,7 +287,7 @@ const Menu = (props) => {
                   {/* {argsMes?.length > 0 && <RedDot />} */}
                   {isDesktop ? (activeNotifi ? <NotificationIcon /> : <IconAlert>{IconAlertSvg}</IconAlert>) : (activeNotifi ? <NotificationIcon size={25} /> : <IconAlert>{IconAlertSvg}</IconAlert>)}
                   {
-                    isOpen && activeNotifi && <NotificationMenu>
+                    isOpen && <NotificationMenu>
                       <h3>Notification</h3>
                       <p>Your referral code has been applied in a "Buy XOX”</p> 
                     </NotificationMenu>
