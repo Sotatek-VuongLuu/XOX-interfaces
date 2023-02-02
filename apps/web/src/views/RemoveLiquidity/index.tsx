@@ -1,6 +1,5 @@
 import { useCallback, useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { splitSignature } from '@ethersproject/bytes'
 import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
 import { useRouter } from 'next/router'
@@ -15,7 +14,6 @@ import {
   Box,
   Flex,
   useModal,
-  Checkbox,
   TooltipText,
   useTooltip,
   useToast,
@@ -27,11 +25,9 @@ import { callWithEstimateGas } from 'utils/calls'
 import { getLPSymbol } from 'utils/getLpSymbol'
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import { getZapAddress } from 'utils/addressHelpers'
-import { ZapCheckbox } from 'components/CurrencyInputPanel/ZapCheckbox'
 import { CommitButton } from 'components/CommitButton'
 import { useTranslation } from '@pancakeswap/localization'
-import { ROUTER_ADDRESS, ROUTER_XOX } from 'config/constants/exchange'
-import { transactionErrorToUserReadableMessage } from 'utils/transactionErrorToUserReadableMessage'
+import { ROUTER_XOX } from 'config/constants/exchange'
 import { useLPApr } from 'state/swap/useLPApr'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
@@ -43,7 +39,7 @@ import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackground
 import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { MinimalPositionCard } from '../../components/PositionCard'
-import { AppHeader, AppBody } from '../../components/App'
+import { AppHeader } from '../../components/App'
 import { RowBetween } from '../../components/Layout/Row'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
 import { LightGreyCard } from '../../components/Card'
@@ -60,7 +56,7 @@ import { useApproveCallback, ApprovalState } from '../../hooks/useApproveCallbac
 import Dots from '../../components/Loader/Dots'
 import { useBurnActionHandlers, useDerivedBurnInfo, useBurnState } from '../../state/burn/hooks'
 import { Field } from '../../state/burn/actions'
-import { useGasPrice, useUserSlippageTolerance, useZapModeManager } from '../../state/user/hooks'
+import { useGasPrice, useUserSlippageTolerance } from '../../state/user/hooks'
 import Page from '../Page'
 import ConfirmLiquidityModal from '../Swap/components/ConfirmRemoveLiquidityModal'
 import { logError } from '../../utils/sentry'
@@ -530,7 +526,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
         }
         setLiquidityState({
           attemptingTxn: false,
-          liquidityErrorMessage: err && err?.code !== 4001 ? `Remove Liquidity failed: ${err.message}` : undefined,
+          liquidityErrorMessage: t('Transaction rejected.'),
           txHash: undefined,
         })
       })
@@ -680,14 +676,10 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
         .catch((err) => {
           if (err && err.code !== 4001) {
             logError(err)
-            console.error(`Remove Liquidity failed`, err, args)
           }
           setLiquidityState({
             attemptingTxn: false,
-            liquidityErrorMessage:
-              err && err?.code !== 4001
-                ? t('Remove liquidity failed: %message%', { message: transactionErrorToUserReadableMessage(err, t) })
-                : undefined,
+            liquidityErrorMessage: t('Transaction rejected.'),
             txHash: undefined,
           })
         })
