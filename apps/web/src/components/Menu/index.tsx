@@ -195,7 +195,7 @@ const Menu = (props) => {
       .catch((error) => {
         console.warn(error)
       })
-    if (result.data.data && result.data.data.length > 0) {
+    if (result?.data?.data && result.data.data.length > 0) {
       setActiveNotifi(true)
     }
   }
