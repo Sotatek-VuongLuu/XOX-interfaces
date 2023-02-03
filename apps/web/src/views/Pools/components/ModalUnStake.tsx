@@ -47,6 +47,9 @@ const ContentUnStake = styled.div`
     white-space: nowrap;
     overflow: hidden;
     max-width: 100px;
+    +span{
+      margin-left: 5px;
+    }
     @media screen and (max-width: 576px) {
       max-width: 90px;
     }
@@ -163,7 +166,7 @@ const ButtonGroup = styled.div`
   .cancel {
     font-weight: 700;
     font-size: 16px;
-    line-height: 19px;
+    line-height: 13px;
     color: #ffffff;
   }
   .confirm {
@@ -339,7 +342,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
               <p>{chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</p>
             </div>
             <div className="token_usd">
-              <Tooltip title={`${amountUSD}USD`} placement="top-start">
+              <Tooltip title={`${amountUSD ? formatNumber(amountUSD) : ''}USD`} placement="top-start">
                 <p style={{ display: 'flex' }}>
                   <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>
                   <span>USD</span>
