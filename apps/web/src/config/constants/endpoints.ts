@@ -57,6 +57,8 @@ export const BLOCKS_CLIENT_WITH_CHAIN = {
   [ChainId.ETHEREUM]: BLOCKS_CLIENT_ETH,
 }
 
+export const ENDPOINT_GRAPHQL_STABLE_COIN = 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/subgraph2'
+
 export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
   [ChainId.BSC]: '',
   [ChainId.ETHEREUM]: '',
