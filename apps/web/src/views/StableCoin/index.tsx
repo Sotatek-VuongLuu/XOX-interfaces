@@ -16,7 +16,7 @@ import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import InfoNav from '../Info/components/InfoNav'
 import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
-import WidthdrawForm from './widthdrawForm'
+// eslint-disable-next-line import/no-cycle
 import Earned from './earned'
 
 const TYPE = {
@@ -175,9 +175,9 @@ const MainBackground = styled.div`
 `
 
 export const formatNumberDecimal = (n: any, decimal?: number) => {
-  const nString = n.toString();
+  const nString = parseFloat(n).toFixed(15).toString();
   const nSlice = decimal || 6;
-  return `${nString.split(".")[0]  }.${  nString.split(".")[1].slice(0, nSlice)}`;
+  return `${nString.split(".")[0]}.${nString.split(".")[1].slice(0, nSlice)}`;
 }
 
 export default function StableCoin() {

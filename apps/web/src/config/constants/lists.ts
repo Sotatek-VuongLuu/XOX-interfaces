@@ -1,6 +1,6 @@
-const PANCAKE_EXTENDED = 'https://tokens.pancakeswap.finance/pancakeswap-extended.json'
-const COINGECKO = 'https://tokens.pancakeswap.finance/coingecko.json'
-const CMC = 'https://tokens.pancakeswap.finance/cmc.json'
+const PANCAKE_EXTENDED = 'https://tokens.xoxnet.io/pancakeswap-extended.json'
+const COINGECKO = 'https://tokens.xoxnet.io/coingecko.json'
+const CMC = 'https://tokens.xoxnet.io/cmc.json'
 
 // List of official tokens list
 export const OFFICIAL_LISTS = [PANCAKE_EXTENDED]

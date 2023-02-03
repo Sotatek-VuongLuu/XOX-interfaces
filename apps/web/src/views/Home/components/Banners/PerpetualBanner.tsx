@@ -43,7 +43,7 @@ const PerpetualBanner = () => {
   const { isDark } = useTheme()
 
   const perpetualUrl = useMemo(
-    () => `https://perp.pancakeswap.finance/${perpLangMap(code)}/futures/BTCUSDT?theme=${perpTheme(isDark)}`,
+    () => `https://perp.xoxnet.io/${perpLangMap(code)}/futures/BTCUSDT?theme=${perpTheme(isDark)}`,
     [code, isDark],
   )
   const headerRef = useRef<HTMLDivElement>(null)

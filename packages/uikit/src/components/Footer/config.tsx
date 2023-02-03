@@ -8,26 +8,26 @@ export const footerLinks: FooterLinkType[] = [
     items: [
       {
         label: "Contact",
-        href: "https://docs.pancakeswap.finance/contact-us",
+        href: "https://docs.xoxnet.io/contact-us",
       },
       {
         label: "Blog",
-        href: "https://medium.com/pancakeswap",
+        href: "https://medium.com/xoxnet",
       },
       {
         label: "Community",
-        href: "https://docs.pancakeswap.finance/contact-us/telegram",
+        href: "https://docs.xoxnet.io/contact-us/telegram",
       },
       {
         label: "CAKE",
-        href: "https://docs.pancakeswap.finance/tokenomics/cake",
+        href: "https://docs.xoxnet.io/tokenomics/cake",
       },
       {
         label: "—",
       },
       {
         label: "Online Store",
-        href: "https://pancakeswap.creator-spring.com/",
+        href: "https://xoxnet.creator-spring.com/",
         isHighlighted: true,
       },
     ],
@@ -37,15 +37,15 @@ export const footerLinks: FooterLinkType[] = [
     items: [
       {
         label: "Customer",
-        href: "Support https://docs.pancakeswap.finance/contact-us/customer-support",
+        href: "Support https://docs.xoxnet.io/contact-us/customer-support",
       },
       {
         label: "Troubleshooting",
-        href: "https://docs.pancakeswap.finance/help/troubleshooting",
+        href: "https://docs.xoxnet.io/help/troubleshooting",
       },
       {
         label: "Guides",
-        href: "https://docs.pancakeswap.finance/get-started",
+        href: "https://docs.xoxnet.io/get-started",
       },
     ],
   },
@@ -54,23 +54,23 @@ export const footerLinks: FooterLinkType[] = [
     items: [
       {
         label: "Github",
-        href: "https://github.com/pancakeswap",
+        href: "https://github.com/xoxnet",
       },
       {
         label: "Documentation",
-        href: "https://docs.pancakeswap.finance",
+        href: "https://docs.xoxnet.io",
       },
       {
         label: "Bug Bounty",
-        href: "https://app.gitbook.com/@pancakeswap-1/s/pancakeswap/code/bug-bounty",
+        href: "https://app.gitbook.com/@xoxnet-1/s/xoxnet/code/bug-bounty",
       },
       {
         label: "Audits",
-        href: "https://docs.pancakeswap.finance/help/faq#is-pancakeswap-safe-has-pancakeswap-been-audited",
+        href: "https://docs.xoxnet.io/help/faq#is-xoxnet-safe-has-xoxnet-been-audited",
       },
       {
         label: "Careers",
-        href: "https://docs.pancakeswap.finance/hiring/become-a-chef",
+        href: "https://docs.xoxnet.io/hiring/become-a-chef",
       },
     ],
   },
