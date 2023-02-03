@@ -300,14 +300,14 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   )
 
   // check whether the user has approved the router on the tokens
-  const [approvalA, approveACallback] = useApproveCallback(
-    parsedAmounts[Field.CURRENCY_A],
-    preferZapInstead ? zapAddress : ROUTER_XOX[chainId],
-  )
-  const [approvalB, approveBCallback] = useApproveCallback(
-    parsedAmounts[Field.CURRENCY_B],
-    preferZapInstead ? zapAddress : ROUTER_XOX[chainId],
-  )
+  const [approvalA, approveACallback] =
+    ROUTER_XOX[chainId] === ''
+      ? [undefined, undefined]
+      : useApproveCallback(parsedAmounts[Field.CURRENCY_A], ROUTER_XOX[chainId])
+  const [approvalB, approveBCallback] =
+    ROUTER_XOX[chainId] === ''
+      ? [undefined, undefined]
+      : useApproveCallback(parsedAmounts[Field.CURRENCY_B], ROUTER_XOX[chainId])
 
   const addTransaction = useTransactionAdder()
 
@@ -648,16 +648,8 @@ export default function AddLiquidity({ currencyA, currencyB }) {
     zapIn.isDependentAmountGreaterThanMaxAmount &&
     rebalancing
 
-  const showZapIsAvailable =
-    !zapMode &&
-    !showZapWarning &&
-    !noAnyInputAmount &&
-    (!zapTokenCheckedA || !zapTokenCheckedB) &&
-    !noLiquidity &&
-    !(
-      (pair && JSBI.lessThan(pair.reserve0.quotient, MINIMUM_LIQUIDITY)) ||
-      (pair && JSBI.lessThan(pair.reserve1.quotient, MINIMUM_LIQUIDITY))
-    )
+  const showZapIsAvailable = false
+
   return (
     <Page>
       <Flex
@@ -827,18 +819,6 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                       {t('Reduce %token%', { token: currencies[zapIn.swapTokenField]?.symbol })}
                     </Button>
                   </RowFixed>
-                )}
-
-                {showZapIsAvailable && (
-                  <Message variant="warning">
-                    <MessageText>
-                      {t('Zap allows you to add liquidity with only 1 single token. Click')}
-                      <Button p="0 4px" scale="sm" variant="text" height="auto" onClick={handleEnableZap}>
-                        {t('here')}
-                      </Button>
-                      {t('to try.')}
-                    </MessageText>
-                  </Message>
                 )}
 
                 {showRebalancingConvert && (
