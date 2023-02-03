@@ -11,6 +11,7 @@ import {
   InjectedModalProps,
   ModalProps,
   useMatchBreakpoints,
+  LinkExternal,
 } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { wrappedCurrency } from 'utils/wrappedCurrency'
@@ -139,15 +140,15 @@ export function TransactionSubmittedContent({
             {t('Transaction Submitted')}
           </Text>
           {chainId && hash && (
-            <Link
-              external
+            <LinkExternal
               href={getBlockExploreLink(hash, 'transaction', chainId)}
-              style={{ color: '#3D8AFF', fontWeight: 400, marginBottom: '16px' }}
+              color="#3D8AFF"
+              style={{ fontWeight: 400, marginBottom: '16px' }}
             >
               {t('View on %site%', {
                 site: getBlockExploreName(chainId),
               })}
-            </Link>
+            </LinkExternal>
           )}
           <ButtonFooters style={{ width: isMobile ? 'auto' : '400px', maxWidth: '100%' }}>
             <Button onClick={onDismiss} maxWidth="200px" style={{ height: '37px', background: '#313131' }}>

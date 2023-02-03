@@ -701,7 +701,8 @@ export default function BridgeToken() {
                 href={`${linkTransaction(chainId)}${txHash}`}
                 target="_blank"
                 rel="noreferrer"
-                color="#9072FF"
+                color="rgb(61, 138, 255)"
+                fontWeight={400}
                 style={{ margin: '0 auto 24px' }}
               >
                 View on {chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}
