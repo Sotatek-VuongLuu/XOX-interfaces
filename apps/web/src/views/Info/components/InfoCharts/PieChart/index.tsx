@@ -49,6 +49,7 @@ export default function InfoPieChart({ data, colors, total }) {
     backgroundColor: '#242424',
     legend: { textStyle: { color: '#ffffff' } },
     labelTextColor: '#ffffff',
+    sliceVisibilityThreshold: 0,
   }
 
   return (
