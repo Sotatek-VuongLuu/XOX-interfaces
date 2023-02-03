@@ -41,9 +41,9 @@ export default function InfoPieChart({ data, colors, total }) {
     title: '',
     is3D: true,
     slices: {
-      0: { color: colors[0], offset: 0.1 },
-      1: { color: colors[1], offset: 0.1 },
-      2: { color: colors[2], offset: 0.1 },
+      0: { color: colors[0], offset: 0.03 },
+      1: { color: colors[1], offset: 0.03 },
+      2: { color: colors[2], offset: 0.03 },
       3: { color: colors[3] },
     },
     backgroundColor: '#242424',
