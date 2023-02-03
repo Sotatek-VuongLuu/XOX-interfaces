@@ -262,7 +262,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   const listTimesPercents = ['25%', '50%', '75%', 'MAX']
   const [messageError, setMessageError] = useState('')
   const [amountUSD, setAmountUSD] = useState<any>()
-  const [activePercent, setActivePercent] = useState<any>(null)
+  const [amountActive, setAmountActive] = useState<any>(null)
 
   const handleButtonClick = () => {
     handleConfirm()
@@ -301,19 +301,24 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
     switch (item) {
       case '25%':
         setAmount(new BigNumber(balanceLP).multipliedBy(0.25).toString())
+        setAmountActive({...amountActive, '25%': (new BigNumber(balanceLP).multipliedBy(0.25).toString())})
         break
       case '50%':
         setAmount(new BigNumber(balanceLP).multipliedBy(0.5).toString())
+        setAmountActive({...amountActive, '50%': (new BigNumber(balanceLP).multipliedBy(0.5).toString())})
         break
       case '75%':
         setAmount(new BigNumber(balanceLP).multipliedBy(0.75).toString())
+        setAmountActive({...amountActive, '75%': (new BigNumber(balanceLP).multipliedBy(0.75).toString())})
         break
       case 'MAX':
         setAmount(balanceLP)
+        setAmountActive({...amountActive, 'MAX': balanceLP})
         break
       default:
         break
     }
+    console.log(amountActive)
   }
 
   return (
@@ -357,11 +362,10 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
                     key={item}
                     onClick={() => {
                       handlePercent(item)
-                      setActivePercent(item)
                     }}
                     style={{
-                      background: activePercent === item ? '#9072ff' : 'none',
-                      color: activePercent === item ? '#fff' : '#9072ff',
+                      background: amountActive?.[`${item}`] === amount ? '#9072ff' : 'none',
+                      color: amountActive?.[`${item}`] === amount ? '#fff' : '#9072ff',
                     }}
                     disabled={!Number(balanceLP)}
                   >
