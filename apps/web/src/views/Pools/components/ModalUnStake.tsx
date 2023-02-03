@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { parseUnits } from '@ethersproject/units'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { Tooltip } from '@mui/material'
 
 const StyledModalContainer = styled(ModalContainer)`
@@ -45,7 +46,7 @@ const ContentUnStake = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 100px;
+    max-width: 300px;
   }
   .flex {
     display: flex;
@@ -331,7 +332,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
             <div className="token_usd">
               <Tooltip title={`${amountUSD}USD`} placement="top-start">
                 <p style={{ display: 'flex' }}>
-                  <span className="balanceLP">~{amountUSD}</span>
+                  <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>
                   <span>USD</span>
                 </p>
               </Tooltip>

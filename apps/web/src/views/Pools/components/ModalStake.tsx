@@ -17,6 +17,7 @@ import { Tooltip } from '@mui/material'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
 import { NETWORK_LABEL } from 'views/BridgeToken/networks'
 import { GridLoader } from 'react-spinners'
+import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { linkTransactionTx } from '..'
 import { Content } from './style'
 import { NumericalInputStyled } from './ModalUnStake'
@@ -57,7 +58,7 @@ const ContentStake = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 100px;
+    max-width: 300px;
   }
   .flex {
     display: flex;
@@ -325,7 +326,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
             <div className="token_usd">
               <Tooltip title={`${amountUSD}USD`} placement="top-start">
                 <p style={{ display: 'flex' }}>
-                  <span className="balanceLP">~{amountUSD}</span>
+                  <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>
                   <span>USD</span>
                 </p>
               </Tooltip>
