@@ -10,7 +10,7 @@ import useWindowSize from 'hooks/useWindowSize'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getContractFarmingLPAddress, getXOXPoolAddress } from 'utils/addressHelpers'
 import { formatEther, formatUnits } from '@ethersproject/units'
-import { USD_DECIMALS } from 'config/constants/exchange'
+import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useConnect, useProvider } from 'wagmi'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
@@ -238,7 +238,7 @@ const Main = styled.div`
           font-size: 20px;
           line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
-          margin-top: 16px;
+          /* margin-top: 16px; */
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
@@ -253,11 +253,22 @@ const Main = styled.div`
           font-size: 20px;
           line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
-          margin-top: 16px;
+          /* margin-top: 16px; */
           text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
           max-width: 100px;
+          @media screen and (max-width: 576px) {
+            font-size: 18px;
+            line-height: 22px;
+          }
+        }
+
+        .user_stake_name_lp {
+          font-weight: 700;
+          font-size: 20px;
+          line-height: 24px;
+          color: rgba(255, 255, 255, 0.87);
           @media screen and (max-width: 576px) {
             font-size: 18px;
             line-height: 22px;
@@ -399,6 +410,14 @@ const MainBackground = styled.div`
   }
 `
 
+const CustomButton = styled(Button)`
+  height: 37px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: 43px;
+  }
+`
+
 export const linkTransaction = (chainId) => {
   return `${NETWORK_LINK[chainId]}/address/`
 }
@@ -423,7 +442,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const contractPair = useXOXPoolContract()
   const provider = useProvider({ chainId })
   const [balanceLP, setBalanceLP] = useState<any>()
-  const [isUnStake, setIsUnStake] = useState(false)
   const { isMobile } = useMatchBreakpoints()
   const [modalReject, setModalReject] = useState<boolean>(false)
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
@@ -504,8 +522,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       const tx = await txWithdraw.wait(1)
       if (tx?.transactionHash) {
         // eslint-disable-next-line no-console
+        setIsOpenLoadingClaimModal(false)
         setIsOpenSuccessModal(true)
         setTxHash(tx?.transactionHash)
+        handleCallbackAfterSuccess()
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -548,9 +568,26 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     }
   }
 
-  const [onModalStake] = useModal(<ModalStake balanceLP={balanceLP} totalSupply={totalSupplyLP} reverse={reserve} />)
+  const handleCallbackAfterSuccess = async () => {
+    await getDataFarming()
+    await handleGetDataFarming()
+  }
+
+  const [onModalStake] = useModal(
+    <ModalStake
+      balanceLP={balanceLP}
+      totalSupply={totalSupplyLP}
+      reverse={reserve}
+      handleCallbackAfterSuccess={handleCallbackAfterSuccess}
+    />,
+  )
   const [onModalUnStake] = useModal(
-    <ModalUnStake balanceLP={userStaked} totalSupply={totalSupplyLP} reverse={reserve} />,
+    <ModalUnStake
+      balanceLP={userStaked}
+      totalSupply={totalSupplyLP}
+      reverse={reserve}
+      handleCallbackAfterSuccess={handleCallbackAfterSuccess}
+    />,
   )
 
   useEffect(() => {
@@ -577,7 +614,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           <Text className="subtitle" marginBottom="16px">
             Earn BUSD/USDC from Your XOXS
           </Text>
-          <a href="/#" target="_blank" rel="noreferrer">
+          <a
+            href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
+            target="_blank"
+            rel="noreferrer"
+          >
             <Button className="get-xox">Get LP Token</Button>
           </a>
           <a href="/whitepaper" target="_blank" rel="noreferrer">
@@ -587,7 +628,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       </NavWrapper>
 
       <NavWrapper>
-        <Main className='border-gradient-style'>
+        <Main className="border-gradient-style">
           <div className="content_container">
             <div className="header_container">
               <div className="header">
@@ -602,14 +643,20 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <>
                     <div className="flex flex_direction">
                       <span className="name">APR:</span>
-                      <Tooltip title={`${aprPercent}%`} placement="top">
-                        <span className="value">{aprPercent || '-'}%</span>
+                      <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
+                        <p style={{ display: 'flex' }}>
+                          <span className="value">{aprPercent || '-'}</span>
+                          <span className="value">%</span>
+                        </p>
                       </Tooltip>
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
-                      <Tooltip title={earned} placement="top">
-                        <span className="value">{earned || '-'}</span>
+                      <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
+                        <p style={{ display: 'flex' }}>
+                          <span className="value">{earned || '-'}</span>
+                          <span className="value">XOX</span>
+                        </p>
                       </Tooltip>
                     </div>
                     <div className="flex flex_direction">
@@ -618,9 +665,15 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         <Tooltip title={`$${liquidity}`} placement="top">
                           <span className="liquidity">${liquidity || '-'}</span>
                         </Tooltip>
-                        <span className="u_question">
-                          <img src="/images/u_question-circle.svg" alt="u_question-circle" />
-                        </span>
+                        <Tooltip
+                          title="Total value of the funds in this farm’s liquidity pair"
+                          placement="top"
+                          id="u_question_farming"
+                        >
+                          <span className="u_question">
+                            <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                          </span>
+                        </Tooltip>
                       </span>
                     </div>
                   </>
@@ -628,14 +681,20 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div className="flex">
                     <div className="flex flex_direction mb_mr">
                       <span className="name">APR:</span>
-                      <Tooltip title={aprPercent} placement="top">
-                        <span className="value">{aprPercent || '-'}%</span>
+                      <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
+                        <p style={{ display: 'flex' }}>
+                          <span className="value">{aprPercent || '-'}</span>
+                          <span className="value">%</span>
+                        </p>
                       </Tooltip>
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
-                      <Tooltip title={earned} placement="top">
-                        <span className="value">{earned || '-'}</span>
+                      <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
+                        <p style={{ display: 'flex' }}>
+                          <span className="value">{earned || '-'}</span>
+                          <span className="value">XOX</span>
+                        </p>
                       </Tooltip>
                     </div>
                   </div>
@@ -647,26 +706,30 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               {width > 576 && (
                 <div className="get_xox_lp">
                   <div>
-                    <p className="_flex">
-                      <a href="/liquidity" target="_blank">
+                    <a
+                      href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <p className="_flex">
                         <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
                         <span style={{ marginLeft: 8 }}>
                           <img src="/images/external-icon.svg" alt="external-icon" />
                         </span>
-                      </a>
-                    </p>
-                    <p className="_flex">
-                      <a
-                        href={`${linkTransaction(chainId)}${getXOXPoolAddress(chainId)}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
+                      </p>
+                    </a>
+                    <a
+                      href={`${linkTransaction(chainId)}${getXOXPoolAddress(chainId)}`}
+                      target="_blank"
+                      rel="noreferrer"
+                    >
+                      <p className="_flex">
                         <span>View Contract</span>
                         <span style={{ marginLeft: 8 }}>
                           <img src="/images/external-icon.svg" alt="external-icon" />
                         </span>
-                      </a>
-                    </p>
+                      </p>
+                    </a>
                   </div>
                 </div>
               )}
@@ -674,36 +737,43 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                 <div className="rectangle _flex space_between">
                   <div>
                     <p className="current_XOX_reward">Current XOX reward</p>
-                    <Tooltip title={pendingRewardOfUser || null} placement="top">
-                      <p className="current_XOX_reward_value">{pendingRewardOfUser || '-'}</p>
+                    <Tooltip title={pendingRewardOfUser ? `${pendingRewardOfUser} XOX` : null} placement="top">
+                      <p style={{ display: 'flex', alignItems: 'center', marginTop: 16 }}>
+                        <span className="current_XOX_reward_value">{pendingRewardOfUser || '-'}</span>
+                        <span className="current_XOX_reward_value">XOX</span>
+                      </p>
                     </Tooltip>
                   </div>
-                  <button type="button" className="withdraw" onClick={handleWithdraw} disabled={!pendingRewardOfUser}>
+                  <CustomButton type="button" className="withdraw" onClick={handleWithdraw} disabled={!pendingRewardOfUser}>
                     Withdraw
-                  </button>
+                  </CustomButton>
                 </div>
               </div>
               <div>
                 <div className="rectangle enable_farm">
                   <p className="current_XOX_reward">
                     {enable
-                      ? `Stake ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`
+                      ? userStaked
+                        ? `${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP Staked`
+                        : `Stake ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`
                       : 'Enable Farm'}
                   </p>
                   {enable && userStaked && (
-                    <Tooltip title={userStaked} placement="top">
-                      <p className="user_stake">{enable ? userStaked || null : null}</p>
+                    <Tooltip title={userStaked} placement="top-start">
+                      <p style={{ display: 'flex', alignItems: 'center', marginTop: 16 }}>
+                        <span className="user_stake">{enable ? userStaked || null : null}</span>
+                      </p>
                     </Tooltip>
                   )}
                   {!enable ? (
                     account ? (
-                      <button type="button" className="nable mt" onClick={() => setEnable(true)}>
+                      <CustomButton type="button" className="nable mt" onClick={() => setEnable(true)}>
                         Enable
-                      </button>
+                      </CustomButton>
                     ) : (
-                      <button type="button" className="nable mt" onClick={handleClick}>
+                      <CustomButton type="button" className="nable mt" onClick={handleClick}>
                         Connect Wallet
-                      </button>
+                      </CustomButton>
                     )
                   ) : enable && userStaked ? (
                     <div className="group_btn_stake">
@@ -715,14 +785,14 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           </div>
                         </div>
                       )}
-                      <button type="button" className="nable" onClick={onModalStake}>
+                      <CustomButton type="button" className="nable" onClick={onModalStake}>
                         Stake LP
-                      </button>
+                      </CustomButton>
                     </div>
                   ) : (
-                    <button type="button" className="nable mt" onClick={onModalStake}>
+                    <CustomButton type="button" className="nable mt" onClick={onModalStake}>
                       Stake LP
-                    </button>
+                    </CustomButton>
                   )}
                 </div>
               </div>
@@ -731,14 +801,20 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div>
                     <p className="flex space_between apr_mb">
                       <span className="name">APR:</span>
-                      <Tooltip title={aprPercent} placement="top">
-                        <span className="value">{aprPercent || '-'}%</span>
+                      <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
+                        <p style={{ display: 'flex' }}>
+                          <span className="value">{aprPercent || '-'}</span>
+                          <span className="value">%</span>
+                        </p>
                       </Tooltip>
                     </p>
                     <p className="flex space_between earned_mb">
                       <span className="name">Earned:</span>
-                      <Tooltip title={earned} placement="top">
-                        <span className="value">{earned || '-'}</span>
+                      <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
+                        <p style={{ display: 'flex' }}>
+                          <span className="value">{earned || '-'}</span>
+                          <span className="value">XOX</span>
+                        </p>
                       </Tooltip>
                     </p>
                     <p className="flex space_between liquidity_mb">
@@ -747,16 +823,22 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         <Tooltip title={`$${liquidity}`} placement="top">
                           <span className="value">${liquidity || '-'}</span>
                         </Tooltip>
-                        <span className="u_question">
-                          <img src="/images/u_question-circle.svg" alt="u_question-circle" />
-                        </span>
+                        <Tooltip title="Total value of the funds in this farm’s liquidity pair" placement="top">
+                          <span className="u_question">
+                            <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                          </span>
+                        </Tooltip>
                       </span>
                     </p>
                   </div>
                   <div className="get_xox_lp">
                     <div>
                       <p className="_flex lp_mb">
-                        <a href="/liquidity" target="_blank">
+                        <a
+                          href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
                           <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
                           <span style={{ marginLeft: 8 }}>
                             <img src="/images/external-icon.svg" alt="external-icon" />
@@ -783,7 +865,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           </div>
         </Main>
       </NavWrapper>
-      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Farming Confirm">
+      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Confirm Farming">
         <Content>
           <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
             <img src="/images/reject_xox.png" alt="reject_xox" />
@@ -806,7 +888,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       <ModalBase
         open={isOpenLoadingClaimModal}
         handleClose={() => setIsOpenLoadingClaimModal(false)}
-        title="Farming Confirm"
+        title="Confirm Farming"
       >
         <Content>
           <div className="xox_loading" style={{ margin: '24px 0px' }}>
@@ -824,7 +906,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           />
         </Content>
       </ModalBase>
-      <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Confirm Bridge">
+      <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Confirm Farming">
         <Content>
           <div className="noti_claim_success">
             <img src="/images/success_claim.png" alt="success_claim" />
@@ -833,8 +915,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           <a href={`${linkTransactionTx(chainId)}${txHash}`} target="_blank" rel="noreferrer">
             <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
           </a>
-          <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)} role="button">
-            Close
+          <div className="btn_dismiss_container">
+            <button className="btn_dismiss" type="button" onClick={() => setIsOpenSuccessModal(false)}>
+              Close
+            </button>
           </div>
         </Content>
       </ModalBase>

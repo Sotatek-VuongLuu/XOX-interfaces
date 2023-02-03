@@ -15,7 +15,7 @@ export const StyledSwapContainer = styled(Flex)<IpropsSwapContainer>`
   width: 559px;
   @media (max-width: 576px) {
     width: calc(100% - 33px);
-    padding: 30px 20px 16px;
+    padding: 30px 4px 32px;
   }
 `
 

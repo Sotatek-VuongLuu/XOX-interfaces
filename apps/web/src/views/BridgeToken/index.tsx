@@ -5,7 +5,7 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState, useCallback, useEffect, useMemo } from 'react'
-import { Flex, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
+import { Flex, Button as PancakeButton, useMatchBreakpoints, useModal, LinkExternal } from '@pancakeswap/uikit'
 import Page from '../Page'
 import { useTranslation } from '@pancakeswap/localization'
 import { useSwitchNetwork } from 'hooks/useSwitchNetwork'
@@ -44,7 +44,7 @@ import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundB
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 
-const SwapButton = styled.button`
+const SwapButton = styled(PancakeButton)`
   background: ${({ disabled }) =>
     disabled ? 'rgba(255, 255, 255, 0.05) ' : 'linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)'};
   color: ${({ theme, disabled }) => (disabled ? 'rgba(255, 255, 255, 0.38)' : theme.colors.white)};
@@ -232,6 +232,10 @@ const Content = styled.div`
       color: #ffffff;
       border: none;
       cursor: pointer;
+
+      &:hover {
+        background: #5f35eb;
+      }
     }
   }
 
@@ -693,9 +697,16 @@ export default function BridgeToken() {
                 <img src="/images/success_claim.png" alt="success_claim" />
               </div>
               <div className="submitted">Transaction Submitted</div>
-              <a href={`${linkTransaction(chainId)}${txHash}`} target="_blank" rel="noreferrer">
-                <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
-              </a>
+              <LinkExternal
+                href={`${linkTransaction(chainId)}${txHash}`}
+                target="_blank"
+                rel="noreferrer"
+                color="rgb(61, 138, 255)"
+                fontWeight={400}
+                style={{ margin: '0 auto 24px' }}
+              >
+                View on {chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}
+              </LinkExternal>
               <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)}>
                 Close
               </div>
@@ -709,7 +720,7 @@ export default function BridgeToken() {
             login={login}
             onDismiss={() => setOpen(false)}
           />
-          <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Bridge Confirm">
+          <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Confirm Bridge">
             <Content>
               <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
                 <img src="/images/reject_xox.png" alt="reject_xox" />
@@ -732,7 +743,7 @@ export default function BridgeToken() {
           <ModalBase
             open={isOpenLoadingClaimModal}
             handleClose={() => setIsOpenLoadingClaimModal(false)}
-            title="Bridge Confirm"
+            title="Confirm Bridge"
           >
             <Content>
               <div className="xox_loading" style={{ margin: '24px 0px' }}>

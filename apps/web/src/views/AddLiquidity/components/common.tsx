@@ -105,7 +105,7 @@ const AutoColumnWrapper = styled(AutoColumn)`
 
   .logo img {
     width: 18px;
-    height: unset;
+    height: 18px;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -140,6 +140,7 @@ const AutoColumnWrapper = styled(AutoColumn)`
 
     .logo img {
       width: 24px;
+      height: 24px;
     }
   }
 `

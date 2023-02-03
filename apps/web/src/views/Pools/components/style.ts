@@ -121,10 +121,13 @@ export const Content = styled.div`
       border: none;
       cursor: pointer;
     }
+    .bg {
+      background: #313131;
+    }
   }
 
   .submitted {
-    font-weight: 400;
+    font-weight: 500;
     font-size: 20px;
     line-height: 24px;
     margin-top: 24px;
