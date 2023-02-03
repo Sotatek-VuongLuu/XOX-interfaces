@@ -433,6 +433,10 @@ const CustomButton = styled(Button)`
     cursor: not-allowed !important;
   }
 `
+interface IPropsButtonUnStake {
+  disabled?: boolean
+}
+const ButtonUnStake = styled.div<IPropsButtonUnStake>``
 
 export const linkTransaction = (chainId) => {
   return `${NETWORK_LINK[chainId]}/address/`
@@ -976,11 +980,16 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     <div className="group_btn_stake">
                       {enable && userStaked && (
                         // eslint-disable-next-line jsx-a11y/interactive-supports-focus, jsx-a11y/click-events-have-key-events
-                        <div className="container_unstake_border" onClick={handleOnModalUnStake} role="button">
+                        <ButtonUnStake
+                          className="container_unstake_border"
+                          onClick={handleOnModalUnStake}
+                          role="button"
+                          disabled={!reserve || !totalSupplyLP}
+                        >
                           <div className="inner_container">
                             <span>Unstake</span>
                           </div>
-                        </div>
+                        </ButtonUnStake>
                       )}
                       <CustomButton
                         type="button"
