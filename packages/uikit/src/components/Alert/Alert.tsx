@@ -83,7 +83,7 @@ const Alert: React.FC<React.PropsWithChildren<AlertProps>> = ({ title, children,
 
   return (
     <StyledAlert>
-      <IconLabel variant={variant} hasDescription={!!children}>
+      <IconLabel variant={variant} hasDescription={!!children} style={{ display: "flex" }}>
         <Icon color="currentColor" width="24px" />
       </IconLabel>
       <Details hasHandler={!!onClick}>

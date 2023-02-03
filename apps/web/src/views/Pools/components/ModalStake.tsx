@@ -1,18 +1,13 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import { InjectedModalProps, ModalContainer, ModalHeader, NumericalInput } from '@pancakeswap/uikit'
-import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
+import { Button, InjectedModalProps, ModalContainer, ModalHeader } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { getContractFarmingLPAddress } from 'utils/addressHelpers'
-import { USD_ADDRESS, XOX_ADDRESS, XOX_LP } from 'config/constants/exchange'
-import { XOXLP } from '@pancakeswap/tokens'
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { parseUnits } from '@ethersproject/units'
-import { useContractFarmingLP } from 'hooks/useContract'
 import { Tooltip } from '@mui/material'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
 import { NETWORK_LABEL } from 'views/BridgeToken/networks'
@@ -227,6 +222,13 @@ const ContentContainer = styled.div`
     }
   }
 `
+const CustomButton = styled(Button)`
+  height: 37px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: 43px;
+  }
+`
 
 interface Props extends InjectedModalProps {
   balanceLP: any
@@ -279,8 +281,12 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   }
 
   useEffect(() => {
-    const amountUsd = (Number(amount) * reverse) / totalSupply
-    setAmountUSD(amountUsd)
+    if (amount && reverse && totalSupply) {
+      const amountUsd = (Number(amount) * reverse) / totalSupply
+      setAmountUSD(amountUsd)
+    } else {
+      setAmountUSD(0)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount])
 
@@ -360,7 +366,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
             <button type="button" className="btn cancel" onClick={onDismiss}>
               Cancel
             </button>
-            <button
+            <CustomButton
               type="button"
               className="btn confirm"
               disabled={
@@ -369,7 +375,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
               onClick={handleButtonClick}
             >
               Confirm
-            </button>
+            </CustomButton>
           </ButtonGroup>
           <GetLP className="get_lp">
             <a

@@ -128,6 +128,12 @@ const CustomCardBody = styled(CardBody)`
     border: 1px solid #9072ff;
     border-radius: 40px;
     padding: 0 12px;
+
+    &:hover {
+      background: #9072ff !important;
+      color: #ffffff;
+      box-shadow: none;
+    }
   }
 
   .btn-percent.active {
@@ -892,7 +898,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                           setBtnPercent(100)
                         }}
                       >
-                        {t('Max')}
+                        {t('MAX')}
                       </Button>
                     </Flex>
                   </BorderCard>

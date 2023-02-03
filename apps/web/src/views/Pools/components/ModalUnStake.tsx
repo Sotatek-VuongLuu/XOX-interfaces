@@ -300,8 +300,12 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   }, [amount, balanceLP])
 
   useEffect(() => {
-    const amountUsd = (Number(amount) * reverse) / totalSupply
-    setAmountUSD(amountUsd)
+    if (amount && reverse && totalSupply) {
+      const amountUsd = (Number(amount) * reverse) / totalSupply
+      setAmountUSD(amountUsd)
+    } else {
+      setAmountUSD(0)
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount])
 

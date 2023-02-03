@@ -96,7 +96,7 @@ const ConfirmAddLiquidityModal: React.FC<
         mb="32px"
         height={['37px', , '43px']}
         style={{
-          background: 'linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)',
+          // background: 'linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)',
           borderRadius: '8px',
         }}
       >

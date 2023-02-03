@@ -145,9 +145,7 @@ export function TransactionSubmittedContent({
               color="#3D8AFF"
               style={{ fontWeight: 400, marginBottom: '16px' }}
             >
-              {t('View on %site%', {
-                site: getBlockExploreName(chainId),
-              })}
+              {t(`View on ${chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}`)}
             </LinkExternal>
           )}
           <ButtonFooters style={{ width: isMobile ? 'auto' : '400px', maxWidth: '100%' }}>
@@ -163,7 +161,7 @@ export function TransactionSubmittedContent({
                 tokenSymbol={currencyToAdd.symbol}
                 tokenDecimals={token.decimals}
                 tokenLogo={token instanceof WrappedTokenInfo ? token.logoURI : undefined}
-                style={{ fontSize: '15px', height: '37px', marginLeft: '16px' }}
+                style={{ fontSize: '16px', height: '37px', marginLeft: '16px' }}
               />
             )}
           </ButtonFooters>
