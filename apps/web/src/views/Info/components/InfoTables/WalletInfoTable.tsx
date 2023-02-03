@@ -193,6 +193,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const [rateXOX, setRateXOX] = useState(0)
   const contractUSD = useERC20(USD_ADDRESS[chainId])
   const contractXOX = useERC20(XOX_ADDRESS[chainId])
+  const [colors, setColors] = useState<string[]>([])
 
   const tokenRateUSD = useCallback(
     (symbol: string): number => {
@@ -306,6 +307,11 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
         sum += formatAmountNumber(balance.balance * tokenRateUSD(balance.symbol))
       }
     })
+    if (chainId === 1 || chainId === 5) {
+      setColors(['#60A5FA', '#9072FF', '#2563EB', '#A8A29E'])
+    } else {
+      setColors(['#FBBF24', '#9072FF', '#FDE047', '#A8A29E'])
+    }
     result.push(['Others', sum, `Others: $${sum}`])
     total = nativeBalance + xoxBalance + result[2][1] + sum
     setTotalAsset(total)
@@ -367,7 +373,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
 
         {account ? (
           <Flex flexDirection="column">
-            <InfoPieChart data={dataChart} total={totalAsset} />
+            <InfoPieChart data={dataChart} colors={colors} total={totalAsset} />
 
             <CoinListWrapper flexDirection="column">
               <Flex alignItems="center" p="16px" borderRadius="6px" background="#303030" mb="6px">

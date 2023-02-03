@@ -24,7 +24,7 @@ import { Chart } from 'react-google-charts'
 //   return null
 // }
 
-export default function InfoPieChart({ data, total }) {
+export default function InfoPieChart({ data, colors, total }) {
   // const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
   //   const radius = innerRadius + (outerRadius - innerRadius) * 0.5
   //   const x = cx + radius * Math.cos(-midAngle * RADIAN)
@@ -41,10 +41,10 @@ export default function InfoPieChart({ data, total }) {
     title: '',
     is3D: true,
     slices: {
-      0: { color: '#9072FF', offset: 0.1 },
-      1: { color: '#5F35EB', offset: 0.1 },
-      2: { color: '#89DDEF', offset: 0.1 },
-      3: { color: '#90F0B1' },
+      0: { color: colors[0], offset: 0.1 },
+      1: { color: colors[1], offset: 0.1 },
+      2: { color: colors[2], offset: 0.1 },
+      3: { color: colors[3] },
     },
     backgroundColor: '#242424',
     legend: { textStyle: { color: '#ffffff' } },
