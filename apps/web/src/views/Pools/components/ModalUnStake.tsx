@@ -46,7 +46,10 @@ const ContentUnStake = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 300px;
+    max-width: 100px;
+    @media screen and (max-width: 576px) {
+      max-width: 90px;
+    }
   }
   .flex {
     display: flex;
@@ -208,17 +211,11 @@ export const NumericalInputStyled = styled(NumericalInput)<INumericalInputStyled
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ amount }) =>
-    amount !== '' && Number(amount) !== 0 && amount !== '.'
-      ? `rgba(255, 255, 255, 0.87)`
-      : `rgba(255, 255, 255, 0.38)`};
+  color: ${({ amount }) => (amount ? `rgba(255, 255, 255, 0.87)` : `rgba(255, 255, 255, 0.38)`)};
   width: auto;
   ${(props) => props.disabled === true && ' pointer-events: none'};
   & {
-    -webkit-text-fill-color: ${({ amount }) =>
-      amount !== '' && Number(amount) !== 0 && amount !== '.'
-        ? `rgba(255, 255, 255, 0.87)`
-        : `rgba(255, 255, 255, 0.38)`};
+    -webkit-text-fill-color: ${({ amount }) => (amount ? `rgba(255, 255, 255, 0.87)` : `rgba(255, 255, 255, 0.38)`)};
     ::placeholder {
       -webkit-text-fill-color: rgba(255, 255, 255, 0.38);
     }

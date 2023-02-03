@@ -48,7 +48,10 @@ const ContentStake = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 300px;
+    max-width: 100px;
+    @media screen and (max-width: 576px) {
+      max-width: 90px;
+    }
   }
   .flex {
     display: flex;

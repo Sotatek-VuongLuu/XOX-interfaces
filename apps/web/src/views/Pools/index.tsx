@@ -600,10 +600,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const getDataFarming = async () => {
     try {
-      setEarned(0)
       const data = await getUserFarmingData(chainId, account)
       if (data?.userFarmingDatas[0]?.amount) {
         setEarned(formatEther(data?.userFarmingDatas[0]?.amount))
+      } else {
+        setEarned(0)
       }
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -731,12 +732,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   }, [approveCallback])
 
   useEffect(() => {
-    if (approvalState === ApprovalState.APPROVED) {
-      setPendingApprove(false)
-    }
-  }, [account, chainId, approvalState])
-
-  useEffect(() => {
     setAmount('')
     setAmountUnStake('')
   }, [isShowModal])
@@ -749,8 +744,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    // if (loadOk) window.location.reload()
-    // setLoadOk(true)
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
     const id = setInterval(() => {
       handleGetDataFarming()
     }, 10000)
@@ -761,12 +756,13 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   }, [chainId, account])
 
   useEffect(() => {
-    if (account && approvalState === ApprovalState.APPROVED) {
+    if (approvalState === ApprovalState.APPROVED) {
+      setPendingApprove(false)
       setEnable(true)
     } else {
       setEnable(false)
     }
-  }, [approvalState, account])
+  }, [approvalState, account, chainId])
 
   return (
     <>
