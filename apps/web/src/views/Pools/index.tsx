@@ -135,6 +135,9 @@ const Banner = styled.div`
 
 const Main = styled.div`
   width: 1200px;
+  a:hover {
+    text-decoration: underline;
+  }
   .flex {
     display: flex;
     align-items: center;
@@ -417,6 +420,15 @@ const CustomButton = styled(Button)`
   ${({ theme }) => theme.mediaQueries.md} {
     height: 43px;
   }
+  &:disabled,
+  button[disabled] {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    background: #313131 !important;
+    color: rgba(255, 255, 255, 0.38) !important;
+    cursor: not-allowed !important;
+  }
 `
 
 export const linkTransaction = (chainId) => {
@@ -459,18 +471,20 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const [amount, setAmount] = useState('')
   const [amountUnStake, setAmountUnStake] = useState('')
   const [notiMess, setNotiMess] = useState('')
+  const [isShowModal, setIsShowModal] = useState(false)
+  const [loadOk, setLoadOk] = useState(false)
+  const addressFarming = getContractFarmingLPAddress(chainId)
 
   const handleGetDataFarming = async () => {
     try {
-      const addressFarming = getContractFarmingLPAddress(chainId)
+      const reserves = await contractPair.getReserves()
+      const totalSupplyBN = await contractPair.totalSupply()
       const amountFarmingBN = await contractPair.balanceOf(addressFarming)
       const endBlock = await contractFarmingLP.bonusEndBlock()
       const startBlock = await contractFarmingLP.startBlock()
       const rewardPBlock = await contractFarmingLP.rewardPerBlock()
       const pendingReward = await contractFarmingLP.pendingReward(account)
       const userInfo = await contractFarmingLP.userInfo(account)
-      const totalSupplyBN = await contractPair.totalSupply()
-      const reserves = await contractPair.getReserves()
 
       if (!Number(formatEther(userInfo[0]._hex))) {
         setUserStaked(null)
@@ -484,7 +498,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       setReserve(reserves1)
       setPendingRewardOfUser(Number(formatEther(pendingReward._hex)))
       const balanceOfFarming = Number(formatEther(amountFarmingBN._hex))
-
+      getDataFarming()
       if (!balanceOfFarming) {
         setAprPercent(0)
       } else {
@@ -597,7 +611,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setAmountUnStake('')
         setIsOpenLoadingClaimModal(false)
         setTxHash(tx?.transactionHash)
-        onDismissUnStake()
+        handleDismissModalUnStake()
         setIsOpenSuccessModal(true)
         handleCallbackAfterSuccess()
       }
@@ -627,7 +641,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setIsOpenLoadingClaimModal(false)
         setTxHash(tx?.transactionHash)
         setAmount('')
-        onDismissStake()
+        handleDismissModalStake()
         setIsOpenSuccessModal(true)
         handleCallbackAfterSuccess()
       }
@@ -675,6 +689,31 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     true,
     'ModalUnStake',
   )
+  /// on
+  const handleOnModalStake = () => {
+    onModalStake()
+    setIsShowModal(true)
+  }
+  const handleOnModalUnStake = () => {
+    onModalUnStake()
+    setIsShowModal(true)
+  }
+  /// off
+
+  const handleDismissModalStake = () => {
+    onDismissStake()
+    setIsShowModal(false)
+  }
+
+  const handleDismissModalUnStake = () => {
+    onDismissUnStake()
+    setIsShowModal(false)
+  }
+
+  useEffect(() => {
+    setAmount('')
+    setAmountUnStake('')
+  }, [isShowModal])
 
   useEffect(() => {
     if (account && !userProfile) {
@@ -684,9 +723,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
     const id = setInterval(() => {
       handleGetDataFarming()
-      getDataFarming()
     }, 10000)
 
     // eslint-disable-next-line consistent-return
@@ -734,37 +774,51 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <>
                     <div className="flex flex_direction">
                       <span className="name">APR:</span>
-                      <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
-                        <p style={{ display: 'flex' }}>
-                          <span className="value">{aprPercent || '-'}</span>
-                          <span className="value">%</span>
-                        </p>
-                      </Tooltip>
+                      {account ? (
+                        <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
+                          <p style={{ display: 'flex' }}>
+                            <span className="value">{aprPercent || '0'}</span>
+                            <span className="value">%</span>
+                          </p>
+                        </Tooltip>
+                      ) : (
+                        <span className="value">-</span>
+                      )}
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
-                      <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
-                        <p style={{ display: 'flex' }}>
-                          <span className="value">{earned || '-'}</span>
-                          <span className="value">XOX</span>
-                        </p>
-                      </Tooltip>
+                      {account ? (
+                        <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
+                          <p style={{ display: 'flex' }}>
+                            <span className="value">{earned || '0'}</span>
+                            <span className="value">XOX</span>
+                          </p>
+                        </Tooltip>
+                      ) : (
+                        <span className="value">-</span>
+                      )}
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Liquidity</span>
                       <span className="value _flex ">
-                        <Tooltip title={`$${liquidity}`} placement="top">
-                          <span className="liquidity">${liquidity || '-'}</span>
-                        </Tooltip>
-                        <Tooltip
-                          title="Total value of the funds in this farm’s liquidity pair"
-                          placement="top"
-                          id="u_question_farming"
-                        >
-                          <span className="u_question">
-                            <img src="/images/u_question-circle.svg" alt="u_question-circle" />
-                          </span>
-                        </Tooltip>
+                        {account ? (
+                          <>
+                            <Tooltip title={liquidity ? `$${liquidity}` : null} placement="top">
+                              <span className="liquidity">${liquidity || '0'}</span>
+                            </Tooltip>
+                            <Tooltip
+                              title="Total value of the funds in this farm’s liquidity pair"
+                              placement="top"
+                              id="u_question_farming"
+                            >
+                              <span className="u_question">
+                                <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                              </span>
+                            </Tooltip>
+                          </>
+                        ) : (
+                          <span className="liquidity">-</span>
+                        )}
                       </span>
                     </div>
                   </>
@@ -772,21 +826,29 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div className="flex">
                     <div className="flex flex_direction mb_mr">
                       <span className="name">APR:</span>
-                      <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
-                        <p style={{ display: 'flex' }}>
-                          <span className="value">{aprPercent || '-'}</span>
-                          <span className="value">%</span>
-                        </p>
-                      </Tooltip>
+                      {account ? (
+                        <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
+                          <p style={{ display: 'flex' }}>
+                            <span className="value">{aprPercent || '0'}</span>
+                            <span className="value">%</span>
+                          </p>
+                        </Tooltip>
+                      ) : (
+                        <span className="value">-</span>
+                      )}
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
-                      <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
-                        <p style={{ display: 'flex' }}>
-                          <span className="value">{earned || '-'}</span>
-                          <span className="value">XOX</span>
-                        </p>
-                      </Tooltip>
+                      {account ? (
+                        <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
+                          <p style={{ display: 'flex' }}>
+                            <span className="value">{earned || '0'}</span>
+                            <span className="value">XOX</span>
+                          </p>
+                        </Tooltip>
+                      ) : (
+                        <span className="value">-</span>
+                      )}
                     </div>
                   </div>
                 )}
@@ -828,12 +890,16 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                 <div className="rectangle _flex space_between">
                   <div>
                     <p className="current_XOX_reward">Current XOX reward</p>
-                    <Tooltip title={pendingRewardOfUser ? `${pendingRewardOfUser} XOX` : null} placement="top">
-                      <p style={{ display: 'flex', alignItems: 'center', marginTop: 16 }}>
-                        <span className="current_XOX_reward_value">{pendingRewardOfUser || '-'}</span>
-                        <span className="current_XOX_reward_value">XOX</span>
-                      </p>
-                    </Tooltip>
+                    {account ? (
+                      <Tooltip title={pendingRewardOfUser ? `${pendingRewardOfUser} XOX` : null} placement="top">
+                        <p style={{ display: 'flex', alignItems: 'center', marginTop: 16 }}>
+                          <span className="current_XOX_reward_value">{pendingRewardOfUser || '0'}</span>
+                          <span className="current_XOX_reward_value">XOX</span>
+                        </p>
+                      </Tooltip>
+                    ) : (
+                      <span className="current_XOX_reward_value">-</span>
+                    )}
                   </div>
                   <CustomButton
                     type="button"
@@ -875,19 +941,29 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     <div className="group_btn_stake">
                       {enable && userStaked && (
                         // eslint-disable-next-line jsx-a11y/interactive-supports-focus, jsx-a11y/click-events-have-key-events
-                        <div className="container_unstake_border" onClick={onModalUnStake} role="button">
+                        <div className="container_unstake_border" onClick={handleOnModalUnStake} role="button">
                           <div className="inner_container">
                             <span>Unstake</span>
                           </div>
                         </div>
                       )}
-                      <CustomButton type="button" className="nable" onClick={onModalStake}>
-                        Stake LP
+                      <CustomButton
+                        type="button"
+                        className="nable"
+                        onClick={handleOnModalStake}
+                        disabled={!reserve || !totalSupplyLP}
+                      >
+                        Stake
                       </CustomButton>
                     </div>
                   ) : (
-                    <CustomButton type="button" className="nable mt" onClick={onModalStake}>
-                      Stake LP
+                    <CustomButton
+                      type="button"
+                      className="nable mt"
+                      onClick={handleOnModalStake}
+                      disabled={!reserve || !totalSupplyLP}
+                    >
+                      Stake
                     </CustomButton>
                   )}
                 </div>
@@ -897,62 +973,76 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div>
                     <p className="flex space_between apr_mb">
                       <span className="name">APR:</span>
-                      <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
-                        <p style={{ display: 'flex' }}>
-                          <span className="value">{aprPercent || '-'}</span>
-                          <span className="value">%</span>
-                        </p>
-                      </Tooltip>
+                      {account ? (
+                        <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
+                          <p style={{ display: 'flex' }}>
+                            <span className="value">{aprPercent || '0'}</span>
+                            <span className="value">%</span>
+                          </p>
+                        </Tooltip>
+                      ) : (
+                        <span className="value">-</span>
+                      )}
                     </p>
                     <p className="flex space_between earned_mb">
                       <span className="name">Earned:</span>
-                      <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
-                        <p style={{ display: 'flex' }}>
-                          <span className="value">{earned || '-'}</span>
-                          <span className="value">XOX</span>
-                        </p>
-                      </Tooltip>
+                      {account ? (
+                        <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
+                          <p style={{ display: 'flex' }}>
+                            <span className="value">{earned || '0'}</span>
+                            <span className="value">XOX</span>
+                          </p>
+                        </Tooltip>
+                      ) : (
+                        <span className="value">-</span>
+                      )}
                     </p>
                     <p className="flex space_between liquidity_mb">
                       <span className="name">Liquidity:</span>
                       <span className="_flex">
-                        <Tooltip title={`$${liquidity}`} placement="top">
-                          <span className="value">${liquidity || '-'}</span>
-                        </Tooltip>
-                        <Tooltip title="Total value of the funds in this farm’s liquidity pair" placement="top">
-                          <span className="u_question">
-                            <img src="/images/u_question-circle.svg" alt="u_question-circle" />
-                          </span>
-                        </Tooltip>
+                        {account ? (
+                          <>
+                            <Tooltip title={`$${liquidity}`} placement="top">
+                              <span className="value">${liquidity || '0'}</span>
+                            </Tooltip>
+                            <Tooltip title="Total value of the funds in this farm’s liquidity pair" placement="top">
+                              <span className="u_question">
+                                <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                              </span>
+                            </Tooltip>
+                          </>
+                        ) : (
+                          <span className="value">-</span>
+                        )}
                       </span>
                     </p>
                   </div>
                   <div className="get_xox_lp">
                     <div>
-                      <p className="_flex lp_mb">
-                        <a
-                          href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
+                      <a
+                        href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <p className="_flex lp_mb">
                           <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
                           <span style={{ marginLeft: 8 }}>
                             <img src="/images/external-icon.svg" alt="external-icon" />
                           </span>
-                        </a>
-                      </p>
-                      <p className="_flex">
-                        <a
-                          href={`${linkTransaction(chainId)}${getXOXPoolAddress(chainId)}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
+                        </p>
+                      </a>
+                      <a
+                        href={`${linkTransaction(chainId)}${getXOXPoolAddress(chainId)}`}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <p className="_flex">
                           <span>View Contract</span>
                           <span style={{ marginLeft: 8 }}>
                             <img src="/images/external-icon.svg" alt="external-icon" />
                           </span>
-                        </a>
-                      </p>
+                        </p>
+                      </a>
                     </div>
                   </div>
                 </>
