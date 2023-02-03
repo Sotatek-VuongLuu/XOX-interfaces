@@ -17,6 +17,8 @@ import {
   infoNRClientXoxBsc,
   infoNRClientXoxBscTestnet,
   infoStableSwapClient,
+  stableCoinClient,
+  stableCoinClientEth
 } from 'utils/graphql'
 
 import { ChainId } from '@pancakeswap/sdk'
@@ -79,6 +81,11 @@ export const multiChainQueryClientWithFrom = {
 export const multiChainQueryClientWithNR = {
   BSC: infoNRClient,
   ETH: infoClientETH,
+}
+
+export const multiChainQueryClientStableCoin = {
+  BSC: stableCoinClient,
+  ETH: stableCoinClientEth,
 }
 
 export const multiChainQueryEndPoint = {

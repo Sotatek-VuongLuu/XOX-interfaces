@@ -9,7 +9,8 @@ import {
   getMultiChainQueryEndPointWithChainId,
   getMultiChainQueryEndPointWithStableSwap,
   MultiChainName,
-  multiChainQueryClientWithNR
+  multiChainQueryClientWithNR,
+  multiChainQueryClientStableCoin
 } from '../../constant'
 
 const QUERYTRANSACTION = `
@@ -76,7 +77,7 @@ const fetchTopStableCoin = async (
   address: string,
 ): Promise<{ infoBUSD: any; infoUSDC: any }> => {
   const result = {infoBUSD: null,infoUSDC: null}
-  await Promise.all([multiChainQueryClientWithNR.BSC.request<any>(QUERYTOP(address)), multiChainQueryClientWithNR.ETH.request<any>(QUERYTOP(address))]).then(([res1, res2]) => {
+  await Promise.all([multiChainQueryClientStableCoin.BSC.request<any>(QUERYTOP(address)), multiChainQueryClientStableCoin.ETH.request<any>(QUERYTOP(address))]).then(([res1, res2]) => {
     result.infoBUSD = res1;
     result.infoUSDC = res2;
   }).catch(error => {
@@ -90,7 +91,7 @@ export const fetchTransactionStableCoin = async (
 ) => {
   const result = { transactionsXOX: [] }
   const chainName = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BSC' : 'ETH';
-  const dataXOX = await multiChainQueryClientWithNR[chainName].request<any>(QUERYTRANSACTION);
+  const dataXOX = await multiChainQueryClientStableCoin[chainName].request<any>(QUERYTRANSACTION);
   if (dataXOX) {
     const swapsXOX = dataXOX.swaps.map(mapSwapsXOX)
     result.transactionsXOX = [ ...swapsXOX].sort((a, b) => {
@@ -106,7 +107,7 @@ export const fetchWithdrawStableCoin = async (
 ) => {
   const result = { transactionsXOX: [] }
   const chainName = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BSC' : 'ETH';
-  const dataXOX = await multiChainQueryClientWithNR[chainName].request<any>(QUERYWITHDRAW(address));
+  const dataXOX = await multiChainQueryClientStableCoin[chainName].request<any>(QUERYWITHDRAW(address));
   if (dataXOX) {
     result.transactionsXOX = dataXOX?.userWithdrawHistories?.map(item => {
       return {
@@ -124,7 +125,7 @@ export const fetchStakeStableCoin = async (
 ) => {
   const result = { transactionsXOX: [] }
   const chainName = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BSC' : 'ETH';
-  const dataXOX = await multiChainQueryClientWithNR[chainName].request<any>(QUERYSTACK(address));
+  const dataXOX = await multiChainQueryClientStableCoin[chainName].request<any>(QUERYSTACK(address));
   if (dataXOX) {
     result.transactionsXOX = dataXOX?.userStakeHistories?.map(item => {
       return {
