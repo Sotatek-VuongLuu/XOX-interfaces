@@ -101,15 +101,22 @@ const Button = styled.button`
   padding: 0;
 `
 
-const WapperConnectBtn = styled(Button)`
+const WapperConnectBtn = styled(PancakeButton)`
   width: 100%;
   margin-top: 20px;
-  height: 54px;
-  font-size: 18px;
+  height: 43px;
+  font-size: 16px;
+  line-height: 19px;
   font-weight: 700;
   border-radius: 8px;
   background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
   color: white;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: 54px;
+    font-size: 18px;
+    line-height: 22px;
+  }
 `
 
 const Content = styled.div`

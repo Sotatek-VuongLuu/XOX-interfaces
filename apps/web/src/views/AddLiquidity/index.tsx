@@ -434,7 +434,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
           : attemptingTxn
           ? t('Confirm add liquidity')
           : txHash
-          ? 'Transaction Submitted'
+          ? 'Confirm add liquidity'
           : liquidityErrorMessage
           ? 'Confirm add liquidity'
           : t('You will receive')

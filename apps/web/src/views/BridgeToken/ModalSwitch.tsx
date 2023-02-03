@@ -144,7 +144,7 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
               // eslint-disable-next-line react/no-array-index-key
               key={i}
             >
-              <div className="title-network">{NETWORK_LABEL[key]}</div>
+              <div className="title-network">{NETWORK_LABEL[key] === 'BSC' ? 'BNB Smart Chain' : NETWORK_LABEL[key]}</div>
               <div className="image-network">
                 <img
                   src={NETWORK_ICON[key]}
