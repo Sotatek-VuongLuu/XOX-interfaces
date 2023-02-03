@@ -13,10 +13,7 @@ import { AppState } from 'state'
 import { useAccount, useConnect } from 'wagmi'
 import Trans from './Trans'
 
-const ConnectWalletButton = ({
-  children,
-  ...props
-}: ButtonProps) => {
+const ConnectWalletButton = ({ children, ...props }: ButtonProps) => {
   const handleActive = useActiveHandle()
   const { login } = useAuth()
   const { address: account } = useAccount()
@@ -48,7 +45,7 @@ const ConnectWalletButton = ({
 
   return (
     <>
-      <Button onClick={handleClick} {...props}>
+      <Button onClick={handleClick} {...props} height={43}>
         {children || <Trans>Connect Wallet</Trans>}
       </Button>
       <WalletModalV2

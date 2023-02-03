@@ -290,6 +290,7 @@ export default function SwapCommitButton({
             }}
             width="48%"
             id="swap-button"
+            height={43}
             disabled={!isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)}
           >
             {priceImpactSeverity > 3 && !isExpertMode
@@ -315,6 +316,7 @@ export default function SwapCommitButton({
           onSwapHandler()
         }}
         id="swap-button"
+        height={43}
         width="100%"
         disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
       >

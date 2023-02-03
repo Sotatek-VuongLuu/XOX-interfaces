@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import { useEffect, useMemo, useState, useRef, useCallback } from 'react'
 import { useRouter } from 'next/router'
 import {
@@ -13,7 +14,7 @@ import {
 import { useTranslation, languageList } from '@pancakeswap/localization'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
 import useTheme from 'hooks/useTheme'
-import io from "socket.io-client";
+import io from 'socket.io-client'
 import axios from 'axios'
 import { useCakeBusdPrice } from 'hooks/useBUSDPrice'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -89,7 +90,7 @@ const NotificationMenu = styled.div`
   width: 252px;
   color: rgba(255, 255, 255, 0.87);
   padding: 16px;
-  h3{
+  h3 {
     font-weight: 700;
     font-size: 20px;
     line-height: 24px;
@@ -97,12 +98,12 @@ const NotificationMenu = styled.div`
     margin-bottom: 10px;
     padding-bottom: 10px;
   }
-  p{
+  p {
     font-size: 16px;
     line-height: 20px;
     word-break: break-word;
     margin-bottom: 10px;
-    &:last-child{
+    &:last-child {
       margin-bottom: 0;
     }
   }
@@ -130,21 +131,30 @@ const IconAlert = styled.div`
   @media (max-width: 576px) {
     min-width: 25px;
     height: 25px;
-    svg{
+    svg {
       width: 12px;
     }
   }
 `
 
-const IconAlertSvg = <svg width="22" height="25" viewBox="0 0 22 25" fill="none" xmlns="http://www.w3.org/2000/svg">
-  <path fillRule="evenodd" clipRule="evenodd" d="M11 0.5C6.85787 0.5 3.5 3.85787 3.5 8V12.4208C3.5 12.4949 3.47809 12.5672 3.43702 12.6289L0.88232 16.4609C0.63302 16.8349 0.5 17.2742 0.5 17.7236C0.5 18.9809 1.51918 20 2.77639 20H19.2236C20.4809 20 21.5 18.9809 21.5 17.7236C21.5 17.2742 21.3669 16.8349 21.1176 16.4609L18.563 12.6289C18.5219 12.5672 18.5 12.4949 18.5 12.4208V8C18.5 3.85787 15.1421 0.5 11 0.5Z" fill="#8E8E8E"/>
-  <path d="M13.9769 21.8743C13.7927 23.3545 12.5301 24.5 11 24.5C9.46987 24.5 8.20732 23.3545 8.0231 21.8743C7.99753 21.6688 8.16788 21.5 8.37499 21.5H13.625C13.8321 21.5 14.0024 21.6688 13.9769 21.8743Z" fill="#8E8E8E"/>
-</svg>
-
+const IconAlertSvg = (
+  <svg width="22" height="25" viewBox="0 0 22 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path
+      fillRule="evenodd"
+      clipRule="evenodd"
+      d="M11 0.5C6.85787 0.5 3.5 3.85787 3.5 8V12.4208C3.5 12.4949 3.47809 12.5672 3.43702 12.6289L0.88232 16.4609C0.63302 16.8349 0.5 17.2742 0.5 17.7236C0.5 18.9809 1.51918 20 2.77639 20H19.2236C20.4809 20 21.5 18.9809 21.5 17.7236C21.5 17.2742 21.3669 16.8349 21.1176 16.4609L18.563 12.6289C18.5219 12.5672 18.5 12.4949 18.5 12.4208V8C18.5 3.85787 15.1421 0.5 11 0.5Z"
+      fill="#8E8E8E"
+    />
+    <path
+      d="M13.9769 21.8743C13.7927 23.3545 12.5301 24.5 11 24.5C9.46987 24.5 8.20732 23.3545 8.0231 21.8743C7.99753 21.6688 8.16788 21.5 8.37499 21.5H13.625C13.8321 21.5 14.0024 21.6688 13.9769 21.8743Z"
+      fill="#8E8E8E"
+    />
+  </svg>
+)
 
 const Menu = (props) => {
-  const [argsMes, setArgsMes] = useState<any>([]);
-  const [isOpen, setIsOpen] = useState(false);
+  const [argsMes, setArgsMes] = useState<any>([])
+  const [isOpen, setIsOpen] = useState(false)
   const { isDark, setTheme } = useTheme()
   const cakePriceUsd = useCakeBusdPrice({ forceMainnet: true })
   const { currentLanguage, setLanguage, t } = useTranslation()
@@ -155,7 +165,7 @@ const Menu = (props) => {
   const { chainId } = useActiveChainId()
   const [openHeader, setOpenHeader] = useState<boolean>(false)
   const [activeNotifi, setActiveNotifi] = useState<boolean>(false)
-  const ref = useRef<HTMLDivElement>(null);
+  const ref = useRef<HTMLDivElement>(null)
   const host = 'wss://api.xoxnet.sotatek.works'
   const menuItemsLanding = useMemo(() => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
@@ -195,47 +205,48 @@ const Menu = (props) => {
       .catch((error) => {
         console.warn(error)
       })
-    if (result?.data?.data && result.data.data.length > 0) {
+    if (result?.data?.data && result?.data?.data.length > 0) {
       setActiveNotifi(true)
     }
   }
 
-  const handleReadAll = async() => {
-    if(!activeNotifi) return
-    setIsOpen(!isOpen);
-    const params = {address: account?.toLocaleLowerCase()}
-    const result: any = await axios.put(`${process.env.NEXT_PUBLIC_API}/notifications/read-all/${params.address}`)
-    .catch((error) => {
-      console.warn(error)
-    })
-    await setActiveNotifi(false);
+  const handleReadAll = async () => {
+    if (!activeNotifi) return
+    setIsOpen(!isOpen)
+    const params = { address: account?.toLocaleLowerCase() }
+    const result: any = await axios
+      .put(`${process.env.NEXT_PUBLIC_API}/notifications/read-all/${params.address}`)
+      .catch((error) => {
+        console.warn(error)
+      })
+    await setActiveNotifi(false)
   }
 
   useEffect(() => {
-    if(account){
-      getNotification();
+    if (account) {
+      getNotification()
     }
-  }, [account]);
- 
+  }, [account])
+
   useEffect(() => {
-    if(account){
+    if (account) {
       const socket = io(host, {})
       socket.on('connect', () => {
         console.log('connected socket')
-      });
+      })
       socket.on(account?.toLocaleLowerCase(), (...args) => {
-        console.log('args',args)
+        console.log('args', args)
         setActiveNotifi(true)
-      });
+      })
     }
   }, [account])
 
   useOnClickOutside(
     ref?.current,
     useCallback(() => {
-      setIsOpen(false);
-    }, [setIsOpen])
-  );
+      setIsOpen(false)
+    }, [setIsOpen]),
+  )
 
   return (
     <>
@@ -285,14 +296,23 @@ const Menu = (props) => {
               {account ? (
                 <NotificationField onClick={() => handleReadAll()} ref={ref}>
                   {/* {argsMes?.length > 0 && <RedDot />} */}
-                  {isDesktop ? (activeNotifi ? <NotificationIcon /> : <IconAlert>{IconAlertSvg}</IconAlert>) : (activeNotifi ? <NotificationIcon size={25} /> : <IconAlert>{IconAlertSvg}</IconAlert>)}
-                  {
-                    isOpen && <NotificationMenu>
+                  {isDesktop ? (
+                    activeNotifi ? (
+                      <NotificationIcon />
+                    ) : (
+                      <IconAlert>{IconAlertSvg}</IconAlert>
+                    )
+                  ) : activeNotifi ? (
+                    <NotificationIcon size={25} />
+                  ) : (
+                    <IconAlert>{IconAlertSvg}</IconAlert>
+                  )}
+                  {isOpen && (
+                    <NotificationMenu>
                       <h3>Notification</h3>
-                      <p>Your referral code has been applied in a "Buy XOX”</p> 
+                      <p>Your referral code has been applied in a "Buy XOX”</p>
                     </NotificationMenu>
-                  }
-                  
+                  )}
                 </NotificationField>
               ) : (
                 <></>

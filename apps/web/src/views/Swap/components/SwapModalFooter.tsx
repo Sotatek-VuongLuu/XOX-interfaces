@@ -140,6 +140,7 @@ export default function SwapModalFooter({
           mb="32px"
           id="confirm-swap-or-send"
           width="100%"
+          height="43px"
         >
           {severity > 2 || (trade.tradeType === TradeType.EXACT_OUTPUT && !isEnoughInputBalance)
             ? t('Swap Anyway')

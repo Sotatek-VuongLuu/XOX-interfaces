@@ -26,7 +26,7 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
       <Grid style={{ gap: '16px', padding: '16px 0' }} maxWidth="336px">
         <Text textAlign="center">{t('This page is located for %network%.', { network: currentChain.name })}</Text>
         {canSwitch ? (
-          <Button isLoading={isLoading} onClick={() => switchNetworkAsync(chainId)}>
+          <Button isLoading={isLoading} onClick={() => switchNetworkAsync(chainId)} height={43}>
             {isLoading ? <Dots>{switchText}</Dots> : switchText}
           </Button>
         ) : (
@@ -34,7 +34,9 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
             <MessageText>{t('Unable to switch network. Please try it on your wallet')}</MessageText>
           </Message>
         )}
-        <Button onClick={() => setSessionChainId(chain?.id)}>Switch to {chain?.name}</Button>
+        <Button onClick={() => setSessionChainId(chain?.id)} height={43}>
+          Switch to {chain?.name}
+        </Button>
         {isConnected && (
           <Button
             onClick={() =>
@@ -42,6 +44,7 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
                 setSessionChainId(chainId)
               })
             }
+            height={43}
           >
             {t('Disconnect Wallet')}
           </Button>

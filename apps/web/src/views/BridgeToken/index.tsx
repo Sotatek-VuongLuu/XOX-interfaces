@@ -52,7 +52,8 @@ const SwapButton = styled(PancakeButton)`
   border-radius: 8px;
   padding: 17px 20px;
   font-weight: 700;
-  font-size: 18px;
+  font-size: 16px;
+  height: 43px;
   margin-bottom: 24px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   display: flex;
