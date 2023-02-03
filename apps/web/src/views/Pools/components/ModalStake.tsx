@@ -252,6 +252,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   const listTimesPercents = ['25%', '50%', '75%', 'MAX']
   const [messageError, setMessageError] = useState('')
   const [amountUSD, setAmountUSD] = useState<any>()
+  const [activePercent, setActivePercent] = useState<any>(null)
 
   const handlePercent = (item: string) => {
     switch (item) {
@@ -336,7 +337,14 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
                     className="item_percent_btn"
                     type="button"
                     key={item}
-                    onClick={() => handlePercent(item)}
+                    onClick={() => {
+                      handlePercent(item);
+                      setActivePercent(item);
+                    }}
+                    style={{
+                      background: activePercent === item ? '#9072ff' : 'none',
+                      color: activePercent === item ? '#fff' : '#9072ff',
+                    }}
                     disabled={!Number(balanceLP)}
                   >
                     {item}
