@@ -6,7 +6,6 @@ import {
   Text,
   Flex,
   Box,
-  Link,
   Modal,
   InjectedModalProps,
   ModalProps,
@@ -19,7 +18,7 @@ import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { GridLoader } from 'react-spinners'
 import { AutoColumn, ColumnCenter } from '../Layout/Column'
-import { getBlockExploreLink, getBlockExploreName } from '../../utils'
+import { getBlockExploreLink } from '../../utils'
 import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToWalletButton'
 
 const Wrapper = styled.div`

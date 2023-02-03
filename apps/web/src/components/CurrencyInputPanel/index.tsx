@@ -338,7 +338,7 @@ export default function CurrencyInputPanel({
             <ForDolar style={isShowPercent ? { bottom: '58px' } : { bottom: '22px' }}>
               <Flex justifyContent="flex-end" mr="1rem">
                 <Flex maxWidth="200px">
-                  <Text fontSize="12px" color="textSubtle">
+                  <Text fontSize="12px" color="textSubtle" style={{ whiteSpace: 'nowrap' }}>
                     ~
                     {isMobile
                       ? formatNumber(amountInDollar).length > 10
