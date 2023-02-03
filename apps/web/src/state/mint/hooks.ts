@@ -209,25 +209,25 @@ export function useDerivedMintInfo(
 
   const { [Field.CURRENCY_A]: currencyAAmount, [Field.CURRENCY_B]: currencyBAmount } = parsedAmounts
 
-  if (
-    currencyAAmount &&
-    currencyBAmount &&
-    currencyBalances?.[Field.CURRENCY_A]?.equalTo(0) &&
-    currencyBalances?.[Field.CURRENCY_B]?.equalTo(0)
-  ) {
-    error = error ?? t('No token balance')
-  }
+  // if (
+  //   currencyAAmount &&
+  //   currencyBAmount &&
+  //   currencyBalances?.[Field.CURRENCY_A]?.equalTo(0) &&
+  //   currencyBalances?.[Field.CURRENCY_B]?.equalTo(0)
+  // ) {
+  //   error = error ?? t('No token balance')
+  // }
 
   if (!parsedAmounts[Field.CURRENCY_A] || !parsedAmounts[Field.CURRENCY_B]) {
     addError = t('Enter an amount')
   }
 
-  if (currencyAAmount && currencyBalances?.[Field.CURRENCY_A]?.lessThan(currencyAAmount)) {
-    addError = t('Insufficient %symbol% balance', { symbol: currencies[Field.CURRENCY_A]?.symbol })
-  }
-
   if (currencyBAmount && currencyBalances?.[Field.CURRENCY_B]?.lessThan(currencyBAmount)) {
     addError = t('Insufficient %symbol% balance', { symbol: currencies[Field.CURRENCY_B]?.symbol })
+  }
+
+  if (currencyAAmount && currencyBalances?.[Field.CURRENCY_A]?.lessThan(currencyAAmount)) {
+    addError = t('Insufficient %symbol% balance', { symbol: currencies[Field.CURRENCY_A]?.symbol })
   }
 
   return {
