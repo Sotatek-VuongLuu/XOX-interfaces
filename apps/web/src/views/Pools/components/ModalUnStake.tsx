@@ -1,7 +1,7 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import { InjectedModalProps, ModalContainer, ModalHeader, NumericalInput } from '@pancakeswap/uikit'
+import { Button, InjectedModalProps, ModalContainer, ModalHeader, NumericalInput } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
@@ -233,6 +233,14 @@ export const NumericalInputStyled = styled(NumericalInput)<INumericalInputStyled
   }
 `
 
+const CustomButton = styled(Button)`
+  height: 37px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: 43px;
+  }
+`
+
 interface Props extends InjectedModalProps {
   balanceLP: any
   totalSupply: any
@@ -343,10 +351,13 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
             <div className="percent">
               {listTimesPercents.map((item) => {
                 return (
-                  <button className="item_percent_btn" type="button" key={item} 
+                  <button
+                    className="item_percent_btn"
+                    type="button"
+                    key={item}
                     onClick={() => {
-                      handlePercent(item);
-                      setActivePercent(item);
+                      handlePercent(item)
+                      setActivePercent(item)
                     }}
                     style={{
                       background: activePercent === item ? '#9072ff' : 'none',
@@ -364,7 +375,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
             <button type="button" className="btn cancel" onClick={onDismiss}>
               Cancel
             </button>
-            <button
+            <CustomButton
               type="button"
               className="btn confirm"
               disabled={
@@ -373,7 +384,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
               onClick={handleButtonClick}
             >
               Confirm
-            </button>
+            </CustomButton>
           </ButtonGroup>
         </ContentContainer>
       </StyledModalContainer>

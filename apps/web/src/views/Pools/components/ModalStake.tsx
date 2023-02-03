@@ -184,6 +184,7 @@ const ButtonGroup = styled.div`
 
 const GetLP = styled.div`
   margin-top: 25px;
+
   p {
     display: flex;
     justify-content: center;
@@ -196,6 +197,10 @@ const GetLP = styled.div`
       font-size: 14px;
       line-height: 17px;
     }
+  }
+  a:hover {
+    text-decoration: underline;
+    text-decoration-color: #9072ff;
   }
 `
 const ContentContainer = styled.div`
@@ -339,8 +344,8 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
                     type="button"
                     key={item}
                     onClick={() => {
-                      handlePercent(item);
-                      setActivePercent(item);
+                      handlePercent(item)
+                      setActivePercent(item)
                     }}
                     style={{
                       background: activePercent === item ? '#9072ff' : 'none',

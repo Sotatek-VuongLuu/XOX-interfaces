@@ -4,14 +4,14 @@
 import styled from 'styled-components'
 import { Flex, Text, Button, useModal, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
 import useWindowSize from 'hooks/useWindowSize'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { getContractFarmingLPAddress, getXOXPoolAddress } from 'utils/addressHelpers'
+import { getBridgeTokenAddress, getContractFarmingLPAddress, getXOXPoolAddress } from 'utils/addressHelpers'
 import { formatEther, formatUnits, parseEther } from '@ethersproject/units'
-import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
-import { useConnect, useProvider } from 'wagmi'
+import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS, XOX_LP } from 'config/constants/exchange'
+import { useAccount, useConnect, useProvider } from 'wagmi'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
@@ -28,6 +28,9 @@ import { createWallets, getDocLink } from 'config/wallet'
 import { useTranslation } from '@pancakeswap/localization'
 import { WalletModalV2 } from '@pancakeswap/ui-wallets'
 import { ChainId } from '@pancakeswap/sdk'
+import { XOX, XOXLP } from '@pancakeswap/tokens'
+import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
+import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
@@ -474,6 +477,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const [isShowModal, setIsShowModal] = useState(false)
   const [loadOk, setLoadOk] = useState(false)
   const addressFarming = getContractFarmingLPAddress(chainId)
+  const [pendingApprove, setPendingApprove] = useState(false)
+  const [approvalState, approveCallback] = useApproveCallback(
+    XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
+    getContractFarmingLPAddress(chainId),
+  )
 
   const handleGetDataFarming = async () => {
     try {
@@ -588,8 +596,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const getDataFarming = async () => {
     try {
+      setEarned(0)
       const data = await getUserFarmingData(chainId, account)
-      setEarned(formatEther(data?.userFarmingDatas[0].amount))
+      if (data?.userFarmingDatas[0]?.amount) {
+        setEarned(formatEther(data?.userFarmingDatas[0]?.amount))
+      }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(error)
@@ -710,6 +721,17 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     setIsShowModal(false)
   }
 
+  const handleApprove = useCallback(async () => {
+    await approveCallback()
+    setPendingApprove(true)
+  }, [approveCallback])
+
+  useEffect(() => {
+    if (approvalState === ApprovalState.APPROVED) {
+      setPendingApprove(false)
+    }
+  }, [account, chainId, approvalState])
+
   useEffect(() => {
     setAmount('')
     setAmountUnStake('')
@@ -723,8 +745,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
+    // if (loadOk) window.location.reload()
+    // setLoadOk(true)
     const id = setInterval(() => {
       handleGetDataFarming()
     }, 10000)
@@ -733,6 +755,14 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     return () => clearInterval(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
+
+  useEffect(() => {
+    if (account && approvalState === ApprovalState.APPROVED) {
+      setEnable(true)
+    } else {
+      setEnable(false)
+    }
+  }, [approvalState, account])
 
   return (
     <>
@@ -929,7 +959,12 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   )}
                   {!enable ? (
                     account ? (
-                      <CustomButton type="button" className="nable mt" onClick={() => setEnable(true)}>
+                      <CustomButton
+                        type="button"
+                        className="nable mt"
+                        onClick={handleApprove}
+                        disabled={pendingApprove}
+                      >
                         Enable
                       </CustomButton>
                     ) : (
