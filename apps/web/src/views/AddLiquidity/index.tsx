@@ -949,7 +949,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                 )}
 
                 {addIsUnsupported || addIsWarning ? (
-                  <Button disabled mb="4px">
+                  <Button disabled mb="4px" height={43}>
                     {t('Unsupported Asset')}
                   </Button>
                 ) : !account ? (
@@ -965,6 +965,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                             onClick={approveACallback}
                             disabled={approvalA === ApprovalState.PENDING}
                             width="100%"
+                            height={43}
                           >
                             {approvalA === ApprovalState.PENDING ? (
                               <Dots>{t('Enabling %asset%', { asset: currencies[Field.CURRENCY_A]?.symbol })}</Dots>
@@ -978,6 +979,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                             onClick={approveBCallback}
                             disabled={approvalB === ApprovalState.PENDING}
                             width="100%"
+                            height={43}
                           >
                             {approvalB === ApprovalState.PENDING ? (
                               <Dots>{t('Enabling %asset%', { asset: currencies[Field.CURRENCY_B]?.symbol })}</Dots>
@@ -1013,6 +1015,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                         }
                       }}
                       disabled={buttonDisabled}
+                      height={43}
                     >
                       {errorText || t('Supply')}
                     </CommitButton>

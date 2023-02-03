@@ -87,7 +87,7 @@ const Reminder: React.FC<Props> = ({
         setAmountTo('')
         return
       }
-      
+
       const res = await fetchBridgeTokenFee(chainIdBri, amountBri && amountBri !== ('.' || '') ? amountBri : '0')
       const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data || bridgeTokenFee
       // const bridgeTokenFee: BridgeTokenFee = {
@@ -105,7 +105,7 @@ const Reminder: React.FC<Props> = ({
           bridgeTokenFeeCurrent.gasFee,
           bridgeTokenFeeCurrent.minCrossChainFee,
           bridgeTokenFeeCurrent.minAmount,
-          amountBri
+          amountBri,
         )
         setAmountTo(amountTo)
         onBridgeTokenFeeChange(bridgeTokenFeeCurrent.minAmount, bridgeTokenFeeCurrent.maxAmount)
@@ -150,13 +150,17 @@ const Reminder: React.FC<Props> = ({
       <Heading>Reminder:</Heading>
       <ReminderList>
         <li>
-          Gas Fee is {formatNumberStr(bridgeTokenFee?.gasFee)} {tokenInput?.symbol}
+          Gas Fee is{' '}
+          {parseFloat(formatNumberStr(bridgeTokenFee?.gasFee)) >= 0.01
+            ? formatNumberStr(bridgeTokenFee?.gasFee)
+            : '<0.01'}{' '}
+          {tokenInput?.symbol}
         </li>
         <li>
           Minimum Crosschain Amount is {formatNumberStr(bridgeTokenFee?.minAmount)} {tokenInput?.symbol}
         </li>
         {/* <li>Maximum Crosschain Amount is {formatNumberStr(bridgeTokenFee?.maxAmount)} STAND</li> */}
-        <li>Estimated Time of Crosschain Arrival is 10-30 min</li>
+        <li>Estimated Time of Crosschain Arrival is 10-30 mins</li>
         {/* <li>
           Crosschain amount larger than {bridgeTokenFee?.maxAmount}{" "}
           {tokenInput?.symbol} could take up to 24 hours
