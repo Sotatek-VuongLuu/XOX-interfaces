@@ -7,8 +7,9 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { parseUnits } from '@ethersproject/units'
+import { parseEther, parseUnits } from '@ethersproject/units'
 import { Tooltip } from '@mui/material'
+import BigNumber from 'bignumber.js'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { NumericalInputStyled } from './ModalUnStake'
 
@@ -239,7 +240,7 @@ interface Props extends InjectedModalProps {
   reverse: any
   handleCallbackAfterSuccess?: () => void
   handleConfirm?: any
-  amount?: any
+  amount?: string
   setAmount?: any
 }
 
@@ -260,25 +261,6 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   const [amountUSD, setAmountUSD] = useState<any>()
   const [activePercent, setActivePercent] = useState<any>(null)
 
-  const handlePercent = (item: string) => {
-    switch (item) {
-      case '25%':
-        setAmount((Number(balanceLP) * 0.25).toString())
-        break
-      case '50%':
-        setAmount((Number(balanceLP) * 0.5).toString())
-        break
-      case '75%':
-        setAmount((Number(balanceLP) * 0.75).toString())
-        break
-      case 'MAX':
-        setAmount(balanceLP)
-        break
-      default:
-        break
-    }
-  }
-
   const handleButtonClick = () => {
     handleConfirm()
   }
@@ -296,7 +278,11 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   useEffect(() => {
     if (Number(balanceLP)) {
       if (amount !== '' && Number(amount) !== 0 && amount !== '.') {
-        if (account && balanceLP && parseUnits(amount, 18).gt(parseUnits(balanceLP, 18))) {
+        if (
+          account &&
+          balanceLP &&
+          parseEther(Number(amount).toFixed(18)).gt(parseEther(Number(balanceLP).toFixed(18)))
+        ) {
           setMessageError(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} Balance`)
         } else {
           setMessageError('')
@@ -307,6 +293,25 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount, balanceLP])
+
+  const handlePercent = (item: string) => {
+    switch (item) {
+      case '25%':
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.25).toString())
+        break
+      case '50%':
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.5).toString())
+        break
+      case '75%':
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.75).toString())
+        break
+      case 'MAX':
+        setAmount(balanceLP)
+        break
+      default:
+        break
+    }
+  }
 
   return (
     <>
@@ -335,7 +340,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
             <div className="token_usd">
               <Tooltip title={`${amountUSD}USD`} placement="top-start">
                 <p style={{ display: 'flex' }}>
-                  <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>
+                  <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>&nbsp;
                   <span>USD</span>
                 </p>
               </Tooltip>

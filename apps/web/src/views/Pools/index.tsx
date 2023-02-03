@@ -807,7 +807,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       {account ? (
                         <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
                           <p style={{ display: 'flex' }}>
-                            <span className="value">{aprPercent || '0'}</span>
+                            <span className="value">{aprPercent || '0 '}</span>&nbsp;
                             <span className="value">%</span>
                           </p>
                         </Tooltip>
@@ -820,7 +820,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       {account ? (
                         <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
                           <p style={{ display: 'flex' }}>
-                            <span className="value">{earned || '0'}</span>
+                            <span className="value">{earned || '0'}</span>&nbsp;
                             <span className="value">XOX</span>
                           </p>
                         </Tooltip>
@@ -830,11 +830,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Liquidity</span>
-                      <span className="value _flex ">
+                      <span className="value _flex">
                         {account ? (
                           <>
                             <Tooltip title={liquidity ? `$${liquidity}` : null} placement="top">
-                              <span className="liquidity">${liquidity || '0'}</span>
+                              <span className="liquidity">${liquidity || '0 '}</span>
                             </Tooltip>
                             <Tooltip
                               title="Total value of the funds in this farm’s liquidity pair"
@@ -859,7 +859,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       {account ? (
                         <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
                           <p style={{ display: 'flex' }}>
-                            <span className="value">{aprPercent || '0'}</span>
+                            <span className="value">{aprPercent || '0 '}</span>&nbsp;
                             <span className="value">%</span>
                           </p>
                         </Tooltip>
@@ -872,7 +872,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       {account ? (
                         <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
                           <p style={{ display: 'flex' }}>
-                            <span className="value">{earned || '0'}</span>
+                            <span className="value">{earned || '0 '}</span>&nbsp;
                             <span className="value">XOX</span>
                           </p>
                         </Tooltip>
@@ -923,7 +923,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     {account ? (
                       <Tooltip title={pendingRewardOfUser ? `${pendingRewardOfUser} XOX` : null} placement="top">
                         <p style={{ display: 'flex', alignItems: 'center', marginTop: 16 }}>
-                          <span className="current_XOX_reward_value">{pendingRewardOfUser || '0'}</span>
+                          <span className="current_XOX_reward_value">{pendingRewardOfUser || '0 '}</span>&nbsp;
                           <span className="current_XOX_reward_value">XOX</span>
                         </p>
                       </Tooltip>
@@ -1016,7 +1016,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       {account ? (
                         <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
                           <p style={{ display: 'flex' }}>
-                            <span className="value">{aprPercent || '0'}</span>
+                            <span className="value">{aprPercent || '0 '}</span>&nbsp;
                             <span className="value">%</span>
                           </p>
                         </Tooltip>
@@ -1029,7 +1029,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       {account ? (
                         <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
                           <p style={{ display: 'flex' }}>
-                            <span className="value">{earned || '0'}</span>
+                            <span className="value">{earned || '0 '}</span>&nbsp;
                             <span className="value">XOX</span>
                           </p>
                         </Tooltip>
@@ -1043,7 +1043,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         {account ? (
                           <>
                             <Tooltip title={`$${liquidity}`} placement="top">
-                              <span className="value">${liquidity || '0'}</span>
+                              <span className="value">${liquidity || '0 '}</span>
                             </Tooltip>
                             <Tooltip title="Total value of the funds in this farm’s liquidity pair" placement="top">
                               <span className="u_question">

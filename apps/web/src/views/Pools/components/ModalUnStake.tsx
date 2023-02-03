@@ -5,10 +5,11 @@ import { Button, InjectedModalProps, ModalContainer, ModalHeader, NumericalInput
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { parseUnits } from '@ethersproject/units'
+import { formatEther, parseEther, parseUnits } from '@ethersproject/units'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { Tooltip } from '@mui/material'
+import BigNumber from 'bignumber.js'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -269,13 +270,13 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   const handlePercent = (item: string) => {
     switch (item) {
       case '25%':
-        setAmount((Number(balanceLP) * 0.25).toString())
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.25).toString())
         break
       case '50%':
-        setAmount((Number(balanceLP) * 0.5).toString())
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.5).toString())
         break
       case '75%':
-        setAmount((Number(balanceLP) * 0.75).toString())
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.75).toString())
         break
       case 'MAX':
         setAmount(balanceLP)
@@ -292,7 +293,11 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   useEffect(() => {
     if (Number(balanceLP)) {
       if (amount !== '' && Number(amount) !== 0 && amount !== '.') {
-        if (account && balanceLP && parseUnits(amount, 18).gt(parseUnits(balanceLP, 18))) {
+        if (
+          account &&
+          balanceLP &&
+          parseEther(Number(amount).toFixed(18)).gt(parseEther(Number(balanceLP).toFixed(18)))
+        ) {
           setMessageError(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} Balance`)
         } else {
           setMessageError('')
@@ -341,7 +346,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
             <div className="token_usd">
               <Tooltip title={`${amountUSD}USD`} placement="top-start">
                 <p style={{ display: 'flex' }}>
-                  <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>
+                  <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>&nbsp;
                   <span>USD</span>
                 </p>
               </Tooltip>
