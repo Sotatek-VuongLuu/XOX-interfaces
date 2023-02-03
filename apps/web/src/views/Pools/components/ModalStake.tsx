@@ -9,12 +9,7 @@ import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { parseUnits } from '@ethersproject/units'
 import { Tooltip } from '@mui/material'
-import ModalBase from 'views/Referral/components/Modal/ModalBase'
-import { NETWORK_LABEL } from 'views/BridgeToken/networks'
-import { GridLoader } from 'react-spinners'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
-import { linkTransactionTx } from '..'
-import { Content } from './style'
 import { NumericalInputStyled } from './ModalUnStake'
 
 const StyledModalContainer = styled(ModalContainer)`
