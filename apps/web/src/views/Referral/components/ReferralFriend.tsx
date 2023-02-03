@@ -12,7 +12,7 @@ import {
   TableRow,
   Tooltip,
 } from '@mui/material'
-import React, { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y } from 'swiper'
@@ -480,8 +480,8 @@ const ReferralFriend = ({
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
-      setIsOpenLoadingClaimModal(false)
       console.log(`error>>>>>`, error)
+      setIsOpenLoadingClaimModal(false)
       if (error && error?.code === 'ACTION_REJECTED') {
         setModalReject(true)
       }
@@ -559,6 +559,7 @@ const ReferralFriend = ({
     if (account && chainId) {
       dataFriend(account)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
 
   // useEffect(() => {
@@ -575,91 +576,91 @@ const ReferralFriend = ({
           <Grid item xs={12} lg={4}>
             {account && (
               <div className="border-gradient-style">
-              <WrapperLeft>
-                <p className="title">Referral friends</p>
-                {listFriends.length !== 0 ? (
-                  <TableContainer component={Paper} sx={{ height: 170, background: '#242424', boxShadow: 'none' }}>
-                    <Table sx={{ minWidth: 400 }} aria-label="simple table">
-                      <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
-                        <TableRow
-                          sx={{
-                            '& td, & th': {
-                              borderBottom: '1px solid #444444',
-                              fontWeight: 700,
-                              fontSize: 14,
-                              color: ' rgba(255, 255, 255, 0.6)',
-                              padding: '8px 8px 8px 0px',
-                            },
-                          }}
-                        >
-                          <TableCell align="left">Username</TableCell>
-                          <TableCell align="center">Referral Code</TableCell>
-                          <TableCell align="right">Total Points</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {listFriends.map((row) => (
+                <WrapperLeft>
+                  <p className="title">Referral friends</p>
+                  {listFriends.length !== 0 ? (
+                    <TableContainer component={Paper} sx={{ height: 170, background: '#242424', boxShadow: 'none' }}>
+                      <Table sx={{ minWidth: 400 }} aria-label="simple table">
+                        <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
                           <TableRow
-                            key={row.name}
                             sx={{
                               '& td, & th': {
-                                border: 0,
-                                fontWeight: 400,
+                                borderBottom: '1px solid #444444',
+                                fontWeight: 700,
                                 fontSize: 14,
-                                color: ' rgba(255, 255, 255, 0.87)',
+                                color: ' rgba(255, 255, 255, 0.6)',
                                 padding: '8px 8px 8px 0px',
                               },
                             }}
                           >
-                            <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                              <Avatar
-                                alt="Remy Sharp"
-                                src={row.avatar}
-                                sx={{ marginRight: '8px', height: '24px', width: '24px' }}
-                              />
-                              <Tooltip title={row?.name}>
-                                <p>
-                                  {row.name?.length > 9
-                                    ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
-                                    : row.name}
-                                </p>
-                              </Tooltip>
-                            </TableCell>
-                            <TableCell align="left">
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <div>
-                                  {row?.refCode?.length > 9
-                                    ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
-                                        row.refCode.length - 2,
-                                      )}`
-                                    : row.refCode}
-                                </div>
-                                <div>
-                                  <CopyButton
-                                    width="24px"
-                                    text={row?.refCode}
-                                    tooltipMessage={t('Copied')}
-                                    button={
-                                      <img
-                                        src="/images/copy_purple.svg"
-                                        alt="copy_purple"
-                                        style={{ marginBottom: '-2px', marginLeft: '8px' }}
-                                      />
-                                    }
-                                  />
-                                </div>
-                              </div>
-                            </TableCell>
-                            <TableCell align="right">{formatAmountNumber(row.point, 2)}</TableCell>
+                            <TableCell align="left">Username</TableCell>
+                            <TableCell align="center">Referral Code</TableCell>
+                            <TableCell align="right">Total Points</TableCell>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                ) : (
-                  <div className="no-data">No Data</div>
-                )}
-              </WrapperLeft>
+                        </TableHead>
+                        <TableBody>
+                          {listFriends.map((row) => (
+                            <TableRow
+                              key={row.name}
+                              sx={{
+                                '& td, & th': {
+                                  border: 0,
+                                  fontWeight: 400,
+                                  fontSize: 14,
+                                  color: ' rgba(255, 255, 255, 0.87)',
+                                  padding: '8px 8px 8px 0px',
+                                },
+                              }}
+                            >
+                              <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Avatar
+                                  alt="Remy Sharp"
+                                  src={row.avatar}
+                                  sx={{ marginRight: '8px', height: '24px', width: '24px' }}
+                                />
+                                <Tooltip title={row?.name}>
+                                  <p>
+                                    {row.name?.length > 9
+                                      ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                                      : row.name}
+                                  </p>
+                                </Tooltip>
+                              </TableCell>
+                              <TableCell align="left">
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                  <div>
+                                    {row?.refCode?.length > 9
+                                      ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
+                                          row.refCode.length - 2,
+                                        )}`
+                                      : row.refCode}
+                                  </div>
+                                  <div>
+                                    <CopyButton
+                                      width="24px"
+                                      text={row?.refCode}
+                                      tooltipMessage={t('Copied')}
+                                      button={
+                                        <img
+                                          src="/images/copy_purple.svg"
+                                          alt="copy_purple"
+                                          style={{ marginBottom: '-2px', marginLeft: '8px' }}
+                                        />
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                              </TableCell>
+                              <TableCell align="right">{formatAmountNumber(row.point, 2)}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  ) : (
+                    <div className="no-data">No Data</div>
+                  )}
+                </WrapperLeft>
               </div>
             )}
           </Grid>

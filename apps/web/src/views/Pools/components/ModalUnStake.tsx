@@ -5,7 +5,7 @@ import { Button, InjectedModalProps, ModalContainer, ModalHeader, NumericalInput
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { formatEther, parseEther, parseUnits } from '@ethersproject/units'
+import { parseEther } from '@ethersproject/units'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { Tooltip } from '@mui/material'
