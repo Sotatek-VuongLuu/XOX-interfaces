@@ -161,7 +161,7 @@ export function TransactionSubmittedContent({
                 tokenSymbol={currencyToAdd.symbol}
                 tokenDecimals={token.decimals}
                 tokenLogo={token instanceof WrappedTokenInfo ? token.logoURI : undefined}
-                style={{ fontSize: '15px', height: '37px', marginLeft: '16px' }}
+                style={{ fontSize: '16px', height: '37px', marginLeft: '16px' }}
               />
             )}
           </ButtonFooters>

@@ -113,9 +113,9 @@ const WapperConnectBtn = styled(PancakeButton)`
   color: white;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    height: 54px;
-    font-size: 18px;
-    line-height: 22px;
+    height: 48px;
+    font-size: 16px;
+    line-height: 19px;
   }
 `
 
