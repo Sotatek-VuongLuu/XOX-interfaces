@@ -6,6 +6,8 @@ import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { ChainId } from '@pancakeswap/sdk'
+// eslint-disable-next-line import/no-cycle
+import {formatNumberDecimal} from './index';
 
 const WrapText = styled.div`
   display: flex;
@@ -51,14 +53,14 @@ const Earned = ({address} : {address?: string}) => {
         <Flex justifyContent="space-between" alignItems="center" width="100%" style={{marginBottom: 15}}>
             <WrapText>
                 <p>BUSD earned</p>
-                <p className='number'>{priceBUSD}</p>
+                <p className='number'>{priceBUSD ? formatNumberDecimal(priceBUSD) : 0}</p>
             </WrapText>
             <img src='/images/1/tokens/BUSD.png' alt='icon' />
             </Flex>
             <Flex justifyContent="space-between" alignItems="center" width="100%">
             <WrapText>
                 <p>USDC earned</p>
-                <p className='number'>{priceUSDC}</p>
+                <p className='number'>{priceUSDC ? formatNumberDecimal(priceUSDC) : 0}</p>
             </WrapText>
             <img src='/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg' alt='icon' />
         </Flex>
