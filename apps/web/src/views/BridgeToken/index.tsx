@@ -463,14 +463,7 @@ export default function BridgeToken() {
   // handle approve STAND to contract
   const handleApprove = useCallback(async () => {
     await approveCallback()
-    try {
-      setPendingApprove(true)
-      await approveCallback()
-    } catch (error) {
-      setPendingApprove(false)
-      // eslint-disable-next-line no-console
-      console.log(`error>>>`, error)
-    }
+    setPendingApprove(true)
   }, [approveCallback])
 
   const [onHistoryTransactionsModal] = useModal(<ModalTransactionHistory />)
