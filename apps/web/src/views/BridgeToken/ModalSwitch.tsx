@@ -123,7 +123,7 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
   return (
     <StyledModalContainer>
       <StyledModalHeader>
-        <h2>Switch to</h2>
+        <h2>Select a network</h2>
         <ModalCloseButton onDismiss={onDismiss} />
       </StyledModalHeader>
       <ListNetWork
@@ -144,7 +144,7 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
               // eslint-disable-next-line react/no-array-index-key
               key={i}
             >
-              <div className="title-network">{NETWORK_LABEL[key]}</div>
+              <div className="title-network">{NETWORK_LABEL[key] === 'BSC' ? 'BNB Chain' : NETWORK_LABEL[key]}</div>
               <div className="image-network">
                 <img
                   src={NETWORK_ICON[key]}
