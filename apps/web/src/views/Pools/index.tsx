@@ -9,14 +9,14 @@ import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
 import useWindowSize from 'hooks/useWindowSize'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getContractFarmingLPAddress, getXOXPoolAddress } from 'utils/addressHelpers'
-import { formatEther, formatUnits } from '@ethersproject/units'
+import { formatEther, formatUnits, parseEther } from '@ethersproject/units'
 import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useConnect, useProvider } from 'wagmi'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import { getUserFarmingData } from 'services/pools'
-import { NETWORK_LABEL, NETWORK_LINK } from 'views/BridgeToken/networks'
+import { NETWORK_LINK } from 'views/BridgeToken/networks'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
 import { GridLoader } from 'react-spinners'
 import { Tooltip } from '@mui/material'
@@ -27,6 +27,7 @@ import { AppState } from 'state'
 import { createWallets, getDocLink } from 'config/wallet'
 import { useTranslation } from '@pancakeswap/localization'
 import { WalletModalV2 } from '@pancakeswap/ui-wallets'
+import { ChainId } from '@pancakeswap/sdk'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
@@ -425,6 +426,13 @@ export const linkTransaction = (chainId) => {
 export const linkTransactionTx = (chainId) => {
   return `${NETWORK_LINK[chainId]}/tx/`
 }
+export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
+  [ChainId.RINKEBY]: 'Rinkeby',
+  [ChainId.BSC_TESTNET]: 'BSC',
+  [ChainId.BSC]: 'BSC',
+  [ChainId.ETHEREUM]: 'Ether',
+  [ChainId.GOERLI]: 'Ether',
+}
 
 const Pools: React.FC<React.PropsWithChildren> = () => {
   const [aprPercent, setAprPercent] = useState<null | number>(null)
@@ -448,6 +456,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')
   const [earned, setEarned] = useState<any>(null)
+  const [amount, setAmount] = useState('')
+  const [amountUnStake, setAmountUnStake] = useState('')
+  const [notiMess, setNotiMess] = useState('')
 
   const handleGetDataFarming = async () => {
     try {
@@ -514,6 +525,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleWithdraw = async () => {
     try {
+      setNotiMess(`Withdraw ${pendingRewardOfUser} XOX`)
       setIsOpenLoadingClaimModal(true)
       const gasFee = await contractFarmingLP.estimateGas.withdraw(0)
       const txWithdraw = await contractFarmingLP.withdraw(0, {
@@ -522,6 +534,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       const tx = await txWithdraw.wait(1)
       if (tx?.transactionHash) {
         // eslint-disable-next-line no-console
+        setNotiMess('')
         setIsOpenLoadingClaimModal(false)
         setIsOpenSuccessModal(true)
         setTxHash(tx?.transactionHash)
@@ -531,6 +544,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       // eslint-disable-next-line no-console
       console.log(`error>>>`, error)
       setIsOpenLoadingClaimModal(false)
+      setNotiMess('')
       if (error?.message.includes('rejected')) {
         setModalReject(true)
       }
@@ -568,26 +582,98 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     }
   }
 
+  const handleConfirmWithdraw = async () => {
+    try {
+      setIsOpenLoadingClaimModal(true)
+      setNotiMess(`Unstake ${amountUnStake} ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`)
+      const gasFee = await contractFarmingLP.estimateGas.withdraw(parseEther(amountUnStake))
+      const txWithdraw = await contractFarmingLP.withdraw(parseEther(amountUnStake), {
+        gasLimit: gasFee,
+      })
+      const tx = await txWithdraw.wait(1)
+      if (tx?.transactionHash) {
+        // eslint-disable-next-line no-console
+        setNotiMess('')
+        setAmountUnStake('')
+        setIsOpenLoadingClaimModal(false)
+        setTxHash(tx?.transactionHash)
+        onDismissUnStake()
+        setIsOpenSuccessModal(true)
+        handleCallbackAfterSuccess()
+      }
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>`, error)
+      setNotiMess('')
+      setIsOpenLoadingClaimModal(false)
+      if (error?.message.includes('rejected')) {
+        setModalReject(true)
+      }
+    }
+  }
+
+  const handleConfirmDeposit = async () => {
+    try {
+      setNotiMess(`Stake ${amount} ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`)
+      setIsOpenLoadingClaimModal(true)
+      const gasFee = await contractFarmingLP.estimateGas.deposit(parseEther(amount))
+      const txDeposit = await contractFarmingLP.deposit(parseEther(amount), {
+        gasLimit: gasFee,
+      })
+      const tx = await txDeposit.wait(1)
+      if (tx?.transactionHash) {
+        // eslint-disable-next-line no-console
+        setNotiMess('')
+        setIsOpenLoadingClaimModal(false)
+        setTxHash(tx?.transactionHash)
+        setAmount('')
+        onDismissStake()
+        setIsOpenSuccessModal(true)
+        handleCallbackAfterSuccess()
+      }
+    } catch (error: any) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>`, error)
+      setNotiMess('')
+      setIsOpenLoadingClaimModal(false)
+      if (error?.message.includes('rejected')) {
+        setModalReject(true)
+      }
+    }
+  }
+
   const handleCallbackAfterSuccess = async () => {
     await getDataFarming()
     await handleGetDataFarming()
   }
 
-  const [onModalStake] = useModal(
+  const [onModalStake, onDismissStake] = useModal(
     <ModalStake
       balanceLP={balanceLP}
       totalSupply={totalSupplyLP}
       reverse={reserve}
       handleCallbackAfterSuccess={handleCallbackAfterSuccess}
+      handleConfirm={handleConfirmDeposit}
+      amount={amount}
+      setAmount={setAmount}
     />,
+    true,
+    true,
+    'ModalStake',
   )
-  const [onModalUnStake] = useModal(
+  const [onModalUnStake, onDismissUnStake] = useModal(
     <ModalUnStake
       balanceLP={userStaked}
       totalSupply={totalSupplyLP}
       reverse={reserve}
       handleCallbackAfterSuccess={handleCallbackAfterSuccess}
+      handleConfirm={handleConfirmWithdraw}
+      amount={amountUnStake}
+      setAmount={setAmountUnStake}
     />,
+    true,
+    true,
+    'ModalUnStake',
   )
 
   useEffect(() => {
@@ -598,8 +684,13 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    handleGetDataFarming()
-    getDataFarming()
+    const id = setInterval(() => {
+      handleGetDataFarming()
+      getDataFarming()
+    }, 10000)
+
+    // eslint-disable-next-line consistent-return
+    return () => clearInterval(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
 
@@ -744,7 +835,12 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       </p>
                     </Tooltip>
                   </div>
-                  <CustomButton type="button" className="withdraw" onClick={handleWithdraw} disabled={!pendingRewardOfUser}>
+                  <CustomButton
+                    type="button"
+                    className="withdraw"
+                    onClick={handleWithdraw}
+                    disabled={!pendingRewardOfUser}
+                  >
                     Withdraw
                   </CustomButton>
                 </div>
@@ -895,7 +991,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
             <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
           </div>
           <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
-          <div className="noti_claim_pending_h3">Withdraw {pendingRewardOfUser} XOX</div>
+          <div className="noti_claim_pending_h3"> {notiMess}</div>
           <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
           <img
             src="/images/close-one.svg"
@@ -916,7 +1012,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
             <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
           </a>
           <div className="btn_dismiss_container">
-            <button className="btn_dismiss" type="button" onClick={() => setIsOpenSuccessModal(false)}>
+            <button className="btn_dismiss bg" type="button" onClick={() => setIsOpenSuccessModal(false)}>
               Close
             </button>
           </div>

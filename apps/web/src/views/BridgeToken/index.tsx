@@ -358,6 +358,7 @@ export default function BridgeToken() {
   const [balancePool, setBalancePool] = useState('')
   const [chainIdSupport, setChainIdSupport] = useState(chainId)
   const [addressTo, setAddressTo] = useState(account)
+  const [pendingApprove, setPendingApprove] = useState(false)
   const [messageButton, setMessageButton] = useState('Enter an amount')
   const [messageTx, setMessageTx] = useState('')
   const [loading, setLoading] = useState(false)
@@ -412,6 +413,11 @@ export default function BridgeToken() {
       setMessageButton('Insuficient Pool Balance')
     } else if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
       setMessageButton(`Approve ${addressTokenInput.symbol}`)
+      if (pendingApprove) {
+        setMessageButton('Bridge')
+      } else {
+        setMessageButton(`Approve ${addressTokenInput.symbol}`)
+      }
     } else if (approvalState === ApprovalState.PENDING) {
       setMessageButton('Approving...')
     } else if (amountTo === '0') {
@@ -457,6 +463,7 @@ export default function BridgeToken() {
   // handle approve STAND to contract
   const handleApprove = useCallback(async () => {
     await approveCallback()
+    setPendingApprove(true)
   }, [approveCallback])
 
   const [onHistoryTransactionsModal] = useModal(<ModalTransactionHistory />)
@@ -539,6 +546,12 @@ export default function BridgeToken() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
+
+  useEffect(() => {
+    if (approvalState === ApprovalState.APPROVED) {
+      setPendingApprove(false)
+    }
+  }, [account, chainId, approvalState])
 
   return (
     <Page>
@@ -669,7 +682,8 @@ export default function BridgeToken() {
                     (messageButton !== 'Bridge' && messageButton !== `Approve ${addressTokenInput.symbol}`) ||
                     messageAddress !== '' ||
                     amountTo === '' ||
-                    loading
+                    loading ||
+                    pendingApprove
                   }
                   onClick={handleSwapButtonClick}
                 >
