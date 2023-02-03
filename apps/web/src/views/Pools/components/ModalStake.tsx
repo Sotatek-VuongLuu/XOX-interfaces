@@ -9,6 +9,7 @@ import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { parseUnits } from '@ethersproject/units'
 import { Tooltip } from '@mui/material'
+import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { NumericalInputStyled } from './ModalUnStake'
 
 const StyledModalContainer = styled(ModalContainer)`
@@ -47,7 +48,7 @@ const ContentStake = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 100px;
+    max-width: 300px;
   }
   .flex {
     display: flex;
@@ -331,7 +332,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
             <div className="token_usd">
               <Tooltip title={`${amountUSD}USD`} placement="top-start">
                 <p style={{ display: 'flex' }}>
-                  <span className="balanceLP">~{amountUSD}</span>
+                  <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>
                   <span>USD</span>
                 </p>
               </Tooltip>

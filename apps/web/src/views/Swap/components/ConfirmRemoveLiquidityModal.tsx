@@ -69,7 +69,7 @@ const ConfirmRemoveLiquidityModal: React.FC<
     return (
       <AutoColumn gap="md">
         {parsedAmounts[Field.CURRENCY_A] && (
-          <RowBetween align="flex-end" style={{marginBottom: 0}}>
+          <RowBetween align="flex-end" style={{ marginBottom: 0 }}>
             <Text fontSize="24px">{formatAmountString(parsedAmounts[Field.CURRENCY_A], 6)}</Text>
             <RowFixed gap="4px">
               <CurrencyLogo currency={currencyA} size="24px" />
@@ -85,7 +85,7 @@ const ConfirmRemoveLiquidityModal: React.FC<
           </RowFixed>
         )}
         {parsedAmounts[Field.CURRENCY_B] && (
-          <RowBetween align="flex-end" style={{marginBottom: 0}}>
+          <RowBetween align="flex-end" style={{ marginBottom: 0 }}>
             <Text fontSize="24px">{formatAmountString(parsedAmounts[Field.CURRENCY_B], 6)}</Text>
             <RowFixed gap="4px">
               <CurrencyLogo currency={currencyB} size="24px" />
@@ -136,6 +136,7 @@ const ConfirmRemoveLiquidityModal: React.FC<
           width="100%"
           mt="20px"
           mb="32px"
+          height={43}
           disabled={!(approval === ApprovalState.APPROVED || signatureData !== null)}
           onClick={onRemove}
         >
@@ -152,7 +153,7 @@ const ConfirmRemoveLiquidityModal: React.FC<
           {isZap && (
             <ZapErrorMessages isSingleToken zapMode={isZap} toggleZapMode={toggleZapMode} onModalDismiss={onDismiss} />
           )}
-          <TransactionErrorContent onDismiss={onDismiss} message={"Transaction rejected."} />
+          <TransactionErrorContent onDismiss={onDismiss} message={'Transaction rejected.'} />
         </>
       ) : (
         <ConfirmationModalContent topContent={modalHeader} bottomContent={modalBottom} />

@@ -237,7 +237,7 @@ const WrapperRight = styled(Box)<IPropsWR>`
       font-size: 14px;
       line-height: 17px;
       color: #ffffff;
-      padding: 10px 20px;
+      padding: 8px 20px;
     }
 
     button:disabled,
@@ -262,7 +262,7 @@ const WrapperRight = styled(Box)<IPropsWR>`
           font-weight: 700;
           font-size: 14px;
           line-height: 17px;
-          padding: 10px 20px;
+          padding: 8px 20px;
           background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;

@@ -122,7 +122,7 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
 
   return (
     <StyledModalContainer>
-      <StyledModalHeader>
+      <StyledModalHeader style={{ justifyContent: 'center' }}>
         <h2>Select a network</h2>
         <ModalCloseButton onDismiss={onDismiss} />
       </StyledModalHeader>

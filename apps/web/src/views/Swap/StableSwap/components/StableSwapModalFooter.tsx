@@ -92,6 +92,7 @@ export default function StableSwapModalFooter({
           mt="12px"
           id="confirm-swap-or-send"
           width="100%"
+          height={43}
         >
           {trade.tradeType === TradeType.EXACT_OUTPUT && !isEnoughInputBalance ? t('Swap Anyway') : t('Confirm Swap')}
         </Button>
