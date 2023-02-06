@@ -30,26 +30,22 @@ const NetworkSelect = ({ switchNetwork, chainId, removeTxtHeader }) => {
 
   return (
     <>
-      {
-        !removeTxtHeader && <><Box px="16px" py="8px">
+      {!removeTxtHeader && (
+        <>
+          <Box px="16px" py="8px">
             <Text color="textSubtle">{t('Select a Network')}</Text>
           </Box>
           <UserMenuDivider />
         </>
-      }
-      {chains
-        .map((chain) => (
-          <UserMenuItem
-            key={chain.id}
-            style={{ justifyContent: 'flex-start' }}
-            onClick={() => switchNetwork(chain.id)}
-          >
-            <ChainLogo chainId={chain.id} />
-            <Text color={chain.id === chainId ? '#9072FF' : 'text'} bold={chain.id === chainId} pl="12px">
-              {chain.name}
-            </Text>
-          </UserMenuItem>
-        ))}
+      )}
+      {chains.map((chain) => (
+        <UserMenuItem key={chain.id} style={{ justifyContent: 'flex-start' }} onClick={() => switchNetwork(chain.id)}>
+          <ChainLogo chainId={chain.id} />
+          <Text color={chain.id === chainId ? '#9072FF' : 'text'} bold={chain.id === chainId} pl="12px">
+            {chain.name}
+          </Text>
+        </UserMenuItem>
+      ))}
     </>
   )
 }
@@ -150,7 +146,12 @@ export const NetworkSwitcher = (props: any) => {
             t('Network')
           ) : foundChain ? (
             <>
-              <Box className={props?.removeTxtHeader ? 'menu-mobile-withdraw' : ''} display={['none', null, null, null, null, 'block']}>{foundChain.name}</Box>
+              <Box
+                className={props?.removeTxtHeader ? 'menu-mobile-withdraw' : ''}
+                display={['none', null, null, null, null, 'block']}
+              >
+                {foundChain.name}
+              </Box>
               <Box display={['block', null, null, null, null, 'none']}>{symbol}</Box>
             </>
           ) : (
@@ -162,7 +163,11 @@ export const NetworkSwitcher = (props: any) => {
           isNotMatched ? (
             <WrongNetworkSelect switchNetwork={switchNetworkAsync} chainId={chainId} />
           ) : (
-            <NetworkSelect switchNetwork={switchNetworkAsync} chainId={chainId} removeTxtHeader={props?.removeTxtHeader} />
+            <NetworkSelect
+              switchNetwork={switchNetworkAsync}
+              chainId={chainId}
+              removeTxtHeader={props?.removeTxtHeader}
+            />
           )
         }
       </UserMenu>

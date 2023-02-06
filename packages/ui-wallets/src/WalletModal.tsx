@@ -230,13 +230,22 @@ function WalletSelect<T>({
             flexDirection="column"
             onClick={() => onClick(wallet)}
           >
-            <AtomBox className={wallet.installed && promotedGradientClass} style={{ borderRadius: '50%' }}>
+            <AtomBox
+              style={{
+                borderRadius: '50%',
+                width: '62px',
+                height: '62px',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+              }}
+            >
               {isImage ? (
                 <Image src={Icon as string} width={60} height={60} />
               ) : (
                 <Icon width={24} height={24} color="textSubtle" />
               )}
-              {wallet.id === selected?.id && (
+              {(wallet.id === selected?.id || (wallet.installed && !selected?.id)) && (
                 <AtomBox
                   position="absolute"
                   inset="0"
