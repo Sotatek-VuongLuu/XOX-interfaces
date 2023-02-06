@@ -5,7 +5,7 @@ import flatMap from 'lodash/flatMap'
 import { getFarmConfig } from '@pancakeswap/farms/constants'
 import { useCallback, useMemo } from 'react'
 import { useSelector } from 'react-redux'
-import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS } from 'config/constants/exchange'
+import { BASES_TO_TRACK_LIQUIDITY_FOR, PINNED_PAIRS, XOX_ADDRESS, USD_ADDRESS, XOX_LP } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useSWRImmutable from 'swr/immutable'
 import { useFeeData } from 'wagmi'
@@ -479,6 +479,17 @@ export function usePairAdder(): (pair: Pair) => void {
  * @param tokenB the other token
  */
 export function toV2LiquidityToken([tokenA, tokenB]: [ERC20Token, ERC20Token]): ERC20Token {
+  const chainId = tokenA.chainId
+  if (
+    String(tokenA.address).toLowerCase() === XOX_ADDRESS[chainId].toLowerCase() &&
+    String(tokenB.address).toLowerCase() === USD_ADDRESS[chainId].toLowerCase()
+  )
+    return new ERC20Token(chainId, XOX_LP[chainId], 18, 'XOX-LP', 'XOX LPs')
+  if (
+    String(tokenB.address).toLowerCase() === XOX_ADDRESS[chainId].toLowerCase() &&
+    String(tokenA.address).toLowerCase() === USD_ADDRESS[chainId].toLowerCase()
+  )
+    return new ERC20Token(chainId, XOX_LP[chainId], 18, 'XOX-LP', 'XOX LPs')
   return new ERC20Token(tokenA.chainId, Pair.getAddress(tokenA, tokenB), 18, 'Cake-LP', 'Pancake LPs')
 }
 
