@@ -24,7 +24,7 @@ import { useCurrency } from 'hooks/Tokens'
 import Page from '../Page'
 import FullPositionCard, { StableFullPositionCard } from '../../components/PositionCard'
 import { useCurrencyBalances, useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { usePairs, PairState } from '../../hooks/usePairs'
+import { usePairs, PairState, usePairXOX } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
 import { CurrencyLogo } from 'components/Logo'
 import { Token } from '@pancakeswap/sdk'
@@ -238,6 +238,7 @@ export default function Pool() {
     account ?? undefined,
     liquidityTokens,
   )
+  console.log("v2PairsBalances: ", v2PairsBalances);
 
   const stablePairs = useLPTokensWithBalanceByAccount(account)
 
@@ -252,8 +253,12 @@ export default function Pool() {
       ),
     [tokenPairsWithLiquidityTokens, v2PairsBalances],
   )
+  console.log("liquidityTokensWithBalances: ", liquidityTokensWithBalances);
+  liquidityTokensWithBalances.map(({ tokens }) => tokens)
 
-  const v2Pairs = usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))
+  const v2Pairs = [...usePairXOX(),...usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))]
+  console.log("v2Pairs: ", v2Pairs);
+
   const v2IsLoading =
     fetchingV2PairBalances ||
     v2Pairs?.length < liquidityTokensWithBalances.length ||
@@ -274,7 +279,7 @@ export default function Pool() {
                 fontWeight={400}
                 lineHeight={['17px', , '22px']}
               >
-                Your liquidity
+                Your Liquidity
               </Text>
             </div>
             <ConnectSub
@@ -326,7 +331,7 @@ export default function Pool() {
                 fontWeight={400}
                 lineHeight={['17px', , '22px']}
               >
-                Your liquidity
+                Your Liquidity
               </Text>
             </div>
           </Title>

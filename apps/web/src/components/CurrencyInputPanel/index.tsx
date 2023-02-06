@@ -211,8 +211,6 @@ export default function CurrencyInputPanel({
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpoints()
-  const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
-  const tokenAddress = token ? isAddress(token.address) : null
   const [activePercent, setActivePercent] = useState<any>(null)
   const [autoChange, setAutoChange] = useState(false)
 

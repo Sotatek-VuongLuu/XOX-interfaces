@@ -11,7 +11,7 @@ import {
   BETTER_TRADE_LESS_HOPS_THRESHOLD,
   ADDITIONAL_BASES,
 } from 'config/constants/exchange'
-import { PairState, usePairs } from './usePairs'
+import { PairState, usePairs, usePairXOX } from './usePairs'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 
 import { useUnsupportedTokens, useWarningTokens } from './Tokens'
@@ -28,8 +28,11 @@ export function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): P
     if (!chainId) return []
 
     const common = BASES_TO_CHECK_TRADES_AGAINST[chainId] ?? []
+    // console.log("useAllCommonPairs common: ", common);
     const additionalA = tokenA ? ADDITIONAL_BASES[chainId]?.[tokenA.address] ?? [] : []
+    // console.log("useAllCommonPairs additionalA: ", additionalA);
     const additionalB = tokenB ? ADDITIONAL_BASES[chainId]?.[tokenB.address] ?? [] : []
+    // console.log("useAllCommonPairs additionalB: ", additionalB);
 
     return [...common, ...additionalA, ...additionalB]
   }, [chainId, tokenA, tokenB])
@@ -38,7 +41,7 @@ export function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): P
     () => flatMap(bases, (base): [Token, Token][] => bases.map((otherBase) => [base, otherBase])),
     [bases],
   )
-
+  // console.log("useAllCommonPairs basePairs: ", basePairs);
   const allPairCombinations: [Token, Token][] = useMemo(
     () =>
       tokenA && tokenB
@@ -91,6 +94,26 @@ export function useAllCommonPairs(currencyA?: Currency, currencyB?: Currency): P
   )
 }
 
+export function useAllPairXOX(): Pair[] {
+  const allPairs = usePairXOX()
+  // only pass along valid pairs, non-duplicated pairs
+  return useMemo(
+    () =>
+      Object.values(
+        allPairs
+          // filter out invalid pairs
+          .filter((result): result is [PairState.EXISTS, Pair] => Boolean(result[0] === PairState.EXISTS && result[1]))
+          // filter out duplicated pairs
+          .reduce<{ [pairAddress: string]: Pair }>((memo, [, curr]) => {
+            memo[curr.liquidityToken.address] = memo[curr.liquidityToken.address] ?? curr
+            return memo
+          }, {}),
+      ),
+    [allPairs],
+  )
+}
+
+
 const MAX_HOPS = 3
 
 /**
@@ -136,7 +159,8 @@ export function useTradeXOXExactIn(
   isRouterNormal?: boolean,
 ): Trade<Currency, Currency, TradeType> | null {
   const allowedPairs = useAllCommonPairs(currencyAmountIn?.currency, currencyOut)
-
+  const xoxPair = useAllPairXOX()
+  
   const [singleHopOnly] = useUserSingleHopOnly()
 
   return useMemo(() => {
@@ -148,7 +172,7 @@ export function useTradeXOXExactIn(
             null
           )
         return (
-          TradeXOX.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, { maxHops: 1, maxNumResults: 1 })[0] ??
+          TradeXOX.bestTradeExactIn(xoxPair, currencyAmountIn, currencyOut, { maxHops: 1, maxNumResults: 1 })[0] ??
           null
         )
       }
@@ -167,7 +191,7 @@ export function useTradeXOXExactIn(
           }
         } else {
           const currentTrade: Trade<Currency, Currency, TradeType> | null =
-            TradeXOX.bestTradeExactIn(allowedPairs, currencyAmountIn, currencyOut, {
+            TradeXOX.bestTradeExactIn(xoxPair, currencyAmountIn, currencyOut, {
               maxHops: i,
               maxNumResults: 1,
             })[0] ?? null
@@ -229,7 +253,7 @@ export function useTradeXOXExactOut(
   isRouterNormal?: boolean,
 ): Trade<Currency, Currency, TradeType> | null {
   const allowedPairs = useAllCommonPairs(currencyIn, currencyAmountOut?.currency)
-
+  const xoxPair = useAllPairXOX()
   const [singleHopOnly] = useUserSingleHopOnly()
 
   return useMemo(() => {
@@ -243,7 +267,7 @@ export function useTradeXOXExactOut(
             })[0] ?? null
           )
         return (
-          TradeXOX.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, {
+          TradeXOX.bestTradeExactOut(xoxPair, currencyIn, currencyAmountOut, {
             maxHops: 1,
             maxNumResults: 1,
           })[0] ?? null
@@ -263,7 +287,7 @@ export function useTradeXOXExactOut(
           }
         } else {
           const currentTrade =
-            TradeXOX.bestTradeExactOut(allowedPairs, currencyIn, currencyAmountOut, {
+            TradeXOX.bestTradeExactOut(xoxPair, currencyIn, currencyAmountOut, {
               maxHops: i,
               maxNumResults: 1,
             })[0] ?? null

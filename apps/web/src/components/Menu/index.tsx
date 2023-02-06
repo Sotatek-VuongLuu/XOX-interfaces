@@ -235,7 +235,6 @@ const Menu = (props) => {
         console.log('connected socket')
       })
       socket.on(account?.toLocaleLowerCase(), (...args) => {
-        console.log('args', args)
         setActiveNotifi(true)
       })
     }
