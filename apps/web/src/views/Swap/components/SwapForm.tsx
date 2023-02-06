@@ -300,7 +300,7 @@ export default function SwapForm() {
             otherCurrency={currencies[Field.OUTPUT]}
             id="swap-currency-input"
             showCommonBases
-            showBUSD={!!tokenMap[chainId]?.[inputCurrencyId] || inputCurrencyId === NATIVE[chainId]?.symbol}
+            showBUSD
             commonBasesType={CommonBasesType.SWAP_LIMITORDER}
           />
 
@@ -331,7 +331,7 @@ export default function SwapForm() {
             otherCurrency={currencies[Field.INPUT]}
             id="swap-currency-output"
             showCommonBases
-            showBUSD={!!tokenMap[chainId]?.[outputCurrencyId] || outputCurrencyId === NATIVE[chainId]?.symbol}
+            showBUSD
             commonBasesType={CommonBasesType.SWAP_LIMITORDER}
           />
 
