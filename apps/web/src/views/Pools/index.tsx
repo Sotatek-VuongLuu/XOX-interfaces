@@ -1,10 +1,11 @@
+/* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-cycle */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import styled from 'styled-components'
 import { Flex, Text, Button, useModal, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { useCallback, useEffect, useMemo, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
 import useWindowSize from 'hooks/useWindowSize'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -31,10 +32,12 @@ import { ChainId } from '@pancakeswap/sdk'
 import { XOXLP } from '@pancakeswap/tokens'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
+import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
 import { Content } from './components/style'
+import ShowBalance from './components/ShowBalance'
 
 const NavWrapper = styled(Flex)`
   padding: 28px 24px 24px;
@@ -175,16 +178,16 @@ const Main = styled.div`
           font-size: 14px;
           line-height: 17px;
           color: rgba(255, 255, 255, 0.87);
-          text-overflow: ellipsis;
+          /* text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          max-width: 100px;
+          max-width: 100px; */
         }
         .liquidity {
-          text-overflow: ellipsis;
+          /* text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          max-width: 100px;
+          max-width: 100px; */
         }
         .flex_direction {
           flex-direction: column;
@@ -246,10 +249,10 @@ const Main = styled.div`
           line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
           /* margin-top: 16px; */
-          text-overflow: ellipsis;
+          /* text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          max-width: 130px;
+          max-width: 130px; */
           @media screen and (max-width: 576px) {
             font-size: 18px;
             line-height: 22px;
@@ -261,10 +264,10 @@ const Main = styled.div`
           line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
           /* margin-top: 16px; */
-          text-overflow: ellipsis;
+          /* text-overflow: ellipsis;
           white-space: nowrap;
           overflow: hidden;
-          max-width: 100px;
+          max-width: 100px; */
           @media screen and (max-width: 576px) {
             font-size: 18px;
             line-height: 22px;
@@ -350,10 +353,10 @@ const Main = styled.div`
         font-size: 14px;
         line-height: 17px;
         color: rgba(255, 255, 255, 0.87);
-        text-overflow: ellipsis;
+        /* text-overflow: ellipsis;
         white-space: nowrap;
         overflow: hidden;
-        max-width: 100px;
+        max-width: 100px; */
       }
       .u_question {
         margin-left: 9px;
@@ -478,10 +481,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const [amount, setAmount] = useState('')
   const [amountUnStake, setAmountUnStake] = useState('')
   const [notiMess, setNotiMess] = useState('')
-  const [isShowModal, setIsShowModal] = useState(false)
   const [loadOk, setLoadOk] = useState(false)
   const addressFarming = getContractFarmingLPAddress(chainId)
   const [pendingApprove, setPendingApprove] = useState(false)
+  const { nodeId } = useContext(Context)
   const [approvalState, approveCallback] = useApproveCallback(
     XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
     getContractFarmingLPAddress(chainId),
@@ -627,7 +630,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setAmountUnStake('')
         setIsOpenLoadingClaimModal(false)
         setTxHash(tx?.transactionHash)
-        handleDismissModalUnStake()
+        onDismissStake()
         setIsOpenSuccessModal(true)
         handleCallbackAfterSuccess()
       }
@@ -657,7 +660,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setIsOpenLoadingClaimModal(false)
         setTxHash(tx?.transactionHash)
         setAmount('')
-        handleDismissModalStake()
+        onDismissUnStake()
         setIsOpenSuccessModal(true)
         handleCallbackAfterSuccess()
       }
@@ -705,26 +708,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     true,
     'ModalUnStake',
   )
-  /// on
-  const handleOnModalStake = () => {
-    onModalStake()
-    setIsShowModal(true)
-  }
-  const handleOnModalUnStake = () => {
-    onModalUnStake()
-    setIsShowModal(true)
-  }
-  /// off
-
-  const handleDismissModalStake = () => {
-    onDismissStake()
-    setIsShowModal(false)
-  }
-
-  const handleDismissModalUnStake = () => {
-    onDismissUnStake()
-    setIsShowModal(false)
-  }
 
   const handleApprove = useCallback(async () => {
     await approveCallback()
@@ -734,7 +717,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   useEffect(() => {
     setAmount('')
     setAmountUnStake('')
-  }, [isShowModal])
+  }, [nodeId])
 
   useEffect(() => {
     if (account && !userProfile) {
@@ -744,8 +727,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
+    // if (loadOk) window.location.reload()
+    // setLoadOk(true)
     const id = setInterval(() => {
       handleGetDataFarming()
     }, 10000)
@@ -804,38 +787,18 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <>
                     <div className="flex flex_direction">
                       <span className="name">APR:</span>
-                      {account ? (
-                        <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
-                          <p style={{ display: 'flex' }}>
-                            <span className="value">{aprPercent || '0 '}</span>&nbsp;
-                            <span className="value">%</span>
-                          </p>
-                        </Tooltip>
-                      ) : (
-                        <span className="value">-</span>
-                      )}
+                      {account ? <ShowBalance balance={aprPercent} unit="%" /> : <span className="value">-</span>}
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
-                      {account ? (
-                        <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
-                          <p style={{ display: 'flex' }}>
-                            <span className="value">{earned || '0'}</span>&nbsp;
-                            <span className="value">XOX</span>
-                          </p>
-                        </Tooltip>
-                      ) : (
-                        <span className="value">-</span>
-                      )}
+                      {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Liquidity</span>
                       <span className="value _flex">
                         {account ? (
                           <>
-                            <Tooltip title={liquidity ? `$${liquidity}` : null} placement="top">
-                              <span className="liquidity">${liquidity || '0 '}</span>
-                            </Tooltip>
+                            <ShowBalance balance={liquidity} name="liquidity" />
                             <Tooltip
                               title="Total value of the funds in this farm’s liquidity pair"
                               placement="top"
@@ -856,29 +819,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div className="flex">
                     <div className="flex flex_direction mb_mr">
                       <span className="name">APR:</span>
-                      {account ? (
-                        <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
-                          <p style={{ display: 'flex' }}>
-                            <span className="value">{aprPercent || '0 '}</span>&nbsp;
-                            <span className="value">%</span>
-                          </p>
-                        </Tooltip>
-                      ) : (
-                        <span className="value">-</span>
-                      )}
+                      {account ? <ShowBalance balance={aprPercent} unit="%" /> : <span className="value">-</span>}
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
-                      {account ? (
-                        <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
-                          <p style={{ display: 'flex' }}>
-                            <span className="value">{earned || '0 '}</span>&nbsp;
-                            <span className="value">XOX</span>
-                          </p>
-                        </Tooltip>
-                      ) : (
-                        <span className="value">-</span>
-                      )}
+                      {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
                     </div>
                   </div>
                 )}
@@ -921,12 +866,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div>
                     <p className="current_XOX_reward">Current XOX reward</p>
                     {account ? (
-                      <Tooltip title={pendingRewardOfUser ? `${pendingRewardOfUser} XOX` : null} placement="top">
-                        <p style={{ display: 'flex', alignItems: 'center', marginTop: 16 }}>
-                          <span className="current_XOX_reward_value">{pendingRewardOfUser || '0 '}</span>&nbsp;
-                          <span className="current_XOX_reward_value">XOX</span>
-                        </p>
-                      </Tooltip>
+                      <div style={{ width: '100%', marginTop: 16 }}>
+                        <ShowBalance balance={pendingRewardOfUser} unit="XOX" />
+                      </div>
                     ) : (
                       <span className="current_XOX_reward_value">-</span>
                     )}
@@ -951,11 +893,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       : 'Enable Farm'}
                   </p>
                   {enable && userStaked && (
-                    <Tooltip title={userStaked} placement="top-start">
-                      <p style={{ display: 'flex', alignItems: 'center', marginTop: 16 }}>
-                        <span className="user_stake">{enable ? userStaked || null : null}</span>
-                      </p>
-                    </Tooltip>
+                    <div style={{ width: '100%', marginTop: 16 }}>
+                      <ShowBalance balance={userStaked} />
+                    </div>
                   )}
                   {!enable ? (
                     account ? (
@@ -978,7 +918,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         // eslint-disable-next-line jsx-a11y/interactive-supports-focus, jsx-a11y/click-events-have-key-events
                         <ButtonUnStake
                           className="container_unstake_border"
-                          onClick={handleOnModalUnStake}
+                          onClick={onModalUnStake}
                           role="button"
                           disabled={!reserve || !totalSupplyLP}
                         >
@@ -990,7 +930,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       <CustomButton
                         type="button"
                         className="nable"
-                        onClick={handleOnModalStake}
+                        onClick={onModalStake}
                         disabled={!reserve || !totalSupplyLP}
                       >
                         Stake
@@ -1000,7 +940,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     <CustomButton
                       type="button"
                       className="nable mt"
-                      onClick={handleOnModalStake}
+                      onClick={onModalStake}
                       disabled={!reserve || !totalSupplyLP}
                     >
                       Stake
@@ -1013,38 +953,18 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div>
                     <p className="flex space_between apr_mb">
                       <span className="name">APR:</span>
-                      {account ? (
-                        <Tooltip title={aprPercent ? `${aprPercent} %` : null} placement="top">
-                          <p style={{ display: 'flex' }}>
-                            <span className="value">{aprPercent || '0 '}</span>&nbsp;
-                            <span className="value">%</span>
-                          </p>
-                        </Tooltip>
-                      ) : (
-                        <span className="value">-</span>
-                      )}
+                      {account ? <ShowBalance balance={aprPercent} unit="%" /> : <span className="value">-</span>}
                     </p>
                     <p className="flex space_between earned_mb">
                       <span className="name">Earned:</span>
-                      {account ? (
-                        <Tooltip title={earned ? `${earned} XOX` : null} placement="top">
-                          <p style={{ display: 'flex' }}>
-                            <span className="value">{earned || '0 '}</span>&nbsp;
-                            <span className="value">XOX</span>
-                          </p>
-                        </Tooltip>
-                      ) : (
-                        <span className="value">-</span>
-                      )}
+                      {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
                     </p>
                     <p className="flex space_between liquidity_mb">
                       <span className="name">Liquidity:</span>
                       <span className="_flex">
                         {account ? (
                           <>
-                            <Tooltip title={`$${liquidity}`} placement="top">
-                              <span className="value">${liquidity || '0 '}</span>
-                            </Tooltip>
+                            <ShowBalance balance={liquidity} name="liquidity" />
                             <Tooltip title="Total value of the funds in this farm’s liquidity pair" placement="top">
                               <span className="u_question">
                                 <img src="/images/u_question-circle.svg" alt="u_question-circle" />
