@@ -106,11 +106,17 @@ const First = styled.div<IPropsTotal>`
     .tab_item {
       padding: 10px 20px;
       cursor: pointer;
+      border-radius: 4px;
+      &:hover{
+        background: #5f35eb;
+      }
     }
 
     .tab_item.active {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-      border-radius: 4px;
+      &:hover{
+        background: #5f35eb;
+      }
     }
   }
 
@@ -223,7 +229,9 @@ const WrapperRight = styled.div<IPropsContainer>`
 
       .subTab_item.active {
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-        border-radius: 4px;
+        &:hover{
+          background: #5f35eb;
+        }
       }
 
       .subTab_item {
@@ -234,6 +242,10 @@ const WrapperRight = styled.div<IPropsContainer>`
         color: #ffffff;
         cursor: pointer;
         white-space: nowrap;
+        border-radius: 4px;
+        &:hover{
+          background: #5f35eb;
+        }
       }
     }
 

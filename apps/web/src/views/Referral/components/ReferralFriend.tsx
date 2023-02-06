@@ -238,6 +238,9 @@ const WrapperRight = styled(Box)<IPropsWR>`
       line-height: 17px;
       color: #ffffff;
       padding: 8px 20px;
+      &:hover{
+        background: #5f35eb;
+      }
     }
 
     button:disabled,
