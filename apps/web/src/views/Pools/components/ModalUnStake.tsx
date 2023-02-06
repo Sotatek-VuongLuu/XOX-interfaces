@@ -10,6 +10,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { Tooltip } from '@mui/material'
 import BigNumber from 'bignumber.js'
+import { formatToShowBalance } from './utils/formatBalance'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -48,7 +49,7 @@ const ContentUnStake = styled.div`
     white-space: nowrap;
     overflow: hidden;
     max-width: 100px;
-    +span{
+    + span {
       margin-left: 5px;
     }
     @media screen and (max-width: 576px) {
@@ -243,6 +244,26 @@ const CustomButton = styled(Button)`
   }
 `
 
+const ShowBalance = ({ balance }) => {
+  return (
+    <>
+      {String(balance).length <= 10 ? (
+        <span aria-hidden="true" className="balance_container">
+          Balance:&nbsp;
+          <span className="balanceLP">{formatToShowBalance(String(balance))}</span>
+        </span>
+      ) : (
+        <Tooltip title={balance} placement="top">
+          <span aria-hidden="true" className="balance_container">
+            Balance:&nbsp;
+            <span className="balanceLP">{formatToShowBalance(String(balance))}</span>
+          </span>
+        </Tooltip>
+      )}
+    </>
+  )
+}
+
 interface Props extends InjectedModalProps {
   balanceLP: any
   totalSupply: any
@@ -269,20 +290,25 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   const [messageError, setMessageError] = useState('')
   const [amountUSD, setAmountUSD] = useState<any>()
   const [activePercent, setActivePercent] = useState<any>(null)
+  const [amountActive, setAmountActive] = useState<any>(null)
 
   const handlePercent = (item: string) => {
     switch (item) {
       case '25%':
         setAmount(new BigNumber(balanceLP).multipliedBy(0.25).toString())
+        setAmountActive({ ...amountActive, '25%': new BigNumber(balanceLP).multipliedBy(0.25).toString() })
         break
       case '50%':
         setAmount(new BigNumber(balanceLP).multipliedBy(0.5).toString())
+        setAmountActive({ ...amountActive, '50%': new BigNumber(balanceLP).multipliedBy(0.5).toString() })
         break
       case '75%':
         setAmount(new BigNumber(balanceLP).multipliedBy(0.75).toString())
+        setAmountActive({ ...amountActive, '75%': new BigNumber(balanceLP).multipliedBy(0.75).toString() })
         break
       case 'MAX':
         setAmount(balanceLP)
+        setAmountActive({ ...amountActive, MAX: balanceLP })
         break
       default:
         break
@@ -305,6 +331,8 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
         } else {
           setMessageError('')
         }
+      } else {
+        setMessageError('')
       }
     } else {
       setMessageError(`No tokens to stake: Get ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`)
@@ -330,12 +358,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
           <ContentUnStake>
             <div className="flex stake">
               <p>Untake</p>
-              <Tooltip title={balanceLP} placement="top">
-                <span aria-hidden="true" className="balance_container">
-                  Balance:&nbsp;
-                  <span className="balanceLP">{balanceLP}</span>
-                </span>
-              </Tooltip>
+              <ShowBalance balance={balanceLP} />
             </div>
             <div className="flex token_lp">
               <NumericalInputStyled
@@ -366,9 +389,10 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
                       setActivePercent(item)
                     }}
                     style={{
-                      background: activePercent === item ? '#9072ff' : 'none',
-                      color: activePercent === item ? '#fff' : '#9072ff',
+                      background: amountActive?.[`${item}`] === amount ? '#9072ff' : 'none',
+                      color: amountActive?.[`${item}`] === amount ? '#fff' : '#9072ff',
                     }}
+                    disabled={!Number(balanceLP)}
                   >
                     {item}
                   </button>
