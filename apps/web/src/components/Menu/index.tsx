@@ -136,6 +136,28 @@ const IconAlert = styled.div`
     }
   }
 `
+const IconAlertActive = styled.div`
+  position: relative;
+  &::before{
+    content: "";
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    background: red;
+    position: absolute;
+    right: 28px;
+    top: 10px;
+    border-radius: 50%;
+  }
+  @media (max-width: 576px) {
+    &::before{
+      width: 5px;
+      height: 5px;
+      right: 23px;
+      top: 5px;
+    }
+  }
+`
 
 const IconAlertSvg = (
   <svg width="22" height="25" viewBox="0 0 22 25" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -297,12 +319,16 @@ const Menu = (props) => {
                   {/* {argsMes?.length > 0 && <RedDot />} */}
                   {isDesktop ? (
                     activeNotifi ? (
-                      <NotificationIcon />
+                      <IconAlertActive>
+                        <NotificationIcon />
+                      </IconAlertActive>
                     ) : (
                       <IconAlert>{IconAlertSvg}</IconAlert>
                     )
                   ) : activeNotifi ? (
-                    <NotificationIcon size={25} />
+                    <IconAlertActive>
+                      <NotificationIcon size={25} />
+                    </IconAlertActive>
                   ) : (
                     <IconAlert>{IconAlertSvg}</IconAlert>
                   )}
