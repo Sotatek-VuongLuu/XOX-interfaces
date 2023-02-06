@@ -11,7 +11,20 @@ export const ShowBalance = ({ balance, unit = '', name = 'default' }: IProps) =>
   const data = String(balance)
   return (
     <>
-      {data.length <= 10 ? (
+      {Number(balance) <= 0.000001 ? (
+        name === 'liquidity' ? (
+          <Tooltip title={balance ? `$${balance}` : null} placement="top-start">
+            <span className="liquidity value">$0.000000...</span>
+          </Tooltip>
+        ) : (
+          <Tooltip title={balance ? `${balance} ${unit}` : null} placement="top-start">
+            <p style={{ display: 'flex' }}>
+              <span className="value">0.000000...</span>&nbsp;
+              <span className="value">{unit}</span>
+            </p>
+          </Tooltip>
+        )
+      ) : data.length <= 10 ? (
         <>
           <p style={{ display: 'flex' }}>
             <span className="value">

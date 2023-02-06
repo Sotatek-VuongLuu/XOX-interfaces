@@ -11,8 +11,7 @@ import { parseEther } from '@ethersproject/units'
 import { Tooltip } from '@mui/material'
 import BigNumber from 'bignumber.js'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
-import { NumericalInputStyled } from './ModalUnStake'
-import { formatToShowBalance } from './utils/formatBalance'
+import { NumericalInputStyled, ShowBalance } from './ModalUnStake'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -237,26 +236,6 @@ const CustomButton = styled(Button)`
     height: 43px;
   }
 `
-
-const ShowBalance = ({ balance }) => {
-  return (
-    <>
-      {String(balance).length <= 10 ? (
-        <span aria-hidden="true" className="balance_container">
-          Balance:&nbsp;
-          <span className="balanceLP">{formatToShowBalance(String(balance))}</span>
-        </span>
-      ) : (
-        <Tooltip title={balance} placement="top">
-          <span aria-hidden="true" className="balance_container">
-            Balance:&nbsp;
-            <span className="balanceLP">{formatToShowBalance(String(balance))}</span>
-          </span>
-        </Tooltip>
-      )}
-    </>
-  )
-}
 
 interface Props extends InjectedModalProps {
   balanceLP: any

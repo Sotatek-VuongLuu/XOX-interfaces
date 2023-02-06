@@ -244,10 +244,17 @@ const CustomButton = styled(Button)`
   }
 `
 
-const ShowBalance = ({ balance }) => {
+export const ShowBalance = ({ balance }) => {
   return (
     <>
-      {String(balance).length <= 10 ? (
+      {Number(balance) <= 0.000001 ? (
+        <Tooltip title={balance ? `${balance}` : null} placement="top-start">
+          <span aria-hidden="true" className="balance_container">
+            Balance:&nbsp;
+            <span className="balanceLP">0.000000...</span>
+          </span>
+        </Tooltip>
+      ) : String(balance).length <= 10 ? (
         <span aria-hidden="true" className="balance_container">
           Balance:&nbsp;
           <span className="balanceLP">{formatToShowBalance(String(balance))}</span>
