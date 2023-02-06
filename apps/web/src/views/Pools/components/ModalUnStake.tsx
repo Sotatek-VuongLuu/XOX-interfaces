@@ -381,7 +381,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
               <p>{chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</p>
             </div>
             <div className="token_usd">
-              <Tooltip title={`${amountUSD ? `${formatNumber(amountUSD)}` : ''}`} placement="top-start">
+              <Tooltip title={`${amountUSD ? `$${formatNumber(amountUSD)}` : ''}`} placement="top-start">
                 <p style={{ display: 'flex' }}>
                   <span className="balanceLP">~${amountUSD ? formatNumber(amountUSD) : ''}</span>&nbsp;
                 </p>
