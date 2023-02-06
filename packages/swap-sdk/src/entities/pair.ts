@@ -64,10 +64,6 @@ export class Pair {
   private readonly tokenAmounts: [CurrencyAmount<ERC20Token>, CurrencyAmount<ERC20Token>]
 
   public static getAddress(tokenA: ERC20Token, tokenB: ERC20Token): string {
-    if (tokenA.address == XOX_ADDRESS[tokenA.chainId] && tokenB.address == USD_ADDRESS[tokenB.chainId])
-      return PAIR_XOX_BUSD[tokenA.chainId]
-    if (tokenA.address == USD_ADDRESS[tokenA.chainId] && tokenB.address == XOX_ADDRESS[tokenB.chainId])
-      return PAIR_XOX_BUSD[tokenA.chainId]
     return computePairAddress({ factoryAddress: FACTORY_ADDRESS_MAP[tokenA.chainId], tokenA, tokenB })
   }
 
@@ -75,13 +71,37 @@ export class Pair {
     const tokenAmounts = currencyAmountA.currency.sortsBefore(tokenAmountB.currency) // does safety checks
       ? [currencyAmountA, tokenAmountB]
       : [tokenAmountB, currencyAmountA]
-    this.liquidityToken = new ERC20Token(
-      tokenAmounts[0].currency.chainId,
-      Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency),
-      18,
-      'XOX-LP',
-      'XOX LPs'
-    )
+    if (
+      tokenAmounts[0].currency.address == XOX_ADDRESS[tokenAmounts[0].currency.chainId] &&
+      tokenAmounts[1].currency.address == USD_ADDRESS[tokenAmounts[1].currency.chainId]
+    ) {
+      this.liquidityToken = new ERC20Token(
+        tokenAmounts[0].currency.chainId,
+        PAIR_XOX_BUSD[tokenAmounts[0].currency.chainId],
+        18,
+        'XOX-LP',
+        'XOX LPs'
+      )
+    } else if (
+      tokenAmounts[0].currency.address == USD_ADDRESS[tokenAmounts[0].currency.chainId] &&
+      tokenAmounts[1].currency.address == XOX_ADDRESS[tokenAmounts[1].currency.chainId]
+    ) {
+      this.liquidityToken = new ERC20Token(
+        tokenAmounts[0].currency.chainId,
+        PAIR_XOX_BUSD[tokenAmounts[0].currency.chainId],
+        18,
+        'XOX-LP',
+        'XOX LPs'
+      )
+    } else {
+      this.liquidityToken = new ERC20Token(
+        tokenAmounts[0].currency.chainId,
+        Pair.getAddress(tokenAmounts[0].currency, tokenAmounts[1].currency),
+        18,
+        'XOX-LP',
+        'XOX LPs'
+      )
+    }
     this.tokenAmounts = tokenAmounts as [CurrencyAmount<ERC20Token>, CurrencyAmount<ERC20Token>]
   }
 
@@ -167,7 +187,6 @@ export class Pair {
   }
 
   public getOutputAmountXOX(inputAmount: CurrencyAmount<ERC20Token>): [CurrencyAmount<ERC20Token>, Pair] {
-    
     invariant(this.involvesToken(inputAmount.currency), 'TOKEN')
     if (JSBI.equal(this.reserve0.quotient, ZERO) || JSBI.equal(this.reserve1.quotient, ZERO)) {
       throw new InsufficientReservesError()
@@ -217,7 +236,10 @@ export class Pair {
     const outputReserve = this.reserveOf(outputAmount.currency)
     const inputReserve = this.reserveOf(outputAmount.currency.equals(this.token0) ? this.token1 : this.token0)
     const numerator = JSBI.multiply(JSBI.multiply(inputReserve.quotient, outputAmount.quotient), _10000)
-    const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmount.quotient), LP_FEE[outputAmount.currency.chainId])
+    const denominator = JSBI.multiply(
+      JSBI.subtract(outputReserve.quotient, outputAmount.quotient),
+      LP_FEE[outputAmount.currency.chainId]
+    )
     const inputAmount = CurrencyAmount.fromRawAmount(
       outputAmount.currency.equals(this.token0) ? this.token1 : this.token0,
       JSBI.add(JSBI.divide(numerator, denominator), ONE)
@@ -241,7 +263,10 @@ export class Pair {
     if (outputAmount.currency.equals(this.token1)) {
       const outputAmountSwap = JSBI.divide(JSBI.multiply(outputAmount.quotient, _100), _90)
       const numerator = JSBI.multiply(JSBI.multiply(inputReserve.quotient, outputAmountSwap), _10000)
-      const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmountSwap), LP_FEE[outputAmount.currency.chainId])
+      const denominator = JSBI.multiply(
+        JSBI.subtract(outputReserve.quotient, outputAmountSwap),
+        LP_FEE[outputAmount.currency.chainId]
+      )
       const inputAmount = CurrencyAmount.fromRawAmount(
         outputAmount.currency.equals(this.token0) ? this.token1 : this.token0,
         JSBI.add(JSBI.divide(numerator, denominator), ONE)
@@ -249,7 +274,10 @@ export class Pair {
       return [inputAmount, new Pair(inputReserve.add(inputAmount), outputReserve.subtract(outputAmount))]
     } else {
       const numerator = JSBI.multiply(JSBI.multiply(inputReserve.quotient, outputAmount.quotient), _10000)
-      const denominator = JSBI.multiply(JSBI.subtract(outputReserve.quotient, outputAmount.quotient), LP_FEE[outputAmount.currency.chainId])
+      const denominator = JSBI.multiply(
+        JSBI.subtract(outputReserve.quotient, outputAmount.quotient),
+        LP_FEE[outputAmount.currency.chainId]
+      )
       const inputAmountSwap = JSBI.add(JSBI.divide(numerator, denominator), ONE)
       const inputAmount = CurrencyAmount.fromRawAmount(
         outputAmount.currency.equals(this.token0) ? this.token1 : this.token0,
