@@ -7,7 +7,7 @@ import { useMultipleContractSingleData } from '../state/multicall/hooks'
 import { wrappedCurrency } from '../utils/wrappedCurrency'
 import { useActiveChainId } from './useActiveChainId'
 import {
-  XOX, BUSD
+  XOX, USD
 } from '@pancakeswap/tokens'
 import { XOX_LP } from 'config/constants/exchange'
 const PAIR_INTERFACE = new Interface(IPancakePairABI)
@@ -89,7 +89,7 @@ export function usePairXOX(): [PairState, Pair | null][] {
     return results.map((result, i) => {
       const { result: reserves, loading } = result
       const tokenA = XOX[chainId]
-      const tokenB = BUSD[chainId]
+      const tokenB = USD[chainId]
 
       if (loading) return [PairState.LOADING, null]
       if (!tokenA || !tokenB || tokenA.equals(tokenB)) return [PairState.INVALID, null]

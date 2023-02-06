@@ -73,7 +73,7 @@ const Reminder: React.FC<Props> = ({
   const [bridgeTokenFee, setBridgeTokenFee] = useState<BridgeTokenFee>(initialBridgeTokenFee)
   const addressTokenOutput = tokenOutput?.address
 
-  const debounceFn = useCallback(debounce(fetchData, 300), [])
+  const debounceFn = useCallback(debounce(fetchData, 800), [])
 
   useEffect(() => {
     debounceFn(amount, chainId)
