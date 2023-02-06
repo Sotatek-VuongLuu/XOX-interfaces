@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import styled from 'styled-components'
-import { Flex, Text, Button, useModal, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Flex, Text, Button, useModal, useMatchBreakpoints, LinkExternal } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
@@ -33,6 +33,8 @@ import { XOXLP } from '@pancakeswap/tokens'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
+import Dots from 'components/Loader/Dots'
+import { linkTransaction } from 'views/BridgeToken'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
@@ -441,13 +443,10 @@ interface IPropsButtonUnStake {
 }
 const ButtonUnStake = styled.div<IPropsButtonUnStake>``
 
-export const linkTransaction = (chainId) => {
+export const linkAddressScan = (chainId) => {
   return `${NETWORK_LINK[chainId]}/address/`
 }
 
-export const linkTransactionTx = (chainId) => {
-  return `${NETWORK_LINK[chainId]}/tx/`
-}
 export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
   [ChainId.RINKEBY]: 'Rinkeby',
   [ChainId.BSC_TESTNET]: 'BSC',
@@ -485,6 +484,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const addressFarming = getContractFarmingLPAddress(chainId)
   const [pendingApprove, setPendingApprove] = useState(false)
   const { nodeId } = useContext(Context)
+  const [isLoadingApproval, setIsLoadingApproval] = useState(false)
   const [approvalState, approveCallback] = useApproveCallback(
     XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
     getContractFarmingLPAddress(chainId),
@@ -721,6 +721,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const handleApprove = useCallback(async () => {
     await approveCallback()
     setPendingApprove(true)
+    setIsLoadingApproval(true)
   }, [approveCallback])
 
   useEffect(() => {
@@ -736,8 +737,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    // if (loadOk) window.location.reload()
-    // setLoadOk(true)
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
     const id = setInterval(() => {
       handleGetDataFarming()
     }, 10000)
@@ -751,6 +752,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     if (approvalState === ApprovalState.APPROVED) {
       setPendingApprove(false)
       setEnable(true)
+      setIsLoadingApproval(false)
     } else {
       setEnable(false)
     }
@@ -856,7 +858,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       </p>
                     </a>
                     <a
-                      href={`${linkTransaction(chainId)}${getXOXPoolAddress(chainId)}`}
+                      href={`${linkAddressScan(chainId)}${getXOXPoolAddress(chainId)}`}
                       target="_blank"
                       rel="noreferrer"
                     >
@@ -914,7 +916,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         onClick={handleApprove}
                         disabled={pendingApprove}
                       >
-                        Enable
+                        {isLoadingApproval ? <Dots>Enable</Dots> : 'Enable'}
                       </CustomButton>
                     ) : (
                       <CustomButton type="button" className="nable mt" onClick={handleClick}>
@@ -1001,7 +1003,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         </p>
                       </a>
                       <a
-                        href={`${linkTransaction(chainId)}${getXOXPoolAddress(chainId)}`}
+                        href={`${linkAddressScan(chainId)}${getXOXPoolAddress(chainId)}`}
                         target="_blank"
                         rel="noreferrer"
                       >
@@ -1075,9 +1077,16 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
             <img src="/images/success_claim.png" alt="success_claim" />
           </div>
           <div className="submitted">Transaction Submitted</div>
-          <a href={`${linkTransactionTx(chainId)}${txHash}`} target="_blank" rel="noreferrer">
-            <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
-          </a>
+          <p style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
+            <LinkExternal
+              href={`${linkTransaction(chainId)}${txHash}`}
+              target="_blank"
+              rel="noreferrer"
+              color="#9072FF"
+            >
+              <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
+            </LinkExternal>
+          </p>
           <div className="btn_dismiss_container">
             <button className="btn_dismiss bg" type="button" onClick={() => setIsOpenSuccessModal(false)}>
               Close

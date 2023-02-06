@@ -45,7 +45,7 @@ const ContentUnStake = styled.div`
   }
 
   .balanceLP {
-    text-overflow: ellipsis;
+    /* text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
     max-width: 100px;
@@ -54,7 +54,7 @@ const ContentUnStake = styled.div`
     }
     @media screen and (max-width: 576px) {
       max-width: 90px;
-    }
+    } */
   }
   .flex {
     display: flex;
@@ -135,6 +135,10 @@ const ContentUnStake = styled.div`
       color: #9072ff;
       margin-left: 8px;
       cursor: pointer;
+      &:hover {
+        background: #9072ff !important;
+        color: #ffffff !important;
+      }
       @media screen and (max-width: 576px) {
         padding: 8px 16px;
         font-size: 12px;
@@ -377,10 +381,9 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
               <p>{chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</p>
             </div>
             <div className="token_usd">
-              <Tooltip title={`${amountUSD ? formatNumber(amountUSD) : ''}USD`} placement="top-start">
+              <Tooltip title={`${amountUSD ? `${formatNumber(amountUSD)}` : ''}`} placement="top-start">
                 <p style={{ display: 'flex' }}>
-                  <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>&nbsp;
-                  <span>USD</span>
+                  <span className="balanceLP">~${amountUSD ? formatNumber(amountUSD) : ''}</span>&nbsp;
                 </p>
               </Tooltip>
             </div>
