@@ -309,7 +309,7 @@ const Menu = (props) => {
                   {isOpen && (
                     <NotificationMenu>
                       <h3>Notification</h3>
-                      <p>Your referral code has been applied in a "Buy XOX”</p>
+                      <p>Your referral code has been applied in a "Buy XOX” transaction</p>
                     </NotificationMenu>
                   )}
                 </NotificationField>
