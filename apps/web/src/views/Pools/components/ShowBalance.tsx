@@ -14,12 +14,12 @@ export const ShowBalance = ({ balance, unit = '', name = 'default' }: IProps) =>
       {Number(balance) <= 0.000001 ? (
         name === 'liquidity' ? (
           <Tooltip title={balance ? `$${balance}` : null} placement="top-start">
-            <span className="liquidity value">$0.000000...</span>
+            <span className="liquidity value">${balance ? '0.000000...' : 0}</span>
           </Tooltip>
         ) : (
           <Tooltip title={balance ? `${balance} ${unit}` : null} placement="top-start">
             <p style={{ display: 'flex' }}>
-              <span className="value">0.000000...</span>&nbsp;
+              <span className="value">{balance ? '0.000000...' : 0}</span>&nbsp;
               <span className="value">{unit}</span>
             </p>
           </Tooltip>
