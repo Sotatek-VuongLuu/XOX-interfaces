@@ -401,6 +401,21 @@ export default function BridgeToken() {
   }, [account, chainId])
 
   useEffect(() => {
+    if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
+      setMessageButton(`Approve ${addressTokenInput.symbol}`)
+      if (pendingApprove) {
+        setMessageButton('Bridge')
+      } else {
+        setMessageButton(`Approve ${addressTokenInput.symbol}`)
+      }
+    } else if (approvalState === ApprovalState.PENDING) {
+      setMessageButton('Approving...')
+    } else if (amountTo === '0') {
+      setMessageButton('Input Amount Not Allowed')
+    } else setMessageButton('Bridge')
+  }, [approvalState, amountTo])
+
+  useEffect(() => {
     if (amountInput === '' || Number(amountInput) === 0 || amountInput === '.') {
       setMessageButton('Enter an amount')
     } else if (
@@ -419,20 +434,9 @@ export default function BridgeToken() {
       parseEther(Number(amountTo).toFixed(18)).gt(parseEther(balancePool))
     ) {
       setMessageButton('Insuficient Pool Balance')
-    } else if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
-      setMessageButton(`Approve ${addressTokenInput.symbol}`)
-      if (pendingApprove) {
-        setMessageButton('Bridge')
-      } else {
-        setMessageButton(`Approve ${addressTokenInput.symbol}`)
-      }
-    } else if (approvalState === ApprovalState.PENDING) {
-      setMessageButton('Approving...')
-    } else if (amountTo === '0') {
-      setMessageButton('Input Amount Not Allowed')
-    } else setMessageButton('Bridge')
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amountInput, approvalState, balanceInput, minAmount, amountTo, balancePool])
+  }, [amountInput, balanceInput, amountTo, balancePool])
 
   // handle user type input
   const handleUserInput = (value) => {
