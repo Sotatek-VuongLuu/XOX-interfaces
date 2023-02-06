@@ -302,16 +302,16 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   const handlePercent = (item: string) => {
     switch (item) {
       case '25%':
-        setAmount(new BigNumber(balanceLP).multipliedBy(0.25).toString())
-        setAmountActive({ ...amountActive, '25%': new BigNumber(balanceLP).multipliedBy(0.25).toString() })
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.25).toFixed(18).toString())
+        setAmountActive({ ...amountActive, '25%': new BigNumber(balanceLP).multipliedBy(0.25).toFixed(18).toString() })
         break
       case '50%':
-        setAmount(new BigNumber(balanceLP).multipliedBy(0.5).toString())
-        setAmountActive({ ...amountActive, '50%': new BigNumber(balanceLP).multipliedBy(0.5).toString() })
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.5).toFixed(18).toString())
+        setAmountActive({ ...amountActive, '50%': new BigNumber(balanceLP).multipliedBy(0.5).toFixed(18).toString() })
         break
       case '75%':
-        setAmount(new BigNumber(balanceLP).multipliedBy(0.75).toString())
-        setAmountActive({ ...amountActive, '75%': new BigNumber(balanceLP).multipliedBy(0.75).toString() })
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.75).toFixed(18).toString())
+        setAmountActive({ ...amountActive, '75%': new BigNumber(balanceLP).multipliedBy(0.75).toFixed(18).toString() })
         break
       case 'MAX':
         setAmount(balanceLP)

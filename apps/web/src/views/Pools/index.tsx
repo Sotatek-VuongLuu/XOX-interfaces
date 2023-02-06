@@ -473,7 +473,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const provider = useProvider({ chainId })
   const [balanceLP, setBalanceLP] = useState<any>()
   const { isMobile } = useMatchBreakpoints()
-  const [modalReject, setModalReject] = useState<boolean>(false)
+  const [modalReject, setModalReject] = useState<{ isShow: boolean; message: string }>({ isShow: false, message: '' })
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')
@@ -571,11 +571,14 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
-      console.log(`error>>>`, error)
+      // console.log(`error>>>`, error)
       setIsOpenLoadingClaimModal(false)
       setNotiMess('')
+      if (error?.error?.message === 'execution reverted: ERC20: transfer amount exceeds balance') {
+        setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
+      }
       if (error?.message.includes('rejected')) {
-        setModalReject(true)
+        setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
       }
     }
   }
@@ -639,8 +642,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       console.log(`error>>>`, error)
       setNotiMess('')
       setIsOpenLoadingClaimModal(false)
+      if (error?.error?.message === 'execution reverted: ERC20: transfer amount exceeds balance') {
+        setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
+      }
       if (error?.message.includes('rejected')) {
-        setModalReject(true)
+        setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
       }
     }
   }
@@ -669,8 +675,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       console.log(`error>>>`, error)
       setNotiMess('')
       setIsOpenLoadingClaimModal(false)
+      if (error?.error?.message === 'execution reverted: ERC20: transfer amount exceeds balance') {
+        setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
+      }
       if (error?.message.includes('rejected')) {
-        setModalReject(true)
+        setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
       }
     }
   }
@@ -1011,14 +1020,22 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           </div>
         </Main>
       </NavWrapper>
-      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Confirm Farming">
+      <ModalBase
+        open={modalReject.isShow}
+        handleClose={() => setModalReject({ ...modalReject, isShow: false })}
+        title="Confirm Farming"
+      >
         <Content>
           <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
             <img src="/images/reject_xox.png" alt="reject_xox" />
           </div>
-          <div className="noti_claim_pending_h4">Transaction rejected.</div>
+          <div className="noti_claim_pending_h4">{modalReject.message}</div>
           <div className="btn_dismiss_container">
-            <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
+            <button
+              className="btn_dismiss"
+              type="button"
+              onClick={() => setModalReject({ ...modalReject, isShow: false })}
+            >
               Dismiss
             </button>
           </div>
@@ -1027,7 +1044,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
             alt="close-one"
             className="x-close-icon"
             aria-hidden="true"
-            onClick={() => setModalReject(false)}
+            onClick={() => setModalReject({ ...modalReject, isShow: false })}
           />
         </Content>
       </ModalBase>
