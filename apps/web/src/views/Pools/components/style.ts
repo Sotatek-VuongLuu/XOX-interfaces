@@ -120,6 +120,9 @@ export const Content = styled.div`
       color: #ffffff;
       border: none;
       cursor: pointer;
+      &:hover{
+        background: #5f35eb;
+      }
     }
     .bg {
       background: #313131;
