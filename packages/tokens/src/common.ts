@@ -321,6 +321,14 @@ export const USDT = {
   [ChainId.ETHEREUM]: USDT_ETH,
 }
 
+export const USD = {
+  [ChainId.BSC]: BUSD_BSC,
+  [ChainId.BSC_TESTNET]: BUSD_TESTNET,
+  [ChainId.ETHEREUM]: USDC_ETH,
+  [ChainId.RINKEBY]: USDC_RINKEBY,
+  [ChainId.GOERLI]: USDC_GOERLI,
+}
+
 export const WBTC_ETH = new ERC20Token(
   ChainId.ETHEREUM,
   '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599',
