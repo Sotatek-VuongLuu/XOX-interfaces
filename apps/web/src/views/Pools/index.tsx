@@ -916,7 +916,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         onClick={handleApprove}
                         disabled={pendingApprove}
                       >
-                        {isLoadingApproval ? <Dots>Enable</Dots> : 'Enable'}
+                        {isLoadingApproval ? <Dots>Enabling</Dots> : 'Enable'}
                       </CustomButton>
                     ) : (
                       <CustomButton type="button" className="nable mt" onClick={handleClick}>
