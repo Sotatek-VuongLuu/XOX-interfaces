@@ -1,14 +1,15 @@
 /* eslint-disable import/no-cycle */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
-import { InjectedModalProps, ModalContainer, ModalHeader, NumericalInput } from '@pancakeswap/uikit'
+import { Button, InjectedModalProps, ModalContainer, ModalHeader, NumericalInput } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { parseUnits } from '@ethersproject/units'
+import { parseEther } from '@ethersproject/units'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { Tooltip } from '@mui/material'
+import BigNumber from 'bignumber.js'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -46,7 +47,13 @@ const ContentUnStake = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
-    max-width: 300px;
+    max-width: 100px;
+    +span{
+      margin-left: 5px;
+    }
+    @media screen and (max-width: 576px) {
+      max-width: 90px;
+    }
   }
   .flex {
     display: flex;
@@ -160,7 +167,7 @@ const ButtonGroup = styled.div`
   .cancel {
     font-weight: 700;
     font-size: 16px;
-    line-height: 19px;
+    line-height: 13px;
     color: #ffffff;
   }
   .confirm {
@@ -208,17 +215,11 @@ export const NumericalInputStyled = styled(NumericalInput)<INumericalInputStyled
   font-weight: 700;
   font-size: 16px;
   line-height: 19px;
-  color: ${({ amount }) =>
-    amount !== '' && Number(amount) !== 0 && amount !== '.'
-      ? `rgba(255, 255, 255, 0.87)`
-      : `rgba(255, 255, 255, 0.38)`};
+  color: ${({ amount }) => (amount ? `rgba(255, 255, 255, 0.87)` : `rgba(255, 255, 255, 0.38)`)};
   width: auto;
   ${(props) => props.disabled === true && ' pointer-events: none'};
   & {
-    -webkit-text-fill-color: ${({ amount }) =>
-      amount !== '' && Number(amount) !== 0 && amount !== '.'
-        ? `rgba(255, 255, 255, 0.87)`
-        : `rgba(255, 255, 255, 0.38)`};
+    -webkit-text-fill-color: ${({ amount }) => (amount ? `rgba(255, 255, 255, 0.87)` : `rgba(255, 255, 255, 0.38)`)};
     ::placeholder {
       -webkit-text-fill-color: rgba(255, 255, 255, 0.38);
     }
@@ -231,6 +232,14 @@ export const NumericalInputStyled = styled(NumericalInput)<INumericalInputStyled
   @media screen and (max-width: 576px) {
     font-size: 12px;
     line-height: 15px;
+  }
+`
+
+const CustomButton = styled(Button)`
+  height: 37px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: 43px;
   }
 `
 
@@ -264,13 +273,13 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   const handlePercent = (item: string) => {
     switch (item) {
       case '25%':
-        setAmount((Number(balanceLP) * 0.25).toString())
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.25).toString())
         break
       case '50%':
-        setAmount((Number(balanceLP) * 0.5).toString())
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.5).toString())
         break
       case '75%':
-        setAmount((Number(balanceLP) * 0.75).toString())
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.75).toString())
         break
       case 'MAX':
         setAmount(balanceLP)
@@ -287,7 +296,11 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   useEffect(() => {
     if (Number(balanceLP)) {
       if (amount !== '' && Number(amount) !== 0 && amount !== '.') {
-        if (account && balanceLP && parseUnits(amount, 18).gt(parseUnits(balanceLP, 18))) {
+        if (
+          account &&
+          balanceLP &&
+          parseEther(Number(amount).toFixed(18)).gt(parseEther(Number(balanceLP).toFixed(18)))
+        ) {
           setMessageError(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} Balance`)
         } else {
           setMessageError('')
@@ -334,9 +347,9 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
               <p>{chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</p>
             </div>
             <div className="token_usd">
-              <Tooltip title={`${amountUSD}USD`} placement="top-start">
+              <Tooltip title={`${amountUSD ? formatNumber(amountUSD) : ''}USD`} placement="top-start">
                 <p style={{ display: 'flex' }}>
-                  <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>
+                  <span className="balanceLP">~{amountUSD ? formatNumber(amountUSD) : ''}</span>&nbsp;
                   <span>USD</span>
                 </p>
               </Tooltip>
@@ -344,10 +357,13 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
             <div className="percent">
               {listTimesPercents.map((item) => {
                 return (
-                  <button className="item_percent_btn" type="button" key={item} 
+                  <button
+                    className="item_percent_btn"
+                    type="button"
+                    key={item}
                     onClick={() => {
-                      handlePercent(item);
-                      setActivePercent(item);
+                      handlePercent(item)
+                      setActivePercent(item)
                     }}
                     style={{
                       background: activePercent === item ? '#9072ff' : 'none',
@@ -365,7 +381,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
             <button type="button" className="btn cancel" onClick={onDismiss}>
               Cancel
             </button>
-            <button
+            <CustomButton
               type="button"
               className="btn confirm"
               disabled={
@@ -374,7 +390,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
               onClick={handleButtonClick}
             >
               Confirm
-            </button>
+            </CustomButton>
           </ButtonGroup>
         </ContentContainer>
       </StyledModalContainer>

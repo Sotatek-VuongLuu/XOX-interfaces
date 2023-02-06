@@ -300,14 +300,8 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   )
 
   // check whether the user has approved the router on the tokens
-  const [approvalA, approveACallback] = useApproveCallback(
-    parsedAmounts[Field.CURRENCY_A],
-    preferZapInstead ? zapAddress : ROUTER_XOX[chainId],
-  )
-  const [approvalB, approveBCallback] = useApproveCallback(
-    parsedAmounts[Field.CURRENCY_B],
-    preferZapInstead ? zapAddress : ROUTER_XOX[chainId],
-  )
+  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], ROUTER_XOX[chainId])
+  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], ROUTER_XOX[chainId])
 
   const addTransaction = useTransactionAdder()
 
@@ -648,16 +642,8 @@ export default function AddLiquidity({ currencyA, currencyB }) {
     zapIn.isDependentAmountGreaterThanMaxAmount &&
     rebalancing
 
-  const showZapIsAvailable =
-    !zapMode &&
-    !showZapWarning &&
-    !noAnyInputAmount &&
-    (!zapTokenCheckedA || !zapTokenCheckedB) &&
-    !noLiquidity &&
-    !(
-      (pair && JSBI.lessThan(pair.reserve0.quotient, MINIMUM_LIQUIDITY)) ||
-      (pair && JSBI.lessThan(pair.reserve1.quotient, MINIMUM_LIQUIDITY))
-    )
+  const showZapIsAvailable = false
+
   return (
     <Page>
       <Flex
@@ -829,18 +815,6 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   </RowFixed>
                 )}
 
-                {showZapIsAvailable && (
-                  <Message variant="warning">
-                    <MessageText>
-                      {t('Zap allows you to add liquidity with only 1 single token. Click')}
-                      <Button p="0 4px" scale="sm" variant="text" height="auto" onClick={handleEnableZap}>
-                        {t('here')}
-                      </Button>
-                      {t('to try.')}
-                    </MessageText>
-                  </Message>
-                )}
-
                 {showRebalancingConvert && (
                   <Message variant="warning">
                     <AutoColumn>
@@ -949,7 +923,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                 )}
 
                 {addIsUnsupported || addIsWarning ? (
-                  <Button disabled mb="4px">
+                  <Button disabled mb="4px" height={43}>
                     {t('Unsupported Asset')}
                   </Button>
                 ) : !account ? (
@@ -965,6 +939,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                             onClick={approveACallback}
                             disabled={approvalA === ApprovalState.PENDING}
                             width="100%"
+                            height={43}
                           >
                             {approvalA === ApprovalState.PENDING ? (
                               <Dots>{t('Enabling %asset%', { asset: currencies[Field.CURRENCY_A]?.symbol })}</Dots>
@@ -978,6 +953,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                             onClick={approveBCallback}
                             disabled={approvalB === ApprovalState.PENDING}
                             width="100%"
+                            height={43}
                           >
                             {approvalB === ApprovalState.PENDING ? (
                               <Dots>{t('Enabling %asset%', { asset: currencies[Field.CURRENCY_B]?.symbol })}</Dots>
@@ -1013,6 +989,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                         }
                       }}
                       disabled={buttonDisabled}
+                      height={43}
                     >
                       {errorText || t('Supply')}
                     </CommitButton>

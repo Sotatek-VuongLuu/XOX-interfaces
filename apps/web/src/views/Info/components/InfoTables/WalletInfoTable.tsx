@@ -193,8 +193,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const [rateXOX, setRateXOX] = useState(0)
   const contractUSD = useERC20(USD_ADDRESS[chainId])
   const contractXOX = useERC20(XOX_ADDRESS[chainId])
-
-  const colors = ['#9072FF', '#5F35EB', '#89DDEF', '#90F0B1']
+  const [colors, setColors] = useState<string[]>([])
 
   const tokenRateUSD = useCallback(
     (symbol: string): number => {
@@ -229,7 +228,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       if (!currencyData) return 0
       return currencyData.price / rateXOX
     },
-    [currencyDatas],
+    [currencyDatas, rateXOX],
   )
 
   const getXOXPrice = () => {
@@ -293,7 +292,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     const balanceXOX = tokensBalance.find(
       (token: any) => token.contractAddress.toLowerCase() === XOX_ADDRESS[chainId].toLowerCase(),
     )
-    const xoxBalance = balanceXOX ? formatAmountNumber(balanceXOX.balance * tokenRateXOX(balanceXOX.symbol)) : 0
+    const xoxBalance = balanceXOX ? formatAmountNumber(balanceXOX.balance * rateXOX) : 0
     const result = [
       ['Label', 'Value', { role: 'tooltip', type: 'string', p: { html: true } }],
       [native.symbol, nativeBalance, `${native.symbol}: $${nativeBalance}`],
@@ -308,11 +307,16 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
         sum += formatAmountNumber(balance.balance * tokenRateUSD(balance.symbol))
       }
     })
+    if (chainId === 1 || chainId === 5) {
+      setColors(['#60A5FA', '#9072FF', '#2563EB', '#A8A29E'])
+    } else {
+      setColors(['#FBBF24', '#9072FF', '#FDE047', '#A8A29E'])
+    }
     result.push(['Others', sum, `Others: $${sum}`])
     total = nativeBalance + xoxBalance + result[2][1] + sum
     setTotalAsset(total)
     setDataChart(result)
-  }, [balanceNative, tokensBalance, chainId])
+  }, [balanceNative, tokensBalance, chainId, currencyDatas, rateXOX])
 
   return (
     <Wrapper className={className}>
@@ -462,14 +466,18 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                         lineHeight="15px"
                         color="rgba(255, 255, 255, 0.6)"
                       >
-                        ~${formatAmountNumber(balance?.balance * tokenRateUSD(balance.symbol))}
                         {/* {tokenRateXOX(balance.symbol)} && 
                         {balance &&
                           (balance.symbol === 'XOX'
                             ? balance?.balance * tokenRateXOX(balance.symbol)
                             : '' */}
-                        {balance?.symbol !== 'XOX' && (
-                          <> | ~{formatAmountNumber(balance?.balance * tokenRateXOX(balance.symbol))} XOX</>
+                        {balance?.symbol !== 'XOX' ? (
+                          <>
+                            ~${formatAmountNumber(balance?.balance * tokenRateUSD(balance.symbol))} | ~
+                            {formatAmountNumber(balance?.balance * tokenRateXOX(balance.symbol))} XOX
+                          </>
+                        ) : (
+                          <>~${formatAmountNumber(balance?.balance / rateXOX)}</>
                         )}
                       </Text>
                     </Flex>

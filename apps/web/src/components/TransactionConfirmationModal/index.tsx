@@ -6,7 +6,6 @@ import {
   Text,
   Flex,
   Box,
-  Link,
   Modal,
   InjectedModalProps,
   ModalProps,
@@ -19,7 +18,7 @@ import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { GridLoader } from 'react-spinners'
 import { AutoColumn, ColumnCenter } from '../Layout/Column'
-import { getBlockExploreLink, getBlockExploreName } from '../../utils'
+import { getBlockExploreLink } from '../../utils'
 import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToWalletButton'
 
 const Wrapper = styled.div`
@@ -149,7 +148,7 @@ export function TransactionSubmittedContent({
             </LinkExternal>
           )}
           <ButtonFooters style={{ width: isMobile ? 'auto' : '400px', maxWidth: '100%' }}>
-            <Button onClick={onDismiss} maxWidth="200px" style={{ height: '37px', background: '#313131' }}>
+            <Button onClick={onDismiss} maxWidth="200px" height={43} style={{ background: '#313131' }}>
               {t('Close')}
             </Button>
             {currencyToAdd && (
@@ -161,7 +160,7 @@ export function TransactionSubmittedContent({
                 tokenSymbol={currencyToAdd.symbol}
                 tokenDecimals={token.decimals}
                 tokenLogo={token instanceof WrappedTokenInfo ? token.logoURI : undefined}
-                style={{ fontSize: '16px', height: '37px', marginLeft: '16px' }}
+                style={{ fontSize: '16px', height: '43px', marginLeft: '16px' }}
               />
             )}
           </ButtonFooters>
@@ -209,7 +208,9 @@ export function TransactionErrorContent({
 
       {onDismiss ? (
         <Flex justifyContent="center" pt="24px" mb="32px">
-          <Button onClick={onDismiss}>{t('Dismiss')}</Button>
+          <Button onClick={onDismiss} height={43}>
+            {t('Dismiss')}
+          </Button>
         </Flex>
       ) : null}
     </Wrapper>
@@ -237,7 +238,9 @@ export function TransactionSwapErrorContent({
 
       {onDismiss ? (
         <Flex justifyContent="center" pt="24px" mb="32px">
-          <Button onClick={onDismiss}>{t('Dismiss')}</Button>
+          <Button onClick={onDismiss} height={43}>
+            {t('Dismiss')}
+          </Button>
         </Flex>
       ) : null}
     </Wrapper>

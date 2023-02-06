@@ -182,9 +182,9 @@ const CustomCardBody = styled(CardBody)`
   }
 
   .slippage {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
     color: #9072ff;
   }
 
@@ -233,8 +233,8 @@ const CustomCardBody = styled(CardBody)`
     }
 
     .slippage {
-      font-size: 16px;
-      line-height: 19px;
+      font-size: 18px;
+      line-height: 22px;
     }
   }
 `
@@ -1005,6 +1005,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                     onCurrencySelect={() => null}
                     showCommonBases
                     commonBasesType={CommonBasesType.LIQUIDITY}
+                    showBUSD
                   />
                   <ColumnCenter style={{ margin: '16px auto' }}>
                     <ArrowDownIcon width="24px" my="16px" />
@@ -1087,7 +1088,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                 </Flex>
               )}
               <RowBetween mt="16px">
-                <Text className="text-price">{t('Slippage Tolerance')}</Text>
+                <Text fontSize={['16px', , '18px']} fontWeight={400} lineHeight={['19px', , '22px']}>{t('Slippage Tolerance')}</Text>
                 <Text className="slippage">{allowedSlippage / 100}%</Text>
               </RowBetween>
               {poolData && (

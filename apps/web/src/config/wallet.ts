@@ -79,5 +79,5 @@ const docLangCodeMapping: Record<string, string> = {
 
 export const getDocLink = (code: string) =>
   docLangCodeMapping[code]
-    ? `https://docs.pancakeswap.finance/v/${docLangCodeMapping[code]}/get-started/wallet-guide`
-    : `https://docs.pancakeswap.finance/get-started/wallet-guide`
+    ? `https://docs.xoxnet.io/v/${docLangCodeMapping[code]}/get-started/wallet-guide`
+    : `https://docs.xoxnet.io/get-started/wallet-guide`

@@ -201,12 +201,14 @@ const ButtonRight = styled(Button)`
 
 const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: any, onSuccess?: any}) => {
   const [withdrawErrorMessage, setWithdrawErrorMessage] = useState('');
+  const [priceState, setPriceState] = useState<any>(priceAvailable);
   const inputRef = useRef(null);
   const priceRef = useRef(null);
   const [pending, setPending] = useState(false);
   const { account, chainId } = useWeb3React();
   const contractTreasuryXOX = useTreasuryXOX();
   const isBUSD = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET);
+  const decimalCompare = isBUSD ? 18 : 6;
   const [keyInput, setKeyInput] = useState(Math.random());
   const [amount, setAmount] = useState<any>();
   const [error, setError] = useState<any>();
@@ -214,11 +216,13 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: any, onSu
   const { toastError, toastSuccess } = useToast();
   const symbol = 'BUSD';
   const [txHas, setTxHas] = useState('');
+  const [decimalError, setDecimalError] = useState(false);
   const tokenContract = useTokenContract(USD_ADDRESS[chainId], false);
 
   useEffect(() => {
     if(priceAvailable){
       priceRef.current.value = `${formatNumberDecimal(parseFloat(priceAvailable))} ${isBUSD ? 'BUSD' : 'USDC'}`;
+      setPriceState(priceAvailable);
     }
   }, [priceAvailable]);
 
@@ -226,12 +230,15 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: any, onSu
     setPending(false);
     setTxHas(response?.hash);
     setWithdrawErrorMessage('');
-    priceRef.current.value = `${formatNumberDecimal(parseFloat(priceAvailable)-parseFloat(amount))} ${isBUSD ? 'BUSD' : 'USDC'}`;
+    const priceAvailable = priceState > amount ? parseFloat(priceState)-parseFloat(amount) : 0;
+    priceRef.current.value = `${formatNumberDecimal(priceAvailable)} ${isBUSD ? 'BUSD' : 'USDC'}`;
+    setPriceState(priceAvailable);
     addTransaction(response);
     setTimeout(() => {
       toastSuccess('Transaction receipt', <ToastDescriptionWithTx txHash={response?.hash} txChainId={response?.chainId} />);
       inputRef.current.value = "";
       setAmount(0);
+      onSuccess?.();
     }, 3000);
   }
 
@@ -281,6 +288,30 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: any, onSu
     'transactionConfirmationModal',
   )
 
+  const formatE = (numberTo:any) => {
+    const stringTo = numberTo.toString();
+    if(stringTo.indexOf('e') !== -1){
+      return formatNumberDecimal(numberTo, decimalCompare);
+    }
+    return numberTo;
+  }
+
+  const handleValidateForm = (value:any) => {
+    if(parseFloat(value) > priceState){
+      setError('Insufficient balance');
+    }else{
+      setError('');
+    }
+    const stringE = value.toString();
+    const parts = stringE.split(".");
+    const decimalPlaces = parts[1]?.length;
+    if(decimalPlaces > decimalCompare){
+      setDecimalError(true);
+    }else{
+      setDecimalError(false);
+    }
+  }
+
   return (
     <WrapForm>
       <Flex justifyContent="space-between" alignItems="center">
@@ -311,14 +342,11 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: any, onSu
         <BoxRight>
           <input ref={inputRef} type="number" key={keyInput} defaultValue={amount} placeholder='0.00' onChange={(e:any) => {
             setAmount(e?.target?.value);
-            if(parseFloat(e?.target?.value) > priceAvailable){
-              setError('Insufficient balance');
-            }else{
-              setError('');
-            }
+            handleValidateForm(e?.target?.value); 
           }} />
           <ButtonRight width={43} height={27} style={{fontSize: 12}} onClick={() => {
-            setAmount(priceAvailable);
+            setAmount(formatE(priceState));
+            handleValidateForm(formatE(priceState));
             setKeyInput(Math.random());
             setError('')
           }}>All</ButtonRight>
@@ -328,7 +356,7 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: any, onSu
         error && <TextStyle className='error'>{error}</TextStyle>
       }
       <Flex justifyContent="end">
-        <Button width={140} height={43} disabled={error || !amount} onClick={handleWidthdraw}>Withdraw</Button>
+        <Button width={140} height={43} disabled={error || !amount || decimalError} onClick={handleWidthdraw}>Withdraw</Button>
       </Flex>
     </WrapForm>
   )

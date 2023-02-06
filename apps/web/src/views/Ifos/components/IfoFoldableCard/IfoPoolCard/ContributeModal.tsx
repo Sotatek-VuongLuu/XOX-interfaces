@@ -250,19 +250,19 @@ const ContributeModal: React.FC<React.PropsWithChildren<Props>> = ({
             ))}
           </Flex>
           {vestingInformation.percentage > 0 && <HasVestingNotice url={articleUrl} />}
-          <Text color="textSubtle" fontSize="12px" mb="24px">
+          {/* <Text color="textSubtle" fontSize="12px" mb="24px">
             {t(
               'If you don’t commit enough CAKE, you may not receive a meaningful amount of IFO tokens, or you may not receive any IFO tokens at all.',
             )}
             <Link
               fontSize="12px"
               display="inline"
-              href="https://docs.pancakeswap.finance/products/ifo-initial-farm-offering"
+              href="https://docs.xoxnet.io/products/ifo-initial-farm-offering"
               external
             >
               {t('Read more')}
             </Link>
-          </Text>
+          </Text> */}
           <ApproveConfirmButtons
             isApproveDisabled={isConfirmed || isConfirming || isApproved}
             isApproving={isApproving}

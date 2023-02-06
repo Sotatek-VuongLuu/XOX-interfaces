@@ -279,7 +279,7 @@ export default function Pool() {
                 fontWeight={400}
                 lineHeight={['17px', , '22px']}
               >
-                Your liquidity
+                Your Liquidity
               </Text>
             </div>
             <ConnectSub
@@ -331,7 +331,7 @@ export default function Pool() {
                 fontWeight={400}
                 lineHeight={['17px', , '22px']}
               >
-                Your liquidity
+                Your Liquidity
               </Text>
             </div>
           </Title>

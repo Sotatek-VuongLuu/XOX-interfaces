@@ -211,8 +211,6 @@ export default function CurrencyInputPanel({
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpoints()
-  const token = pair ? pair.liquidityToken : currency?.isToken ? currency : null
-  const tokenAddress = token ? isAddress(token.address) : null
   const [activePercent, setActivePercent] = useState<any>(null)
   const [autoChange, setAutoChange] = useState(false)
 
@@ -338,7 +336,7 @@ export default function CurrencyInputPanel({
             <ForDolar style={isShowPercent ? { bottom: '58px' } : { bottom: '22px' }}>
               <Flex justifyContent="flex-end" mr="1rem">
                 <Flex maxWidth="200px">
-                  <Text fontSize="12px" color="textSubtle">
+                  <Text fontSize="12px" color="textSubtle" style={{ whiteSpace: 'nowrap' }}>
                     ~
                     {isMobile
                       ? formatNumber(amountInDollar).length > 10

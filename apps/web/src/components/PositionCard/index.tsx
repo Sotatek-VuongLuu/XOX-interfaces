@@ -111,6 +111,11 @@ const CustomCard = styled(Card)`
       height: 20px;
     }
 
+    .pair-token {
+      font-size: 16px;
+      line-height: 19px;
+    }
+
     .text-left {
       font-size: 16px;
       line-height: 19px;
@@ -319,7 +324,6 @@ const withLPValuesFactory =
     const currency0 = props.showUnwrapped ? props.pair.token0 : unwrappedToken(props.pair.token0)
     const currency1 = props.showUnwrapped ? props.pair.token1 : unwrappedToken(props.pair.token1)
 
-    console.log(props.pair.liquidityToken, 'props.pair.liquidityToken')
     const userPoolBalance = useTokenBalance(account ?? undefined, props.pair.liquidityToken)
 
     const totalPoolTokens = useTotalSupply(props.pair.liquidityToken)
@@ -451,7 +455,7 @@ function MinimalPositionCardView({
               </CustomFixedHeightRow>
             )}
             <CustomFixedHeightRow>
-              <Text className="text-left">{t('Share of Pool')}:</Text>
+              <Text className="text-left">{t('Share of Pool')}</Text>
               <Text className="text-right">
                 {poolTokenPercentage
                   ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
@@ -530,7 +534,7 @@ function FullPositionCard({
           {isStableLP ? null : (
             <CustomRow>
               <CustomRowFixed>
-                <Text className="text-left">{t('Pooled %asset%', { asset: currency0.symbol })}:</Text>
+                <Text className="text-left">{t('Pooled %asset%', { asset: currency0.symbol })}</Text>
               </CustomRowFixed>
               {token0Deposited ? (
                 <CustomRowFixed>
@@ -546,7 +550,7 @@ function FullPositionCard({
           {isStableLP ? null : (
             <CustomRow>
               <CustomRowFixed>
-                <Text className="text-left">{t('Pooled %asset%', { asset: currency1.symbol })}:</Text>
+                <Text className="text-left">{t('Pooled %asset%', { asset: currency1.symbol })}</Text>
               </CustomRowFixed>
               {token1Deposited ? (
                 <CustomRowFixed>
