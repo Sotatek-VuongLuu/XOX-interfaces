@@ -135,6 +135,10 @@ const ContentUnStake = styled.div`
       color: #9072ff;
       margin-left: 8px;
       cursor: pointer;
+      &:hover{
+        background: #9072ff !important;
+        color: #fff !important;
+      }
       @media screen and (max-width: 576px) {
         padding: 8px 16px;
         font-size: 12px;
