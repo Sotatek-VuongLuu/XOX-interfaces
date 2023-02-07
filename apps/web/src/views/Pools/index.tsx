@@ -449,8 +449,8 @@ export const linkAddressScan = (chainId) => {
 
 export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
   [ChainId.RINKEBY]: 'Rinkeby',
-  [ChainId.BSC_TESTNET]: 'BSC',
-  [ChainId.BSC]: 'BSC',
+  [ChainId.BSC_TESTNET]: 'Bsc',
+  [ChainId.BSC]: 'Bsc',
   [ChainId.ETHEREUM]: 'Ether',
   [ChainId.GOERLI]: 'Ether',
 }
