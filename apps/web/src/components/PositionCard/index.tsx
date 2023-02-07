@@ -590,7 +590,7 @@ function FullPositionCard({
             </Text>
           </CustomRow>
 
-          {userPoolBalance && JSBI.greaterThan(userPoolBalance.quotient, BIG_INT_ZERO) && (
+          {/* {userPoolBalance && JSBI.greaterThan(userPoolBalance.quotient, BIG_INT_ZERO) && ( */}
             <ButtonWrapper>
               <Button
                 as={NextLinkFromReactRouter}
@@ -610,7 +610,7 @@ function FullPositionCard({
                 {t('Add')}
               </Button>
             </ButtonWrapper>
-          )}
+          {/* )} */}
         </AutoColumn>
       )}
     </CustomCard>
