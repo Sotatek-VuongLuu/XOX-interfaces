@@ -449,8 +449,8 @@ export const linkAddressScan = (chainId) => {
 
 export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
   [ChainId.RINKEBY]: 'Rinkeby',
-  [ChainId.BSC_TESTNET]: 'BSC',
-  [ChainId.BSC]: 'BSC',
+  [ChainId.BSC_TESTNET]: 'Bsc',
+  [ChainId.BSC]: 'Bsc',
   [ChainId.ETHEREUM]: 'Ether',
   [ChainId.GOERLI]: 'Ether',
 }
@@ -1034,7 +1034,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           <div className="noti_claim_pending_h4">{modalReject.message}</div>
           <div className="btn_dismiss_container">
             <button
-              className="btn_dismiss"
+              className="btn_dismiss hv"
               type="button"
               onClick={() => setModalReject({ ...modalReject, isShow: false })}
             >
@@ -1082,7 +1082,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               href={`${linkTransaction(chainId)}${txHash}`}
               target="_blank"
               rel="noreferrer"
-              color="#9072FF"
+              color="#3D8AFF"
             >
               <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
             </LinkExternal>
