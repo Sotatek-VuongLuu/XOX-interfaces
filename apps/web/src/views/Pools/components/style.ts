@@ -120,6 +120,8 @@ export const Content = styled.div`
       color: #ffffff;
       border: none;
       cursor: pointer;
+    }
+    .hv {
       &:hover {
         background: #5f35eb;
       }
@@ -143,11 +145,11 @@ export const Content = styled.div`
     font-size: 16px;
     line-height: 24px;
     text-align: center;
-    color: #9072ff;
+    /* color: #9072ff;
     &:hover {
       text-decoration: underline;
       text-decoration-color: #9072ff !important;
-    }
+    } */
   }
 
   .btn_close {
