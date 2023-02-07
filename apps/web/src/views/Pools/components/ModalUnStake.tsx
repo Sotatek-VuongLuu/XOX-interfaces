@@ -252,7 +252,7 @@ export const ShowBalance = ({ balance }) => {
   return (
     <>
       {Number(balance) <= 0.000001 ? (
-        <Tooltip title={balance ? `${balance}` : null} placement="top-start">
+        <Tooltip title={Number(balance) !== 0 ? `${balance}` : null} placement="top-start">
           <span aria-hidden="true" className="balance_container">
             Balance:&nbsp;
             <span className="balanceLP">{Number(balance) !== 0 ? '0.000000...' : 0}</span>
