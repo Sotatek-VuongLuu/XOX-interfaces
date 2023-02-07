@@ -121,13 +121,21 @@ const WrapperRight = styled(Box)<IPropsWR>`
     background-size: 192px 172px;
     background-repeat: no-repeat;
     background-position: center;
-    height: 172px;
-    width: 192px;
-    background: url(/images/item.svg);
+    height: auto;
+    width: 100%;
+    /* background: url(/images/item.svg); */
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     margin: auto;
   }
-  .item > div {
+  .main-img{
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    img{
+      width: 100%;
+      height: auto;
+    }
+  }
+  .item > div.inner-text {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -174,7 +182,6 @@ const WrapperRight = styled(Box)<IPropsWR>`
   }
 
   .current {
-    background: url(/images/current_item.svg);
     & > div {
       .btn {
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
@@ -493,6 +500,9 @@ const ReferralFriend = ({
 
   const controlWidth = useMemo(() => {
     let slidesPerView = 5
+    if (width < 1600) {
+      slidesPerView = 5
+    }
     if (width < 1400) {
       slidesPerView = 4
     }
@@ -683,7 +693,10 @@ const ReferralFriend = ({
                         className={`item ${item.isReach && item.lever === currentLevelReach ? 'current' : ''}`}
                         key={item.icon}
                       >
-                        <div>
+                        <div className="main-img">
+                          <img src={item.lever === currentLevelReach ? "/images/current_item.svg" : "images/item.svg"} alt="images" /> 
+                        </div>
+                        <div className='inner-text'>
                           <img src={item.icon} alt="icons" className="jewellery" />
 
                           <div className="shadow" />
