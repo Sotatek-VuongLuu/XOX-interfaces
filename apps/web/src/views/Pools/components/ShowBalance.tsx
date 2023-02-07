@@ -5,9 +5,10 @@ interface IProps {
   balance: string | number
   unit?: string
   name?: string
+  notSpace?: boolean
 }
 
-export const ShowBalance = ({ balance, unit = '', name = 'default' }: IProps) => {
+export const ShowBalance = ({ balance, unit = '', name = 'default', notSpace = false }: IProps) => {
   const data = String(balance)
   return (
     <>
@@ -17,9 +18,13 @@ export const ShowBalance = ({ balance, unit = '', name = 'default' }: IProps) =>
             <span className="liquidity value">${balance ? '0.000000...' : 0}</span>
           </Tooltip>
         ) : (
-          <Tooltip title={balance ? `${balance} ${unit}` : null} placement="top-start">
+          <Tooltip
+            title={balance ? (!notSpace ? `${balance} ${unit}` : `${balance}${unit}`) : null}
+            placement="top-start"
+          >
             <p style={{ display: 'flex' }}>
-              <span className="value">{balance ? '0.000000...' : 0}</span>&nbsp;
+              <span className="value">{balance ? '0.000000...' : 0}</span>
+              {!notSpace && <span>&nbsp;</span>}
               <span className="value">{unit}</span>
             </p>
           </Tooltip>
@@ -30,7 +35,7 @@ export const ShowBalance = ({ balance, unit = '', name = 'default' }: IProps) =>
             <span className="value">
               {balance ? formatToShowBalance(String(balance)) : `${name === 'liquidity' ? '$0' : '0'}`}
             </span>
-            &nbsp;
+            {!notSpace && <span>&nbsp;</span>}
             <span className="value">{unit}</span>
           </p>
         </>
@@ -39,9 +44,13 @@ export const ShowBalance = ({ balance, unit = '', name = 'default' }: IProps) =>
           <span className="liquidity value">${balance ? formatToShowBalance(String(balance)) : '0'}</span>
         </Tooltip>
       ) : (
-        <Tooltip title={balance ? `${balance} ${unit}` : null} placement="top-start">
+        <Tooltip
+          title={balance ? (!notSpace ? `${balance} ${unit}` : `${balance}${unit}`) : null}
+          placement="top-start"
+        >
           <p style={{ display: 'flex' }}>
-            <span className="value">{balance ? formatToShowBalance(String(balance)) : '0'}</span>&nbsp;
+            <span className="value">{balance ? formatToShowBalance(String(balance)) : '0'}</span>
+            {!notSpace && <span>&nbsp;</span>}
             <span className="value">{unit}</span>
           </p>
         </Tooltip>
