@@ -35,6 +35,7 @@ import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
 import Dots from 'components/Loader/Dots'
 import { linkTransaction } from 'views/BridgeToken'
+import BigNumber from 'bignumber.js'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
@@ -456,9 +457,9 @@ export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
 }
 
 const Pools: React.FC<React.PropsWithChildren> = () => {
-  const [aprPercent, setAprPercent] = useState<null | number>(null)
+  const [aprPercent, setAprPercent] = useState<null | string | number>(null)
   const [pendingRewardOfUser, setPendingRewardOfUser] = useState<any>(null)
-  const [liquidity, setLiquidity] = useState<null | number>(null)
+  const [liquidity, setLiquidity] = useState<null | number | string>(null)
   const [totalSupplyLP, setTotalSupplyLP] = useState<any>(null)
   const [userStaked, setUserStaked] = useState<null | string>()
   const [reserve, setReserve] = useState<any>()
@@ -507,23 +508,35 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setUserStaked(formatEther(userInfo[0]._hex))
       }
 
-      const reserves1 = Number(formatUnits(reserves[1]._hex, USD_DECIMALS[chainId]))
-      const totalSupply = Number(formatEther(totalSupplyBN._hex))
+      const reserves1 = formatUnits(reserves[1]._hex, USD_DECIMALS[chainId])
+      const totalSupply = formatEther(totalSupplyBN._hex)
       setTotalSupplyLP(totalSupply)
       setReserve(reserves1)
-      setPendingRewardOfUser(Number(formatEther(pendingReward._hex)))
-      const balanceOfFarming = Number(formatEther(amountFarmingBN._hex))
+      setPendingRewardOfUser(formatEther(pendingReward._hex))
+      const balanceOfFarming = formatEther(amountFarmingBN._hex)
+
+      const delta = new BigNumber(endBlock.toNumber() - startBlock.toNumber())
+
       getDataFarming()
       if (!balanceOfFarming) {
         setAprPercent(0)
       } else {
-        const resultPercent =
-          ((endBlock.toNumber() - startBlock.toNumber()) * Number(formatEther(rewardPBlock._hex)) * 100) /
-          balanceOfFarming
+        const resultPercent = delta
+          .multipliedBy(100)
+          .multipliedBy(formatEther(rewardPBlock._hex))
+          .dividedBy(balanceOfFarming)
+          .toFixed(18)
+          .toString()
+
         setAprPercent(resultPercent)
       }
 
-      const amountLiquidity = (balanceOfFarming * reserves1) / totalSupply
+      const amountLiquidity = new BigNumber(balanceOfFarming)
+        .multipliedBy(reserves1)
+        .dividedBy(totalSupply)
+        .toFixed(18)
+        .toString()
+
       setLiquidity(amountLiquidity)
     } catch (error) {
       // eslint-disable-next-line no-console
@@ -622,8 +635,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     try {
       setIsOpenLoadingClaimModal(true)
       setNotiMess(`Unstake ${amountUnStake} ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`)
-      const gasFee = await contractFarmingLP.estimateGas.withdraw(parseEther(amountUnStake))
-      const txWithdraw = await contractFarmingLP.withdraw(parseEther(amountUnStake), {
+      const gasFee = await contractFarmingLP.estimateGas.withdraw(parseEther(amountUnStake.toString()))
+      const txWithdraw = await contractFarmingLP.withdraw(parseEther(amountUnStake.toString()), {
         gasLimit: gasFee,
       })
       const tx = await txWithdraw.wait(1)
@@ -655,8 +668,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     try {
       setNotiMess(`Stake ${amount} ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`)
       setIsOpenLoadingClaimModal(true)
-      const gasFee = await contractFarmingLP.estimateGas.deposit(parseEther(amount))
-      const txDeposit = await contractFarmingLP.deposit(parseEther(amount), {
+      const gasFee = await contractFarmingLP.estimateGas.deposit(parseEther(amount.toString()))
+      const txDeposit = await contractFarmingLP.deposit(parseEther(amount.toString()), {
         gasLimit: gasFee,
       })
       const tx = await txDeposit.wait(1)
@@ -737,8 +750,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
+    // if (loadOk) window.location.reload()
+    // setLoadOk(true)
     const id = setInterval(() => {
       handleGetDataFarming()
     }, 10000)

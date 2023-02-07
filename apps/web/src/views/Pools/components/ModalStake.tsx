@@ -274,7 +274,8 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
 
   useEffect(() => {
     if (amount && reverse && totalSupply) {
-      const amountUsd = (Number(amount) * reverse) / totalSupply
+      const amountUsd = new BigNumber(amount).multipliedBy(reverse).dividedBy(totalSupply).toFixed(2).toString()
+
       setAmountUSD(amountUsd)
     } else {
       setAmountUSD(0)
@@ -306,16 +307,25 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   const handlePercent = (item: string) => {
     switch (item) {
       case '25%':
-        setAmount(new BigNumber(balanceLP).multipliedBy(0.25).toFixed(18).toString())
-        setAmountActive({ ...amountActive, '25%': new BigNumber(balanceLP).multipliedBy(0.25).toFixed(18).toString() })
+        setAmount(parseFloat(new BigNumber(balanceLP).multipliedBy(0.25).toFixed(14).toString()))
+        setAmountActive({
+          ...amountActive,
+          '25%': parseFloat(new BigNumber(balanceLP).multipliedBy(0.25).toFixed(14).toString()),
+        })
         break
       case '50%':
-        setAmount(new BigNumber(balanceLP).multipliedBy(0.5).toFixed(18).toString())
-        setAmountActive({ ...amountActive, '50%': new BigNumber(balanceLP).multipliedBy(0.5).toFixed(18).toString() })
+        setAmount(parseFloat(new BigNumber(balanceLP).multipliedBy(0.5).toFixed(14).toString()))
+        setAmountActive({
+          ...amountActive,
+          '50%': parseFloat(new BigNumber(balanceLP).multipliedBy(0.5).toFixed(14).toString()),
+        })
         break
       case '75%':
-        setAmount(new BigNumber(balanceLP).multipliedBy(0.75).toFixed(18).toString())
-        setAmountActive({ ...amountActive, '75%': new BigNumber(balanceLP).multipliedBy(0.75).toFixed(18).toString() })
+        setAmount(parseFloat(new BigNumber(balanceLP).multipliedBy(0.75).toFixed(14).toString()))
+        setAmountActive({
+          ...amountActive,
+          '75%': parseFloat(new BigNumber(balanceLP).multipliedBy(0.75).toFixed(14).toString()),
+        })
         break
       case 'MAX':
         setAmount(balanceLP)

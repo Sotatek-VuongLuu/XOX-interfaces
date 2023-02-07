@@ -20,14 +20,13 @@ import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 import { useDerivedMintInfo } from 'state/mint/hooks'
 import useSWR from 'swr'
 import { useCurrency } from 'hooks/Tokens'
-
+import { CurrencyLogo } from 'components/Logo'
+import { Token } from '@pancakeswap/sdk'
 import Page from '../Page'
 import FullPositionCard, { StableFullPositionCard } from '../../components/PositionCard'
 import { useCurrencyBalances, useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import { usePairs, PairState, usePairXOX } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import { CurrencyLogo } from 'components/Logo'
-import { Token } from '@pancakeswap/sdk'
 
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -254,7 +253,7 @@ export default function Pool() {
   )
   liquidityTokensWithBalances.map(({ tokens }) => tokens)
 
-  const v2Pairs = [...usePairXOX(),...usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))]
+  const v2Pairs = [...usePairXOX(), ...usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))]
 
   const v2IsLoading =
     fetchingV2PairBalances ||
