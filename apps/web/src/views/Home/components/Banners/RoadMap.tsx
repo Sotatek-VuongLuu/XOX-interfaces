@@ -113,7 +113,7 @@ const Title = styled.div`
 const RoadMap = () => {
   const { width } = useWindowSize()
   return (
-    <Wrapper style={{ overflow: 'hidden' }}>
+    <Wrapper>
       <Title data-aos="fade-up">Development map</Title>
       <Description data-aos="fade-up" data-aos-duration="2300">
         Building The Road For Web3 & Blockchain Mass Adoption

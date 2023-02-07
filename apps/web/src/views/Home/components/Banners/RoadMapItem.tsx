@@ -10,7 +10,18 @@ interface Iprops {
 const ContainerItem = styled.div`
   width: 326px;
   height: fit-content;
-
+  &.left{
+    &::before{
+      content: "";
+      display: inline-block;
+      width: 15px;
+      height: 3px;
+      background: #9072FF;
+      position: absolute;
+      top: -1px;
+      left: -27px;
+    }
+  }
   .title {
     font-weight: 700;
     font-size: 20px;
@@ -90,12 +101,13 @@ const LineDash = styled.div`
 const Wrapper = styled.div`
   position: relative;
   height: 285px;
+  overflow: visible !important;
 `
 
 const RoadMapItem = ({ item, index }: Iprops) => {
   return (
     <Wrapper className={`timeline-item timeline-item-${index}`} data-aos={index % 2 === 0 ? `fade-down` : `fade-up`}>
-      <ContainerItem>
+      <ContainerItem className={index === 1 ? 'left' : ''}>
         {item.status === 'done' ? <LineDash className="line_status" /> : <LineNotDone className="line_status" />}
         {item.status === 'done' ? (
           <img src="/images/mile_stone_done.svg" alt="milestone" className="milestone" />
