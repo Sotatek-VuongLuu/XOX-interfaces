@@ -274,7 +274,11 @@ export default function AddLiquidity({ currencyA, currencyB }) {
           (independentField === Field.CURRENCY_B && !zapTokenCheckedB))
           ? ''
           : typedValue,
-      [dependentField]: noLiquidity ? otherTypedValue : formatAmountString(parsedAmounts[dependentField], 6) ?? '',
+      [dependentField]: noLiquidity
+        ? otherTypedValue
+        : parsedAmounts[dependentField]
+        ? formatAmountString(parsedAmounts[dependentField], 6)
+        : '',
     }),
     [
       canZap,
