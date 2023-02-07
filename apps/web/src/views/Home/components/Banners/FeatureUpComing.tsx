@@ -50,6 +50,36 @@ const WrapperItem = styled.div<IPropsWI>`
   backdrop-filter: blur(15px);
   border-radius: 20px;
 
+  .get_xox {
+    padding: 1px;
+    width: fit-content;
+    margin-top: 26px;
+    border-radius: 8px;
+    background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    cursor: pointer;
+
+    .boxed-child {
+      width: 100%;
+      height: 100%;
+      background-color: #242424;
+      padding: 10px 20px;
+      border-radius: inherit;
+      span {
+        background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        font-weight: 700;
+        font-size: 14px;
+        width: 100%;
+        height: 100%;
+        background-color: #191a28;
+        border-radius: inherit;
+      }
+    }
+  }
+
   .container_title {
     display: flex;
     justify-content: space-between;
@@ -83,7 +113,7 @@ const WrapperItem = styled.div<IPropsWI>`
   }
 `
 
-const UpComingItem = ({ title, describe }) => {
+const UpComingItem = ({ title, describe, link }) => {
   const [isShowReadMore, setIsShow] = useState(false)
   const [readMore, setIsShowReadMore] = useState(describe.length > 260)
   const { width } = useWindowSize()
@@ -108,17 +138,35 @@ const UpComingItem = ({ title, describe }) => {
 
       {width <= 900 ? (
         isShowReadMore ? (
-          <p className="describe">{describe}</p>
+          <>
+            <p className="describe">{describe}</p>
+            <a href={link} target="_blank" rel="noreferrer">
+              <div className="get_xox">
+                <div className="boxed-child">
+                  <span>Discover More</span>
+                </div>
+              </div>
+            </a>
+          </>
         ) : null
       ) : (
-        <p className="describe" style={{ marginTop: 16 }}>
-          {readMore ? `${describe.slice(0, 260)}...` : describe}{' '}
-          {describe.length > 260 ? (
-            <span onClick={() => setIsShowReadMore(!readMore)} style={{ cursor: 'pointer' }}>
-              {readMore ? <span className="expand">Read more</span> : <span className="expand">Read less</span>}
-            </span>
-          ) : null}
-        </p>
+        <>
+          <p className="describe" style={{ marginTop: 16 }}>
+            {readMore ? `${describe.slice(0, 260)}...` : describe}{' '}
+            {describe.length > 260 ? (
+              <span onClick={() => setIsShowReadMore(!readMore)} style={{ cursor: 'pointer' }}>
+                {readMore ? <span className="expand">Read more</span> : <span className="expand">Read less</span>}
+              </span>
+            ) : null}
+          </p>
+          <a href={link} target="_blank" rel="noreferrer">
+            <div className="get_xox">
+              <div className="boxed-child">
+                <span>Discover More</span>
+              </div>
+            </div>
+          </a>
+        </>
       )}
     </WrapperItem>
   )
@@ -137,10 +185,10 @@ const UpComing = () => {
 
       <Box sx={{ flexGrow: 1, display: 'flex' }} data-aos="fade-up">
         <Grid container spacing={2}>
-          {listItem.map(({ title, describe }) => {
+          {listItem.map(({ title, describe, link }) => {
             return (
               <Grid item xs={12} md={3} key={title}>
-                <UpComingItem describe={describe} title={title} />
+                <UpComingItem describe={describe} title={title} link={link} />
               </Grid>
             )
           })}
@@ -150,26 +198,32 @@ const UpComing = () => {
   )
 }
 
+const linkWhitepaper = '#';
+
 const listItem = [
   {
     title: 'Decentralized Wallet',
     describe:
       'With the downfall of Centralized Exchanges, crypto investors finally realized that "Not your Keys not your Crypto", and Decentralized wallets like Trust Wallet & Metamask now more important than ever. The XOX Decentralized Wallet bring inovative features like.',
+    link: linkWhitepaper 
   },
   {
     title: 'Multichain Launchpad',
     describe:
       'Investing in ICOs, Fair Launches and Pre-sales could be very profitable if you find the right projects. We have set the task to Develop The Best Web3 Multi-Chain Launchpad on the Space and after studying over 50 Launchpads we have a pretty good idea of what works and what does not. The XOX Multi-Chain Launchpad will.',
+    link: linkWhitepaper  
   },
   {
     title: 'Coin Listing/Ranking Site',
     describe:
       'Multiple Studies have shown that at least 80% of crypto holders check CoinMarketCap once a day. The problem is that there is no accurate ranking system dedicated to a specific community. So we will create our own one, fully dedicated and targeted towards the needs of the XOX Community. No more searching around multiple platforms. Here is what we got in mind.',
+    link: linkWhitepaper
   },
   {
     title: 'Advance Trading Station',
     describe:
       'The XOX Multi-Chain Trading Station will transform the way you trade tokens in a decentralized way, mainly targeted for traders that need more than a simple Swapping Platform, by just connecting your wallet to our Trading Station you will be able to take advantage of a set of features and tools that will take your trading skills and success to the Next Level.',
+    link: linkWhitepaper
   },
 ]
 
