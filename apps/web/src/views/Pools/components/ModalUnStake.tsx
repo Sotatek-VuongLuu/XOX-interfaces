@@ -300,7 +300,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   const { account } = useActiveWeb3React()
   const [messageError, setMessageError] = useState('')
   const [amountUSD, setAmountUSD] = useState<any>()
-  const [activePercent, setActivePercent] = useState<any>(null)
+  const [_, setActivePercent] = useState<any>(null)
   const [amountActive, setAmountActive] = useState<any>(null)
 
   const handlePercent = (item: string) => {
