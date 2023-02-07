@@ -1,5 +1,4 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { ChainId } from '@pancakeswap/sdk'
 import {
   Box,
   Flex,
@@ -128,6 +127,7 @@ const UserMenu = () => {
       })
       .catch((error) => {
         console.warn(error)
+        setBalanceXOX(undefined)
       })
   }, [account, chainId, provider])
 

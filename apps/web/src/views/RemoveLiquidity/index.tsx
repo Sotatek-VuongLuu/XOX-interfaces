@@ -385,11 +385,23 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
       ? '<1'
       : parsedAmounts[Field.LIQUIDITY_PERCENT].toFixed(0),
     [Field.LIQUIDITY]:
-      independentField === Field.LIQUIDITY ? typedValue : formatAmountString(parsedAmounts[Field.LIQUIDITY], 6) ?? '',
+      independentField === Field.LIQUIDITY
+        ? typedValue
+        : parsedAmounts[Field.LIQUIDITY]
+        ? formatAmountString(parsedAmounts[Field.LIQUIDITY], 6)
+        : '',
     [Field.CURRENCY_A]:
-      independentField === Field.CURRENCY_A ? typedValue : formatAmountString(parsedAmounts[Field.CURRENCY_A], 6) ?? '',
+      independentField === Field.CURRENCY_A
+        ? typedValue
+        : parsedAmounts[Field.CURRENCY_A]
+        ? formatAmountString(parsedAmounts[Field.CURRENCY_A], 6)
+        : '',
     [Field.CURRENCY_B]:
-      independentField === Field.CURRENCY_B ? typedValue : formatAmountString(parsedAmounts[Field.CURRENCY_B], 6) ?? '',
+      independentField === Field.CURRENCY_B
+        ? typedValue
+        : parsedAmounts[Field.CURRENCY_B]
+        ? formatAmountString(parsedAmounts[Field.CURRENCY_B], 6)
+        : '',
   }
 
   const atMaxAmount = parsedAmounts[Field.LIQUIDITY_PERCENT]?.equalTo(new Percent('1'))
@@ -1005,7 +1017,6 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                     onCurrencySelect={() => null}
                     showCommonBases
                     commonBasesType={CommonBasesType.LIQUIDITY}
-                    showBUSD
                   />
                   <ColumnCenter style={{ margin: '16px auto' }}>
                     <ArrowDownIcon width="24px" my="16px" />
@@ -1088,7 +1099,9 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                 </Flex>
               )}
               <RowBetween mt="16px">
-                <Text fontSize={['16px', , '18px']} fontWeight={400} lineHeight={['19px', , '22px']}>{t('Slippage Tolerance')}</Text>
+                <Text fontSize={['16px', , '18px']} fontWeight={400} lineHeight={['19px', , '22px']}>
+                  {t('Slippage Tolerance')}
+                </Text>
                 <Text className="slippage">{allowedSlippage / 100}%</Text>
               </RowBetween>
               {poolData && (
