@@ -337,13 +337,13 @@ export const AddLiquidityModalHeader = ({
           <Text className="text-left">{t('Rates')}</Text>
           <Flex flexDirection="column">
             <Text className="text-right" mb="8px">
-              {`1 ${currencies[Field.CURRENCY_A]?.symbol} = ${formatAmountString(price?.invert(), 6)} ${
+              {`1 ${currencies[Field.CURRENCY_A]?.symbol} = ${formatAmountString(price, 6)} ${
                 currencies[Field.CURRENCY_B]?.symbol
               }`}
             </Text>
 
             <Text className="text-right">
-              {`1 ${currencies[Field.CURRENCY_B]?.symbol} = ${formatAmountString(price, 6)} ${
+              {`1 ${currencies[Field.CURRENCY_B]?.symbol} = ${formatAmountString(price?.invert(), 6)} ${
                 currencies[Field.CURRENCY_A]?.symbol
               }`}
             </Text>
