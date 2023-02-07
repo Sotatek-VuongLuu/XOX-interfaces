@@ -493,24 +493,28 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleGetDataFarming = async () => {
     try {
-      const reserves = await contractPair.getReserves()
-      const totalSupplyBN = await contractPair.totalSupply()
-      const amountFarmingBN = await contractPair.balanceOf(addressFarming)
-      const endBlock = await contractFarmingLP.bonusEndBlock()
-      const startBlock = await contractFarmingLP.startBlock()
-      const rewardPBlock = await contractFarmingLP.rewardPerBlock()
-      const pendingReward = await contractFarmingLP.pendingReward(account)
-      const userInfo = await contractFarmingLP.userInfo(account)
+      const [reserves, totalSupplyBN, amountFarmingBN, endBlock, startBlock, rewardPBlock, pendingReward, userInfo] =
+        await Promise.all([
+          contractPair.getReserves(),
+          contractPair.totalSupply(),
+          contractPair.balanceOf(addressFarming),
+          contractFarmingLP.bonusEndBlock(),
+          contractFarmingLP.startBlock(),
+          contractFarmingLP.rewardPerBlock(),
+          contractFarmingLP.pendingReward(account),
+          contractFarmingLP.userInfo(account),
+        ])
 
+      const totalSupply = formatEther(totalSupplyBN._hex)
+      const reserves1 = formatUnits(reserves[1]._hex, USD_DECIMALS[chainId])
+
+      setTotalSupplyLP(totalSupply)
       if (!Number(formatEther(userInfo[0]._hex))) {
         setUserStaked(null)
       } else {
         setUserStaked(formatEther(userInfo[0]._hex))
       }
 
-      const reserves1 = formatUnits(reserves[1]._hex, USD_DECIMALS[chainId])
-      const totalSupply = formatEther(totalSupplyBN._hex)
-      setTotalSupplyLP(totalSupply)
       setReserve(reserves1)
       setPendingRewardOfUser(formatEther(pendingReward._hex))
       const balanceOfFarming = formatEther(amountFarmingBN._hex)
