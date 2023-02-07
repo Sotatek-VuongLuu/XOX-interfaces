@@ -750,8 +750,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    // if (loadOk) window.location.reload()
-    // setLoadOk(true)
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
     const id = setInterval(() => {
       handleGetDataFarming()
     }, 10000)
