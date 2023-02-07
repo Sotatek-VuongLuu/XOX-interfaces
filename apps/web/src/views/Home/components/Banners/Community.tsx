@@ -198,16 +198,16 @@ const listCommunity = [
     iconMobile: '/images/group_tele_mb.svg',
   },
   {
+    icon: '/images/pc_tiktok.svg',
+    name: 'Tiktok',
+    des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    iconMobile: '/images/tiktok_mb.svg',
+  },
+  {
     icon: '/images/pc_telegram.svg',
     name: 'Telegram Channel',
     des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
     iconMobile: '/images/telegram_mb.svg',
-  },
-  {
-    icon: '/images/pc_discord.svg',
-    name: 'Discord',
-    des: 'Ask general questions and chat with the worldwide community on Discord.',
-    iconMobile: '/images/discord_mb.svg',
   },
   {
     icon: '/images/pc_youtube.svg',
@@ -216,10 +216,10 @@ const listCommunity = [
     iconMobile: '/images/youtube_mb.svg',
   },
   {
-    icon: '/images/pc_tiktok.svg',
-    name: 'Tiktok',
-    des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
-    iconMobile: '/images/tiktok_mb.svg',
+    icon: '/images/pc_discord.svg',
+    name: 'Discord',
+    des: 'Ask general questions and chat with the worldwide community on Discord.',
+    iconMobile: '/images/discord_mb.svg',
   },
 ]
 

@@ -764,10 +764,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       <NavWrapper>
         <Banner>
           <Text className="title" marginBottom="16px">
-            Swap to get XOX and XOXS
+            Add Liquidity. Earn Trading Fees
           </Text>
           <Text className="subtitle" marginBottom="16px">
-            Earn BUSD/USDC from Your XOXS
+            Level Up your DeFi Game
           </Text>
           <a
             href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}

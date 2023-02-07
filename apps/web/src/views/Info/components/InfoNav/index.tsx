@@ -139,7 +139,7 @@ const InfoNav: React.FC<{ allTokens: any, textContentBanner?: string }> = ({ all
     <NavWrapper>
       <MainContent>
         <Text className="title" marginBottom="16px">
-          Swap to get XOX and XOXS
+        Swap to get XOX & XOXS. Earn like a Pro
         </Text>
         <Text className="subtitle" marginBottom="16px">
           {textContentBanner || "Stake XOXS automatically to earn more"}
