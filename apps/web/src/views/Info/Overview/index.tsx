@@ -211,11 +211,11 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   return (
     <Page>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
-      <InfoNav allTokens={allTokens} />
+      <InfoNav allTokens={allTokens} textContentBanner="One Dapp. Unlimited possibilities." />
       <PageContainer>
         <div>
           <ChartCardsContainer>
-            <div className='border-gradient-style'>
+            <div className="border-gradient-style">
               <HoverableChart
                 chartData={chartData}
                 valueProperty="priceUSD"
@@ -233,9 +233,14 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
               />
             </div>
           </ChartCardsContainer>
-          <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} className='border-gradient-style' />
+          <WalletInfoTable
+            currencyDatas={currencyDatas}
+            native={native}
+            allTokens={allTokens}
+            className="border-gradient-style"
+          />
         </div>
-        <div className='border-gradient-style'>
+        <div className="border-gradient-style">
           <TransactionTable />
         </div>
       </PageContainer>

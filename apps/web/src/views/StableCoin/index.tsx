@@ -230,7 +230,7 @@ export default function StableCoin() {
   return (
     <>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
-      <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
+      <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from your XOXS Indefinitely" />
       <Container style={{marginBottom: 100}} key={`container-stablecoin${chainId}`}>
           <>
             {

@@ -337,7 +337,7 @@ export default function CurrencyInputPanel({
               <Flex justifyContent="flex-end" mr="1rem">
                 <Flex maxWidth="200px">
                   <Text fontSize="12px" color="textSubtle" style={{ whiteSpace: 'nowrap' }}>
-                    ~
+                    ~$
                     {isMobile
                       ? formatNumber(amountInDollar).length > 10
                         ? `${formatNumber(amountInDollar).substring(0, 10)}...`
@@ -345,7 +345,7 @@ export default function CurrencyInputPanel({
                       : formatNumber(amountInDollar).length > 30
                       ? `${formatNumber(amountInDollar).substring(0, 30)}...`
                       : formatNumber(amountInDollar)}{' '}
-                    USD
+                    {/* USD */}
                   </Text>
                 </Flex>
               </Flex>

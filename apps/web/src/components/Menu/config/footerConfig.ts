@@ -6,16 +6,32 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
     label: 'Company',
     items: [
       {
-        label: t('About Us'),
-        href: '/about-us',
+        label: t('Swap'),
+        href: '/swap',
       },
       {
-        label: t('Blog'),
-        href: '/blog',
+        label: t('Bridge'),
+        href: '/bridge-token',
       },
       {
-        label: t('Partners'),
-        href: '/partner',
+        label: t('Liquidity'),
+        href: '/liquidity',
+      },
+      {
+        label: t('Farming'),
+        href: '/pools',
+      },
+      {
+        label: t('Referral'),
+        href: '/referral',
+      },
+      {
+        label: t('Asset'),
+        href: '/info',
+      },
+      {
+        label: t('Stable Coin'),
+        href: '/stable-coin',
       },
     ],
   },
