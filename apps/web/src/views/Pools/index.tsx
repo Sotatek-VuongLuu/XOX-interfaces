@@ -815,7 +815,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <>
                     <div className="flex flex_direction">
                       <span className="name">APR:</span>
-                      {account ? <ShowBalance balance={aprPercent} unit="%" /> : <span className="value">-</span>}
+                      {account ? (
+                        <ShowBalance balance={aprPercent} unit="%" notSpace />
+                      ) : (
+                        <span className="value">-</span>
+                      )}
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
@@ -847,7 +851,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div className="flex">
                     <div className="flex flex_direction mb_mr">
                       <span className="name">APR:</span>
-                      {account ? <ShowBalance balance={aprPercent} unit="%" /> : <span className="value">-</span>}
+                      {account ? (
+                        <ShowBalance balance={aprPercent} unit="%" notSpace />
+                      ) : (
+                        <span className="value">-</span>
+                      )}
                     </div>
                     <div className="flex flex_direction">
                       <span className="name">Earned:</span>
@@ -981,7 +989,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div>
                     <p className="flex space_between apr_mb">
                       <span className="name">APR:</span>
-                      {account ? <ShowBalance balance={aprPercent} unit="%" /> : <span className="value">-</span>}
+                      {account ? (
+                        <ShowBalance balance={aprPercent} unit="%" notSpace />
+                      ) : (
+                        <span className="value">-</span>
+                      )}
                     </p>
                     <p className="flex space_between earned_mb">
                       <span className="name">Earned:</span>
