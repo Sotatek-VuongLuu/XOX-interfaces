@@ -170,24 +170,26 @@ export default function Refferal() {
     <>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Wrapper>
-        <Box>
-          <Banner />
-          <MainInfo
-            userCurrentPoint={userCurrentPoint}
-            currentLevelReach={currentLevelReach}
-            listLever={listLever}
-            volumnTotalEarn={volumnTotalEarn}
-          />
-          <ReferralFriend
-            currentLevelReach={currentLevelReach}
-            isClaimAll={isClaimAll}
-            listLevelMustReach={listLevelMustReach}
-            volumnTotalEarn={volumnTotalEarn}
-            getUserPoint={getUserPoint}
-            handleCheckReachLevel={handleReCallGetCurrentPoint}
-            handleCheckPendingRewardAll={handleCheckPendingRewardAll}
-            totalUnClaimed={totalAmountUnClaimOfUser}
-          />
+        <Box display="flex" justifyContent="center">
+          <div style={{ width: 1400 }}>
+            <Banner />
+            <MainInfo
+              userCurrentPoint={userCurrentPoint}
+              currentLevelReach={currentLevelReach}
+              listLever={listLever}
+              volumnTotalEarn={volumnTotalEarn}
+            />
+            <ReferralFriend
+              currentLevelReach={currentLevelReach}
+              isClaimAll={isClaimAll}
+              listLevelMustReach={listLevelMustReach}
+              volumnTotalEarn={volumnTotalEarn}
+              getUserPoint={getUserPoint}
+              handleCheckReachLevel={handleReCallGetCurrentPoint}
+              handleCheckPendingRewardAll={handleCheckPendingRewardAll}
+              totalUnClaimed={totalAmountUnClaimOfUser}
+            />
+          </div>
         </Box>
       </Wrapper>
     </>

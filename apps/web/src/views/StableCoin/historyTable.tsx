@@ -7,7 +7,13 @@ import truncateHash from '@pancakeswap/utils/truncateHash'
 import { Box, Flex, LinkExternal, Skeleton, Text, Button, Link, Select, Input } from '@pancakeswap/uikit'
 import { formatISO9075 } from 'date-fns'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import { useGetChainName, useProtocolTransactionsSWR, useWidthDrawStableCoinSWR, useStakeStableCoinSWR, useMyWidthDrawStableCoinSWR } from 'state/info/hooks'
+import {
+  useGetChainName,
+  useProtocolTransactionsSWR,
+  useWidthDrawStableCoinSWR,
+  useStakeStableCoinSWR,
+  useMyWidthDrawStableCoinSWR,
+} from 'state/info/hooks'
 import { Transaction, TransactionFrom, TransactionType } from 'state/info/types'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -23,7 +29,7 @@ import { Arrow, ClickableColumnHeader } from '../Info/components/InfoTables/shar
 export const TYPE_HISTORY = {
   widthDraw: 'WIDTH_DRAW',
   stake: 'STAKE',
-  myWidthDraw: 'MY_WIDTH_DRAW'
+  myWidthDraw: 'MY_WIDTH_DRAW',
 }
 
 const Wrapper = styled.div`
@@ -60,7 +66,7 @@ const Wrapper = styled.div`
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
   }
 
-  & .total{
+  & .total {
     padding-top: 25px;
   }
 
@@ -84,15 +90,15 @@ const Wrapper = styled.div`
 
   @media (max-width: 576px) {
     & .heading {
-        font-size: 16px;
+      font-size: 16px;
     }
 
-    & .total{
-        padding-top: 0px;
-        font-size: 12px;
+    & .total {
+      padding-top: 0px;
+      font-size: 12px;
     }
-    & .size-14{
-        font-size: 14px !important;
+    & .size-14 {
+      font-size: 14px !important;
     }
   }
 
@@ -128,7 +134,7 @@ const Table = styled.div`
   align-items: center;
   position: relative;
   grid-template-columns: 0.15fr 1.4fr 1.2fr 0.8fr;
-  &.table-withdraw{
+  &.table-withdraw {
     grid-gap: 13px 25px;
   }
   .text-ellipsis{
@@ -142,11 +148,11 @@ const Table = styled.div`
     margin-bottom: 16px;
   }
 
-  .flex-username{
+  .flex-username {
     display: flex;
     align-items: center;
     gap: 10px;
-    img{
+    img {
       width: 30px;
       object-fit: cover;
       height: 30px;
@@ -154,12 +160,12 @@ const Table = styled.div`
     }
   }
 
-  @media(max-width: 576px){
+  @media (max-width: 576px) {
     grid-gap: 15px 25px;
-    .table-header{
-        font-size: 14px;
+    .table-header {
+      font-size: 14px;
     }
-    div[font-size="16px"]{
+    div[font-size='16px'] {
       font-size: 14px;
       white-space: nowrap;
     }
@@ -333,13 +339,18 @@ const formatNumberDecimal = (n: any, decimal?: number) => {
 }
 
 const DataRow: React.FC<
-  React.PropsWithChildren<{ transaction: any; index: number; page: number; perPage: number, typePage: any }>
+  React.PropsWithChildren<{ transaction: any; index: number; page: number; perPage: number; typePage: any }>
 > = ({ transaction, index, page, perPage, typePage }) => {
   const { t } = useTranslation()
-  const { chainId } = useActiveChainId();
-  const abs0 = formatUnits(transaction?.amount, USD_DECIMALS[chainId]);
-  const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
-  const symbolToken0 = typePage === TYPE_HISTORY.stake ? 'XOXS' : (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BUSD' : 'USDC';
+  const { chainId } = useActiveChainId()
+  const abs0 = formatUnits(transaction?.amount, USD_DECIMALS[chainId])
+  const chainIdLink = [1, 5, 56, 97].some((it) => it === chainId) ? chainId : ChainId.ETHEREUM
+  const symbolToken0 =
+    typePage === TYPE_HISTORY.stake
+      ? 'XOXS'
+      : chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET
+      ? 'BUSD'
+      : 'USDC'
 
   const onImageError = (e: any) => {
     // eslint-disable-next-line no-param-reassign
@@ -349,7 +360,7 @@ const DataRow: React.FC<
   return (
     <>
       <Text
-        className='size-14'
+        className="size-14"
         fontSize="16px"
         fontFamily="Inter"
         fontStyle="normal"
@@ -360,15 +371,15 @@ const DataRow: React.FC<
       >
         {index + 1 + (page - 1) * perPage}
       </Text>
-      {
-        typePage === TYPE_HISTORY.myWidthDraw && <LinkExternal
+      {typePage === TYPE_HISTORY.myWidthDraw && (
+        <LinkExternal
           color="#9072FF"
           href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
           key={`${transaction.hash}-type`}
         >
           <Text
             fontSize="16px"
-            className='size-14'
+            className="size-14"
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="400"
@@ -378,38 +389,43 @@ const DataRow: React.FC<
             WithDraw
           </Text>
         </LinkExternal>
-      }
-      {
-        typePage === TYPE_HISTORY.widthDraw &&  <Text
+      )}
+      {typePage === TYPE_HISTORY.widthDraw && (
+        <Text
           fontSize="16px"
-          className='size-14 flex-username'
+          className="size-14 flex-username"
           fontFamily="Inter"
           fontStyle="normal"
           fontWeight="400"
           lineHeight="19px"
           color="rgba(255, 255, 255, 0.87)"
         >
-          {transaction?.avatar ? <img src={transaction?.avatar} alt="avatar" onError={onImageError} /> : <img src="images/default_avatar.jpg" alt="imagess" />}
+          {transaction?.avatar ? (
+            <img src={transaction?.avatar} alt="avatar" onError={onImageError} />
+          ) : (
+            <img src="images/default_avatar.jpg" alt="imagess" />
+          )}
           {transaction?.username}
         </Text>
-      }
+      )}
       <Text
         fontSize="16px"
         fontFamily="Inter"
-        className='size-14'
+        className="size-14"
         fontStyle="normal"
         fontWeight="400"
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-time`}
+        style={{whiteSpace: 'nowrap'}}
       >
         {formatISO9075(parseInt(transaction.date, 10) * 1000)}
       </Text>
-      {
-        typePage !== TYPE_HISTORY.widthDraw && <Text
+      {typePage !== TYPE_HISTORY.widthDraw && (
+        <Text
           fontSize="16px"
           fontFamily="Inter"
-          className='size-14'
+          className="size-14"
           fontStyle="normal"
           fontWeight="400"
           lineHeight="19px"
@@ -422,9 +438,9 @@ const DataRow: React.FC<
             </span>
           </Tooltip>
         </Text>
-      }
-      {
-        typePage === TYPE_HISTORY.widthDraw && <LinkExternal
+      )}
+      {typePage === TYPE_HISTORY.widthDraw && (
+        <LinkExternal
           color="#9072FF"
           href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
           key={`${transaction.hash}-type`}
@@ -432,7 +448,7 @@ const DataRow: React.FC<
           <Text
             fontSize="16px"
             fontFamily="Inter"
-            className='size-14'
+            className="size-14"
             fontStyle="normal"
             fontWeight="400"
             lineHeight="19px"
@@ -446,24 +462,24 @@ const DataRow: React.FC<
             </Tooltip>
           </Text>
         </LinkExternal>
-      }
-      {
-        typePage === TYPE_HISTORY.stake && <Text
+      )}
+      {typePage === TYPE_HISTORY.stake && (
+        <Text
           fontSize="16px"
           fontFamily="Inter"
-          className='size-14'
+          className="size-14"
           fontStyle="normal"
           fontWeight="400"
           lineHeight="19px"
           color="rgba(255, 255, 255, 0.87)"
           key={`${transaction.hash}-token0`}
         >{`${transaction?.apy}%`}</Text>
-      }
+      )}
     </>
   )
 }
 
-const HistoryTable = ({typePage} : {typePage?: string}) => {
+const HistoryTable = ({ typePage }: { typePage?: string }) => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
   const [sortDirection, setSortDirection] = useState<boolean>(true)
   const { account } = useActiveWeb3React()
@@ -475,13 +491,18 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
   const [tempPage, setTempPage] = useState('1')
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
-  const transactions = useProtocolTransactionsSWR();
-  const dataTable = (typePage === TYPE_HISTORY.stake) ? useStakeStableCoinSWR(account) : (typePage === TYPE_HISTORY.widthDraw) ? useWidthDrawStableCoinSWR() : useMyWidthDrawStableCoinSWR(account);
+  const transactions = useProtocolTransactionsSWR()
+  const dataTable =
+    typePage === TYPE_HISTORY.stake
+      ? useStakeStableCoinSWR(account)
+      : typePage === TYPE_HISTORY.widthDraw
+      ? useWidthDrawStableCoinSWR()
+      : useMyWidthDrawStableCoinSWR(account)
   const [currentTransactions, setCurrentTransactions] = useState([])
 
   const { t } = useTranslation()
 
-  const [page, setPage] = useState(1) 
+  const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
 
   const [txFilter, setTxFilter] = useState<TransactionType | undefined>(undefined)
@@ -642,33 +663,33 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
         />
       </svg>
     )
-  }, []);
+  }, [])
 
-  const loadDataWithDraw = async() => {
-    const listAddress = dataTable?.transactionsXOX?.map((item) => item.address);
+  const loadDataWithDraw = async () => {
+    const listAddress = dataTable?.transactionsXOX?.map((item) => item.address)
     if (listAddress.length > 0) {
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
         wallets: listAddress,
-      });
-      const dataMapping:any = dataTable?.transactionsXOX?.map((item:any, index:any) => {
-        const dataUserInfos = response.data;
+      })
+      const dataMapping: any = dataTable?.transactionsXOX?.map((item: any, index: any) => {
+        const dataUserInfos = response.data
         const userInfo = dataUserInfos?.find((user) => item.address === user.address)
         return {
           ...item,
           username: userInfo?.username ?? null,
           avatar: userInfo?.avatar ?? null,
         }
-      });
-      setCurrentTransactions(dataMapping);
+      })
+      setCurrentTransactions(dataMapping)
     }
   }
 
   useEffect(() => {
-    if(dataTable){
-      if(typePage === TYPE_HISTORY.widthDraw){
-        loadDataWithDraw();
-      }else{
-        setCurrentTransactions(dataTable?.transactionsXOX);
+    if (dataTable) {
+      if (typePage === TYPE_HISTORY.widthDraw) {
+        loadDataWithDraw()
+      } else {
+        setCurrentTransactions(dataTable?.transactionsXOX)
       }
     }
   }, [dataTable])
@@ -694,8 +715,8 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
           color="rgba(255, 255, 255, 0.87)"
           height="24px"
         >
-          {typePage === TYPE_HISTORY.stake && "Stake History" }
-          {(typePage === TYPE_HISTORY.widthDraw || typePage === TYPE_HISTORY.myWidthDraw) && "Withdraw History" }
+          {typePage === TYPE_HISTORY.stake && 'Stake History'}
+          {(typePage === TYPE_HISTORY.widthDraw || typePage === TYPE_HISTORY.myWidthDraw) && 'Withdraw History'}
         </Text>
       </Flex>
       <CustomTableWrapper>
@@ -711,8 +732,8 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
           >
             No
           </Text>
-          {
-            typePage === TYPE_HISTORY.myWidthDraw && <Text
+          {typePage === TYPE_HISTORY.myWidthDraw && (
+            <Text
               fontSize="16px"
               fontFamily="Inter"
               fontStyle="normal"
@@ -723,9 +744,9 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
             >
               Action
             </Text>
-          }
-          {
-            typePage === TYPE_HISTORY.widthDraw && <Text
+          )}
+          {typePage === TYPE_HISTORY.widthDraw && (
+            <Text
               fontSize="16px"
               fontFamily="Inter"
               fontStyle="normal"
@@ -736,7 +757,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
             >
               Username
             </Text>
-          }
+          )}
           <Text
             fontSize="16px"
             fontFamily="Inter"
@@ -763,8 +784,8 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
               {iconSortField === null ? IconSort : iconSortField ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
-          {
-            typePage === TYPE_HISTORY.stake && <Text
+          {typePage === TYPE_HISTORY.stake && (
+            <Text
               fontSize="16px"
               fontFamily="Inter"
               fontStyle="normal"
@@ -775,8 +796,8 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
             >
               APY
             </Text>
-          }
-          
+          )}
+
           {/* <Break /> */}
 
           {currentTransactions ? (
@@ -786,7 +807,13 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
                   return (
                     // eslint-disable-next-line react/no-array-index-key
                     <Fragment key={index}>
-                      <DataRow transaction={transaction} index={index} page={page} perPage={perPage} typePage={typePage} />
+                      <DataRow
+                        transaction={transaction}
+                        index={index}
+                        page={page}
+                        perPage={perPage}
+                        typePage={typePage}
+                      />
                     </Fragment>
                   )
                 }
@@ -802,7 +829,7 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
           )}
         </Table>
         {sortedTransactions.length === 0 ? (
-          <Flex justifyContent="center" style={{margin: "100px 0"}}>
+          <Flex justifyContent="center" style={{ margin: '100px 0' }}>
             <Text>{t('No Transactions')}</Text>
           </Flex>
         ) : undefined}
@@ -932,7 +959,9 @@ const HistoryTable = ({typePage} : {typePage?: string}) => {
               onOptionChange={(option: any) => setPerPage(option.value)}
               className="select-page"
             />
-            <Text className="go-page" style={{whiteSpace: 'nowrap'}}>Go to page</Text>
+            <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
+              Go to page
+            </Text>
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}

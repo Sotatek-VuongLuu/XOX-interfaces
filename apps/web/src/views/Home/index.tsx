@@ -33,9 +33,10 @@ const StyledSection = styled(PageSection)`
     padding: 0px 130px;
   }
 `
-const ImageWrapper = styled.div`
-  width: 100%;
+const ImageWrapper = styled.video`
+  width: 117%;
   height: 74vh;
+  margin-right: -20px;
   display: grid;
   place-content: center;
 
@@ -47,14 +48,14 @@ const ImageWrapper = styled.div`
 
   ${({ theme }) => theme.mediaQueries.xxl} {
     img {
-      transform: scale(1.6) translateY(-30px);
+      transform: scale(5) translateY(-30px);
     }
   }
 `
 
 const Home: React.FC<React.PropsWithChildren> = () => {
   const { width: innerWidth } = useWindowSize()
-  const widthResize = innerWidth > 1400 ? 1400 : innerWidth > 900 ? 1200 : '100%';
+  const widthResize = innerWidth > 1400 ? 1400 : innerWidth > 900 ? 1200 : '100%'
   useEffect(() => {
     AOS.init({ duration: 2000 })
   }, [])
@@ -91,13 +92,8 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         </div>
 
         {innerWidth > 967 && (
-          // <Spline
-          //   scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-          //   onLoad={(e) => e.setZoom(1)}
-          //   id="asset_3d"
-          // />
-          <ImageWrapper>
-            <img src="/images/xox-desktop.gif" alt="" />
+          <ImageWrapper autoPlay muted loop>
+            <source src="/lp_video.webm" type="video/webm" />
           </ImageWrapper>
         )}
       </StyledSection>

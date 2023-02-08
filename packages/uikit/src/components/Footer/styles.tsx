@@ -29,9 +29,8 @@ export const SubTitleStyle = styled.span`
 `;
 
 export const FooterMainContent = styled.div`
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  gap: 123px;
+  display: flex;
+  justify-content: center;
   padding: 92px 119px;
   background-color: #1d1d1d;
   position: relative;
@@ -47,10 +46,22 @@ export const FooterMainContent = styled.div`
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
   }
 
+  @media screen and (max-width: 560px) {
+    padding: 0;
+  }
+`;
+
+export const Container = styled.div`
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr 1fr;
+  gap: 123px;
+  width: 1400px;
+
   @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr 1fr;
     gap: 40px 20px;
     padding: 40px;
+    width: 100%;
 
     & > div:first-child,
     & > div:last-child {
@@ -67,9 +78,18 @@ export const FooterMainContent = styled.div`
   }
 `;
 
+export const Wrapper = styled.div`
+  width: 1400px;
+  display: flex;
+  justify-content: center;
+
+  @media screen and (max-width: 560px) {
+    flex-direction: column;
+  }
+`;
+
 export const StyledListItem = styled.li`
   margin-bottom: 12px;
-  text-transform: capitalize;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;

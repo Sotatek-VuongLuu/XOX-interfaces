@@ -104,7 +104,7 @@ const Banner = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} lg={8}>
           <WrapperLeft>
-            <p className="title">Earn Together</p>
+            <p className="title">Invite Your Friends. Earn Together</p>
 
             <p className="description">
               Start Earning passive/active income with the XOX Multi-Chain Gamified Referral Program.

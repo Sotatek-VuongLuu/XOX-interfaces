@@ -126,25 +126,25 @@ const WrapperRight = styled(Box)<IPropsWR>`
     /* background: url(/images/item.svg); */
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     margin: auto;
-    &:hover{
+    &:hover {
       transform: scale(1.11);
-      .jewellery{
+      .jewellery {
         animation: ${floatingAnim('0px', '10px')} 3s ease-in-out infinite !important;
       }
-      .main-img .sec-img{
+      .main-img .sec-img {
         opacity: 1;
       }
     }
   }
-  .main-img{
+  .main-img {
     width: calc(100% + 20px);
     margin-left: -10px;
     position: relative;
-    img{
+    img {
       width: 100%;
       height: auto;
     }
-    .sec-img{
+    .sec-img {
       position: absolute;
       left: 0;
       top: 0;
@@ -187,13 +187,13 @@ const WrapperRight = styled(Box)<IPropsWR>`
       margin-top: 12px;
       cursor: pointer;
     }
-    
+
     @media (min-width: 1600px) {
-      .title{
+      .title {
         font-size: 14px;
         margin-top: 25px;
       }
-      .btn{
+      .btn {
         font-size: 18px;
         margin-top: 28px;
       }
@@ -273,7 +273,7 @@ const WrapperRight = styled(Box)<IPropsWR>`
       line-height: 17px;
       color: #ffffff;
       padding: 8px 20px;
-      &:hover{
+      &:hover {
         background: #5f35eb;
       }
     }
@@ -722,17 +722,22 @@ const ReferralFriend = ({
                         key={item.icon}
                       >
                         <div className="main-img">
-                          <img className='first-img' src={item.lever === currentLevelReach ? "/images/current_item.svg" : "images/item.svg"} alt="images" /> 
-                          <img className='sec-img' src="/images/current_item.svg" alt='images' />
+                          <img
+                            className="first-img"
+                            src={item.lever === currentLevelReach ? '/images/current_item.svg' : 'images/item.svg'}
+                            alt="images"
+                          />
+                          <img className="sec-img" src="/images/current_item.svg" alt="images" />
                         </div>
-                        <div className='inner-text'>
+                        <div className="inner-text">
                           <img src={item.icon} alt="icons" className="jewellery" />
 
                           <div className="shadow" />
 
                           <p className="title">
                             {item.point.toLocaleString()} points
-                            <br />~${item.dollar.toLocaleString()}
+                            <br />
+                            ~${item.dollar.toLocaleString()}
                           </p>
 
                           {account && (
@@ -747,7 +752,7 @@ const ReferralFriend = ({
                               }}
                             >
                               {item?.isClaimed ? (
-                                <span>Claimed</span>
+                                <span className={`${item.lever === currentLevelReach ? 'claim' : ''}`}>Claimed</span>
                               ) : (
                                 <span className={`${item.isReach ? 'claim' : ''} `}>Claim</span>
                               )}

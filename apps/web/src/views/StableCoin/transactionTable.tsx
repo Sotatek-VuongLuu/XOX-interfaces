@@ -48,7 +48,7 @@ const Wrapper = styled.div`
     background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
   }
 
-  & .total{
+  & .total {
     padding-top: 25px;
   }
 
@@ -72,15 +72,15 @@ const Wrapper = styled.div`
 
   @media (max-width: 576px) {
     & .heading {
-        font-size: 16px;
+      font-size: 16px;
     }
 
-    & .total{
-        padding-top: 0px;
-        font-size: 12px;
+    & .total {
+      padding-top: 0px;
+      font-size: 12px;
     }
-    & .size-14{
-        font-size: 14px !important;
+    & .size-14 {
+      font-size: 14px !important;
     }
   }
 
@@ -120,12 +120,12 @@ const Table = styled.div`
     margin-bottom: 16px;
   }
 
-  @media(max-width: 576px){
+  @media (max-width: 576px) {
     grid-gap: 15px 25px;
-    .table-header{
-        font-size: 14px;
+    .table-header {
+      font-size: 14px;
     }
-    div[font-size="16px"]{
+    div[font-size='16px'] {
       font-size: 14px;
       white-space: nowrap;
     }
@@ -286,9 +286,9 @@ const DataRow: React.FC<
 > = ({ transaction, index, page, perPage }) => {
   const { t } = useTranslation()
   const abs0 = Math.abs(transaction.amountToken0)
-  const abs1 = Math.abs(transaction.amountToken1)/10
-  const { chainId } = useActiveChainId();
-  const chainIdLink  = [1,5,56,97].some(it => it === chainId) ? chainId : ChainId.ETHEREUM;
+  const abs1 = Math.abs(transaction.amountToken1) / 10
+  const { chainId } = useActiveChainId()
+  const chainIdLink = [1, 5, 56, 97].some((it) => it === chainId) ? chainId : ChainId.ETHEREUM
   const symbolToken0 = transaction.token0Symbol === 'xox' ? 'XOX' : transaction.token0Symbol
   const symbolToken1 = transaction.token1Symbol === 'xox' ? 'XOX' : transaction.token1Symbol
 
@@ -340,6 +340,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-time`}
+        style={{whiteSpace: 'nowrap'}}
       >
         {formatISO9075(parseInt(transaction.timestamp, 10) * 1000)}
       </Text>
@@ -368,7 +369,7 @@ const TransactionsTable: React.FC = () => {
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
   const [currentTransactions, setCurrentTransactions] = useState([])
-  const stablecoin = useTransactionStableCoinSWR();
+  const stablecoin = useTransactionStableCoinSWR()
 
   const { t } = useTranslation()
 
@@ -554,7 +555,7 @@ const TransactionsTable: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    if(stablecoin){
+    if (stablecoin) {
       setCurrentTransactions(stablecoin?.transactionsXOX)
     }
   }, [stablecoin])
@@ -658,7 +659,7 @@ const TransactionsTable: React.FC = () => {
           )}
         </Table>
         {sortedTransactions.length === 0 ? (
-          <Flex justifyContent="center" style={{margin: "100px 0"}}>
+          <Flex justifyContent="center" style={{ margin: '100px 0' }}>
             <Text>{t('No Transactions')}</Text>
           </Flex>
         ) : undefined}
@@ -788,7 +789,9 @@ const TransactionsTable: React.FC = () => {
               onOptionChange={(option: any) => setPerPage(option.value)}
               className="select-page"
             />
-            <Text className="go-page" style={{whiteSpace: 'nowrap'}}>Go to page</Text>
+            <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
+              Go to page
+            </Text>
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}
