@@ -45,7 +45,7 @@ const WrapperLeft = styled.div`
 const WrapperRight = styled.div`
   width: 100%;
   height: 100%;
-  background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+  background: linear-gradient(27.06deg, #4919d0 13.81%, #9a56f9 136.8%);
   border-radius: 10px;
   padding: 24px;
 
@@ -104,7 +104,7 @@ const Banner = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} lg={8}>
           <WrapperLeft>
-            <p className="title">Earn Together</p>
+            <p className="title">Invite Your Friends. Earn Together</p>
 
             <p className="description">
               Start Earning passive/active income with the XOX Multi-Chain Gamified Referral Program.

@@ -26,9 +26,14 @@ export interface IItemLevel {
 
 const Wrapper = styled(Box)`
   padding: 48px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     padding: 48px 24px;
+    display: block;
   }
 `
 
@@ -43,6 +48,23 @@ const MainBackground = styled.div`
     width: 100vw;
     height: auto;
     object-fit: cover;
+  }
+`
+
+const BoxStyled = styled(Box)`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  .content {
+    width: 1400px;
+  }
+
+  @media screen and (max-width: 1200px) {
+    display: block;
+    .content {
+      width: unset;
+    }
   }
 `
 
@@ -170,8 +192,8 @@ export default function Refferal() {
     <>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Wrapper>
-        <Box display="flex" justifyContent="center">
-          <div style={{ width: 1400 }}>
+        <BoxStyled>
+          <div className="content">
             <Banner />
             <MainInfo
               userCurrentPoint={userCurrentPoint}
@@ -190,7 +212,7 @@ export default function Refferal() {
               totalUnClaimed={totalAmountUnClaimOfUser}
             />
           </div>
-        </Box>
+        </BoxStyled>
       </Wrapper>
     </>
   )

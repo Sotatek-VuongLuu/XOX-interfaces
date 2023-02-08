@@ -188,17 +188,6 @@ const WrapperRight = styled(Box)<IPropsWR>`
       cursor: pointer;
     }
 
-    @media (min-width: 1600px) {
-      .title {
-        font-size: 14px;
-        margin-top: 25px;
-      }
-      .btn {
-        font-size: 18px;
-        margin-top: 28px;
-      }
-    }
-
     button:disabled,
     button[disabled] {
       cursor: not-allowed;
@@ -440,6 +429,16 @@ const Content = styled.div`
   }
 `
 
+const Pad = styled.div`
+  width: 100%;
+  height: calc(100% + 16px);
+  background: #242424;
+  margin-top: -16px;
+  border-bottom-left-radius: 10px;
+  border-bottom-right-radius: 10px;
+  z-index: 7;
+`
+
 const ReferralFriend = ({
   listLevelMustReach,
   isClaimAll,
@@ -612,9 +611,9 @@ const ReferralFriend = ({
 
   return (
     <>
-      <Box sx={{ marginTop: '16px' }}>
+      <Box sx={{ marginTop: '16px', zIndex: 9 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={4}>
+          <Grid item xs={12} lg={4} sx={{ zIndex: 7 }}>
             {account && (
               <div className="border-gradient-style">
                 <WrapperLeft>
@@ -704,6 +703,8 @@ const ReferralFriend = ({
                 </WrapperLeft>
               </div>
             )}
+
+            {!account && <Pad />}
           </Grid>
 
           <Grid item xs={12} lg={8}>

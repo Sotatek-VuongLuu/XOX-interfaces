@@ -44,6 +44,10 @@ const WrapperBorder = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+
+  @media (max-width: 576px) {
+    width: 100%;
+  }
 `
 
 const Box = styled.div`
@@ -183,7 +187,7 @@ const MainBackground = styled.div`
   bottom: 0;
   svg {
     width: 100vw;
-    height: auto;
+    /* height: auto; */
     object-fit: cover;
   }
 `
@@ -193,12 +197,24 @@ const ContainerBanner = styled.div`
   justify-content: center;
   padding: 28px 0px 24px;
 
-  @media (max-width: 576px) {
-    padding: 28px 24px 24px;
-  }
   .banner {
     width: 1400px;
   }
+  @media (max-width: 576px) {
+    padding: 28px 24px 24px;
+    .banner {
+      width: unset;
+    }
+  }
+`
+
+const FullWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
 `
 
 export const formatNumberDecimal = (n: any, decimal?: number) => {
@@ -257,94 +273,97 @@ export default function StableCoin() {
   return (
     <>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
-      <ContainerBanner>
-        <div className="banner">
-          <InfoNav
-            allTokens={allTokens}
-            textContentBanner="Earn BUSD/USDC from your XOXS Indefinitely"
-            hasPadding={false}
-          />
-        </div>
-      </ContainerBanner>
-      <Container style={{ marginBottom: 100 }} key={`container-stablecoin${chainId}`}>
-        <div className="content">
-          {account && (
-            <Row>
+
+      <FullWrapper>
+        <ContainerBanner>
+          <div className="banner">
+            <InfoNav
+              allTokens={allTokens}
+              textContentBanner="Earn BUSD/USDC from your XOXS Indefinitely"
+              hasPadding={false}
+            />
+          </div>
+        </ContainerBanner>
+        <Container style={{ marginBottom: 100 }} key={`container-stablecoin${chainId}`}>
+          <div className="content">
+            {account && (
+              <Row>
+                <WrapperBorder className="border-gradient-style">
+                  <Box className="h-190">
+                    <Flex justifyContent="space-between" alignItems="center" width="100%">
+                      <WrapText>
+                        <p>Your current XOXS</p>
+                        <p className="number">{currentXOX}</p>
+                        <Link href="/stable-coin/history">
+                          <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
+                            View your history
+                          </Button>
+                        </Link>
+                      </WrapText>
+                      <img src="/images/1/tokens/XOX.png" alt="icon" />
+                    </Flex>
+                  </Box>
+                </WrapperBorder>
+                <WrapperBorder className="border-gradient-style">
+                  <Box className="h-190">
+                    <Earned address={account} />
+                  </Box>
+                </WrapperBorder>
+                <WrapperBorder className="border-gradient-style">
+                  <Box className="h-190">
+                    <Flex justifyContent="space-between" alignItems="center" width="100%">
+                      <WrapText>
+                        <p>Your current reward</p>
+                        <p className="number">{currentReward}</p>
+                        <Link href="/stable-coin/withdraw">
+                          <Button height={37} style={{ fontSize: 14 }}>
+                            Withdraw reward
+                          </Button>
+                        </Link>
+                      </WrapText>
+                      <img src="/images/1/tokens/XOX.png" alt="icon" />
+                    </Flex>
+                  </Box>
+                </WrapperBorder>
+              </Row>
+            )}
+            {!account && (
+              <Row>
+                <WrapperBorder className="border-gradient-style">
+                  <Box className="h-190">
+                    <Flex
+                      flexDirection="column"
+                      justifyContent="center"
+                      alignItems="center"
+                      style={{ width: '100%', padding: '10px 0' }}
+                    >
+                      <TextConnectWallet style={{ color: 'rgba(255, 255, 255, 0.87)' }}>
+                        Please connect wallet to <br />
+                        view your information
+                      </TextConnectWallet>
+                      <ConnectWalletButtonWraper scale="sm" style={{ whiteSpace: 'nowrap' }}>
+                        <Trans>Connect Wallet</Trans>
+                      </ConnectWalletButtonWraper>
+                    </Flex>
+                  </Box>
+                </WrapperBorder>
+              </Row>
+            )}
+            <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
               <WrapperBorder className="border-gradient-style">
-                <Box className="h-190">
-                  <Flex justifyContent="space-between" alignItems="center" width="100%">
-                    <WrapText>
-                      <p>Your current XOXS</p>
-                      <p className="number">{currentXOX}</p>
-                      <Link href="/stable-coin/history">
-                        <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
-                          View your history
-                        </Button>
-                      </Link>
-                    </WrapText>
-                    <img src="/images/1/tokens/XOX.png" alt="icon" />
-                  </Flex>
+                <Box className="wrap-table">
+                  <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
                 </Box>
               </WrapperBorder>
               <WrapperBorder className="border-gradient-style">
-                <Box className="h-190">
-                  <Earned address={account} />
-                </Box>
-              </WrapperBorder>
-              <WrapperBorder className="border-gradient-style">
-                <Box className="h-190">
-                  <Flex justifyContent="space-between" alignItems="center" width="100%">
-                    <WrapText>
-                      <p>Your current reward</p>
-                      <p className="number">{currentReward}</p>
-                      <Link href="/stable-coin/withdraw">
-                        <Button height={37} style={{ fontSize: 14 }}>
-                          Withdraw reward
-                        </Button>
-                      </Link>
-                    </WrapText>
-                    <img src="/images/1/tokens/XOX.png" alt="icon" />
-                  </Flex>
+                <Box className="wrap-table">
+                  <TransactionTable />
                 </Box>
               </WrapperBorder>
             </Row>
-          )}
-          {!account && (
-            <Row>
-              <WrapperBorder className="border-gradient-style">
-                <Box className="h-190">
-                  <Flex
-                    flexDirection="column"
-                    justifyContent="center"
-                    alignItems="center"
-                    style={{ width: '100%', padding: '10px 0' }}
-                  >
-                    <TextConnectWallet style={{ color: 'rgba(255, 255, 255, 0.87)' }}>
-                      Please connect wallet to <br />
-                      view your information
-                    </TextConnectWallet>
-                    <ConnectWalletButtonWraper scale="sm" style={{ whiteSpace: 'nowrap' }}>
-                      <Trans>Connect Wallet</Trans>
-                    </ConnectWalletButtonWraper>
-                  </Flex>
-                </Box>
-              </WrapperBorder>
-            </Row>
-          )}
-          <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
-            <WrapperBorder className="border-gradient-style">
-              <Box className="wrap-table">
-                <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
-              </Box>
-            </WrapperBorder>
-            <WrapperBorder className="border-gradient-style">
-              <Box className="wrap-table">
-                <TransactionTable />
-              </Box>
-            </WrapperBorder>
-          </Row>
-        </div>
-      </Container>
+          </div>
+        </Container>
+      </FullWrapper>
     </>
   )
 }

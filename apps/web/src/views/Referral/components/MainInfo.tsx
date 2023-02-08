@@ -11,6 +11,7 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useCallback, useEffect, useState } from 'react'
 import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 import styled from 'styled-components'
+import useWindowSize from 'hooks/useWindowSize'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import BigNumber from 'bignumber.js'
 import HowToJoin from './HowToJoin'
@@ -51,6 +52,7 @@ interface IPropsTotal {
   account?: string
   chainid?: number
   totalPoint?: number
+  isMobileOrTablet?: boolean
 }
 
 interface IPropsContainer {
@@ -107,14 +109,14 @@ const First = styled.div<IPropsTotal>`
       padding: 10px 20px;
       cursor: pointer;
       border-radius: 4px;
-      &:hover{
+      &:hover {
         background: #5f35eb;
       }
     }
 
     .tab_item.active {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-      &:hover{
+      &:hover {
         background: #5f35eb;
       }
     }
@@ -155,9 +157,11 @@ const Second = styled.div<IPropsTotal>`
   .total_point {
     margin-top: 16px;
     padding: 24px;
+    position: relative;
     background: #242424;
-    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-    border-radius: 10px;
+    box-shadow: ${({ account, isMobileOrTablet }) =>
+      account || isMobileOrTablet ? '0px 0px 16px rgba(0, 0, 0, 0.5)' : ''};
+    border-radius: ${({ account, isMobileOrTablet }) => (account || isMobileOrTablet ? '10px' : ' 10px 10px 0px 0px')};
 
     .title {
       font-weight: 700;
@@ -201,6 +205,15 @@ const Second = styled.div<IPropsTotal>`
       line-height: 17px;
     }
   }
+  .unconnect {
+    position: relative;
+    .content_connect {
+      position: absolute !important;
+      top: 80%;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+  }
 `
 
 const WrapperRight = styled.div<IPropsContainer>`
@@ -229,7 +242,7 @@ const WrapperRight = styled.div<IPropsContainer>`
 
       .subTab_item.active {
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-        &:hover{
+        &:hover {
           background: #5f35eb;
         }
       }
@@ -243,7 +256,7 @@ const WrapperRight = styled.div<IPropsContainer>`
         cursor: pointer;
         white-space: nowrap;
         border-radius: 4px;
-        &:hover{
+        &:hover {
           background: #5f35eb;
         }
       }
@@ -348,7 +361,7 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
   const totalPoint = listLever[currentLevelReach]?.point
   const currentPoint = userCurrentPoint
   const percentPoint = (currentPoint / totalPoint) * 100
-
+  const { width } = useWindowSize()
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
   const [rankOfUser, setRankOfUser] = useState<IMappingFormat>(defaultIMappingFormat)
   const [rankOfUserDaily, setRankOfUserDaily] = useState<IMappingFormat>(defaultIMappingFormat)
@@ -609,7 +622,13 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
             </div>
 
             {account && (
-              <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint} className="border-gradient-style">
+              <Second
+                percentPoint={percentPoint}
+                account={account}
+                chainid={chainId}
+                totalPoint={totalPoint}
+                className="border-gradient-style"
+              >
                 <div className="total_point">
                   <p className="title">Your current total points</p>
                   <div className="total_point_bar">
@@ -630,17 +649,43 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
               </Second>
             )}
             {!account && (
-              <Second percentPoint={percentPoint} account={account} chainid={chainId} totalPoint={totalPoint} className="border-gradient-style">
-                <div className="total_point" style={{ height: '203px', padding: '58px 0' }}>
-                  <SubTitle className="please-connec">Please connect wallet to view your referral information</SubTitle>
-                  <ConnectBox>
-                    <ConnectWalletButtonWraper scale="sm">
-                      <BoxWrapper display={['flex', , , 'flex']}>
-                        <Trans>Connect Wallet</Trans>
-                      </BoxWrapper>
-                    </ConnectWalletButtonWraper>
-                  </ConnectBox>
-                </div>
+              <Second
+                percentPoint={percentPoint}
+                account={account}
+                chainid={chainId}
+                totalPoint={totalPoint}
+                isMobileOrTablet={width < 1200}
+                className={`border-gradient-style ${width > 1200 && `border-gradient-style_expand`}`}
+              >
+                {width < 1200 ? (
+                  <div className="total_point " style={{ height: '203px', padding: '58px 0' }}>
+                    <SubTitle className="please-connec">
+                      Please connect wallet to view your referral information
+                    </SubTitle>
+                    <ConnectBox>
+                      <ConnectWalletButtonWraper scale="sm">
+                        <BoxWrapper display={['flex', , , 'flex']}>
+                          <Trans>Connect Wallet</Trans>
+                        </BoxWrapper>
+                      </ConnectWalletButtonWraper>
+                    </ConnectBox>
+                  </div>
+                ) : (
+                  <div className="total_point unconnect" style={{ height: '203px', padding: '58px 0' }}>
+                    <div className="content_connect">
+                      <SubTitle className="please-connec">
+                        Please connect wallet to view your referral information
+                      </SubTitle>
+                      <ConnectBox>
+                        <ConnectWalletButtonWraper scale="sm">
+                          <BoxWrapper display={['flex', , , 'flex']}>
+                            <Trans>Connect Wallet</Trans>
+                          </BoxWrapper>
+                        </ConnectWalletButtonWraper>
+                      </ConnectBox>
+                    </div>
+                  </div>
+                )}
               </Second>
             )}
           </div>

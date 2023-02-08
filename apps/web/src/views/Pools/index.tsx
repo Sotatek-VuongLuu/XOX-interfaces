@@ -414,7 +414,7 @@ const MainBackground = styled.div`
   bottom: 0;
   svg {
     width: 100vw;
-    height: auto;
+    /* height: auto; */
     object-fit: cover;
   }
 `
@@ -439,6 +439,8 @@ const CustomButton = styled(Button)`
 const Container = styled.div`
   display: flex;
   justify-content: center;
+  height: 100%;
+  align-items: center;
   .content {
     width: 1400px;
   }
