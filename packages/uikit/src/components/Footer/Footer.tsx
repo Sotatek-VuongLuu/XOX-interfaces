@@ -145,16 +145,6 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
           >
             © 2022 XOX. All rights reserved
           </Text>
-
-          <StyleStaticPage>
-            <li style={{ paddingLeft: "0" }}>
-              <a href="#">Terms & Conditions</a>
-            </li>
-            <li>|</li>
-            <li>
-              <a href="#">Privacy Policy</a>
-            </li>
-          </StyleStaticPage>
         </Wrapper>
       </Flex>
     </Flex>
