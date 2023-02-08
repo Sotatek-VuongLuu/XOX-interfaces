@@ -43,12 +43,12 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
         href: '/docs',
       },
       {
-        label: t('Terms & Privacy'),
-        href: '/terms-privacy',
+        label: t('Terms of Service'),
+        href: '/terms-of-service',
       },
       {
-        label: t('Disclaimer'),
-        href: '/disclaimer',
+        label: t('Privacy Policies'),
+        href: '/privacy-policies',
       },
     ],
   },

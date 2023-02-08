@@ -75,11 +75,12 @@ export const useStableCoinSWR = (address:any): {
   infoUSDC: any
 } => {
   const chainName = useGetChainName()
+  const { chainId } = useActiveChainId()
   // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
   const type = 'swap'
   const { data: stablecoin } = useSWRImmutable(
     [`info/protocol/updateStableCoinData/${type}`, chainName],
-    () => fetchTopStableCoin(address),
+    () => fetchTopStableCoin(address, chainId),
     SWR_SETTINGS, // update latest Transactions per 15s
   )
   return stablecoin

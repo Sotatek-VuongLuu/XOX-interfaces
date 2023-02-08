@@ -17,18 +17,19 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
 import { useCallback, useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
-import { useAccount, useProvider } from 'wagmi'
+import { useAccount, useProvider, useSigner } from 'wagmi'
 import { parseUnits } from '@ethersproject/units'
 import { formatAmountNumber, formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { getBlockExploreLink, getBlockExploreName } from 'utils'
 import { AppState, useAppDispatch } from 'state'
-import { updateOpenFormReferral } from 'state/user/actions'
+import { updateOpenFormReferral, updateUserProfileEdit } from 'state/user/actions'
 import styled from 'styled-components'
 import { useSelector } from 'react-redux'
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import { XOX_ADDRESS } from 'config/constants/exchange'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { Tooltip } from '@mui/material'
+import axios from 'axios'
 
 export const LOW_NATIVE_BALANCE = parseUnits('0.002', 'ether')
 
@@ -105,6 +106,7 @@ const UserMenu = () => {
   const [balanceNative, setBalanceNative] = useState<any>()
   const [balanceXOX, setBalanceXOX] = useState<any>()
   const provider = useProvider({ chainId })
+  const { data: signer } = useSigner()
 
   useEffect(() => {
     if (!account || !chainId) return
@@ -133,8 +135,21 @@ const UserMenu = () => {
 
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
 
-  const setOpenFormReferral = () => {
-    dispatch(updateOpenFormReferral({ openFormReferral: true }))
+  const setOpenFormReferral = async () => {
+    signer
+      ?.signMessage('Authentication')
+      ?.then((res) => {
+        axios
+          .get(`${process.env.NEXT_PUBLIC_API}/users/${account}`, { headers: { signature: res } })
+          .then((result) => {
+            dispatch(updateUserProfileEdit({ userProfile: result.data }))
+            dispatch(updateOpenFormReferral({ openFormReferral: true }))
+          })
+          .catch((error) => console.warn(error))
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const chainName = useCallback(() => {

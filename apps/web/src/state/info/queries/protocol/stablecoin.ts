@@ -75,9 +75,16 @@ const QUERYTOP = (address:string) => {
 
 const fetchTopStableCoin = async (
   address: string,
+  chainId: any
 ): Promise<{ infoBUSD: any; infoUSDC: any }> => {
   const result = {infoBUSD: null,infoUSDC: null}
-  await Promise.all([multiChainQueryClientStableCoin.BSC.request<any>(QUERYTOP(address)), multiChainQueryClientStableCoin.ETH.request<any>(QUERYTOP(address))]).then(([res1, res2]) => {
+  let endpoint1 = ChainId.BSC_TESTNET;
+  let endpoint2 = ChainId.GOERLI;
+  if(chainId === ChainId.ETHEREUM || chainId === ChainId.BSC){
+    endpoint1 = ChainId.BSC;
+    endpoint2 = ChainId.ETHEREUM;
+  }
+  await Promise.all([multiChainQueryClientStableCoin(endpoint1).request<any>(QUERYTOP(address)), multiChainQueryClientStableCoin(endpoint2).request<any>(QUERYTOP(address))]).then(([res1, res2]) => {
     result.infoBUSD = res1;
     result.infoUSDC = res2;
   }).catch(error => {
@@ -86,12 +93,30 @@ const fetchTopStableCoin = async (
   return result
 }
 
+const getChainName = (id: any) => {
+  let name = 'ETH';
+  switch(id) {
+    case ChainId.BSC:
+      name = 'BSC'
+      break;
+    case ChainId.BSC_TESTNET:
+      name = 'BSCTestNet'
+      break;
+    case ChainId.GOERLI:
+      name = 'Goerli'
+      break;
+    default:
+      name = 'ETH'
+  }
+  return name;
+}
+
 export const fetchTransactionStableCoin = async (
   chainId: number,
 ) => {
   const result = { transactionsXOX: [] }
-  const chainName = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BSC' : 'ETH';
-  const dataXOX = await multiChainQueryClientStableCoin[chainName].request<any>(QUERYTRANSACTION);
+  const chainName = getChainName(chainId);
+  const dataXOX = await multiChainQueryClientStableCoin(chainId).request<any>(QUERYTRANSACTION);
   if (dataXOX) {
     const swapsXOX = dataXOX.swaps.map(mapSwapsXOX)
     result.transactionsXOX = [ ...swapsXOX].sort((a, b) => {
@@ -106,8 +131,8 @@ export const fetchWithdrawStableCoin = async (
   address?: string
 ) => {
   const result = { transactionsXOX: [] }
-  const chainName = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BSC' : 'ETH';
-  const dataXOX = await multiChainQueryClientStableCoin[chainName].request<any>(QUERYWITHDRAW(address));
+  const chainName = getChainName(chainId);
+  const dataXOX = await multiChainQueryClientStableCoin(chainId).request<any>(QUERYWITHDRAW(address));
   if (dataXOX) {
     result.transactionsXOX = dataXOX?.userWithdrawHistories?.map(item => {
       return {
@@ -124,8 +149,8 @@ export const fetchStakeStableCoin = async (
   address?: string
 ) => {
   const result = { transactionsXOX: [] }
-  const chainName = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET) ? 'BSC' : 'ETH';
-  const dataXOX = await multiChainQueryClientStableCoin[chainName].request<any>(QUERYSTACK(address));
+  const chainName = getChainName(chainId);
+  const dataXOX = await multiChainQueryClientStableCoin(chainId).request<any>(QUERYSTACK(address));
   if (dataXOX) {
     result.transactionsXOX = dataXOX?.userStakeHistories?.map(item => {
       return {

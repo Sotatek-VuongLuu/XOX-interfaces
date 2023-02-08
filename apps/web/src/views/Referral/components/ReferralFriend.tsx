@@ -126,13 +126,30 @@ const WrapperRight = styled(Box)<IPropsWR>`
     /* background: url(/images/item.svg); */
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     margin: auto;
+    &:hover {
+      transform: scale(1.11);
+      .jewellery {
+        animation: ${floatingAnim('0px', '10px')} 3s ease-in-out infinite !important;
+      }
+      .main-img .sec-img {
+        opacity: 1;
+      }
+    }
   }
   .main-img {
     width: calc(100% + 20px);
     margin-left: -10px;
+    position: relative;
     img {
       width: 100%;
       height: auto;
+    }
+    .sec-img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      opacity: 0;
     }
   }
   .item > div.inner-text {
@@ -169,6 +186,17 @@ const WrapperRight = styled(Box)<IPropsWR>`
       color: rgba(255, 255, 255, 0.38);
       margin-top: 12px;
       cursor: pointer;
+    }
+
+    @media (min-width: 1600px) {
+      .title {
+        font-size: 14px;
+        margin-top: 25px;
+      }
+      .btn {
+        font-size: 18px;
+        margin-top: 28px;
+      }
     }
 
     button:disabled,
@@ -695,9 +723,11 @@ const ReferralFriend = ({
                       >
                         <div className="main-img">
                           <img
+                            className="first-img"
                             src={item.lever === currentLevelReach ? '/images/current_item.svg' : 'images/item.svg'}
                             alt="images"
                           />
+                          <img className="sec-img" src="/images/current_item.svg" alt="images" />
                         </div>
                         <div className="inner-text">
                           <img src={item.icon} alt="icons" className="jewellery" />
@@ -706,7 +736,8 @@ const ReferralFriend = ({
 
                           <p className="title">
                             {item.point.toLocaleString()} points
-                            <br />~ ${item.dollar.toLocaleString()}
+                            <br />
+                            ~${item.dollar.toLocaleString()}
                           </p>
 
                           {account && (
@@ -721,7 +752,7 @@ const ReferralFriend = ({
                               }}
                             >
                               {item?.isClaimed ? (
-                                <span>Claimed</span>
+                                <span className={`${item.lever === currentLevelReach ? 'claim' : ''}`}>Claimed</span>
                               ) : (
                                 <span className={`${item.isReach ? 'claim' : ''} `}>Claim</span>
                               )}
@@ -737,7 +768,7 @@ const ReferralFriend = ({
                 {account && (
                   <div className="unclaim_reward_container">
                     <div className="unclaim_reward">
-                      <div>{Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)}$ Unclaimed Rewards</div>
+                      <div>${Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)} Unclaimed Rewards</div>
                     </div>
                   </div>
                 )}
