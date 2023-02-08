@@ -27,6 +27,8 @@ import FullPositionCard, { StableFullPositionCard } from '../../components/Posit
 import { useCurrencyBalances, useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import { usePairs, PairState, usePairXOX } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
+import { GridLoader } from 'react-spinners'
+import { ColumnCenter } from 'components/Layout/Column'
 
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -202,6 +204,13 @@ const PoolWrapper = styled(Flex)`
   }
 `
 
+const ConfirmedIcon = styled(ColumnCenter)`
+  padding: 14px 0 34px 0;
+  height: 300px;
+  display: grid;
+  place-content: center;
+`
+
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
 export default function Pool() {
@@ -252,6 +261,7 @@ export default function Pool() {
     [tokenPairsWithLiquidityTokens, v2PairsBalances],
   )
   liquidityTokensWithBalances.map(({ tokens }) => tokens)
+  console.log(liquidityTokensWithBalances, usePairXOX())
 
   const v2Pairs = [...usePairXOX(), ...usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))]
 
@@ -293,7 +303,7 @@ export default function Pool() {
 
     let positionCards = []
 
-    if (allV2PairsWithLiquidity?.length > 0) {
+    if (liquidityTokensWithBalances?.length > 0) {
       positionCards = allV2PairsWithLiquidity.map((v2Pair, index) => (
         <FullPositionCard
           key={v2Pair.liquidityToken.address}
@@ -551,9 +561,15 @@ export default function Pool() {
               // backTo="/liquidity"
             />
 
-            <Body>
-              {renderBody()}
-              {/* {account && !v2IsLoading && (
+            {v2IsLoading ? (
+              <ConfirmedIcon>
+                <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+              </ConfirmedIcon>
+            ) : (
+              <>
+                <Body>
+                  {renderBody()}
+                  {/* {account && !v2IsLoading && (
                 <Flex flexDirection="column" alignItems="center" mt="24px">
                   <Text color="textSubtle" mb="8px">
                     {t("Don't see a pool you joined?")}
@@ -565,22 +581,24 @@ export default function Pool() {
                   </Link>
                 </Flex>
               )} */}
-            </Body>
-            <StyledCardFooter style={{ textAlign: 'center' }}>
-              {account ? (
-                <>
-                  {allV2PairsWithLiquidity.length === 0 && (
-                    <Link href="/add" passHref>
-                      <ButtonWrapper id="join-pool-button" width="100%">
-                        {t('Add Liquidity')}
-                      </ButtonWrapper>
-                    </Link>
+                </Body>
+                <StyledCardFooter style={{ textAlign: 'center' }}>
+                  {account ? (
+                    <>
+                      {liquidityTokensWithBalances.length === 0 && (
+                        <Link href="/add" passHref>
+                          <ButtonWrapper id="join-pool-button" width="100%">
+                            {t('Add Liquidity')}
+                          </ButtonWrapper>
+                        </Link>
+                      )}
+                    </>
+                  ) : (
+                    <ConnectWalletButtonWrapper />
                   )}
-                </>
-              ) : (
-                <ConnectWalletButtonWrapper />
-              )}
-            </StyledCardFooter>
+                </StyledCardFooter>
+              </>
+            )}
           </StyledLiquidityContainer>
         </Wrapper>
       </Flex>
