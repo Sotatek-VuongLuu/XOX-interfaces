@@ -747,7 +747,7 @@ const ReferralFriend = ({
                               }}
                             >
                               {item?.isClaimed ? (
-                                <span>Claimed</span>
+                                <span className={`${item.lever === currentLevelReach ? 'claim' : ''}`}>Claimed</span>
                               ) : (
                                 <span className={`${item.isReach ? 'claim' : ''} `}>Claim</span>
                               )}
