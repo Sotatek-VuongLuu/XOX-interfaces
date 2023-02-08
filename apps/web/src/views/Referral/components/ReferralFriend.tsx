@@ -864,7 +864,7 @@ const ReferralFriend = ({
       <ModalBase
         open={isOpenLoadingClaimModal}
         handleClose={() => setIsOpenLoadingClaimModal(false)}
-        title="Claim Confirm"
+        title="Confirm Claim"
       >
         <Content>
           <div className="xox_loading" style={{ margin: '24px 0px' }}>
@@ -881,7 +881,7 @@ const ReferralFriend = ({
           />
         </Content>
       </ModalBase>
-      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Claim Confirm">
+      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Confirm Claim">
         <Content>
           <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
             <img src="/images/reject_xox.png" alt="reject_xox" />

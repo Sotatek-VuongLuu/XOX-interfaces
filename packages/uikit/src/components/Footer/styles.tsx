@@ -81,7 +81,7 @@ export const Container = styled.div`
 export const Wrapper = styled.div`
   width: 1400px;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
 
   @media screen and (max-width: 560px) {
     flex-direction: column;
@@ -90,7 +90,6 @@ export const Wrapper = styled.div`
 
 export const StyledListItem = styled.li`
   margin-bottom: 12px;
-  text-transform: capitalize;
   font-family: "Inter";
   font-style: normal;
   font-weight: 400;

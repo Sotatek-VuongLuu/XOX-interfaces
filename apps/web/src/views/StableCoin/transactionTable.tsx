@@ -12,6 +12,7 @@ import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { getBlockExploreLink } from 'utils'
 import { formatAmount } from 'utils/formatInfoNumbers'
+import { Tooltip } from '@mui/material'
 import { Arrow, ClickableColumnHeader } from '../Info/components/InfoTables/shared'
 
 const Wrapper = styled.div`
@@ -115,7 +116,7 @@ const Table = styled.div`
   grid-gap: 16px 25px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1fr 0.8fr;
+  grid-template-columns: 0.15fr 1.3fr 1fr 1fr;
   .table-header {
     margin-bottom: 16px;
   }
@@ -132,7 +133,7 @@ const Table = styled.div`
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    grid-gap: 24px 25px;
+    grid-gap: 23px 25px;
 
     .table-header {
       margin-bottom: 8px;
@@ -155,7 +156,7 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-
+  min-height: 458px;
   &::-webkit-scrollbar {
     height: 6px;
   }
@@ -281,6 +282,40 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
   )
 }
 
+const decimalCount = (n: any) => {
+  if(!n) return false;
+  const nString = parseFloat(n).toString();
+  if(nString.indexOf('.') === -1 ||  nString.split(".")[1]?.length < 7){
+    return false
+  }
+  return true;
+}
+
+const getPowerOfTen = (n: any) => {
+  const nString = parseFloat(n).toString();
+  const eIndex = nString.indexOf("e");
+  return nString.substring(eIndex + 2);
+}
+
+const fullNumber = (n: any) => {
+  let nString = parseFloat(n).toString();
+  if(nString.indexOf('e') !== -1){
+    const numberPower = getPowerOfTen(n);
+    nString = parseFloat(n).toFixed(parseFloat(numberPower)).toString();
+  }
+  return nString;
+}
+
+const formatNumberDecimal = (n: any, decimal?: number) => {
+  let nString = parseFloat(n).toString();
+  if(nString.indexOf('e') !== -1){
+    const numberPower = getPowerOfTen(n);
+    nString = parseFloat(n).toFixed(parseFloat(numberPower)).toString();
+  }
+  const nSlice = decimal || 6;
+  return `${nString.split(".")[0]}${nString.indexOf('.') !== -1 ? '.' : ''}${nString.split(".")?.[1]?.slice(0, nSlice) || ''}`;
+}
+
 const DataRow: React.FC<
   React.PropsWithChildren<{ transaction: Transaction; index: number; page: number; perPage: number }>
 > = ({ transaction, index, page, perPage }) => {
@@ -340,6 +375,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-time`}
+        style={{whiteSpace: 'nowrap'}}
       >
         {formatISO9075(parseInt(transaction.timestamp, 10) * 1000)}
       </Text>
@@ -351,7 +387,10 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
-      >{`${formatAmount(abs1)} ${symbolToken0}S`}</Text>
+      >
+        <Tooltip placement="top-start" title={`${fullNumber(abs1)} ${symbolToken0}S`}>
+          <span>{`${formatNumberDecimal(abs1)} ${decimalCount(abs1) ? '...' : ''} ${symbolToken0}S`}</span>
+        </Tooltip></Text>
     </>
   )
 }

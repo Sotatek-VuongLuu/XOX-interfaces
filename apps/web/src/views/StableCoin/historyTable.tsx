@@ -23,6 +23,7 @@ import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import axios from 'axios'
+import { Tooltip } from '@mui/material'
 import { Arrow, ClickableColumnHeader } from '../Info/components/InfoTables/shared'
 
 export const TYPE_HISTORY = {
@@ -136,6 +137,13 @@ const Table = styled.div`
   &.table-withdraw {
     grid-gap: 13px 25px;
   }
+  .text-ellipsis{
+    max-width: 90px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+  }
   .table-header {
     margin-bottom: 16px;
   }
@@ -187,7 +195,7 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-
+  min-height: 458px;
   &::-webkit-scrollbar {
     height: 6px;
   }
@@ -312,6 +320,24 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
   )
 }
 
+const decimalCount = (n: any) => {
+  if(!n) return false;
+  const nString = parseFloat(n).toString();
+  if(nString.split(".")[1]?.length < 7){
+    return false
+  }
+  return true;
+}
+
+const formatNumberDecimal = (n: any, decimal?: number) => {
+  let nString = parseFloat(n).toString();
+  if(nString.indexOf('e') !== -1){
+    nString = parseFloat(n).toFixed(15).toString();
+  }
+  const nSlice = decimal || 6;
+  return `${nString.split(".")[0]}.${nString.split(".")?.[1]?.slice(0, nSlice) || 0}`;
+}
+
 const DataRow: React.FC<
   React.PropsWithChildren<{ transaction: any; index: number; page: number; perPage: number; typePage: any }>
 > = ({ transaction, index, page, perPage, typePage }) => {
@@ -391,6 +417,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-time`}
+        style={{whiteSpace: 'nowrap'}}
       >
         {formatISO9075(parseInt(transaction.date, 10) * 1000)}
       </Text>
@@ -403,7 +430,14 @@ const DataRow: React.FC<
           fontWeight="400"
           lineHeight="19px"
           color="rgba(255, 255, 255, 0.87)"
-        >{`${abs0} ${symbolToken0}`}</Text>
+        >
+          <Tooltip title={abs0 ? `${abs0} ${symbolToken0}` : null} placement="top-start">
+            <span>{formatNumberDecimal(abs0)}
+            {decimalCount(abs0) && typePage !== TYPE_HISTORY.stake ? '...' : ''}
+            &nbsp;{`${symbolToken0}`}
+            </span>
+          </Tooltip>
+        </Text>
       )}
       {typePage === TYPE_HISTORY.widthDraw && (
         <LinkExternal
@@ -419,7 +453,14 @@ const DataRow: React.FC<
             fontWeight="400"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.87)"
-          >{`${abs0} ${symbolToken0}`}</Text>
+          >
+            <Tooltip title={abs0 ? `${abs0} ${symbolToken0}` : null} placement="top-start">
+              <span>{formatNumberDecimal(abs0)}
+              {decimalCount(abs0) ? '...' : ''}
+              &nbsp;{`${symbolToken0}`}
+              </span>
+            </Tooltip>
+          </Text>
         </LinkExternal>
       )}
       {typePage === TYPE_HISTORY.stake && (
