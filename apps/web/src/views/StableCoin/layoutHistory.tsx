@@ -60,6 +60,7 @@ const Box = styled.div`
   }
   &.wrap-table {
     align-items: flex-start;
+    min-height: 633px;
   }
   &.h-190{
     min-height: 190px;

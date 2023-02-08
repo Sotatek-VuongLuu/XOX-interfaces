@@ -314,6 +314,24 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
   )
 }
 
+const decimalCount = (n: any) => {
+  if(!n) return false;
+  const nString = parseFloat(n).toString();
+  if(nString.split(".")[1]?.length < 7){
+    return false
+  }
+  return true;
+}
+
+const formatNumberDecimal = (n: any, decimal?: number) => {
+  let nString = parseFloat(n).toString();
+  if(nString.indexOf('e') !== -1){
+    nString = parseFloat(n).toFixed(15).toString();
+  }
+  const nSlice = decimal || 6;
+  return `${nString.split(".")[0]}.${nString.split(".")?.[1]?.slice(0, nSlice) || 0}`;
+}
+
 const DataRow: React.FC<
   React.PropsWithChildren<{ transaction: any; index: number; page: number; perPage: number, typePage: any }>
 > = ({ transaction, index, page, perPage, typePage }) => {
@@ -396,7 +414,14 @@ const DataRow: React.FC<
           fontWeight="400"
           lineHeight="19px"
           color="rgba(255, 255, 255, 0.87)"
-        >{`${abs0} ${symbolToken0}`}</Text>
+        >
+          <Tooltip title={abs0 ? `${abs0} ${symbolToken0}` : null} placement="top-start">
+            <span>{formatNumberDecimal(abs0)}
+            {decimalCount(abs0) && typePage !== TYPE_HISTORY.stake ? '...' : ''}
+            &nbsp;{`${symbolToken0}`}
+            </span>
+          </Tooltip>
+        </Text>
       }
       {
         typePage === TYPE_HISTORY.widthDraw && <LinkExternal
@@ -414,9 +439,11 @@ const DataRow: React.FC<
             color="rgba(255, 255, 255, 0.87)"
           >
             <Tooltip title={abs0 ? `${abs0} ${symbolToken0}` : null} placement="top-start">
-              <span className="text-ellipsis">{abs0}</span>
+              <span>{formatNumberDecimal(abs0)}
+              {decimalCount(abs0) ? '...' : ''}
+              &nbsp;{`${symbolToken0}`}
+              </span>
             </Tooltip>
-            &nbsp;{`${symbolToken0}`}
           </Text>
         </LinkExternal>
       }
