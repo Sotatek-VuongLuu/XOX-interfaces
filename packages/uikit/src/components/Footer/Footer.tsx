@@ -143,7 +143,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             color="rgba(255, 255, 255, 0.87)"
             marginBottom="20px"
           >
-            © 2022 XOX. All Rights Reserved
+            © {new Date().getFullYear()} XOX. All Rights Reserved
           </Text>
         </Wrapper>
       </Flex>
