@@ -58,7 +58,10 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   if (currency.length === 0) {
     return {
-      notFound: true,
+      redirect: {
+        statusCode: 307,
+        destination: '/liquidity',
+      },
     }
   }
 
