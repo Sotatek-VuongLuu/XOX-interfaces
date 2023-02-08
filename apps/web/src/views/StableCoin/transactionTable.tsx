@@ -132,7 +132,7 @@ const Table = styled.div`
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    grid-gap: 24px 25px;
+    grid-gap: 23px 25px;
 
     .table-header {
       margin-bottom: 8px;
@@ -155,7 +155,7 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-
+  min-height: 458px;
   &::-webkit-scrollbar {
     height: 6px;
   }

@@ -17,6 +17,7 @@ import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import axios from 'axios'
+import { Tooltip } from '@mui/material'
 import { Arrow, ClickableColumnHeader } from '../Info/components/InfoTables/shared'
 
 export const TYPE_HISTORY = {
@@ -130,6 +131,13 @@ const Table = styled.div`
   &.table-withdraw{
     grid-gap: 13px 25px;
   }
+  .text-ellipsis{
+    max-width: 90px;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: inline-block;
+    vertical-align: bottom;
+  }
   .table-header {
     margin-bottom: 16px;
   }
@@ -181,7 +189,7 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-
+  min-height: 458px;
   &::-webkit-scrollbar {
     height: 6px;
   }
@@ -404,7 +412,12 @@ const DataRow: React.FC<
             fontWeight="400"
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.87)"
-          >{`${abs0} ${symbolToken0}`}</Text>
+          >
+            <Tooltip title={abs0 ? `${abs0} ${symbolToken0}` : null} placement="top-start">
+              <span className="text-ellipsis">{abs0}</span>
+            </Tooltip>
+            &nbsp;{`${symbolToken0}`}
+          </Text>
         </LinkExternal>
       }
       {
