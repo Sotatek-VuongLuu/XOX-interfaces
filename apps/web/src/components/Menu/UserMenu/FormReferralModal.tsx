@@ -6,7 +6,7 @@ import { useSigner, useAccount } from 'wagmi'
 import { createPortal } from 'react-dom'
 import { useSelector } from 'react-redux'
 import { AppState, useAppDispatch } from 'state'
-import { updateOpenFormReferral, updateUserProfile } from 'state/user/actions'
+import { updateOpenFormReferral, updateUserProfile, updateUserProfileEdit } from 'state/user/actions'
 import { useRouter } from 'next/router'
 import useAuth from 'hooks/useAuth'
 
@@ -181,7 +181,9 @@ const FormReferralModal = (_, ref) => {
 
   const modalElement = document.getElementById('modal-root')
 
-  const { openFormReferral, userProfile } = useSelector<AppState, AppState['user']>((state) => state.user)
+  const { openFormReferral, userProfileEdit: userProfile } = useSelector<AppState, AppState['user']>(
+    (state) => state.user,
+  )
 
   const setOpenFormReferral = (open: boolean) => {
     dispatch(updateOpenFormReferral({ openFormReferral: open }))
@@ -289,23 +291,34 @@ const FormReferralModal = (_, ref) => {
     if (avatar) dataSubmit.avatar = avataURL
     if (Object.keys(dataSubmit).length > 0) {
       console.log(typeof JSON.stringify(dataSubmit), signer, 'signer')
-      signer?.signMessage((JSON.stringify(dataSubmit)).toString())?.then((res) => {
-        axios
-          .post(`${process.env.NEXT_PUBLIC_API}/users/${account}`, {
-            ...dataSubmit,
-            signature: res,
-          })
-          .then((response) => {
-            dispatch(updateUserProfile({ userProfile: response.data }))
-            setAvata(undefined)
-            setProfileSuccess(true)
-          })
-          .catch((error) => {
-            console.warn(error)
-          })
-      }).catch(error => {
-        console.log(error)
-      })
+      signer
+        ?.signMessage(JSON.stringify(dataSubmit).toString())
+        ?.then((res) => {
+          axios
+            .post(`${process.env.NEXT_PUBLIC_API}/users/${account}`, {
+              ...dataSubmit,
+              signature: res,
+            })
+            .then((response) => {
+              dispatch(updateUserProfileEdit({ userProfile: undefined }))
+              axios
+                .get(`${process.env.NEXT_PUBLIC_API}/users/${account}`)
+                .then((response) => {
+                  dispatch(updateUserProfile({ userProfile: response.data }))
+                })
+                .catch((error) => {
+                  console.warn(error)
+                })
+              setAvata(undefined)
+              setProfileSuccess(true)
+            })
+            .catch((error) => {
+              console.warn(error)
+            })
+        })
+        .catch((error) => {
+          console.log(error)
+        })
     }
     setSubmitting(false)
   }, [isValid, username, email, telegram, avatar])
@@ -385,7 +398,7 @@ const FormReferralModal = (_, ref) => {
         }
       })
       .catch((error) => console.warn(error))
-  }, [openFormReferral, account])
+  }, [account])
 
   useEffect(() => {
     setUsername(userProfile?.username || '')

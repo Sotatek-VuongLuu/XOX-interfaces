@@ -261,7 +261,6 @@ export default function Pool() {
     [tokenPairsWithLiquidityTokens, v2PairsBalances],
   )
   liquidityTokensWithBalances.map(({ tokens }) => tokens)
-  console.log(liquidityTokensWithBalances, usePairXOX())
 
   const v2Pairs = [...usePairXOX(), ...usePairs(liquidityTokensWithBalances.map(({ tokens }) => tokens))]
 

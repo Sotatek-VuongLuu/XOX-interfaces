@@ -906,6 +906,8 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                     {poolTokenPercentage
                       ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
                         ? `${formatAmountString(poolTokenPercentage)}%`
+                        : parseFloat(poolTokenPercentage.toFixed(6)) === 0
+                        ? '0%'
                         : '<0.01%'
                       : '0%'}
                   </Text>

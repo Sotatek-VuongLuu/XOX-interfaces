@@ -458,6 +458,8 @@ function MinimalPositionCardView({
                 {poolTokenPercentage
                   ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
                     ? `${formatAmountString(poolTokenPercentage)}%`
+                    : parseFloat(poolTokenPercentage.toFixed(6)) === 0
+                    ? '0%'
                     : '<0.01%'
                   : '0%'}
               </Text>
@@ -583,31 +585,33 @@ function FullPositionCard({
               {poolTokenPercentage
                 ? parseFloat(poolTokenPercentage.toFixed(6)) >= 0.01
                   ? `${formatAmountString(poolTokenPercentage)}%`
+                  : parseFloat(poolTokenPercentage.toFixed(6)) === 0
+                  ? '0%'
                   : '<0.01%'
                 : '0%'}
             </Text>
           </CustomRow>
 
           {/* {userPoolBalance && JSBI.greaterThan(userPoolBalance.quotient, BIG_INT_ZERO) && ( */}
-            <ButtonWrapper>
-              <Button
-                as={NextLinkFromReactRouter}
-                to={`/remove/${currencyId(currency0)}/${currencyId(currency1)}${isStableLP ? '?stable=1' : ''}`}
-                width="100%"
-                className="btn-remove"
-              >
-                {t('Remove')}
-              </Button>
-              <Button
-                as={NextLinkFromReactRouter}
-                to={`/add/${currencyId(currency0)}/${currencyId(currency1)}?step=1`}
-                variant="text"
-                width="100%"
-                className="btn-add"
-              >
-                {t('Add')}
-              </Button>
-            </ButtonWrapper>
+          <ButtonWrapper>
+            <Button
+              as={NextLinkFromReactRouter}
+              to={`/remove/${currencyId(currency0)}/${currencyId(currency1)}${isStableLP ? '?stable=1' : ''}`}
+              width="100%"
+              className="btn-remove"
+            >
+              {t('Remove')}
+            </Button>
+            <Button
+              as={NextLinkFromReactRouter}
+              to={`/add/${currencyId(currency0)}/${currencyId(currency1)}?step=1`}
+              variant="text"
+              width="100%"
+              className="btn-add"
+            >
+              {t('Add')}
+            </Button>
+          </ButtonWrapper>
           {/* )} */}
         </AutoColumn>
       )}
