@@ -309,7 +309,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                   </TableCell>
                   <TableCell align="left">{row.time}</TableCell>
                   <TableCell align="left">{row.point} points</TableCell>
-                  <TableCell align="right">{row.claim}$</TableCell>
+                  <TableCell align="right">${row.claim}</TableCell>
                 </TableRow>
               ))}
             </TableBody>

@@ -36,6 +36,7 @@ export enum ChartViewMode {
 export const updateUserExpertMode = createAction<{ userExpertMode: boolean }>('user/updateUserExpertMode')
 export const updateOpenFormReferral = createAction<{ openFormReferral: boolean }>('user/updateOpenFormReferral')
 export const updateUserProfile = createAction<{ userProfile: UserProfile }>('user/updateUserProfile')
+export const updateUserProfileEdit = createAction<{ userProfile: UserProfile }>('user/updateUserProfileEdit')
 export const updateUserSingleHopOnly = createAction<{ userSingleHopOnly: boolean }>('user/updateUserSingleHopOnly')
 export const updateUserSlippageTolerance = createAction<{ userSlippageTolerance: number }>(
   'user/updateUserSlippageTolerance',

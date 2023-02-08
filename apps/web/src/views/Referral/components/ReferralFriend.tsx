@@ -170,6 +170,17 @@ const WrapperRight = styled(Box)<IPropsWR>`
       margin-top: 12px;
       cursor: pointer;
     }
+    
+    @media (min-width: 1600px) {
+      .title{
+        font-size: 14px;
+        margin-top: 25px;
+      }
+      .btn{
+        font-size: 18px;
+        margin-top: 28px;
+      }
+    }
 
     button:disabled,
     button[disabled] {
@@ -703,7 +714,7 @@ const ReferralFriend = ({
 
                           <p className="title">
                             {item.point.toLocaleString()} points
-                            <br />~ {item.dollar.toLocaleString()}$
+                            <br />~${item.dollar.toLocaleString()}
                           </p>
 
                           {account && (
@@ -734,7 +745,7 @@ const ReferralFriend = ({
                 {account && (
                   <div className="unclaim_reward_container">
                     <div className="unclaim_reward">
-                      <div>{Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)}$ Unclaimed Rewards</div>
+                      <div>${Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)} Unclaimed Rewards</div>
                     </div>
                   </div>
                 )}
