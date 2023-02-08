@@ -863,7 +863,7 @@ const ReferralFriend = ({
       <ModalBase
         open={isOpenLoadingClaimModal}
         handleClose={() => setIsOpenLoadingClaimModal(false)}
-        title="Claim Confirm"
+        title="Confirm Claim"
       >
         <Content>
           <div className="xox_loading" style={{ margin: '24px 0px' }}>
