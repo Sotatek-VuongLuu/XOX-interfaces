@@ -11,7 +11,8 @@ import {
   INFO_CLIENT_XOX_ETH,
   INFO_CLIENT_XOX_GOERLI,
   INFO_CLIENT_UNI,
-  ENDPOINT_GRAPHQL_STABLE_COIN
+  ENDPOINT_GRAPHQL_STABLE_COIN,
+  ENDPOINT_GRAPHQL_WITH_CHAIN
 } from 'config/constants/endpoints'
 import { GraphQLClient } from 'graphql-request'
 import { INFO_CLIENT_WITH_CHAIN } from '../config/constants/endpoints'
@@ -53,7 +54,13 @@ export const infoClientXoxEth = new GraphQLClient(INFO_CLIENT_XOX_ETH)
 export const infoClientXoxGoerli = new GraphQLClient(INFO_CLIENT_XOX_GOERLI)
 export const infoClientETHUNI = new GraphQLClient(INFO_CLIENT_UNI)
 
+export const stableCoinClientWithChain = (chainId: number) => {
+  return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId])
+}
+
 export const stableCoinClient = new GraphQLClient(ENDPOINT_GRAPHQL_STABLE_COIN)
+export const stableCoinClientBSCTestNet = new GraphQLClient(ENDPOINT_GRAPHQL_STABLE_COIN)
+export const stableCoinClientGoerli = new GraphQLClient(INFO_CLIENT_ETH)
 export const stableCoinClientEth = new GraphQLClient(INFO_CLIENT_ETH)
 
 export const infoStableSwapClient = new GraphQLClient(STABLESWAP_SUBGRAPH_CLIENT)
