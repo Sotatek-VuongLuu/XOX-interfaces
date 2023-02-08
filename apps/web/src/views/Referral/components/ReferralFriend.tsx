@@ -174,11 +174,11 @@ const WrapperRight = styled(Box)<IPropsWR>`
     @media (min-width: 1600px) {
       .title{
         font-size: 14px;
-        margin-top: 18px;
+        margin-top: 25px;
       }
       .btn{
-        font-size: 16px;
-        margin-top: 20px;
+        font-size: 18px;
+        margin-top: 28px;
       }
     }
 
