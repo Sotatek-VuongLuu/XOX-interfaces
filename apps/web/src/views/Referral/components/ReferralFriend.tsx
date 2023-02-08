@@ -126,13 +126,30 @@ const WrapperRight = styled(Box)<IPropsWR>`
     /* background: url(/images/item.svg); */
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     margin: auto;
+    &:hover{
+      transform: scale(1.11);
+      .jewellery{
+        animation: ${floatingAnim('0px', '10px')} 3s ease-in-out infinite !important;
+      }
+      .main-img .sec-img{
+        opacity: 1;
+      }
+    }
   }
   .main-img{
     width: calc(100% + 20px);
     margin-left: -10px;
+    position: relative;
     img{
       width: 100%;
       height: auto;
+    }
+    .sec-img{
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      opacity: 0;
     }
   }
   .item > div.inner-text {
@@ -705,7 +722,8 @@ const ReferralFriend = ({
                         key={item.icon}
                       >
                         <div className="main-img">
-                          <img src={item.lever === currentLevelReach ? "/images/current_item.svg" : "images/item.svg"} alt="images" /> 
+                          <img className='first-img' src={item.lever === currentLevelReach ? "/images/current_item.svg" : "images/item.svg"} alt="images" /> 
+                          <img className='sec-img' src="/images/current_item.svg" alt='images' />
                         </div>
                         <div className='inner-text'>
                           <img src={item.icon} alt="icons" className="jewellery" />
