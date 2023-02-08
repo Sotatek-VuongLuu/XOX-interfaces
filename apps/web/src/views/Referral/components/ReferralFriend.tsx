@@ -170,6 +170,17 @@ const WrapperRight = styled(Box)<IPropsWR>`
       margin-top: 12px;
       cursor: pointer;
     }
+    
+    @media (min-width: 1600px) {
+      .title{
+        font-size: 14px;
+        margin-top: 25px;
+      }
+      .btn{
+        font-size: 18px;
+        margin-top: 28px;
+      }
+    }
 
     button:disabled,
     button[disabled] {
