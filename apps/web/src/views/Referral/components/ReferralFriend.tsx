@@ -714,7 +714,7 @@ const ReferralFriend = ({
 
                           <p className="title">
                             {item.point.toLocaleString()} points
-                            <br />~ {item.dollar.toLocaleString()}$
+                            <br />~${item.dollar.toLocaleString()}
                           </p>
 
                           {account && (
@@ -745,7 +745,7 @@ const ReferralFriend = ({
                 {account && (
                   <div className="unclaim_reward_container">
                     <div className="unclaim_reward">
-                      <div>{Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)}$ Unclaimed Rewards</div>
+                      <div>${Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)} Unclaimed Rewards</div>
                     </div>
                   </div>
                 )}

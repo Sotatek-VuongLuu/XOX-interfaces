@@ -98,7 +98,7 @@ const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
         <img src="/images/ref_chart_bg.svg" alt="ref_chart_bg" className="ref_chart_bg" />
       </div>
       <p className="title">Total Earned By Referrals</p>
-      <p className="amount">{Number(volumnTotalEarn)}$</p>
+      <p className="amount">${Number(volumnTotalEarn)}</p>
 
       <p className="guide">
         This number represents the total value in $ earned so far by all referral users since day one till today. Start
