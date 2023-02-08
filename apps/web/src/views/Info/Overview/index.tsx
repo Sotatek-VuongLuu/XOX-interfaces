@@ -211,7 +211,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   return (
     <Page>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
-      <InfoNav allTokens={allTokens} textContentBanner="One Dapp. Unlimited possibilities." />
+      <InfoNav allTokens={allTokens} textContentBanner="One Dapp. Unlimited possibilities" />
       <PageContainer>
         <div>
           <ChartCardsContainer>
