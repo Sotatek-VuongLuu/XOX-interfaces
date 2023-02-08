@@ -153,19 +153,12 @@ const GridLeft = styled(Grid)`
     margin-bottom: 66px;
   }
 `
-const Image = styled.div`
-  width: 100%;
-  height: 100%;
-  background-image: url('/images/xox-desktop.gif');
-  background-repeat: no-repeat;
-  margin-left: -110px;
 
-  @media screen and (max-width: 560px) {
-    background-size: 100%;
-    margin-left: 0;
-    margin-top: 50px;
-    transform: scale(1.5);
-  }
+const ImageWrapper = styled.video`
+  width: 100%;
+  height: 300px;
+  display: grid;
+  place-content: center;
 `
 
 const WelcomeXOX = (): JSX.Element => {
@@ -199,13 +192,9 @@ const WelcomeXOX = (): JSX.Element => {
           </GridLeft>
           <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'hidden' }}>
             {(isMobile || isTablet) && (
-              // <Spline
-              //   scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-              //   onLoad={(e) => e.setZoom(0.5)}
-              //   height={600}
-              //   id="mb_3d"
-              // />
-              <Image />
+              <ImageWrapper autoPlay muted loop>
+                <source src="/lp_video.webm" type="video/webm" />
+              </ImageWrapper>
             )}
           </Grid>
         </Grid>

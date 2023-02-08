@@ -43,14 +43,10 @@ import { Content } from './components/style'
 import ShowBalance from './components/ShowBalance'
 
 const NavWrapper = styled(Flex)`
-  padding: 28px 24px 24px;
-  justify-content: center;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    grid-template-columns: 5fr 2fr;
-    padding-left: 48px;
-    padding-right: 48px;
-  } ;
+  padding: 28px 0px 24px;
+  @media screen and (max-width: 576px) {
+    padding: 0 0 24px 0;
+  }
 `
 
 const Banner = styled.div`
@@ -143,7 +139,7 @@ const Banner = styled.div`
 `
 
 const Main = styled.div`
-  width: 1200px;
+  width: 100%;
   a:hover {
     text-decoration: underline;
   }
@@ -439,6 +435,17 @@ const CustomButton = styled(Button)`
     cursor: not-allowed !important;
   }
 `
+
+const Container = styled.div`
+  display: flex;
+  justify-content: center;
+  .content {
+    width: 1400px;
+  }
+  @media screen and (max-width: 576px) {
+    padding: 24px;
+  }
+`
 interface IPropsButtonUnStake {
   disabled?: boolean
 }
@@ -567,7 +574,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       .catch((error) => {
         console.warn(error)
       })
-  }, [account, chainId, provider])
+  }, [account, chainId, provider, isOpenSuccessModal])
 
   const handleWithdraw = async () => {
     try {
@@ -778,279 +785,283 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   return (
     <>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
-      <NavWrapper>
-        <Banner>
-          <Text className="title" marginBottom="16px">
-            Add Liquidity. Earn Trading Fees
-          </Text>
-          <Text className="subtitle" marginBottom="16px">
-            Level Up your DeFi Game
-          </Text>
-          <a
-            href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <Button className="get-xox">Get LP Token</Button>
-          </a>
-          <a href="/whitepaper" target="_blank" rel="noreferrer">
-            <Button className="learn-more">Learn More</Button>
-          </a>
-        </Banner>
-      </NavWrapper>
+      <Container>
+        <div className="content">
+          <NavWrapper>
+            <Banner>
+              <Text className="title" marginBottom="16px">
+                Add Liquidity. Earn Trading Fees
+              </Text>
+              <Text className="subtitle" marginBottom="16px">
+                Level Up your DeFi Game
+              </Text>
+              <a
+                href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <Button className="get-xox">Get LP Token</Button>
+              </a>
+              <a href="/whitepaper" target="_blank" rel="noreferrer">
+                <Button className="learn-more">Learn More</Button>
+              </a>
+            </Banner>
+          </NavWrapper>
 
-      <NavWrapper>
-        <Main className="border-gradient-style">
-          <div className="content_container">
-            <div className="header_container">
-              <div className="header">
-                <div className="flex">
-                  {chainIdSupport.includes(chainId) ? (
-                    <PairToken linkTokenSecond="/images/1/tokens/BUSD.png" symbolTokenSecond="BUSD" />
-                  ) : (
-                    <PairToken />
-                  )}
-                </div>
-                {width > 576 ? (
-                  <>
-                    <div className="flex flex_direction">
-                      <span className="name">APR:</span>
-                      {account ? (
-                        <ShowBalance balance={aprPercent} unit="%" notSpace />
+          <NavWrapper>
+            <Main className="border-gradient-style">
+              <div className="content_container">
+                <div className="header_container">
+                  <div className="header">
+                    <div className="flex">
+                      {chainIdSupport.includes(chainId) ? (
+                        <PairToken linkTokenSecond="/images/1/tokens/BUSD.png" symbolTokenSecond="BUSD" />
                       ) : (
-                        <span className="value">-</span>
+                        <PairToken />
                       )}
                     </div>
-                    <div className="flex flex_direction">
-                      <span className="name">Earned:</span>
-                      {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
-                    </div>
-                    <div className="flex flex_direction">
-                      <span className="name">Liquidity</span>
-                      <span className="value _flex">
-                        {account ? (
-                          <>
-                            <ShowBalance balance={liquidity} name="liquidity" />
-                            <Tooltip
-                              title="Total value of the funds in this farm’s liquidity pair"
-                              placement="top"
-                              id="u_question_farming"
-                            >
-                              <span className="u_question">
-                                <img src="/images/u_question-circle.svg" alt="u_question-circle" />
-                              </span>
-                            </Tooltip>
-                          </>
-                        ) : (
-                          <span className="liquidity">-</span>
-                        )}
-                      </span>
-                    </div>
-                  </>
-                ) : (
-                  <div className="flex">
-                    <div className="flex flex_direction mb_mr">
-                      <span className="name">APR:</span>
-                      {account ? (
-                        <ShowBalance balance={aprPercent} unit="%" notSpace />
-                      ) : (
-                        <span className="value">-</span>
-                      )}
-                    </div>
-                    <div className="flex flex_direction">
-                      <span className="name">Earned:</span>
-                      {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </div>
-            <div className="diver" />
-            <div className="create_lp">
-              {width > 576 && (
-                <div className="get_xox_lp">
-                  <div>
-                    <a
-                      href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <p className="_flex">
-                        <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
-                        <span style={{ marginLeft: 8 }}>
-                          <img src="/images/external-icon.svg" alt="external-icon" />
-                        </span>
-                      </p>
-                    </a>
-                    <a
-                      href={`${linkAddressScan(chainId)}${getXOXPoolAddress(chainId)}`}
-                      target="_blank"
-                      rel="noreferrer"
-                    >
-                      <p className="_flex">
-                        <span>View Contract</span>
-                        <span style={{ marginLeft: 8 }}>
-                          <img src="/images/external-icon.svg" alt="external-icon" />
-                        </span>
-                      </p>
-                    </a>
-                  </div>
-                </div>
-              )}
-              <div>
-                <div className="rectangle _flex space_between">
-                  <div>
-                    <p className="current_XOX_reward">Current XOX reward</p>
-                    {account ? (
-                      <div style={{ width: '100%', marginTop: 16 }}>
-                        <ShowBalance balance={pendingRewardOfUser} unit="XOX" />
-                      </div>
+                    {width > 576 ? (
+                      <>
+                        <div className="flex flex_direction">
+                          <span className="name">APR:</span>
+                          {account ? (
+                            <ShowBalance balance={aprPercent} unit="%" notSpace />
+                          ) : (
+                            <span className="value">-</span>
+                          )}
+                        </div>
+                        <div className="flex flex_direction">
+                          <span className="name">Earned:</span>
+                          {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
+                        </div>
+                        <div className="flex flex_direction">
+                          <span className="name">Liquidity</span>
+                          <span className="value _flex">
+                            {account ? (
+                              <>
+                                <ShowBalance balance={liquidity} name="liquidity" />
+                                <Tooltip
+                                  title="Total value of the funds in this farm’s liquidity pair"
+                                  placement="top"
+                                  id="u_question_farming"
+                                >
+                                  <span className="u_question">
+                                    <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                                  </span>
+                                </Tooltip>
+                              </>
+                            ) : (
+                              <span className="liquidity">-</span>
+                            )}
+                          </span>
+                        </div>
+                      </>
                     ) : (
-                      <span className="current_XOX_reward_value">-</span>
+                      <div className="flex">
+                        <div className="flex flex_direction mb_mr">
+                          <span className="name">APR:</span>
+                          {account ? (
+                            <ShowBalance balance={aprPercent} unit="%" notSpace />
+                          ) : (
+                            <span className="value">-</span>
+                          )}
+                        </div>
+                        <div className="flex flex_direction">
+                          <span className="name">Earned:</span>
+                          {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
+                        </div>
+                      </div>
                     )}
                   </div>
-                  <CustomButton
-                    type="button"
-                    className="withdraw"
-                    onClick={handleWithdraw}
-                    disabled={!pendingRewardOfUser}
-                  >
-                    Withdraw
-                  </CustomButton>
                 </div>
-              </div>
-              <div>
-                <div className="rectangle enable_farm">
-                  <p className="current_XOX_reward">
-                    {enable
-                      ? userStaked
-                        ? `${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP Staked`
-                        : `Stake ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`
-                      : 'Enable Farm'}
-                  </p>
-                  {enable && userStaked && (
-                    <div style={{ width: '100%', marginTop: 16 }}>
-                      <ShowBalance balance={userStaked} />
+                <div className="diver" />
+                <div className="create_lp">
+                  {width > 576 && (
+                    <div className="get_xox_lp">
+                      <div>
+                        <a
+                          href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <p className="_flex">
+                            <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
+                            <span style={{ marginLeft: 8 }}>
+                              <img src="/images/external-icon.svg" alt="external-icon" />
+                            </span>
+                          </p>
+                        </a>
+                        <a
+                          href={`${linkAddressScan(chainId)}${getXOXPoolAddress(chainId)}`}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <p className="_flex">
+                            <span>View Contract</span>
+                            <span style={{ marginLeft: 8 }}>
+                              <img src="/images/external-icon.svg" alt="external-icon" />
+                            </span>
+                          </p>
+                        </a>
+                      </div>
                     </div>
                   )}
-                  {!enable ? (
-                    account ? (
+                  <div>
+                    <div className="rectangle _flex space_between">
+                      <div>
+                        <p className="current_XOX_reward">Current XOX reward</p>
+                        {account ? (
+                          <div style={{ width: '100%', marginTop: 16 }}>
+                            <ShowBalance balance={pendingRewardOfUser} unit="XOX" />
+                          </div>
+                        ) : (
+                          <span className="current_XOX_reward_value">-</span>
+                        )}
+                      </div>
                       <CustomButton
                         type="button"
-                        className="nable mt"
-                        onClick={handleApprove}
-                        disabled={pendingApprove}
+                        className="withdraw"
+                        onClick={handleWithdraw}
+                        disabled={!pendingRewardOfUser}
                       >
-                        {isLoadingApproval ? <Dots>Enabling</Dots> : 'Enable'}
+                        Withdraw
                       </CustomButton>
-                    ) : (
-                      <CustomButton type="button" className="nable mt" onClick={handleClick}>
-                        Connect Wallet
-                      </CustomButton>
-                    )
-                  ) : enable && userStaked ? (
-                    <div className="group_btn_stake">
+                    </div>
+                  </div>
+                  <div>
+                    <div className="rectangle enable_farm">
+                      <p className="current_XOX_reward">
+                        {enable
+                          ? userStaked
+                            ? `${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP Staked`
+                            : `Stake ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`
+                          : 'Enable Farm'}
+                      </p>
                       {enable && userStaked && (
-                        // eslint-disable-next-line jsx-a11y/interactive-supports-focus, jsx-a11y/click-events-have-key-events
-                        <ButtonUnStake
-                          className="container_unstake_border"
-                          onClick={onModalUnStake}
-                          role="button"
+                        <div style={{ width: '100%', marginTop: 16 }}>
+                          <ShowBalance balance={userStaked} />
+                        </div>
+                      )}
+                      {!enable ? (
+                        account ? (
+                          <CustomButton
+                            type="button"
+                            className="nable mt"
+                            onClick={handleApprove}
+                            disabled={pendingApprove}
+                          >
+                            {isLoadingApproval ? <Dots>Enabling</Dots> : 'Enable'}
+                          </CustomButton>
+                        ) : (
+                          <CustomButton type="button" className="nable mt" onClick={handleClick}>
+                            Connect Wallet
+                          </CustomButton>
+                        )
+                      ) : enable && userStaked ? (
+                        <div className="group_btn_stake">
+                          {enable && userStaked && (
+                            // eslint-disable-next-line jsx-a11y/interactive-supports-focus, jsx-a11y/click-events-have-key-events
+                            <ButtonUnStake
+                              className="container_unstake_border"
+                              onClick={onModalUnStake}
+                              role="button"
+                              disabled={!reserve || !totalSupplyLP}
+                            >
+                              <div className="inner_container">
+                                <span>Unstake</span>
+                              </div>
+                            </ButtonUnStake>
+                          )}
+                          <CustomButton
+                            type="button"
+                            className="nable"
+                            onClick={onModalStake}
+                            disabled={!reserve || !totalSupplyLP}
+                          >
+                            Stake
+                          </CustomButton>
+                        </div>
+                      ) : (
+                        <CustomButton
+                          type="button"
+                          className="nable mt"
+                          onClick={onModalStake}
                           disabled={!reserve || !totalSupplyLP}
                         >
-                          <div className="inner_container">
-                            <span>Unstake</span>
-                          </div>
-                        </ButtonUnStake>
+                          Stake
+                        </CustomButton>
                       )}
-                      <CustomButton
-                        type="button"
-                        className="nable"
-                        onClick={onModalStake}
-                        disabled={!reserve || !totalSupplyLP}
-                      >
-                        Stake
-                      </CustomButton>
                     </div>
-                  ) : (
-                    <CustomButton
-                      type="button"
-                      className="nable mt"
-                      onClick={onModalStake}
-                      disabled={!reserve || !totalSupplyLP}
-                    >
-                      Stake
-                    </CustomButton>
+                  </div>
+                  {width <= 576 && (
+                    <>
+                      <div>
+                        <p className="flex space_between apr_mb">
+                          <span className="name">APR:</span>
+                          {account ? (
+                            <ShowBalance balance={aprPercent} unit="%" notSpace />
+                          ) : (
+                            <span className="value">-</span>
+                          )}
+                        </p>
+                        <p className="flex space_between earned_mb">
+                          <span className="name">Earned:</span>
+                          {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
+                        </p>
+                        <p className="flex space_between liquidity_mb">
+                          <span className="name">Liquidity:</span>
+                          <span className="_flex">
+                            {account ? (
+                              <>
+                                <ShowBalance balance={liquidity} name="liquidity" />
+                                <Tooltip title="Total value of the funds in this farm’s liquidity pair" placement="top">
+                                  <span className="u_question">
+                                    <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                                  </span>
+                                </Tooltip>
+                              </>
+                            ) : (
+                              <span className="value">-</span>
+                            )}
+                          </span>
+                        </p>
+                      </div>
+                      <div className="get_xox_lp">
+                        <div>
+                          <a
+                            href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <p className="_flex lp_mb">
+                              <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
+                              <span style={{ marginLeft: 8 }}>
+                                <img src="/images/external-icon.svg" alt="external-icon" />
+                              </span>
+                            </p>
+                          </a>
+                          <a
+                            href={`${linkAddressScan(chainId)}${getXOXPoolAddress(chainId)}`}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            <p className="_flex">
+                              <span>View Contract</span>
+                              <span style={{ marginLeft: 8 }}>
+                                <img src="/images/external-icon.svg" alt="external-icon" />
+                              </span>
+                            </p>
+                          </a>
+                        </div>
+                      </div>
+                    </>
                   )}
                 </div>
               </div>
-              {width <= 576 && (
-                <>
-                  <div>
-                    <p className="flex space_between apr_mb">
-                      <span className="name">APR:</span>
-                      {account ? (
-                        <ShowBalance balance={aprPercent} unit="%" notSpace />
-                      ) : (
-                        <span className="value">-</span>
-                      )}
-                    </p>
-                    <p className="flex space_between earned_mb">
-                      <span className="name">Earned:</span>
-                      {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
-                    </p>
-                    <p className="flex space_between liquidity_mb">
-                      <span className="name">Liquidity:</span>
-                      <span className="_flex">
-                        {account ? (
-                          <>
-                            <ShowBalance balance={liquidity} name="liquidity" />
-                            <Tooltip title="Total value of the funds in this farm’s liquidity pair" placement="top">
-                              <span className="u_question">
-                                <img src="/images/u_question-circle.svg" alt="u_question-circle" />
-                              </span>
-                            </Tooltip>
-                          </>
-                        ) : (
-                          <span className="value">-</span>
-                        )}
-                      </span>
-                    </p>
-                  </div>
-                  <div className="get_xox_lp">
-                    <div>
-                      <a
-                        href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <p className="_flex lp_mb">
-                          <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
-                          <span style={{ marginLeft: 8 }}>
-                            <img src="/images/external-icon.svg" alt="external-icon" />
-                          </span>
-                        </p>
-                      </a>
-                      <a
-                        href={`${linkAddressScan(chainId)}${getXOXPoolAddress(chainId)}`}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <p className="_flex">
-                          <span>View Contract</span>
-                          <span style={{ marginLeft: 8 }}>
-                            <img src="/images/external-icon.svg" alt="external-icon" />
-                          </span>
-                        </p>
-                      </a>
-                    </div>
-                  </div>
-                </>
-              )}
-            </div>
-          </div>
-        </Main>
-      </NavWrapper>
+            </Main>
+          </NavWrapper>
+        </div>
+      </Container>
       <ModalBase
         open={modalReject.isShow}
         handleClose={() => setModalReject({ ...modalReject, isShow: false })}

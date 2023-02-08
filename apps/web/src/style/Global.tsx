@@ -116,6 +116,18 @@ const GlobalStyle = createGlobalStyle`
     color: rgba(255, 255, 255, 0.87);
   }
  }
+
+ .container_bridge  {
+  transform: translateY(-50%);
+  position: absolute;
+  top: 50%; 
+  @media screen and (max-width: 851px) {
+    transform: unset;
+    position: relative;
+    top: unset; 
+    margin-top: 40px;
+  }
+ }
 `
 
 export default GlobalStyle
