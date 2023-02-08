@@ -82,17 +82,31 @@ const Main = styled(Grid)`
   }
 `
 
+const ImageWrapper = styled.video`
+  width: 117%;
+  height: 74vh;
+  display: grid;
+  place-content: center;
+  transform: scale(2) translateY(-30px);
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    img {
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.xxl} {
+    img {
+      transform: scale(5) translateY(-30px);
+    }
+  }
+`
+
 const FeatureWatch = () => {
   const { width } = useWindowSize()
   return (
     <Wrapper style={{ overflow: 'hidden' }}>
       <Main container spacing={2}>
-        <Grid
-          item
-          xs={12}
-          md={4}
-          style={{ minHeight: '400px', display: 'flex', alignItems: 'center' }}
-        >
+        <Grid item xs={12} md={4} style={{ minHeight: '400px', display: 'flex', alignItems: 'center' }}>
           <LeftContent>
             {width < 900 ? (
               <img
@@ -108,6 +122,9 @@ const FeatureWatch = () => {
                 style={{ marginLeft: -100, transform: 'scale(2)' }}
                 data-aos="fade-right"
               />
+              // <ImageWrapper autoPlay muted loop>
+              //   <source src="/3dxox.webm" type="video/webm" />
+              // </ImageWrapper>
             )}
           </LeftContent>
         </Grid>

@@ -197,17 +197,13 @@ const WelcomeXOX = (): JSX.Element => {
               </div>
             </LeftContent>
           </GridLeft>
-          <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'hidden' }}>
+          {/* <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'hidden' }}>
             {(isMobile || isTablet) && (
-              // <Spline
-              //   scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-              //   onLoad={(e) => e.setZoom(0.5)}
-              //   height={600}
-              //   id="mb_3d"
-              // />
-              <Image />
+              <video>
+                <source src="/lp_video.webm" type="video/webm" />
+              </video>
             )}
-          </Grid>
+          </Grid> */}
         </Grid>
       </Box>
     </Wrapper>

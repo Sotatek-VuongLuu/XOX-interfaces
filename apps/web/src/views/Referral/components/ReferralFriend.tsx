@@ -127,10 +127,10 @@ const WrapperRight = styled(Box)<IPropsWR>`
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     margin: auto;
   }
-  .main-img{
+  .main-img {
     width: calc(100% + 20px);
     margin-left: -10px;
-    img{
+    img {
       width: 100%;
       height: auto;
     }
@@ -245,7 +245,7 @@ const WrapperRight = styled(Box)<IPropsWR>`
       line-height: 17px;
       color: #ffffff;
       padding: 8px 20px;
-      &:hover{
+      &:hover {
         background: #5f35eb;
       }
     }
@@ -694,16 +694,19 @@ const ReferralFriend = ({
                         key={item.icon}
                       >
                         <div className="main-img">
-                          <img src={item.lever === currentLevelReach ? "/images/current_item.svg" : "images/item.svg"} alt="images" /> 
+                          <img
+                            src={item.lever === currentLevelReach ? '/images/current_item.svg' : 'images/item.svg'}
+                            alt="images"
+                          />
                         </div>
-                        <div className='inner-text'>
+                        <div className="inner-text">
                           <img src={item.icon} alt="icons" className="jewellery" />
 
                           <div className="shadow" />
 
                           <p className="title">
                             {item.point.toLocaleString()} points
-                            <br />~ {item.dollar.toLocaleString()}$
+                            <br />~ ${item.dollar.toLocaleString()}
                           </p>
 
                           {account && (

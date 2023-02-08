@@ -567,7 +567,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       .catch((error) => {
         console.warn(error)
       })
-  }, [account, chainId, provider])
+  }, [account, chainId, provider, isOpenSuccessModal])
 
   const handleWithdraw = async () => {
     try {

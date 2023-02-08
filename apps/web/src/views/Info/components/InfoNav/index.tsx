@@ -26,13 +26,17 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 
-const NavWrapper = styled(Flex)`
-  padding: 28px 24px 24px;
+interface INavWrapper {
+  hasPadding?: boolean
+}
+
+const NavWrapper = styled(Flex)<INavWrapper>`
+  padding: ${({ hasPadding }) => (hasPadding ? '28px 24px 24px' : '0')};
 
   ${({ theme }) => theme.mediaQueries.md} {
     grid-template-columns: 5fr 2fr;
-    padding-left: 48px;
-    padding-right: 48px;
+    padding-left: ${({ hasPadding }) => (hasPadding ? '48px' : '0')};
+    padding-right: ${({ hasPadding }) => (hasPadding ? '48px' : '0')};
   } ;
 `
 
@@ -125,7 +129,11 @@ const MainContent = styled.div`
   }
 `
 
-const InfoNav: React.FC<{ allTokens: any, textContentBanner?: string }> = ({ allTokens, textContentBanner }) => {
+const InfoNav: React.FC<{ allTokens: any; textContentBanner?: string; hasPadding?: boolean }> = ({
+  allTokens,
+  textContentBanner,
+  hasPadding = true,
+}) => {
   const router = useRouter()
   const chainPath = useMultiChainPath()
   const { chainId } = useActiveChainId()
@@ -136,17 +144,18 @@ const InfoNav: React.FC<{ allTokens: any, textContentBanner?: string }> = ({ all
   const inputCurrency = Object.values(allTokens).find((value: any) => value.symbol === baseToken)
 
   return (
-    <NavWrapper>
+    <NavWrapper hasPadding={hasPadding}>
       <MainContent>
         <Text className="title" marginBottom="16px">
-        Swap to get XOX & XOXS. Earn like a Pro
+          Swap to get XOX & XOXS. Earn like a Pro
         </Text>
         <Text className="subtitle" marginBottom="16px">
-          {textContentBanner || "Stake XOXS automatically to earn more"}
+          {textContentBanner || 'Stake XOXS automatically to earn more'}
         </Text>
         <a
           href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
-          target="_blank" rel="noreferrer"
+          target="_blank"
+          rel="noreferrer"
         >
           <Button className="get-xox">Get XOX</Button>
         </a>
