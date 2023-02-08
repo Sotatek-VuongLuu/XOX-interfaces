@@ -85,8 +85,32 @@ const Container = styled.div`
   padding: 0px 48px;
   margin-bottom: 24px;
   color: rgba(0, 0, 0, 0.87);
+  justify-content: center;
+  @media (min-width: 1300px) {
+    .content {
+      width: 1400px;
+      margin: 0 auto;
+    }
+  }
   @media (max-width: 576px) {
     padding: 0px 24px;
+
+    .content {
+      width: unset;
+    }
+  }
+`
+
+const ContainerBanner = styled.div`
+  display: flex;
+  justify-content: center;
+  padding: 28px 0px 24px;
+
+  @media (max-width: 576px) {
+    padding: 28px 24px 24px;
+  }
+  .banner {
+    width: 1400px;
   }
 `
 
@@ -161,44 +185,54 @@ export default function WithDrawLayout() {
   return (
     <>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
-      <InfoNav allTokens={allTokens} textContentBanner="Earn BUSD/USDC from Your  XOXS" />
+      <ContainerBanner>
+        <div className="banner">
+          <InfoNav
+            allTokens={allTokens}
+            textContentBanner="Earn BUSD/USDC from your XOXS Indefinitely"
+            hasPadding={false}
+          />
+        </div>
+      </ContainerBanner>
       <Container style={{marginBottom: 100}} key={`container-stablecoin${chainId}`}>
-        <Flex alignItems="center" style={{ gap: 10 }}>
-            <Flex
-            onClick={() => setWidthDraw(TYPE.default)}
-            style={{ cursor: 'pointer', gap: 5 }}
-            alignItems="center"
-            >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                d="M6 11.9961H18"
-                stroke="#8E8E8E"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                />
-                <path
-                d="M12 18L6 12L12 6"
-                stroke="#8E8E8E"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                />
-            </svg>
-            <Link href="/stable-coin">
-              <TextStyle>Stable coin</TextStyle>
-            </Link>
-            </Flex>
-            <TextStyle style={{ transform: 'translateY(1px)' }}>|</TextStyle>
-            <TextStyle className="primary">Withdraw reward</TextStyle>
-        </Flex>
-        <Row style={{marginTop: 25}}>
-            <WrapperBorder className='border-gradient-style'>
-              <Box className='wrap-withdraw'>
-                <WidthdrawForm priceAvailable={currentReward} />
-              </Box>
-            </WrapperBorder>
-        </Row>
+        <div className="content">
+          <Flex alignItems="center" style={{ gap: 10 }}>
+              <Flex
+              onClick={() => setWidthDraw(TYPE.default)}
+              style={{ cursor: 'pointer', gap: 5 }}
+              alignItems="center"
+              >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                  d="M6 11.9961H18"
+                  stroke="#8E8E8E"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  />
+                  <path
+                  d="M12 18L6 12L12 6"
+                  stroke="#8E8E8E"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  />
+              </svg>
+              <Link href="/stable-coin">
+                <TextStyle>Stable coin</TextStyle>
+              </Link>
+              </Flex>
+              <TextStyle style={{ transform: 'translateY(1px)' }}>|</TextStyle>
+              <TextStyle className="primary">Withdraw reward</TextStyle>
+          </Flex>
+          <Row style={{marginTop: 25}}>
+              <WrapperBorder className='border-gradient-style'>
+                <Box className='wrap-withdraw'>
+                  <WidthdrawForm priceAvailable={currentReward} />
+                </Box>
+              </WrapperBorder>
+          </Row>
+        </div>
       </Container>
     </>
   )
