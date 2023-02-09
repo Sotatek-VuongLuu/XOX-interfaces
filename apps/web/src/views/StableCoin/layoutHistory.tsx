@@ -44,6 +44,15 @@ const WrapperBorder = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+  @media (min-width: 577px) {
+    &.flex-50{
+      flex: 0 0 calc(50% - 15px);
+      max-width: calc(50% - 15px);
+      >div{
+        width: 100%;
+      }
+    }  
+  }
 `
 
 const Box = styled.div`
@@ -87,10 +96,17 @@ const Container = styled.div`
   margin-bottom: 24px;
   color: rgba(0, 0, 0, 0.87);
   justify-content: center;
-  @media (min-width: 1300px) {
+  .content{
+    margin: 0 auto;
+  }
+  @media (min-width: 1200px) {
+    .content {
+      width: 1200px;
+    }
+  }
+  @media (min-width: 1400px) {
     .content {
       width: 1400px;
-      margin: 0 auto;
     }
   }
   @media (max-width: 576px) {
@@ -109,8 +125,15 @@ const ContainerBanner = styled.div`
   @media (max-width: 576px) {
     padding: 28px 24px 24px;
   }
-  .banner {
-    width: 1400px;
+  @media (min-width: 1200px) {
+    .banner {
+      width: 1200px;
+    }
+  }
+  @media (min-width: 1400px) {
+    .banner {
+      width: 1400px;
+    }
   }
 `
 
@@ -230,14 +253,14 @@ export default function LayoutHistory() {
             <TextStyle className="primary">History</TextStyle>
         </Flex>
         <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
-            <WrapperBorder className='border-gradient-style'>
+            <WrapperBorder className='border-gradient-style flex-50'>
               <Box className="wrap-table">
                   {
                       account && <HistoryTable typePage={TYPE_HISTORY.stake} />
                   }
               </Box>
             </WrapperBorder>
-            <WrapperBorder className='border-gradient-style'>
+            <WrapperBorder className='border-gradient-style flex-50'>
               <Box className="wrap-table">
               {
                   account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />

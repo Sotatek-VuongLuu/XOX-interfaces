@@ -359,6 +359,7 @@ const DataRow: React.FC<
           fontWeight="400"
           lineHeight="19px"
           color="rgba(255, 255, 255, 0.87)"
+          style={{whiteSpace: 'nowrap'}}
         >
           {transaction.type === TransactionType.MINT
             ? t('Add %token0% and %token1%', { token0: symbolToken0, token1: symbolToken1 })

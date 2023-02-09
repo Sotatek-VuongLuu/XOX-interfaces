@@ -44,7 +44,15 @@ const WrapperBorder = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-
+  @media (min-width: 577px) {
+    &.flex-50{
+      flex: 0 0 calc(50% - 15px);
+      max-width: calc(50% - 15px);
+      >div{
+        width: 100%;
+      }
+    }  
+  }
   @media (max-width: 576px) {
     width: 100%;
   }
@@ -93,7 +101,12 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
 
-  @media (min-width: 1300px) {
+  @media (min-width: 1200px) {
+    .content {
+      width: 1200px;
+    }
+  }
+  @media (min-width: 1400px) {
     .content {
       width: 1400px;
     }
@@ -196,9 +209,15 @@ const ContainerBanner = styled.div`
   display: flex;
   justify-content: center;
   padding: 28px 0px 24px;
-
-  .banner {
-    width: 1400px;
+  @media (min-width: 1200px) {
+    .banner {
+      width: 1200px;
+    }
+  }
+  @media (min-width: 1400px) {
+    .banner {
+      width: 1400px;
+    }
   }
   @media (max-width: 576px) {
     padding: 28px 24px 24px;
@@ -350,12 +369,12 @@ export default function StableCoin() {
               </Row>
             )}
             <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
-              <WrapperBorder className="border-gradient-style">
+              <WrapperBorder className="border-gradient-style flex-50">
                 <Box className="wrap-table">
                   <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
                 </Box>
               </WrapperBorder>
-              <WrapperBorder className="border-gradient-style">
+              <WrapperBorder className="border-gradient-style flex-50">
                 <Box className="wrap-table">
                   <TransactionTable />
                 </Box>
