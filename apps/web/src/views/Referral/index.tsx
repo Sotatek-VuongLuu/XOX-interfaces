@@ -27,6 +27,7 @@ import styled from 'styled-components'
 import Banner from './components/Banner'
 import MainInfo from './components/MainInfo'
 import ReferralFriend from './components/ReferralFriend'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 
 export interface IItemLevel {
   icon: string
@@ -156,6 +157,8 @@ const ConnectBox = styled.div<IPropsConnectBox>`
     }
   }
 `
+
+const ConnectWalletButtonWraper = styled(ConnectWalletButton)``
 
 const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily'] as const
 type FilterTime = typeof filterTime[number]
@@ -550,7 +553,7 @@ export default function Refferal() {
                   <div className="group_btn">
                     <p>Please connect wallet to view your referral information</p>
                     <div>
-                      <button type="button">Connect Wallet</button>
+                      <ConnectWalletButtonWraper type="button">Connect Wallet</ConnectWalletButtonWraper>
                     </div>
                   </div>
                 </div>
