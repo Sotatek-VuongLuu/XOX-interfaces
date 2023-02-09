@@ -2,32 +2,19 @@
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import axios from 'axios'
 import { Box, Grid } from '@mui/material'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import moment from 'moment'
 import Trans from 'components/Trans'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 import styled from 'styled-components'
 import useWindowSize from 'hooks/useWindowSize'
-import { USD_DECIMALS } from 'config/constants/exchange'
-import BigNumber from 'bignumber.js'
 import HowToJoin from './HowToJoin'
 // eslint-disable-next-line import/no-cycle
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
-
-import {
-  getUerRank,
-  getUserPointDaily,
-  getUserPointMonthly,
-  getUserPointWeekly,
-  userPoint,
-  pointDataDays,
-} from '../../../services/referral'
 
 export interface IItemLeaderBoard {
   name: string
@@ -43,10 +30,7 @@ interface IItemLevel {
   lever: number
   isReach?: boolean
 }
-interface IListPoint {
-  reward: number
-  point: number
-}
+
 interface IPropsTotal {
   percentPoint?: number
   account?: string
@@ -59,19 +43,6 @@ interface IPropsContainer {
   subTabIndex?: number
 }
 
-interface IDataFormatUnit {
-  id: string
-  amount: string
-  address: string
-}
-
-interface IProps {
-  userCurrentPoint: number
-  currentLevelReach: number
-  listLever: IItemLevel[]
-  volumnTotalEarn: string
-}
-
 export interface IMappingFormat {
   address: string
   amount: string
@@ -80,11 +51,6 @@ export interface IMappingFormat {
   point: number | null
   rank: number | null
   username: string
-}
-interface IVolumnDataItem {
-  volumn: string
-  title: string
-  svg: string
 }
 
 const First = styled.div<IPropsTotal>`
@@ -159,9 +125,8 @@ const Second = styled.div<IPropsTotal>`
     padding: 24px;
     position: relative;
     background: #242424;
-    box-shadow: ${({ account, isMobileOrTablet }) =>
-      account || isMobileOrTablet ? '0px 0px 16px rgba(0, 0, 0, 0.5)' : ''};
-    border-radius: ${({ account, isMobileOrTablet }) => (account || isMobileOrTablet ? '10px' : ' 10px 10px 0px 0px')};
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
 
     .title {
       font-weight: 700;
@@ -326,244 +291,49 @@ const SubTitle = styled.div`
   max-width: 242px;
   margin: 0 auto;
 `
-const defaultIMappingFormat = {
-  address: '',
-  amount: '',
-  avatar: '',
-  id: '',
-  point: null,
-  rank: null,
-  username: '',
+interface IProps {
+  userCurrentPoint: number
+  currentLevelReach: number
+  listLever: IItemLevel[]
+  volumnTotalEarn: string
+  filterTime?: any
+  handleOnChangeRankTab: any
+  tabLeaderBoard: any
+  listUserRanks: any
+  rankOfUser: any
+  volumnData: any
+  dataChart: any
+  minAmount: any
+  middleAmount: any
+  maxAmount: any
+  listPoint: any
 }
-const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily'] as const
-type FilterTime = typeof filterTime[number]
 
-const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalEarn }: IProps) => {
-  const startOfDay = moment().startOf('days').toString()
-  const startOfMonth = moment().startOf('month').toString()
-  const startOfWeek = moment().startOf('isoWeek').toString()
-  const [volumnData, setVolumnData] = useState<Array<IVolumnDataItem>>(listData)
-  const [dataChart, setDataChart] = useState([])
-  const [minAmount, setMinAmount] = useState('')
-  const [middleAmount, setMiddleAmount] = useState('')
-  const [maxAmount, setMaxAmount] = useState('')
-  const [tabLeaderBoard, setTabLeaderBoard] = useState<FilterTime>('All Time')
+const MainInfo = ({
+  userCurrentPoint,
+  currentLevelReach,
+  listLever,
+  volumnTotalEarn,
+  filterTime,
+  handleOnChangeRankTab,
+  tabLeaderBoard,
+  listUserRanks,
+  rankOfUser,
+  volumnData,
+  dataChart,
+  minAmount,
+  middleAmount,
+  maxAmount,
+  listPoint,
+}: IProps) => {
   const [subTabIndex, setSubTabIndex] = useState(0)
-  const [listUserRanks, setListUserRanks] = useState<IMappingFormat[]>([])
-  const [listUserRanksDaily, setListUserRanksDaily] = useState<IMappingFormat[]>([])
-  const [listUserRanksWeekly, setListUserRanksWeekly] = useState<IMappingFormat[]>([])
-  const [listUserRanksMonthly, setListUserRanksMonthly] = useState<IMappingFormat[]>([])
-  const [listUserRanksAllTime, setListUserRanksAllTime] = useState<IMappingFormat[]>([])
-  const [loadOk, setLoadOk] = useState(false)
   const [loadNetWork, setLoadNetWork] = useState(false)
-  const [listPoint, setListPoint] = useState<IListPoint[]>([])
   const { account, chainId, isWrongNetwork } = useActiveWeb3React()
   const totalPoint = listLever[currentLevelReach]?.point
   const currentPoint = userCurrentPoint
   const percentPoint = (currentPoint / totalPoint) * 100
   const { width } = useWindowSize()
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
-  const [rankOfUser, setRankOfUser] = useState<IMappingFormat>(defaultIMappingFormat)
-  const [rankOfUserDaily, setRankOfUserDaily] = useState<IMappingFormat>(defaultIMappingFormat)
-  const [rankOfUserWeekly, setRankOfUserWeekly] = useState<IMappingFormat>(defaultIMappingFormat)
-  const [rankOfUserMonthly, setRankOfUserMonthly] = useState<IMappingFormat>(defaultIMappingFormat)
-  const [rankOfUserAllTime, setRankOfUserAllTime] = useState<IMappingFormat>(defaultIMappingFormat)
-
-  const payloadPostForDaily = {
-    date_gte: moment(startOfDay).unix(),
-    date_lte: moment().unix(),
-  }
-  const payloadPostForMonth = {
-    date_gte: moment(startOfMonth).unix(),
-    date_lte: moment().unix(),
-  }
-
-  const payloadPostForWeek = {
-    date_gte: moment(startOfWeek).unix(),
-    date_lte: moment().unix(),
-  }
-
-  const handleGetUserRanks = async (
-    typeFilter: FilterTime,
-    setList: (arr: IMappingFormat[]) => void,
-    setRank: (rank: IMappingFormat) => void,
-  ) => {
-    try {
-      let data = []
-      let res
-      switch (typeFilter) {
-        case 'All Time':
-          res = await getUerRank(chainId)
-          data = res.userPoints
-          break
-        case 'Monthly':
-          res = await getUserPointMonthly(chainId, payloadPostForMonth)
-          data = res.userPointMonthlies
-          break
-        case 'Weekly':
-          res = await getUserPointWeekly(chainId, payloadPostForWeek)
-          data = res.userPointWeeklies
-          break
-        default:
-          res = await getUserPointDaily(chainId, payloadPostForDaily)
-          data = res.userPointDailies
-          break
-      }
-
-      const dataUserFormatAmount: IDataFormatUnit[] = data.map((item) => {
-        return {
-          ...item,
-          id: item.id,
-          point: new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber(),
-        }
-      })
-
-      const listAddress = dataUserFormatAmount.map((item) => item.address)
-
-      if (listAddress.length > 0) {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
-          wallets: listAddress,
-        })
-        const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index) => {
-          const dataUserInfos = response.data
-          const userInfo = dataUserInfos?.find((user) => item.address === user.address)
-
-          return {
-            ...item,
-            ...userInfo,
-            rank: index + 1,
-            username: userInfo?.username ?? null,
-            avatar: userInfo?.avatar ?? null,
-          }
-        })
-
-        setList([...dataMapping])
-        if (tabLeaderBoard === typeFilter) setListUserRanks([...dataMapping])
-
-        const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 101).filter((item: any) => {
-          return item.address === account?.toLowerCase()
-        })
-
-        if (levelOfUSer.length !== 0) {
-          setRank(levelOfUSer[0])
-          if (tabLeaderBoard === typeFilter) setRankOfUser(levelOfUSer[0])
-        }
-      }
-    } catch (error) {
-      console.log(`error >>>`, error)
-    }
-  }
-
-  const getListPointConfig = async () => {
-    const res: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/point/config`).catch((error) => {
-      console.warn(error)
-    })
-    if (res && res.data) {
-      setListPoint(res.data)
-    }
-  }
-  const getUserPoint = async () => {
-    const result = await userPoint(chainId)
-    if (result && result.analysisDatas && result.analysisDatas.length > 0) {
-      const totalReward = new BigNumber(result.analysisDatas[0]?.total_reward)
-        .div(10 ** USD_DECIMALS[chainId])
-        .toNumber()
-      const totalClaimedAmount = new BigNumber(result.analysisDatas[0]?.total_claimed_amount)
-        .div(10 ** USD_DECIMALS[chainId])
-        .toNumber()
-      const totalUnClaimed = Number(totalReward) - Number(totalClaimedAmount)
-      listData[0].volumn = result.analysisDatas[0]?.number_of_referral
-      listData[1].volumn = totalUnClaimed.toString()
-      listData[2].volumn = totalClaimedAmount.toString()
-      listData[3].volumn = result.analysisDatas[0]?.total_transactions.toString()
-      listData[4].volumn = totalReward.toString()
-      setVolumnData(listData)
-    }
-  }
-
-  const getPointDataDays = async () => {
-    const startDate = new Date()
-    startDate.setDate(startDate.getDate() - 14)
-    startDate.setHours(0, 0, 0, 0)
-    const endDate = new Date()
-    endDate.setHours(23, 59, 59, 999)
-    const time = {
-      from: moment(startDate).unix(),
-      to: moment(endDate).unix(),
-    }
-    const result = await pointDataDays(time.from, time.to, chainId)
-    if (result && result.pointDataDays && result.pointDataDays.length > 0) {
-      const arr = result.pointDataDays
-      const chartData = createArray(startDate, endDate, arr)
-      const data = chartData.map((item: any) => {
-        const amount = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
-        return createDataChartDay(moment(item.date * 1000).format('DD MMM'), amount)
-      })
-      setMinAmount(data[0].uv.toString())
-      setMiddleAmount(data[Math.floor(data.length / 2)].uv.toString())
-      setMaxAmount(data[data.length - 1].uv.toString())
-      setDataChart(data)
-    }
-  }
-  const createArray = (from: Date, to: Date, subGraphData: any) => {
-    const start = new Date(moment(from).format('MM/DD/YYYY'))
-    const end = new Date(moment(to).format('MM/DD/YYYY'))
-    const chartData = []
-    for (let d = start; d <= end; d.setDate(d.getDate() + 1)) {
-      const loopDay = new Date(d)
-      loopDay.setHours(23)
-      loopDay.setMinutes(59)
-      loopDay.setSeconds(59)
-      const dataByDay = { date: moment(loopDay).unix(), amount: 0 }
-      const dateInterger = Math.trunc(moment(loopDay).unix() / 86400)
-
-      const findData = subGraphData.find((x) => {
-        return x.id === dateInterger.toString()
-      })
-      dataByDay.amount = findData ? findData.amount : 0
-      chartData.push(dataByDay)
-    }
-    return chartData
-  }
-
-  function createDataChartDay(name: string, uv: number) {
-    return { name, uv }
-  }
-
-  const handleOnChangeRankTab = (item: FilterTime) => {
-    setTabLeaderBoard(item)
-    switch (item) {
-      case 'All Time':
-        setListUserRanks(listUserRanksAllTime)
-        setRankOfUser(rankOfUserAllTime)
-        break
-      case 'Monthly':
-        setListUserRanks(listUserRanksMonthly)
-        setRankOfUser(rankOfUserMonthly)
-        break
-      case 'Weekly':
-        setListUserRanks(listUserRanksWeekly)
-        setRankOfUser(rankOfUserWeekly)
-        break
-      default:
-        setListUserRanks(listUserRanksDaily)
-        setRankOfUser(rankOfUserDaily)
-        break
-    }
-  }
-
-  useEffect(() => {
-    if (!chainId || !account) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
-    handleGetUserRanks('All Time', setListUserRanksAllTime, setRankOfUserAllTime)
-    handleGetUserRanks('Monthly', setListUserRanksMonthly, setRankOfUserMonthly)
-    handleGetUserRanks('Weekly', setListUserRanksWeekly, setRankOfUserWeekly)
-    handleGetUserRanks('Daily', setListUserRanksDaily, setRankOfUserDaily)
-    getListPointConfig()
-    getUserPoint()
-    getPointDataDays()
-  }, [chainId, account])
 
   useEffect(() => {
     if (isWrongNetwork === undefined) return
@@ -648,44 +418,24 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
                 </div>
               </Second>
             )}
-            {!account && (
+            {!account && width <= 1200 && (
               <Second
                 percentPoint={percentPoint}
                 account={account}
                 chainid={chainId}
                 totalPoint={totalPoint}
-                isMobileOrTablet={width < 1200}
                 className={`border-gradient-style ${width > 1200 && `border-gradient-style_expand`}`}
               >
-                {width < 1200 ? (
-                  <div className="total_point " style={{ height: '203px', padding: '58px 0' }}>
-                    <SubTitle className="please-connec">
-                      Please connect wallet to view your referral information
-                    </SubTitle>
-                    <ConnectBox>
-                      <ConnectWalletButtonWraper scale="sm">
-                        <BoxWrapper display={['flex', , , 'flex']}>
-                          <Trans>Connect Wallet</Trans>
-                        </BoxWrapper>
-                      </ConnectWalletButtonWraper>
-                    </ConnectBox>
-                  </div>
-                ) : (
-                  <div className="total_point unconnect" style={{ height: '203px', padding: '58px 0' }}>
-                    <div className="content_connect">
-                      <SubTitle className="please-connec">
-                        Please connect wallet to view your referral information
-                      </SubTitle>
-                      <ConnectBox>
-                        <ConnectWalletButtonWraper scale="sm">
-                          <BoxWrapper display={['flex', , , 'flex']}>
-                            <Trans>Connect Wallet</Trans>
-                          </BoxWrapper>
-                        </ConnectWalletButtonWraper>
-                      </ConnectBox>
-                    </div>
-                  </div>
-                )}
+                <div className="total_point " style={{ height: '203px', padding: '58px 0' }}>
+                  <SubTitle className="please-connec">Please connect wallet to view your referral information</SubTitle>
+                  <ConnectBox>
+                    <ConnectWalletButtonWraper scale="sm">
+                      <BoxWrapper display={['flex', , , 'flex']}>
+                        <Trans>Connect Wallet</Trans>
+                      </BoxWrapper>
+                    </ConnectWalletButtonWraper>
+                  </ConnectBox>
+                </div>
               </Second>
             )}
           </div>
@@ -726,33 +476,5 @@ const MainInfo = ({ userCurrentPoint, currentLevelReach, listLever, volumnTotalE
     </Box>
   )
 }
-
-const listData = [
-  {
-    volumn: '',
-    title: 'Number of Referral Participants',
-    svg: '/images/referral/icon-user.svg',
-  },
-  {
-    volumn: '',
-    title: 'Total Money Unclaimed',
-    svg: '/images/referral/icon-unclaimed-money.svg',
-  },
-  {
-    volumn: '',
-    title: 'Total Money Claimed',
-    svg: '/images/referral/icon-total-claim-money.svg',
-  },
-  {
-    volumn: '0',
-    title: 'Number of referral transactions',
-    svg: '/images/referral/icon-number-of-referral.svg',
-  },
-  {
-    volumn: '0',
-    title: 'Total reward earned',
-    svg: '/images/referral/icon-reward-earn.svg',
-  },
-]
 
 export default MainInfo
