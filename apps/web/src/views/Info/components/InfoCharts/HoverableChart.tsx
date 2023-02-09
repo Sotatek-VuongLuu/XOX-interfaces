@@ -97,7 +97,7 @@ const HoverableChart = ({
       if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList.ETH)
       else setCoinmarketcapId(_tokenList.BNB)
     } else {
-      setCoinmarketcapId(_tokenList[(selectedCurrency as any).address])
+      setCoinmarketcapId(_tokenList[(selectedCurrency as any).address.toUpperCase()])
     }
   }, [selectedCurrency, fetchingTokenId])
 
