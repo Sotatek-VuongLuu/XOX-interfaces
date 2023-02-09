@@ -37,6 +37,10 @@ const BTNLaunchApp = styled.button`
   border-radius: 6px;
   border: none;
   cursor: pointer;
+
+  &:hover {
+    background: #5f35eb;
+  }
 `
 
 const HamburgerButton = styled.div`
@@ -138,8 +142,8 @@ const IconAlert = styled.div`
 `
 const IconAlertActive = styled.div`
   position: relative;
-  &::before{
-    content: "";
+  &::before {
+    content: '';
     display: inline-block;
     width: 8px;
     height: 8px;
@@ -150,7 +154,7 @@ const IconAlertActive = styled.div`
     border-radius: 50%;
   }
   @media (max-width: 576px) {
-    &::before{
+    &::before {
       width: 5px;
       height: 5px;
       right: 23px;

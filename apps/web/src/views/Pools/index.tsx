@@ -440,7 +440,7 @@ const Container = styled.div`
   display: flex;
   justify-content: center;
   height: 100%;
-  align-items: center;
+  /* align-items: center; */
   .content {
     width: 1400px;
   }

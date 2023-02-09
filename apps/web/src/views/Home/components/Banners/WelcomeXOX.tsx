@@ -9,6 +9,7 @@ import useWindowSize from 'hooks/useWindowSize'
 
 const Wrapper = styled.div`
   width: 100%;
+
   @media screen and (max-width: 900px) {
     .title {
       font-size: 24px;
@@ -138,6 +139,10 @@ const Button = styled.button`
   font-size: 18px;
   color: #ffffff;
   cursor: pointer;
+
+  &:hover {
+    background: #5f35eb;
+  }
 
   @media screen and (max-width: 900px) {
     font-size: 16px;

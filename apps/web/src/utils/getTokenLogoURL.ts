@@ -1,6 +1,6 @@
 import { getAddress } from '@ethersproject/address'
-import memoize from 'lodash/memoize'
 import { ChainId, Token } from '@pancakeswap/sdk'
+import { XOX_ADDRESS } from 'config/constants/exchange'
 
 const mapping = {
   [ChainId.BSC]: 'smartchain',
@@ -11,6 +11,9 @@ const mapping = {
 
 const getTokenLogoURL = (token?: Token) => {
   if (token && token.symbol.toLocaleUpperCase() === 'XOX') {
+    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`
+  }
+  if (token && token.address.toLowerCase() === XOX_ADDRESS[token.chainId].toLowerCase()) {
     return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`
   }
   if (token && token.symbol.toLocaleUpperCase() === 'XOXS') {

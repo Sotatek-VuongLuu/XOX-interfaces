@@ -112,6 +112,10 @@ const Wrapper = styled(Box)`
     border-radius: 8px;
     cursor: pointer;
 
+    &:hover {
+      background: #5f35eb;
+    }
+
     @media screen and (max-width: 900px) {
       padding: 12px 30px;
       font-size: 16px;
