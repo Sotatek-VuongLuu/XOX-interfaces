@@ -180,7 +180,7 @@ const HoverableChart = ({
                       viewBox="0 0 12 13"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      transform="rotate(180)"
+                      style={{ transform: 'rotate(180deg)' }}
                     >
                       <path
                         fillRule="evenodd"
