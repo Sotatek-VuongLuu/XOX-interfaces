@@ -13,6 +13,7 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import { getBlockExploreLink } from 'utils'
 import { formatAmount } from 'utils/formatInfoNumbers'
 import { Arrow, ClickableColumnHeader } from './shared'
+import { isMobile } from 'react-device-detect'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -63,7 +64,7 @@ const Wrapper = styled.div`
     line-height: 17px;
     color: #ffffff;
     margin-right: 8px;
-    padding: 10px 16px;
+    padding: 10px 10px;
   }
 
   .btn-filter button.inactive {
@@ -96,6 +97,10 @@ const Wrapper = styled.div`
       & > div:first-child {
         margin-bottom: 28px;
       }
+    }
+
+    .btn-filter button {
+      padding: 10px 16px;
     }
   }
 `
@@ -866,7 +871,7 @@ const TransactionsTable: React.FC = () => {
           )}
         </Table>
       </CustomTableWrapper>
-      {currentTransactions && (
+      {currentTransactions && currentTransactions.length > 0 && (
         <PageButtons>
           <div>
             <Arrow
@@ -908,12 +913,16 @@ const TransactionsTable: React.FC = () => {
                     ))
                   ) : (
                     <>
-                      <button type="button" className="page" onClick={() => setPagePagination(1)}>
-                        1
-                      </button>
-                      <button type="button" className="page" onClick={() => setPagePagination(page - 3)}>
-                        ...
-                      </button>
+                      {!isMobile && (
+                        <>
+                          <button type="button" className="page" onClick={() => setPagePagination(1)}>
+                            1
+                          </button>
+                          <button type="button" className="page" onClick={() => setPagePagination(page - 3)}>
+                            ...
+                          </button>
+                        </>
+                      )}
                       <button type="button" className="page" onClick={() => setPagePagination(page - 2)}>
                         {page - 2}
                       </button>
@@ -939,12 +948,16 @@ const TransactionsTable: React.FC = () => {
                       <button type="button" className="page" onClick={() => setPagePagination(page + 2)}>
                         {page + 2}
                       </button>
-                      <button type="button" className="page" onClick={() => setPagePagination(page + 3)}>
-                        ...
-                      </button>
-                      <button type="button" className="page" onClick={() => setPagePagination(maxPage)}>
-                        {maxPage}
-                      </button>
+                      {!isMobile && (
+                        <>
+                          <button type="button" className="page" onClick={() => setPagePagination(page + 3)}>
+                            ...
+                          </button>
+                          <button type="button" className="page" onClick={() => setPagePagination(maxPage)}>
+                            {maxPage}
+                          </button>
+                        </>
+                      )}
                     </>
                   )}
                 </>
