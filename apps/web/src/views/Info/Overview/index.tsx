@@ -66,8 +66,33 @@ const MainBackground = styled.div`
   bottom: 0;
   svg {
     width: 100vw;
-    height: auto;
+    /* height: auto; */
     object-fit: cover;
+  }
+`
+
+const FullContentInside = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+  .content {
+    width: 1400px;
+  }
+
+  @media screen and (max-width: 1200px) {
+    display: block;
+    .content {
+      width: unset;
+    }
+  }
+`
+
+const PageOverViewStyled = styled(Page)`
+  display: grid;
+  @media screen and (max-width: 1200px) {
+    display: block;
   }
 `
 
@@ -209,42 +234,46 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   }, [currencyDatas])
 
   return (
-    <Page>
+    <PageOverViewStyled>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
-      <InfoNav allTokens={allTokens} textContentBanner="One Dapp. Unlimited possibilities" />
-      <PageContainer>
-        <div>
-          <ChartCardsContainer>
-            <div className="border-gradient-style">
-              <HoverableChart
-                chartData={chartData}
-                valueProperty="priceUSD"
-                ChartComponent={LineChart}
-                filter={filter}
-                setFilter={setFilter}
+      <FullContentInside>
+        <div className="content">
+          <InfoNav allTokens={allTokens} textContentBanner="One Dapp. Unlimited possibilities" />
+          <PageContainer>
+            <div>
+              <ChartCardsContainer>
+                <div className="border-gradient-style">
+                  <HoverableChart
+                    chartData={chartData}
+                    valueProperty="priceUSD"
+                    ChartComponent={LineChart}
+                    filter={filter}
+                    setFilter={setFilter}
+                    currencyDatas={currencyDatas}
+                    setCoinmarketcapId={setCoinmarketcapId}
+                    chainId={chainId}
+                    native={native}
+                    allTokens={allTokens}
+                    fetchingTokenId={fetchingTokenId}
+                    setFetchingTokenId={setFetchingTokenId}
+                    unsupported={unsupported}
+                  />
+                </div>
+              </ChartCardsContainer>
+              <WalletInfoTable
                 currencyDatas={currencyDatas}
-                setCoinmarketcapId={setCoinmarketcapId}
-                chainId={chainId}
                 native={native}
                 allTokens={allTokens}
-                fetchingTokenId={fetchingTokenId}
-                setFetchingTokenId={setFetchingTokenId}
-                unsupported={unsupported}
+                className="border-gradient-style"
               />
             </div>
-          </ChartCardsContainer>
-          <WalletInfoTable
-            currencyDatas={currencyDatas}
-            native={native}
-            allTokens={allTokens}
-            className="border-gradient-style"
-          />
+            <div className="border-gradient-style border-gradient-restyle-bottom">
+              <TransactionTable />
+            </div>
+          </PageContainer>
         </div>
-        <div className="border-gradient-style">
-          <TransactionTable />
-        </div>
-      </PageContainer>
-    </Page>
+      </FullContentInside>
+    </PageOverViewStyled>
   )
 }
 

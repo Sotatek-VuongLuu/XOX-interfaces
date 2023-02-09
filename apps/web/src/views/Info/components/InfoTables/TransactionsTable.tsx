@@ -130,7 +130,7 @@ const Table = styled.div`
 `
 
 export const CustomTableWrapper = styled(Flex)`
-  width: calc(100vw - 96px);
+  /* width: calc(100vw - 96px); */
   padding-top: 24px;
   flex-direction: column;
   gap: 16px;
@@ -160,7 +160,7 @@ export const CustomTableWrapper = styled(Flex)`
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    width: calc(100vw - 152px);
+    /* width: calc(100vw - 152px); */
   }
 `
 
