@@ -389,7 +389,7 @@ const DataRow: React.FC<
         key={`${transaction.hash}-token0`}
       >
         <Tooltip placement="top-start" title={`${fullNumber(abs1)} ${symbolToken0}S`}>
-          <span>{`${formatNumberDecimal(abs1)} ${decimalCount(abs1) ? '...' : ''} ${symbolToken0}S`}</span>
+          <span>{`${formatNumberDecimal(abs1)}${decimalCount(abs1) ? '...' : ''} ${symbolToken0}S`}</span>
         </Tooltip></Text>
     </>
   )
