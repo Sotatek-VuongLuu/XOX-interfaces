@@ -210,7 +210,7 @@ const HoverableChart = ({
         </div>
 
         <div className="filter">
-          <div>
+          <div style={{whiteSpace: 'nowrap'}}>
             <button type="button" onClick={() => handleFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
               All
             </button>

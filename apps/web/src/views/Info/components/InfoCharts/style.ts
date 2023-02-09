@@ -165,6 +165,11 @@ export const ChartContent = styled.div`
       outline: none;
       cursor: pointer;
     }
+    @media (max-width: 576px) {
+      button{
+        padding: 0 5px;
+      }
+    }
 
     button.active {
       color: #9072ff;

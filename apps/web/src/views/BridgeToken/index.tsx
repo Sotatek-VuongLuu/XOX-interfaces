@@ -69,6 +69,13 @@ const SwapButton = styled(PancakeButton)`
   }
 `
 
+const WapperHeight = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 820px;
+`
+
 const WapperBg = styled.div`
   position: relative;
   .mobile {
@@ -567,6 +574,7 @@ export default function BridgeToken() {
 
   return (
     <Page>
+      <WapperHeight>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex width={['328px', , '559px']} className="container_bridge">
         <Wrapper flex="column" position="relative">
@@ -785,6 +793,7 @@ export default function BridgeToken() {
           </ModalBase>
         </Wrapper>
       </Flex>
+      </WapperHeight>
     </Page>
   )
 }
