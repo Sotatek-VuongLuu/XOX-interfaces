@@ -86,10 +86,14 @@ const Container = styled.div`
   margin-bottom: 24px;
   color: rgba(0, 0, 0, 0.87);
   justify-content: center;
-  @media (min-width: 1300px) {
+  @media (min-width: 1200px) {
+    .content {
+      width: 1200px;
+    }
+  }
+  @media (min-width: 1400px) {
     .content {
       width: 1400px;
-      margin: 0 auto;
     }
   }
   @media (max-width: 576px) {
@@ -109,8 +113,15 @@ const ContainerBanner = styled.div`
   @media (max-width: 576px) {
     padding: 28px 24px 24px;
   }
-  .banner {
-    width: 1400px;
+  @media (min-width: 1200px) {
+    .banner {
+      width: 1200px;
+    }
+  }
+  @media (min-width: 1400px) {
+    .banner {
+      width: 1400px;
+    }
   }
 `
 
