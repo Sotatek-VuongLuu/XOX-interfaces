@@ -101,10 +101,16 @@ const BoxStyled = styled(Box)`
     position: relative;
   }
 
-  @media screen and (max-width: 1200px) {
+  @media screen and (max-width: 1400px) {
     display: block;
     .content {
-      width: unset;
+      width: 1200px;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    .content {
+      width: 100%;
     }
   }
 `
@@ -112,53 +118,6 @@ const BoxStyled = styled(Box)`
 interface IPropsConnectBox {
   hasListUserRanks?: boolean
 }
-
-const ConnectBox = styled.div<IPropsConnectBox>`
-  position: absolute;
-  height: ${({ hasListUserRanks }) => (hasListUserRanks ? '445px' : '375px')};
-  width: 456px;
-  left: 0;
-  bottom: 0;
-  background: #242424;
-  z-index: 10;
-  border-radius: 10px;
-  .content {
-    height: ${({ hasListUserRanks }) => (hasListUserRanks ? '445px' : '375px')};
-    width: 456px;
-    border-radius: inherit;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    .group_btn {
-      p {
-        text-align: center;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 17px;
-        text-align: center;
-        color: rgba(255, 255, 255, 0.87);
-      }
-      div {
-        display: flex;
-        justify-content: center;
-        margin-top: 32px;
-        button {
-          border: none;
-          padding: 10px 20px;
-          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-          font-weight: 700;
-          font-size: 14px;
-          line-height: 17px;
-          color: #ffffff;
-          border-radius: 4px;
-        }
-      }
-    }
-  }
-`
-
-const ConnectWalletButtonWraper = styled(ConnectWalletButton)``
 
 const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily'] as const
 type FilterTime = typeof filterTime[number]
@@ -535,6 +494,7 @@ export default function Refferal() {
               middleAmount={middleAmount}
               maxAmount={maxAmount}
               listPoint={listPoint}
+              listLevelMustReach={listLevelMustReach}
             />
             <ReferralFriend
               currentLevelReach={currentLevelReach}
@@ -546,19 +506,6 @@ export default function Refferal() {
               handleCheckPendingRewardAll={handleCheckPendingRewardAll}
               totalUnClaimed={totalAmountUnClaimOfUser}
             />
-
-            {!account && width > 1200 && (
-              <ConnectBox className="border-gradient-style" hasListUserRanks={listUserRanks.length > 0}>
-                <div className="content">
-                  <div className="group_btn">
-                    <p>Please connect wallet to view your referral information</p>
-                    <div>
-                      <ConnectWalletButtonWraper type="button">Connect Wallet</ConnectWalletButtonWraper>
-                    </div>
-                  </div>
-                </div>
-              </ConnectBox>
-            )}
           </div>
         </BoxStyled>
       </Wrapper>

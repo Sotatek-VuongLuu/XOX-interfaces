@@ -37,7 +37,7 @@ export const ChartCardsContainer = styled(Flex)`
 export const PageContainer = styled(Flex)`
   display: flex;
   flex-direction: column;
-  padding: 24px;
+  padding-top: 24px;
 
   & > div {
     display: flex;
@@ -46,11 +46,11 @@ export const PageContainer = styled(Flex)`
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    padding: 48px;
+    padding-top: 24px;
   }
 
   ${({ theme }) => theme.mediaQueries.xxl} {
-    padding: 48px;
+    padding-top: 48px;
     & > div {
       flex-direction: row;
     }
@@ -77,14 +77,22 @@ const FullContentInside = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
+  padding-top: 48px;
   .content {
     width: 1400px;
+  }
+
+  @media screen and (max-width: 1400px) {
+    padding: 24px;
+    .content {
+      width: 1200px;
+    }
   }
 
   @media screen and (max-width: 1200px) {
     display: block;
     .content {
-      width: unset;
+      width: 100%;
     }
   }
 `
@@ -238,7 +246,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <FullContentInside>
         <div className="content">
-          <InfoNav allTokens={allTokens} textContentBanner="One Dapp. Unlimited possibilities" />
+          <InfoNav allTokens={allTokens} textContentBanner="One Dapp. Unlimited possibilities" hasPadding={false} />
           <PageContainer>
             <div>
               <ChartCardsContainer>

@@ -112,7 +112,7 @@ const WrapperLeft = styled(Box)`
   }
 `
 
-const WrapperRight = styled(Box)<IPropsWR>`
+export const WrapperRight = styled(Box)<IPropsWR>`
   margin-top: 0 !important;
   position: relative;
 
@@ -602,13 +602,6 @@ const ReferralFriend = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
 
-  // useEffect(() => {
-  //   document.querySelector('.swiper-button-next').addEventListener('dblclick', (e) => {
-  //     e.preventDefault()
-  //     event.stopPropagation();
-  //   }, true)
-  // })
-
   return (
     <>
       <Box sx={{ marginTop: '16px', zIndex: 9 }}>
@@ -706,80 +699,82 @@ const ReferralFriend = ({
           </Grid>
 
           <Grid item xs={12} lg={8}>
-            <WrapperRight sx={{ marginTop: '16px' }} account={account}>
-              <Swiper
-                slidesPerView={controlWidth}
-                modules={[Navigation, Pagination, A11y]}
-                navigation
-                scrollbar={{ draggable: true }}
-              >
-                {listLevelMustReach.map((item: IItemLevel) => {
-                  return (
-                    <SwiperSlide key={item.icon}>
-                      <div
-                        className={`item ${item.isReach && item.lever === currentLevelReach ? 'current' : ''}`}
-                        key={item.icon}
-                      >
-                        <div className="main-img">
-                          <img
-                            className="first-img"
-                            src={item.lever === currentLevelReach ? '/images/current_item.svg' : 'images/item.svg'}
-                            alt="images"
-                          />
-                          <img className="sec-img" src="/images/current_item.svg" alt="images" />
-                        </div>
-                        <div className="inner-text">
-                          <img src={item.icon} alt="icons" className="jewellery" />
-
-                          <div className="shadow" />
-
-                          <p className="title">
-                            {item.point.toLocaleString()} points
-                            <br />
-                            ~${item.dollar.toLocaleString()}
-                          </p>
-
-                          {account && (
-                            <button
-                              type="button"
-                              className="btn"
-                              disabled={!item.isReach || item?.isClaimed}
-                              onClick={() => {
-                                setDataClaim({ ...dataClaim, point: item.point, dollar: item.dollar })
-                                setIsShowModalConfirmClaimByLevel(true)
-                                setLevel(item.lever)
-                              }}
-                            >
-                              {item?.isClaimed ? (
-                                <span className={`${item.lever === currentLevelReach ? 'claim' : ''}`}>Claimed</span>
-                              ) : (
-                                <span className={`${item.isReach ? 'claim' : ''} `}>Claim</span>
-                              )}
-                            </button>
-                          )}
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  )
-                })}
-              </Swiper>
-              <div className="claim_total">
-                {account && (
-                  <div className="unclaim_reward_container">
-                    <div className="unclaim_reward">
-                      <div>${Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)} Unclaimed Rewards</div>
-                    </div>
-                  </div>
-                )}
-                <button
-                  type="button"
-                  onClick={() => setIsShowModalConfirmClaimAll(true)}
-                  disabled={!account || isClaimAll}
+            {account && (
+              <WrapperRight sx={{ marginTop: '16px' }} account={account}>
+                <Swiper
+                  slidesPerView={controlWidth}
+                  modules={[Navigation, Pagination, A11y]}
+                  navigation
+                  scrollbar={{ draggable: true }}
                 >
-                  <span>Claim All</span>
-                </button>
-              </div>
-            </WrapperRight>
+                  {listLevelMustReach.map((item: IItemLevel) => {
+                    return (
+                      <SwiperSlide key={item.icon}>
+                        <div
+                          className={`item ${item.isReach && item.lever === currentLevelReach ? 'current' : ''}`}
+                          key={item.icon}
+                        >
+                          <div className="main-img">
+                            <img
+                              className="first-img"
+                              src={item.lever === currentLevelReach ? '/images/current_item.svg' : 'images/item.svg'}
+                              alt="images"
+                            />
+                            <img className="sec-img" src="/images/current_item.svg" alt="images" />
+                          </div>
+                          <div className="inner-text">
+                            <img src={item.icon} alt="icons" className="jewellery" />
+
+                            <div className="shadow" />
+
+                            <p className="title">
+                              {item.point.toLocaleString()} points
+                              <br />
+                              ~${item.dollar.toLocaleString()}
+                            </p>
+
+                            {account && (
+                              <button
+                                type="button"
+                                className="btn"
+                                disabled={!item.isReach || item?.isClaimed}
+                                onClick={() => {
+                                  setDataClaim({ ...dataClaim, point: item.point, dollar: item.dollar })
+                                  setIsShowModalConfirmClaimByLevel(true)
+                                  setLevel(item.lever)
+                                }}
+                              >
+                                {item?.isClaimed ? (
+                                  <span className={`${item.lever === currentLevelReach ? 'claim' : ''}`}>Claimed</span>
+                                ) : (
+                                  <span className={`${item.isReach ? 'claim' : ''} `}>Claim</span>
+                                )}
+                              </button>
+                            )}
+                          </div>
+                        </div>
+                      </SwiperSlide>
+                    )
+                  })}
+                </Swiper>
+                <div className="claim_total">
+                  {account && (
+                    <div className="unclaim_reward_container">
+                      <div className="unclaim_reward">
+                        <div>${Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)} Unclaimed Rewards</div>
+                      </div>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={() => setIsShowModalConfirmClaimAll(true)}
+                    disabled={!account || isClaimAll}
+                  >
+                    <span>Claim All</span>
+                  </button>
+                </div>
+              </WrapperRight>
+            )}
           </Grid>
         </Grid>
       </Box>

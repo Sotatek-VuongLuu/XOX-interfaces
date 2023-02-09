@@ -99,11 +99,17 @@ const Container = styled.div`
     }
   }
 
-  @media (max-width: 576px) {
-    padding: 0px 24px;
-
+  @media screen and (max-width: 1400px) {
+    padding: 24px;
     .content {
-      width: unset;
+      width: 1200px;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    padding: 0px 24px;
+    .content {
+      width: 100%;
     }
   }
 `
@@ -200,10 +206,18 @@ const ContainerBanner = styled.div`
   .banner {
     width: 1400px;
   }
-  @media (max-width: 576px) {
+
+  @media screen and (max-width: 1400px) {
+    padding: 24px;
+    .banner {
+      width: 1200px;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
     padding: 28px 24px 24px;
     .banner {
-      width: unset;
+      width: 100%;
     }
   }
 `

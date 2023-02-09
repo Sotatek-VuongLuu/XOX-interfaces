@@ -6,15 +6,36 @@ import { Box, Grid } from '@mui/material'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import Trans from 'components/Trans'
 import ConnectWalletButton from 'components/ConnectWalletButton'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import useWindowSize from 'hooks/useWindowSize'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Navigation, Pagination, A11y } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
+import { USD_DECIMALS } from 'config/constants/exchange'
+import { getUserFriend } from 'services/referral'
+import { formatUnits } from '@ethersproject/units'
+import axios from 'axios'
 import HowToJoin from './HowToJoin'
 // eslint-disable-next-line import/no-cycle
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
+
+const floatingAnim = (x: string, y: string) => keyframes`
+  from {
+    transform: translate(0,  0px);
+  }
+  50% {
+    transform: translate(${x}, ${y});
+  }
+  to {
+    transform: translate(0, 0px);
+  }
+`
 
 export interface IItemLeaderBoard {
   name: string
@@ -78,6 +99,10 @@ const First = styled.div<IPropsTotal>`
       &:hover {
         background: #5f35eb;
       }
+
+      @media screen and (min-width: 1200px) and (max-width: 1401px) {
+        padding: 10px 14px !important;
+      }
     }
 
     .tab_item.active {
@@ -120,8 +145,8 @@ const First = styled.div<IPropsTotal>`
 `
 
 const Second = styled.div<IPropsTotal>`
+  margin-top: 16px;
   .total_point {
-    margin-top: 16px;
     padding: 24px;
     position: relative;
     background: #242424;
@@ -182,7 +207,7 @@ const Second = styled.div<IPropsTotal>`
 `
 
 const WrapperRight = styled.div<IPropsContainer>`
-  height: 100%;
+  /* height: 100%; */
 
   .container {
     width: 100%;
@@ -248,6 +273,227 @@ const WrapperRight = styled.div<IPropsContainer>`
     }
   }
 `
+
+const FakeSwiper = styled.div`
+  margin-top: 0 !important;
+  position: relative;
+
+  .item {
+    position: relative;
+    background-size: 192px 172px;
+    background-repeat: no-repeat;
+    background-position: center;
+    height: auto;
+    width: 100%;
+    /* background: url(/images/item.svg); */
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+    margin: auto;
+    &:hover {
+      transform: scale(1.11);
+      .jewellery {
+        animation: ${floatingAnim('0px', '10px')} 3s ease-in-out infinite !important;
+      }
+      .main-img .sec-img {
+        opacity: 1;
+      }
+    }
+  }
+  .main-img {
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    position: relative;
+    img {
+      width: 100%;
+      height: auto;
+    }
+    .sec-img {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 100%;
+      opacity: 0;
+    }
+  }
+  .item > div.inner-text {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: -7px;
+
+    .shadow {
+      width: 110px;
+      height: 17px;
+      background: radial-gradient(50% 50% at 50% 50%, #000000 0%, rgba(48, 48, 48, 0) 100%);
+    }
+
+    .title {
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 15px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.87);
+      margin-top: 8px;
+      white-space: nowrap;
+    }
+
+    .btn {
+      background: transparent;
+      border: none;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      color: rgba(255, 255, 255, 0.38);
+      margin-top: 12px;
+      cursor: pointer;
+    }
+
+    button:disabled,
+    button[disabled] {
+      cursor: not-allowed;
+    }
+
+    .jewellery {
+      animation: ${floatingAnim('0px', '5px')} 3s ease-in-out infinite;
+    }
+  }
+
+  .current {
+    & > div {
+      .btn {
+        background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+      button:disabled,
+      button[disabled] {
+        cursor: not-allowed;
+        background: linear-gradient(0deg, rgba(255, 255, 255, 0.384) 0%, rgba(255, 255, 255, 0.384) 100%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+      }
+    }
+  }
+
+  .swiper-button-next {
+    z-index: 999;
+    background-image: url(/images/next.svg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    border-radius: 50%;
+    @media screen and (max-width: 555px) {
+      margin-right: -14px;
+    }
+  }
+
+  .swiper-button-next::after {
+    display: none;
+  }
+
+  .swiper-button-prev {
+    background-image: url(/images/prev.svg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+  }
+
+  .swiper-button-prev::after {
+    display: none;
+  }
+
+  .swiper.swiper-initialized {
+    padding-top: 16px;
+  }
+
+  .claim_total {
+    display: flex;
+    justify-content: center;
+    button {
+      background-color: transparent;
+      border: none;
+      cursor: pointer;
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      border-radius: 4px;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      color: #ffffff;
+      padding: 8px 20px;
+      &:hover {
+        background: #5f35eb;
+      }
+    }
+
+    button:disabled,
+    button[disabled] {
+      background: rgba(255, 255, 255, 0.05);
+      color: rgba(255, 255, 255, 0.38);
+      cursor: not-allowed;
+    }
+
+    .unclaim_reward_container {
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      padding: 2px;
+      border-radius: 4px;
+      margin-right: 16px;
+
+      .unclaim_reward {
+        width: 100%;
+        height: 100%;
+        background: black;
+        border-radius: 4px;
+        div {
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 17px;
+          padding: 8px 20px;
+          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          /* text-fill-color: transparent; */
+        }
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      flex-direction: column;
+      .unclaim_reward_container {
+        width: 100%;
+        margin-bottom: 16px;
+        .unclaim_reward {
+          div {
+            text-align: center;
+          }
+        }
+      }
+    }
+  }
+
+  .claim {
+    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+`
+
+const ConnectBoxContainer = styled.div`
+  margin-top: 20px;
+  height: 100%;
+
+  .total_point_content {
+    display: grid;
+    place-content: center;
+  }
+`
+
 const NoDataWraper = styled.div`
   width: 100%;
   height: 360px;
@@ -291,6 +537,17 @@ const SubTitle = styled.div`
   max-width: 242px;
   margin: 0 auto;
 `
+
+interface IPropsWrapperLeft {
+  account?: boolean
+}
+
+const WrapperLeft = styled.div<IPropsWrapperLeft>`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+`
+
 interface IProps {
   userCurrentPoint: number
   currentLevelReach: number
@@ -307,6 +564,7 @@ interface IProps {
   middleAmount: any
   maxAmount: any
   listPoint: any
+  listLevelMustReach: any
 }
 
 const MainInfo = ({
@@ -325,6 +583,7 @@ const MainInfo = ({
   middleAmount,
   maxAmount,
   listPoint,
+  listLevelMustReach,
 }: IProps) => {
   const [subTabIndex, setSubTabIndex] = useState(0)
   const [loadNetWork, setLoadNetWork] = useState(false)
@@ -334,6 +593,84 @@ const MainInfo = ({
   const percentPoint = (currentPoint / totalPoint) * 100
   const { width } = useWindowSize()
   const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
+  const [listFriends, setListFriends] = useState([])
+
+  const controlWidth = useMemo(() => {
+    let slidesPerView = 5
+    if (width < 1600) {
+      slidesPerView = 5
+    }
+    if (width < 1400) {
+      slidesPerView = 4
+    }
+    if (width < 1200) {
+      slidesPerView = 4
+    }
+    if (width < 900) {
+      slidesPerView = 3
+    }
+    if (width < 698) {
+      slidesPerView = 3
+    }
+    if (width < 534) {
+      slidesPerView = 2
+    }
+    if (width < 376) {
+      slidesPerView = 2
+    }
+    if (width < 368) {
+      slidesPerView = 1
+    }
+    return slidesPerView
+  }, [width])
+
+  const dataFriend = async (accountId: string) => {
+    try {
+      setListFriends([])
+      const { userInfos } = await getUserFriend(chainId, accountId)
+      const sortByPoints = userInfos[0]?.friends?.sort(function (a: any, b: any) {
+        return Number(b.amount) - Number(a.amount)
+      })
+      // console.log('sortByPoints', sortByPoints)
+      if (Array.from(userInfos).length !== 0) {
+        const dataUserFormatAmount = sortByPoints.map((item: any) => {
+          return {
+            ...item,
+            id: item?.ref_address,
+            point: Number(formatUnits(item.amount, USD_DECIMALS[chainId])),
+          }
+        })
+
+        const dataMapping = await Promise.all(
+          dataUserFormatAmount?.map(async (item: any): Promise<any> => {
+            const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+              wallets: [`${item.ref_address}`],
+            })
+            const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API}/users/${item.ref_address}`)
+            const dataMap = response?.data[0]
+            return {
+              ...item,
+              ...dataMap,
+              name: dataMap?.username ?? null,
+              avatar: dataMap?.avatar ?? null,
+              refCode: data?.referralCode,
+            }
+          }),
+        )
+        setListFriends(dataMapping)
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error >>>>`, error)
+    }
+  }
+
+  useEffect(() => {
+    if (account && chainId) {
+      dataFriend(account)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chainId, account])
 
   useEffect(() => {
     if (isWrongNetwork === undefined) return
@@ -345,7 +682,7 @@ const MainInfo = ({
     <Box sx={{ marginTop: '16px' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} lg={4}>
-          <div>
+          <WrapperLeft>
             <div className="border-gradient-style">
               <First account={account}>
                 <div className="tab_filter">
@@ -418,6 +755,21 @@ const MainInfo = ({
                 </div>
               </Second>
             )}
+            {!account && width > 1200 && (
+              <ConnectBoxContainer className="border-gradient-style">
+                <div className="total_point_content " style={{ height: '100%', padding: '58px 0' }}>
+                  <SubTitle className="please-connec">Please connect wallet to view your referral information</SubTitle>
+                  <ConnectBox>
+                    <ConnectWalletButtonWraper scale="sm">
+                      <BoxWrapper display={['flex', , , 'flex']}>
+                        <Trans>Connect Wallet</Trans>
+                      </BoxWrapper>
+                    </ConnectWalletButtonWraper>
+                  </ConnectBox>
+                </div>
+              </ConnectBoxContainer>
+            )}
+
             {!account && width <= 1200 && (
               <Second
                 percentPoint={percentPoint}
@@ -438,7 +790,7 @@ const MainInfo = ({
                 </div>
               </Second>
             )}
-          </div>
+          </WrapperLeft>
         </Grid>
         <Grid item xs={12} lg={8}>
           <WrapperRight subTabIndex={subTabIndex} className="border-gradient-style">
@@ -471,6 +823,48 @@ const MainInfo = ({
               {subTabIndex === 2 && <HowToJoin />}
             </div>
           </WrapperRight>
+
+          {!account && width > 1200 && (
+            <FakeSwiper>
+              <Swiper
+                slidesPerView={controlWidth}
+                modules={[Navigation, Pagination, A11y]}
+                navigation
+                scrollbar={{ draggable: true }}
+              >
+                {listLevelMustReach.map((item: IItemLevel) => {
+                  return (
+                    <SwiperSlide key={item.icon}>
+                      <div
+                        className={`item ${item.isReach && item.lever === currentLevelReach ? 'current' : ''}`}
+                        key={item.icon}
+                      >
+                        <div className="main-img">
+                          <img
+                            className="first-img"
+                            src={item.lever === currentLevelReach ? '/images/current_item.svg' : 'images/item.svg'}
+                            alt="images"
+                          />
+                          <img className="sec-img" src="/images/current_item.svg" alt="images" />
+                        </div>
+                        <div className="inner-text">
+                          <img src={item.icon} alt="icons" className="jewellery" />
+
+                          <div className="shadow" />
+
+                          <p className="title">
+                            {item.point.toLocaleString()} points
+                            <br />
+                            ~${item.dollar.toLocaleString()}
+                          </p>
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  )
+                })}
+              </Swiper>
+            </FakeSwiper>
+          )}
         </Grid>
       </Grid>
     </Box>

@@ -444,8 +444,19 @@ const Container = styled.div`
   .content {
     width: 1400px;
   }
-  @media screen and (max-width: 576px) {
+
+  @media screen and (max-width: 1400px) {
     padding: 24px;
+    .content {
+      width: 1200px;
+    }
+  }
+
+  @media screen and (max-width: 1200px) {
+    display: block;
+    .content {
+      width: 100%;
+    }
   }
 `
 interface IPropsButtonUnStake {

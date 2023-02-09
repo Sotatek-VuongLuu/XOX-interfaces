@@ -12,8 +12,8 @@ import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { getBlockExploreLink } from 'utils'
 import { formatAmount } from 'utils/formatInfoNumbers'
-import { Arrow, ClickableColumnHeader } from './shared'
 import { isMobile } from 'react-device-detect'
+import { Arrow, ClickableColumnHeader } from './shared'
 
 const Wrapper = styled.div`
   width: 100%;
