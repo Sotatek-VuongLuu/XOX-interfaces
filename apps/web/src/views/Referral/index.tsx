@@ -24,10 +24,10 @@ import {
   userPoint,
 } from 'services/referral'
 import styled from 'styled-components'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import Banner from './components/Banner'
 import MainInfo from './components/MainInfo'
 import ReferralFriend from './components/ReferralFriend'
-import ConnectWalletButton from 'components/ConnectWalletButton'
 
 export interface IItemLevel {
   icon: string
