@@ -127,7 +127,7 @@ const WrapperRight = styled(Box)<IPropsWR>`
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     margin: auto;
     &:hover {
-      transform: scale(1.11);
+      transform: scale(1.08);
       .jewellery {
         animation: ${floatingAnim('0px', '10px')} 3s ease-in-out infinite !important;
       }
