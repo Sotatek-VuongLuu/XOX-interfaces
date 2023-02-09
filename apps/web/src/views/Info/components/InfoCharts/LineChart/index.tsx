@@ -5,6 +5,7 @@ import { formatAmount } from 'utils/formatInfoNumbers'
 import { LineChartLoader } from 'views/Info/components/ChartLoaders'
 import { useTranslation } from '@pancakeswap/localization'
 import styled from 'styled-components'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
 
 const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
 
@@ -57,9 +58,10 @@ const LineChart = ({
   hoverableChart,
   unsupported,
 }: LineChartProps) => {
+  const { isMobile } = useMatchBreakpoints()
   const minGap = useMemo(() => {
-    return typeXAxis === '1M' ? 2 : 10
-  }, [typeXAxis])
+    return isMobile ? 60 : typeXAxis === '1M' ? 2 : 10
+  }, [typeXAxis, isMobile])
 
   let tmpRsFormat
   const formatDate = (time: any) => {
