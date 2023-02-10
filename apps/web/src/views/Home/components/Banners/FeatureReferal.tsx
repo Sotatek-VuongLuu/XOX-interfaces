@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/click-events-have-key-events */
+/* eslint-disable jsx-a11y/interactive-supports-focus */
 /* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
@@ -234,20 +236,80 @@ const NoDataWraper = styled.div`
   color: rgba(255, 255, 255, 0.6);
 `
 
+const FilterChain = styled.div`
+  display: flex;
+  justify-content: center;
+
+  .tab_filter_chain_container {
+    display: flex;
+    padding: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    margin-bottom: 35px;
+    .filter_chain {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      padding: 12px 30px;
+    }
+
+    .filter_chain_active {
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      padding: 12px 30px;
+    }
+
+    @media screen and (max-width: 900px) {
+      margin-bottom: 24px;
+      .filter_chain {
+        padding: 12px 19.5px;
+      }
+
+      .filter_chain_active {
+        padding: 12px 19.5px;
+      }
+    }
+  }
+`
+
 const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily'] as const
 type FilterTime = typeof filterTime[number]
+
+const filterChain = ['General', 'Ethereum', 'BSC']
+type FilterChain = typeof filterChain[number]
 
 const FeatureReferal = () => {
   const startOfDay = moment().startOf('days').toString()
   const startOfMonth = moment().startOf('month').toString()
   const startOfWeek = moment().startOf('isoWeek').toString()
   const [tabLeaderBoard, setTabLeaderBoard] = useState<FilterTime>('All Time')
-  const route = useRouter()
+  const [tabChainId, setTabChainId] = useState<FilterChain>('General')
   const [listUserRanks, setListUserRanks] = useState<IMappingFormat[]>([])
+
+  /// forBSC
   const [listUserRanksDaily, setListUserRanksDaily] = useState<IMappingFormat[]>([])
   const [listUserRanksWeekly, setListUserRanksWeekly] = useState<IMappingFormat[]>([])
   const [listUserRanksMonthly, setListUserRanksMonthly] = useState<IMappingFormat[]>([])
   const [listUserRanksAllTime, setListUserRanksAllTime] = useState<IMappingFormat[]>([])
+
+  // forETH
+
+  const [listUserRanksDailyETH, setListUserRanksDailyETH] = useState<IMappingFormat[]>([])
+  const [listUserRanksWeeklyETH, setListUserRanksWeeklyETH] = useState<IMappingFormat[]>([])
+  const [listUserRanksMonthlyETH, setListUserRanksMonthlyETH] = useState<IMappingFormat[]>([])
+  const [listUserRanksAllTimeETH, setListUserRanksAllTimeETH] = useState<IMappingFormat[]>([])
+
+  /// for Genaral
+
+  const [listUserRanksDailyGenaral, setListUserRanksDailyGenaral] = useState<IMappingFormat[]>([])
+  const [listUserRanksWeeklyGenaral, setListUserRanksWeeklyGenaral] = useState<IMappingFormat[]>([])
+  const [listUserRanksMonthlyGenaral, setListUserRanksMonthlyGenaral] = useState<IMappingFormat[]>([])
+  const [listUserRanksAllTimeGenaral, setListUserRanksAllTimeGenaral] = useState<IMappingFormat[]>([])
 
   const payloadPostForDaily = {
     date_gte: moment(startOfDay).unix(),
@@ -263,36 +325,118 @@ const FeatureReferal = () => {
     date_lte: moment().unix(),
   }
 
-  const handleGetUserRanks = async (typeFilter: FilterTime, setList: (arr: IMappingFormat[]) => void) => {
+  const handleGetUserRanks = async (
+    typeFilterChain: FilterChain,
+    typeFilter: FilterTime,
+    setList: (arr: IMappingFormat[]) => void,
+  ) => {
     try {
       let data = []
       let res
-      switch (typeFilter) {
-        case 'All Time':
-          res = await getUerRank(ChainId.BSC_TESTNET)
-          data = res.userPoints
-          break
-        case 'Monthly':
-          res = await getUserPointMonthly(ChainId.BSC_TESTNET, payloadPostForMonth)
-          data = res.userPointMonthlies
-          break
-        case 'Weekly':
-          res = await getUserPointWeekly(ChainId.BSC_TESTNET, payloadPostForWeek)
-          data = res.userPointWeeklies
-          break
-        default:
-          res = await getUserPointDaily(ChainId.BSC_TESTNET, payloadPostForDaily)
-          data = res.userPointDailies
-          break
+
+      let dataColab = []
+
+      // for General
+
+      let dataBSC = []
+      let dataETH = []
+      let resBSC
+      let resETH
+
+      //
+
+      let dataUserFormatAmount: IDataFormatUnit[]
+
+      if (typeFilterChain === 'BSC') {
+        switch (typeFilter) {
+          case 'All Time':
+            res = await getUerRank(ChainId.BSC_TESTNET)
+            data = res.userPoints
+            break
+          case 'Monthly':
+            res = await getUserPointMonthly(ChainId.BSC_TESTNET, payloadPostForMonth)
+            data = res.userPointMonthlies
+            break
+          case 'Weekly':
+            res = await getUserPointWeekly(ChainId.BSC_TESTNET, payloadPostForWeek)
+            data = res.userPointWeeklies
+            break
+          default:
+            res = await getUserPointDaily(ChainId.BSC_TESTNET, payloadPostForDaily)
+            data = res.userPointDailies
+            break
+        }
       }
 
-      const dataUserFormatAmount: IDataFormatUnit[] = data.map((item) => {
-        return {
-          ...item,
-          id: item.id,
-          point: new BigNumber(item.amount).div(10 ** USD_DECIMALS[ChainId.BSC_TESTNET]).toNumber(),
+      if (typeFilterChain === 'Ethereum') {
+        switch (typeFilter) {
+          case 'All Time':
+            res = await getUerRank(ChainId.GOERLI)
+            data = res.userPoints
+            break
+          case 'Monthly':
+            res = await getUserPointMonthly(ChainId.GOERLI, payloadPostForMonth)
+            data = res.userPointMonthlies
+            break
+          case 'Weekly':
+            res = await getUserPointWeekly(ChainId.GOERLI, payloadPostForWeek)
+            data = res.userPointWeeklies
+            break
+          default:
+            res = await getUserPointDaily(ChainId.GOERLI, payloadPostForDaily)
+            data = res.userPointDailies
+            break
         }
-      })
+      }
+
+      if (typeFilterChain === 'General') {
+        switch (typeFilter) {
+          case 'All Time':
+            resETH = await getUerRank(ChainId.GOERLI)
+            resBSC = await getUerRank(ChainId.BSC_TESTNET)
+            dataETH = handleFormatData('Ethereum', resETH.userPoints)
+            dataBSC = handleFormatData('BSC', resBSC.userPoints)
+            dataColab = [...dataETH, ...dataBSC]
+            dataUserFormatAmount = handleSoftDescending(dataColab)
+            break
+          case 'Monthly':
+            resETH = await getUserPointMonthly(ChainId.GOERLI, payloadPostForMonth)
+            resBSC = await getUserPointMonthly(ChainId.BSC_TESTNET, payloadPostForMonth)
+            dataETH = handleFormatData('Ethereum', resETH.userPointMonthlies)
+            dataBSC = handleFormatData('BSC', resBSC.userPointMonthlies)
+            dataColab = [...dataETH, ...dataBSC]
+            dataUserFormatAmount = handleSoftDescending(dataColab)
+            break
+          case 'Weekly':
+            resETH = await getUserPointWeekly(ChainId.GOERLI, payloadPostForWeek)
+            resBSC = await getUserPointWeekly(ChainId.BSC_TESTNET, payloadPostForWeek)
+            dataETH = handleFormatData('Ethereum', resETH.userPointWeeklies)
+            dataBSC = handleFormatData('BSC', resBSC.userPointWeeklies)
+            dataColab = [...dataETH, ...dataBSC]
+            dataUserFormatAmount = handleSoftDescending(dataColab)
+            break
+          default:
+            resETH = await getUserPointDaily(ChainId.GOERLI, payloadPostForDaily)
+            resBSC = await getUserPointDaily(ChainId.BSC_TESTNET, payloadPostForDaily)
+            dataETH = handleFormatData('Ethereum', resETH.userPointDailies)
+            dataBSC = handleFormatData('BSC', resBSC.userPointDailies)
+            dataColab = [...dataETH, ...dataBSC]
+            dataUserFormatAmount = handleSoftDescending(dataColab)
+            break
+        }
+      }
+
+      if (typeFilterChain !== 'General') {
+        dataUserFormatAmount = data.map((item) => {
+          return {
+            ...item,
+            id: item.id,
+            point: new BigNumber(item.amount)
+              .div(10 ** USD_DECIMALS[typeFilterChain === 'BSC' ? ChainId.BSC_TESTNET : ChainId.GOERLI])
+              .toNumber(),
+          }
+        })
+      }
 
       const listAddress = dataUserFormatAmount.map((item) => item.address)
 
@@ -320,52 +464,139 @@ const FeatureReferal = () => {
     }
   }
 
-  const handleOnChangeRankTab = (item: FilterTime) => {
-    setTabLeaderBoard(item)
-    switch (item) {
-      case 'All Time':
-        setListUserRanks(listUserRanksAllTime)
-        break
-      case 'Monthly':
-        setListUserRanks(listUserRanksMonthly)
+  const handleFormatData = (filter: string, data: any[]) => {
+    return data.map((item) => {
+      return {
+        ...item,
+        id: item.id,
+        point: new BigNumber(item.amount)
+          .div(10 ** USD_DECIMALS[filter === 'BSC' ? ChainId.BSC_TESTNET : ChainId.GOERLI])
+          .toNumber(),
+      }
+    })
+  }
 
-        break
-      case 'Weekly':
-        setListUserRanks(listUserRanksWeekly)
-        break
-      default:
-        setListUserRanks(listUserRanksDaily)
-        break
+  const handleSoftDescending = (data: any[]) => {
+    return data.sort((a, b) => {
+      return b?.point - a?.point
+    })
+  }
+
+  const handleOnChangeRankTab = (item: FilterTime, tabChain: FilterChain) => {
+    setTabLeaderBoard(item)
+
+    if (tabChain === 'BSC') {
+      switch (item) {
+        case 'All Time':
+          setListUserRanks(listUserRanksAllTime)
+          break
+        case 'Monthly':
+          setListUserRanks(listUserRanksMonthly)
+
+          break
+        case 'Weekly':
+          setListUserRanks(listUserRanksWeekly)
+          break
+        default:
+          setListUserRanks(listUserRanksDaily)
+          break
+      }
+    }
+
+    if (tabChain === 'Ethereum') {
+      switch (item) {
+        case 'All Time':
+          setListUserRanks(listUserRanksAllTimeETH)
+          break
+        case 'Monthly':
+          setListUserRanks(listUserRanksMonthlyETH)
+
+          break
+        case 'Weekly':
+          setListUserRanks(listUserRanksWeeklyETH)
+          break
+        default:
+          setListUserRanks(listUserRanksDailyETH)
+          break
+      }
+    }
+
+    if (tabChain === 'General') {
+      switch (item) {
+        case 'All Time':
+          setListUserRanks(listUserRanksAllTimeGenaral)
+          break
+        case 'Monthly':
+          setListUserRanks(listUserRanksMonthlyGenaral)
+          break
+        case 'Weekly':
+          setListUserRanks(listUserRanksWeeklyGenaral)
+          break
+        default:
+          setListUserRanks(listUserRanksDailyGenaral)
+          break
+      }
     }
   }
 
+  const handleOnChangeFilterChain = (item: FilterChain) => {
+    setTabChainId(item)
+    handleOnChangeRankTab(tabLeaderBoard, item)
+  }
+
   useEffect(() => {
-    handleGetUserRanks('All Time', setListUserRanksAllTime)
-    handleGetUserRanks('Monthly', setListUserRanksMonthly)
-    handleGetUserRanks('Weekly', setListUserRanksWeekly)
-    handleGetUserRanks('Daily', setListUserRanksDaily)
+    handleGetUserRanks('BSC', 'All Time', setListUserRanksAllTime)
+    handleGetUserRanks('BSC', 'Monthly', setListUserRanksMonthly)
+    handleGetUserRanks('BSC', 'Weekly', setListUserRanksWeekly)
+    handleGetUserRanks('BSC', 'Daily', setListUserRanksDaily)
+    handleGetUserRanks('Ethereum', 'All Time', setListUserRanksAllTimeETH)
+    handleGetUserRanks('Ethereum', 'Monthly', setListUserRanksMonthlyETH)
+    handleGetUserRanks('Ethereum', 'Weekly', setListUserRanksWeeklyETH)
+    handleGetUserRanks('Ethereum', 'Daily', setListUserRanksDailyETH)
+    handleGetUserRanks('Genaral', 'All Time', setListUserRanksAllTimeGenaral)
+    handleGetUserRanks('Genaral', 'Monthly', setListUserRanksMonthlyGenaral)
+    handleGetUserRanks('Genaral', 'Weekly', setListUserRanksWeeklyGenaral)
+    handleGetUserRanks('Genaral', 'Daily', setListUserRanksDailyGenaral)
   }, [])
 
   useEffect(() => {
     if (!listUserRanksAllTime) return
-    handleOnChangeRankTab('All Time')
+    handleOnChangeRankTab('All Time', 'Genaral')
   }, [listUserRanksAllTime])
 
   return (
     <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2} style={{ overflow: 'hidden' }}>
         <Grid item xs={12} md={5}>
-          <WrapperLeft data-aos="fade-right">
+          <WrapperLeft
+          // data-aos="fade-right"
+          >
             <Container>
               <Overlay>
                 <First>
+                  <FilterChain>
+                    <div className="tab_filter_chain_container">
+                      {Array.from(filterChain).map((item) => {
+                        return (
+                          <div
+                            key={item}
+                            className={tabChainId === item ? 'filter_chain_active' : 'filter_chain'}
+                            onClick={() => handleOnChangeFilterChain(item)}
+                            role="button"
+                          >
+                            {item}
+                          </div>
+                        )
+                      })}
+                    </div>
+                  </FilterChain>
                   <div className="tab_filter">
                     {Array.from(filterTime).map((item) => {
                       return (
                         // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                         <div
                           key={item}
-                          onClick={() => handleOnChangeRankTab(item)}
+                          onClick={() => handleOnChangeRankTab(item, tabChainId)}
                           className={tabLeaderBoard === item ? 'tab_item_active' : 'tab_item'}
                           style={{ cursor: 'pointer' }}
                         >
