@@ -568,9 +568,7 @@ const FeatureReferal = () => {
     <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2} style={{ overflow: 'hidden' }}>
         <Grid item xs={12} md={5}>
-          <WrapperLeft
-          // data-aos="fade-right"
-          >
+          <WrapperLeft data-aos="fade-right">
             <Container>
               <Overlay>
                 <First>
