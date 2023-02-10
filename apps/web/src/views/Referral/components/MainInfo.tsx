@@ -269,6 +269,7 @@ const WrapperRight = styled.div<IPropsContainer>`
         gap: 4px;
         .subTab_item {
           padding: 6px 5px;
+          font-size: 10px;
         }
       }
     }

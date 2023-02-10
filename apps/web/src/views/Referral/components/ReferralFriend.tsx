@@ -85,7 +85,16 @@ const WrapperLeft = styled(Box)`
   border-radius: 10px;
   min-height: 248px;
   position: relative;
-
+  &::before{
+    content: "";
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: #242424;
+    position: absolute;
+    right: 23px;
+    bottom: 23px;
+  }
   .title {
     font-weight: 700;
     font-size: 20px;
