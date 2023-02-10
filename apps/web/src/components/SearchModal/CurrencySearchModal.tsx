@@ -88,6 +88,11 @@ const StyledModalHeader = styled(ModalHeader)`
 
 const StyledModalBody = styled(ModalBody)`
   padding: 16px 27px 32px 27px;
+  height: 428px;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    height: unset;
+  }
 
   & .curency-list {
     width: calc(100% + 15px) !important;

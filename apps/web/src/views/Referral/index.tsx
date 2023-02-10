@@ -66,6 +66,7 @@ interface IListPoint {
 
 const Wrapper = styled(Box)`
   padding: 48px;
+  padding-top: 28px;
   display: flex;
   justify-content: center;
   align-items: center;

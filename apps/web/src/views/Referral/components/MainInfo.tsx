@@ -228,7 +228,7 @@ const WrapperRight = styled.div<IPropsContainer>`
       color: #ffffff;
       position: relative;
       z-index: 2;
-      overflow: auto;
+      overflow: hidden;
 
       .subTab_item.active {
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
@@ -266,8 +266,10 @@ const WrapperRight = styled.div<IPropsContainer>`
     }
     @media screen and (max-width: 398px) {
       .filter {
+        gap: 4px;
         .subTab_item {
           padding: 6px 5px;
+          font-size: 10px;
         }
       }
     }

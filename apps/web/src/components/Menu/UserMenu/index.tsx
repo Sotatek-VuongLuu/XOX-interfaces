@@ -17,7 +17,7 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
 import { useCallback, useEffect, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
-import { useAccount, useProvider, useSigner } from 'wagmi'
+import { useAccount, useNetwork, useProvider, useSigner } from 'wagmi'
 import { parseUnits } from '@ethersproject/units'
 import { formatAmountNumber, formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { getBlockExploreLink, getBlockExploreName } from 'utils'
@@ -30,6 +30,7 @@ import { XOX_ADDRESS } from 'config/constants/exchange'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { Tooltip } from '@mui/material'
 import axios from 'axios'
+import { useRouter } from 'next/router'
 
 export const LOW_NATIVE_BALANCE = parseUnits('0.002', 'ether')
 
@@ -95,10 +96,12 @@ const MenuItemsStyle = styled.div`
 `
 
 const UserMenu = () => {
+  const router = useRouter()
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const { address: account } = useAccount()
   const { chainId, isWrongNetwork } = useActiveChainId()
+  const { chain } = useNetwork()
   const { logout } = useAuth()
   const { profile } = useProfile()
   const avatarSrc = profile?.nft?.image?.thumbnail
@@ -107,6 +110,28 @@ const UserMenu = () => {
   const [balanceXOX, setBalanceXOX] = useState<any>()
   const provider = useProvider({ chainId })
   const { data: signer } = useSigner()
+
+  useEffect(() => {
+    const handleChangeChainToBscTestnet = (hexChainId) => {
+      if (parseInt(hexChainId, 16) !== chain?.id && parseInt(hexChainId, 16) === 97) {
+        router
+          .replace({
+            pathname: router.pathname,
+            query: {
+              ...router.query,
+              chainId: parseInt(hexChainId, 16),
+            },
+          })
+          .then(() => router.reload())
+      }
+    }
+
+    window.ethereum?.on('chainChanged', handleChangeChainToBscTestnet)
+
+    return () => {
+      window.ethereum?.removeListener('chainChanged', handleChangeChainToBscTestnet)
+    }
+  }, [account])
 
   useEffect(() => {
     if (!account || !chainId) return

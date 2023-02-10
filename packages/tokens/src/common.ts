@@ -2,7 +2,7 @@ import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 
 export const XOX_BSC_MAINNET = new ERC20Token(
   ChainId.BSC,
-  '0x1D5EB09cb8a70213E52DD1dc084b9E22Fc4dA4dd',
+  '0x726e2a75173956B164fbBF4A2A52C87a35F38716',
   18,
   'XOX',
   'XOX',
@@ -11,7 +11,7 @@ export const XOX_BSC_MAINNET = new ERC20Token(
 
 export const XOX_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x1D5EB09cb8a70213E52DD1dc084b9E22Fc4dA4dd',
+  '0x726e2a75173956B164fbBF4A2A52C87a35F38716',
   18,
   'XOX',
   'XOX',
@@ -20,7 +20,7 @@ export const XOX_BSC_TESTNET = new ERC20Token(
 
 export const XOX_MAINNET = new ERC20Token(
   ChainId.ETHEREUM,
-  '0x0e3FA7D925eeE7C361aBafFba280c0b376644327',
+  '0xE4A47Eba46b86B3B69F4Ecf28e1AB81649A24d31',
   18,
   'XOX',
   'XOX',
@@ -29,7 +29,7 @@ export const XOX_MAINNET = new ERC20Token(
 
 export const XOX_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0x0e3FA7D925eeE7C361aBafFba280c0b376644327',
+  '0xE4A47Eba46b86B3B69F4Ecf28e1AB81649A24d31',
   18,
   'XOX',
   'XOX',
@@ -38,7 +38,7 @@ export const XOX_GOERLI = new ERC20Token(
 
 export const XOX_BUSD_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0xF38Df69bF602EAABD10f13B74Eaeb363428B26fa',
+  '0x97F7b4298c5dFa0eb9A5441896c51177d94845E8',
   18,
   'XOX-BUSD',
   'XOX-BUSD',
@@ -47,7 +47,7 @@ export const XOX_BUSD_TESTNET = new ERC20Token(
 
 export const XOX_USDC_TESTNET = new ERC20Token(
   ChainId.GOERLI,
-  '0xbCda2cb851062e2CdB3D237f206Ab98F2188e4aC',
+  '0xc9d9cE57256D59a9B726aCdDBDB7d5Ec490775bd',
   18,
   'XOX-USDC',
   'XOX-USDC',
@@ -124,7 +124,7 @@ export const USDC_RINKEBY = new ERC20Token(
 
 export const USDC_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0x74905dfad4b2dEeD1b1a28a73De5c0BA3300e05d',
+  '0x65888E18E046a80173932ca27bf4F6ef60E3368F',
   6,
   'tUSDC',
   'test USD Coin',
@@ -168,7 +168,7 @@ export const BUSD_BSC = new ERC20Token(
 
 export const BUSD_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0xBe72fDa9F32897d725F9666e0c113E132f0a4a5c',
+  '0x04CAD66eF1842A91E6cDE275E1e3A49Ee9106c56',
   18,
   'BUSD',
   'Binance USD',
@@ -259,7 +259,7 @@ export const ETH_BSC_TESTNET = new ERC20Token(
 )
 export const BUSD_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0xBe72fDa9F32897d725F9666e0c113E132f0a4a5c',
+  '0x04CAD66eF1842A91E6cDE275E1e3A49Ee9106c56',
   18,
   'BUSD',
 )
