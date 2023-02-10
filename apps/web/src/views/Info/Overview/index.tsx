@@ -77,7 +77,7 @@ const FullContentInside = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
-  padding-top: 48px;
+  padding-top: 24px;
   .content {
     width: 1400px;
   }
