@@ -266,6 +266,7 @@ const WrapperRight = styled.div<IPropsContainer>`
     }
     @media screen and (max-width: 398px) {
       .filter {
+        gap: 4px;
         .subTab_item {
           padding: 6px 5px;
         }
