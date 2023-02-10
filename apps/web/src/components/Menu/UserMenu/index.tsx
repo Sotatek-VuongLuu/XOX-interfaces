@@ -126,10 +126,10 @@ const UserMenu = () => {
       }
     }
 
-    window.ethereum.on('chainChanged', handleChangeChainToBscTestnet)
+    window.ethereum?.on('chainChanged', handleChangeChainToBscTestnet)
 
     return () => {
-      window.ethereum.removeListener('chainChanged', handleChangeChainToBscTestnet)
+      window.ethereum?.removeListener('chainChanged', handleChangeChainToBscTestnet)
     }
   }, [account])
 
