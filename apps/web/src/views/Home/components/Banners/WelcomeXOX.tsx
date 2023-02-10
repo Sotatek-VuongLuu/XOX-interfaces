@@ -178,8 +178,9 @@ const WelcomeXOX = (): JSX.Element => {
               <Title className="title">XOX: The Next Gen Multichain DeFi Dapps & Web3 Solutions Provider</Title>
               <Feature className="feature">Revolutionary - Scalable - Sustainable</Feature>
               <Description className="description">
-                Swap, stake, store, bridge, refer, invest and earn with ease on the leading Decentralized Blockchain
-                Ecosystem.
+                Swap, stake, store, bridge, refer, invest and earn with ease on the
+                <br />
+                leading Decentralized Blockchain Ecosystem.
               </Description>
               <div className="btn_group">
                 <Button className="btn_read_doc" onClick={() => window.open('')}>

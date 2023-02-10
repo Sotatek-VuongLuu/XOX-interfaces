@@ -33,25 +33,7 @@ const StyledSection = styled(PageSection)`
     padding: 0px 130px;
   }
 `
-const ImageWrapper = styled.video`
-  width: 117%;
-  height: 74vh;
-  margin-right: -20px;
-  display: grid;
-  place-content: center;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    img {
-      transform: scale(2) translateY(-30px);
-    }
-  }
-
-  ${({ theme }) => theme.mediaQueries.xxl} {
-    img {
-      transform: scale(5) translateY(-30px);
-    }
-  }
-`
+const ImageWrapper = styled.div``
 
 const Home: React.FC<React.PropsWithChildren> = () => {
   const { width: innerWidth } = useWindowSize()
@@ -77,6 +59,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             alignItems: 'center',
             justifyContent: innerWidth > 900 ? 'space-around' : 'unset',
             width: widthResize,
+            height: '80vh',
           },
         }}
         containerProps={{
@@ -91,11 +74,11 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           <WelcomeXOX />
         </div>
 
-        {innerWidth > 967 && (
-          <ImageWrapper autoPlay muted loop>
-            <source src="/lp_video.webm" type="video/webm" />
-          </ImageWrapper>
-        )}
+        <Spline
+          scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
+          onLoad={(e) => e.setZoom(0.8)}
+          id="my_spline"
+        />
       </StyledSection>
 
       <StyledSection

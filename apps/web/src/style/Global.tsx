@@ -29,11 +29,12 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  #computer_xox {
+  #my_spline {
     position: absolute;
     right: -50%;
-    transform: translateX(-30%);
-
+    top: -50px;
+    transform: translateX(-27%);
+    height: 110% !important;
     @media screen and (max-width: 900px) {
       right: 0;
     }
