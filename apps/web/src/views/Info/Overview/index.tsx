@@ -179,7 +179,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             const tokenInfos = response.data.data
             const tokenInfo = Object.keys(tokenInfos).map((key) => tokenInfos[key])?.[0]
             const res = {}
-            res[token.address] = tokenInfo.id
+            res[token.address?.toUpperCase()] = tokenInfo.id
             return res
           })
           .catch(() => {
@@ -198,7 +198,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!coinmarketcapId) {
-      setUnsupported(true)
+      if (fetchingTokenId) setUnsupported(true)
       setChardData([])
       return
     }
@@ -230,6 +230,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!coinmarketcapIds || Object.keys(coinmarketcapIds).length === 0) return
+    localStorage.removeItem('coinmarketcapIds')
     localStorage.setItem('coinmarketcapIds', JSON.stringify(coinmarketcapIds))
     loadChartData()
   }, [coinmarketcapIds, coinmarketcapId])

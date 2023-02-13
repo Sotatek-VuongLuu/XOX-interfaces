@@ -61,7 +61,7 @@ const WrapperRight = styled.div`
     margin-top: 16px;
     background: rgba(255, 255, 255, 0.15);
     border-radius: 8px;
-    .content {
+    .content_code_number {
       display: flex;
       align-items: center;
       justify-content: space-between;
@@ -84,7 +84,7 @@ const WrapperRight = styled.div`
     }
     .code {
       padding: 12px;
-      .content {
+      .content_code_number {
         .code_number {
           font-size: 16px;
           line-height: 19px;
@@ -116,7 +116,7 @@ const Banner = () => {
           <WrapperRight>
             <p className="my_code">My Referral Code</p>
             <div className="code">
-              <div className="content">
+              <div className="content_code_number">
                 {account && (
                   <>
                     <span className="code_number">{userProfile?.referralCode}</span>
