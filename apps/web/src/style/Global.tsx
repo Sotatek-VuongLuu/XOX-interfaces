@@ -29,15 +29,11 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  #my_spline {
+  #canvas3d_pc {
     position: absolute;
     right: -50%;
-    top: -50px;
-    transform: translateX(-27%);
-    height: 110% !important;
-    @media screen and (max-width: 900px) {
-      right: 0;
-    }
+    top: 50%;
+    transform: translate(-55%, -60%);
   }
 
   #mobile_xox {

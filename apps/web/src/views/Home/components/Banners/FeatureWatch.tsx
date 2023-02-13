@@ -1,13 +1,29 @@
 import { Box, Grid } from '@mui/material'
+import { Application } from '@splinetool/runtime'
 import useWindowSize from 'hooks/useWindowSize'
+import { useEffect } from 'react'
 import styled from 'styled-components'
 
 const LeftContent = styled.div`
   display: flex;
   justify-content: center;
+  width: 100%;
+  position: relative;
+  height: 343px;
   @media screen and (min-width: 900px) {
     align-items: center;
     height: 100%;
+  }
+
+  #canvas3d_xoxs_logo_pc {
+    position: absolute;
+    transform: scale(1.3);
+
+    @media screen and (max-width: 900px) {
+      height: 100% !important;
+      width: 100% !important;
+      transform: scale(1.4);
+    }
   }
 `
 
@@ -103,29 +119,19 @@ const ImageWrapper = styled.video`
 
 const FeatureWatch = () => {
   const { width } = useWindowSize()
+
+  useEffect(() => {
+    const canvas = document.getElementById('canvas3d_xoxs_logo_pc')
+    const app = new Application(canvas as any)
+    app.load('https://prod.spline.design/eHWlbskKUlvFMGuG/scene.splinecode')
+  }, [])
+
   return (
     <Wrapper style={{ overflow: 'hidden' }}>
       <Main container spacing={2}>
-        <Grid item xs={12} md={4} style={{ minHeight: '400px', display: 'flex', alignItems: 'center' }}>
+        <Grid item xs={12} md={4} style={{ minHeight: '400px', display: 'flex', alignItems: 'center', width: '100%' }}>
           <LeftContent>
-            {width < 900 ? (
-              <img
-                src="/images/3D-XOS-logo.gif"
-                alt="xoxs"
-                style={{ marginLeft: -50, transform: 'scale(2)' }}
-                data-aos="fade-right"
-              />
-            ) : (
-              <img
-                src="/images/3D-XOS-logo.gif"
-                alt="xoxs"
-                style={{ marginLeft: -100, transform: 'scale(2)' }}
-                data-aos="fade-right"
-              />
-              // <ImageWrapper autoPlay muted loop>
-              //   <source src="/3dxox.webm" type="video/webm" />
-              // </ImageWrapper>
-            )}
+            <canvas id="canvas3d_xoxs_logo_pc" />
           </LeftContent>
         </Grid>
         <Grid item xs={12} md={8}>

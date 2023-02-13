@@ -6,6 +6,8 @@ import { Box, Grid } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
+import { useEffect } from 'react'
+import { Application } from '@splinetool/runtime'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -159,15 +161,36 @@ const GridLeft = styled(Grid)`
   }
 `
 
-const ImageWrapper = styled.video`
+const ImageWrapper = styled.div`
   width: 100%;
   height: 300px;
   display: grid;
   place-content: center;
+
+  #canvas3d_mobile {
+    height: 100% !important;
+    width: 100% !important;
+
+    @media screen and (max-width: 448px) {
+      transform: scale(1.3);
+    }
+  }
+
+  @media screen and (max-width: 448px) {
+    padding-bottom: 90px;
+  }
 `
 
 const WelcomeXOX = (): JSX.Element => {
   const { isMobile, isTablet } = useMatchBreakpoints()
+
+  useEffect(() => {
+    const canvas = document.getElementById('canvas3d_mobile')
+    if (canvas) {
+      const app = new Application(canvas as any)
+      app.load('https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode')
+    }
+  }, [])
 
   return (
     <Wrapper>
@@ -198,8 +221,8 @@ const WelcomeXOX = (): JSX.Element => {
           </GridLeft>
           <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'hidden' }}>
             {(isMobile || isTablet) && (
-              <ImageWrapper autoPlay muted loop>
-                <source src="/lp_video.webm" type="video/webm" />
+              <ImageWrapper>
+                <canvas id="canvas3d_mobile" />
               </ImageWrapper>
             )}
           </Grid>
