@@ -29,14 +29,11 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
-  #computer_xox {
+  #canvas3d_pc {
     position: absolute;
     right: -50%;
-    transform: translateX(-30%);
-
-    @media screen and (max-width: 900px) {
-      right: 0;
-    }
+    top: 50%;
+    transform: translate(-55%, -60%);
   }
 
   #mobile_xox {

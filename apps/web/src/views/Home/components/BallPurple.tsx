@@ -1,4 +1,3 @@
-import Spline from '@splinetool/react-spline'
 import styled, { CSSProperties } from 'styled-components'
 
 interface Iprops {

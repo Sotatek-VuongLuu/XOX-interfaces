@@ -141,7 +141,7 @@ const FeaturePlant = () => {
             </div>
           </LeftContent>
         </Grid>
-        <Grid item xs={12} md={5} style={{ height: 285 }}>
+        <Grid item xs={12} md={5} style={{ height: 300 }}>
           <RightContent data-aos="fade-left">
             <Watch>
               {width > 900 ? (

@@ -2,10 +2,11 @@ import styled from 'styled-components'
 import PageSection from 'components/PageSection'
 import { PageMeta } from 'components/Layout/Page'
 import AOS from 'aos'
+import { Application } from '@splinetool/runtime'
 import 'aos/dist/aos.css'
 import { useEffect } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
-import Spline from '@splinetool/react-spline'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import BallPurple from './components/BallPurple'
 import WelcomeXOX from './components/Banners/WelcomeXOX'
 import FeatureWatch from './components/Banners/FeatureWatch'
@@ -33,31 +34,19 @@ const StyledSection = styled(PageSection)`
     padding: 0px 130px;
   }
 `
-const ImageWrapper = styled.video`
-  width: 117%;
-  height: 74vh;
-  margin-right: -20px;
-  display: grid;
-  place-content: center;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    img {
-      transform: scale(2) translateY(-30px);
-    }
-  }
-
-  ${({ theme }) => theme.mediaQueries.xxl} {
-    img {
-      transform: scale(5) translateY(-30px);
-    }
-  }
-`
 
 const Home: React.FC<React.PropsWithChildren> = () => {
   const { width: innerWidth } = useWindowSize()
+  const { isDesktop } = useMatchBreakpoints()
   const widthResize = innerWidth > 1400 ? 1400 : innerWidth > 900 ? 1200 : '100%'
+
   useEffect(() => {
     AOS.init({ duration: 2000 })
+    const canvas = document.getElementById('canvas3d_pc')
+    if (canvas) {
+      const app = new Application(canvas as any)
+      app.load('https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode')
+    }
   }, [])
   return (
     <>
@@ -77,6 +66,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             alignItems: 'center',
             justifyContent: innerWidth > 900 ? 'space-around' : 'unset',
             width: widthResize,
+            height: '80vh',
           },
         }}
         containerProps={{
@@ -90,12 +80,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <div>
           <WelcomeXOX />
         </div>
-
-        {innerWidth > 967 && (
-          <ImageWrapper autoPlay muted loop>
-            <source src="/lp_video.webm" type="video/webm" />
-          </ImageWrapper>
-        )}
+        {isDesktop && <canvas id="canvas3d_pc" />}
       </StyledSection>
 
       <StyledSection
