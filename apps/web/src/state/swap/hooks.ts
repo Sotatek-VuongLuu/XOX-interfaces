@@ -205,7 +205,6 @@ export function queryParametersToSwapState(
   defaultOutputCurrency?: string,
   usd?: string,
 ): SwapState {
-  console.log(parsedQs.inputCurrency)
   let inputCurrency =
     parsedQs.inputCurrency === undefined
       ? usd : isAddress(parsedQs.inputCurrency) || (nativeSymbol ?? DEFAULT_INPUT_CURRENCY)

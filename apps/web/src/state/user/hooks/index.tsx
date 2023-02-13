@@ -436,7 +436,7 @@ export function useGasPrice(chainIdOverride?: number): string {
     return GAS_PRICE_GWEI.testnet
   }
   if (chain?.testnet) {
-    return data?.formatted?.maxPriorityFeePerGas
+    return data?.formatted?.gasPrice
   }
   return data?.formatted?.gasPrice
 }
