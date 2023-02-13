@@ -5,7 +5,6 @@ import AOS from 'aos'
 import 'aos/dist/aos.css'
 import { useEffect } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
-import Spline from '@splinetool/react-spline'
 import BallPurple from './components/BallPurple'
 import WelcomeXOX from './components/Banners/WelcomeXOX'
 import FeatureWatch from './components/Banners/FeatureWatch'
@@ -20,6 +19,7 @@ import UpComing from './components/Banners/FeatureUpComing'
 import SecuredBy from './components/Banners/SecuredBy'
 import BGPartner from './components/Banners/BackgroundPartner'
 import FeatureSquare from './components/Banners/FeatureSquare'
+import { Application } from '@splinetool/runtime'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
@@ -33,13 +33,16 @@ const StyledSection = styled(PageSection)`
     padding: 0px 130px;
   }
 `
-const ImageWrapper = styled.div``
 
 const Home: React.FC<React.PropsWithChildren> = () => {
   const { width: innerWidth } = useWindowSize()
   const widthResize = innerWidth > 1400 ? 1400 : innerWidth > 900 ? 1200 : '100%'
+
   useEffect(() => {
     AOS.init({ duration: 2000 })
+    const canvas = document.getElementById('canvas3d')
+    const app = new Application(canvas as any)
+    app.load('https://prod.spline.design/P2CAfQ4dgX8EaM7o/scene.splinecode')
   }, [])
   return (
     <>
@@ -74,11 +77,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           <WelcomeXOX />
         </div>
 
-        <Spline
-          scene="https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode"
-          onLoad={(e) => e.setZoom(0.8)}
-          id="my_spline"
-        />
+        <canvas id="canvas3d"></canvas>
       </StyledSection>
 
       <StyledSection
