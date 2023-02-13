@@ -34,6 +34,8 @@ const GlobalStyle = createGlobalStyle`
     right: -50%;
     top: 50%;
     transform: translate(-55%, -60%);
+    height: 758px !important;
+    width: 1400px !important; 
   }
 
   #mobile_xox {
