@@ -24,6 +24,7 @@ import HowToJoin from './HowToJoin'
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
+import { filterChain, FilterChain, filterTime, FilterTime, ListRankingByChain, RankingByChain } from '..'
 
 const floatingAnim = (x: string, y: string) => keyframes`
   from {
@@ -550,16 +551,58 @@ const WrapperLeft = styled.div<IPropsWrapperLeft>`
   height: 100%;
 `
 
+const FilterChainWrap = styled.div`
+  display: flex;
+  justify-content: center;
+
+  .tab_filter_chain_container {
+    display: flex;
+    padding: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    margin-bottom: 35px;
+    .filter_chain {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      padding: 12px 30px;
+    }
+
+    .filter_chain_active {
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      border-radius: 30px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      padding: 12px 30px;
+    }
+
+    @media screen and (max-width: 900px) {
+      margin-bottom: 24px;
+      .filter_chain {
+        padding: 12px 19.5px;
+      }
+
+      .filter_chain_active {
+        padding: 12px 19.5px;
+      }
+    }
+  }
+`
+
 interface IProps {
   userCurrentPoint: number
   currentLevelReach: number
   listLever: IItemLevel[]
   volumnTotalEarn: string
-  filterTime?: any
-  handleOnChangeRankTab: any
-  tabLeaderBoard: any
-  listUserRanks: any
-  rankOfUser: any
+  handleOnChangeRankTab: (tab: FilterTime) => void
+  handleOnChangeChainTab: (tab: FilterChain) => void
+  tabLeaderBoard: FilterTime
+  tabChainLeaderBoard: FilterChain
+  listUserRanks: ListRankingByChain
+  rankOfUser: RankingByChain
   volumnData: any
   dataChart: any
   minAmount: any
@@ -574,9 +617,10 @@ const MainInfo = ({
   currentLevelReach,
   listLever,
   volumnTotalEarn,
-  filterTime,
   handleOnChangeRankTab,
+  handleOnChangeChainTab,
   tabLeaderBoard,
+  tabChainLeaderBoard,
   listUserRanks,
   rankOfUser,
   volumnData,
@@ -687,8 +731,24 @@ const MainInfo = ({
           <WrapperLeft>
             <div className="border-gradient-style">
               <First account={account}>
+                <FilterChainWrap>
+                  <div className="tab_filter_chain_container">
+                    {filterChain.map((item: FilterChain) => {
+                      return (
+                        <div
+                          key={item}
+                          className={tabChainLeaderBoard === item ? 'filter_chain_active' : 'filter_chain'}
+                          onClick={() => handleOnChangeChainTab(item)}
+                          role="button"
+                        >
+                          {item}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </FilterChainWrap>
                 <div className="tab_filter">
-                  {filterTime.map((item) => {
+                  {filterTime.map((item: FilterTime) => {
                     return (
                       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                       <div
@@ -704,15 +764,15 @@ const MainInfo = ({
 
                 <div className="learder_board">
                   {listUserRanks &&
-                    listUserRanks.length > 0 &&
-                    listUserRanks?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
+                    listUserRanks[tabChainLeaderBoard].length > 0 &&
+                    listUserRanks[tabChainLeaderBoard]?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
                       // eslint-disable-next-line react/no-array-index-key
                       return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
                     })}
-                  {listUserRanks.length === 0 && <NoDataWraper>No data</NoDataWraper>}
+                  {listUserRanks[tabChainLeaderBoard].length === 0 && <NoDataWraper>No data</NoDataWraper>}
                 </div>
 
-                {!rankOfUser.rank ? null : rankOfUser.rank <= 6 ? null : (
+                {!rankOfUser[tabChainLeaderBoard].rank ? null : rankOfUser[tabChainLeaderBoard].rank <= 6 ? null : (
                   <div className="dot">
                     <div className="dot_item" />
                     <div className="dot_item" />
@@ -721,9 +781,9 @@ const MainInfo = ({
                 )}
 
                 {account ? (
-                  rankOfUser.rank ? (
-                    [1, 2, 3, 4, 5].includes(rankOfUser.rank) ? null : (
-                      <LeaderBoardItem item={rankOfUser} mb={false} />
+                  rankOfUser[tabChainLeaderBoard].rank ? (
+                    [1, 2, 3, 4, 5].includes(rankOfUser[tabChainLeaderBoard].rank) ? null : (
+                      <LeaderBoardItem item={rankOfUser[tabChainLeaderBoard]} mb={false} />
                     )
                   ) : null
                 ) : null}

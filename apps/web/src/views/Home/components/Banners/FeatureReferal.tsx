@@ -5,18 +5,18 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react/button-has-type */
+import React, { useMemo } from 'react'
 import BigNumber from 'bignumber.js'
 import { Box, Grid } from '@mui/material'
 import { ChainId } from '@pancakeswap/sdk'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import moment from 'moment'
-import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 import { getUerRank, getUserPointDaily, getUserPointMonthly, getUserPointWeekly } from 'services/referral'
 import styled from 'styled-components'
 import axios from 'axios'
-
 import LeaderBoardItemLP from 'views/Referral/components/LearderBoardItemForLandingPage'
+import { filterChain, FilterChain, filterTime, FilterTime, ListRankingByChain, RankingByChain } from 'views/Referral'
 
 export interface IItemLeaderBoard {
   name: string
@@ -236,7 +236,7 @@ const NoDataWraper = styled.div`
   color: rgba(255, 255, 255, 0.6);
 `
 
-const FilterChain = styled.div`
+const FilterChainWrapper = styled.div`
   display: flex;
   justify-content: center;
 
@@ -277,39 +277,38 @@ const FilterChain = styled.div`
   }
 `
 
-const filterTime = ['All Time', 'Monthly', 'Weekly', 'Daily'] as const
-type FilterTime = typeof filterTime[number]
+const defaultListRankingByChain: ListRankingByChain = {
+  General: [],
+  Ethereum: [],
+  BSC: [],
+}
 
-const filterChain = ['General', 'Ethereum', 'BSC']
-type FilterChain = typeof filterChain[number]
+type FunctionList = {
+  [key in typeof filterTime[number]]: [ListRankingByChain, (func: ListRankingByChain) => void]
+}
 
 const FeatureReferal = () => {
   const startOfDay = moment().startOf('days').toString()
   const startOfMonth = moment().startOf('month').toString()
   const startOfWeek = moment().startOf('isoWeek').toString()
   const [tabLeaderBoard, setTabLeaderBoard] = useState<FilterTime>('All Time')
-  const [tabChainId, setTabChainId] = useState<FilterChain>('General')
-  const [listUserRanks, setListUserRanks] = useState<IMappingFormat[]>([])
+  const [tabChainLeaderBoard, setTabChainLeaderBoard] = useState<FilterChain>('General')
+  const [listUserRanks, setListUserRanks] = useState<ListRankingByChain>(defaultListRankingByChain)
 
   /// forBSC
-  const [listUserRanksDaily, setListUserRanksDaily] = useState<IMappingFormat[]>([])
-  const [listUserRanksWeekly, setListUserRanksWeekly] = useState<IMappingFormat[]>([])
-  const [listUserRanksMonthly, setListUserRanksMonthly] = useState<IMappingFormat[]>([])
-  const [listUserRanksAllTime, setListUserRanksAllTime] = useState<IMappingFormat[]>([])
+  const [listUserRanksDaily, setListUserRanksDaily] = useState<ListRankingByChain>(defaultListRankingByChain)
+  const [listUserRanksWeekly, setListUserRanksWeekly] = useState<ListRankingByChain>(defaultListRankingByChain)
+  const [listUserRanksMonthly, setListUserRanksMonthly] = useState<ListRankingByChain>(defaultListRankingByChain)
+  const [listUserRanksAllTime, setListUserRanksAllTime] = useState<ListRankingByChain>(defaultListRankingByChain)
 
-  // forETH
-
-  const [listUserRanksDailyETH, setListUserRanksDailyETH] = useState<IMappingFormat[]>([])
-  const [listUserRanksWeeklyETH, setListUserRanksWeeklyETH] = useState<IMappingFormat[]>([])
-  const [listUserRanksMonthlyETH, setListUserRanksMonthlyETH] = useState<IMappingFormat[]>([])
-  const [listUserRanksAllTimeETH, setListUserRanksAllTimeETH] = useState<IMappingFormat[]>([])
-
-  // /// for Genaral
-
-  const [listUserRanksDailyGenaral, setListUserRanksDailyGenaral] = useState<IMappingFormat[]>([])
-  const [listUserRanksWeeklyGenaral, setListUserRanksWeeklyGenaral] = useState<IMappingFormat[]>([])
-  const [listUserRanksMonthlyGenaral, setListUserRanksMonthlyGenaral] = useState<IMappingFormat[]>([])
-  const [listUserRanksAllTimeGenaral, setListUserRanksAllTimeGenaral] = useState<IMappingFormat[]>([])
+  const functionList: FunctionList = useMemo(() => {
+    return {
+      'All Time': [listUserRanksAllTime, setListUserRanksAllTime],
+      Monthly: [listUserRanksMonthly, setListUserRanksMonthly],
+      Weekly: [listUserRanksWeekly, setListUserRanksWeekly],
+      Daily: [listUserRanksDaily, setListUserRanksDaily],
+    }
+  }, [])
 
   const payloadPostForDaily = {
     date_gte: moment(startOfDay).unix(),
@@ -328,113 +327,72 @@ const FeatureReferal = () => {
   const handleGetUserRanks = async (
     typeFilterChain: FilterChain,
     typeFilter: FilterTime,
-    setList: (arr: IMappingFormat[]) => void,
+    list: ListRankingByChain,
+    setList: (arr: ListRankingByChain) => void,
   ) => {
     try {
       let data = []
-      let res
-
-      let dataColab = []
-
       // for General
+      let userPointBSC: any
+      let userPointETH: any
 
-      let dataBSC = []
-      let dataETH = []
-      let resBSC
-      let resETH
+      const chainEthId = ChainId.GOERLI
+      const chainBscId = ChainId.BSC_TESTNET
 
       let dataUserFormatAmount: IDataFormatUnit[]
 
-      if (typeFilterChain === 'BSC') {
-        switch (typeFilter) {
-          case 'All Time':
-            res = await getUerRank(ChainId.BSC_TESTNET)
-            data = res.userPoints
-            break
-          case 'Monthly':
-            res = await getUserPointMonthly(ChainId.BSC_TESTNET, payloadPostForMonth)
-            data = res.userPointMonthlies
-            break
-          case 'Weekly':
-            res = await getUserPointWeekly(ChainId.BSC_TESTNET, payloadPostForWeek)
-            data = res.userPointWeeklies
-            break
-          default:
-            res = await getUserPointDaily(ChainId.BSC_TESTNET, payloadPostForDaily)
-            data = res.userPointDailies
-            break
-        }
-      }
-
-      if (typeFilterChain === 'Ethereum') {
-        switch (typeFilter) {
-          case 'All Time':
-            res = await getUerRank(ChainId.GOERLI)
-            data = res.userPoints
-            break
-          case 'Monthly':
-            res = await getUserPointMonthly(ChainId.GOERLI, payloadPostForMonth)
-            data = res.userPointMonthlies
-            break
-          case 'Weekly':
-            res = await getUserPointWeekly(ChainId.GOERLI, payloadPostForWeek)
-            data = res.userPointWeeklies
-            break
-          default:
-            res = await getUserPointDaily(ChainId.GOERLI, payloadPostForDaily)
-            data = res.userPointDailies
-            break
-        }
-      }
-
       switch (typeFilter) {
         case 'All Time':
-          resETH = await getUerRank(ChainId.GOERLI)
-          resBSC = await getUerRank(ChainId.BSC_TESTNET)
-          dataETH = handleFormatData('Ethereum', resETH.userPoints)
-          dataBSC = handleFormatData('BSC', resBSC.userPoints)
-          dataColab = [...dataETH, ...dataBSC]
-          dataUserFormatAmount = handleSoftDescending(dataColab)
+          userPointETH = await getUerRank(chainEthId)
+          userPointBSC = await getUerRank(chainBscId)
           break
         case 'Monthly':
-          resETH = await getUserPointMonthly(ChainId.GOERLI, payloadPostForMonth)
-          resBSC = await getUserPointMonthly(ChainId.BSC_TESTNET, payloadPostForMonth)
-          dataETH = handleFormatData('Ethereum', resETH.userPointMonthlies)
-          dataBSC = handleFormatData('BSC', resBSC.userPointMonthlies)
-          dataColab = [...dataETH, ...dataBSC]
-          dataUserFormatAmount = handleSoftDescending(dataColab)
+          userPointETH = await getUserPointMonthly(chainEthId, payloadPostForMonth)
+          userPointBSC = await getUserPointMonthly(chainBscId, payloadPostForMonth)
           break
         case 'Weekly':
-          resETH = await getUserPointWeekly(ChainId.GOERLI, payloadPostForWeek)
-          resBSC = await getUserPointWeekly(ChainId.BSC_TESTNET, payloadPostForWeek)
-          dataETH = handleFormatData('Ethereum', resETH.userPointWeeklies)
-          dataBSC = handleFormatData('BSC', resBSC.userPointWeeklies)
-          dataColab = [...dataETH, ...dataBSC]
-          dataUserFormatAmount = handleSoftDescending(dataColab)
+          userPointETH = await getUserPointWeekly(chainEthId, payloadPostForWeek)
+          userPointBSC = await getUserPointWeekly(chainBscId, payloadPostForWeek)
           break
         default:
-          resETH = await getUserPointDaily(ChainId.GOERLI, payloadPostForDaily)
-          resBSC = await getUserPointDaily(ChainId.BSC_TESTNET, payloadPostForDaily)
-          dataETH = handleFormatData('Ethereum', resETH.userPointDailies)
-          dataBSC = handleFormatData('BSC', resBSC.userPointDailies)
-          dataColab = [...dataETH, ...dataBSC]
-          dataUserFormatAmount = handleSoftDescending(dataColab)
+          userPointETH = await getUserPointDaily(chainEthId, payloadPostForDaily)
+          userPointBSC = await getUserPointDaily(chainBscId, payloadPostForDaily)
           break
       }
 
-      if (typeFilterChain !== 'General') {
-        dataUserFormatAmount = data.map((item) => {
-          return {
-            ...item,
-            id: item.id,
-            point: new BigNumber(item.amount)
-              .div(10 ** USD_DECIMALS[typeFilterChain === 'BSC' ? ChainId.BSC_TESTNET : ChainId.GOERLI])
-              .toNumber(),
-          }
-        })
-      }
+      const dataUserPointETH =
+        userPointETH.userPoints ||
+        userPointETH.userPointMonthlies ||
+        userPointETH.userPointWeeklies ||
+        userPointETH.userPointDailies
 
-      console.log(`dataUserFormatAmount`, dataUserFormatAmount)
+      const dataUserPointBSC =
+        userPointBSC.userPoints ||
+        userPointBSC.userPointMonthlies ||
+        userPointBSC.userPointWeeklies ||
+        userPointBSC.userPointDailies
+
+      switch (typeFilterChain) {
+        case 'General':
+          const dataFormatETH = handleFormatData('Ethereum', dataUserPointETH)
+          const dataFormatBSC = handleFormatData('BSC', dataUserPointBSC)
+          const dataColab = [...dataFormatETH, ...dataFormatBSC]
+          dataUserFormatAmount = dataColab.sort((a, b) => b?.point - a?.point)
+          break
+        case 'BSC':
+        case 'Ethereum':
+          const data = typeFilterChain === 'BSC' ? dataUserPointBSC : dataUserPointETH
+          dataUserFormatAmount = data.map((item: any) => {
+            return {
+              ...item,
+              id: item.id,
+              point: new BigNumber(item.amount)
+                .div(10 ** USD_DECIMALS[typeFilterChain === 'BSC' ? chainBscId : chainEthId])
+                .toNumber(),
+            }
+          })
+          break
+      }
 
       const listAddress = dataUserFormatAmount.map((item) => item.address)
 
@@ -455,7 +413,14 @@ const FeatureReferal = () => {
           }
         })
 
-        setList([...dataMapping])
+        const tempList = {
+          General: typeFilterChain === 'General' ? [...dataMapping] : list.General,
+          Ethereum: typeFilterChain === 'Ethereum' ? [...dataMapping] : list.Ethereum,
+          BSC: typeFilterChain === 'BSC' ? [...dataMapping] : list.BSC,
+        }
+
+        setList(tempList)
+        setListUserRanks(tempList)
       }
     } catch (error) {
       console.log(`error >>>`, error)
@@ -474,93 +439,20 @@ const FeatureReferal = () => {
     })
   }
 
-  const handleSoftDescending = (data: any[]) => {
-    return data.sort((a, b) => {
-      return b?.point - a?.point
-    })
-  }
-
-  const handleOnChangeRankTab = (item: FilterTime, tabChain: FilterChain) => {
+  const handleOnChangeRankTab = async (item: FilterTime) => {
     setTabLeaderBoard(item)
 
-    if (tabChain === 'BSC') {
-      switch (item) {
-        case 'All Time':
-          setListUserRanks(listUserRanksAllTime)
-          break
-        case 'Monthly':
-          setListUserRanks(listUserRanksMonthly)
-
-          break
-        case 'Weekly':
-          setListUserRanks(listUserRanksWeekly)
-          break
-        default:
-          setListUserRanks(listUserRanksDaily)
-          break
-      }
-    }
-
-    if (tabChain === 'Ethereum') {
-      switch (item) {
-        case 'All Time':
-          setListUserRanks(listUserRanksAllTimeETH)
-          break
-        case 'Monthly':
-          setListUserRanks(listUserRanksMonthlyETH)
-
-          break
-        case 'Weekly':
-          setListUserRanks(listUserRanksWeeklyETH)
-          break
-        default:
-          setListUserRanks(listUserRanksDailyETH)
-          break
-      }
-    }
-
-    if (tabChain === 'General') {
-      switch (item) {
-        case 'All Time':
-          setListUserRanks(listUserRanksAllTimeGenaral)
-          break
-        case 'Monthly':
-          setListUserRanks(listUserRanksMonthlyGenaral)
-          break
-        case 'Weekly':
-          setListUserRanks(listUserRanksWeeklyGenaral)
-          break
-        default:
-          setListUserRanks(listUserRanksDailyGenaral)
-          break
-      }
-    }
+    await handleGetUserRanks(tabChainLeaderBoard, item, functionList[item][0], functionList[item][1])
   }
 
-  const handleOnChangeFilterChain = (item: FilterChain) => {
-    setTabChainId(item)
-    handleOnChangeRankTab(tabLeaderBoard, item)
+  const handleOnChangeChainTab = async (item: FilterChain) => {
+    setTabChainLeaderBoard(item)
+    await handleGetUserRanks(item, tabLeaderBoard, functionList[tabLeaderBoard][0], functionList[tabLeaderBoard][1])
   }
 
   useEffect(() => {
-    handleGetUserRanks('Genaral', 'All Time', setListUserRanksAllTimeGenaral)
-    handleGetUserRanks('Genaral', 'Monthly', setListUserRanksMonthlyGenaral)
-    handleGetUserRanks('Genaral', 'Weekly', setListUserRanksWeeklyGenaral)
-    handleGetUserRanks('Genaral', 'Daily', setListUserRanksDailyGenaral)
-    handleGetUserRanks('BSC', 'All Time', setListUserRanksAllTime)
-    handleGetUserRanks('BSC', 'Monthly', setListUserRanksMonthly)
-    handleGetUserRanks('BSC', 'Weekly', setListUserRanksWeekly)
-    handleGetUserRanks('BSC', 'Daily', setListUserRanksDaily)
-    handleGetUserRanks('Ethereum', 'All Time', setListUserRanksAllTimeETH)
-    handleGetUserRanks('Ethereum', 'Monthly', setListUserRanksMonthlyETH)
-    handleGetUserRanks('Ethereum', 'Weekly', setListUserRanksWeeklyETH)
-    handleGetUserRanks('Ethereum', 'Daily', setListUserRanksDailyETH)
+    handleGetUserRanks('General', 'All Time', listUserRanksAllTime, setListUserRanksAllTime)
   }, [])
-
-  useEffect(() => {
-    if (!listUserRanksAllTime || !listUserRanksAllTimeGenaral || !listUserRanksAllTimeETH) return
-    handleOnChangeRankTab('All Time', 'Genaral')
-  }, [listUserRanksAllTime, listUserRanksAllTimeETH, listUserRanksAllTimeGenaral])
 
   return (
     <Wrapper sx={{ flexGrow: 1, display: 'flex' }}>
@@ -570,14 +462,14 @@ const FeatureReferal = () => {
             <Container>
               <Overlay>
                 <First>
-                  <FilterChain>
+                  <FilterChainWrapper>
                     <div className="tab_filter_chain_container">
-                      {Array.from(filterChain).map((item) => {
+                      {filterChain.map((item) => {
                         return (
                           <div
                             key={item}
-                            className={tabChainId === item ? 'filter_chain_active' : 'filter_chain'}
-                            onClick={() => handleOnChangeFilterChain(item)}
+                            className={tabChainLeaderBoard === item ? 'filter_chain_active' : 'filter_chain'}
+                            onClick={() => handleOnChangeChainTab(item)}
                             role="button"
                           >
                             {item}
@@ -585,14 +477,14 @@ const FeatureReferal = () => {
                         )
                       })}
                     </div>
-                  </FilterChain>
+                  </FilterChainWrapper>
                   <div className="tab_filter">
                     {Array.from(filterTime).map((item) => {
                       return (
                         // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                         <div
                           key={item}
-                          onClick={() => handleOnChangeRankTab(item, tabChainId)}
+                          onClick={() => handleOnChangeRankTab(item)}
                           className={tabLeaderBoard === item ? 'tab_item_active' : 'tab_item'}
                           style={{ cursor: 'pointer' }}
                         >
@@ -604,12 +496,12 @@ const FeatureReferal = () => {
 
                   <div className="learder_board">
                     {listUserRanks &&
-                      listUserRanks.length > 0 &&
-                      listUserRanks?.slice(0, 5).map((item: IMappingFormat, index: number) => {
+                      listUserRanks[tabChainLeaderBoard].length > 0 &&
+                      listUserRanks[tabChainLeaderBoard]?.slice(0, 5).map((item: IMappingFormat, index: number) => {
                         // eslint-disable-next-line react/no-array-index-key
                         return <LeaderBoardItemLP item={item} key={`learder_item_${index}`} />
                       })}
-                    {listUserRanks.length === 0 && <NoDataWraper>No data</NoDataWraper>}
+                    {listUserRanks[tabChainLeaderBoard].length === 0 && <NoDataWraper>No data</NoDataWraper>}
                   </div>
                 </First>
               </Overlay>
