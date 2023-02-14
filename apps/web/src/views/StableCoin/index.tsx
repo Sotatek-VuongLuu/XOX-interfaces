@@ -45,13 +45,13 @@ const WrapperBorder = styled.div`
   display: flex;
   flex-wrap: wrap;
   @media (min-width: 577px) {
-    &.flex-50{
+    &.flex-50 {
       flex: 0 0 calc(50% - 15px);
       max-width: calc(50% - 15px);
-      >div{
+      > div {
         width: 100%;
       }
-    }  
+    }
   }
   @media (max-width: 576px) {
     width: 100%;
@@ -312,7 +312,7 @@ export default function StableCoin() {
           <div className="banner">
             <InfoNav
               allTokens={allTokens}
-              textContentBanner="Earn BUSD/USDC from your XOXS Indefinitely"
+              textContentBanner="Earn USDT/USDC from your XOXS Indefinitely"
               hasPadding={false}
             />
           </div>

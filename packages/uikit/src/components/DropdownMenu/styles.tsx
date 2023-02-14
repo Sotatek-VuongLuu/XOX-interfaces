@@ -67,7 +67,7 @@ export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: b
   padding-top: 4px;
   pointer-events: auto;
   margin-bottom: 0;
-  width: ${({ $isBottomNav }) => ($isBottomNav ? "100%" : "320px")};
+  width: ${({ $isBottomNav }) => ($isBottomNav ? "100%" : "515px")};
   visibility: visible;
   z-index: 1001;
   display: grid;
