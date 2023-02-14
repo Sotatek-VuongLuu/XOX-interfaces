@@ -479,7 +479,7 @@ export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
 
 const Pools: React.FC<React.PropsWithChildren> = () => {
   const [aprPercent, setAprPercent] = useState<null | string | number>(null)
-  const [pendingRewardOfUser, setPendingRewardOfUser] = useState<any>(null)
+  const [pendingRewardOfUser, setPendingRewardOfUser] = useState<string>(null)
   const [liquidity, setLiquidity] = useState<null | number | string>(null)
   const [totalSupplyLP, setTotalSupplyLP] = useState<any>(null)
   const [userStaked, setUserStaked] = useState<null | string>()
@@ -936,7 +936,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         type="button"
                         className="withdraw"
                         onClick={handleWithdraw}
-                        disabled={!pendingRewardOfUser}
+                        disabled={!Number(pendingRewardOfUser) || approvalState !== ApprovalState.APPROVED}
                       >
                         Withdraw
                       </CustomButton>

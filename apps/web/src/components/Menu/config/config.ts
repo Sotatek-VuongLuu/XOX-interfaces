@@ -101,6 +101,14 @@ const config: (
       image: '/images/decorations/pe2.png',
       items: [],
     },
+    {
+      label: t('Vesting'),
+      href: '/vesting',
+      icon: EarnIcon,
+      fillIcon: EarnFillIcon,
+      image: '/images/decorations/pe2.png',
+      items: [],
+    },
   ].map((item) => addMenuItemSupported(item, chainId))
 
 export const configLanding: (
