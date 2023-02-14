@@ -42,11 +42,11 @@ const Home: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     AOS.init({ duration: 2000 })
-    // const canvas = document.getElementById('canvas3d_pc')
-    // if (canvas) {
-    //   const app = new Application(canvas as any)
-    //   app.load('https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode')
-    // }
+    const canvas = document.getElementById('canvas3d_pc')
+    if (canvas) {
+      const app = new Application(canvas as any)
+      app.load('https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode')
+    }
   }, [])
   return (
     <>

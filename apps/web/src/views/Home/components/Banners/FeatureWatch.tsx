@@ -121,9 +121,9 @@ const FeatureWatch = () => {
   const { width } = useWindowSize()
 
   useEffect(() => {
-    // const canvas = document.getElementById('canvas3d_xoxs_logo_pc')
-    // const app = new Application(canvas as any)
-    // app.load('https://prod.spline.design/eHWlbskKUlvFMGuG/scene.splinecode')
+    const canvas = document.getElementById('canvas3d_xoxs_logo_pc')
+    const app = new Application(canvas as any)
+    app.load('https://prod.spline.design/eHWlbskKUlvFMGuG/scene.splinecode')
   }, [])
 
   return (
