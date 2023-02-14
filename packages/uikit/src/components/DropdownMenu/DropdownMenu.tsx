@@ -1,6 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useContext, useEffect, useState, useCallback, createElement } from "react";
 import { usePopper } from "react-popper";
+import { Tooltip } from "@mui/material";
 import { useOnClickOutside } from "../../hooks";
 import { MenuContext } from "../../widgets/Menu/context";
 import { Box, Flex } from "../Box";
@@ -68,6 +69,13 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
     }, [setIsOpen])
   );
 
+  const listUnderDevelopment = [
+    "XOX Super DEX 2.0",
+    "XOX Mobile App/Wallet",
+    "XOX Multi-chain Launchpad",
+    "XOX Coin Listing/Ranking Site",
+  ];
+
   return (
     <Box ref={setTargetRef} {...props}>
       <BoxDropdown
@@ -93,7 +101,16 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
             .filter((item) => !item.isMobileOnly)
             .map(
               (
-                { type = DropdownMenuItemType.INTERNAL_LINK, label, href = "/", status, disabled, icon, ...itemProps },
+                {
+                  type = DropdownMenuItemType.INTERNAL_LINK,
+                  label,
+                  href = "/",
+                  status,
+                  disabled,
+                  icon,
+                  showTooltip,
+                  ...itemProps
+                },
                 itemItem
               ) => {
                 const MenuItemContent = (
@@ -120,21 +137,40 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                         {MenuItemContent}
                       </DropdownMenuItem>
                     )}
-                    {type === DropdownMenuItemType.INTERNAL_LINK && (
-                      <DropdownMenuItem
-                        $isActive={isActive}
-                        disabled={disabled || isDisabled}
-                        as={linkComponent}
-                        href={href}
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
-                        {...itemProps}
-                        className="submenu"
-                      >
-                        {MenuItemContent}
-                      </DropdownMenuItem>
-                    )}
+                    {type === DropdownMenuItemType.INTERNAL_LINK &&
+                      (showTooltip ? (
+                        <Tooltip title="Under Development" placement="top-start">
+                          <span>
+                            <DropdownMenuItem
+                              $isActive={isActive}
+                              disabled={disabled || isDisabled}
+                              as={linkComponent}
+                              href={href}
+                              onClick={() => {
+                                setIsOpen(false);
+                              }}
+                              {...itemProps}
+                              className="submenu"
+                            >
+                              {MenuItemContent}
+                            </DropdownMenuItem>
+                          </span>
+                        </Tooltip>
+                      ) : (
+                        <DropdownMenuItem
+                          $isActive={isActive}
+                          disabled={disabled || isDisabled}
+                          as={linkComponent}
+                          href={href}
+                          onClick={() => {
+                            setIsOpen(false);
+                          }}
+                          {...itemProps}
+                          className="submenu"
+                        >
+                          {MenuItemContent}
+                        </DropdownMenuItem>
+                      ))}
                     {type === DropdownMenuItemType.EXTERNAL_LINK && (
                       <DropdownMenuItem
                         $isActive={isActive}

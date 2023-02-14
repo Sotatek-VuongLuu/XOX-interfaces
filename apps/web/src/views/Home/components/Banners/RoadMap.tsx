@@ -145,20 +145,12 @@ export const listRoadMap = [
   },
   {
     year: 'Under Development',
-    describe: [
-      'Bridge',
-      'Adding Features To Already Live Utilities',
-      'Decentralized Wallet Available On IOS, Android & Web',
-    ],
+    describe: ['Bridge', 'Adding Features To Already Live Utilities', 'XOX Mobile App/Wallet for IOS, Android & Web'],
     status: 'processing',
   },
   {
     year: 'Under Development',
-    describe: [
-      'Multichain Launchpad',
-      'Coin Listing/Ranking Site (Early Stage)',
-      'Advance Trading Station (Early Stage)',
-    ],
+    describe: ['XOX Multi-Chain Launchpad', 'XOX Coin Listing/Ranking Site (Early Stage)', 'XOX Super DEX 2.0'],
     status: 'todo',
   },
   {

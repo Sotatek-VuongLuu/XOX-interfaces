@@ -18,7 +18,7 @@ import AssetIcon from 'components/Svg/AssetIcon'
 import StableCoinIcon from 'components/Svg/StableCoinIcon'
 import FarmingIcon from 'components/Svg/FarmingIcon'
 
-export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean }
+export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean; showTooltip?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
   items?: ConfigMenuDropDownItemsType[]
 }
@@ -184,6 +184,34 @@ export const configLanding: (
           icon: StableCoinIcon,
           fillIcon: StableCoinIcon,
           href: '/stable-coin',
+        },
+        {
+          label: 'XOX Super DEX 2.0',
+          icon: '',
+          fillIcon: '',
+          href: '/#',
+          showTooltip: true,
+        },
+        {
+          label: 'XOX Mobile App/Wallet ',
+          icon: '',
+          fillIcon: '',
+          href: '/stable-coin',
+          showTooltip: true,
+        },
+        {
+          label: 'XOX Multi-chain Launchpad',
+          icon: '',
+          fillIcon: 'StableCoinIcon',
+          href: '/stable-coin',
+          showTooltip: true,
+        },
+        {
+          label: 'XOX Coin Listing/Ranking Site',
+          icon: '',
+          fillIcon: 'StableCoinIcon',
+          href: '/stable-coin',
+          showTooltip: true,
         },
       ].map((item) => addMenuItemSupported(item, chainId)),
     },

@@ -198,32 +198,30 @@ const UpComing = () => {
   )
 }
 
-const linkWhitepaper = '#';
+const linkWhitepaper = '#'
 
 const listItem = [
   {
-    title: 'Decentralized Wallet',
-    describe:
-      'With the downfall of Centralized Exchanges, crypto investors finally realized that "Not your Keys not your Crypto", and Decentralized wallets like Trust Wallet & Metamask now more important than ever. The XOX Decentralized Wallet bring inovative features like.',
-    link: linkWhitepaper 
+    title: 'XOX Mobile App/Wallet',
+    describe: `After the recent downfall of Centralized Exchanges, crypto investors have finally realized that "Not your Keys not your Crypto", and Decentralized wallets like Trust Wallet & Metamask now more important than ever. The XOX Decentralized Wallet bring innovative Multi-chain features for users to enjoy while being sure that their funds are safe.`,
+    link: linkWhitepaper,
   },
   {
-    title: 'Multichain Launchpad',
-    describe:
-      'Investing in ICOs, Fair Launches and Pre-sales could be very profitable if you find the right projects. We have set the task to Develop The Best Web3 Multi-Chain Launchpad on the Space and after studying over 50 Launchpads we have a pretty good idea of what works and what does not. The XOX Multi-Chain Launchpad will.',
-    link: linkWhitepaper  
+    title: 'XOX Multi-chain Launchpad',
+    describe: `Investing in ICOs, Fair Launches and Pre-sales could be very profitable if you find the right projects. We have set the task to Develop The Best Web3 Multi-Chain Launchpad on the Space and after studying over 50 Launchpads we have a pretty good idea of what works and what does not.`,
+    link: linkWhitepaper,
   },
   {
-    title: 'Coin Listing/Ranking Site',
+    title: 'XOX Coin Listing/Rating Site',
     describe:
-      'Multiple Studies have shown that at least 80% of crypto holders check CoinMarketCap once a day. The problem is that there is no accurate ranking system dedicated to a specific community. So we will create our own one, fully dedicated and targeted towards the needs of the XOX Community. No more searching around multiple platforms. Here is what we got in mind.',
-    link: linkWhitepaper
+      'Multiple Studies have shown that at least 80% of crypto holders check CoinMarketCap once a day. The problem is that there is no accurate ranking system dedicated to a specific community. So we will create our own one, fully dedicated and targeted towards the needs of the XOX Community. No more searching around multiple platforms.',
+    link: linkWhitepaper,
   },
   {
-    title: 'Advance Trading Station',
+    title: 'XOX Super Dex 2.0',
     describe:
-      'The XOX Multi-Chain Trading Station will transform the way you trade tokens in a decentralized way, mainly targeted for traders that need more than a simple Swapping Platform, by just connecting your wallet to our Trading Station you will be able to take advantage of a set of features and tools that will take your trading skills and success to the Next Level.',
-    link: linkWhitepaper
+      'Swap, Stake, Cross-chain Bridge, stake, borrow, lend, earn crypto through the most advance gamified referral system in the space, earn stable coins and passive income out of the stable coin holdings, add liquidity and earn lp tokens, yield farming, enjoy of a wide range of tools for crypto traders (charting, portfolio checker, buy limit-sell limit...) and get access to a wide range of other Defi services.',
+    link: linkWhitepaper,
   },
 ]
 
