@@ -17,17 +17,7 @@ export const GRAPH_API_POTTERY = 'https://api.thegraph.com/subgraphs/name/pancak
  */
 export const GRAPH_API_PREDICTION_V1 = 'https://api.thegraph.com/subgraphs/name/pancakeswap/prediction'
 
-export const INFO_CLIENT = 'dev-subgraph.xoxnet.sotatek.works'
-export const INFO_CLIENT_XOX_BSC = ''
-export const INFO_CLIENT_XOX_BSC_TESTNET = 'dev-subgraph.xoxnet.sotatek.works'
-
-export const INFO_NR_CLIENT = 'dev-subgraph.xoxnet.sotatek.works'
-export const INFO_NR_CLIENT_XOX_BSC = ''
-export const INFO_NR_CLIENT_XOX_BSC_TESTNET = 'dev-subgraph.xoxnet.sotatek.works'
-
-export const INFO_CLIENT_ETH = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.26'
-export const INFO_CLIENT_XOX_ETH = ''
-export const INFO_CLIENT_XOX_GOERLI = 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.26'
+export const INFO_CLIENT_PANCAKE = 'https://api.thegraph.com/subgraphs/name/vmatskiv/pancakeswap-v2'
 export const INFO_CLIENT_UNI = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v2'
 
 export const BLOCKS_CLIENT = 'https://api.thegraph.com/subgraphs/name/pancakeswap/blocks'
@@ -47,9 +37,16 @@ export const ACCESS_RISK_API = 'https://red.alert.pancakeswap.com/red-api'
 
 export const CELER_API = 'https://api.celerscan.com/scan'
 
+export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
+  [ChainId.BSC]: '',
+  [ChainId.ETHEREUM]: '',
+  [ChainId.BSC_TESTNET]: 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/subgraph2',
+  [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.26',
+}
+
 export const INFO_CLIENT_WITH_CHAIN = {
   [ChainId.BSC]: 'https://pancakeswap.nodereal.io/graphql/',
-  [ChainId.ETHEREUM]: INFO_CLIENT_ETH,
+  [ChainId.ETHEREUM]: ENDPOINT_GRAPHQL_WITH_CHAIN[1],
 }
 
 export const BLOCKS_CLIENT_WITH_CHAIN = {
@@ -58,10 +55,3 @@ export const BLOCKS_CLIENT_WITH_CHAIN = {
 }
 
 export const ENDPOINT_GRAPHQL_STABLE_COIN = 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/subgraph2'
-
-export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
-  [ChainId.BSC]: '',
-  [ChainId.ETHEREUM]: '',
-  [ChainId.BSC_TESTNET]: 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/subgraph2',
-  [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.26',
-}

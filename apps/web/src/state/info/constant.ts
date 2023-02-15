@@ -1,25 +1,20 @@
 import {
   BLOCKS_CLIENT,
   BLOCKS_CLIENT_ETH,
-  INFO_CLIENT,
-  INFO_CLIENT_ETH,
-  INFO_NR_CLIENT,
+  ENDPOINT_GRAPHQL_WITH_CHAIN,
 } from 'config/constants/endpoints'
 import {
   infoClient,
+  infoClientBSCPANCAKE,
   infoClientETH,
   infoClientETHUNI,
-  infoClientXoxBsc,
-  infoClientXoxBscTestnet,
   infoClientXoxEth,
   infoClientXoxGoerli,
   infoNRClient,
   infoNRClientXoxBsc,
   infoNRClientXoxBscTestnet,
   infoStableSwapClient,
-  stableCoinClient,
-  stableCoinClientEth,
-  stableCoinClientWithChain
+  stableCoinClientWithChain,
 } from 'utils/graphql'
 
 import { ChainId } from '@pancakeswap/sdk'
@@ -31,7 +26,6 @@ import {
   INFO_BUCKETS_COOKIES,
 } from 'config/constants/info'
 import Cookies from 'js-cookie'
-import { GraphQLClient } from 'graphql-request'
 import { TransactionFrom } from './types'
 
 export type MultiChainName = 'BSC' | 'ETH'
@@ -77,6 +71,10 @@ export const multiChainQueryClientWithFrom = {
     [ChainId.ETHEREUM]: infoClientETHUNI,
     [ChainId.GOERLI]: infoClientETHUNI,
   },
+  [TransactionFrom.PANCAKE]: {
+    [ChainId.BSC]: infoClientBSCPANCAKE,
+    [ChainId.BSC_TESTNET]: infoClientBSCPANCAKE,
+  },
 }
 
 export const multiChainQueryClientWithNR = {
@@ -89,13 +87,13 @@ export const multiChainQueryClientStableCoin = (chainId: number) => {
 }
 
 export const multiChainQueryEndPoint = {
-  BSC: INFO_CLIENT,
-  ETH: INFO_CLIENT_ETH,
+  BSC: ENDPOINT_GRAPHQL_WITH_CHAIN[ChainId.BSC],
+  ETH: ENDPOINT_GRAPHQL_WITH_CHAIN[ChainId.ETHEREUM],
 }
 
 export const multiChainQueryEndPointWithNR = {
-  BSC: INFO_NR_CLIENT,
-  ETH: INFO_CLIENT_ETH,
+  BSC: ENDPOINT_GRAPHQL_WITH_CHAIN[ChainId.BSC],
+  ETH: ENDPOINT_GRAPHQL_WITH_CHAIN[ChainId.ETHEREUM],
 }
 
 export const multiChainScan = {

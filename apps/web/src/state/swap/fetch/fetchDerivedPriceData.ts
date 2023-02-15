@@ -1,4 +1,5 @@
-import { INFO_CLIENT, INFO_NR_CLIENT } from 'config/constants/endpoints'
+import { ChainId } from '@pancakeswap/sdk'
+import { ENDPOINT_GRAPHQL_WITH_CHAIN } from 'config/constants/endpoints'
 import { ONE_DAY_UNIX, ONE_HOUR_SECONDS, INFO_BUCKETS_COOKIES } from 'config/constants/info'
 import { getUnixTime, startOfHour, sub } from 'date-fns'
 import Cookies from 'js-cookie'
@@ -11,11 +12,10 @@ import { getDerivedPrices, getDerivedPricesQueryConstructor } from '../queries/g
 import { PairDataTimeWindowEnum } from '../types'
 
 const getTokenDerivedBnbPrices = async (tokenAddress: string, blocks: Block[]) => {
-  const bucketInfo = Cookies.get(INFO_BUCKETS_COOKIES) // sf or nr
   const rawPrices: any | undefined = await multiQuery(
     getDerivedPricesQueryConstructor,
     getDerivedPrices(tokenAddress, blocks),
-    bucketInfo === 'sf' ? INFO_CLIENT : INFO_NR_CLIENT,
+    ENDPOINT_GRAPHQL_WITH_CHAIN[ChainId.BSC],
     200,
   )
 
