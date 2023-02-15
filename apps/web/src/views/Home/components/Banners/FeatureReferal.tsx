@@ -16,7 +16,9 @@ import { getUerRank, getUserPointDaily, getUserPointMonthly, getUserPointWeekly 
 import styled from 'styled-components'
 import axios from 'axios'
 import LeaderBoardItemLP from 'views/Referral/components/LearderBoardItemForLandingPage'
-import { filterChain, FilterChain, filterTime, FilterTime, ListRankingByChain, RankingByChain } from 'views/Referral'
+import { filterChain, FilterChain, filterTime, FilterTime, ListRankingByChain } from 'views/Referral'
+import { GridLoader } from 'react-spinners'
+import { ColumnCenter } from 'components/Layout/Column'
 
 export interface IItemLeaderBoard {
   name: string
@@ -175,20 +177,16 @@ const First = styled.div`
       padding: 10px 20px;
     }
 
-    .tab_item_active {
+    .tab_item.active,
+    .tab_item:hover {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
       border-radius: 4px;
-      padding: 10px 20px;
     }
 
     @media screen and (max-width: 900px) {
       font-size: 12px;
       line-height: 15px;
       .tab_item {
-        padding: 8px;
-      }
-
-      .tab_item_active {
         padding: 8px;
       }
     }
@@ -254,14 +252,10 @@ const FilterChainWrapper = styled.div`
       padding: 12px 30px;
     }
 
-    .filter_chain_active {
+    .filter_chain.active,
+    .filter_chain:hover {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
       border-radius: 30px;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 19px;
-      color: #ffffff;
-      padding: 12px 30px;
     }
 
     @media screen and (max-width: 900px) {
@@ -275,6 +269,10 @@ const FilterChainWrapper = styled.div`
       }
     }
   }
+`
+
+const ConfirmedIcon = styled(ColumnCenter)`
+  padding: 14px 0 34px 0;
 `
 
 const defaultListRankingByChain: ListRankingByChain = {
@@ -293,13 +291,13 @@ const FeatureReferal = () => {
   const startOfWeek = moment().startOf('isoWeek').toString()
   const [tabLeaderBoard, setTabLeaderBoard] = useState<FilterTime>('All Time')
   const [tabChainLeaderBoard, setTabChainLeaderBoard] = useState<FilterChain>('General')
-  const [listUserRanks, setListUserRanks] = useState<ListRankingByChain>(defaultListRankingByChain)
+  const [listUserRanks, setListUserRanks] = useState<ListRankingByChain>()
 
   /// forBSC
-  const [listUserRanksDaily, setListUserRanksDaily] = useState<ListRankingByChain>(defaultListRankingByChain)
-  const [listUserRanksWeekly, setListUserRanksWeekly] = useState<ListRankingByChain>(defaultListRankingByChain)
-  const [listUserRanksMonthly, setListUserRanksMonthly] = useState<ListRankingByChain>(defaultListRankingByChain)
-  const [listUserRanksAllTime, setListUserRanksAllTime] = useState<ListRankingByChain>(defaultListRankingByChain)
+  const [listUserRanksDaily, setListUserRanksDaily] = useState<ListRankingByChain>()
+  const [listUserRanksWeekly, setListUserRanksWeekly] = useState<ListRankingByChain>()
+  const [listUserRanksMonthly, setListUserRanksMonthly] = useState<ListRankingByChain>()
+  const [listUserRanksAllTime, setListUserRanksAllTime] = useState<ListRankingByChain>()
 
   const functionList: FunctionList = useMemo(() => {
     return {
@@ -331,7 +329,6 @@ const FeatureReferal = () => {
     setList: (arr: ListRankingByChain) => void,
   ) => {
     try {
-      let data = []
       // for General
       let userPointBSC: any
       let userPointETH: any
@@ -376,54 +373,43 @@ const FeatureReferal = () => {
         case 'General':
           const dataFormatETH = handleFormatData('Ethereum', dataUserPointETH)
           const dataFormatBSC = handleFormatData('BSC', dataUserPointBSC)
-          const dataColab = [...dataFormatETH, ...dataFormatBSC]
-          dataUserFormatAmount = dataColab.sort((a, b) => b?.point - a?.point)
+          dataUserFormatAmount = combineFormatData(dataFormatETH, dataFormatBSC)
           break
         case 'BSC':
         case 'Ethereum':
           const data = typeFilterChain === 'BSC' ? dataUserPointBSC : dataUserPointETH
-          dataUserFormatAmount = data.map((item: any) => {
-            return {
-              ...item,
-              id: item.id,
-              point: new BigNumber(item.amount)
-                .div(10 ** USD_DECIMALS[typeFilterChain === 'BSC' ? chainBscId : chainEthId])
-                .toNumber(),
-            }
-          })
+          dataUserFormatAmount = handleFormatData(typeFilterChain, data)
           break
       }
 
       const listAddress = dataUserFormatAmount.map((item) => item.address)
 
-      if (listAddress.length > 0) {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
-          wallets: listAddress,
-        })
-        const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index) => {
-          const dataUserInfos = response.data
-          const userInfo = dataUserInfos?.find((user) => item.address === user.address)
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+        wallets: listAddress,
+      })
+      const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index) => {
+        const dataUserInfos = response.data
+        const userInfo = dataUserInfos?.find((user) => item.address === user.address)
 
-          return {
-            ...item,
-            ...userInfo,
-            rank: index + 1,
-            username: userInfo?.username ?? null,
-            avatar: userInfo?.avatar ?? null,
-          }
-        })
-
-        const tempList = {
-          General: typeFilterChain === 'General' ? [...dataMapping] : list.General,
-          Ethereum: typeFilterChain === 'Ethereum' ? [...dataMapping] : list.Ethereum,
-          BSC: typeFilterChain === 'BSC' ? [...dataMapping] : list.BSC,
+        return {
+          ...item,
+          ...userInfo,
+          rank: index + 1,
+          username: userInfo?.username ?? null,
+          avatar: userInfo?.avatar ?? null,
         }
+      })
 
-        setList(tempList)
-        setListUserRanks(tempList)
+      const tempList = {
+        General: typeFilterChain === 'General' ? [...dataMapping] : list?.General,
+        Ethereum: typeFilterChain === 'Ethereum' ? [...dataMapping] : list?.Ethereum,
+        BSC: typeFilterChain === 'BSC' ? [...dataMapping] : list?.BSC,
       }
+
+      setList(tempList)
+      setListUserRanks(tempList)
     } catch (error) {
-      console.log(`error >>>`, error)
+      setListUserRanks(defaultListRankingByChain)
     }
   }
 
@@ -439,16 +425,63 @@ const FeatureReferal = () => {
     })
   }
 
+  const combineFormatData = (dataETH: any[], dataBSC: any[]) => {
+    const data = dataETH.map((itemETH) => {
+      const itemBSC = dataBSC.find(({ address }) => itemETH.address === address)
+      let point = itemETH.point
+      if (itemBSC) {
+        point += itemBSC.point
+        const idx = dataBSC.indexOf(itemBSC)
+        dataBSC.splice(idx, 1)
+      }
+
+      return {
+        ...itemETH,
+        id: itemETH.id,
+        point: point,
+      }
+    })
+
+    return [...data, ...dataBSC].sort((a, b) => b.point - a.point)
+  }
+
   const handleOnChangeRankTab = async (item: FilterTime) => {
     setTabLeaderBoard(item)
+    setListUserRanks(functionList[item][0])
 
     await handleGetUserRanks(tabChainLeaderBoard, item, functionList[item][0], functionList[item][1])
   }
 
   const handleOnChangeChainTab = async (item: FilterChain) => {
     setTabChainLeaderBoard(item)
+    setListUserRanks(functionList[tabLeaderBoard][0])
     await handleGetUserRanks(item, tabLeaderBoard, functionList[tabLeaderBoard][0], functionList[tabLeaderBoard][1])
   }
+
+  const renderListUserRank = useMemo(() => {
+    if (!listUserRanks) {
+      return (
+        <NoDataWraper>
+          <ConfirmedIcon>
+            <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+          </ConfirmedIcon>
+        </NoDataWraper>
+      )
+    }
+
+    if (listUserRanks[tabChainLeaderBoard].length === 0) {
+      return <NoDataWraper>No data</NoDataWraper>
+    }
+
+    return (
+      <>
+        {listUserRanks[tabChainLeaderBoard]?.slice(0, 5).map((item: IMappingFormat, index: number) => {
+          // eslint-disable-next-line react/no-array-index-key
+          return <LeaderBoardItemLP item={item} key={`learder_item_${index}`} />
+        })}
+      </>
+    )
+  }, [listUserRanks, tabChainLeaderBoard])
 
   useEffect(() => {
     handleGetUserRanks('General', 'All Time', listUserRanksAllTime, setListUserRanksAllTime)
@@ -468,7 +501,7 @@ const FeatureReferal = () => {
                         return (
                           <div
                             key={item}
-                            className={tabChainLeaderBoard === item ? 'filter_chain_active' : 'filter_chain'}
+                            className={tabChainLeaderBoard === item ? 'filter_chain active' : 'filter_chain'}
                             onClick={() => handleOnChangeChainTab(item)}
                             role="button"
                           >
@@ -485,7 +518,7 @@ const FeatureReferal = () => {
                         <div
                           key={item}
                           onClick={() => handleOnChangeRankTab(item)}
-                          className={tabLeaderBoard === item ? 'tab_item_active' : 'tab_item'}
+                          className={tabLeaderBoard === item ? 'tab_item active' : 'tab_item'}
                           style={{ cursor: 'pointer' }}
                         >
                           {item}
@@ -494,15 +527,7 @@ const FeatureReferal = () => {
                     })}
                   </div>
 
-                  <div className="learder_board">
-                    {listUserRanks &&
-                      listUserRanks[tabChainLeaderBoard].length > 0 &&
-                      listUserRanks[tabChainLeaderBoard]?.slice(0, 5).map((item: IMappingFormat, index: number) => {
-                        // eslint-disable-next-line react/no-array-index-key
-                        return <LeaderBoardItemLP item={item} key={`learder_item_${index}`} />
-                      })}
-                    {listUserRanks[tabChainLeaderBoard].length === 0 && <NoDataWraper>No data</NoDataWraper>}
-                  </div>
+                  <div className="learder_board">{renderListUserRank}</div>
                 </First>
               </Overlay>
             </Container>
