@@ -177,7 +177,8 @@ const First = styled.div`
       padding: 10px 20px;
     }
 
-    .tab_item.active {
+    .tab_item.active,
+    .tab_item:hover {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
       border-radius: 4px;
     }
@@ -251,14 +252,10 @@ const FilterChainWrapper = styled.div`
       padding: 12px 30px;
     }
 
-    .filter_chain_active {
+    .filter_chain.active,
+    .filter_chain:hover {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
       border-radius: 30px;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 19px;
-      color: #ffffff;
-      padding: 12px 30px;
     }
 
     @media screen and (max-width: 900px) {
@@ -506,7 +503,7 @@ const FeatureReferal = () => {
                         return (
                           <div
                             key={item}
-                            className={tabChainLeaderBoard === item ? 'filter_chain_active' : 'filter_chain'}
+                            className={tabChainLeaderBoard === item ? 'filter_chain active' : 'filter_chain'}
                             onClick={() => handleOnChangeChainTab(item)}
                             role="button"
                           >
