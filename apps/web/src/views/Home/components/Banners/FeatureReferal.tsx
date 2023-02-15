@@ -367,8 +367,6 @@ const FeatureReferal = () => {
         userPointETH.userPointWeeklies ||
         userPointETH.userPointDailies
 
-      console.log(dataUserPointETH, 'dataUserPointETH')
-
       const dataUserPointBSC =
         userPointBSC.userPoints ||
         userPointBSC.userPointMonthlies ||
@@ -389,7 +387,6 @@ const FeatureReferal = () => {
       }
 
       const listAddress = dataUserFormatAmount.map((item) => item.address)
-      let tempList
 
       const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
         wallets: listAddress,
@@ -407,7 +404,7 @@ const FeatureReferal = () => {
         }
       })
 
-      tempList = {
+      const tempList = {
         General: typeFilterChain === 'General' ? [...dataMapping] : list?.General,
         Ethereum: typeFilterChain === 'Ethereum' ? [...dataMapping] : list?.Ethereum,
         BSC: typeFilterChain === 'BSC' ? [...dataMapping] : list?.BSC,
@@ -416,7 +413,6 @@ const FeatureReferal = () => {
       setList(tempList)
       setListUserRanks(tempList)
     } catch (error) {
-      console.log(error)
       setListUserRanks(defaultListRankingByChain)
     }
   }
@@ -434,7 +430,7 @@ const FeatureReferal = () => {
   }
 
   const combineFormatData = (dataETH: any[], dataBSC: any[]) => {
-    dataETH.map((itemETH) => {
+    const data = dataETH.map((itemETH) => {
       const itemBSC = dataBSC.find(({ address }) => itemETH.address === address)
       let point = itemETH.point
       if (itemBSC) {
@@ -450,7 +446,7 @@ const FeatureReferal = () => {
       }
     })
 
-    return [...dataETH, ...dataBSC].sort((a, b) => b.point - a.point)
+    return [...data, ...dataBSC].sort((a, b) => b.point - a.point)
   }
 
   const handleOnChangeRankTab = async (item: FilterTime) => {
