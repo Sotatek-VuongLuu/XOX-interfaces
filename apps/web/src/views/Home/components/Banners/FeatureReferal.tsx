@@ -329,7 +329,6 @@ const FeatureReferal = () => {
     setList: (arr: ListRankingByChain) => void,
   ) => {
     try {
-      let data = []
       // for General
       let userPointBSC: any
       let userPointETH: any
@@ -460,7 +459,6 @@ const FeatureReferal = () => {
   }
 
   const renderListUserRank = useMemo(() => {
-    console.log(listUserRanks, tabChainLeaderBoard)
     if (!listUserRanks) {
       return (
         <NoDataWraper>

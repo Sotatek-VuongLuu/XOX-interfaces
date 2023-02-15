@@ -25,6 +25,8 @@ import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
 import { filterChain, FilterChain, filterTime, FilterTime, ListRankingByChain, RankingByChain } from '..'
+import { ColumnCenter } from 'components/Layout/Column'
+import { GridLoader } from 'react-spinners'
 
 const floatingAnim = (x: string, y: string) => keyframes`
   from {
@@ -569,14 +571,10 @@ const FilterChainWrap = styled.div`
       padding: 12px 30px;
     }
 
-    .filter_chain_active {
+    .filter_chain.active,
+    .filter_chain:hover {
       background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
       border-radius: 30px;
-      font-weight: 700;
-      font-size: 16px;
-      line-height: 19px;
-      color: #ffffff;
-      padding: 12px 30px;
     }
 
     @media screen and (max-width: 900px) {
@@ -590,6 +588,10 @@ const FilterChainWrap = styled.div`
       }
     }
   }
+`
+
+const ConfirmedIcon = styled(ColumnCenter)`
+  padding: 14px 0 34px 0;
 `
 
 interface IProps {
@@ -677,7 +679,6 @@ const MainInfo = ({
       const sortByPoints = userInfos[0]?.friends?.sort(function (a: any, b: any) {
         return Number(b.amount) - Number(a.amount)
       })
-      // console.log('sortByPoints', sortByPoints)
       if (Array.from(userInfos).length !== 0) {
         const dataUserFormatAmount = sortByPoints.map((item: any) => {
           return {
@@ -711,6 +712,31 @@ const MainInfo = ({
     }
   }
 
+  const renderListUserRank = useMemo(() => {
+    if (!listUserRanks) {
+      return (
+        <NoDataWraper>
+          <ConfirmedIcon>
+            <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+          </ConfirmedIcon>
+        </NoDataWraper>
+      )
+    }
+
+    if (listUserRanks[tabChainLeaderBoard].length === 0) {
+      return <NoDataWraper>No data</NoDataWraper>
+    }
+
+    return (
+      <>
+        {listUserRanks[tabChainLeaderBoard]?.slice(0, 5).map((item: IMappingFormat, index: number) => {
+          // eslint-disable-next-line react/no-array-index-key
+          return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
+        })}
+      </>
+    )
+  }, [listUserRanks, tabChainLeaderBoard])
+
   useEffect(() => {
     if (account && chainId) {
       dataFriend(account)
@@ -737,7 +763,7 @@ const MainInfo = ({
                       return (
                         <div
                           key={item}
-                          className={tabChainLeaderBoard === item ? 'filter_chain_active' : 'filter_chain'}
+                          className={tabChainLeaderBoard === item ? 'filter_chain active' : 'filter_chain'}
                           onClick={() => handleOnChangeChainTab(item)}
                           role="button"
                         >
@@ -763,16 +789,18 @@ const MainInfo = ({
                 </div>
 
                 <div className="learder_board">
-                  {listUserRanks &&
+                  {renderListUserRank}
+                  {/* {listUserRanks &&
                     listUserRanks[tabChainLeaderBoard].length > 0 &&
                     listUserRanks[tabChainLeaderBoard]?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
                       // eslint-disable-next-line react/no-array-index-key
                       return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
                     })}
-                  {listUserRanks[tabChainLeaderBoard].length === 0 && <NoDataWraper>No data</NoDataWraper>}
+                  {listUserRanks[tabChainLeaderBoard].length === 0 && <NoDataWraper>No data</NoDataWraper>} */}
                 </div>
 
-                {!rankOfUser[tabChainLeaderBoard].rank ? null : rankOfUser[tabChainLeaderBoard].rank <= 6 ? null : (
+                {!rankOfUser || !rankOfUser[tabChainLeaderBoard]?.rank ? null : rankOfUser[tabChainLeaderBoard].rank <=
+                  6 ? null : (
                   <div className="dot">
                     <div className="dot_item" />
                     <div className="dot_item" />
@@ -780,8 +808,8 @@ const MainInfo = ({
                   </div>
                 )}
 
-                {account ? (
-                  rankOfUser[tabChainLeaderBoard].rank ? (
+                {account && rankOfUser ? (
+                  rankOfUser[tabChainLeaderBoard]?.rank ? (
                     [1, 2, 3, 4, 5].includes(rankOfUser[tabChainLeaderBoard].rank) ? null : (
                       <LeaderBoardItem item={rankOfUser[tabChainLeaderBoard]} mb={false} />
                     )

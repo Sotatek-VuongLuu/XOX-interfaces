@@ -28,8 +28,6 @@ import Banner from './components/Banner'
 import MainInfo from './components/MainInfo'
 import ReferralFriend from './components/ReferralFriend'
 import { ChainId } from '@pancakeswap/sdk'
-import { GridLoader } from 'react-spinners'
-import { ColumnCenter } from 'components/Layout/Column'
 
 export interface IItemLevel {
   icon: string
@@ -181,11 +179,11 @@ export default function Refferal() {
   const [tabLeaderBoard, setTabLeaderBoard] = useState<FilterTime>('All Time')
   const [tabChainLeaderBoard, setTabChainLeaderBoard] = useState<FilterChain>('General')
 
-  const [listUserRanks, setListUserRanks] = useState<ListRankingByChain>(defaultListRankingByChain)
-  const [listUserRanksDaily, setListUserRanksDaily] = useState<ListRankingByChain>(defaultListRankingByChain)
-  const [listUserRanksWeekly, setListUserRanksWeekly] = useState<ListRankingByChain>(defaultListRankingByChain)
-  const [listUserRanksMonthly, setListUserRanksMonthly] = useState<ListRankingByChain>(defaultListRankingByChain)
-  const [listUserRanksAllTime, setListUserRanksAllTime] = useState<ListRankingByChain>(defaultListRankingByChain)
+  const [listUserRanks, setListUserRanks] = useState<ListRankingByChain>()
+  const [listUserRanksDaily, setListUserRanksDaily] = useState<ListRankingByChain>()
+  const [listUserRanksWeekly, setListUserRanksWeekly] = useState<ListRankingByChain>()
+  const [listUserRanksMonthly, setListUserRanksMonthly] = useState<ListRankingByChain>()
+  const [listUserRanksAllTime, setListUserRanksAllTime] = useState<ListRankingByChain>()
 
   const [rankOfUser, setRankOfUser] = useState<RankingByChain>(defaultRankingByChain)
   const [rankOfUserDaily, setRankOfUserDaily] = useState<RankingByChain>(defaultRankingByChain)
@@ -403,7 +401,6 @@ export default function Refferal() {
     setRank: (rank: RankingByChain) => void,
   ) => {
     try {
-      let data = []
       // for General
       let userPointBSC: any
       let userPointETH: any
@@ -431,6 +428,7 @@ export default function Refferal() {
           userPointBSC = await getUserPointDaily(chainBscId, payloadPostForDaily)
           break
       }
+      console.log(userPointETH, userPointBSC)
 
       const dataUserPointETH =
         userPointETH.userPoints ||
@@ -446,89 +444,99 @@ export default function Refferal() {
 
       switch (typeFilterChain) {
         case 'General':
-          const dataFormatETH = handleFormatData('Ethereum', dataUserPointETH)
-          const dataFormatBSC = handleFormatData('BSC', dataUserPointBSC)
-          const dataColab = [...dataFormatETH, ...dataFormatBSC]
-          dataUserFormatAmount = dataColab.sort((a, b) => b?.point - a?.point)
+          const dataFormatETH = handleFormatData(dataUserPointETH, chainEthId)
+          const dataFormatBSC = handleFormatData(dataUserPointBSC, chainBscId)
+          dataUserFormatAmount = combineFormatData(dataFormatETH, dataFormatBSC)
           break
         case 'BSC':
         case 'Ethereum':
-          const data = typeFilterChain === 'BSC' ? dataUserPointBSC : dataUserPointETH
-          dataUserFormatAmount = data.map((item: any) => {
-            return {
-              ...item,
-              id: item.id,
-              point: new BigNumber(item.amount)
-                .div(10 ** USD_DECIMALS[typeFilterChain === 'BSC' ? chainBscId : chainEthId])
-                .toNumber(),
-            }
-          })
+          dataUserFormatAmount = handleFormatData(
+            typeFilterChain === 'BSC' ? dataUserPointBSC : dataUserPointETH,
+            typeFilterChain === 'BSC' ? chainBscId : chainEthId,
+          )
           break
       }
 
       const listAddress = dataUserFormatAmount.map((item) => item.address)
 
-      if (listAddress.length > 0) {
-        const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
-          wallets: listAddress,
-        })
-        const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index) => {
-          const dataUserInfos = response.data
-          const userInfo = dataUserInfos?.find((user) => item.address === user.address)
+      const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+        wallets: listAddress,
+      })
+      const dataMapping: IMappingFormat[] = dataUserFormatAmount.map((item, index) => {
+        const dataUserInfos = response.data
+        const userInfo = dataUserInfos?.find((user) => item.address === user.address)
 
-          return {
-            ...item,
-            ...userInfo,
-            rank: index + 1,
-            username: userInfo?.username ?? null,
-            avatar: userInfo?.avatar ?? null,
-          }
-        })
-
-        const tempList = {
-          General: typeFilterChain === 'General' ? [...dataMapping] : list.General,
-          Ethereum: typeFilterChain === 'Ethereum' ? [...dataMapping] : list.Ethereum,
-          BSC: typeFilterChain === 'BSC' ? [...dataMapping] : list.BSC,
+        return {
+          ...item,
+          ...userInfo,
+          rank: index + 1,
+          username: userInfo?.username ?? null,
+          avatar: userInfo?.avatar ?? null,
         }
+      })
 
-        setList(tempList)
-        setListUserRanks(tempList)
-        // if (tabLeaderBoard === typeFilter) setListUserRanks([...dataMapping])
+      const tempList = {
+        General: typeFilterChain === 'General' ? [...dataMapping] : list?.General,
+        Ethereum: typeFilterChain === 'Ethereum' ? [...dataMapping] : list?.Ethereum,
+        BSC: typeFilterChain === 'BSC' ? [...dataMapping] : list?.BSC,
+      }
 
-        const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 101).filter((item: any) => {
-          return item.address === account?.toLowerCase()
-        })
+      setList(tempList)
+      setListUserRanks(tempList)
+      // if (tabLeaderBoard === typeFilter) setListUserRanks([...dataMapping])
 
-        if (levelOfUSer.length !== 0) {
-          const tempLevel = {
-            General: typeFilterChain === 'General' ? levelOfUSer[0] : rank.General,
-            Ethereum: typeFilterChain === 'Ethereum' ? levelOfUSer[0] : rank.Ethereum,
-            BSC: typeFilterChain === 'BSC' ? levelOfUSer[0] : rank.BSC,
-          }
-          setRank(tempLevel)
-          setRankOfUser(tempLevel)
-          // if (tabLeaderBoard === typeFilter) setRankOfUser(levelOfUSer[0])
+      const levelOfUSer: IMappingFormat[] = dataMapping.slice(0, 101).filter((item: any) => {
+        return item.address === account?.toLowerCase()
+      })
+
+      if (levelOfUSer.length !== 0) {
+        const tempLevel = {
+          General: typeFilterChain === 'General' ? levelOfUSer[0] : rank.General,
+          Ethereum: typeFilterChain === 'Ethereum' ? levelOfUSer[0] : rank.Ethereum,
+          BSC: typeFilterChain === 'BSC' ? levelOfUSer[0] : rank.BSC,
         }
+        setRank(tempLevel)
+        setRankOfUser(tempLevel)
+        // if (tabLeaderBoard === typeFilter) setRankOfUser(levelOfUSer[0])
       }
     } catch (error) {
-      console.log(`error >>>`, error)
+      setListUserRanks(defaultListRankingByChain)
     }
   }
 
-  const handleFormatData = (filter: string, data: any[]) => {
+  const handleFormatData = (data: any[], chainId: number) => {
     return data.map((item) => {
       return {
         ...item,
         id: item.id,
-        point: new BigNumber(item.amount)
-          .div(10 ** USD_DECIMALS[filter === 'BSC' ? ChainId.BSC_TESTNET : ChainId.GOERLI])
-          .toNumber(),
+        point: new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber(),
       }
     })
   }
 
+  const combineFormatData = (dataETH: any[], dataBSC: any[]) => {
+    const data = dataETH.map((itemETH) => {
+      const itemBSC = dataBSC.find(({ address }) => itemETH.address === address)
+      let point = itemETH.point
+      if (itemBSC) {
+        point += itemBSC.point
+        const idx = dataBSC.indexOf(itemBSC)
+        dataBSC.splice(idx, 1)
+      }
+
+      return {
+        ...itemETH,
+        id: itemETH.id,
+        point: point,
+      }
+    })
+
+    return [...data, ...dataBSC].sort((a, b) => b.point - a.point)
+  }
+
   const handleOnChangeRankTab = async (item: FilterTime) => {
     setTabLeaderBoard(item)
+    setListUserRanks(functionList[item][0])
 
     await handleGetUserRanks(
       tabChainLeaderBoard,
@@ -542,6 +550,7 @@ export default function Refferal() {
 
   const handleOnChangeChainTab = async (item: FilterChain) => {
     setTabChainLeaderBoard(item)
+    setListUserRanks(functionList[tabLeaderBoard][0])
     await handleGetUserRanks(
       item,
       tabLeaderBoard,
@@ -553,17 +562,17 @@ export default function Refferal() {
   }
 
   useEffect(() => {
-    if (!chainId || !account) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
     handleGetUserRanks(
       'General',
       'All Time',
-      listUserRanksAllTime,
-      rankOfUserAllTime,
-      setListUserRanksAllTime,
-      setRankOfUserAllTime,
+      functionList['All Time'][0],
+      functionList['All Time'][1],
+      functionList['All Time'][2],
+      functionList['All Time'][3],
     )
+    if (!chainId || !account) return
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
     getListPointConfig()
     getUserPoint()
     getPointDataDays()
