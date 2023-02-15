@@ -22,6 +22,7 @@ interface HoverableChartProps {
   setCoinmarketcapId: (id: number) => void
   chainId: number
   native: NativeCurrency
+  defaultToken: Currency
   allTokens: any
   fetchingTokenId: boolean
   setFetchingTokenId: (b: boolean) => void
@@ -37,6 +38,7 @@ const HoverableChart = ({
   setFilter,
   setCoinmarketcapId,
   native,
+  defaultToken,
   chainId,
   fetchingTokenId,
   allTokens,
@@ -44,7 +46,7 @@ const HoverableChart = ({
   setFetchingTokenId,
 }: HoverableChartProps) => {
   const [hover, setHover] = useState<number | undefined>()
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(native)
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(defaultToken)
   const [dateHover, setDateHover] = useState<string | undefined>()
   const [currencyData, setCurrencyData] = useState<any>()
   const [showX, setShowX] = useState<any>(true)
@@ -87,8 +89,8 @@ const HoverableChart = ({
   )
 
   useEffect(() => {
-    setSelectedCurrency(native)
-  }, [native])
+    setSelectedCurrency(defaultToken)
+  }, [defaultToken])
 
   useEffect(() => {
     setFetchingTokenId(false)
@@ -210,7 +212,7 @@ const HoverableChart = ({
         </div>
 
         <div className="filter">
-          <div style={{whiteSpace: 'nowrap'}}>
+          <div style={{ whiteSpace: 'nowrap' }}>
             <button type="button" onClick={() => handleFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
               All
             </button>
