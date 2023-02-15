@@ -501,7 +501,7 @@ const ConnectBoxContainer = styled.div`
 
 const NoDataWraper = styled.div`
   width: 100%;
-  height: 360px;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
