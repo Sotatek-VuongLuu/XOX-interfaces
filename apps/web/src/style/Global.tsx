@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: black;
     width: 100vw;
-    overflow-x: hidden;
+    overflow-x: hidden !important; overflow-y: visible !important;
 
     img {
       height: auto;
@@ -31,9 +31,9 @@ const GlobalStyle = createGlobalStyle`
 
   #canvas3d_pc {
     position: absolute;
-    right: -50%;
+    left: 50%;
     top: 50%;
-    transform: translate(-55%, -60%);
+    transform: translate(-18%, -65%);
     height: 758px !important;
     width: 1400px !important; 
   }

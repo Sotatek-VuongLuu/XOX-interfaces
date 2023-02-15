@@ -22,8 +22,14 @@ const LeftContent = styled.div`
     @media screen and (max-width: 900px) {
       height: 100% !important;
       width: 100% !important;
-      transform: scale(1.4);
+      transform: scale(1);
+      left: 50%;
+      transform: translate(-53%, 0);
     }
+  }
+
+  @media screen and (max-width: 900px) {
+    overflow-x: hidden;
   }
 `
 
@@ -122,8 +128,10 @@ const FeatureWatch = () => {
 
   useEffect(() => {
     const canvas = document.getElementById('canvas3d_xoxs_logo_pc')
-    const app = new Application(canvas as any)
-    app.load('https://prod.spline.design/eHWlbskKUlvFMGuG/scene.splinecode')
+    if (canvas) {
+      const app = new Application(canvas as any)
+      app.load('https://prod.spline.design/eHWlbskKUlvFMGuG/scene.splinecode')
+    }
   }, [])
 
   return (
