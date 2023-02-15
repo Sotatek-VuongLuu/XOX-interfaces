@@ -76,6 +76,14 @@
     },
 
     {
+      "name": "XOX",
+      "address": "0x726e2a75173956B164fbBF4A2A52C87a35F38716",
+      "symbol": "XOX",
+      "decimals": 18,
+      "chainId": 97,
+      "logoURI": ""
+    },
+    {
       "name": "BTCB Token",
       "symbol": "BTCB",
       "address": "0xa3961366f8A7A5772C22A00788f1824d233B26ed",
@@ -138,14 +146,6 @@
       "chainId": 97,
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png"
-    },
-    {
-      "name": "XOX",
-      "address": "0x726e2a75173956B164fbBF4A2A52C87a35F38716",
-      "symbol": "XOX",
-      "decimals": 18,
-      "chainId": 97,
-      "logoURI": ""
     },
 
     {
@@ -214,6 +214,14 @@
     },
 
     {
+      "name": "XOX",
+      "address": "0xE4A47Eba46b86B3B69F4Ecf28e1AB81649A24d31",
+      "symbol": "XOX",
+      "decimals": 18,
+      "chainId": 5,
+      "logoURI": ""
+    },
+    {
       "name": "Wrapped Bitcoin",
       "address": "0x2a924bcD60450C7a354413d8b2c906A3173F9208",
       "symbol": "WBTC",
@@ -276,14 +284,6 @@
       "decimals": 18,
       "chainId": 5,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5994.png"
-    },
-    {
-      "name": "XOX",
-      "address": "0xE4A47Eba46b86B3B69F4Ecf28e1AB81649A24d31",
-      "symbol": "XOX",
-      "decimals": 18,
-      "chainId": 5,
-      "logoURI": ""
     }
   ]
 }
