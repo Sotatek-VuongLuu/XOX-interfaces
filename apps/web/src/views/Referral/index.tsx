@@ -24,11 +24,12 @@ import {
   userPoint,
 } from 'services/referral'
 import styled from 'styled-components'
-import ConnectWalletButton from 'components/ConnectWalletButton'
 import Banner from './components/Banner'
 import MainInfo from './components/MainInfo'
 import ReferralFriend from './components/ReferralFriend'
 import { ChainId } from '@pancakeswap/sdk'
+import { GridLoader } from 'react-spinners'
+import { ColumnCenter } from 'components/Layout/Column'
 
 export interface IItemLevel {
   icon: string
@@ -128,11 +129,11 @@ export const filterChain = ['General', 'Ethereum', 'BSC'] as const
 export type FilterChain = typeof filterChain[number]
 
 export type RankingByChain = {
-  [key in typeof filterChain[number]]: IMappingFormat
+  [key in typeof filterChain[number]]?: IMappingFormat
 }
 
 export type ListRankingByChain = {
-  [key in typeof filterChain[number]]: IMappingFormat[]
+  [key in typeof filterChain[number]]?: IMappingFormat[]
 }
 
 const defaultIMappingFormat = {
