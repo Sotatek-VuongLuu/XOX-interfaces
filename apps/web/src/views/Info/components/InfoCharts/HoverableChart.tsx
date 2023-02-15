@@ -51,8 +51,6 @@ const HoverableChart = ({
   const [currencyData, setCurrencyData] = useState<any>()
   const [showX, setShowX] = useState<any>(true)
 
-  console.log(`defaultToken`, defaultToken)
-
   // Getting latest data to display on top of chart when not hovered
   useEffect(() => {
     setHover(null)
