@@ -7,10 +7,10 @@ import LineChart from 'views/Info/components/InfoCharts/LineChart'
 import TransactionTable from 'views/Info/components/InfoTables/TransactionsTable'
 import WalletInfoTable from 'views/Info/components/InfoTables/WalletInfoTable'
 import axios from 'axios'
-import { SUGGESTED_BASES_ID } from 'config/constants/exchange'
+import { SUGGESTED_BASES_ID, XOX_ADDRESS } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useNativeCurrency from 'hooks/useNativeCurrency'
-import { useAllTokens } from 'hooks/Tokens'
+import { useAllTokens, useCurrency } from 'hooks/Tokens'
 import HoverableChart from '../components/InfoCharts/HoverableChart'
 import InfoNav from '../components/InfoNav'
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
@@ -116,6 +116,8 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const [fetchingTokenId, setFetchingTokenId] = useState(false)
   const [unsupported, setUnsupported] = useState(false)
   const { isMobile } = useMatchBreakpoints()
+
+  const xoxToken = useCurrency(XOX_ADDRESS[chainId]) ?? undefined
 
   // const allPoolData = useAllPoolDataSWR()
   // const allPoolData = useAllPoolData()
@@ -262,6 +264,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
                     setCoinmarketcapId={setCoinmarketcapId}
                     chainId={chainId}
                     native={native}
+                    defaultToken={xoxToken}
                     allTokens={allTokens}
                     fetchingTokenId={fetchingTokenId}
                     setFetchingTokenId={setFetchingTokenId}
