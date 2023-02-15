@@ -723,13 +723,13 @@ const MainInfo = ({
       )
     }
 
-    if (listUserRanks[tabChainLeaderBoard].length === 0) {
+    if (listUserRanks[tabChainLeaderBoard]?.length === 0) {
       return <NoDataWraper>No data</NoDataWraper>
     }
 
     return (
       <>
-        {listUserRanks[tabChainLeaderBoard]?.slice(0, 5).map((item: IMappingFormat, index: number) => {
+        {listUserRanks[tabChainLeaderBoard]?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
           // eslint-disable-next-line react/no-array-index-key
           return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
         })}
