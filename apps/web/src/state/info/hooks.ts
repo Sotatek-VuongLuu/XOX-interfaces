@@ -9,7 +9,11 @@ import fetchPoolTransactions from 'state/info/queries/pools/transactions'
 import { fetchGlobalChartData } from 'state/info/queries/protocol/chart'
 import { fetchProtocolData } from 'state/info/queries/protocol/overview'
 import fetchTopTransactions from 'state/info/queries/protocol/transactions'
-import fetchTopStableCoin, { fetchTransactionStableCoin, fetchWithdrawStableCoin, fetchStakeStableCoin } from 'state/info/queries/protocol/stablecoin'
+import fetchTopStableCoin, {
+  fetchTransactionStableCoin,
+  fetchWithdrawStableCoin,
+  fetchStakeStableCoin,
+} from 'state/info/queries/protocol/stablecoin'
 import fetchTokenChartData from 'state/info/queries/tokens/chartData'
 import fetchPoolsForToken from 'state/info/queries/tokens/poolsForToken'
 import fetchTokenPriceData from 'state/info/queries/tokens/priceData'
@@ -70,8 +74,10 @@ export const useProtocolTransactionsSWR = (): {
   return transactions
 }
 
-export const useStableCoinSWR = (address:any): {
-  infoBUSD: any
+export const useStableCoinSWR = (
+  address: any,
+): {
+  infoUSDT: any
   infoUSDC: any
 } => {
   const chainName = useGetChainName()
@@ -96,7 +102,7 @@ export const useTransactionStableCoinSWR = () => {
     () => fetchTransactionStableCoin(chainId),
     SWR_SETTINGS, // update latest Transactions per 15s
   )
-  return stablecoin;
+  return stablecoin
 }
 
 export const useWidthDrawStableCoinSWR = () => {
@@ -109,7 +115,7 @@ export const useWidthDrawStableCoinSWR = () => {
     () => fetchWithdrawStableCoin(chainId, null),
     SWR_SETTINGS, // update latest Transactions per 15s
   )
-  return withdraw;
+  return withdraw
 }
 
 export const useMyWidthDrawStableCoinSWR = (address?: any) => {
@@ -122,7 +128,7 @@ export const useMyWidthDrawStableCoinSWR = (address?: any) => {
     () => fetchWithdrawStableCoin(chainId, address),
     SWR_SETTINGS, // update latest Transactions per 15s
   )
-  return withdraw;
+  return withdraw
 }
 
 export const useStakeStableCoinSWR = (address?: any) => {
@@ -135,7 +141,7 @@ export const useStakeStableCoinSWR = (address?: any) => {
     () => fetchStakeStableCoin(chainId, address),
     SWR_SETTINGS, // update latest Transactions per 15s
   )
-  return stakeTable;
+  return stakeTable
 }
 
 export const useAllPoolDataSWR = () => {
@@ -312,7 +318,7 @@ export const useMultiChainPath = () => {
 
 export const useMultiChainId = () => {
   const router = useRouter()
-  const { chainId } = router.query;
+  const { chainId } = router.query
   return chainId
 }
 

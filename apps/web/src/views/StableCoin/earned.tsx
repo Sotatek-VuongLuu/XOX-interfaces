@@ -35,16 +35,16 @@ const WrapText = styled.div`
 
 const Earned = ({ address }: { address?: string }) => {
   const [priceUSDC, setPriceUSDC] = useState(0)
-  const [priceBUSD, setPriceBUSD] = useState(0)
+  const [priceUSDT, setPriceUSDT] = useState(0)
   const stablecoin: any = useStableCoinSWR(address)
   const { chainId } = useWeb3React()
 
   useEffect(() => {
-    if (stablecoin?.infoBUSD || stablecoin?.infoUSDC) {
+    if (stablecoin?.infoUSDT || stablecoin?.infoUSDC) {
       const infopriceUSDC = stablecoin?.infoUSDC?.userInfo?.total_withdraw_earning || 0
-      const infopriceBUSD = stablecoin?.infoBUSD?.userInfo?.total_withdraw_earning || 0
+      const infopriceUSDT = stablecoin?.infoUSDT?.userInfo?.total_withdraw_earning || 0
       setPriceUSDC(Number(formatUnits(infopriceUSDC, USD_DECIMALS[ChainId.ETHEREUM])))
-      setPriceBUSD(Number(formatUnits(infopriceBUSD, USD_DECIMALS[ChainId.BSC])))
+      setPriceUSDT(Number(formatUnits(infopriceUSDT, USD_DECIMALS[ChainId.BSC])))
     }
   }, [stablecoin])
 
@@ -53,7 +53,7 @@ const Earned = ({ address }: { address?: string }) => {
       <Flex justifyContent="space-between" alignItems="center" width="100%" style={{ marginBottom: 15 }}>
         <WrapText>
           <p>USDT earned</p>
-          <p className="number">{priceBUSD ? formatNumberDecimal(priceBUSD) : 0}</p>
+          <p className="number">{priceUSDT ? formatNumberDecimal(priceUSDT) : 0}</p>
         </WrapText>
         <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="icon" />
       </Flex>

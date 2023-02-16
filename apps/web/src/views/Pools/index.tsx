@@ -659,7 +659,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const handleConfirmWithdraw = async () => {
     try {
       setIsOpenLoadingClaimModal(true)
-      setNotiMess(`Unstake ${amountUnStake} ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`)
+      setNotiMess(`Unstake ${amountUnStake} ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP`)
       const gasFee = await contractFarmingLP.estimateGas.withdraw(parseEther(amountUnStake.toString()))
       const txWithdraw = await contractFarmingLP.withdraw(parseEther(amountUnStake.toString()), {
         gasLimit: gasFee,
@@ -691,7 +691,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleConfirmDeposit = async () => {
     try {
-      setNotiMess(`Stake ${amount} ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`)
+      setNotiMess(`Stake ${amount} ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP`)
       setIsOpenLoadingClaimModal(true)
       const gasFee = await contractFarmingLP.estimateGas.deposit(parseEther(amount.toString()))
       const txDeposit = await contractFarmingLP.deposit(parseEther(amount.toString()), {
@@ -796,6 +796,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     }
   }, [approvalState, account, chainId])
 
+  console.log(`aprPercent`, aprPercent)
+
   return (
     <>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
@@ -829,7 +831,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div className="header">
                     <div className="flex">
                       {chainIdSupport.includes(chainId) ? (
-                        <PairToken linkTokenSecond="/images/1/tokens/BUSD.png" symbolTokenSecond="BUSD" />
+                        <PairToken
+                          linkTokenSecond="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png"
+                          symbolTokenSecond="USDT"
+                        />
                       ) : (
                         <PairToken />
                       )}
@@ -899,7 +904,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           rel="noreferrer"
                         >
                           <p className="_flex">
-                            <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
+                            <span>Get {chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP</span>
                             <span style={{ marginLeft: 8 }}>
                               <img src="/images/external-icon.svg" alt="external-icon" />
                             </span>
@@ -936,7 +941,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         type="button"
                         className="withdraw"
                         onClick={handleWithdraw}
-                        disabled={!pendingRewardOfUser}
+                        disabled={!Number(pendingRewardOfUser) || approvalState !== ApprovalState.APPROVED}
                       >
                         Withdraw
                       </CustomButton>
@@ -947,8 +952,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       <p className="current_XOX_reward">
                         {enable
                           ? userStaked
-                            ? `${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP Staked`
-                            : `Stake ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`
+                            ? `${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP Staked`
+                            : `Stake ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP`
                           : 'Enable Farm'}
                       </p>
                       {enable && userStaked && (
@@ -1048,7 +1053,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             rel="noreferrer"
                           >
                             <p className="_flex lp_mb">
-                              <span>Get {chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</span>
+                              <span>Get {chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP</span>
                               <span style={{ marginLeft: 8 }}>
                                 <img src="/images/external-icon.svg" alt="external-icon" />
                               </span>
