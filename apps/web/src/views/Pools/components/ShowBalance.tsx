@@ -19,7 +19,7 @@ export const ShowBalance = ({ balance, unit = '', name = 'default', notSpace = f
           </Tooltip>
         ) : (
           <Tooltip
-            title={balance ? (!notSpace ? `${balance} ${unit}` : `${balance}${unit}`) : null}
+            title={Number(balance) ? (!notSpace ? `${balance} ${unit}` : `${balance}${unit}`) : null}
             placement="top-start"
           >
             <p style={{ display: 'flex' }}>

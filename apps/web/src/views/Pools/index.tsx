@@ -543,7 +543,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       const delta = new BigNumber(endBlock.toNumber() - startBlock.toNumber())
 
       getDataFarming()
-      if (!balanceOfFarming) {
+
+      if (!Number(balanceOfFarming)) {
         setAprPercent(0)
       } else {
         const resultPercent = delta
@@ -795,8 +796,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       setEnable(false)
     }
   }, [approvalState, account, chainId])
-
-  console.log(`aprPercent`, aprPercent)
 
   return (
     <>
