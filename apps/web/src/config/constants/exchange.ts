@@ -47,9 +47,9 @@ export const ROUTER_ADDRESS: ChainMap<string> = {
 export const ROUTER_XOX: ChainMap<string> = {
   [ChainId.ETHEREUM]: '',
   [ChainId.RINKEBY]: '',
-  [ChainId.GOERLI]: '0xe59E4aECB8B5709665b682B5b97580a3736cd11C',
+  [ChainId.GOERLI]: '0xA3d98A2a0B38AAB985d39974FD560AcBd59468a9',
   [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0xC628128a15e64bDE50726692d4C10E6FC4db0BB4',
+  [ChainId.BSC_TESTNET]: '0x7b56ec4a1D7c24357189329eEB929C435128a78D',
 }
 
 export const XOX_ADDRESS: ChainMap<string> = {
