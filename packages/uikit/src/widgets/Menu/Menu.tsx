@@ -62,6 +62,8 @@ const BodyWrapper = styled(Box)`
   position: relative;
   display: flex;
   max-width: 100vw;
+  overflow-y: auto;
+  overflow-x: hidden;
 `;
 
 const Inner = styled.div`

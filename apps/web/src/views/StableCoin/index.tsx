@@ -241,6 +241,16 @@ const ContainerBanner = styled.div`
   }
 `
 
+const CustomRow = styled(Row)`
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-template-columns: 1fr 1fr;
+  }
+`
+
 const FullWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -382,18 +392,18 @@ export default function StableCoin() {
                 </WrapperBorder>
               </Row>
             )}
-            <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
-              <WrapperBorder className="border-gradient-style flex-50">
-                <Box className="wrap-table">
+            <CustomRow>
+              <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
+                <Box className="wrap-table" style={{ height: '100%' }}>
                   <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
                 </Box>
               </WrapperBorder>
-              <WrapperBorder className="border-gradient-style flex-50">
-                <Box className="wrap-table">
+              <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
+                <Box className="wrap-table" style={{ height: '100%' }}>
                   <TransactionTable />
                 </Box>
               </WrapperBorder>
-            </Row>
+            </CustomRow>
           </div>
         </Container>
       </FullWrapper>

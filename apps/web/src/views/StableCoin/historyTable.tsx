@@ -135,7 +135,7 @@ const Table = styled.div`
   position: relative;
   grid-template-columns: 0.15fr 1.4fr 1.2fr 0.8fr;
   &.table-withdraw {
-    grid-gap: 13px 25px;
+    grid-gap: 15px 25px;
   }
   .text-ellipsis{
     max-width: 90px;
