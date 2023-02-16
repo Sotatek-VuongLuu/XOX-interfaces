@@ -117,7 +117,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const [unsupported, setUnsupported] = useState(false)
   const { isMobile } = useMatchBreakpoints()
 
-  const xoxToken = useCurrency(XOX_ADDRESS[chainId]) ?? undefined
+  const xoxToken = useCurrency(XOX_ADDRESS[chainId]) ?? native
 
   // const allPoolData = useAllPoolDataSWR()
   // const allPoolData = useAllPoolData()
