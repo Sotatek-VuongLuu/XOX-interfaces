@@ -575,224 +575,228 @@ export default function BridgeToken() {
   return (
     <Page>
       <WapperHeight>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
-      <Flex width={['328px', , '559px']} className="container_bridge">
-        <Wrapper flex="column" position="relative">
-          {isMobile ? (
-            <>
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundMobile />
-              </SwapBackgroundWrapper>
+        <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+        <Flex width={['328px', , '559px']} className="container_bridge">
+          <Wrapper flex="column" position="relative">
+            {isMobile ? (
+              <>
+                <SwapBackgroundWrapper>
+                  <LiquidityBackgroundMobile />
+                </SwapBackgroundWrapper>
 
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundBorderMobile />
-              </SwapBackgroundWrapper>
-            </>
-          ) : (
-            <>
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundDesktop />
-              </SwapBackgroundWrapper>
+                <SwapBackgroundWrapper>
+                  <LiquidityBackgroundBorderMobile />
+                </SwapBackgroundWrapper>
+              </>
+            ) : (
+              <>
+                <SwapBackgroundWrapper>
+                  <LiquidityBackgroundDesktop />
+                </SwapBackgroundWrapper>
 
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundBorderDesktop />
-              </SwapBackgroundWrapper>
-            </>
-          )}
-          <BackgroundWrapper />
-          <StyledSwapContainer>
-            <StyledInputCurrencyWrapper>
-              <StyledHeader>
-                <div>
-                  <StyledHeading1>{t('Bridge')}</StyledHeading1>
-                  <p>{t('Trade tokens in an instant')} </p>
-                </div>
-                <Button onClick={onHistoryTransactionsModal}>
-                  <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
-                    <path
-                      d="M2.90918 3.36365V7H6.54556"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M2 12C2 17.5229 6.47715 22 12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C8.299 2 5.06755 4.01056 3.33839 6.99905"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M12.0026 6L12.002 12.0044L16.2417 16.2441"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
-                </Button>
-              </StyledHeader>
-              <AmountInput
-                isTokenFrom
-                inputChainId={chainIdSupport}
-                balance={balanceInput ? balanceInput?.toExact() : '-'}
-                amount={amountInput}
-                handleUserInput={handleUserInput}
-                handleBalanceMax={(balance) => setAmountInput(balance)}
-                switchNetwork={switchNetwork}
-                tokenSymbol={defaultToken?.symbol}
-                isShowDrop={isShowDropFrom}
-                handleShowDrop={handleShowDropFrom}
-              />
-              <Divider>
-                <div>
-                  <svg
-                    width="31"
-                    height="30"
-                    viewBox="0 0 31 30"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                    onClick={switchNetwork}
-                    aria-hidden="true"
-                    style={{ cursor: 'pointer' }}
+                <SwapBackgroundWrapper>
+                  <LiquidityBackgroundBorderDesktop />
+                </SwapBackgroundWrapper>
+              </>
+            )}
+            <BackgroundWrapper />
+            <StyledSwapContainer>
+              <StyledInputCurrencyWrapper>
+                <StyledHeader>
+                  <div>
+                    <StyledHeading1>{t('Bridge')}</StyledHeading1>
+                    <p>{t('Bridge tokens in an instant')} </p>
+                  </div>
+                  <Button onClick={onHistoryTransactionsModal}>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                      <path
+                        d="M2.90918 3.36365V7H6.54556"
+                        stroke="#8E8E8E"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M2 12C2 17.5229 6.47715 22 12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C8.299 2 5.06755 4.01056 3.33839 6.99905"
+                        stroke="#8E8E8E"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M12.0026 6L12.002 12.0044L16.2417 16.2441"
+                        stroke="#8E8E8E"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </Button>
+                </StyledHeader>
+                <AmountInput
+                  isTokenFrom
+                  inputChainId={chainIdSupport}
+                  balance={balanceInput ? balanceInput?.toExact() : '-'}
+                  amount={amountInput}
+                  handleUserInput={handleUserInput}
+                  handleBalanceMax={(balance) => setAmountInput(balance)}
+                  switchNetwork={switchNetwork}
+                  tokenSymbol={defaultToken?.symbol}
+                  isShowDrop={isShowDropFrom}
+                  handleShowDrop={handleShowDropFrom}
+                />
+                <Divider>
+                  <div>
+                    <svg
+                      width="31"
+                      height="30"
+                      viewBox="0 0 31 30"
+                      fill="none"
+                      xmlns="http://www.w3.org/2000/svg"
+                      onClick={switchNetwork}
+                      aria-hidden="true"
+                      style={{ cursor: 'pointer' }}
+                    >
+                      <circle cx="15.5" cy="15" r="15" fill="#303030" />
+                      <path
+                        d="M15.5042 20.9498V9"
+                        stroke="#8E8E8E"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                      <path
+                        d="M21.5 15L15.5 21L9.5 15"
+                        stroke="#8E8E8E"
+                        strokeWidth="2"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                      />
+                    </svg>
+                  </div>
+                </Divider>
+                <AmountInput
+                  isTokenFrom={false}
+                  inputChainId={getChainIdToByChainId(chainIdSupport)}
+                  amount={amountTo}
+                  balance={balancePool}
+                  switchNetwork={switchNetwork}
+                  tokenSymbol={tokenB?.symbol}
+                  isShowDrop={isShowDropTo}
+                  handleShowDrop={handleShowDropTo}
+                />
+                {account && (
+                  <AddressInput address={addressTo} handleAddressTo={handleAddressTo} messageAddress={messageAddress} />
+                )}
+                {!account ? (
+                  <WapperConnectBtn onClick={handleClick}>Connect Wallet</WapperConnectBtn>
+                ) : (
+                  <SwapButton
+                    disabled={
+                      (messageButton !== 'Bridge' && messageButton !== `Approve ${addressTokenInput.symbol}`) ||
+                      messageAddress !== '' ||
+                      amountTo === '' ||
+                      loading ||
+                      pendingApprove
+                    }
+                    onClick={handleSwapButtonClick}
                   >
-                    <circle cx="15.5" cy="15" r="15" fill="#303030" />
-                    <path
-                      d="M15.5042 20.9498V9"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                    <path
-                      d="M21.5 15L15.5 21L9.5 15"
-                      stroke="#8E8E8E"
-                      strokeWidth="2"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    />
-                  </svg>
+                    <span>{messageButton}</span>
+                    {approvalState === ApprovalState.PENDING}
+                  </SwapButton>
+                )}
+                <Reminder
+                  chainId={chainId}
+                  tokenInput={defaultToken}
+                  tokenOutput={tokenB}
+                  amount={amountInput}
+                  // eslint-disable-next-line @typescript-eslint/no-shadow
+                  onBridgeTokenFeeChange={(minAmount, maxAmount) => {
+                    setMinAmount(Number(minAmount))
+                    setMaxAmount(Number(maxAmount))
+                  }}
+                  setAmountTo={setAmountTo}
+                />
+              </StyledInputCurrencyWrapper>
+            </StyledSwapContainer>
+            <ModalBase
+              open={isOpenSuccessModal}
+              handleClose={() => setIsOpenSuccessModal(false)}
+              title="Confirm Bridge"
+            >
+              <Content>
+                <div className="noti_claim_success">
+                  <img src="/images/success_claim.png" alt="success_claim" />
                 </div>
-              </Divider>
-              <AmountInput
-                isTokenFrom={false}
-                inputChainId={getChainIdToByChainId(chainIdSupport)}
-                amount={amountTo}
-                balance={balancePool}
-                switchNetwork={switchNetwork}
-                tokenSymbol={tokenB?.symbol}
-                isShowDrop={isShowDropTo}
-                handleShowDrop={handleShowDropTo}
-              />
-              {account && (
-                <AddressInput address={addressTo} handleAddressTo={handleAddressTo} messageAddress={messageAddress} />
-              )}
-              {!account ? (
-                <WapperConnectBtn onClick={handleClick}>Connect Wallet</WapperConnectBtn>
-              ) : (
-                <SwapButton
-                  disabled={
-                    (messageButton !== 'Bridge' && messageButton !== `Approve ${addressTokenInput.symbol}`) ||
-                    messageAddress !== '' ||
-                    amountTo === '' ||
-                    loading ||
-                    pendingApprove
-                  }
-                  onClick={handleSwapButtonClick}
+                <div className="submitted">Transaction Submitted</div>
+                <LinkExternal
+                  href={`${linkTransaction(chainId)}${txHash}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  color="rgb(61, 138, 255)"
+                  fontWeight={400}
+                  style={{ margin: '0 auto 24px' }}
                 >
-                  <span>{messageButton}</span>
-                  {approvalState === ApprovalState.PENDING}
-                </SwapButton>
-              )}
-              <Reminder
-                chainId={chainId}
-                tokenInput={defaultToken}
-                tokenOutput={tokenB}
-                amount={amountInput}
-                // eslint-disable-next-line @typescript-eslint/no-shadow
-                onBridgeTokenFeeChange={(minAmount, maxAmount) => {
-                  setMinAmount(Number(minAmount))
-                  setMaxAmount(Number(maxAmount))
-                }}
-                setAmountTo={setAmountTo}
-              />
-            </StyledInputCurrencyWrapper>
-          </StyledSwapContainer>
-          <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Confirm Bridge">
-            <Content>
-              <div className="noti_claim_success">
-                <img src="/images/success_claim.png" alt="success_claim" />
-              </div>
-              <div className="submitted">Transaction Submitted</div>
-              <LinkExternal
-                href={`${linkTransaction(chainId)}${txHash}`}
-                target="_blank"
-                rel="noreferrer"
-                color="rgb(61, 138, 255)"
-                fontWeight={400}
-                style={{ margin: '0 auto 24px' }}
-              >
-                View on {chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}
-              </LinkExternal>
-              <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)}>
-                Close
-              </div>
-            </Content>
-          </ModalBase>
-          <WalletModalV2
-            docText={t('Learn How to Connect')}
-            docLink={docLink}
-            isOpen={open}
-            wallets={wallets}
-            login={login}
-            onDismiss={() => setOpen(false)}
-          />
-          <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Confirm Bridge">
-            <Content>
-              <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
-                <img src="/images/reject_xox.png" alt="reject_xox" />
-              </div>
-              <div className="noti_claim_pending_h4">Transaction rejected.</div>
-              <div className="btn_dismiss_container">
-                <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
-                  Dismiss
-                </button>
-              </div>
-              <img
-                src="/images/close-one.svg"
-                alt="close-one"
-                className="x-close-icon"
-                aria-hidden="true"
-                onClick={() => setModalReject(false)}
-              />
-            </Content>
-          </ModalBase>
-          <ModalBase
-            open={isOpenLoadingClaimModal}
-            handleClose={() => setIsOpenLoadingClaimModal(false)}
-            title="Confirm Bridge"
-          >
-            <Content>
-              <div className="xox_loading" style={{ margin: '24px 0px' }}>
-                <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
-              </div>
-              <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
-              <div className="noti_claim_pending_h3">
-                Bridging {amountInput} XOX and {amountTo} XOX
-              </div>
-              <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
-              <img
-                src="/images/close-one.svg"
-                alt="close-one"
-                className="x-close-icon"
-                aria-hidden="true"
-                onClick={() => setIsOpenLoadingClaimModal(false)}
-              />
-            </Content>
-          </ModalBase>
-        </Wrapper>
-      </Flex>
+                  View on {chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}
+                </LinkExternal>
+                <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)}>
+                  Close
+                </div>
+              </Content>
+            </ModalBase>
+            <WalletModalV2
+              docText={t('Learn How to Connect')}
+              docLink={docLink}
+              isOpen={open}
+              wallets={wallets}
+              login={login}
+              onDismiss={() => setOpen(false)}
+            />
+            <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Confirm Bridge">
+              <Content>
+                <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
+                  <img src="/images/reject_xox.png" alt="reject_xox" />
+                </div>
+                <div className="noti_claim_pending_h4">Transaction rejected.</div>
+                <div className="btn_dismiss_container">
+                  <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
+                    Dismiss
+                  </button>
+                </div>
+                <img
+                  src="/images/close-one.svg"
+                  alt="close-one"
+                  className="x-close-icon"
+                  aria-hidden="true"
+                  onClick={() => setModalReject(false)}
+                />
+              </Content>
+            </ModalBase>
+            <ModalBase
+              open={isOpenLoadingClaimModal}
+              handleClose={() => setIsOpenLoadingClaimModal(false)}
+              title="Confirm Bridge"
+            >
+              <Content>
+                <div className="xox_loading" style={{ margin: '24px 0px' }}>
+                  <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+                </div>
+                <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
+                <div className="noti_claim_pending_h3">
+                  Bridging {amountInput} XOX and {amountTo} XOX
+                </div>
+                <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
+                <img
+                  src="/images/close-one.svg"
+                  alt="close-one"
+                  className="x-close-icon"
+                  aria-hidden="true"
+                  onClick={() => setIsOpenLoadingClaimModal(false)}
+                />
+              </Content>
+            </ModalBase>
+          </Wrapper>
+        </Flex>
       </WapperHeight>
     </Page>
   )
