@@ -2,7 +2,7 @@ import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 
 export const XOX_BSC_MAINNET = new ERC20Token(
   ChainId.BSC,
-  '0x726e2a75173956B164fbBF4A2A52C87a35F38716',
+  '0xA80d0Ca5D7AEe243F20Cf9140c1A6f5181890F81',
   18,
   'XOX',
   'XOX',
@@ -11,7 +11,7 @@ export const XOX_BSC_MAINNET = new ERC20Token(
 
 export const XOX_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x726e2a75173956B164fbBF4A2A52C87a35F38716',
+  '0xA80d0Ca5D7AEe243F20Cf9140c1A6f5181890F81',
   18,
   'XOX',
   'XOX',
@@ -20,7 +20,7 @@ export const XOX_BSC_TESTNET = new ERC20Token(
 
 export const XOX_MAINNET = new ERC20Token(
   ChainId.ETHEREUM,
-  '0xE4A47Eba46b86B3B69F4Ecf28e1AB81649A24d31',
+  '0x52487dd38f0e4EA455cE934690a18Ca873094472',
   18,
   'XOX',
   'XOX',
@@ -29,7 +29,7 @@ export const XOX_MAINNET = new ERC20Token(
 
 export const XOX_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xE4A47Eba46b86B3B69F4Ecf28e1AB81649A24d31',
+  '0x52487dd38f0e4EA455cE934690a18Ca873094472',
   18,
   'XOX',
   'XOX',
@@ -38,7 +38,7 @@ export const XOX_GOERLI = new ERC20Token(
 
 export const XOX_BUSD_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x97F7b4298c5dFa0eb9A5441896c51177d94845E8',
+  '0x5E4cF7f5121C01e623B3454c35D018D452592226',
   18,
   'XOX-BUSD',
   'XOX-BUSD',
@@ -124,7 +124,7 @@ export const USDC_RINKEBY = new ERC20Token(
 
 export const USDC_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0x65888E18E046a80173932ca27bf4F6ef60E3368F',
+  '0xD22db0a69b39a9B462e70BcfEbD1344113F768a5',
   6,
   'tUSDC',
   'test USD Coin',
@@ -157,15 +157,6 @@ export const BUSD_BSC = new ERC20Token(
   'https://www.paxos.com/busd/',
 )
 
-// export const BUSD_TESTNET = new ERC20Token(
-//   ChainId.BSC_TESTNET,
-//   '0xaB1a4d4f1D656d2450692D237fdD6C7f9146e814',
-//   18,
-//   'BUSD',
-//   'Binance USD',
-//   'https://www.paxos.com/busd/',
-// )
-
 export const BUSD_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
   '0x04CAD66eF1842A91E6cDE275E1e3A49Ee9106c56',
@@ -173,6 +164,15 @@ export const BUSD_TESTNET = new ERC20Token(
   'BUSD',
   'Binance USD',
   'https://www.paxos.com/busd/',
+)
+
+export const USDT_TESTNET = new ERC20Token(
+  ChainId.BSC_TESTNET,
+  '0xd984292a4870a5C5637EC36829B69f2dEA3ec84D',
+  18,
+  'USDT',
+  'Tether USD',
+  'https://tether.to/',
 )
 
 export const BUSD_ETH = new ERC20Token(
@@ -257,11 +257,11 @@ export const ETH_BSC_TESTNET = new ERC20Token(
   18,
   'ETH',
 )
-export const BUSD_BSC_TESTNET = new ERC20Token(
+export const USDT_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x04CAD66eF1842A91E6cDE275E1e3A49Ee9106c56',
+  '0xd984292a4870a5C5637EC36829B69f2dEA3ec84D',
   18,
-  'BUSD',
+  'USDT',
 )
 export const DOGE_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
@@ -322,8 +322,8 @@ export const USDT = {
 }
 
 export const USD = {
-  [ChainId.BSC]: BUSD_BSC,
-  [ChainId.BSC_TESTNET]: BUSD_TESTNET,
+  [ChainId.BSC]: USDT_BSC,
+  [ChainId.BSC_TESTNET]: USDT_BSC_TESTNET,
   [ChainId.ETHEREUM]: USDC_ETH,
   [ChainId.RINKEBY]: USDC_RINKEBY,
   [ChainId.GOERLI]: USDC_GOERLI,
