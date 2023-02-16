@@ -356,7 +356,7 @@ const UserMenu = () => {
     )
   }
 
-  if (account && userProfile) {
+  if (account) {
     return (
       <UIKitUserMenu account={account} avatarSrc={avatarSrc} text="" variant="default" uncloseWhenClick>
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
