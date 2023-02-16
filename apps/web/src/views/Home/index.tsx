@@ -36,9 +36,11 @@ const StyledSection = styled(PageSection)`
 `
 
 const Home: React.FC<React.PropsWithChildren> = () => {
-  const { width: innerWidth } = useWindowSize()
+  const { width: innerWidth, height: innerHeight } = useWindowSize()
   const { isDesktop } = useMatchBreakpoints()
   const widthResize = innerWidth > 1400 ? 1400 : innerWidth > 900 ? 1200 : '100%'
+
+  console.log(`innerHeight`, innerHeight)
 
   useEffect(() => {
     AOS.init({ duration: 2000 })
@@ -66,6 +68,9 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         }}
         containerProps={{
           id: 'home',
+          style: {
+            height: innerHeight < 700 && innerWidth <= 376 ? '100vh' : '',
+          },
         }}
         innerClass="welcome"
         index={2}
