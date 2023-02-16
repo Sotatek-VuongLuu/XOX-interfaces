@@ -63,8 +63,8 @@ export const multiChainQueryClient = {
 export const multiChainQueryClientWithFrom = {
   [TransactionFrom.XOX]: {
     [ChainId.BSC]: infoNRClientXoxBsc,
-    [ChainId.ETHEREUM]: infoClientXoxEth,
     [ChainId.BSC_TESTNET]: infoNRClientXoxBscTestnet,
+    [ChainId.ETHEREUM]: infoClientXoxEth,
     [ChainId.GOERLI]: infoClientXoxGoerli,
   },
   [TransactionFrom.UNI]: {

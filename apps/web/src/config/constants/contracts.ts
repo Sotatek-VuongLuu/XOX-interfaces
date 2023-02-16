@@ -162,8 +162,8 @@ export default {
     97: '0xBab5d3B6bA24E185f216419f3ba07f03984bF983',
   },
   treasuryXOX: {
-    97: '0x92C50Bd7BFE888C7BB65f85266028d5Ac3991Ca8',
-    5: '0x72cC6E782e0356963468Dd22F87fE6fEf6399125',
+    97: '0xc194a5d6564aB11679f5afC19c0B406309b19a87',
+    5: '0x2Fbb32fA11643b28372330B0cb7c5bbED4Cc1d2A',
     1: '',
     56: '',
   },
@@ -174,26 +174,26 @@ export default {
     56: '',
   },
   contractXOXPool: {
-    97: '0x97F7b4298c5dFa0eb9A5441896c51177d94845E8',
+    97: '0x5E4cF7f5121C01e623B3454c35D018D452592226',
     5: '0xc9d9cE57256D59a9B726aCdDBDB7d5Ec490775bd',
     1: '', // TODO: change address
     56: '',
   },
   contractBridgeToken: {
-    97: '0xf9F1Afd8531a6137e67dda7fa8ddA4eE65988dC6',
-    5: '0x314731a576E0fa39Fe5eeee7092815e01195d498',
+    97: '0xdBE930b1ED1925D6d65ac7E332396d84f984e589',
+    5: '0x7b56ec4a1D7c24357189329eEB929C435128a78D',
     1: '', // TODO: change address
     56: '',
   },
   xoxToken: {
-    97: '0x726e2a75173956B164fbBF4A2A52C87a35F38716',
-    5: '0xE4A47Eba46b86B3B69F4Ecf28e1AB81649A24d31',
+    97: '0xA80d0Ca5D7AEe243F20Cf9140c1A6f5181890F81',
+    5: '0x52487dd38f0e4EA455cE934690a18Ca873094472',
     1: '', // TODO: change address
     56: '',
   },
   farmingLP: {
-    97: '0xF6F6C14782B4C4f5b0C4c4E448C204504fcAFC39',
-    5: '0xFAA8A1bd17B7AE7832F47e1E1e59807D81bAF39d',
+    97: '0x3022536393A16620587D3e25852Cc58B7F9fb761',
+    5: '0x6AF35AFC7210715B203E8ad1DA6376E0cd3eF98f',
     1: '', // TODO: change address
     56: '',
   },

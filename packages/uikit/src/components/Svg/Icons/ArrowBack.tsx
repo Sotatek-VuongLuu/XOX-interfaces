@@ -7,16 +7,16 @@ const Icon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
       <path
         d="M5.20581 10.4971H15.2058"
         stroke="#8E8E8E"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
       <path
         d="M10.2058 15.5L5.20581 10.5L10.2058 5.5"
         stroke="#8E8E8E"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       />
     </svg>
   );
