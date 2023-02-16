@@ -175,7 +175,7 @@ export default {
   },
   contractXOXPool: {
     97: '0x5E4cF7f5121C01e623B3454c35D018D452592226',
-    5: '0xc9d9cE57256D59a9B726aCdDBDB7d5Ec490775bd',
+    5: '0x7baAC42917dEe0B0140F6bC3DeBA3E4663161D85',
     1: '', // TODO: change address
     56: '',
   },
