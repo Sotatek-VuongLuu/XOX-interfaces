@@ -519,7 +519,8 @@ const FormReferralModal = (_, ref) => {
               <button
                 onClick={() => {
                   // logout()
-                  handleRenderUserName(account)
+                  // eslint-disable-next-line no-unused-expressions
+                  !editForm && handleRenderUserName(account)
                   onCloseBtnClicked()
                 }}
                 type="button"
