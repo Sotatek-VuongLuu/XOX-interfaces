@@ -63,7 +63,7 @@ export const XOX_ADDRESS: ChainMap<string> = {
 export const XOX_LP: ChainMap<string> = {
   [ChainId.ETHEREUM]: '',
   [ChainId.RINKEBY]: '',
-  [ChainId.GOERLI]: '0xc9d9cE57256D59a9B726aCdDBDB7d5Ec490775bd',
+  [ChainId.GOERLI]: '0x7baAC42917dEe0B0140F6bC3DeBA3E4663161D85',
   [ChainId.BSC]: '',
   [ChainId.BSC_TESTNET]: '0x5E4cF7f5121C01e623B3454c35D018D452592226',
 }
