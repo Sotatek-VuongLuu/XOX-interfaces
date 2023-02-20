@@ -281,7 +281,7 @@ export default function Pool() {
         Boolean(pair) &&
         (((pair.token0.isNative || pair.token1.isNative) && userTokenBalanceNativeXOX.greaterThan('0')) ||
           ((pair.token0.address === USD_ADDRESS[chainId] || pair.token1.address === USD_ADDRESS[chainId]) &&
-            userTokenBalanceUSDXOX.greaterThan('0')))
+            userTokenBalanceUSDXOX?.greaterThan('0')))
       )
     })
     .map(([, pair]) => pair)
