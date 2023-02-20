@@ -205,7 +205,7 @@ const WidthdrawForm = ({priceAvailable, onSuccess} : {priceAvailable?: any, onSu
   const inputRef = useRef(null);
   const priceRef = useRef(null);
   const [pending, setPending] = useState(false);
-  const { account, chainId } = useWeb3React();
+  const { chainId } = useWeb3React();
   const contractTreasuryXOX = useTreasuryXOX();
   const isBUSD = (chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET);
   const decimalCompare = isBUSD ? 18 : 6;

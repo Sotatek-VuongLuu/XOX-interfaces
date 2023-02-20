@@ -90,7 +90,7 @@ const ConfirmImg = styled.div`
   }
 `
 
-function ConfirmationPendingContent({ pendingText, iconGridLoader }: { pendingText: string; iconGridLoader?: any }) {
+function ConfirmationPendingContent({ pendingText, iconGridLoader }: { pendingText: string | React.ReactNode; iconGridLoader?: any }) {
   const { t } = useTranslation()
   return (
     <Wrapper>
@@ -252,7 +252,7 @@ interface ConfirmationModalProps {
   hash?: string | undefined
   content: () => React.ReactNode
   attemptingTxn: boolean
-  pendingText: string
+  pendingText: string | React.ReactNode
   currencyToAdd?: Currency | undefined
   iconGridLoader?: boolean
 }

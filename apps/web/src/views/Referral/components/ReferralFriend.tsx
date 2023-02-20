@@ -25,7 +25,7 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { getUserFriend } from 'services/referral'
 import { USD_DECIMALS } from 'config/constants/exchange'
-import { formatAmountNumber, roudingAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
 import axios from 'axios'
 import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
@@ -809,9 +809,11 @@ const ReferralFriend = ({
             points"?
           </div> */}
           <div className="discription">
-            Withdraw Amount ${roudingAmountNumber(Number(totalUnClaimed))} You will receive $
-            {roudingAmountNumber(Number(totalUnClaimed) * 0.99)} Platform Fee: $
-            {roudingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)}
+            Withdraw Amount ${roundingAmountNumber(Number(totalUnClaimed))}
+            <br />
+            You will receive ${roundingAmountNumber(Number(totalUnClaimed) * 0.99)}
+            <br />
+            Platform Fee: ${roundingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)}
           </div>
           <div className="btn-group">
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>

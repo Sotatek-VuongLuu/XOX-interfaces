@@ -99,8 +99,8 @@ export const formatAmountNumber = (number: number, decimals = 2) => {
   return parseInt((number * 10 ** decimals).toString()) / 10 ** decimals
 }
 
-export const roudingAmountNumber = (number: number, decimals = 2) => {
-  return parseInt((parseFloat(number.toFixed(2)) * 10 ** decimals).toString()) / 10 ** decimals
+export const roundingAmountNumber = (number: number, decimals = 2) => {
+  return parseInt((parseFloat(number.toFixed(8)) * 10 ** decimals).toString()) / 10 ** decimals
 }
 
 export const formatAmountString = (number: any, decimals = 2) => {
