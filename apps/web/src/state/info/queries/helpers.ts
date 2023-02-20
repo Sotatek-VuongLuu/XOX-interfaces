@@ -50,7 +50,6 @@ const calculatorAmountUSDBurn = (burn: BurnResponse) => {
 }
 
 export const mapDataChartXOX = (pairData: PairData) => {
-  console.log(pairData.dailyVolumeToken1, 'pairData.hourlyVolumeUSD || pairData.dailyVolumeUSD')
   return {
     date: pairData.hourStartUnix || pairData.date,
     priceUSD: formatAmountNumber(pairData.reserve0 / pairData.reserve1, 4),

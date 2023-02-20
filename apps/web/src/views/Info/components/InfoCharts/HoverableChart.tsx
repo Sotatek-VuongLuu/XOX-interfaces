@@ -79,16 +79,6 @@ const HoverableChart = ({
   const formattedData = useMemo(() => {
     let data = chartData
     if (selectedCurrency.symbol.toUpperCase() === 'XOX') data = dataChartXOX
-    console.log(
-      data?.map((day) => {
-        return {
-          time: fromUnixTime(day.date),
-          value: day[valueProperty],
-          vol: day.VolUSD,
-          month: fromUnixTime(day.date).getMonth(),
-        }
-      }),
-    )
     if (data) {
       return data.map((day) => {
         return {
