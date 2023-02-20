@@ -1,7 +1,7 @@
-import React from 'react'
+import VestingPage from 'views/Vesting'
 
 function Vesting() {
-  return <div>NGU</div>
+  return <VestingPage />
 }
 
 export default Vesting
