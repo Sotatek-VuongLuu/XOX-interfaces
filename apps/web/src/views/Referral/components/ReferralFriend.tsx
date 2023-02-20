@@ -25,7 +25,7 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { getUserFriend } from 'services/referral'
 import { USD_DECIMALS } from 'config/constants/exchange'
-import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, roudingAmountNumber } from '@pancakeswap/utils/formatBalance'
 import axios from 'axios'
 import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
@@ -762,7 +762,9 @@ const ReferralFriend = ({
                                 }}
                               >
                                 {item?.isClaimed ? (
-                                  <span className={`${item.lever === currentLevelReach ? 'claimed' : ''}`}>Claimed</span>
+                                  <span className={`${item.lever === currentLevelReach ? 'claimed' : ''}`}>
+                                    Claimed
+                                  </span>
                                 ) : (
                                   <span className={`${item.isReach ? 'claim' : ''} `}>Claim</span>
                                 )}
@@ -802,9 +804,14 @@ const ReferralFriend = ({
         title="Claim"
       >
         <Content>
-          <div className="discription">
+          {/* <div className="discription">
             Receive {dataClaim.dollar?.toLocaleString()}$ at level "<span>{dataClaim.point?.toLocaleString()}</span>{' '}
             points"?
+          </div> */}
+          <div className="discription">
+            Withdraw Amount ${roudingAmountNumber(Number(totalUnClaimed))} You will receive $
+            {roudingAmountNumber(Number(totalUnClaimed) * 0.99)} Platform Fee: $
+            {roudingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)}
           </div>
           <div className="btn-group">
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>
