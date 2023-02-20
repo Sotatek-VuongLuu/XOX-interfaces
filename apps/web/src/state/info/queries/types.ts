@@ -15,8 +15,8 @@ export interface PairData {
   date?: number
   reserve0: number
   reserve1: number
-  hourlyVolumeUSD?: number
-  dailyVolumeUSD?: number
+  hourlyVolumeToken1?: number
+  dailyVolumeToken1?: number
 }
 
 export interface MintResponse {

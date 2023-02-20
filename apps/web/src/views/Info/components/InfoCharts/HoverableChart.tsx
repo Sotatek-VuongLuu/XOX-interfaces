@@ -3,14 +3,16 @@ import { Box, useModal } from '@pancakeswap/uikit'
 import { fromUnixTime } from 'date-fns'
 import { useState, useMemo, memo, useEffect } from 'react'
 import { formatAmount } from 'utils/formatInfoNumbers'
-import { Currency, NativeCurrency } from '@pancakeswap/sdk'
+import { Currency, NativeCurrency, PAIR_XOX_BUSD } from '@pancakeswap/sdk'
 import { CurrencyLogo } from 'components/Logo'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
-import { SUGGESTED_BASES_ID, USD_ADDRESS } from 'config/constants/exchange'
+import { SUGGESTED_BASES_ID, USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
 import { ResponsiveContainer } from 'recharts'
 import BarChart from './BarChart'
 import LineChart from './LineChart'
 import { ChartContent, TitleChart } from './style'
+import { useERC20 } from 'hooks/useContract'
+import { formatAmountNumber, formatBigNumber } from '@pancakeswap/utils/formatBalance'
 
 interface HoverableChartProps {
   chartData: any[]
@@ -52,6 +54,9 @@ const HoverableChart = ({
   const [dateHover, setDateHover] = useState<string | undefined>()
   const [currencyData, setCurrencyData] = useState<any>()
   const [showX, setShowX] = useState<any>(true)
+  const contractUSD = useERC20(USD_ADDRESS[chainId])
+  const contractXOX = useERC20(XOX_ADDRESS[chainId])
+  const [rateXOX, setRateXOX] = useState(0)
 
   // Getting latest data to display on top of chart when not hovered
   useEffect(() => {
@@ -74,6 +79,16 @@ const HoverableChart = ({
   const formattedData = useMemo(() => {
     let data = chartData
     if (selectedCurrency.symbol.toUpperCase() === 'XOX') data = dataChartXOX
+    console.log(
+      data?.map((day) => {
+        return {
+          time: fromUnixTime(day.date),
+          value: day[valueProperty],
+          vol: day.VolUSD,
+          month: fromUnixTime(day.date).getMonth(),
+        }
+      }),
+    )
     if (data) {
       return data.map((day) => {
         return {
@@ -99,6 +114,10 @@ const HoverableChart = ({
   }, [defaultToken])
 
   useEffect(() => {
+    getXOXPrice()
+  }, [])
+
+  useEffect(() => {
     setFetchingTokenId(false)
     const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds')) || SUGGESTED_BASES_ID
     if (selectedCurrency === native) {
@@ -110,6 +129,7 @@ const HoverableChart = ({
   }, [selectedCurrency, fetchingTokenId])
 
   useEffect(() => {
+    if (selectedCurrency.symbol.toUpperCase() === 'XOX') getXOXPrice()
     if (!currencyDatas) return
     const sym =
       selectedCurrency === native
@@ -127,6 +147,17 @@ const HoverableChart = ({
       setShowX(true)
     }, 500)
     setFilter(value)
+  }
+
+  const getXOXPrice = () => {
+    Promise.all([contractUSD.balanceOf(PAIR_XOX_BUSD[chainId]), contractXOX.balanceOf(PAIR_XOX_BUSD[chainId])])
+      .then((balances) => {
+        const baseTokenPrice = parseFloat(formatBigNumber(balances[0], 2, USD_DECIMALS[chainId]))
+        const XoxPrice = parseFloat(formatBigNumber(balances[1]))
+        if (baseTokenPrice === 0) return
+        setRateXOX(baseTokenPrice / XoxPrice)
+      })
+      .catch((e) => console.warn(e))
   }
 
   return (
@@ -163,7 +194,14 @@ const HoverableChart = ({
           </div>
           <>
             <div className="liquidity">
-              <p>Current price: {currencyData ? `$${formatAmount(currencyData?.price)}` : '--'} </p>
+              <p>
+                Current price:{' '}
+                {selectedCurrency.symbol === 'XOX' ? (
+                  <>{rateXOX ? `$${formatAmountNumber(rateXOX)}` : '--'}</>
+                ) : (
+                  <>{currencyData ? `$${formatAmount(currencyData?.price)}` : '--'}</>
+                )}{' '}
+              </p>
               <p>
                 Price change (in last 24 hours):{' '}
                 {currencyData?.percent_change_24h?.toFixed(2) > 0 ? (
@@ -210,9 +248,15 @@ const HoverableChart = ({
               <p>
                 Market cap: {currencyData ? <span>${formatAmount(currencyData?.market_cap)}</span> : <span>--</span>}
               </p>
-              <p>
-                Volume 24h: {currencyData ? <span>${formatAmount(currencyData?.volume_24h)}</span> : <span>--</span>}
-              </p>
+              {selectedCurrency.symbol === 'XOX' ? (
+                <p>
+                  Volume 24h: {formattedData ? <span>${formatAmount(formattedData[0]?.vol)}</span> : <span>--</span>}
+                </p>
+              ) : (
+                <p>
+                  Volume 24h: {currencyData ? <span>${formatAmount(currencyData?.volume_24h)}</span> : <span>--</span>}
+                </p>
+              )}
             </div>
           </>
         </div>
