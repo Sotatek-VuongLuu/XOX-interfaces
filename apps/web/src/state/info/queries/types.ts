@@ -9,6 +9,16 @@ interface PairResponse {
   }
 }
 
+export interface PairData {
+  id: string | number
+  hourStartUnix?: number
+  date?: number
+  reserve0: number
+  reserve1: number
+  hourlyVolumeUSD?: number
+  dailyVolumeUSD?: number
+}
+
 export interface MintResponse {
   id: string
   timestamp: string

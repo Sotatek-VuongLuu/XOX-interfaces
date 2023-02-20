@@ -144,7 +144,6 @@ const fetchTopTransactions = async (
       chainId,
       TransactionFrom.XOX,
     ).request<TransactionResults>(GLOBAL_TRANSACTIONS)
-    console.log(dataXOX)
     let transactionsXOX: any
     if (dataXOX) {
       const mintsXOX = dataXOX.mints.map(mapMints)
@@ -157,8 +156,6 @@ const fetchTopTransactions = async (
     }
     result.transactionsXOX = transactionsXOX
   } catch (e) {
-    console.log(e, 'result')
-
     result.transactionsXOX = []
   }
 
@@ -198,7 +195,6 @@ const fetchTopTransactions = async (
     result.transactionsOther = []
   }
 
-  console.log(result, 'result')
   return result
 }
 

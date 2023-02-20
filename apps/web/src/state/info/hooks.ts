@@ -27,6 +27,7 @@ import { getDeltaTimestamps } from 'utils/getDeltaTimestamps'
 import { useBlockFromTimeStampSWR } from 'views/Info/hooks/useBlocksFromTimestamps'
 import { MultiChainName, checkIsStableSwap } from './constant'
 import { ChartEntry, PoolData, PriceChartEntry, ProtocolData, TokenData } from './types'
+import fetchDataChartXOX from './queries/protocol/dataChart'
 // Protocol hooks
 
 const refreshIntervalForInfo = 15000 // 15s
@@ -72,6 +73,17 @@ export const useProtocolTransactionsSWR = (): {
     SWR_SETTINGS, // update latest Transactions per 15s
   )
   return transactions
+}
+
+export const useDataChartXOXSWR = (filter: any): any => {
+  const { chainId } = useActiveChainId()
+  // const type = checkIsStableSwap() ? 'stableSwap' : 'swap'
+  const dataChart = useSWRImmutable(
+    [`info/protocol/updateDataChartXOX`, chainId, filter],
+    () => fetchDataChartXOX(chainId, filter),
+    SWR_SETTINGS, // update latest Transactions per 15s
+  )
+  return dataChart
 }
 
 export const useStableCoinSWR = (

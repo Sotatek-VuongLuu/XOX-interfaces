@@ -15,6 +15,7 @@ import HoverableChart from '../components/InfoCharts/HoverableChart'
 import InfoNav from '../components/InfoNav'
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
+import { useDataChartXOXSWR } from 'state/info/hooks'
 
 export const ChartCardsContainer = styled(Flex)`
   justify-content: space-between;
@@ -116,6 +117,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const [fetchingTokenId, setFetchingTokenId] = useState(false)
   const [unsupported, setUnsupported] = useState(false)
   const { isMobile } = useMatchBreakpoints()
+  const { data: dataChartXOX } = useDataChartXOXSWR(filter)
 
   const xoxToken = useCurrency(XOX_ADDRESS[chainId]) ?? native
 
@@ -256,6 +258,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
                 <div className="border-gradient-style">
                   <HoverableChart
                     chartData={chartData}
+                    dataChartXOX={dataChartXOX}
                     valueProperty="priceUSD"
                     ChartComponent={LineChart}
                     filter={filter}
