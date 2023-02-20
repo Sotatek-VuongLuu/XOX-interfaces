@@ -347,7 +347,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
           balanceLP &&
           parseEther(Number(amount).toFixed(18)).gt(parseEther(Number(balanceLP).toFixed(18)))
         ) {
-          setMessageError(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} Balance`)
+          setMessageError(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} Balance`)
         } else {
           setMessageError('')
         }
@@ -355,7 +355,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
         setMessageError('')
       }
     } else {
-      setMessageError(`No tokens to stake: Get ${chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP`)
+      setMessageError(`No tokens to stake: Get ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP`)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount, balanceLP])
@@ -387,7 +387,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
                 onUserInput={(value) => setAmount(value)}
                 placeholder="0"
               />
-              <p>{chainIdSupport.includes(chainId) ? 'XOX - BUSD' : 'XOX - USDC'} LP</p>
+              <p>{chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP</p>
             </div>
             <div className="token_usd">
               <Tooltip title={`${amountUSD ? `$${formatNumber(amountUSD)}` : ''}`} placement="top-start">

@@ -9,7 +9,8 @@ interface IProps {
 }
 
 export const ShowBalance = ({ balance, unit = '', name = 'default', notSpace = false }: IProps) => {
-  const data = String(balance)
+  const data = parseFloat(String(balance))
+
   return (
     <>
       {Number(balance) <= 0.000001 ? (
@@ -29,7 +30,7 @@ export const ShowBalance = ({ balance, unit = '', name = 'default', notSpace = f
             </p>
           </Tooltip>
         )
-      ) : data.length <= 10 ? (
+      ) : data.toString().length <= 10 ? (
         <>
           <p style={{ display: 'flex' }}>
             <span className="value">
