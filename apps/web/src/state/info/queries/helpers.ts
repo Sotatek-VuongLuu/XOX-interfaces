@@ -19,6 +19,7 @@ import {
   PairDayData,
   PancakeDayData,
   SwapResponseUNI,
+  PairData,
 } from './types'
 
 const calculatorAmountUSDMint = (mint: MintResponse) => {
@@ -45,6 +46,14 @@ const calculatorAmountUSDBurn = (burn: BurnResponse) => {
   const inputTokenSymbol = symbolToken0
   const amountUSD = inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD' ? abs0 : abs1
   return amountUSD * 2
+}
+
+export const mapDataChartXOX = (pairData: PairData) => {
+  return {
+    date: pairData.hourStartUnix || pairData.dailyVolumeUSD,
+    priceUSD: pairData.reserve0 / pairData.reserve1,
+    volUSD: pairData.hourlyVolumeUSD || pairData.dailyVolumeUSD,
+  }
 }
 
 export const mapMints = (mint: MintResponse) => {

@@ -27,12 +27,12 @@
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"
     },
     {
-      "name": "BUSD Token",
-      "symbol": "BUSD",
-      "address": "0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56",
+      "name": "USDT Token",
+      "symbol": "USDT",
+      "address": "0x55d398326f99059ff775485246999027b3197955",
       "chainId": 56,
       "decimals": 18,
-      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/4687.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
     },
     {
       "name": "Binance-Peg Dogecoin",
@@ -76,6 +76,14 @@
     },
 
     {
+      "name": "XOX",
+      "address": "0xA80d0Ca5D7AEe243F20Cf9140c1A6f5181890F81",
+      "symbol": "XOX",
+      "decimals": 18,
+      "chainId": 97,
+      "logoURI": ""
+    },
+    {
       "name": "BTCB Token",
       "symbol": "BTCB",
       "address": "0xa3961366f8A7A5772C22A00788f1824d233B26ed",
@@ -92,12 +100,12 @@
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"
     },
     {
-      "name": "BUSD Token",
-      "symbol": "BUSD",
-      "address": "0x04CAD66eF1842A91E6cDE275E1e3A49Ee9106c56",
+      "name": "USDT Token",
+      "symbol": "USDT",
+      "address": "0xd984292a4870a5C5637EC36829B69f2dEA3ec84D",
       "chainId": 97,
       "decimals": 18,
-      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/4687.png"
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
     },
     {
       "name": "Binance-Peg Dogecoin",
@@ -138,14 +146,6 @@
       "chainId": 97,
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/2010.png"
-    },
-    {
-      "name": "XOX",
-      "address": "0x726e2a75173956B164fbBF4A2A52C87a35F38716",
-      "symbol": "XOX",
-      "decimals": 18,
-      "chainId": 97,
-      "logoURI": ""
     },
 
     {
@@ -214,6 +214,14 @@
     },
 
     {
+      "name": "XOX",
+      "address": "0x52487dd38f0e4EA455cE934690a18Ca873094472",
+      "symbol": "XOX",
+      "decimals": 18,
+      "chainId": 5,
+      "logoURI": ""
+    },
+    {
       "name": "Wrapped Bitcoin",
       "address": "0x2a924bcD60450C7a354413d8b2c906A3173F9208",
       "symbol": "WBTC",
@@ -231,7 +239,7 @@
     },
     {
       "name": "USD Coin",
-      "address": "0x65888E18E046a80173932ca27bf4F6ef60E3368F",
+      "address": "0xD22db0a69b39a9B462e70BcfEbD1344113F768a5",
       "symbol": "USDC",
       "decimals": 6,
       "chainId": 5,
@@ -276,14 +284,6 @@
       "decimals": 18,
       "chainId": 5,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5994.png"
-    },
-    {
-      "name": "XOX",
-      "address": "0xE4A47Eba46b86B3B69F4Ecf28e1AB81649A24d31",
-      "symbol": "XOX",
-      "decimals": 18,
-      "chainId": 5,
-      "logoURI": ""
     }
   ]
 }

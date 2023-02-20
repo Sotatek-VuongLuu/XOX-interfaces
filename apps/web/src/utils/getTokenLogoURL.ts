@@ -19,8 +19,8 @@ const getTokenLogoURL = (token?: Token) => {
   if (token && token.symbol.toLocaleUpperCase() === 'XOXS') {
     return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xoxs-icon.svg`
   }
-  if (token && token.chainId === 97 && token.symbol.toLocaleUpperCase() === 'BUSD') {
-    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/1/tokens/BUSD.png`
+  if (token && token.chainId === 97 && token.symbol.toLocaleUpperCase() === 'USDT') {
+    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg`
   }
   if (token && token.chainId === 5 && token.symbol.toLocaleUpperCase() === 'TUSDC') {
     return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg`

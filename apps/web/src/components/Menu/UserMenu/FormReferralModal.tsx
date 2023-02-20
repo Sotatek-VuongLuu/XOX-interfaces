@@ -225,6 +225,17 @@ const FormReferralModal = (_, ref) => {
     [errorMessages],
   )
 
+  const handleRenderUserName = async (accountId) => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/users/${accountId}/add-new`, {
+        address: accountId,
+      })
+      .then((res) => {
+        handleGetProfile()
+      })
+      .catch((e) => console.warn(e))
+  }
+
   const onCloseBtnClicked = useCallback(() => {
     setOpenFormReferral(false)
   }, [])
@@ -381,12 +392,7 @@ const FormReferralModal = (_, ref) => {
     return () => clearTimeout(getData)
   }, [username])
 
-  useEffect(() => {
-    if (!account) {
-      dispatch(updateUserProfile({ userProfile: undefined }))
-      dispatch(updateOpenFormReferral({ openFormReferral: false }))
-      return
-    }
+  const handleGetProfile = async () => {
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/users/${account}`)
       .then((result) => {
@@ -398,6 +404,15 @@ const FormReferralModal = (_, ref) => {
         }
       })
       .catch((error) => console.warn(error))
+  }
+
+  useEffect(() => {
+    if (!account) {
+      dispatch(updateUserProfile({ userProfile: undefined }))
+      dispatch(updateOpenFormReferral({ openFormReferral: false }))
+      return
+    }
+    handleGetProfile()
   }, [account])
 
   useEffect(() => {
@@ -503,7 +518,9 @@ const FormReferralModal = (_, ref) => {
             {!userProfile && (
               <button
                 onClick={() => {
-                  logout()
+                  // logout()
+                  // eslint-disable-next-line no-unused-expressions
+                  !editForm && handleRenderUserName(account)
                   onCloseBtnClicked()
                 }}
                 type="button"

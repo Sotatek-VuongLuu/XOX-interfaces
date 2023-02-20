@@ -17,7 +17,7 @@ import Column, { AutoColumn } from '../Layout/Column'
 import Row from '../Layout/Row'
 import CurrencyList from './CurrencyList'
 import { createFilterToken, useSortedTokensByQuery } from './filtering'
-import useTokenComparator from './sorting'
+// import useTokenComparator from './sorting'
 import { getSwapSound } from './swapSound'
 import ImportRow from './ImportRow'
 
@@ -114,7 +114,7 @@ function CurrencySearch({
   const [searchQuery, setSearchQuery] = useState<string>('')
   const debouncedQuery = useDebounce(searchQuery, 200)
 
-  const [invertSearchOrder] = useState<boolean>(false)
+  // const [invertSearchOrder] = useState<boolean>(false)
 
   const allTokens = useAllTokens()
 
@@ -139,11 +139,11 @@ function CurrencySearch({
 
   const filteredQueryTokens = useSortedTokensByQuery(filteredTokens, debouncedQuery)
 
-  const tokenComparator = useTokenComparator(invertSearchOrder)
+  // const tokenComparator = useTokenComparator(invertSearchOrder)
 
   const filteredSortedTokens: Token[] = useMemo(() => {
-    return [...filteredQueryTokens].sort(tokenComparator)
-  }, [filteredQueryTokens, tokenComparator])
+    return [...filteredQueryTokens]//.sort(tokenComparator)
+  }, [filteredQueryTokens])
 
   const handleCurrencySelect = useCallback(
     (currency: Currency) => {

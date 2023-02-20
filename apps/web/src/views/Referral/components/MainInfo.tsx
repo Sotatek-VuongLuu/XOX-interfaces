@@ -24,6 +24,9 @@ import HowToJoin from './HowToJoin'
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
+import { filterChain, FilterChain, filterTime, FilterTime, ListRankingByChain, RankingByChain } from '..'
+import { ColumnCenter } from 'components/Layout/Column'
+import { GridLoader } from 'react-spinners'
 
 const floatingAnim = (x: string, y: string) => keyframes`
   from {
@@ -498,7 +501,7 @@ const ConnectBoxContainer = styled.div`
 
 const NoDataWraper = styled.div`
   width: 100%;
-  height: 360px;
+  height: 300px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -550,16 +553,58 @@ const WrapperLeft = styled.div<IPropsWrapperLeft>`
   height: 100%;
 `
 
+const FilterChainWrap = styled.div`
+  display: flex;
+  justify-content: center;
+
+  .tab_filter_chain_container {
+    display: flex;
+    padding: 3px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 30px;
+    margin-bottom: 35px;
+    .filter_chain {
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+      padding: 12px 30px;
+    }
+
+    .filter_chain.active,
+    .filter_chain:hover {
+      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      border-radius: 30px;
+    }
+
+    @media screen and (max-width: 900px) {
+      margin-bottom: 24px;
+      .filter_chain {
+        padding: 12px 19.5px;
+      }
+
+      .filter_chain_active {
+        padding: 12px 19.5px;
+      }
+    }
+  }
+`
+
+const ConfirmedIcon = styled(ColumnCenter)`
+  padding: 14px 0 34px 0;
+`
+
 interface IProps {
   userCurrentPoint: number
   currentLevelReach: number
   listLever: IItemLevel[]
   volumnTotalEarn: string
-  filterTime?: any
-  handleOnChangeRankTab: any
-  tabLeaderBoard: any
-  listUserRanks: any
-  rankOfUser: any
+  handleOnChangeRankTab: (tab: FilterTime) => void
+  handleOnChangeChainTab: (tab: FilterChain) => void
+  tabLeaderBoard: FilterTime
+  tabChainLeaderBoard: FilterChain
+  listUserRanks: ListRankingByChain
+  rankOfUser: RankingByChain
   volumnData: any
   dataChart: any
   minAmount: any
@@ -574,9 +619,10 @@ const MainInfo = ({
   currentLevelReach,
   listLever,
   volumnTotalEarn,
-  filterTime,
   handleOnChangeRankTab,
+  handleOnChangeChainTab,
   tabLeaderBoard,
+  tabChainLeaderBoard,
   listUserRanks,
   rankOfUser,
   volumnData,
@@ -633,7 +679,6 @@ const MainInfo = ({
       const sortByPoints = userInfos[0]?.friends?.sort(function (a: any, b: any) {
         return Number(b.amount) - Number(a.amount)
       })
-      // console.log('sortByPoints', sortByPoints)
       if (Array.from(userInfos).length !== 0) {
         const dataUserFormatAmount = sortByPoints.map((item: any) => {
           return {
@@ -667,6 +712,31 @@ const MainInfo = ({
     }
   }
 
+  const renderListUserRank = useMemo(() => {
+    if (!listUserRanks) {
+      return (
+        <NoDataWraper>
+          <ConfirmedIcon>
+            <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+          </ConfirmedIcon>
+        </NoDataWraper>
+      )
+    }
+
+    if (listUserRanks[tabChainLeaderBoard]?.length === 0) {
+      return <NoDataWraper>No data</NoDataWraper>
+    }
+
+    return (
+      <>
+        {listUserRanks[tabChainLeaderBoard]?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
+          // eslint-disable-next-line react/no-array-index-key
+          return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
+        })}
+      </>
+    )
+  }, [listUserRanks, tabChainLeaderBoard])
+
   useEffect(() => {
     if (account && chainId) {
       dataFriend(account)
@@ -687,8 +757,24 @@ const MainInfo = ({
           <WrapperLeft>
             <div className="border-gradient-style">
               <First account={account}>
+                <FilterChainWrap>
+                  <div className="tab_filter_chain_container">
+                    {filterChain.map((item: FilterChain) => {
+                      return (
+                        <div
+                          key={item}
+                          className={tabChainLeaderBoard === item ? 'filter_chain active' : 'filter_chain'}
+                          onClick={() => handleOnChangeChainTab(item)}
+                          role="button"
+                        >
+                          {item}
+                        </div>
+                      )
+                    })}
+                  </div>
+                </FilterChainWrap>
                 <div className="tab_filter">
-                  {filterTime.map((item) => {
+                  {filterTime.map((item: FilterTime) => {
                     return (
                       // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                       <div
@@ -703,16 +789,18 @@ const MainInfo = ({
                 </div>
 
                 <div className="learder_board">
-                  {listUserRanks &&
-                    listUserRanks.length > 0 &&
-                    listUserRanks?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
+                  {renderListUserRank}
+                  {/* {listUserRanks &&
+                    listUserRanks[tabChainLeaderBoard].length > 0 &&
+                    listUserRanks[tabChainLeaderBoard]?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
                       // eslint-disable-next-line react/no-array-index-key
                       return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
                     })}
-                  {listUserRanks.length === 0 && <NoDataWraper>No data</NoDataWraper>}
+                  {listUserRanks[tabChainLeaderBoard].length === 0 && <NoDataWraper>No data</NoDataWraper>} */}
                 </div>
 
-                {!rankOfUser.rank ? null : rankOfUser.rank <= 6 ? null : (
+                {!rankOfUser || !rankOfUser[tabChainLeaderBoard]?.rank ? null : rankOfUser[tabChainLeaderBoard].rank <=
+                  6 ? null : (
                   <div className="dot">
                     <div className="dot_item" />
                     <div className="dot_item" />
@@ -720,10 +808,10 @@ const MainInfo = ({
                   </div>
                 )}
 
-                {account ? (
-                  rankOfUser.rank ? (
-                    [1, 2, 3, 4, 5].includes(rankOfUser.rank) ? null : (
-                      <LeaderBoardItem item={rankOfUser} mb={false} />
+                {account && rankOfUser ? (
+                  rankOfUser[tabChainLeaderBoard]?.rank ? (
+                    [1, 2, 3, 4, 5].includes(rankOfUser[tabChainLeaderBoard].rank) ? null : (
+                      <LeaderBoardItem item={rankOfUser[tabChainLeaderBoard]} mb={false} />
                     )
                   ) : null
                 ) : null}

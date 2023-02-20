@@ -1,7 +1,11 @@
 import { useCallback, memo } from 'react'
 import { Trade, Currency, TradeType, CurrencyAmount } from '@pancakeswap/sdk'
 import { InjectedModalProps, LinkExternal, Text } from '@pancakeswap/uikit'
-import { TransactionErrorContent, TransactionSubmittedContent, TransactionSwapErrorContent } from 'components/TransactionConfirmationModal'
+import {
+  TransactionErrorContent,
+  TransactionSubmittedContent,
+  TransactionSwapErrorContent,
+} from 'components/TransactionConfirmationModal'
 import { useTranslation } from '@pancakeswap/localization'
 import { Field } from 'state/swap/actions'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -38,7 +42,7 @@ const SwapTransactionErrorContent = ({ onDismiss, message, openSettingModal }) =
           </Text>
           <LinkExternal
             href="https://docs.xoxnet.io/products/pancakeswap-exchange/trade-guide"
-            style={{ width: '100%', justifyContent: 'center', color:  '#3D8AFF'}}
+            style={{ width: '100%', justifyContent: 'center', color: '#3D8AFF', marginBottom: '32px' }}
           >
             {t('What are the potential issues with the token?')}
           </LinkExternal>

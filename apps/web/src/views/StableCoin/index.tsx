@@ -45,13 +45,13 @@ const WrapperBorder = styled.div`
   display: flex;
   flex-wrap: wrap;
   @media (min-width: 577px) {
-    &.flex-50{
+    &.flex-50 {
       flex: 0 0 calc(50% - 15px);
       max-width: calc(50% - 15px);
-      >div{
+      > div {
         width: 100%;
       }
-    }  
+    }
   }
   @media (max-width: 576px) {
     width: 100%;
@@ -241,6 +241,16 @@ const ContainerBanner = styled.div`
   }
 `
 
+const CustomRow = styled(Row)`
+  margin-top: 24px;
+  display: grid;
+  grid-template-columns: 1fr;
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    grid-template-columns: 1fr 1fr;
+  }
+`
+
 const FullWrapper = styled.div`
   display: flex;
   flex-direction: column;
@@ -312,7 +322,7 @@ export default function StableCoin() {
           <div className="banner">
             <InfoNav
               allTokens={allTokens}
-              textContentBanner="Earn BUSD/USDC from your XOXS Indefinitely"
+              textContentBanner="Earn USDT/USDC from your XOXS Indefinitely"
               hasPadding={false}
             />
           </div>
@@ -382,18 +392,18 @@ export default function StableCoin() {
                 </WrapperBorder>
               </Row>
             )}
-            <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
-              <WrapperBorder className="border-gradient-style flex-50">
-                <Box className="wrap-table">
+            <CustomRow>
+              <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
+                <Box className="wrap-table" style={{ height: '100%' }}>
                   <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
                 </Box>
               </WrapperBorder>
-              <WrapperBorder className="border-gradient-style flex-50">
-                <Box className="wrap-table">
+              <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
+                <Box className="wrap-table" style={{ height: '100%' }}>
                   <TransactionTable />
                 </Box>
               </WrapperBorder>
-            </Row>
+            </CustomRow>
           </div>
         </Container>
       </FullWrapper>

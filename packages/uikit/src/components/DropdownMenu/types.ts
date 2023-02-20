@@ -49,4 +49,5 @@ export interface DropdownMenuItems {
   iconName?: string;
   icon?: React.ReactNode;
   isMobileOnly?: boolean;
+  showTooltip?: boolean;
 }

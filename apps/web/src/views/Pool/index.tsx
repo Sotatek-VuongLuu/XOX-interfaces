@@ -381,7 +381,7 @@ export default function Pool() {
               color="rgba(255, 255, 255, 0.87)"
               ml="8px"
             >
-              {chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'}
+              {chainId === 1 || chainId === 5 ? 'USDC' : 'USDT'}
             </Text>
           </Flex>
           <Flex justifyContent="center" alignItems="center">

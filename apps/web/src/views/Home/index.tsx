@@ -36,17 +36,14 @@ const StyledSection = styled(PageSection)`
 `
 
 const Home: React.FC<React.PropsWithChildren> = () => {
-  const { width: innerWidth } = useWindowSize()
+  const { width: innerWidth, height: innerHeight } = useWindowSize()
   const { isDesktop } = useMatchBreakpoints()
   const widthResize = innerWidth > 1400 ? 1400 : innerWidth > 900 ? 1200 : '100%'
 
+  console.log(`innerHeight`, innerHeight)
+
   useEffect(() => {
     AOS.init({ duration: 2000 })
-    const canvas = document.getElementById('canvas3d_pc')
-    if (canvas) {
-      const app = new Application(canvas as any)
-      app.load('https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode')
-    }
   }, [])
   return (
     <>
@@ -71,6 +68,9 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         }}
         containerProps={{
           id: 'home',
+          style: {
+            height: innerHeight < 700 && innerWidth <= 376 ? '100vh' : '',
+          },
         }}
         innerClass="welcome"
         index={2}
@@ -80,11 +80,10 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <div>
           <WelcomeXOX />
         </div>
-        {isDesktop && <canvas id="canvas3d_pc" />}
       </StyledSection>
 
       <StyledSection
-        innerProps={{ style: { margin: '0' } }}
+        innerProps={{ style: { margin: '0', width: widthResize } }}
         containerProps={{
           id: 'home',
         }}

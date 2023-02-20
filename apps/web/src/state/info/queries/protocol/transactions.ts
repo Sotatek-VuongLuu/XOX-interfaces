@@ -131,6 +131,9 @@ interface TransactionResults {
 interface TransactionResultsUNI {
   swaps: SwapResponseUNI[]
 }
+interface TransactionResultsPANCAKE {
+  swaps: SwapResponse[]
+}
 
 const fetchTopTransactions = async (
   chainId: number,
@@ -152,13 +155,13 @@ const fetchTopTransactions = async (
       })
     }
     result.transactionsXOX = transactionsXOX
-  } catch {
+  } catch (e) {
     result.transactionsXOX = []
   }
 
   try {
     let transactionsOther
-    if (chainId === 1) {
+    if (chainId === 1 || chainId === 5) {
       const dataUNI = await getMultiChainQueryEndPointWithChainId(
         chainId,
         TransactionFrom.UNI,
@@ -172,11 +175,10 @@ const fetchTopTransactions = async (
         })
       }
     } else {
-      const dataPANCAKERES = await axios.post(`${process.env.NEXT_PUBLIC_API}/Pancake/query`, {
-        url: 'https://proxy-worker-dev.pancake-swap.workers.dev/bsc-exchange',
-        query: QUERYPANCAKE,
-      })
-      const dataPANCAKE = dataPANCAKERES?.data
+      const dataPANCAKE = await getMultiChainQueryEndPointWithChainId(
+        chainId,
+        TransactionFrom.PANCAKE,
+      ).request<TransactionResultsPANCAKE>(QUERYPANCAKE)
       // const dataPANCAKE = await getMultiChainQueryEndPointWithStableSwap(
       //   chainId,
       //   TransactionFrom.PANCAKE,
@@ -189,9 +191,10 @@ const fetchTopTransactions = async (
       }
     }
     result.transactionsOther = transactionsOther
-  } catch {
+  } catch (e) {
     result.transactionsOther = []
   }
+
   return result
 }
 

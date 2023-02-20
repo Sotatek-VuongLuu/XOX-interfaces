@@ -14,6 +14,7 @@ import { ChartContent, TitleChart } from './style'
 
 interface HoverableChartProps {
   chartData: any[]
+  dataChartXOX: any[]
   valueProperty: string
   ChartComponent: typeof BarChart | typeof LineChart
   filter: any
@@ -22,6 +23,7 @@ interface HoverableChartProps {
   setCoinmarketcapId: (id: number) => void
   chainId: number
   native: NativeCurrency
+  defaultToken: Currency
   allTokens: any
   fetchingTokenId: boolean
   setFetchingTokenId: (b: boolean) => void
@@ -30,6 +32,7 @@ interface HoverableChartProps {
 
 const HoverableChart = ({
   chartData,
+  dataChartXOX,
   currencyDatas,
   valueProperty,
   ChartComponent,
@@ -37,6 +40,7 @@ const HoverableChart = ({
   setFilter,
   setCoinmarketcapId,
   native,
+  defaultToken,
   chainId,
   fetchingTokenId,
   allTokens,
@@ -44,7 +48,7 @@ const HoverableChart = ({
   setFetchingTokenId,
 }: HoverableChartProps) => {
   const [hover, setHover] = useState<number | undefined>()
-  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(native)
+  const [selectedCurrency, setSelectedCurrency] = useState<Currency>(defaultToken)
   const [dateHover, setDateHover] = useState<string | undefined>()
   const [currencyData, setCurrencyData] = useState<any>()
   const [showX, setShowX] = useState<any>(true)
@@ -52,13 +56,15 @@ const HoverableChart = ({
   // Getting latest data to display on top of chart when not hovered
   useEffect(() => {
     setHover(null)
-  }, [chartData])
+  }, [chartData, dataChartXOX])
 
   useEffect(() => {
-    if (hover == null && chartData) {
-      setHover(chartData[valueProperty])
+    let data = chartData
+    if (selectedCurrency.symbol.toUpperCase() === 'XOX') data = dataChartXOX
+    if (hover == null && data) {
+      setHover(data[valueProperty])
     }
-  }, [chartData, hover, valueProperty])
+  }, [chartData, hover, valueProperty, dataChartXOX, selectedCurrency])
 
   const minValue = Math.min(...(chartData || []).map((o) => o[valueProperty]))
   const maxValue = Math.max(...(chartData || []).map((o) => o[valueProperty]))
@@ -66,8 +72,10 @@ const HoverableChart = ({
   const maxYAxis = maxValue + (maxValue - minValue) * 0.2
 
   const formattedData = useMemo(() => {
-    if (chartData) {
-      return chartData.map((day) => {
+    let data = chartData
+    if (selectedCurrency.symbol.toUpperCase() === 'XOX') data = dataChartXOX
+    if (data) {
+      return data.map((day) => {
         return {
           time: fromUnixTime(day.date),
           value: day[valueProperty],
@@ -77,7 +85,7 @@ const HoverableChart = ({
       })
     }
     return []
-  }, [chartData, valueProperty])
+  }, [chartData, valueProperty, dataChartXOX, selectedCurrency])
 
   const [onPresentCurrencyModal] = useModal(
     <CurrencySearchModal onCurrencySelect={setSelectedCurrency} selectedCurrency={selectedCurrency} />,
@@ -87,8 +95,8 @@ const HoverableChart = ({
   )
 
   useEffect(() => {
-    setSelectedCurrency(native)
-  }, [native])
+    setSelectedCurrency(defaultToken)
+  }, [defaultToken])
 
   useEffect(() => {
     setFetchingTokenId(false)
@@ -210,7 +218,7 @@ const HoverableChart = ({
         </div>
 
         <div className="filter">
-          <div style={{whiteSpace: 'nowrap'}}>
+          <div style={{ whiteSpace: 'nowrap' }}>
             <button type="button" onClick={() => handleFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
               All
             </button>

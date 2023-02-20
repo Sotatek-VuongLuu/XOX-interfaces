@@ -163,32 +163,51 @@ const GridLeft = styled(Grid)`
 
 const ImageWrapper = styled.div`
   width: 100%;
-  height: 300px;
+  height: 100%;
   display: grid;
   place-content: center;
+  overflow-x: hidden;
 
   #canvas3d_mobile {
-    height: 100% !important;
-    width: 100% !important;
+    width: 670px !important;
+    height: 458px !important;
+  }
 
-    @media screen and (max-width: 448px) {
-      transform: scale(1.3);
+  @media screen and (max-width: 786px) {
+    position: relative;
+    #canvas3d_mobile {
+      transform: scale(1.1);
+      position: absolute;
+      left: 50%;
+      top: 0%;
+      transform: translate(-30%, -50%);
     }
   }
 
-  @media screen and (max-width: 448px) {
-    padding-bottom: 90px;
+  @media screen and (max-width: 450px) {
+    position: relative;
+    #canvas3d_mobile {
+      left: 45%;
+      top: 15%;
+      width: 528px !important;
+      height: 390px !important;
+    }
   }
 `
 
 const WelcomeXOX = (): JSX.Element => {
-  const { isMobile, isTablet } = useMatchBreakpoints()
+  const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
 
   useEffect(() => {
+    const canvasPC = document.getElementById('canvas3d_pc')
     const canvas = document.getElementById('canvas3d_mobile')
+    if (canvasPC) {
+      const app = new Application(canvasPC as any)
+      app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode')
+    }
     if (canvas) {
       const app = new Application(canvas as any)
-      app.load('https://prod.spline.design/M4m4JHN1AfoMsH4A/scene.splinecode')
+      app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode')
     }
   }, [])
 
@@ -219,12 +238,14 @@ const WelcomeXOX = (): JSX.Element => {
               </div>
             </LeftContent>
           </GridLeft>
-          <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'hidden' }}>
+          <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
             {(isMobile || isTablet) && (
               <ImageWrapper>
                 <canvas id="canvas3d_mobile" />
               </ImageWrapper>
             )}
+
+            {isDesktop && <canvas id="canvas3d_pc" />}
           </Grid>
         </Grid>
       </Box>
