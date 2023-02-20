@@ -7,7 +7,7 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import {useMultiChainId } from 'state/info/hooks'
+import { useMultiChainId } from 'state/info/hooks'
 import Trans from 'components/Trans'
 import Link from 'next/link'
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
@@ -61,7 +61,7 @@ const Box = styled.div`
     align-items: flex-start;
     max-width: calc(50% - 15px);
   }
-  &.h-190{
+  &.h-190 {
     min-height: 190px;
   }
   @media (max-width: 576px) {
@@ -86,6 +86,7 @@ const Container = styled.div`
   margin-bottom: 24px;
   color: rgba(0, 0, 0, 0.87);
   justify-content: center;
+  display: flex;
   @media (min-width: 1200px) {
     .content {
       width: 1200px;
@@ -155,13 +156,13 @@ export default function WithDrawLayout() {
   const contractTreasuryXOX = useTreasuryXOX()
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
-  const chainIdLocal:any = useMultiChainId() || chainId;
-  const [keyContainer, setKeyContainer] = useState(Math.random());
+  const chainIdLocal: any = useMultiChainId() || chainId
+  const [keyContainer, setKeyContainer] = useState(Math.random())
   const { isMobile } = useMatchBreakpoints()
 
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async (accountId: any) => {
-    if(!accountId) return null;
+    if (!accountId) return null
     try {
       const [infosUser, res2] = await Promise.all([
         contractTreasuryXOX.userInfo(accountId),
@@ -171,27 +172,27 @@ export default function WithDrawLayout() {
       const dataParse: any[] = infosUser.map((item) => {
         return formatUnits(item, USD_DECIMALS[chainIdLocal])
       })
-      const amountPoint = Number(dataParse[1]);
-      const rewardPoint = Number(dataParse[2]);
-      if(rewardPoint === 0 || rewardPoint){
-        const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdLocal])) + rewardPoint;
-        setCurrentReward(numberReward || 0);
-        const totalCurrentXOXS = amountPoint+numberReward;
-        setCurrentXOX(totalCurrentXOXS || 0);
+      const amountPoint = Number(dataParse[1])
+      const rewardPoint = Number(dataParse[2])
+      if (rewardPoint === 0 || rewardPoint) {
+        const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdLocal])) + rewardPoint
+        setCurrentReward(numberReward || 0)
+        const totalCurrentXOXS = amountPoint + numberReward
+        setCurrentXOX(totalCurrentXOXS || 0)
       }
     } catch (error) {
       // eslint-disable-next-line no-console
-      console.log(`error>>>>>`, error);
-      setCurrentReward(0);
-      setCurrentXOX(0);
+      console.log(`error>>>>>`, error)
+      setCurrentReward(0)
+      setCurrentXOX(0)
     }
   }
 
   useEffect(() => {
-    if(account){
-      handleCheckPendingRewardAll(account);
+    if (account) {
+      handleCheckPendingRewardAll(account)
     }
-  }, [account]);
+  }, [account])
 
   return (
     <>
@@ -205,43 +206,41 @@ export default function WithDrawLayout() {
           />
         </div>
       </ContainerBanner>
-      <Container style={{marginBottom: 100}} key={`container-stablecoin${chainId}`}>
+      <Container style={{ marginBottom: 100 }} key={`container-stablecoin${chainId}`}>
         <div className="content">
           <Flex alignItems="center" style={{ gap: 10 }}>
-              <Flex
-              onClick={() => setWidthDraw(TYPE.default)}
-              style={{ cursor: 'pointer', gap: 5 }}
-              alignItems="center"
-              >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <Flex onClick={() => setWidthDraw(TYPE.default)} style={{ cursor: 'pointer', gap: 5 }} alignItems="center">
+              <Link href="/stable-coin">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
-                  d="M6 11.9961H18"
-                  stroke="#8E8E8E"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                    d="M6 11.9961H18"
+                    stroke="#8E8E8E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
                   <path
-                  d="M12 18L6 12L12 6"
-                  stroke="#8E8E8E"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
+                    d="M12 18L6 12L12 6"
+                    stroke="#8E8E8E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
                   />
-              </svg>
+                </svg>
+              </Link>
               <Link href="/stable-coin">
                 <TextStyle>Stable coin</TextStyle>
               </Link>
-              </Flex>
-              <TextStyle style={{ transform: 'translateY(1px)' }}>|</TextStyle>
-              <TextStyle className="primary">Withdraw reward</TextStyle>
+            </Flex>
+            <TextStyle style={{ transform: 'translateY(1px)' }}>|</TextStyle>
+            <TextStyle className="primary">Withdraw reward</TextStyle>
           </Flex>
-          <Row style={{marginTop: 25}}>
-              <WrapperBorder className='border-gradient-style'>
-                <Box className='wrap-withdraw'>
-                  <WidthdrawForm priceAvailable={currentReward} />
-                </Box>
-              </WrapperBorder>
+          <Row style={{ marginTop: 25 }}>
+            <WrapperBorder className="border-gradient-style">
+              <Box className="wrap-withdraw">
+                <WidthdrawForm priceAvailable={currentReward} />
+              </Box>
+            </WrapperBorder>
           </Row>
         </div>
       </Container>

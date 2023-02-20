@@ -25,7 +25,7 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { getUserFriend } from 'services/referral'
 import { USD_DECIMALS } from 'config/constants/exchange'
-import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
 import axios from 'axios'
 import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
@@ -85,8 +85,8 @@ const WrapperLeft = styled(Box)`
   border-radius: 10px;
   min-height: 248px;
   position: relative;
-  &::before{
-    content: "";
+  &::before {
+    content: '';
     display: inline-block;
     width: 7px;
     height: 7px;
@@ -200,6 +200,8 @@ export const WrapperRight = styled(Box)<IPropsWR>`
     button:disabled,
     button[disabled] {
       cursor: not-allowed;
+      background-color: unset;
+      -webkit-text-fill-color: unset;
     }
 
     .jewellery {
@@ -328,6 +330,12 @@ export const WrapperRight = styled(Box)<IPropsWR>`
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
+  }
+
+  .claimed {
+    color: rgba(255, 255, 255, 0.38);
+    background: unset;
+    text-fill-color: unset;
   }
 `
 
@@ -754,7 +762,9 @@ const ReferralFriend = ({
                                 }}
                               >
                                 {item?.isClaimed ? (
-                                  <span className={`${item.lever === currentLevelReach ? 'claim' : ''}`}>Claimed</span>
+                                  <span className={`${item.lever === currentLevelReach ? 'claimed' : ''}`}>
+                                    Claimed
+                                  </span>
                                 ) : (
                                   <span className={`${item.isReach ? 'claim' : ''} `}>Claim</span>
                                 )}
@@ -794,9 +804,22 @@ const ReferralFriend = ({
         title="Claim"
       >
         <Content>
-          <div className="discription">
+          {/* <div className="discription">
             Receive {dataClaim.dollar?.toLocaleString()}$ at level "<span>{dataClaim.point?.toLocaleString()}</span>{' '}
             points"?
+          </div> */}
+          <div className="discription">
+            Withdraw Amount ${roundingAmountNumber(Number(totalUnClaimed))}
+            <br />
+            You will receive:{' '}
+            {`${roundingAmountNumber(Number(totalUnClaimed) * 0.99)} ${
+              chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
+            }`}
+            <br />
+            Platform Fee:{' '}
+            {`${roundingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)} ${
+              chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
+            }`}
           </div>
           <div className="btn-group">
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>

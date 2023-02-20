@@ -255,6 +255,7 @@ const Menu = (props) => {
   }, [account])
 
   useEffect(() => {
+    setActiveNotifi(false)
     if (account) {
       const socket = io(host, {})
       socket.on('connect', () => {

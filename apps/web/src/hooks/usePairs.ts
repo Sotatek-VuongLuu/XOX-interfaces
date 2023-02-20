@@ -83,7 +83,6 @@ export function usePairXOX(): [PairState, Pair | null][] {
   const { chainId } = useActiveChainId()
   
   const pairAddresses = [XOX_LP[chainId]]
-  console.log("pairAddresses:", pairAddresses);
   
   const results = useMultipleContractSingleData(pairAddresses, PAIR_INTERFACE, 'getReserves')
 

@@ -1,16 +1,11 @@
 import React, { useCallback } from 'react'
-import { Currency, CurrencyAmount, Fraction, Percent, Token } from '@pancakeswap/sdk'
-import { InjectedModalProps, Button } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
-import TransactionConfirmationModal, {
-  ConfirmationModalContent,
-  TransactionErrorContent,
-} from 'components/TransactionConfirmationModal'
-import { Field } from 'state/burn/actions'
+import TransactionConfirmationModal, { TransactionErrorContent } from 'components/TransactionConfirmationModal'
 import _toNumber from 'lodash/toNumber'
+import { roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
 
 const StableCoinModal = (props: any) => {
-    const {onDismiss, isBUSD, amount, txHas, pending, withdrawErrorMessage} = props;
+  const { onDismiss, isBUSD, amount, txHas, pending, withdrawErrorMessage } = props
   const { t } = useTranslation()
 
   console.log(withdrawErrorMessage)
@@ -31,7 +26,15 @@ const StableCoinModal = (props: any) => {
     <TransactionConfirmationModal
       title="Confirm Withdraw"
       content={confirmationContent}
-      pendingText={`Withdraw ${amount} ${isBUSD ? 'BUSD' : 'USDC'}`}
+      pendingText={
+        <>
+          Withdraw Amount ${roundingAmountNumber(amount, 6)}
+          <br />
+          You will receive: {`${roundingAmountNumber(amount * 0.99, 6)} ${isBUSD ? 'USDT' : 'USDC'}`}
+          <br />
+          Platform Fee: {`${roundingAmountNumber(amount * 0.01, 6)} ${isBUSD ? 'USDT' : 'USDC'}`}
+        </>
+      }
       attemptingTxn={pending}
       hash={txHas}
       onDismiss={onDismiss}

@@ -428,7 +428,6 @@ export default function Refferal() {
           userPointBSC = await getUserPointDaily(chainBscId, payloadPostForDaily)
           break
       }
-      console.log(userPointETH, userPointBSC)
 
       const dataUserPointETH =
         userPointETH.userPoints ||

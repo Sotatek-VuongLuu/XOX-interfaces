@@ -45,13 +45,13 @@ const WrapperBorder = styled.div`
   display: flex;
   flex-wrap: wrap;
   @media (min-width: 577px) {
-    &.flex-50{
+    &.flex-50 {
       flex: 0 0 calc(50% - 15px);
       max-width: calc(50% - 15px);
-      >div{
+      > div {
         width: 100%;
       }
-    }  
+    }
   }
 `
 
@@ -71,7 +71,7 @@ const Box = styled.div`
     align-items: flex-start;
     min-height: 633px;
   }
-  &.h-190{
+  &.h-190 {
     min-height: 190px;
   }
   @media (max-width: 576px) {
@@ -96,7 +96,7 @@ const Container = styled.div`
   margin-bottom: 24px;
   color: rgba(0, 0, 0, 0.87);
   justify-content: center;
-  .content{
+  .content {
     margin: 0 auto;
   }
   @media (min-width: 1200px) {
@@ -164,11 +164,11 @@ const WrapText = styled.div`
 const TextConnectWallet = styled.div`
   text-align: center;
   line-height: 1.3;
-  br{
+  br {
     display: none;
   }
   @media (max-width: 576px) {
-    br{
+    br {
       display: block;
     }
   }
@@ -205,8 +205,8 @@ export default function LayoutHistory() {
   const contractTreasuryXOX = useTreasuryXOX()
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
-  const chainIdLocal:any = useMultiChainId() || chainId;
-  const [keyContainer, setKeyContainer] = useState(Math.random());
+  const chainIdLocal: any = useMultiChainId() || chainId
+  const [keyContainer, setKeyContainer] = useState(Math.random())
   const { isMobile } = useMatchBreakpoints()
 
   return (
@@ -221,54 +221,44 @@ export default function LayoutHistory() {
           />
         </div>
       </ContainerBanner>
-      <Container style={{marginBottom: 100}} key={`container-stablecoin${chainId}`}>
-        <div className='content'>
-        <Flex alignItems="center" style={{ gap: 10 }}>
-            <Flex
-            onClick={() => setWidthDraw(TYPE.default)}
-            style={{ cursor: 'pointer', gap: 5 }}
-            alignItems="center"
-            >
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                d="M6 11.9961H18"
-                stroke="#8E8E8E"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                />
-                <path
-                d="M12 18L6 12L12 6"
-                stroke="#8E8E8E"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                />
-            </svg>
-            <Link href="/stable-coin">
+      <Container style={{ marginBottom: 100 }} key={`container-stablecoin${chainId}`}>
+        <div className="content">
+          <Flex alignItems="center" style={{ gap: 10 }}>
+            <Flex onClick={() => setWidthDraw(TYPE.default)} style={{ cursor: 'pointer', gap: 5 }} alignItems="center">
+              <Link href="/stable-coin">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M6 11.9961H18"
+                    stroke="#8E8E8E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M12 18L6 12L12 6"
+                    stroke="#8E8E8E"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </Link>
+              <Link href="/stable-coin">
                 <TextStyle>Stable coin</TextStyle>
-            </Link>
+              </Link>
             </Flex>
             <TextStyle>|</TextStyle>
             <TextStyle className="primary">History</TextStyle>
-        </Flex>
-        <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
-            <WrapperBorder className='border-gradient-style flex-50'>
-              <Box className="wrap-table">
-                  {
-                      account && <HistoryTable typePage={TYPE_HISTORY.stake} />
-                  }
-              </Box>
+          </Flex>
+          <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
+            <WrapperBorder className="border-gradient-style flex-50">
+              <Box className="wrap-table">{account && <HistoryTable typePage={TYPE_HISTORY.stake} />}</Box>
             </WrapperBorder>
-            <WrapperBorder className='border-gradient-style flex-50'>
-              <Box className="wrap-table">
-              {
-                  account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />
-              }
-              </Box>
+            <WrapperBorder className="border-gradient-style flex-50">
+              <Box className="wrap-table">{account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />}</Box>
             </WrapperBorder>
-        </Row>
-        </div> 
+          </Row>
+        </div>
       </Container>
     </>
   )
