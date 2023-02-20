@@ -30,9 +30,9 @@ const StableCoinModal = (props: any) => {
         <>
           Withdraw Amount ${roundingAmountNumber(amount, 6)}
           <br />
-          You will receive {roundingAmountNumber(amount * 0.99, 6)} USDT
+          You will receive: {`${roundingAmountNumber(amount * 0.99, 6)} ${isBUSD ? 'USDT' : 'USDC'}`}
           <br />
-          Platform Fee: {roundingAmountNumber(amount * 0.01, 6)} USDT
+          Platform Fee: {`${roundingAmountNumber(amount * 0.01, 6)} ${isBUSD ? 'USDT' : 'USDC'}`}
         </>
       }
       attemptingTxn={pending}
