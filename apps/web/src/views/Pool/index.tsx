@@ -21,14 +21,15 @@ import { useDerivedMintInfo } from 'state/mint/hooks'
 import useSWR from 'swr'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyLogo } from 'components/Logo'
-import { Token } from '@pancakeswap/sdk'
+import { Currency, Token } from '@pancakeswap/sdk'
 import { GridLoader } from 'react-spinners'
 import { ColumnCenter } from 'components/Layout/Column'
 import Page from '../Page'
 import FullPositionCard, { StableFullPositionCard } from '../../components/PositionCard'
-import { useCurrencyBalances, useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
-import { usePairs, PairState, usePairXOX } from '../../hooks/usePairs'
+import { useCurrencyBalances, useTokenBalance, useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
+import { usePair, usePairs, PairState, usePairXOX } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
+import useNativeCurrency from 'hooks/useNativeCurrency'
 
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -216,6 +217,7 @@ const fetcher = (url) => fetch(url).then((r) => r.json())
 export default function Pool() {
   const { address: account } = useAccount()
   const { isMobile } = useMatchBreakpoints()
+  const native = useNativeCurrency()
   const { t } = useTranslation()
   const { chainId } = useActiveChainId()
   // fetch the user's balances of all tracked V2 LP tokens
@@ -228,6 +230,10 @@ export default function Pool() {
   )
   const USDId = chainId === 1 || chainId === 5 ? 3408 : 4687
   const { price } = useDerivedMintInfo(currencyA, currencyB)
+  const [pairXOX] = usePairXOX()
+  const [pairNative] = usePair(native, useCurrency(XOX_ADDRESS[chainId]))
+  const userTokenBalanceUSDXOX = useTokenBalance(account, pairXOX[1]?.liquidityToken)
+  const userTokenBalanceNativeXOX = useTokenBalance(account, pairNative[1]?.liquidityToken)
 
   const { data: USDPrice } = useSWR(
     `${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/price?id=${USDId}`,
@@ -255,8 +261,8 @@ export default function Pool() {
       tokenPairsWithLiquidityTokens.filter(
         ({ liquidityToken, tokens }) =>
           v2PairsBalances[liquidityToken.address]?.greaterThan('0') &&
-          ((tokens[0].address === USD_ADDRESS[chainId] && tokens[1].address === XOX_ADDRESS[chainId]) ||
-            (tokens[0].address === XOX_ADDRESS[chainId] && tokens[1].address === USD_ADDRESS[chainId])),
+          ((tokens[0].isNative && tokens[1].address === XOX_ADDRESS[chainId]) ||
+            (tokens[0].address === XOX_ADDRESS[chainId] && tokens[1].isNative)),
       ),
     [tokenPairsWithLiquidityTokens, v2PairsBalances],
   )
@@ -269,7 +275,15 @@ export default function Pool() {
     v2Pairs?.length < liquidityTokensWithBalances.length ||
     (v2Pairs?.length && v2Pairs.every(([pairState]) => pairState === PairState.LOADING))
   const allV2PairsWithLiquidity = v2Pairs
-    ?.filter(([pairState, pair]) => pairState === PairState.EXISTS && Boolean(pair))
+    ?.filter(([pairState, pair]) => {
+      return (
+        pairState === PairState.EXISTS &&
+        Boolean(pair) &&
+        (((pair.token0.isNative || pair.token1.isNative) && userTokenBalanceNativeXOX.greaterThan('0')) ||
+          ((pair.token0.address === USD_ADDRESS[chainId] || pair.token1.address === USD_ADDRESS[chainId]) &&
+            userTokenBalanceUSDXOX.greaterThan('0')))
+      )
+    })
     .map(([, pair]) => pair)
 
   const renderBody = () => {
@@ -302,7 +316,7 @@ export default function Pool() {
 
     let positionCards = []
 
-    if (liquidityTokensWithBalances?.length > 0) {
+    if (allV2PairsWithLiquidity?.length > 0) {
       positionCards = allV2PairsWithLiquidity.map((v2Pair, index) => (
         <FullPositionCard
           key={v2Pair.liquidityToken.address}
