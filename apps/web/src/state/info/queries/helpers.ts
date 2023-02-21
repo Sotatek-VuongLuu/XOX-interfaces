@@ -117,7 +117,7 @@ const calculatorAmountUSDSwap = (swap: SwapResponse) => {
 
   const inputTokenSymbol = amountToken1 < 0 ? symbolToken0 : symbolToken1
   const amountUSD =
-    inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD'
+    inputTokenSymbol === 'USDC' || inputTokenSymbol === 'USDT'
       ? amountToken1 < 0
         ? abs0
         : abs1
