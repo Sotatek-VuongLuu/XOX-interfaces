@@ -173,9 +173,10 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
   const [userClaimHistories, setUserClaimHistories] = useState([])
 
   const mapPoint = (amount: number) => {
+    const amountParse = new BigNumber(new BigNumber(amount).multipliedBy(100).div(99).toFixed()).toNumber()
     if (listPoint && listPoint.length > 0) {
       for (let i = 0; i < listPoint.length; i++) {
-        if (listPoint[i].reward <= amount && amount < listPoint[i + 1].reward) {
+        if (listPoint[i].reward <= amountParse && amountParse < listPoint[i + 1].reward) {
           return listPoint[i].point.toString()
         }
       }
@@ -190,7 +191,6 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
         const userAvatar = mappingUser.avatar
         const point = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
         const claim = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
-
         return createData(
           idx + 1,
           userAvatar,
@@ -200,6 +200,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
           claim,
         )
       })
+
       const lastResponse = await Promise.all(histories)
       setUserClaimHistories(
         lastResponse.sort((a, b) => {

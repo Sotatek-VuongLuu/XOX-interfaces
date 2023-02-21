@@ -221,7 +221,9 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
 
   useEffect(() => {
     if (priceAvailable) {
-      priceRef.current.value = `${formatNumberDecimal(parseFloat(priceAvailable))} ${isUSDT ? 'USDT' : 'USDC'}`
+      priceRef.current.value = `${
+        Number(priceAvailable) !== 0 ? formatNumberDecimal(parseFloat(priceAvailable)) : '0'
+      } ${isUSDT ? 'USDT' : 'USDC'}`
       setPriceState(priceAvailable)
     }
   }, [priceAvailable])
@@ -231,7 +233,9 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
     setTxHas(response?.hash)
     setWithdrawErrorMessage('')
     const priceAvailable = priceState > amount ? parseFloat(priceState) - parseFloat(amount) : 0
-    priceRef.current.value = `${formatNumberDecimal(priceAvailable)} ${isUSDT ? 'USDT' : 'USDC'}`
+    priceRef.current.value = `${Number(priceAvailable) !== 0 ? formatNumberDecimal(priceAvailable) : '0'} ${
+      isUSDT ? 'USDT' : 'USDC'
+    }`
     setPriceState(priceAvailable)
     addTransaction(response)
     setTimeout(() => {
@@ -344,7 +348,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
                 disabled
                 className="no-border-text"
                 ref={priceRef}
-                defaultValue={`${priceAvailable} ${isUSDT ? 'USDT' : 'USDC'}`}
+                defaultValue={`${Number(priceAvailable) !== 0 ? priceAvailable : '0'} ${isUSDT ? 'USDT' : 'USDC'}`}
               />
             </TextStyle>
           </Flex>
