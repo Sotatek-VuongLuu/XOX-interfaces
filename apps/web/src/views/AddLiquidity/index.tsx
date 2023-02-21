@@ -29,7 +29,7 @@ import { useRouter } from 'next/router'
 import { callWithEstimateGas } from 'utils/calls'
 import { SUPPORT_ZAP } from 'config/constants/supportChains'
 import { ContractMethodName } from 'utils/types'
-import { ROUTER_XOX } from 'config/constants/exchange'
+import { ROUTER_ADDRESS, ROUTER_XOX } from 'config/constants/exchange'
 import { useLPApr } from 'state/swap/useLPApr'
 import SwapbackgroundDesktop from 'components/Svg/SwapBackgroundDesktop'
 import SwapbackgroundDesktopNone from 'components/Svg/SwapBackgroundDesktopNone'
@@ -61,6 +61,7 @@ import { formatAmount } from '../../utils/formatInfoNumbers'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
 import { MinimalPositionCard } from 'components/PositionCard'
+import useNativeCurrency from 'hooks/useNativeCurrency'
 
 const Wrapper = styled(Flex)`
   width: 100%;
@@ -161,6 +162,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   const zapMode = false
   const expertMode = useIsExpertMode()
   const zapAddress = getZapAddress(chainId)
+  const native = useNativeCurrency()
 
   const [temporarilyZapMode, setTemporarilyZapMode] = useState(true)
 
@@ -304,12 +306,22 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   )
 
   // check whether the user has approved the router on the tokens
-  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], ROUTER_XOX[chainId])
-  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], ROUTER_XOX[chainId])
+  const [approvalA, approveACallback] = useApproveCallback(
+    parsedAmounts[Field.CURRENCY_A],
+    currencies[Field.CURRENCY_A].symbol === native.symbol ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
+  )
+  const [approvalB, approveBCallback] = useApproveCallback(
+    parsedAmounts[Field.CURRENCY_B],
+    currencies[Field.CURRENCY_A].symbol === native.symbol ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
+  )
 
   const addTransaction = useTransactionAdder()
 
-  const routerContract = useRouterContractXOX(false)
+  const routerContractXOX = useRouterContractXOX(false)
+  const routerContractNormal = useRouterContractXOX(true)
+  const routerContract = useMemo(() => {
+    return currencies[Field.CURRENCY_A].symbol === native.symbol ? routerContractNormal : routerContractXOX
+  }, [routerContractNormal, routerContractXOX, currencies[Field.CURRENCY_A]])
 
   async function onAdd() {
     if (!chainId || !account || !routerContract) return
@@ -747,7 +759,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   id="add-liquidity-input-tokena"
                   showCommonBases
                   commonBasesType={CommonBasesType.LIQUIDITY}
-                  disableCurrencySelect
+                  forLiquidity
                 />
                 <ColumnCenter>
                   <AddIcon width="16px" />

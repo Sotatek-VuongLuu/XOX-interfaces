@@ -12,7 +12,7 @@ import { useAudioModeManager } from 'state/user/hooks'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { isAddress } from 'utils'
-import { useAllTokens, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
+import { useAllTokens, useCurrency, useIsUserAddedToken, useToken } from '../../hooks/Tokens'
 import Column, { AutoColumn } from '../Layout/Column'
 import Row from '../Layout/Row'
 import CurrencyList from './CurrencyList'
@@ -20,6 +20,7 @@ import { createFilterToken, useSortedTokensByQuery } from './filtering'
 // import useTokenComparator from './sorting'
 import { getSwapSound } from './swapSound'
 import ImportRow from './ImportRow'
+import { USD_ADDRESS } from 'config/constants/exchange'
 
 const InputWrapper = styled.div`
   position: relative;
@@ -53,6 +54,7 @@ interface CurrencySearchProps {
   showImportView: () => void
   setImportToken: (token: Token) => void
   height?: number
+  forLiquidity?: boolean
 }
 
 function useSearchInactiveTokenLists(search: string | undefined, minResults = 10): WrappedTokenInfo[] {
@@ -105,8 +107,10 @@ function CurrencySearch({
   showImportView,
   setImportToken,
   height,
+  forLiquidity,
 }: CurrencySearchProps) {
   const { t } = useTranslation()
+  const { chainId } = useActiveChainId()
 
   // refs for fixed size lists
   const fixedList = useRef<FixedSizeList>()
@@ -142,7 +146,7 @@ function CurrencySearch({
   // const tokenComparator = useTokenComparator(invertSearchOrder)
 
   const filteredSortedTokens: Token[] = useMemo(() => {
-    return [...filteredQueryTokens]//.sort(tokenComparator)
+    return [...filteredQueryTokens] //.sort(tokenComparator)
   }, [filteredQueryTokens])
 
   const handleCurrencySelect = useCallback(
@@ -158,7 +162,7 @@ function CurrencySearch({
   const inputRef = useRef<HTMLInputElement>()
 
   useEffect(() => {
-    if (!isMobile) inputRef.current.focus()
+    if (!isMobile && !forLiquidity) inputRef.current.focus()
   }, [isMobile])
 
   const handleInput = useCallback((event) => {
@@ -234,7 +238,7 @@ function CurrencySearch({
         <CurrencyList
           height={isMobile ? (height ? height + 80 : 350) : 310}
           showNative={false}
-          currencies={filteredSortedTokens}
+          currencies={forLiquidity ? [native, useCurrency(USD_ADDRESS[chainId])] : filteredSortedTokens}
           inactiveCurrencies={filteredInactiveTokens}
           breakIndex={
             Boolean(filteredInactiveTokens?.length) && filteredSortedTokens ? filteredSortedTokens.length : undefined
@@ -248,7 +252,7 @@ function CurrencySearch({
         />
       </Box>
     ) : (
-      <Column style={{ padding: '20px', height:'50px' }} className="no-result">
+      <Column style={{ padding: '20px', height: '50px' }} className="no-result">
         <Text color="textSubtle" textAlign="center" mb="20px">
           {t('No results found.')}
         </Text>
@@ -275,35 +279,37 @@ function CurrencySearch({
   return (
     <>
       <AutoColumn gap="16px">
-        <Row>
-          <InputWrapper>
-            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
-              <path
-                d="M10.0833 17.4167C14.1334 17.4167 17.4167 14.1334 17.4167 10.0833C17.4167 6.03325 14.1334 2.75 10.0833 2.75C6.03325 2.75 2.75 6.03325 2.75 10.0833C2.75 14.1334 6.03325 17.4167 10.0833 17.4167Z"
-                stroke="#8E8E8E"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
+        {!forLiquidity && (
+          <Row>
+            <InputWrapper>
+              <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 22 22" fill="none">
+                <path
+                  d="M10.0833 17.4167C14.1334 17.4167 17.4167 14.1334 17.4167 10.0833C17.4167 6.03325 14.1334 2.75 10.0833 2.75C6.03325 2.75 2.75 6.03325 2.75 10.0833C2.75 14.1334 6.03325 17.4167 10.0833 17.4167Z"
+                  stroke="#8E8E8E"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M19.25 19.2502L15.2625 15.2627"
+                  stroke="#8E8E8E"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              <Input
+                id="token-search-input"
+                placeholder={t('Search name or paste address')}
+                autoComplete="off"
+                value={searchQuery}
+                ref={inputRef as RefObject<HTMLInputElement>}
+                onChange={handleInput}
+                onKeyDown={handleEnter}
               />
-              <path
-                d="M19.25 19.2502L15.2625 15.2627"
-                stroke="#8E8E8E"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-            <Input
-              id="token-search-input"
-              placeholder={t('Search name or paste address')}
-              autoComplete="off"
-              value={searchQuery}
-              ref={inputRef as RefObject<HTMLInputElement>}
-              onChange={handleInput}
-              onKeyDown={handleEnter}
-            />
-          </InputWrapper>
-        </Row>
+            </InputWrapper>
+          </Row>
+        )}
         {/* {showCommonBases && (
           <CommonBases
             chainId={chainId}

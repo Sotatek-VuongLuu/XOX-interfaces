@@ -21,7 +21,6 @@ import { useDerivedMintInfo } from 'state/mint/hooks'
 import useSWR from 'swr'
 import { useCurrency } from 'hooks/Tokens'
 import { CurrencyLogo } from 'components/Logo'
-import { Currency, Token } from '@pancakeswap/sdk'
 import { GridLoader } from 'react-spinners'
 import { ColumnCenter } from 'components/Layout/Column'
 import Page from '../Page'
@@ -30,6 +29,8 @@ import { useCurrencyBalances, useTokenBalance, useTokenBalancesWithLoadingIndica
 import { usePair, usePairs, PairState, usePairXOX } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
 import useNativeCurrency from 'hooks/useNativeCurrency'
+import { unwrappedToken } from 'utils/wrappedCurrency'
+import { Token } from '@pancakeswap/sdk'
 
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -231,7 +232,7 @@ export default function Pool() {
   const USDId = chainId === 1 || chainId === 5 ? 3408 : 4687
   const { price } = useDerivedMintInfo(currencyA, currencyB)
   const [pairXOX] = usePairXOX()
-  const [pairNative] = usePair(native, useCurrency(XOX_ADDRESS[chainId]))
+  const pairNative = usePair(native, useCurrency(XOX_ADDRESS[chainId]))
   const userTokenBalanceUSDXOX = useTokenBalance(account, pairXOX[1]?.liquidityToken)
   const userTokenBalanceNativeXOX = useTokenBalance(account, pairNative[1]?.liquidityToken)
 
@@ -258,12 +259,13 @@ export default function Pool() {
   // fetch the reserves for all V2 pools in which the user has a balance
   const liquidityTokensWithBalances = useMemo(
     () =>
-      tokenPairsWithLiquidityTokens.filter(
-        ({ liquidityToken, tokens }) =>
+      tokenPairsWithLiquidityTokens.filter(({ liquidityToken, tokens }) => {
+        return (
           v2PairsBalances[liquidityToken.address]?.greaterThan('0') &&
-          ((tokens[0].isNative && tokens[1].address === XOX_ADDRESS[chainId]) ||
-            (tokens[0].address === XOX_ADDRESS[chainId] && tokens[1].isNative)),
-      ),
+          ((unwrappedToken(tokens[0]).isNative && tokens[1].address === XOX_ADDRESS[chainId]) ||
+            (tokens[0].address === XOX_ADDRESS[chainId] && unwrappedToken(tokens[1]).isNative))
+        )
+      }),
     [tokenPairsWithLiquidityTokens, v2PairsBalances],
   )
   liquidityTokensWithBalances.map(({ tokens }) => tokens)
@@ -279,7 +281,8 @@ export default function Pool() {
       return (
         pairState === PairState.EXISTS &&
         Boolean(pair) &&
-        (((pair.token0.isNative || pair.token1.isNative) && userTokenBalanceNativeXOX.greaterThan('0')) ||
+        (((unwrappedToken(pair.token0).isNative || unwrappedToken(pair.token1).isNative) &&
+          userTokenBalanceNativeXOX?.greaterThan('0')) ||
           ((pair.token0.address === USD_ADDRESS[chainId] || pair.token1.address === USD_ADDRESS[chainId]) &&
             userTokenBalanceUSDXOX?.greaterThan('0')))
       )
@@ -597,15 +600,11 @@ export default function Pool() {
                 </Body>
                 <StyledCardFooter style={{ textAlign: 'center' }}>
                   {account ? (
-                    <>
-                      {liquidityTokensWithBalances.length === 0 && (
-                        <Link href="/add" passHref>
-                          <ButtonWrapper id="join-pool-button" width="100%">
-                            {t('Add Liquidity')}
-                          </ButtonWrapper>
-                        </Link>
-                      )}
-                    </>
+                    <Link href="/add" passHref>
+                      <ButtonWrapper id="join-pool-button" width="100%">
+                        {t('Add Liquidity')}
+                      </ButtonWrapper>
+                    </Link>
                   ) : (
                     <ConnectWalletButtonWrapper />
                   )}

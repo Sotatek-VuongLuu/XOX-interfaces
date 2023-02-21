@@ -27,7 +27,7 @@ import useNativeCurrency from 'hooks/useNativeCurrency'
 import { getZapAddress } from 'utils/addressHelpers'
 import { CommitButton } from 'components/CommitButton'
 import { useTranslation } from '@pancakeswap/localization'
-import { ROUTER_XOX } from 'config/constants/exchange'
+import { ROUTER_ADDRESS, ROUTER_XOX } from 'config/constants/exchange'
 import { useLPApr } from 'state/swap/useLPApr'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
@@ -414,7 +414,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   const [signatureData, setSignatureData] = useState<{ v: number; r: string; s: string; deadline: number } | null>(null)
   const [approval, approveCallback] = useApproveCallback(
     parsedAmounts[Field.LIQUIDITY],
-    isZap ? getZapAddress(chainId) : ROUTER_XOX[chainId],
+    currencyA.isNative ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
   )
 
   async function onAttemptToApprove() {
@@ -486,7 +486,11 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   // tx sending
   const addTransaction = useTransactionAdder()
 
-  const routerContract = useRouterContractXOX(false)
+  const routerContractXOX = useRouterContractXOX(false)
+  const routerContractNormal = useRouterContractXOX(true)
+  const routerContract = useMemo(() => {
+    return currencyA.isNative ? routerContractNormal : routerContractXOX
+  }, [routerContractNormal, routerContractXOX, currencyA])
 
   async function onZapOut() {
     if (!chainId || !library || !account || !estimateZapOutAmount) throw new Error('missing dependencies')

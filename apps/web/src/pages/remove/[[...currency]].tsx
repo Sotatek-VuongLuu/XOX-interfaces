@@ -1,6 +1,7 @@
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveChainId } from 'hooks/useActiveChainId'
+import useNativeCurrency from 'hooks/useNativeCurrency'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { CHAIN_IDS } from 'utils/wagmi'
@@ -11,13 +12,12 @@ import useStableConfig, { StableConfigContext } from 'views/Swap/StableSwap/hook
 const RemoveLiquidityPage = () => {
   const router = useRouter()
   const { chainId } = useActiveChainId()
+  const native = useNativeCurrency()
 
-  const [currencyIdA, currencyIdB] = router.query.currency || []
+  const [currencyIdA, currencyIdB] = router.query.currency || [native.symbol, XOX_ADDRESS[chainId]]
 
-  const [currencyA, currencyB] = [
-    useCurrency(USD_ADDRESS[chainId]) ?? undefined,
-    useCurrency(XOX_ADDRESS[chainId]) ?? undefined,
-  ]
+  const currencyA = useCurrency(currencyIdA === USD_ADDRESS[chainId] ? currencyIdA : native.symbol)
+  const currencyB = useCurrency(XOX_ADDRESS[chainId])
 
   const stableConfig = useStableConfig({
     tokenA: currencyA,

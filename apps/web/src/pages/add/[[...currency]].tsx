@@ -1,6 +1,4 @@
-import { CAKE, USDC } from '@pancakeswap/tokens'
 import { useCurrency } from 'hooks/Tokens'
-import useNativeCurrency from 'hooks/useNativeCurrency'
 import { GetStaticPaths, GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
 import { useEffect } from 'react'
@@ -12,6 +10,7 @@ import AddStableLiquidity from 'views/AddLiquidity/AddStableLiquidity/index'
 import useStableConfig, { StableConfigContext } from 'views/Swap/StableSwap/hooks/useStableConfig'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import useNativeCurrency from 'hooks/useNativeCurrency'
 
 const AddLiquidityPage = () => {
   const router = useRouter()
@@ -20,18 +19,10 @@ const AddLiquidityPage = () => {
 
   const native = useNativeCurrency()
 
-  const [currencyIdA, currencyIdB] = [
-    USD_ADDRESS[chainId],
-    XOX_ADDRESS[chainId],
-  ]
+  const [currencyIdA, currencyIdB] = router.query.currency || [native.symbol, XOX_ADDRESS[chainId]]
 
-  const currencyA = useCurrency(currencyIdA)
-  const currencyB = useCurrency(currencyIdB)
-
-  const { stableSwapConfig, ...stableConfig } = useStableConfig({
-    tokenA: currencyA,
-    tokenB: currencyB,
-  })
+  const currencyA = useCurrency(currencyIdA === USD_ADDRESS[chainId] ? currencyIdA : native.symbol)
+  const currencyB = useCurrency(XOX_ADDRESS[chainId])
 
   useEffect(() => {
     if (!currencyIdA && !currencyIdB) {
@@ -39,13 +30,7 @@ const AddLiquidityPage = () => {
     }
   }, [dispatch, currencyIdA, currencyIdB])
 
-  return stableSwapConfig ? (
-    <StableConfigContext.Provider value={{ stableSwapConfig, ...stableConfig }}>
-      <AddStableLiquidity currencyA={currencyA} currencyB={currencyB} />
-    </StableConfigContext.Provider>
-  ) : (
-    <AddLiquidity currencyA={currencyA} currencyB={currencyB} />
-  )
+  return <AddLiquidity currencyA={currencyA} currencyB={currencyB} />
 }
 
 AddLiquidityPage.chains = CHAIN_IDS
