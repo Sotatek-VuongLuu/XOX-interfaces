@@ -237,8 +237,8 @@ const Menu = (props) => {
   }
 
   const handleReadAll = async () => {
-    if (!activeNotifi) return
     setIsOpen(!isOpen)
+    if (!activeNotifi) return
     const params = { address: account?.toLocaleLowerCase() }
     const result: any = await axios
       .put(`${process.env.NEXT_PUBLIC_API}/notifications/read-all/${params.address}`)
