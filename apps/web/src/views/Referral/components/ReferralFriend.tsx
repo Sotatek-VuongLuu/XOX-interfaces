@@ -845,7 +845,7 @@ const ReferralFriend = ({
       >
         <Content>
           <div className="discription">
-            Receive ${Number(totalUnClaimed)?.toLocaleString()}
+            Withdraw Amount ${Number(totalUnClaimed)?.toLocaleString()}
             <br />
             You will receive:{' '}
             {`${roundingAmountNumber(Number(totalUnClaimed) * 0.99)} ${
