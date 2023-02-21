@@ -809,15 +809,15 @@ const ReferralFriend = ({
             points"?
           </div> */}
           <div className="discription">
-            Withdraw Amount ${roundingAmountNumber(Number(totalUnClaimed))}
+            Withdraw Amount ${roundingAmountNumber(Number(dataClaim.dollar))}
             <br />
             You will receive:{' '}
-            {`${roundingAmountNumber(Number(totalUnClaimed) * 0.99)} ${
+            {`${roundingAmountNumber(Number(dataClaim.dollar) * 0.99)} ${
               chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
             }`}
             <br />
             Platform Fee:{' '}
-            {`${roundingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)} ${
+            {`${roundingAmountNumber(Number(dataClaim.dollar) - Number(dataClaim.dollar) * 0.99)} ${
               chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
             }`}
           </div>
@@ -844,7 +844,19 @@ const ReferralFriend = ({
         title="Claim"
       >
         <Content>
-          <div className="discription">Receive {Number(totalUnClaimed)?.toLocaleString()}$?</div>
+          <div className="discription">
+            Receive ${Number(totalUnClaimed)?.toLocaleString()}
+            <br />
+            You will receive:{' '}
+            {`${roundingAmountNumber(Number(totalUnClaimed) * 0.99)} ${
+              chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
+            }`}
+            <br />
+            Platform Fee:{' '}
+            {`${roundingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)} ${
+              chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
+            }`}
+          </div>
           <div className="btn-group">
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimAll(false)}>
               Cancel
