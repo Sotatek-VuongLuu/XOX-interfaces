@@ -237,8 +237,8 @@ const Menu = (props) => {
   }
 
   const handleReadAll = async () => {
-    setIsOpen(!isOpen)
     if (!activeNotifi) return
+    setIsOpen(!isOpen)
     const params = { address: account?.toLocaleLowerCase() }
     const result: any = await axios
       .put(`${process.env.NEXT_PUBLIC_API}/notifications/read-all/${params.address}`)
@@ -320,7 +320,7 @@ const Menu = (props) => {
             <>
               {/* <GlobalSettings mode={SettingsMode.GLOBAL} /> */}
               {account ? (
-                <NotificationField onClick={() => handleReadAll()} ref={ref}>
+                <NotificationField onClick={() => handleReadAll()}>
                   {/* {argsMes?.length > 0 && <RedDot />} */}
                   {isDesktop ? (
                     activeNotifi ? (
@@ -338,7 +338,7 @@ const Menu = (props) => {
                     <IconAlert>{IconAlertSvg}</IconAlert>
                   )}
                   {isOpen && (
-                    <NotificationMenu>
+                    <NotificationMenu ref={ref}>
                       <h3>Notification</h3>
                       <p>Your referral code has been applied in a "Buy XOX” transaction</p>
                     </NotificationMenu>
