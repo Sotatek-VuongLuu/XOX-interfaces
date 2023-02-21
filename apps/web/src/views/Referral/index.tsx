@@ -323,6 +323,7 @@ export default function Refferal() {
     const res: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/point/config`).catch((error) => {
       console.warn(error)
     })
+
     if (res && res.data) {
       setListPoint(res.data)
     }

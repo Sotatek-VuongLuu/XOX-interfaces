@@ -69,13 +69,6 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
     }, [setIsOpen])
   );
 
-  const listUnderDevelopment = [
-    "XOX Super DEX 2.0",
-    "XOX Mobile App/Wallet",
-    "XOX Multi-chain Launchpad",
-    "XOX Coin Listing/Ranking Site",
-  ];
-
   return (
     <Box ref={setTargetRef} {...props}>
       <BoxDropdown
