@@ -6,7 +6,7 @@ import { NetworkSwitcher } from 'components/NetworkSwitcher'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { ChainId } from '@pancakeswap/sdk'
 import { useTokenContract, useTreasuryXOX } from 'hooks/useContract'
-import { getDecimalAmount } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, getDecimalAmount } from '@pancakeswap/utils/formatBalance'
 import BigNumber from 'bignumber.js'
 import { calculateGasMargin } from 'utils'
 import { useCallWithGasPrice } from 'hooks/useCallWithGasPrice'
@@ -379,7 +379,13 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
           </ButtonRight>
         </BoxRight>
       </Flex>
-      {error && <TextStyle className="error">{error}</TextStyle>}
+      {!error && <TextStyle className="error">dwqdqw{error}</TextStyle>}
+      <Flex justifyContent="space-between" alignItems="center">
+        <TextStyle>Platform Fee</TextStyle>
+        <BoxRight style={{ minHeight: 'unset' }}>
+          <TextStyle>{0.01 * amount < 0.01 ? '< 0.01' : formatAmountNumber(0.01 * amount)}$</TextStyle>
+        </BoxRight>
+      </Flex>
       <Flex justifyContent="end">
         <Button width={140} height={43} disabled={error || !amount || decimalError} onClick={handleWidthdraw}>
           Withdraw
