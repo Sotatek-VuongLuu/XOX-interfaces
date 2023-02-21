@@ -26,7 +26,11 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <CustomTooltipStyle>
-        <p className="label">{`$${formatAmountNumber(payload[0].payload.uv, 2)}`}</p>
+        <p className="label">
+          {formatAmountNumber(payload[0].payload.uv, 2) > 1
+            ? `${formatAmountNumber(payload[0].payload.uv, 2)} points`
+            : `${formatAmountNumber(payload[0].payload.uv, 2)} point`}
+        </p>
       </CustomTooltipStyle>
     )
   }
