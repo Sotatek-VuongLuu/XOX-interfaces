@@ -21,6 +21,7 @@ import {
   SwapResponseUNI,
   PairData,
 } from './types'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 
 const calculatorAmountUSDMint = (mint: MintResponse) => {
   const token0Symbol = mint.pair.token0.symbol
@@ -50,9 +51,9 @@ const calculatorAmountUSDBurn = (burn: BurnResponse) => {
 
 export const mapDataChartXOX = (pairData: PairData) => {
   return {
-    date: pairData.hourStartUnix || pairData.dailyVolumeUSD,
-    priceUSD: pairData.reserve0 / pairData.reserve1,
-    volUSD: pairData.hourlyVolumeUSD || pairData.dailyVolumeUSD,
+    date: pairData.hourStartUnix || pairData.date,
+    priceUSD: formatAmountNumber(pairData.reserve0 / pairData.reserve1, 4),
+    VolUSD: formatAmountNumber(pairData.hourlyVolumeToken1 || pairData.dailyVolumeToken1, 4),
   }
 }
 

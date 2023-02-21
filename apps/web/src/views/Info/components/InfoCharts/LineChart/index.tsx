@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useEffect, useMemo, useState } from 'react'
+import { Dispatch, SetStateAction, useMemo } from 'react'
 import { ResponsiveContainer, XAxis, YAxis, Tooltip, AreaChart, Area, CartesianGrid } from 'recharts'
 import useTheme from 'hooks/useTheme'
 import { formatAmount } from 'utils/formatInfoNumbers'
@@ -163,6 +163,8 @@ const LineChart = ({
           tickFormatter={(time) => formatDate(time)}
           minTickGap={minGap}
           fontSize={showXAxis ? '14px' : '0px'}
+          allowDuplicatedCategory={false}
+          interval="preserveStartEnd"
         />
         {hoverableChart && typeXAxis === '3M' && (
           <XAxis
