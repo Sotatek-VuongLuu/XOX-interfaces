@@ -32,7 +32,7 @@ const calculatorAmountUSDMint = (mint: MintResponse) => {
   const symbolToken0 = token0Symbol === 'USDC' ? 'XOX' : token0Symbol
 
   const inputTokenSymbol = symbolToken0
-  const amountUSD = inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD' ? abs0 : abs1
+  const amountUSD = inputTokenSymbol === 'USDC' || inputTokenSymbol === 'USDT' ? abs0 : abs1
   return amountUSD * 2
 }
 
@@ -45,7 +45,7 @@ const calculatorAmountUSDBurn = (burn: BurnResponse) => {
   const symbolToken0 = token0Symbol === 'USDC' ? 'XOX' : token0Symbol
 
   const inputTokenSymbol = symbolToken0
-  const amountUSD = inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD' ? abs0 : abs1
+  const amountUSD = inputTokenSymbol === 'USDC' || inputTokenSymbol === 'USDT' ? abs0 : abs1
   return amountUSD * 2
 }
 
@@ -117,7 +117,7 @@ const calculatorAmountUSDSwap = (swap: SwapResponse) => {
 
   const inputTokenSymbol = amountToken1 < 0 ? symbolToken0 : symbolToken1
   const amountUSD =
-    inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD'
+    inputTokenSymbol === 'USDC' || inputTokenSymbol === 'USDT'
       ? amountToken1 < 0
         ? abs0
         : abs1

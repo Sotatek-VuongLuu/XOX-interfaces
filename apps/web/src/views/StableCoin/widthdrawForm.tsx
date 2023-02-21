@@ -383,11 +383,15 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
           </ButtonRight>
         </BoxRight>
       </Flex>
-      {!error && <TextStyle className="error">{error}</TextStyle>}
+      {error && <TextStyle className="error">{error}</TextStyle>}
       <Flex justifyContent="space-between" alignItems="center">
         <TextStyle>Platform Fee</TextStyle>
         <BoxRight style={{ minHeight: 'unset' }}>
-          <TextStyle>{0.01 * amount < 0.01 ? '< 0.01' : formatAmountNumber(0.01 * amount)}$</TextStyle>
+          {amount === undefined || amount === '' ? (
+            <TextStyle></TextStyle>
+          ) : (
+            <TextStyle className="color-white">{0.01 * amount < 0.01 ? '< 0.01' : formatAmountNumber(0.01 * amount)}$</TextStyle>
+          )}
         </BoxRight>
       </Flex>
       <Flex justifyContent="end">
