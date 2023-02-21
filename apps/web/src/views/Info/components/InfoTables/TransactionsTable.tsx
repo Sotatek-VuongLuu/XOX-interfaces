@@ -325,7 +325,7 @@ const DataRow: React.FC<
   //   }
   // }
   const stablCoin =
-    (inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD') && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
+    (inputTokenSymbol === 'USDC' || inputTokenSymbol === 'USDT') && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
       ? `${formatAmount(amountUSD / 10)} Stable coin`
       : '--'
 
