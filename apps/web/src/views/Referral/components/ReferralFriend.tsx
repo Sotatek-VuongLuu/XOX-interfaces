@@ -804,10 +804,6 @@ const ReferralFriend = ({
         title="Claim"
       >
         <Content>
-          {/* <div className="discription">
-            Receive {dataClaim.dollar?.toLocaleString()}$ at level "<span>{dataClaim.point?.toLocaleString()}</span>{' '}
-            points"?
-          </div> */}
           <div className="discription">
             Withdraw Amount ${roundingAmountNumber(Number(dataClaim.dollar))}
             <br />
@@ -880,8 +876,8 @@ const ReferralFriend = ({
             You have gotten{' '}
             <span>
               {typeOfClaim === TYPE_OF_CLAIM.CLAIM_BY_LEVEL
-                ? dataClaim.dollar?.toLocaleString()
-                : Number(cacheAmountUnClaimOfUser)?.toLocaleString()}
+                ? (dataClaim.dollar * 0.99).toLocaleString()
+                : (Number(cacheAmountUnClaimOfUser) * 0.99).toLocaleString()}
               $.
             </span>
           </div>
