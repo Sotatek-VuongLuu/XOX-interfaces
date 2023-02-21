@@ -442,8 +442,8 @@ const TransactionsTable: React.FC = () => {
   const [tempPage, setTempPage] = useState('1')
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
-  const transactions = useProtocolTransactionsSWR()
   const [currentTransactions, setCurrentTransactions] = useState([])
+  const transactions = useProtocolTransactionsSWR()
   const { t } = useTranslation()
 
   const [page, setPage] = useState(1)
@@ -454,54 +454,6 @@ const TransactionsTable: React.FC = () => {
   const handleChangeTempPage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
   }, [])
-
-  const sortedTransactions = useMemo(() => {
-    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD, SORT_FIELD.stableCoin]
-    return currentTransactions
-      ? currentTransactions
-          .slice(0, 300)
-          .filter((x) => {
-            return txFilter === undefined || x.type === txFilter
-          })
-          .map((item: any) => {
-            const outputTokenSymbol = item.amountToken0 < 0 ? item.token0Symbol : item.token1Symbol
-            const inputTokenSymbol = item.amountToken1 < 0 ? item.token0Symbol : item.token1Symbol
-            const amountStable =
-              inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
-                ? item.amountUSD / 10 + 1
-                : 0
-            return { ...item, amountStable }
-          })
-          .sort((a, b) => {
-            if (a && b) {
-              const firstField = a[sortField as keyof Transaction]
-              const secondField = b[sortField as keyof Transaction]
-              const [first, second] = toBeAbsList.includes(sortField)
-                ? [Math.abs(firstField as number), Math.abs(secondField as number)]
-                : [firstField, secondField]
-              return first > second ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
-            }
-            return -1
-          })
-          .slice(perPage * (page - 1), page * perPage)
-      : []
-  }, [currentTransactions, page, sortField, sortDirection, sortStable, txFilter, perPage])
-
-  // Update maxPage based on amount of items & applied filtering
-  useEffect(() => {
-    if (currentTransactions) {
-      const filteredTransactions = currentTransactions
-        .filter((tx) => {
-          return txFilter === undefined || tx.type === txFilter
-        })
-        .slice(0, 300)
-      if (filteredTransactions.length % perPage === 0) {
-        setMaxPage(Math.floor(filteredTransactions.length / perPage))
-      } else {
-        setMaxPage(Math.floor(filteredTransactions.length / perPage) + 1)
-      }
-    }
-  }, [currentTransactions, txFilter, perPage])
 
   const handleFilter = useCallback(
     (newFilter: TransactionType) => {
@@ -633,17 +585,6 @@ const TransactionsTable: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    switch (transactionFrom) {
-      case TransactionFrom.XOX:
-        setCurrentTransactions(transactions?.transactionsXOX)
-        break
-      default:
-        setCurrentTransactions(transactions?.transactionsOther)
-        break
-    }
-  }, [transactions, transactionFrom])
-
-  useEffect(() => {
     setTempPage(page.toString())
   }, [page])
 
@@ -656,6 +597,77 @@ const TransactionsTable: React.FC = () => {
     setTransactionFrom(TransactionFrom.XOX)
     setCurrentTransactions([])
   }, [chainId])
+
+  useEffect(() => {
+    setCurrentTransactions([])
+  }, [])
+
+  // Update maxPage based on amount of items & applied filtering
+  useEffect(() => {
+    if (!transactions) return
+
+    let trans
+    if (TransactionFrom.XOX === transactionFrom) {
+      trans = [...transactions?.transactionsXOX]
+    } else {
+      trans = [...transactions?.transactionsOther]
+    }
+    setCurrentTransactions(trans)
+
+    if (trans) {
+      const filteredTransactions = currentTransactions
+        .filter((tx) => {
+          return txFilter === undefined || tx.type === txFilter
+        })
+        .slice(0, 300)
+      if (filteredTransactions.length % perPage === 0) {
+        setMaxPage(Math.floor(filteredTransactions.length / perPage))
+      } else {
+        setMaxPage(Math.floor(filteredTransactions.length / perPage) + 1)
+      }
+    }
+  }, [transactions, txFilter, perPage])
+
+  const sortedTransactions = useMemo(() => {
+    if (!transactions) return []
+
+    let trans
+    if (TransactionFrom.XOX === transactionFrom) {
+      trans = [...transactions?.transactionsXOX]
+    } else {
+      trans = [...transactions?.transactionsOther]
+    }
+    setCurrentTransactions(trans)
+    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD, SORT_FIELD.stableCoin]
+    return trans
+      ? trans
+          .slice(0, 300)
+          .filter((x) => {
+            return txFilter === undefined || x.type === txFilter
+          })
+          .map((item: any) => {
+            const outputTokenSymbol = item.amountToken0 < 0 ? item.token0Symbol : item.token1Symbol
+            const inputTokenSymbol = item.amountToken1 < 0 ? item.token0Symbol : item.token1Symbol
+            const amountStable =
+              inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
+                ? item.amountUSD / 10 + 1
+                : 0
+            return { ...item, amountStable }
+          })
+          .sort((a, b) => {
+            if (a && b) {
+              const firstField = a[sortField as keyof Transaction]
+              const secondField = b[sortField as keyof Transaction]
+              const [first, second] = toBeAbsList.includes(sortField)
+                ? [Math.abs(firstField as number), Math.abs(secondField as number)]
+                : [firstField, secondField]
+              return first > second ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
+            }
+            return -1
+          })
+          .slice(perPage * (page - 1), page * perPage)
+      : []
+  }, [transactions, page, sortField, sortDirection, sortStable, txFilter, perPage])
 
   return (
     <Wrapper>
