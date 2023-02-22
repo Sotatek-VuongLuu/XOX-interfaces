@@ -350,7 +350,7 @@ const DataRow: React.FC<
     typePage === TYPE_HISTORY.stake
       ? 'XOXS'
       : chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET
-      ? 'BUSD'
+      ? 'USDT'
       : 'USDC'
 
   const onImageError = (e: any) => {
