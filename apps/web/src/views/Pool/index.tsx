@@ -1,5 +1,5 @@
 /* eslint-disable react/no-unknown-property */
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Text, Flex, CardFooter, Button, AddIcon, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
 import Link from 'next/link'
@@ -291,6 +291,10 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
     })
     .map(([, pair]) => pair)
 
+  useEffect(() => {
+    setSelectedCurrency(currencyA)
+  }, [currencyA])
+
   const renderBody = () => {
     if (!account) {
       return (
@@ -580,7 +584,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
                         allV2PairsWithLiquidity.length > 0 && !stateAdd
                           ? '/add'
                           : `/add/${XOX_ADDRESS[chainId]}/${
-                              selectedCurrency.isNative ? native.symbol : selectedCurrency.wrapped.address
+                              selectedCurrency?.isNative ? native.symbol : selectedCurrency?.wrapped?.address
                             }`
                       }
                       passHref
