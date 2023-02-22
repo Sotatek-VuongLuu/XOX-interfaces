@@ -37,13 +37,10 @@ export const getUserFriend = async (chainId: ChainId, account: string) => {
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getUserFriends {
-        userInfos(where: { id: "${account?.toLocaleLowerCase()}" }) {
+        userInfos(where: { id: "${account?.toLowerCase()}" }) {
           id
           total_amount
           total_claimed_amount
-          rank {
-            amount
-          }
           friends(orderBy: amount, orderDirection: desc) {
             ref_address
             amount
@@ -152,7 +149,7 @@ export const userClaimedHistories = (chainId: ChainId) => {
   }`
   return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
 }
-export const pointDataDays = (from : number, to: number, chainId: ChainId) => {
+export const pointDataDays = (from: number, to: number, chainId: ChainId) => {
   const requests = `{
     pointDataDays(where: { date_gte: ${from}, date_lte: ${to} }, orderBy: date, orderDirection: desc) {
       id,
