@@ -21,11 +21,13 @@ const AddLiquidityPage = () => {
   const [currencyIdA, currencyIdB] = router.query.currency || [undefined, undefined]
 
   const currencyA = useCurrency(
-    currencyIdA === XOX_ADDRESS[chainId] || currencyIdA === native.symbol ? currencyIdA : USD_ADDRESS[chainId],
+    currencyIdA === XOX_ADDRESS[chainId] || currencyIdA?.toUpperCase() === native.symbol.toUpperCase()
+      ? currencyIdA
+      : USD_ADDRESS[chainId],
   )
   const currencyB = useCurrency(
     currencyIdA === XOX_ADDRESS[chainId]
-      ? currencyIdB === native.symbol
+      ? currencyIdB?.toUpperCase() === native.symbol.toUpperCase()
         ? currencyIdB
         : USD_ADDRESS[chainId]
       : XOX_ADDRESS[chainId],

@@ -44,7 +44,7 @@ export function useDerivedBurnInfo(
   // const [, pair] = usePair(currencyA, currencyB)
   const [, pairUSDXOX] = usePairSingleXOX()
   const [, pairNativeXOX] = usePair(currencyA, currencyB)
-  const pair = currencyA.isNative ? pairNativeXOX : pairUSDXOX
+  const pair = currencyA?.isNative || currencyB?.isNative ? pairNativeXOX : pairUSDXOX
 
   // balances
   const relevantTokenBalances = useTokenBalances(
