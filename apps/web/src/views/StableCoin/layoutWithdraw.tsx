@@ -159,7 +159,7 @@ export default function WithDrawLayout() {
   const chainIdLocal: any = useMultiChainId() || chainId
   const [keyContainer, setKeyContainer] = useState(Math.random())
   const { isMobile } = useMatchBreakpoints()
-
+  const [loadOk, setLoadOk] = useState(false)
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async (accountId: any) => {
     if (!accountId) return null
@@ -193,6 +193,12 @@ export default function WithDrawLayout() {
       handleCheckPendingRewardAll(account)
     }
   }, [account])
+
+  useEffect(() => {
+    if (!chainId || !account) return
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
+  }, [chainId, account])
 
   return (
     <>

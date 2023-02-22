@@ -126,21 +126,19 @@ const ImageWrapper = styled.video`
 const FeatureWatch = () => {
   const { width } = useWindowSize()
 
-  useEffect(() => {
-    const canvas = document.getElementById('canvas3d_xoxs_logo_pc')
-    if (canvas) {
-      const app = new Application(canvas as any)
-      app.load('https://prod.spline.design/eHWlbskKUlvFMGuG/scene.splinecode')
-    }
-  }, [])
+  // useEffect(() => {
+  //   const canvas = document.getElementById('canvas3d_xoxs_logo_pc')
+  //   if (canvas) {
+  //     const app = new Application(canvas as any)
+  //     app.load('https://prod.spline.design/eHWlbskKUlvFMGuG/scene.splinecode')
+  //   }
+  // }, [])
 
   return (
     <Wrapper style={{ overflow: 'hidden' }}>
       <Main container spacing={2}>
         <Grid item xs={12} md={4} style={{ minHeight: '400px', display: 'flex', alignItems: 'center', width: '100%' }}>
-          <LeftContent>
-            <canvas id="canvas3d_xoxs_logo_pc" />
-          </LeftContent>
+          <LeftContent>{/* <canvas id="canvas3d_xoxs_logo_pc" /> */}</LeftContent>
         </Grid>
         <Grid item xs={12} md={8}>
           <RightContent data-aos="fade-left">

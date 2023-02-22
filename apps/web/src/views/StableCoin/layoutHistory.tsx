@@ -209,6 +209,13 @@ export default function LayoutHistory() {
   const [keyContainer, setKeyContainer] = useState(Math.random())
   const { isMobile } = useMatchBreakpoints()
 
+  const [loadOk, setLoadOk] = useState(false)
+  useEffect(() => {
+    if (!chainId || !account) return
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
+  }, [chainId, account])
+
   return (
     <>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
