@@ -49,6 +49,7 @@ const WrapperItem = styled.div<IPropsWI>`
   background: rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(15px);
   border-radius: 20px;
+  position: relative;
 
   .get_xox {
     padding: 1px;
@@ -64,6 +65,7 @@ const WrapperItem = styled.div<IPropsWI>`
       background-color: #242424;
       padding: 10px 20px;
       border-radius: inherit;
+      border-radius: 8px;
       span {
         background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
         -webkit-background-clip: text;
@@ -76,7 +78,14 @@ const WrapperItem = styled.div<IPropsWI>`
         height: 100%;
         background-color: #191a28;
         border-radius: inherit;
+        border-radius: 8px;
       }
+    }
+
+    @media screen and (min-width: 900px) {
+      position: absolute;
+      left: 22px;
+      bottom: 24px;
     }
   }
 
@@ -98,6 +107,10 @@ const WrapperItem = styled.div<IPropsWI>`
     font-size: 14px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
+
+    @media screen and (min-width: 900px) {
+      margin-bottom: 55px;
+    }
   }
   .expand {
     color: #9072ff;
@@ -159,13 +172,13 @@ const UpComingItem = ({ title, describe, link }) => {
               </span>
             ) : null}
           </p>
-          <a href={link} target="_blank" rel="noreferrer">
-            <div className="get_xox">
+          <div className="get_xox box_absolute">
+            <a href={link} target="_blank" rel="noreferrer">
               <div className="boxed-child">
                 <span>Discover More</span>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </>
       )}
     </WrapperItem>
