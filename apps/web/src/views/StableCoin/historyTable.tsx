@@ -25,6 +25,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import axios from 'axios'
 import { Tooltip } from '@mui/material'
 import { Arrow, ClickableColumnHeader } from '../Info/components/InfoTables/shared'
+import BigNumber from 'bignumber.js'
 
 export const TYPE_HISTORY = {
   widthDraw: 'WIDTH_DRAW',
@@ -137,7 +138,7 @@ const Table = styled.div`
   &.table-withdraw {
     grid-gap: 15px 25px;
   }
-  .text-ellipsis{
+  .text-ellipsis {
     max-width: 90px;
     text-overflow: ellipsis;
     overflow: hidden;
@@ -321,21 +322,21 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
 }
 
 const decimalCount = (n: any) => {
-  if(!n) return false;
-  const nString = parseFloat(n).toString();
-  if(nString.split(".")[1]?.length < 7){
+  if (!n) return false
+  const nString = parseFloat(n).toString()
+  if (nString.split('.')[1]?.length < 7) {
     return false
   }
-  return true;
+  return true
 }
 
 const formatNumberDecimal = (n: any, decimal?: number) => {
-  let nString = parseFloat(n).toString();
-  if(nString.indexOf('e') !== -1){
-    nString = parseFloat(n).toFixed(15).toString();
+  let nString = parseFloat(n).toString()
+  if (nString.indexOf('e') !== -1) {
+    nString = parseFloat(n).toFixed(15).toString()
   }
-  const nSlice = decimal || 6;
-  return `${nString.split(".")[0]}.${nString.split(".")?.[1]?.slice(0, nSlice) || 0}`;
+  const nSlice = decimal || 6
+  return `${nString.split('.')[0]}.${nString.split('.')?.[1]?.slice(0, nSlice) || 0}`
 }
 
 const DataRow: React.FC<
@@ -343,7 +344,7 @@ const DataRow: React.FC<
 > = ({ transaction, index, page, perPage, typePage }) => {
   const { t } = useTranslation()
   const { chainId } = useActiveChainId()
-  const abs0 = formatUnits(transaction?.amount, USD_DECIMALS[chainId])
+  const abs0 = formatUnits(transaction?.amount?.split('.')?.[0], USD_DECIMALS[chainId])
   const chainIdLink = [1, 5, 56, 97].some((it) => it === chainId) ? chainId : ChainId.ETHEREUM
   const symbolToken0 =
     typePage === TYPE_HISTORY.stake
@@ -417,7 +418,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-time`}
-        style={{whiteSpace: 'nowrap'}}
+        style={{ whiteSpace: 'nowrap' }}
       >
         {formatISO9075(parseInt(transaction.date, 10) * 1000)}
       </Text>
@@ -432,9 +433,10 @@ const DataRow: React.FC<
           color="rgba(255, 255, 255, 0.87)"
         >
           <Tooltip title={abs0 ? `${abs0} ${symbolToken0}` : null} placement="top-start">
-            <span>{formatNumberDecimal(abs0)}
-            {decimalCount(abs0) && typePage !== TYPE_HISTORY.stake ? '...' : ''}
-            &nbsp;{`${symbolToken0}`}
+            <span>
+              {formatNumberDecimal(abs0)}
+              {decimalCount(abs0) && typePage !== TYPE_HISTORY.stake ? '...' : ''}
+              &nbsp;{`${symbolToken0}`}
             </span>
           </Tooltip>
         </Text>
@@ -455,9 +457,10 @@ const DataRow: React.FC<
             color="rgba(255, 255, 255, 0.87)"
           >
             <Tooltip title={abs0 ? `${abs0} ${symbolToken0}` : null} placement="top-start">
-              <span>{formatNumberDecimal(abs0)}
-              {decimalCount(abs0) ? '...' : ''}
-              &nbsp;{`${symbolToken0}`}
+              <span>
+                {formatNumberDecimal(abs0)}
+                {decimalCount(abs0) ? '...' : ''}
+                &nbsp;{`${symbolToken0}`}
               </span>
             </Tooltip>
           </Text>
