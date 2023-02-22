@@ -154,7 +154,7 @@ enum Steps {
   Add,
 }
 
-export default function AddLiquidity({ currencyA, currencyB }) {
+export default function AddLiquidity({ currencyA, currencyB, currencyIdA, currencyIdB }) {
   const router = useRouter()
   const { account, chainId, isWrongNetwork } = useActiveWeb3React()
   const { isMobile } = useMatchBreakpoints()
@@ -711,7 +711,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   chainId === 5 || chainId === 1 ? 0.3 : 0.25
                 }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
               )}
-              backTo="/liquidity"
+              backTo="/add"
             />
             <CardBody p={['18px 0', , '24px 0']}>
               <AutoColumn gap="16px">
@@ -759,7 +759,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   id="add-liquidity-input-tokena"
                   showCommonBases
                   commonBasesType={CommonBasesType.LIQUIDITY}
-                  forLiquidity
+                  disableCurrencySelect
                 />
                 <ColumnCenter>
                   <AddIcon width="16px" />

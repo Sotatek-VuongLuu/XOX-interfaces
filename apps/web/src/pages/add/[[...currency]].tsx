@@ -6,11 +6,10 @@ import { useAppDispatch } from 'state'
 import { resetMintState } from 'state/mint/actions'
 import { CHAIN_IDS } from 'utils/wagmi'
 import AddLiquidity from 'views/AddLiquidity'
-import AddStableLiquidity from 'views/AddLiquidity/AddStableLiquidity/index'
-import useStableConfig, { StableConfigContext } from 'views/Swap/StableSwap/hooks/useStableConfig'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import useNativeCurrency from 'hooks/useNativeCurrency'
+import Liquidity from 'views/Pool'
 
 const AddLiquidityPage = () => {
   const router = useRouter()
@@ -19,10 +18,18 @@ const AddLiquidityPage = () => {
 
   const native = useNativeCurrency()
 
-  const [currencyIdA, currencyIdB] = router.query.currency || [native.symbol, XOX_ADDRESS[chainId]]
+  const [currencyIdA, currencyIdB] = router.query.currency || [undefined, undefined]
 
-  const currencyA = useCurrency(currencyIdA === USD_ADDRESS[chainId] ? currencyIdA : native.symbol)
-  const currencyB = useCurrency(XOX_ADDRESS[chainId])
+  const currencyA = useCurrency(
+    currencyIdA === XOX_ADDRESS[chainId] || currencyIdA === native.symbol ? currencyIdA : USD_ADDRESS[chainId],
+  )
+  const currencyB = useCurrency(
+    currencyIdA === XOX_ADDRESS[chainId]
+      ? currencyIdB === native.symbol
+        ? currencyIdB
+        : USD_ADDRESS[chainId]
+      : XOX_ADDRESS[chainId],
+  )
 
   useEffect(() => {
     if (!currencyIdA && !currencyIdB) {
@@ -30,7 +37,11 @@ const AddLiquidityPage = () => {
     }
   }, [dispatch, currencyIdA, currencyIdB])
 
-  return <AddLiquidity currencyA={currencyA} currencyB={currencyB} />
+  return currencyIdA === undefined && currencyIdB === undefined ? (
+    <Liquidity stateAdd />
+  ) : (
+    <AddLiquidity currencyA={currencyA} currencyB={currencyB} currencyIdA={currencyIdA} currencyIdB={currencyIdB} />
+  )
 }
 
 AddLiquidityPage.chains = CHAIN_IDS
