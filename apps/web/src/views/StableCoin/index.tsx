@@ -270,6 +270,7 @@ export default function StableCoin() {
   const { account, chainId } = useWeb3React()
   const [widthDraw, setWidthDraw] = useState(TYPE.default)
   const allTokens = useAllTokens()
+  const [loadOk, setLoadOk] = useState(false)
   const contractTreasuryXOX = useTreasuryXOX()
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
@@ -312,6 +313,12 @@ export default function StableCoin() {
       handleCheckPendingRewardAll(account)
     }
   }, [account])
+
+  useEffect(() => {
+    if (!chainId || !account) return
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
+  }, [chainId, account])
 
   return (
     <>
