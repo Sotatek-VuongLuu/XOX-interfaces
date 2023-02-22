@@ -41,7 +41,7 @@ const CurrencySelectButton = ({ selectedCurrency, setSelectedCurrency }: Props) 
           color="rgba(255, 255, 255, 0.87)"
           ml="8px"
         >
-          {selectedCurrency.symbol}
+          {selectedCurrency?.symbol}
         </Text>
       </Flex>
       <ChevronDownIcon />

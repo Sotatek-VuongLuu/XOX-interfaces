@@ -154,28 +154,18 @@ enum Steps {
   Add,
 }
 
-export default function AddLiquidity({ currencyA, currencyB, currencyIdA, currencyIdB }) {
-  const router = useRouter()
+export default function AddLiquidity({ currencyA, currencyB }) {
   const { account, chainId, isWrongNetwork } = useActiveWeb3React()
   const { isMobile } = useMatchBreakpoints()
   const addPair = usePairAdder()
   const zapMode = false
   const expertMode = useIsExpertMode()
-  const zapAddress = getZapAddress(chainId)
   const native = useNativeCurrency()
 
   const [temporarilyZapMode, setTemporarilyZapMode] = useState(true)
 
-  const [steps, setSteps] = useState(Steps.Choose)
-
   const { t } = useTranslation()
   const gasPrice = useGasPrice()
-
-  useEffect(() => {
-    if (router.query.step === '1') {
-      setSteps(Steps.Add)
-    }
-  }, [router.query])
 
   const zapModeStatus = useMemo(() => !!zapMode && temporarilyZapMode, [zapMode, temporarilyZapMode])
 
@@ -308,11 +298,11 @@ export default function AddLiquidity({ currencyA, currencyB, currencyIdA, curren
   // check whether the user has approved the router on the tokens
   const [approvalA, approveACallback] = useApproveCallback(
     parsedAmounts[Field.CURRENCY_A],
-    currencies[Field.CURRENCY_A].symbol === native.symbol ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
+    currencies[Field.CURRENCY_A]?.symbol === native.symbol ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
   )
   const [approvalB, approveBCallback] = useApproveCallback(
     parsedAmounts[Field.CURRENCY_B],
-    currencies[Field.CURRENCY_A].symbol === native.symbol ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
+    currencies[Field.CURRENCY_A]?.symbol === native.symbol ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
   )
 
   const addTransaction = useTransactionAdder()
@@ -320,7 +310,7 @@ export default function AddLiquidity({ currencyA, currencyB, currencyIdA, curren
   const routerContractXOX = useRouterContractXOX(false)
   const routerContractNormal = useRouterContractXOX(true)
   const routerContract = useMemo(() => {
-    return currencies[Field.CURRENCY_A].symbol === native.symbol ? routerContractNormal : routerContractXOX
+    return currencies[Field.CURRENCY_A]?.symbol === native.symbol ? routerContractNormal : routerContractXOX
   }, [routerContractNormal, routerContractXOX, currencies[Field.CURRENCY_A]])
 
   async function onAdd() {
@@ -702,7 +692,7 @@ export default function AddLiquidity({ currencyA, currencyB, currencyIdA, curren
             <AppHeader
               title={
                 currencies[Field.CURRENCY_A]?.symbol && currencies[Field.CURRENCY_B]?.symbol
-                  ? `${getLPSymbol(currencies[Field.CURRENCY_A].symbol, currencies[Field.CURRENCY_B].symbol, chainId)}`
+                  ? `${getLPSymbol(currencies[Field.CURRENCY_A]?.symbol, currencies[Field.CURRENCY_B]?.symbol, chainId)}`
                   : t('Add Liquidity')
               }
               subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
@@ -715,7 +705,7 @@ export default function AddLiquidity({ currencyA, currencyB, currencyIdA, curren
             />
             <CardBody p={['18px 0', , '24px 0']}>
               <AutoColumn gap="16px">
-                {noLiquidity && (
+                {/* {noLiquidity && (
                   <ColumnCenter>
                     <Message variant="warning">
                       <div>
@@ -727,7 +717,7 @@ export default function AddLiquidity({ currencyA, currencyB, currencyIdA, curren
                       </div>
                     </Message>
                   </ColumnCenter>
-                )}
+                )} */}
                 <CurrencyInputPanel
                   showBUSD
                   onInputBlur={canZap ? zapIn.onInputBlurOnce : undefined}

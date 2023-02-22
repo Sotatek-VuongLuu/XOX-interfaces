@@ -100,7 +100,7 @@ export function useDerivedMintInfo(
   const [pairStateUSDXOX, pairUSDXOX] = usePairSingleXOX()
   const [pairStateNativeXOX, pairNativeXOX] = usePair(currencies[Field.CURRENCY_A], currencies[Field.CURRENCY_B])
   const [pairState, pair] =
-    currencies[Field.CURRENCY_A]?.symbol === native.symbol
+    currencies[Field.CURRENCY_A]?.symbol === native.symbol || currencies[Field.CURRENCY_B]?.symbol === native.symbol
       ? [pairStateNativeXOX, pairNativeXOX]
       : [pairStateUSDXOX, pairUSDXOX]
 

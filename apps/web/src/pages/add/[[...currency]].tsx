@@ -40,7 +40,7 @@ const AddLiquidityPage = () => {
   return currencyIdA === undefined && currencyIdB === undefined ? (
     <Liquidity stateAdd />
   ) : (
-    <AddLiquidity currencyA={currencyA} currencyB={currencyB} currencyIdA={currencyIdA} currencyIdB={currencyIdB} />
+    <AddLiquidity currencyA={currencyA} currencyB={currencyB} />
   )
 }
 

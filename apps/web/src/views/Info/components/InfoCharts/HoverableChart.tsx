@@ -167,7 +167,7 @@ const HoverableChart = ({
             rel="noreferrer"
           >
             <div className="boxed-child">
-              <span>Get {selectedCurrency.symbol}</span>
+              <span>Get {selectedCurrency?.symbol}</span>
             </div>
           </a>
           <button className="btn_select_token" onClick={onPresentCurrencyModal}>
@@ -180,7 +180,7 @@ const HoverableChart = ({
         <div className="container">
           <div className="token">
             <CurrencyLogo currency={selectedCurrency} size="30px" />
-            {selectedCurrency.symbol}
+            {selectedCurrency?.symbol}
           </div>
           <>
             <div className="liquidity">
