@@ -298,11 +298,15 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   // check whether the user has approved the router on the tokens
   const [approvalA, approveACallback] = useApproveCallback(
     parsedAmounts[Field.CURRENCY_A],
-    currencies[Field.CURRENCY_A]?.symbol === native.symbol ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
+    currencies[Field.CURRENCY_A]?.symbol === native.symbol || currencies[Field.CURRENCY_B]?.symbol === native.symbol
+      ? ROUTER_ADDRESS[chainId]
+      : ROUTER_XOX[chainId],
   )
   const [approvalB, approveBCallback] = useApproveCallback(
     parsedAmounts[Field.CURRENCY_B],
-    currencies[Field.CURRENCY_A]?.symbol === native.symbol ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
+    currencies[Field.CURRENCY_A]?.symbol === native.symbol || currencies[Field.CURRENCY_B]?.symbol === native.symbol
+      ? ROUTER_ADDRESS[chainId]
+      : ROUTER_XOX[chainId],
   )
 
   const addTransaction = useTransactionAdder()
@@ -310,8 +314,11 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   const routerContractXOX = useRouterContractXOX(false)
   const routerContractNormal = useRouterContractXOX(true)
   const routerContract = useMemo(() => {
-    return currencies[Field.CURRENCY_A]?.symbol === native.symbol ? routerContractNormal : routerContractXOX
-  }, [routerContractNormal, routerContractXOX, currencies[Field.CURRENCY_A]])
+    return currencies[Field.CURRENCY_A]?.symbol === native.symbol ||
+      currencies[Field.CURRENCY_B]?.symbol === native.symbol
+      ? routerContractNormal
+      : routerContractXOX
+  }, [routerContractNormal, routerContractXOX, currencies[Field.CURRENCY_A], currencies[Field.CURRENCY_B]])
 
   async function onAdd() {
     if (!chainId || !account || !routerContract) return
@@ -692,7 +699,11 @@ export default function AddLiquidity({ currencyA, currencyB }) {
             <AppHeader
               title={
                 currencies[Field.CURRENCY_A]?.symbol && currencies[Field.CURRENCY_B]?.symbol
-                  ? `${getLPSymbol(currencies[Field.CURRENCY_A]?.symbol, currencies[Field.CURRENCY_B]?.symbol, chainId)}`
+                  ? `${getLPSymbol(
+                      currencies[Field.CURRENCY_A]?.symbol,
+                      currencies[Field.CURRENCY_B]?.symbol,
+                      chainId,
+                    )}`
                   : t('Add Liquidity')
               }
               subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}

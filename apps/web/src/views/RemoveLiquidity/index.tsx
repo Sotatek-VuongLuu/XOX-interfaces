@@ -414,7 +414,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   const [signatureData, setSignatureData] = useState<{ v: number; r: string; s: string; deadline: number } | null>(null)
   const [approval, approveCallback] = useApproveCallback(
     parsedAmounts[Field.LIQUIDITY],
-    currencyA.isNative ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
+    currencyA.isNative || currencyB.isNative ? ROUTER_ADDRESS[chainId] : ROUTER_XOX[chainId],
   )
 
   async function onAttemptToApprove() {
@@ -489,8 +489,8 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   const routerContractXOX = useRouterContractXOX(false)
   const routerContractNormal = useRouterContractXOX(true)
   const routerContract = useMemo(() => {
-    return currencyA.isNative ? routerContractNormal : routerContractXOX
-  }, [routerContractNormal, routerContractXOX, currencyA])
+    return currencyA.isNative || currencyB.isNative ? routerContractNormal : routerContractXOX
+  }, [routerContractNormal, routerContractXOX, currencyA, currencyB])
 
   async function onZapOut() {
     if (!chainId || !library || !account || !estimateZapOutAmount) throw new Error('missing dependencies')
