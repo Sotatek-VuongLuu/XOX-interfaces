@@ -151,7 +151,10 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             price: data[key]?.quote?.USD?.price,
             percent_change_24h: data[key]?.quote?.USD?.percent_change_24h,
             volume_24h: data[key]?.quote?.USD?.volume_24h,
-            market_cap: data[key]?.quote?.USD?.market_cap,
+            market_cap:
+              data[key]?.self_reported_market_cap === null
+                ? data[key]?.quote?.USD?.market_cap
+                : data[key]?.self_reported_market_cap,
           }
         })
         setCurrencyDatas(result)
