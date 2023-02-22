@@ -14,10 +14,18 @@ const RemoveLiquidityPage = () => {
   const { chainId } = useActiveChainId()
   const native = useNativeCurrency()
 
-  const [currencyIdA, currencyIdB] = router.query.currency || [native.symbol, XOX_ADDRESS[chainId]]
+  const [currencyIdA, currencyIdB] = router.query.currency || [USD_ADDRESS[chainId], XOX_ADDRESS[chainId]]
 
-  const currencyA = useCurrency(currencyIdA === USD_ADDRESS[chainId] ? currencyIdA : native.symbol)
-  const currencyB = useCurrency(XOX_ADDRESS[chainId])
+  const currencyA = useCurrency(
+    currencyIdA === XOX_ADDRESS[chainId] || currencyIdA === native.symbol ? currencyIdA : USD_ADDRESS[chainId],
+  )
+  const currencyB = useCurrency(
+    currencyIdA === XOX_ADDRESS[chainId]
+      ? currencyIdB === native.symbol
+        ? currencyIdB
+        : USD_ADDRESS[chainId]
+      : XOX_ADDRESS[chainId],
+  )
 
   const stableConfig = useStableConfig({
     tokenA: currencyA,

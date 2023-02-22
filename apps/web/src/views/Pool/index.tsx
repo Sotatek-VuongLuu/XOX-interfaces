@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unknown-property */
-import { useMemo } from 'react'
+import { useMemo, useState } from 'react'
 import styled from 'styled-components'
-import { Text, Flex, CardFooter, Button, AddIcon, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Text, Flex, CardFooter, Button, AddIcon, useMatchBreakpoints, useModal } from '@pancakeswap/uikit'
 import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from '@pancakeswap/localization'
@@ -31,6 +31,7 @@ import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import { unwrappedToken } from 'utils/wrappedCurrency'
 import { Token } from '@pancakeswap/sdk'
+import CurrencySelectButton from './CurrencySelectButton'
 
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -215,7 +216,7 @@ const ConfirmedIcon = styled(ColumnCenter)`
 
 const fetcher = (url) => fetch(url).then((r) => r.json())
 
-export default function Pool() {
+export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
   const { address: account } = useAccount()
   const { isMobile } = useMatchBreakpoints()
   const native = useNativeCurrency()
@@ -225,16 +226,17 @@ export default function Pool() {
   const trackedTokenPairs = useTrackedTokenPairs()
   const currencyA = useCurrency(USD_ADDRESS[chainId])
   const currencyB = useCurrency(XOX_ADDRESS[chainId])
-  const balances = useCurrencyBalances(
-    account ?? undefined,
-    useMemo(() => [currencyA, currencyB], [chainId]),
-  )
   const USDId = chainId === 1 || chainId === 5 ? 3408 : 4687
   const { price } = useDerivedMintInfo(currencyA, currencyB)
   const [pairXOX] = usePairXOX()
   const pairNative = usePair(native, useCurrency(XOX_ADDRESS[chainId]))
   const userTokenBalanceUSDXOX = useTokenBalance(account, pairXOX[1]?.liquidityToken)
   const userTokenBalanceNativeXOX = useTokenBalance(account, pairNative[1]?.liquidityToken)
+  const [selectedCurrency, setSelectedCurrency] = useState(currencyA)
+  const balances = useCurrencyBalances(
+    account ?? undefined,
+    useMemo(() => [selectedCurrency, currencyB], [selectedCurrency, currencyB]),
+  )
 
   const { data: USDPrice } = useSWR(
     `${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/price?id=${USDId}`,
@@ -319,7 +321,7 @@ export default function Pool() {
 
     let positionCards = []
 
-    if (allV2PairsWithLiquidity?.length > 0) {
+    if (allV2PairsWithLiquidity?.length > 0 && !stateAdd) {
       positionCards = allV2PairsWithLiquidity.map((v2Pair, index) => (
         <FullPositionCard
           key={v2Pair.liquidityToken.address}
@@ -329,7 +331,7 @@ export default function Pool() {
       ))
     }
 
-    if (stablePairs?.length > 0) {
+    if (stablePairs?.length > 0 && !stateAdd) {
       positionCards = [
         ...positionCards,
         ...stablePairs?.map((stablePair, index) => (
@@ -342,7 +344,7 @@ export default function Pool() {
       ]
     }
 
-    if (positionCards?.length > 0) {
+    if (positionCards?.length > 0 && !stateAdd) {
       return (
         <>
           <Title>
@@ -381,37 +383,6 @@ export default function Pool() {
             border="1px solid #444444"
             borderRadius="8px"
           >
-            <CurrencyLogo
-              currency={
-                new Token(
-                  chainId === 1 || chainId === 5 ? 1 : 56,
-                  USD_ADDRESS[chainId === 1 || chainId === 5 ? 1 : 56],
-                  18,
-                  '',
-                )
-              }
-            />
-            <Text
-              fontWeight="400"
-              fontSize={['16px', , '18px']}
-              lineHeight={['19px', , '22px']}
-              color="rgba(255, 255, 255, 0.87)"
-              ml="8px"
-            >
-              {chainId === 1 || chainId === 5 ? 'USDC' : 'USDT'}
-            </Text>
-          </Flex>
-          <Flex justifyContent="center" alignItems="center">
-            <AddIcon />
-          </Flex>
-          <Flex
-            flexDirection="row"
-            alignItems="center"
-            px="16px"
-            py="12px"
-            border="1px solid #444444"
-            borderRadius="8px"
-          >
             <CurrencyLogo currency={new Token(chainId, XOX_ADDRESS[chainId], 18, '')} />
             <Text
               fontWeight="400"
@@ -423,41 +394,12 @@ export default function Pool() {
               XOX
             </Text>
           </Flex>
+          <Flex justifyContent="center" alignItems="center">
+            <AddIcon />
+          </Flex>
+          <CurrencySelectButton selectedCurrency={selectedCurrency} setSelectedCurrency={setSelectedCurrency} />
         </div>
         <div className="pair-balance">
-          <Flex flexDirection="row" justifyContent="space-between">
-            <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)">
-              Balance
-            </Text>
-            <Flex flexDirection="column" alignItems="flex-end">
-              <Text
-                fontWeight="400"
-                fontSize="12px"
-                lineHeight="15px"
-                color="rgba(255, 255, 255, 0.87)"
-                className="text-elipsis"
-              >
-                {formatAmountNumber(parseFloat(balances[0]?.toFixed()), 6) || 0}
-              </Text>
-              <Text
-                fontWeight="400"
-                fontSize="12px"
-                lineHeight="15px"
-                color="rgba(255, 255, 255, 0.6)"
-                mt="8px"
-                className="text-elipsis"
-              >
-                ~$
-                {balances[0]
-                  ? formatAmountNumber(
-                      parseFloat(balances[0]?.toFixed(6)) * parseFloat(USDPrice?.data?.[USDId]?.quote?.USD?.price || 1),
-                      2,
-                    )
-                  : 0}
-              </Text>
-            </Flex>
-          </Flex>
-          <div />
           <Flex flexDirection="row" justifyContent="space-between">
             <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)">
               Balance
@@ -489,6 +431,39 @@ export default function Pool() {
                       2,
                     )}`
                   : '0'}
+              </Text>
+            </Flex>
+          </Flex>
+          <div />
+          <Flex flexDirection="row" justifyContent="space-between">
+            <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)">
+              Balance
+            </Text>
+            <Flex flexDirection="column" alignItems="flex-end">
+              <Text
+                fontWeight="400"
+                fontSize="12px"
+                lineHeight="15px"
+                color="rgba(255, 255, 255, 0.87)"
+                className="text-elipsis"
+              >
+                {formatAmountNumber(parseFloat(balances[0]?.toFixed()), 6) || 0}
+              </Text>
+              <Text
+                fontWeight="400"
+                fontSize="12px"
+                lineHeight="15px"
+                color="rgba(255, 255, 255, 0.6)"
+                mt="8px"
+                className="text-elipsis"
+              >
+                ~$
+                {balances[0]
+                  ? formatAmountNumber(
+                      parseFloat(balances[0]?.toFixed(6)) * parseFloat(USDPrice?.data?.[USDId]?.quote?.USD?.price || 1),
+                      2,
+                    )
+                  : 0}
               </Text>
             </Flex>
           </Flex>
@@ -574,7 +549,7 @@ export default function Pool() {
                   chainId === 5 || chainId === 1 ? 0.3 : 0.25
                 }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
               )}
-              // backTo="/liquidity"
+              backTo={stateAdd ? '/liquidity' : undefined}
             />
 
             {v2IsLoading ? (
@@ -600,7 +575,16 @@ export default function Pool() {
                 </Body>
                 <StyledCardFooter style={{ textAlign: 'center' }}>
                   {account ? (
-                    <Link href="/add" passHref>
+                    <Link
+                      href={
+                        allV2PairsWithLiquidity.length > 0 && !stateAdd
+                          ? '/add'
+                          : `/add/${XOX_ADDRESS[chainId]}/${
+                              selectedCurrency.isNative ? native.symbol : selectedCurrency.wrapped.address
+                            }`
+                      }
+                      passHref
+                    >
                       <ButtonWrapper id="join-pool-button" width="100%">
                         {t('Add Liquidity')}
                       </ButtonWrapper>
