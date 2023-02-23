@@ -111,27 +111,27 @@ const UserMenu = () => {
   const provider = useProvider({ chainId })
   const { data: signer } = useSigner()
 
-  useEffect(() => {
-    const handleChangeChainToBscTestnet = (hexChainId) => {
-      if (parseInt(hexChainId, 16) !== chain?.id && parseInt(hexChainId, 16) === 97) {
-        router
-          .replace({
-            pathname: router.pathname,
-            query: {
-              ...router.query,
-              chainId: parseInt(hexChainId, 16),
-            },
-          })
-          .then(() => router.reload())
-      }
-    }
+  // useEffect(() => {
+  //   const handleChangeChainToBscTestnet = (hexChainId) => {
+  //     if (parseInt(hexChainId, 16) !== chain?.id && parseInt(hexChainId, 16) === 97) {
+  //       router
+  //         .replace({
+  //           pathname: router.pathname,
+  //           query: {
+  //             ...router.query,
+  //             chainId: parseInt(hexChainId, 16),
+  //           },
+  //         })
+  //         .then(() => router.reload())
+  //     }
+  //   }
 
-    window.ethereum?.on('chainChanged', handleChangeChainToBscTestnet)
+  //   window.ethereum?.on('chainChanged', handleChangeChainToBscTestnet)
 
-    return () => {
-      window.ethereum?.removeListener('chainChanged', handleChangeChainToBscTestnet)
-    }
-  }, [account])
+  //   return () => {
+  //     window.ethereum?.removeListener('chainChanged', handleChangeChainToBscTestnet)
+  //   }
+  // }, [account])
 
   useEffect(() => {
     if (!account || !chainId) return

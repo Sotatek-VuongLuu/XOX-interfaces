@@ -873,7 +873,7 @@ const ReferralFriend = ({
       <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Success">
         <Content>
           <div className="noti">
-            You have gotten{' '}
+            You have got{' '}
             <span>
               {typeOfClaim === TYPE_OF_CLAIM.CLAIM_BY_LEVEL
                 ? (dataClaim.dollar * 0.99).toLocaleString()

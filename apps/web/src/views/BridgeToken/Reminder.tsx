@@ -160,7 +160,7 @@ const Reminder: React.FC<Props> = ({
           Minimum Crosschain Amount is {formatNumberStr(bridgeTokenFee?.minAmount)} {tokenInput?.symbol}
         </li>
         {/* <li>Maximum Crosschain Amount is {formatNumberStr(bridgeTokenFee?.maxAmount)} STAND</li> */}
-        <li>Estimated Time of Crosschain Arrival is 10-30 mins</li>
+        <li>Estimated Time of Crosschain Arrival is 0.5-3 mins</li>
         {/* <li>
           Crosschain amount larger than {bridgeTokenFee?.maxAmount}{" "}
           {tokenInput?.symbol} could take up to 24 hours
