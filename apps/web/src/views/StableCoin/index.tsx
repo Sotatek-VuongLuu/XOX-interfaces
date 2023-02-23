@@ -247,7 +247,7 @@ const CustomRow = styled(Row)`
   grid-template-columns: 1fr;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: calc(50% - 12px) calc(50% - 12px);
   }
 `
 
@@ -401,12 +401,12 @@ export default function StableCoin() {
             )}
             <CustomRow>
               <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
-                <Box className="wrap-table" style={{ height: '100%' }}>
+                <Box className="wrap-table" style={{ height: '100%', maxWidth: '100%', overflow: 'auto' }}>
                   <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
                 </Box>
               </WrapperBorder>
               <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
-                <Box className="wrap-table" style={{ height: '100%' }}>
+                <Box className="wrap-table" style={{ height: '100%', maxWidth: '100%', overflow: 'auto' }}>
                   <TransactionTable />
                 </Box>
               </WrapperBorder>
