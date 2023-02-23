@@ -401,12 +401,18 @@ export default function StableCoin() {
             )}
             <CustomRow>
               <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
-                <Box className="wrap-table" style={{ height: '100%', maxWidth: '100%', overflow: 'auto' }}>
+                <Box
+                  className="wrap-table"
+                  style={{ height: '100%', maxWidth: '100%', overflow: 'visible' }}
+                >
                   <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
                 </Box>
               </WrapperBorder>
               <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
-                <Box className="wrap-table" style={{ height: '100%', maxWidth: '100%', overflow: 'auto' }}>
+                <Box
+                  className="wrap-table"
+                  style={{ height: '100%', maxWidth: '100%', overflow: 'visible' }}
+                >
                   <TransactionTable />
                 </Box>
               </WrapperBorder>
