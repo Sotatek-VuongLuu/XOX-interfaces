@@ -57,7 +57,12 @@ const Content = styled.div<IContentProps>`
 `
 
 const NoData = styled.div``
-const TxHash = styled.a``
+const TxHash = styled.a`
+  &:hover {
+    text-decoration: underline;
+    text-decoration-color: #9072ff;
+  }
+`
 
 export const shortenAddress = (address = '', start = 8, chars = 4) => {
   return address ? `${address?.substring(0, start)}...${address?.substring(address.length - chars)}` : ``

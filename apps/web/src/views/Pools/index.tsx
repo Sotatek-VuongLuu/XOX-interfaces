@@ -570,8 +570,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     }
   }
 
-  useEffect(() => {
-    if (!account || !chainId) return
+  const handleGetBalanceOfUser = () => {
     const currentProvider = provider
     getBalancesForEthereumAddress({
       // erc20 tokens you want to query!
@@ -589,6 +588,12 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       .catch((error) => {
         console.warn(error)
       })
+  }
+
+  useEffect(() => {
+    if (!account || !chainId) return
+    handleGetBalanceOfUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId, provider, isOpenSuccessModal])
 
   const handleWithdraw = async () => {
@@ -993,7 +998,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           <CustomButton
                             type="button"
                             className="nable"
-                            onClick={onModalStake}
+                            onClick={() => {
+                              onModalStake()
+                              handleGetBalanceOfUser()
+                            }}
                             disabled={!reserve || !totalSupplyLP}
                           >
                             Stake
@@ -1003,7 +1011,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         <CustomButton
                           type="button"
                           className="nable mt"
-                          onClick={onModalStake}
+                          onClick={() => {
+                            onModalStake()
+                            handleGetBalanceOfUser()
+                          }}
                           disabled={!reserve || !totalSupplyLP}
                         >
                           Stake
