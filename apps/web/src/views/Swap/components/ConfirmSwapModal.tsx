@@ -1,6 +1,6 @@
 import { useCallback, memo } from 'react'
 import { Trade, Currency, TradeType, CurrencyAmount } from '@pancakeswap/sdk'
-import { InjectedModalProps, LinkExternal, Text } from '@pancakeswap/uikit'
+import { InjectedModalProps, LinkExternal, OpenNewIcon, Text } from '@pancakeswap/uikit'
 import {
   TransactionErrorContent,
   TransactionSubmittedContent,
@@ -40,12 +40,21 @@ const SwapTransactionErrorContent = ({ onDismiss, message, openSettingModal }) =
               <u>{t('slippage tolerance.')}</u>
             </Text>
           </Text>
-          <LinkExternal
-            href="https://docs.xoxnet.io/products/pancakeswap-exchange/trade-guide"
-            style={{ width: '100%', justifyContent: 'center', color: '#3D8AFF', marginBottom: '32px' }}
-          >
-            {t('What are the potential issues with the token?')}
-          </LinkExternal>
+          <p style={{ paddingBottom: 20 }} className="text_potential">
+            {/* <span>
+              <a
+                href="https://docs.xoxnet.io/products/pancakeswap-exchange/trade-guide"
+                target="_blank"
+                rel="noreferrer"
+                style={{ width: '100%', justifyContent: 'center', color: '#3D8AFF', marginBottom: '32px' }}
+              >
+                {t('What are the potential issues with the token?')}
+                <span>
+                  <OpenNewIcon color="#3D8AFF" ml="4px" className="open-icon" />
+                </span>
+              </a>
+            </span> */}
+          </p>
         </>
       }
     />

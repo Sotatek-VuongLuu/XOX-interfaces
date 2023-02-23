@@ -172,6 +172,16 @@ const GlobalStyle = createGlobalStyle`
     margin-top: 40px;
   }
  }
+
+
+ .text_potential:hover {
+  text-decoration:underline;
+ }
+
+ .open-icon {
+  margin-bottom: -3px !important; 
+ }
+
 `
 
 export default GlobalStyle
