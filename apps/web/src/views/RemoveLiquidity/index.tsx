@@ -316,6 +316,7 @@ const ButtonWrapper = styled.div`
   }
 `
 
+export type TransactionState = 'start' | 'submited' | 'finished'
 const zapSupportedChainId = [ChainId.BSC, ChainId.BSC_TESTNET]
 
 export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, currencyIdB }) {
@@ -329,6 +330,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   const [tokenA, tokenB] = useMemo(() => [currencyA?.wrapped, currencyB?.wrapped], [currencyA, currencyB])
   const { isMobile } = useMatchBreakpoints()
   const [btnPercent, setBtnPercent] = useState<number>()
+  const [transactionState, setTransactionState] = useState<TransactionState>('finished')
 
   const { t } = useTranslation()
   const gasPrice = useGasPrice()
@@ -565,156 +567,162 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   }
 
   async function onRemove() {
-    if (!chainId || !account || !deadline || !routerContract) throw new Error('missing dependencies')
-    const { [Field.CURRENCY_A]: currencyAmountA, [Field.CURRENCY_B]: currencyAmountB } = parsedAmounts
-    if (!currencyAmountA || !currencyAmountB) {
-      toastError(t('Error'), t('Missing currency amounts'))
-      throw new Error('missing currency amounts')
-    }
-
-    const amountsMin = {
-      [Field.CURRENCY_A]: calculateSlippageAmount(currencyAmountA, allowedSlippage)[0],
-      [Field.CURRENCY_B]: calculateSlippageAmount(currencyAmountB, allowedSlippage)[0],
-    }
-
-    if (!currencyA || !currencyB) {
-      toastError(t('Error'), t('Missing tokens'))
-      throw new Error('missing tokens')
-    }
-    const liquidityAmount = parsedAmounts[Field.LIQUIDITY]
-    if (!liquidityAmount) {
-      toastError(t('Error'), t('Missing liquidity amount'))
-      throw new Error('missing liquidity amount')
-    }
-
-    const currencyBIsNative = currencyB?.isNative
-    const oneCurrencyIsNative = currencyA?.isNative || currencyBIsNative
-
-    if (!tokenA || !tokenB) {
-      toastError(t('Error'), t('Could not wrap'))
-      throw new Error('could not wrap')
-    }
-
-    let methodNames: string[]
-    let args: Array<string | string[] | number | boolean>
-    // we have approval, use normal remove liquidity
-    if (approval === ApprovalState.APPROVED) {
-      // removeLiquidityETH
-      if (oneCurrencyIsNative) {
-        methodNames = ['removeLiquidityETH', 'removeLiquidityETHSupportingFeeOnTransferTokens']
-        args = [
-          currencyBIsNative ? tokenA.address : tokenB.address,
-          liquidityAmount.quotient.toString(),
-          amountsMin[currencyBIsNative ? Field.CURRENCY_A : Field.CURRENCY_B].toString(),
-          amountsMin[currencyBIsNative ? Field.CURRENCY_B : Field.CURRENCY_A].toString(),
-          account,
-          deadline.toHexString(),
-        ]
-      }
-      // removeLiquidity
-      else {
-        methodNames = ['removeLiquidity']
-        args = [
-          tokenA.address,
-          tokenB.address,
-          liquidityAmount.quotient.toString(),
-          amountsMin[Field.CURRENCY_A].toString(),
-          amountsMin[Field.CURRENCY_B].toString(),
-          account,
-          deadline.toHexString(),
-        ]
-      }
-    }
-    // we have a signature, use permit versions of remove liquidity
-    else if (signatureData !== null) {
-      // removeLiquidityETHWithPermit
-      if (oneCurrencyIsNative) {
-        methodNames = ['removeLiquidityETHWithPermit', 'removeLiquidityETHWithPermitSupportingFeeOnTransferTokens']
-        args = [
-          currencyBIsNative ? tokenA.address : tokenB.address,
-          liquidityAmount.quotient.toString(),
-          amountsMin[currencyBIsNative ? Field.CURRENCY_A : Field.CURRENCY_B].toString(),
-          amountsMin[currencyBIsNative ? Field.CURRENCY_B : Field.CURRENCY_A].toString(),
-          account,
-          signatureData.deadline,
-          false,
-          signatureData.v,
-          signatureData.r,
-          signatureData.s,
-        ]
-      }
-      // removeLiquidityETHWithPermit
-      else {
-        methodNames = ['removeLiquidityWithPermit']
-        args = [
-          tokenA.address,
-          tokenB.address,
-          liquidityAmount.quotient.toString(),
-          amountsMin[Field.CURRENCY_A].toString(),
-          amountsMin[Field.CURRENCY_B].toString(),
-          account,
-          signatureData.deadline,
-          false,
-          signatureData.v,
-          signatureData.r,
-          signatureData.s,
-        ]
-      }
-    } else {
-      toastError(t('Error'), t('Attempting to confirm without approval or a signature'))
-      throw new Error('Attempting to confirm without approval or a signature')
-    }
-
-    let methodSafeGasEstimate: { methodName: string; safeGasEstimate: BigNumber }
-    for (let i = 0; i < methodNames.length; i++) {
-      let safeGasEstimate
-      try {
-        // eslint-disable-next-line no-await-in-loop
-        safeGasEstimate = calculateGasMargin(await routerContract.estimateGas[methodNames[i]](...args))
-      } catch (e) {
-        console.error(`estimateGas failed`, methodNames[i], args, e)
+    try {
+      setTransactionState('start')
+      if (!chainId || !account || !deadline || !routerContract) throw new Error('missing dependencies')
+      const { [Field.CURRENCY_A]: currencyAmountA, [Field.CURRENCY_B]: currencyAmountB } = parsedAmounts
+      if (!currencyAmountA || !currencyAmountB) {
+        toastError(t('Error'), t('Missing currency amounts'))
+        throw new Error('missing currency amounts')
       }
 
-      if (BigNumber.isBigNumber(safeGasEstimate)) {
-        methodSafeGasEstimate = { methodName: methodNames[i], safeGasEstimate }
-        break
+      const amountsMin = {
+        [Field.CURRENCY_A]: calculateSlippageAmount(currencyAmountA, allowedSlippage)[0],
+        [Field.CURRENCY_B]: calculateSlippageAmount(currencyAmountB, allowedSlippage)[0],
       }
-    }
 
-    // all estimations failed...
-    if (!methodSafeGasEstimate) {
-      toastError(t('Error'), t('This transaction would fail'))
-    } else {
-      const { methodName, safeGasEstimate } = methodSafeGasEstimate
+      if (!currencyA || !currencyB) {
+        toastError(t('Error'), t('Missing tokens'))
+        throw new Error('missing tokens')
+      }
+      const liquidityAmount = parsedAmounts[Field.LIQUIDITY]
+      if (!liquidityAmount) {
+        toastError(t('Error'), t('Missing liquidity amount'))
+        throw new Error('missing liquidity amount')
+      }
 
-      setLiquidityState({ attemptingTxn: true, liquidityErrorMessage: undefined, txHash: undefined })
-      await routerContract[methodName](...args, {
-        gasLimit: safeGasEstimate,
-        gasPrice,
-      })
-        .then((response: TransactionResponse) => {
-          setLiquidityState({ attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response.hash })
-          const amountA = formatAmountString(parsedAmounts[Field.CURRENCY_A], 3)
-          const amountB = formatAmountString(parsedAmounts[Field.CURRENCY_B], 3)
-          addTransaction(response, {
-            summary: `Remove ${amountA} ${currencyA?.symbol} and ${amountB} ${currencyB?.symbol}`,
-            translatableSummary: {
-              text: 'Remove %amountA% %symbolA% and %amountB% %symbolB%',
-              data: { amountA, symbolA: currencyA?.symbol, amountB, symbolB: currencyB?.symbol },
-            },
-            type: 'remove-liquidity',
-          })
+      const currencyBIsNative = currencyB?.isNative
+      const oneCurrencyIsNative = currencyA?.isNative || currencyBIsNative
+
+      if (!tokenA || !tokenB) {
+        toastError(t('Error'), t('Could not wrap'))
+        throw new Error('could not wrap')
+      }
+
+      let methodNames: string[]
+      let args: Array<string | string[] | number | boolean>
+      // we have approval, use normal remove liquidity
+      if (approval === ApprovalState.APPROVED) {
+        // removeLiquidityETH
+        if (oneCurrencyIsNative) {
+          methodNames = ['removeLiquidityETH', 'removeLiquidityETHSupportingFeeOnTransferTokens']
+          args = [
+            currencyBIsNative ? tokenA.address : tokenB.address,
+            liquidityAmount.quotient.toString(),
+            amountsMin[currencyBIsNative ? Field.CURRENCY_A : Field.CURRENCY_B].toString(),
+            amountsMin[currencyBIsNative ? Field.CURRENCY_B : Field.CURRENCY_A].toString(),
+            account,
+            deadline.toHexString(),
+          ]
+        }
+        // removeLiquidity
+        else {
+          methodNames = ['removeLiquidity']
+          args = [
+            tokenA.address,
+            tokenB.address,
+            liquidityAmount.quotient.toString(),
+            amountsMin[Field.CURRENCY_A].toString(),
+            amountsMin[Field.CURRENCY_B].toString(),
+            account,
+            deadline.toHexString(),
+          ]
+        }
+      }
+      // we have a signature, use permit versions of remove liquidity
+      else if (signatureData !== null) {
+        // removeLiquidityETHWithPermit
+        if (oneCurrencyIsNative) {
+          methodNames = ['removeLiquidityETHWithPermit', 'removeLiquidityETHWithPermitSupportingFeeOnTransferTokens']
+          args = [
+            currencyBIsNative ? tokenA.address : tokenB.address,
+            liquidityAmount.quotient.toString(),
+            amountsMin[currencyBIsNative ? Field.CURRENCY_A : Field.CURRENCY_B].toString(),
+            amountsMin[currencyBIsNative ? Field.CURRENCY_B : Field.CURRENCY_A].toString(),
+            account,
+            signatureData.deadline,
+            false,
+            signatureData.v,
+            signatureData.r,
+            signatureData.s,
+          ]
+        }
+        // removeLiquidityETHWithPermit
+        else {
+          methodNames = ['removeLiquidityWithPermit']
+          args = [
+            tokenA.address,
+            tokenB.address,
+            liquidityAmount.quotient.toString(),
+            amountsMin[Field.CURRENCY_A].toString(),
+            amountsMin[Field.CURRENCY_B].toString(),
+            account,
+            signatureData.deadline,
+            false,
+            signatureData.v,
+            signatureData.r,
+            signatureData.s,
+          ]
+        }
+      } else {
+        toastError(t('Error'), t('Attempting to confirm without approval or a signature'))
+        throw new Error('Attempting to confirm without approval or a signature')
+      }
+
+      let methodSafeGasEstimate: { methodName: string; safeGasEstimate: BigNumber }
+      for (let i = 0; i < methodNames.length; i++) {
+        let safeGasEstimate
+        try {
+          // eslint-disable-next-line no-await-in-loop
+          safeGasEstimate = calculateGasMargin(await routerContract.estimateGas[methodNames[i]](...args))
+        } catch (e) {
+          console.error(`estimateGas failed`, methodNames[i], args, e)
+        }
+
+        if (BigNumber.isBigNumber(safeGasEstimate)) {
+          methodSafeGasEstimate = { methodName: methodNames[i], safeGasEstimate }
+          break
+        }
+      }
+
+      // all estimations failed...
+      if (!methodSafeGasEstimate) {
+        toastError(t('Error'), t('This transaction would fail'))
+      } else {
+        const { methodName, safeGasEstimate } = methodSafeGasEstimate
+
+        setLiquidityState({ attemptingTxn: true, liquidityErrorMessage: undefined, txHash: undefined })
+        await routerContract[methodName](...args, {
+          gasLimit: safeGasEstimate,
+          gasPrice,
         })
-        .catch((err) => {
-          if (err && err.code !== 4001) {
-            logError(err)
-          }
-          setLiquidityState({
-            attemptingTxn: false,
-            liquidityErrorMessage: t('Transaction rejected.'),
-            txHash: undefined,
+          .then((response: TransactionResponse) => {
+            setTransactionState('submited')
+            setLiquidityState({ attemptingTxn: false, liquidityErrorMessage: undefined, txHash: response.hash })
+            const amountA = formatAmountString(parsedAmounts[Field.CURRENCY_A], 3)
+            const amountB = formatAmountString(parsedAmounts[Field.CURRENCY_B], 3)
+            addTransaction(response, {
+              summary: `Remove ${amountA} ${currencyA?.symbol} and ${amountB} ${currencyB?.symbol}`,
+              translatableSummary: {
+                text: 'Remove %amountA% %symbolA% and %amountB% %symbolB%',
+                data: { amountA, symbolA: currencyA?.symbol, amountB, symbolB: currencyB?.symbol },
+              },
+              type: 'remove-liquidity',
+            })
           })
-        })
+          .catch((err) => {
+            if (err && err.code !== 4001) {
+              logError(err)
+            }
+            setLiquidityState({
+              attemptingTxn: false,
+              liquidityErrorMessage: t('Transaction rejected.'),
+              txHash: undefined,
+            })
+          })
+      }
+    } catch (e) {
+      setTransactionState('finished')
     }
   }
 
@@ -796,6 +804,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
       currencyA={currencyA}
       currencyB={currencyB}
       toggleZapMode={setTemporarilyZapMode}
+      transactionState={transactionState}
     />,
     true,
     true,
@@ -1164,7 +1173,8 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                       disabled={
                         !isValid ||
                         (!isZap && signatureData === null && approval !== ApprovalState.APPROVED) ||
-                        (isZap && approval !== ApprovalState.APPROVED)
+                        (isZap && approval !== ApprovalState.APPROVED) ||
+                        transactionState !== 'finished'
                       }
                       style={{ fontWeight: 700 }}
                     >
@@ -1175,7 +1185,12 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
               </Box>
               {pair ? (
                 <AutoColumn style={{ width: '100%', marginTop: '24px' }}>
-                  <MinimalPositionCard showUnwrapped={oneCurrencyIsWNative} pair={pair} />
+                  <MinimalPositionCard
+                    showUnwrapped={oneCurrencyIsWNative}
+                    pair={pair}
+                    transactionState={transactionState}
+                    setTransactionState={setTransactionState}
+                  />
                 </AutoColumn>
               ) : null}
             </CustomCardBody>

@@ -13,6 +13,7 @@ import { CurrencyLogo, DoubleCurrencyLogo } from 'components/Logo'
 import { ApprovalState } from 'hooks/useApproveCallback'
 import { ZapErrorMessages } from '../../AddLiquidity/components/ZapErrorMessage'
 import { formatAmountString } from '@pancakeswap/utils/formatBalance'
+import { TransactionState } from 'views/RemoveLiquidity'
 
 interface ConfirmRemoveLiquidityModalProps {
   title: string
@@ -38,6 +39,7 @@ interface ConfirmRemoveLiquidityModalProps {
   currencyB: Currency | null | undefined
   isZap?: boolean
   toggleZapMode?: (value: boolean) => void
+  transactionState?: TransactionState
 }
 
 const ConfirmRemoveLiquidityModal: React.FC<
@@ -62,6 +64,7 @@ const ConfirmRemoveLiquidityModal: React.FC<
   currencyB,
   isZap,
   toggleZapMode,
+  transactionState,
 }) => {
   const { t } = useTranslation()
 
@@ -137,7 +140,7 @@ const ConfirmRemoveLiquidityModal: React.FC<
           mt="20px"
           mb="32px"
           height={43}
-          disabled={!(approval === ApprovalState.APPROVED || signatureData !== null)}
+          disabled={!(approval === ApprovalState.APPROVED || signatureData !== null) || transactionState !== 'finished'}
           onClick={onRemove}
         >
           {t('Confirm')}
