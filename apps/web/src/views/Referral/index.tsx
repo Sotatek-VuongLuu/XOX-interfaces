@@ -202,6 +202,9 @@ export default function Refferal() {
   const [maxAmount, setMaxAmount] = useState('')
   const [listPoint, setListPoint] = useState<IListPoint[]>([])
 
+  const [subTabIndex, setSubTabIndex] = useState(0)
+  const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
+
   const functionList: FunctionList = useMemo(() => {
     return {
       'All Time': [listUserRanksAllTime, rankOfUserAllTime, setListUserRanksAllTime, setRankOfUserAllTime],
@@ -587,9 +590,9 @@ export default function Refferal() {
   }, [account, chainId])
 
   useEffect(() => {
-    if (!chainId) return
+    if (!chainId || !account) return
     getUserVolumn()
-  }, [chainId])
+  }, [chainId, account, subTabIndex])
 
   useEffect(() => {
     if (account) {
@@ -622,6 +625,9 @@ export default function Refferal() {
               maxAmount={maxAmount}
               listPoint={listPoint}
               listLevelMustReach={listLevelMustReach}
+              subTab={subTab}
+              subTabIndex={subTabIndex}
+              setSubTabIndex={setSubTabIndex}
             />
             <ReferralFriend
               currentLevelReach={currentLevelReach}

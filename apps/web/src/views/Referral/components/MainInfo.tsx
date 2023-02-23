@@ -612,6 +612,9 @@ interface IProps {
   maxAmount: any
   listPoint: any
   listLevelMustReach: any
+  subTab: any
+  subTabIndex: any
+  setSubTabIndex: any
 }
 
 const MainInfo = ({
@@ -632,15 +635,16 @@ const MainInfo = ({
   maxAmount,
   listPoint,
   listLevelMustReach,
+  subTab,
+  subTabIndex,
+  setSubTabIndex,
 }: IProps) => {
-  const [subTabIndex, setSubTabIndex] = useState(0)
   const [loadNetWork, setLoadNetWork] = useState(false)
   const { account, chainId, isWrongNetwork } = useActiveWeb3React()
   const totalPoint = listLever[currentLevelReach]?.point
   const currentPoint = userCurrentPoint
   const percentPoint = (currentPoint / totalPoint) * 100
   const { width } = useWindowSize()
-  const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
   const [listFriends, setListFriends] = useState([])
 
   const controlWidth = useMemo(() => {
