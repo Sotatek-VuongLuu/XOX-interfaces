@@ -283,37 +283,39 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
 }
 
 const decimalCount = (n: any) => {
-  if(!n) return false;
-  const nString = parseFloat(n).toString();
-  if(nString.indexOf('.') === -1 ||  nString.split(".")[1]?.length < 7){
+  if (!n) return false
+  const nString = parseFloat(n).toString()
+  if (nString.indexOf('.') === -1 || nString.split('.')[1]?.length < 7) {
     return false
   }
-  return true;
+  return true
 }
 
 const getPowerOfTen = (n: any) => {
-  const nString = parseFloat(n).toString();
-  const eIndex = nString.indexOf("e");
-  return nString.substring(eIndex + 2);
+  const nString = parseFloat(n).toString()
+  const eIndex = nString.indexOf('e')
+  return nString.substring(eIndex + 2)
 }
 
 const fullNumber = (n: any) => {
-  let nString = parseFloat(n).toString();
-  if(nString.indexOf('e') !== -1){
-    const numberPower = getPowerOfTen(n);
-    nString = parseFloat(n).toFixed(parseFloat(numberPower)).toString();
+  let nString = parseFloat(n).toString()
+  if (nString.indexOf('e') !== -1) {
+    const numberPower = getPowerOfTen(n)
+    nString = parseFloat(n).toFixed(parseFloat(numberPower)).toString()
   }
-  return nString;
+  return nString
 }
 
 const formatNumberDecimal = (n: any, decimal?: number) => {
-  let nString = parseFloat(n).toString();
-  if(nString.indexOf('e') !== -1){
-    const numberPower = getPowerOfTen(n);
-    nString = parseFloat(n).toFixed(parseFloat(numberPower)).toString();
+  let nString = parseFloat(n).toString()
+  if (nString.indexOf('e') !== -1) {
+    const numberPower = getPowerOfTen(n)
+    nString = parseFloat(n).toFixed(parseFloat(numberPower)).toString()
   }
-  const nSlice = decimal || 6;
-  return `${nString.split(".")[0]}${nString.indexOf('.') !== -1 ? '.' : ''}${nString.split(".")?.[1]?.slice(0, nSlice) || ''}`;
+  const nSlice = decimal || 6
+  return `${nString.split('.')[0]}${nString.indexOf('.') !== -1 ? '.' : ''}${
+    nString.split('.')?.[1]?.slice(0, nSlice) || ''
+  }`
 }
 
 const DataRow: React.FC<
@@ -359,7 +361,7 @@ const DataRow: React.FC<
           fontWeight="400"
           lineHeight="19px"
           color="rgba(255, 255, 255, 0.87)"
-          style={{whiteSpace: 'nowrap'}}
+          style={{ whiteSpace: 'nowrap' }}
         >
           {transaction.type === TransactionType.MINT
             ? t('Add %token0% and %token1%', { token0: symbolToken0, token1: symbolToken1 })
@@ -376,7 +378,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-time`}
-        style={{whiteSpace: 'nowrap'}}
+        style={{ whiteSpace: 'nowrap' }}
       >
         {formatISO9075(parseInt(transaction.timestamp, 10) * 1000)}
       </Text>
@@ -391,7 +393,8 @@ const DataRow: React.FC<
       >
         <Tooltip placement="top-start" title={`${fullNumber(abs1)} ${symbolToken0}S`}>
           <span>{`${formatNumberDecimal(abs1)}${decimalCount(abs1) ? '...' : ''} ${symbolToken0}S`}</span>
-        </Tooltip></Text>
+        </Tooltip>
+      </Text>
     </>
   )
 }
@@ -598,6 +601,8 @@ const TransactionsTable: React.FC = () => {
       setCurrentTransactions(stablecoin?.transactionsXOX)
     }
   }, [stablecoin])
+
+  console.log(`stablecoin`, stablecoin)
 
   useEffect(() => {
     setTempPage(page.toString())
