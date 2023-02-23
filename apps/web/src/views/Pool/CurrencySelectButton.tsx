@@ -6,12 +6,13 @@ import { Currency } from '@pancakeswap/sdk'
 
 const ButtonWrapper = styled(Button)`
   background: unset !important;
-  padding: 0;
   cursor: poiter;
   border: 1px solid #444444;
   border-radius: 8px;
   padding: 12px 16px;
   height: 100%;
+  height: 50px;
+  box-shadow: none;
 `
 
 type Props = { selectedCurrency: Currency; setSelectedCurrency: (currency: Currency) => void }

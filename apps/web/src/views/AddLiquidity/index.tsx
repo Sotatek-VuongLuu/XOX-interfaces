@@ -62,6 +62,8 @@ import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
 import { MinimalPositionCard } from 'components/PositionCard'
 import useNativeCurrency from 'hooks/useNativeCurrency'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
+import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 
 const Wrapper = styled(Flex)`
   width: 100%;
@@ -147,6 +149,20 @@ const SwapbackgroundWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
+`
+
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+    height: auto;
+    object-fit: cover;
+  }
 `
 
 enum Steps {
@@ -659,6 +675,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   return (
     <Page>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
         width={['290px', , '100%']}
         marginTop="100px"
