@@ -329,8 +329,6 @@ const DataRow: React.FC<
       ? `${formatAmount(abs1 * 0.1)} Stable coin`
       : '--'
 
-  console.log(`formatAmount(amountUSD / 10)`, formatAmount(abs1))
-
   return (
     <>
       <Text
