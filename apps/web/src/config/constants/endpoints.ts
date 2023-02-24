@@ -40,8 +40,8 @@ export const CELER_API = 'https://api.celerscan.com/scan'
 export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
   [ChainId.BSC]: '',
   [ChainId.ETHEREUM]: '',
-  [ChainId.BSC_TESTNET]: 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/subgraph2',
-  [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-subgraph/v0.0.30',
+  [ChainId.BSC_TESTNET]: 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/staging',
+  [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/40341/xox-dev/v0.0.1',
 }
 
 export const INFO_CLIENT_WITH_CHAIN = {
@@ -54,4 +54,4 @@ export const BLOCKS_CLIENT_WITH_CHAIN = {
   [ChainId.ETHEREUM]: BLOCKS_CLIENT_ETH,
 }
 
-export const ENDPOINT_GRAPHQL_STABLE_COIN = 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/subgraph2'
+export const ENDPOINT_GRAPHQL_STABLE_COIN = 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/staging'
