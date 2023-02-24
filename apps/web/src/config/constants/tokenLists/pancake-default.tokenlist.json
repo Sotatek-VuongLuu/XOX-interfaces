@@ -77,7 +77,7 @@
 
     {
       "name": "XOX",
-      "address": "0xA80d0Ca5D7AEe243F20Cf9140c1A6f5181890F81",
+      "address": "0xdbB76E719C324c9b3BB7168FA229215926061E7e",
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 97,
@@ -102,7 +102,7 @@
     {
       "name": "USDT Token",
       "symbol": "USDT",
-      "address": "0xd984292a4870a5C5637EC36829B69f2dEA3ec84D",
+      "address": "0xCc7283a00481de9AdBE379c3c2459691a6ee274a",
       "chainId": 97,
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
@@ -239,7 +239,7 @@
     },
     {
       "name": "USD Coin",
-      "address": "0xD22db0a69b39a9B462e70BcfEbD1344113F768a5",
+      "address": "0xCc7283a00481de9AdBE379c3c2459691a6ee274a",
       "symbol": "USDC",
       "decimals": 6,
       "chainId": 5,
