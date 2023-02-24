@@ -354,9 +354,13 @@ export default function Refferal() {
     try {
       const isDevEnv = chainId === ChainId.BSC_TESTNET || chainId === ChainId.GOERLI
       const [resBSC, resETH] = await Promise.all([userAmount(isDevEnv ? 97 : 56), userAmount(isDevEnv ? 5 : 1)])
-      if (resBSC && resETH) {
-        const volumnBSC = formatUnits(resBSC.analysisDatas[0]?.total_claimed_amount, 18)
-        const volumnETH = formatUnits(resETH.analysisDatas[0]?.total_claimed_amount, 6)
+      if (resBSC || resETH) {
+        const volumnBSC = resBSC.analysisDatas[0]?.total_claimed_amount
+          ? formatUnits(resBSC.analysisDatas[0]?.total_claimed_amount, 18)
+          : 0
+        const volumnETH = resETH.analysisDatas[0]?.total_claimed_amount
+          ? formatUnits(resETH.analysisDatas[0]?.total_claimed_amount, 6)
+          : 0
         const totalVolumn = new BigNumber(volumnBSC).plus(volumnETH).toString()
         setVolumnTotalEarn(totalVolumn)
       }

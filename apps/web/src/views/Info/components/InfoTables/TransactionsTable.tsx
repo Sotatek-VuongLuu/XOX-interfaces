@@ -326,8 +326,10 @@ const DataRow: React.FC<
   // }
   const stablCoin =
     (inputTokenSymbol === 'USDC' || inputTokenSymbol === 'USDT') && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
-      ? `${formatAmount(amountUSD / 10)} Stable coin`
+      ? `${formatAmount(abs1 * 0.1)} Stable coin`
       : '--'
+
+  console.log(`formatAmount(amountUSD / 10)`, formatAmount(abs1))
 
   return (
     <>
@@ -400,7 +402,9 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token1`}
-      >{`${formatAmount(abs1)} ${transaction.token1Symbol.toUpperCase()}`}</Text>
+      >
+        {`${formatAmount(abs1)} ${transaction.token1Symbol.toUpperCase()}`}
+      </Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
