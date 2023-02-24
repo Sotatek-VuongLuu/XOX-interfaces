@@ -188,7 +188,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
     if (result) {
       const histories = result.userClaimedHistories.map(async (item: any, idx: number) => {
         const mappingUser = await mapingHistories(item.address)
-        const userAvatar = mappingUser.avatar
+        const userAvatar = mappingUser?.avatar
         const point = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
         const claim = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
         return createData(

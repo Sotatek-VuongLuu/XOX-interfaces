@@ -340,7 +340,7 @@ export default function Refferal() {
       const totalClaimedAmount = new BigNumber(result.analysisDatas[0]?.total_claimed_amount)
         .div(10 ** USD_DECIMALS[chainId])
         .toNumber()
-      const totalUnClaimed = Number(totalReward) - Number(totalClaimedAmount)
+      const totalUnClaimed = new BigNumber(totalReward).minus(totalClaimedAmount).toString()
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
       listData[1].volumn = totalUnClaimed.toString()
       listData[2].volumn = totalClaimedAmount.toString()
