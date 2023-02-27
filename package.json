@@ -8,9 +8,9 @@
     "apis/*"
   ],
   "scripts": {
-    "dev": "PORT=3000 turbo run dev --filter=web...",
-    "build": "PORT=3000 turbo run build --filter=web...",
-    "start": "PORT=3000 turbo run start --filter=web",
+    "dev": "PORT=3001 turbo run dev --filter=web...",
+    "build": "PORT=3001 turbo run build --filter=web...",
+    "start": "PORT=3001 turbo run start --filter=web",
     "test:config": "yarn workspace web run test:config",
     "test:ci": "yarn turbo run test --filter=[HEAD^1]",
     "lint": "turbo run lint --filter=web",
