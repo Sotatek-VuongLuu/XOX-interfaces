@@ -165,12 +165,18 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   }, [coinmarketcapIds])
 
   useEffect(() => {
-    const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds')) || SUGGESTED_BASES_ID
+    const hasDataLocal = !!JSON.parse(localStorage.getItem('coinmarketcapIds'))
+    const _tokenList = hasDataLocal ? JSON.parse(localStorage.getItem('coinmarketcapIds')) : SUGGESTED_BASES_ID
+
     const tokenListNotHaveIds = Object.keys(allTokens)
       .map((key: any) => {
         const token = allTokens[key]
         const { address } = token
-        if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[address]) {
+        if (hasDataLocal) {
+          if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[address]) {
+            return undefined
+          }
+        } else if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[token?.chainId][address]) {
           return undefined
         }
         return token

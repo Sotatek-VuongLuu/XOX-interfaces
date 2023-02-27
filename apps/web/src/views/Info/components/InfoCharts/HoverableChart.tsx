@@ -3,7 +3,7 @@ import { Box, useModal } from '@pancakeswap/uikit'
 import { fromUnixTime } from 'date-fns'
 import { useState, useMemo, memo, useEffect } from 'react'
 import { formatAmount } from 'utils/formatInfoNumbers'
-import { Currency, NativeCurrency, PAIR_XOX_BUSD } from '@pancakeswap/sdk'
+import { ChainId, Currency, NativeCurrency, PAIR_XOX_BUSD } from '@pancakeswap/sdk'
 import { CurrencyLogo } from 'components/Logo'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
 import { SUGGESTED_BASES_ID, USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
@@ -109,12 +109,22 @@ const HoverableChart = ({
 
   useEffect(() => {
     setFetchingTokenId(false)
-    const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds')) || SUGGESTED_BASES_ID
-    if (selectedCurrency === native) {
-      if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList.ETH)
-      else setCoinmarketcapId(_tokenList.BNB)
+    if (JSON.parse(localStorage.getItem('coinmarketcapIds'))) {
+      const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds'))
+      if (selectedCurrency === native) {
+        if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList.ETH)
+        else setCoinmarketcapId(_tokenList.BNB)
+      } else {
+        setCoinmarketcapId(_tokenList[(selectedCurrency as any).address.toUpperCase()])
+      }
     } else {
-      setCoinmarketcapId(_tokenList[(selectedCurrency as any).address.toUpperCase()])
+      const _tokenList = SUGGESTED_BASES_ID
+      if (selectedCurrency === native) {
+        if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList[ChainId.ETHEREUM]?.ETH)
+        else setCoinmarketcapId(_tokenList[ChainId.BSC]?.BNB)
+      } else {
+        setCoinmarketcapId(_tokenList[chainId][(selectedCurrency as any).address.toUpperCase()])
+      }
     }
   }, [selectedCurrency, fetchingTokenId])
 
