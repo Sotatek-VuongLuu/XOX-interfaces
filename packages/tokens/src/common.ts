@@ -20,7 +20,7 @@ export const XOX_BSC_TESTNET = new ERC20Token(
 
 export const XOX_MAINNET = new ERC20Token(
   ChainId.ETHEREUM,
-  '0x52487dd38f0e4EA455cE934690a18Ca873094472',
+  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
   18,
   'XOX',
   'XOX',
@@ -29,7 +29,7 @@ export const XOX_MAINNET = new ERC20Token(
 
 export const XOX_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0x52487dd38f0e4EA455cE934690a18Ca873094472',
+  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
   18,
   'XOX',
   'XOX',
@@ -47,7 +47,7 @@ export const XOX_BUSD_TESTNET = new ERC20Token(
 
 export const XOX_USDC_TESTNET = new ERC20Token(
   ChainId.GOERLI,
-  '0x7baAC42917dEe0B0140F6bC3DeBA3E4663161D85',
+  '0x89858dB27b761820f47f382A0da30B46c7D2C8db',
   18,
   'XOX-USDC',
   'XOX-USDC',
