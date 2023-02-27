@@ -180,8 +180,8 @@ export default {
     56: '',
   },
   contractBridgeToken: {
-    97: '0xdBE930b1ED1925D6d65ac7E332396d84f984e589',
-    5: '0x7b56ec4a1D7c24357189329eEB929C435128a78D',
+    97: '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
+    5: '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
     1: '', // TODO: change address
     56: '',
   },
