@@ -597,6 +597,13 @@ export default function Refferal() {
   }, [account, chainId])
 
   useEffect(() => {
+    const myInterval = setInterval(() => {
+      handleGetCurrentPoint()
+    }, 10000)
+    return () => clearInterval(myInterval)
+  }, [])
+
+  useEffect(() => {
     if (!chainId || !account) return
     getUserVolumn()
   }, [chainId, account, subTabIndex])

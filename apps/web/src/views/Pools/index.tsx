@@ -511,7 +511,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
     getContractFarmingLPAddress(chainId),
   )
-
   const handleGetDataFarming = async () => {
     try {
       const [reserves, totalSupplyBN, amountFarmingBN, endBlock, startBlock, rewardPBlock, pendingReward, userInfo] =
@@ -796,7 +795,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     if (approvalState === ApprovalState.APPROVED) {
       setPendingApprove(false)
       setEnable(true)
-      setIsLoadingApproval(false)
+      setIsLoadingApproval(true)
     } else {
       setEnable(false)
     }

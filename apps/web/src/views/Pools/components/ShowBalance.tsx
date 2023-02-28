@@ -15,12 +15,12 @@ export const ShowBalance = ({ balance, unit = '', name = 'default', notSpace = f
     <>
       {Number(balance) <= 0.000001 ? (
         name === 'liquidity' ? (
-          <Tooltip title={Number(balance) ? `$${balance}` : null} placement="top-start">
+          <Tooltip title={Number(balance) ? `$${data}` : null} placement="top-start">
             <span className="liquidity value">${Number(balance) ? '0.000000...' : 0}</span>
           </Tooltip>
         ) : (
           <Tooltip
-            title={Number(balance) ? (!notSpace ? `${balance} ${unit}` : `${balance}${unit}`) : null}
+            title={Number(balance) ? (!notSpace ? `${data} ${unit}` : `${data}${unit}`) : null}
             placement="top-start"
           >
             <p style={{ display: 'flex' }}>
@@ -41,12 +41,12 @@ export const ShowBalance = ({ balance, unit = '', name = 'default', notSpace = f
           </p>
         </>
       ) : name === 'liquidity' ? (
-        <Tooltip title={Number(balance) ? `$${balance}` : null} placement="top-start">
+        <Tooltip title={Number(balance) ? `$${data}` : null} placement="top-start">
           <span className="liquidity value">${Number(balance) ? formatToShowBalance(String(balance)) : '0'}</span>
         </Tooltip>
       ) : (
         <Tooltip
-          title={Number(balance) ? (!notSpace ? `${balance} ${unit}` : `${balance}${unit}`) : null}
+          title={Number(balance) ? (!notSpace ? `${data} ${unit}` : `${data}${unit}`) : null}
           placement="top-start"
         >
           <p style={{ display: 'flex' }}>
