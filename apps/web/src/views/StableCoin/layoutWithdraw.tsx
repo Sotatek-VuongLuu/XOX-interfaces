@@ -18,6 +18,7 @@ import TransactionTable from './transactionTable'
 import WidthdrawForm from './widthdrawForm'
 import Earned from './earned'
 import BigNumber from 'bignumber.js'
+import { ChainId } from '@pancakeswap/sdk'
 
 const TYPE = {
   default: 'DEFAULT',
