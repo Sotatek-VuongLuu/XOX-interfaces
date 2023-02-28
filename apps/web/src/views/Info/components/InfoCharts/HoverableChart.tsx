@@ -7,12 +7,12 @@ import { ChainId, Currency, NativeCurrency, PAIR_XOX_BUSD } from '@pancakeswap/s
 import { CurrencyLogo } from 'components/Logo'
 import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
 import { SUGGESTED_BASES_ID, USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
+import { useERC20 } from 'hooks/useContract'
+import { formatAmountNumber, formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import { ResponsiveContainer } from 'recharts'
 import BarChart from './BarChart'
 import LineChart from './LineChart'
 import { ChartContent, TitleChart } from './style'
-import { useERC20 } from 'hooks/useContract'
-import { formatAmountNumber, formatBigNumber } from '@pancakeswap/utils/formatBalance'
 
 interface HoverableChartProps {
   chartData: any[]
@@ -109,22 +109,12 @@ const HoverableChart = ({
 
   useEffect(() => {
     setFetchingTokenId(false)
-    if (JSON.parse(localStorage.getItem('coinmarketcapIds'))) {
-      const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds'))
-      if (selectedCurrency === native) {
-        if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList.ETH)
-        else setCoinmarketcapId(_tokenList.BNB)
-      } else {
-        setCoinmarketcapId(_tokenList[(selectedCurrency as any).address.toUpperCase()])
-      }
+    const _tokenList = JSON.parse(localStorage.getItem('coinmarketcapIds')) || SUGGESTED_BASES_ID
+    if (selectedCurrency === native) {
+      if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList[ChainId.ETHEREUM]?.ETH)
+      else setCoinmarketcapId(_tokenList[ChainId.BSC]?.BNB)
     } else {
-      const _tokenList = SUGGESTED_BASES_ID
-      if (selectedCurrency === native) {
-        if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList[ChainId.ETHEREUM]?.ETH)
-        else setCoinmarketcapId(_tokenList[ChainId.BSC]?.BNB)
-      } else {
-        setCoinmarketcapId(_tokenList[chainId][(selectedCurrency as any).address.toUpperCase()])
-      }
+      setCoinmarketcapId(_tokenList[chainId][(selectedCurrency as any).address.toUpperCase()])
     }
   }, [selectedCurrency, fetchingTokenId])
 
