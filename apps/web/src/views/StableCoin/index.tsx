@@ -309,11 +309,15 @@ export default function StableCoin() {
   }
 
   useEffect(() => {
-    if (account) {
-      handleCheckPendingRewardAll(account)
-    }
+    const myInterval = setInterval(() => {
+      if (account) {
+        handleCheckPendingRewardAll(account)
+      }
+    }, 10000)
+    return () => clearInterval(myInterval)
   }, [account])
 
+  // const [loadOk, setLoadOk] = useState(false)
   useEffect(() => {
     if (!chainId || !account) return
     if (loadOk) window.location.reload()
@@ -401,18 +405,12 @@ export default function StableCoin() {
             )}
             <CustomRow>
               <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
-                <Box
-                  className="wrap-table"
-                  style={{ height: '100%', maxWidth: '100%', overflow: 'visible' }}
-                >
+                <Box className="wrap-table" style={{ height: '100%', maxWidth: '100%', overflow: 'visible' }}>
                   <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
                 </Box>
               </WrapperBorder>
               <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
-                <Box
-                  className="wrap-table"
-                  style={{ height: '100%', maxWidth: '100%', overflow: 'visible' }}
-                >
+                <Box className="wrap-table" style={{ height: '100%', maxWidth: '100%', overflow: 'visible' }}>
                   <TransactionTable />
                 </Box>
               </WrapperBorder>
