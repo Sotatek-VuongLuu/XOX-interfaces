@@ -134,11 +134,14 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const loadChartData = useCallback(() => {
     if (!coinmarketcapIds || Object.keys(coinmarketcapIds).length === 0) return
 
-    const tempIds = Object.values(coinmarketcapIds)
+    const unPackage = Array.from(Object.values(coinmarketcapIds))
+      .map((item) => Object.values(item))
+      .flat()
+
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/price`, {
         params: {
-          id: tempIds.filter((id, index) => tempIds.indexOf(id) === index).join(','),
+          id: unPackage.filter((id, index) => unPackage.indexOf(id) === index).join(','),
         },
       })
       .then((response) => {
@@ -170,7 +173,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       .map((key: any) => {
         const token = allTokens[key]
         const { address } = token
-        if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[address]) {
+        if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[chainId][address]) {
           return undefined
         }
         return token
@@ -194,11 +197,11 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
           })
       }),
     ).then((values) => {
-      let tokenIds = { ..._tokenList }
+      let tokenIds = { ..._tokenList[chainId] }
       values.forEach((value) => {
         tokenIds = { ...tokenIds, ...value }
       })
-      setCoinmarketcapIds(tokenIds)
+      setCoinmarketcapIds({ ..._tokenList, [chainId]: tokenIds })
       setFetchingTokenId(true)
     })
   }, [allTokens])
