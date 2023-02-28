@@ -795,7 +795,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     if (approvalState === ApprovalState.APPROVED) {
       setPendingApprove(false)
       setEnable(true)
-      setIsLoadingApproval(true)
+      setIsLoadingApproval(false)
     } else {
       setEnable(false)
     }
