@@ -138,6 +138,8 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       .map((item) => Object.values(item))
       .flat()
 
+    console.log(`chart`)
+
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/price`, {
         params: {
