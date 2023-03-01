@@ -316,14 +316,10 @@ export default function StableCoin() {
       handleCheckPendingRewardAll(account)
       id = setInterval(() => {
         handleCheckPendingRewardAll(account)
-      }, 7000)
+      }, 5000)
     }
     return () => clearInterval(id)
-  }, [account, isLoadingData])
-
-  useEffect(() => {
-    setIsLoadingData(true)
-  }, [])
+  }, [account])
 
   useEffect(() => {
     if (!chainId || !account) return
