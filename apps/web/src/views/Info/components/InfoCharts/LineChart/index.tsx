@@ -24,13 +24,11 @@ const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep
 
 const CustomTooltipStyle = styled.div`
   position: relative;
-  width: 130px;
   .content {
-    width: 130px;
+    width: 150px;
     height: 50px;
     padding: 8px;
-    position: absolute;
-    // transform: translateX(-50%);
+    position: relative;
     z-index: 3;
     left: 0;
     font-weight: 400;
@@ -41,6 +39,7 @@ const CustomTooltipStyle = styled.div`
     outline: none;
 
     .price {
+      margin: auto;
       display: flex;
       .dola {
         font-weight: 400;
@@ -85,7 +84,7 @@ const CustomTooltipStyle = styled.div`
       position: absolute;
       top: -1px;
       left: -1px;
-      width: 132px;
+      width: 152px;
       height: 52px;
       z-index: -2;
       background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
@@ -95,7 +94,7 @@ const CustomTooltipStyle = styled.div`
       position: absolute;
       top: 0;
       left: 0;
-      width: 130px;
+      width: 150px;
       height: 50px;
       z-index: -1;
       background: #242424;
@@ -104,7 +103,7 @@ const CustomTooltipStyle = styled.div`
     .vertical {
       position: absolute;
       top: 100%;
-      left: 65px;
+      left: 75px;
       width: 1px;
       z-index: -2;
       height: 16px;
@@ -115,7 +114,7 @@ const CustomTooltipStyle = styled.div`
       position: absolute;
       top: calc(100% + 20px);
       transform: translate(-50%, -50%);
-      left: 65px;
+      left: 75px;
       z-index: -2;
     }
   }
@@ -167,7 +166,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         <div className="content">
           <div className="price">
             <p className="dola">$</p>
-            <p className="value">{intToString(payload[0].payload.value)}</p>
+            <p className="value">{intToString(formatAmountNumber(payload[0].payload.value, 4))}</p>
             <p
               className={`change ${
                 payload[0].payload.priceChange > 0 ? 'positive' : payload[0].payload.priceChange < 0 ? 'negative' : ''
@@ -325,16 +324,6 @@ const LineChart = ({
     return <LineChartLoader unsupported={unsupported} />
   }
 
-  const CustomizedAxisTick = (props) => {
-    const { x, y, payload } = props
-
-    return (
-      <Text x={x} y={y} width={75} textAnchor="middle" verticalAnchor="start" style={{ color: '#ffffff' }}>
-        {payload.value}
-      </Text>
-    )
-  }
-
   return (
     <CustomResponsiveContainer>
       <AreaChart
@@ -380,6 +369,7 @@ const LineChart = ({
         <XAxis
           xAxisId="0"
           dataKey="time"
+          tickCount={10}
           axisLine={{ stroke: '#ffffff66' }}
           tickFormatter={(time) => formatDate(time)}
           minTickGap={minGap}
@@ -389,7 +379,6 @@ const LineChart = ({
           color="rgba(255, 255, 255, 0.6)"
           tickMargin={10}
           allowDataOverflow={true}
-          interval={0}
           padding={{ left: 0, right: 10 }}
         />
         {hoverableChart && typeXAxis === '3M' && (
@@ -423,7 +412,7 @@ const LineChart = ({
           <Tooltip
             content={<CustomTooltip />}
             position={{
-              x: (lineGraphData?.activeTooltipIndex * chartWidth) / (data.length - 1) || 0,
+              x: (lineGraphData?.activeTooltipIndex * chartWidth) / (data.length - 1) - 10 || 0,
               y:
                 145 -
                 (((lineGraphData?.activePayload?.[0]?.payload?.value || maxYAxis) - minYAxis) * chartHeight) /
