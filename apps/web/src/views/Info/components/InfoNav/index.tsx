@@ -41,7 +41,7 @@ const NavWrapper = styled(Flex)<INavWrapper>`
 `
 
 const MainContent = styled.div`
-  height: 315px;
+  height: 292px;
   width: 100%;
   background: url('/images/bg_mobile_info.svg');
   background-repeat: no-repeat;
@@ -54,7 +54,12 @@ const MainContent = styled.div`
     font-size: 14px;
     line-height: 17px;
     color: #ffffff;
-    height: 43px;
+    height: 37px;
+    border: 1px solid #ffffff;
+    border-radius: 6px;
+    background: transparent;
+    padding: 10px 20px;
+    box-shadow: none;
   }
 
   .learn-more {
@@ -62,56 +67,66 @@ const MainContent = styled.div`
     font-size: 14px;
     line-height: 17px;
     color: #ffffff;
-    width: 149px;
-    height: 43px;
+    height: 37px;
     border: 1px solid #ffffff;
     border-radius: 6px;
     margin-left: 16px;
     background: transparent;
+    padding: 10px 20px;
+    box-shadow: none;
   }
 
   .title {
-    font-weight: 700;
+    font-weight: 500;
     font-size: 12px;
     line-height: 15px;
-    color: #ffbd3c;
+    letter-spacing: 0.075em;
+    color: rgba(255, 255, 255, 0.6);
   }
 
   .subtitle {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 18px;
-    line-height: 22px;
+    line-height: 32px;
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
     color: rgba(255, 255, 255, 0.87);
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    height: 200px;
+    height: 208px;
     padding: 30px 24px;
     background: url('/images/bg.svg');
     background-repeat: no-repeat;
     background-size: cover;
     .title {
-      font-weight: 700;
+      font-weight: 500;
       font-size: 18px;
       line-height: 22px;
-      color: #ffbd3c;
+      letter-spacing: 0.075em;
+      color: rgba(255, 255, 255, 0.6);
     }
 
     .subtitle {
-      font-weight: 700;
-      font-size: 36px;
-      line-height: 44px;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 29px;
+      letter-spacing: 0.075em;
+      text-transform: uppercase;
       color: rgba(255, 255, 255, 0.87);
     }
 
     .get-xox {
-      font-family: 'Inter';
-      font-style: normal;
       font-weight: 700;
       font-size: 16px;
       line-height: 19px;
       color: #ffffff;
+      width: 149px;
       height: 43px;
+      border: 1px solid #ffffff;
+      border-radius: 6px;
+      background: transparent;
+      box-shadow: none;
     }
 
     .learn-more {
@@ -125,11 +140,12 @@ const MainContent = styled.div`
       border-radius: 6px;
       margin-left: 16px;
       background: transparent;
+      box-shadow: none;
     }
   }
 `
 
-const InfoNav: React.FC<{ allTokens: any; textContentBanner?: string; hasPadding?: boolean }> = ({
+const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: boolean }> = ({
   allTokens,
   textContentBanner,
   hasPadding = true,
@@ -145,11 +161,15 @@ const InfoNav: React.FC<{ allTokens: any; textContentBanner?: string; hasPadding
 
   return (
     <NavWrapper hasPadding={hasPadding}>
+      <div className="corner1"></div>
+      <div className="edge1"></div>
+      <div className="corner2"></div>
+      <div className="edge2"></div>
       <MainContent>
-        <Text className="title" marginBottom="16px">
+        <Text className="title" marginBottom="8px" mt={[118, 0, 0]}>
           Swap to get XOX & XOXS. Earn like a Pro
         </Text>
-        <Text className="subtitle" marginBottom="16px">
+        <Text className="subtitle" marginBottom={['16px', , '24px']}>
           {textContentBanner || 'Stake XOXS automatically to earn more'}
         </Text>
         <a

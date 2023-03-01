@@ -18,8 +18,8 @@ export const TitleChart = styled.div`
 
   .btn-get-token {
     padding: 1px;
-    border-radius: 4px;
-    background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    border-radius: 8px;
+    background-image: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
     height: 37px;
     cursor: pointer;
     margin-right: 8px;
@@ -27,11 +27,11 @@ export const TitleChart = styled.div`
     .boxed-child {
       width: 100%;
       height: 100%;
-      background-color: #242424;
-      padding: 9px 40px;
+      background-color: #1d1d1d;
+      padding: 9px 20px;
       border-radius: inherit;
       span {
-        background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -58,13 +58,13 @@ export const TitleChart = styled.div`
     margin-bottom: 4px;
     width: 40px;
     height: 4px;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
   }
 
   .btn_select_token {
     padding: 10px 20px;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-    border-radius: 4px;
+    background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
+    border-radius: 8px;
     font-weight: 700;
     font-size: 14px;
     color: #ffffff;
@@ -133,21 +133,42 @@ export const ChartContent = styled.div`
     }
   }
 
-  .liquidity {
-    font-weight: 400;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.87);
-    p:first-child {
-      margin-bottom: 16px;
-    }
-  }
+  .price-info {
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    gap: 40px;
 
-  .volume {
-    font-weight: 400;
-    font-size: 16px;
-    color: rgba(255, 255, 255, 0.87);
-    p:first-child {
-      margin-bottom: 16px;
+    .group {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 15px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .group.right {
+      place-content: end;
+      display: grid;
+    }
+
+    .group > div {
+      display: flex;
+      margin-top: 8px;
+    }
+
+    span.icon {
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 15px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-right: 4px;
+      margin-bottom: 4px;
+    }
+
+    span.val {
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 24px;
+      color: #ffffff;
     }
   }
 
@@ -156,23 +177,31 @@ export const ChartContent = styled.div`
     display: flex;
     justify-content: flex-start;
     button {
-      font-weight: 700;
-      font-size: 14px;
-      margin-right: 8px;
-      color: rgba(255, 255, 255, 0.6);
-      background: transparent;
+      border-radius: 8px;
+      height: 33px;
+      padding: 8px 15px;
       border: none;
       outline: none;
       cursor: pointer;
+      font-weight: 300;
+      font-size: 14px;
+      line-height: 17px;
+      color: rgba(255, 255, 255, 0.6);
+      background: rgba(255, 255, 255, 0.05);
     }
     @media (max-width: 576px) {
-      button{
-        padding: 0 5px;
+      button {
+        padding: 8px 12px;
+        margin-right: 8px;
       }
     }
 
     button.active {
-      color: #9072ff;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      color: #ffffff;
+      background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
     }
   }
 
@@ -188,6 +217,40 @@ export const ChartContent = styled.div`
 
       button {
         margin-left: 8px;
+      }
+    }
+
+    .price-info {
+      display: grid;
+      grid-template-columns: repeat(4, auto);
+      gap: 40px;
+
+      .group {
+        font-weight: 400;
+        font-size: 12px;
+        line-height: 15px;
+        color: rgba(255, 255, 255, 0.6);
+      }
+
+      .group > div {
+        display: flex;
+        margin-top: 8px;
+      }
+
+      span.icon {
+        font-weight: 700;
+        font-size: 12px;
+        line-height: 15px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-right: 4px;
+        margin-bottom: 4px;
+      }
+
+      span.val {
+        font-weight: 700;
+        font-size: 20px;
+        line-height: 24px;
+        color: #ffffff;
       }
     }
   }

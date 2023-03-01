@@ -532,7 +532,7 @@ const TransactionsTable: React.FC = () => {
       <path
         d="M1 4.66667L4.66667 1L8.33333 4.66667"
         stroke="#8E8E8E"
-        strokeWidth="1.6"
+        strokeWidth="1.6"   
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -799,12 +799,24 @@ const TransactionsTable: React.FC = () => {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke={page === maxPage ? 'white' : '#9072FF'}
-                  strokeOpacity={page === maxPage ? '0.38' : '1'}
+                  stroke="url(#paint0_linear_11079_7639)"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_11079_7639"
+                    x1="3.85449"
+                    y1="9.75"
+                    x2="3.85449"
+                    y2="1.25"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#EE0979" />
+                    <stop offset="1" stopColor="#FF6A00" />
+                  </linearGradient>
+                </defs>
               </svg>
             </Arrow>
           </div>

@@ -15,9 +15,6 @@ import { MENU_HEIGHT, MOBILE_MENU_HEIGHT, TOP_BANNER_HEIGHT, TOP_BANNER_HEIGHT_M
 import { MenuContext } from "./context";
 import { NavProps } from "./types";
 
-interface IPropsNav {
-  isLanding?: boolean;
-}
 const Wrapper = styled.div`
   position: relative;
   width: 100%;
@@ -25,30 +22,44 @@ const Wrapper = styled.div`
   grid-template-rows: auto 1fr;
 `;
 
-const StyledNav = styled.nav<IPropsNav>`
+const StyledNav = styled.nav`
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
+  max-width: 1400px;
   height: ${MENU_HEIGHT}px;
-  background-color: ${({ theme, isLanding }) => (isLanding ? "black" : theme.nav.background)};
-  ${({ theme, isLanding }) => !isLanding && ` border-bottom: 1px solid ${theme.colors.cardBorder}`};
   transform: translate3d(0, 0, 0);
-  padding: 14px 21px;
+  padding: 14px 24px;
 
-  ${({ theme }) => theme.mediaQueries.md} {
+  ${({ theme }) => theme.mediaQueries.sm} {
     height: ${MENU_HEIGHT}px;
+    padding: 14px 24px;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    height: ${MENU_HEIGHT}px;
+    padding: 14px 0;
+    max-width: 1200px;
+  }
+
+  @media screen and (min-width: 1400px) {
+    max-width: 1400px;
   }
 `;
 
-const FixedContainer = styled.div<{ showMenu: boolean; height: number }>`
+const FixedContainer = styled.div<{ showMenu: boolean; height: number; isLanding?: boolean }>`
   position: fixed;
   top: ${({ showMenu, height }) => (showMenu ? 0 : `-${height}px`)};
   left: 0;
   transition: top 0.2s;
   height: ${({ height }) => `${height}px`};
-  width: 100%;
+  width: 100vw;
   z-index: 20;
+  background-color: ${({ theme, isLanding }) => (isLanding ? "black" : theme.nav.background)};
+  ${({ theme, isLanding }) => !isLanding && ` border-bottom: 1px solid ${theme.colors.cardBorder}`};
+  display: flex;
+  justify-content: center;
 `;
 
 const TopBannerContainer = styled.div<{ height: number }>`
@@ -65,7 +76,7 @@ const BodyWrapper = styled(Box)`
   overflow-y: auto;
   overflow-x: hidden;
 
-  ${({theme}) => theme.mediaQueries.md} {
+  ${({ theme }) => theme.mediaQueries.md} {
     overflow: unset;
   }
 `;
@@ -167,9 +178,9 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
         }}
       >
         <Wrapper>
-          <FixedContainer showMenu={showMenu} height={totalTopMenuHeight}>
+          <FixedContainer showMenu={showMenu} height={totalTopMenuHeight} isLanding={isLanding}>
             {banner && isMounted && <TopBannerContainer height={topBannerHeight}>{banner}</TopBannerContainer>}
-            <StyledNav isLanding={isLanding}>
+            <StyledNav>
               <Flex>
                 <Logo href={homeLink?.href ?? "/"} />
                 <AtomBox display={{ xs: "none", xxl: "block" }}>

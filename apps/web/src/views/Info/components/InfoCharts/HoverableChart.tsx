@@ -71,8 +71,16 @@ const HoverableChart = ({
     }
   }, [chartData, hover, valueProperty, dataChartXOX, selectedCurrency])
 
-  const minValue = Math.min(...(chartData || []).map((o) => o[valueProperty]))
-  const maxValue = Math.max(...(chartData || []).map((o) => o[valueProperty]))
+  const minValue = Math.min(
+    ...((selectedCurrency.symbol.toUpperCase() === 'XOX' ? dataChartXOX : chartData) || []).map(
+      (o) => o[valueProperty],
+    ),
+  )
+  const maxValue = Math.max(
+    ...((selectedCurrency.symbol.toUpperCase() === 'XOX' ? dataChartXOX : chartData) || []).map(
+      (o) => o[valueProperty],
+    ),
+  )
   const minYAxis = minValue - (maxValue - minValue) * 0.2 > 0 ? minValue - (maxValue - minValue) * 0.2 : 0
   const maxYAxis = maxValue + (maxValue - minValue) * 0.2
 
@@ -80,13 +88,17 @@ const HoverableChart = ({
     let data = chartData
     if (selectedCurrency.symbol.toUpperCase() === 'XOX') data = dataChartXOX
     if (data) {
+      let prev = data[0]?.priceUSD
       return data.map((day) => {
-        return {
+        const result = {
           time: fromUnixTime(day.date),
           value: day[valueProperty],
           vol: day.VolUSD,
+          priceChange: day.priceChange || ((day?.priceUSD - prev) / prev).toFixed(2),
           month: fromUnixTime(day.date).getMonth(),
         }
+        prev = day.priceUSD
+        return result
       })
     }
     return []
@@ -183,93 +195,108 @@ const HoverableChart = ({
             {selectedCurrency?.symbol}
           </div>
           <>
-            <div className="liquidity">
-              <p>
-                Current price:{' '}
-                {selectedCurrency.symbol === 'XOX' ? (
-                  <>{rateXOX ? `$${formatAmountNumber(rateXOX)}` : '--'}</>
-                ) : (
-                  <>{currencyData ? `$${formatAmount(currencyData?.price)}` : '--'}</>
-                )}{' '}
-              </p>
-              <p>
-                Price change (in last 24 hours):{' '}
+            <div className="price-info">
+              <div className="group">
+                Current price
+                <div>
+                  <span className="icon">$</span>
+                  {selectedCurrency.symbol === 'XOX' ? (
+                    <span className="val">{rateXOX ? formatAmountNumber(rateXOX) : '--'}</span>
+                  ) : (
+                    <span className="val">{currencyData ? formatAmount(currencyData?.price) : '--'}</span>
+                  )}
+                </div>
+              </div>
+              <div className="group right">
+                Market cap
+                <div>
+                  <span className="icon">$</span>
+                  {currencyData ? (
+                    <span className="val">{formatAmount(currencyData?.market_cap)}</span>
+                  ) : (
+                    <span className="val">--</span>
+                  )}
+                </div>
+              </div>
+              <div className="group">
+                Price change (in last 24h)
                 {currencyData?.percent_change_24h?.toFixed(2) > 0 ? (
-                  <>
-                    <svg width="12" height="13" viewBox="0 0 12 13" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <div>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
                       <path
                         fillRule="evenodd"
                         clipRule="evenodd"
-                        d="M6.80361 11.2498C6.80361 11.6916 6.44544 12.0498 6.00361 12.0498C5.56179 12.0498 5.20361 11.6916 5.20361 11.2498V3.67776L1.81588 7.06549C1.50346 7.37791 0.996929 7.37791 0.68451 7.06549C0.37209 6.75307 0.37209 6.24654 0.68451 5.93412L5.43451 1.18412C5.74693 0.871699 6.25346 0.871699 6.56588 1.18412L11.3159 5.93412C11.6283 6.24654 11.6283 6.75307 11.3159 7.06549C11.0035 7.37791 10.4969 7.37791 10.1845 7.06549L6.80361 3.68459V11.2498Z"
-                        fill="#6BB372"
+                        d="M10.3036 14.2498C10.3036 14.6916 9.94544 15.0498 9.50361 15.0498C9.06179 15.0498 8.70361 14.6916 8.70361 14.2498V6.67776L5.31588 10.0655C5.00346 10.3779 4.49693 10.3779 4.18451 10.0655C3.87209 9.75307 3.87209 9.24654 4.18451 8.93412L8.93451 4.18412C9.24693 3.8717 9.75346 3.8717 10.0659 4.18412L14.8159 8.93412C15.1283 9.24654 15.1283 9.75307 14.8159 10.0655C14.5035 10.3779 13.9969 10.3779 13.6845 10.0655L10.3036 6.68459V14.2498Z"
+                        fill="#64C66D"
                       />
                     </svg>
-                    <span style={{ color: '#6BB372' }}>
+                    <span className="val">
                       {currencyData ? `${currencyData.percent_change_24h?.toFixed(2)}%` : '--'}
                     </span>
-                  </>
+                  </div>
                 ) : currencyData?.percent_change_24h?.toFixed(2) < 0 ? (
-                  <>
+                  <div>
                     <svg
-                      width="12"
-                      height="13"
-                      viewBox="0 0 12 13"
-                      fill="none"
                       xmlns="http://www.w3.org/2000/svg"
+                      width="19"
+                      height="19"
+                      viewBox="0 0 19 19"
+                      fill="none"
                       style={{ transform: 'rotate(180deg)' }}
                     >
                       <path
                         fillRule="evenodd"
                         clipRule="evenodd"
-                        d="M6.80361 11.2498C6.80361 11.6916 6.44544 12.0498 6.00361 12.0498C5.56179 12.0498 5.20361 11.6916 5.20361 11.2498V3.67776L1.81588 7.06549C1.50346 7.37791 0.996929 7.37791 0.68451 7.06549C0.37209 6.75307 0.37209 6.24654 0.68451 5.93412L5.43451 1.18412C5.74693 0.871699 6.25346 0.871699 6.56588 1.18412L11.3159 5.93412C11.6283 6.24654 11.6283 6.75307 11.3159 7.06549C11.0035 7.37791 10.4969 7.37791 10.1845 7.06549L6.80361 3.68459V11.2498Z"
+                        d="M10.3036 14.2498C10.3036 14.6916 9.94544 15.0498 9.50361 15.0498C9.06179 15.0498 8.70361 14.6916 8.70361 14.2498V6.67776L5.31588 10.0655C5.00346 10.3779 4.49693 10.3779 4.18451 10.0655C3.87209 9.75307 3.87209 9.24654 4.18451 8.93412L8.93451 4.18412C9.24693 3.8717 9.75346 3.8717 10.0659 4.18412L14.8159 8.93412C15.1283 9.24654 15.1283 9.75307 14.8159 10.0655C14.5035 10.3779 13.9969 10.3779 13.6845 10.0655L10.3036 6.68459V14.2498Z"
                         fill="#FF0000"
                       />
                     </svg>
-                    <span style={{ color: '#FF0000' }}>
+                    <span className="val">
                       {currencyData ? `${Math.abs(currencyData.percent_change_24h?.toFixed(2))}%` : '--'}
                     </span>
-                  </>
+                  </div>
                 ) : (
-                  <span>{currencyData ? '0.00%' : '--'}</span>
+                  <div>
+                    <span className="val">{currencyData ? '0.00%' : '--'}</span>
+                  </div>
                 )}
-              </p>
-            </div>
-            <div className="volume">
-              <p>
-                Market cap: {currencyData ? <span>${formatAmount(currencyData?.market_cap)}</span> : <span>--</span>}
-              </p>
-              {selectedCurrency.symbol === 'XOX' ? (
-                <p>
-                  Volume 24h: {formattedData ? <span>${formatAmount(formattedData[0]?.vol)}</span> : <span>--</span>}
-                </p>
-              ) : (
-                <p>
-                  Volume 24h: {currencyData ? <span>${formatAmount(currencyData?.volume_24h)}</span> : <span>--</span>}
-                </p>
-              )}
+              </div>
+              <div className="group right">
+                Volume 24h
+                <div>
+                  <span className="icon">$</span>
+                  {selectedCurrency.symbol === 'XOX' ? (
+                    <span className="val">
+                      {formattedData ? formatAmount(formattedData[formattedData.length - 1]?.vol) : '--'}
+                    </span>
+                  ) : (
+                    <span className="val">{currencyData ? formatAmount(currencyData?.volume_24h) : '--'}</span>
+                  )}
+                </div>
+              </div>
             </div>
           </>
         </div>
 
         <div className="filter">
           <div style={{ whiteSpace: 'nowrap' }}>
-            <button type="button" onClick={() => handleFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
-              All
-            </button>
-            <button type="button" onClick={() => handleFilter('1Y')} className={filter === '1Y' ? 'active' : ''}>
-              1Y
-            </button>
-            <button type="button" onClick={() => handleFilter('3M')} className={filter === '3M' ? 'active' : ''}>
-              3M
-            </button>
-            <button type="button" onClick={() => handleFilter('1M')} className={filter === '1M' ? 'active' : ''}>
-              1M
+            <button type="button" onClick={() => handleFilter('1D')} className={filter === '1D' ? 'active' : ''}>
+              24H
             </button>
             <button type="button" onClick={() => handleFilter('7D')} className={filter === '7D' ? 'active' : ''}>
               7D
             </button>
-            <button type="button" onClick={() => handleFilter('1D')} className={filter === '1D' ? 'active' : ''}>
-              24H
+            <button type="button" onClick={() => handleFilter('1M')} className={filter === '1M' ? 'active' : ''}>
+              1M
+            </button>
+            <button type="button" onClick={() => handleFilter('3M')} className={filter === '3M' ? 'active' : ''}>
+              3M
+            </button>
+            <button type="button" onClick={() => handleFilter('1Y')} className={filter === '1Y' ? 'active' : ''}>
+              1Y
+            </button>
+            <button type="button" onClick={() => handleFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
+              All
             </button>
           </div>
         </div>

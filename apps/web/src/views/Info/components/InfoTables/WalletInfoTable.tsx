@@ -29,6 +29,7 @@ import InfoPieChart from '../InfoCharts/PieChart'
 const Wrapper = styled.div`
   width: 100%;
   margin-top: 16px;
+  position: relative;
 
   & .heading {
     position: relative;
@@ -41,14 +42,81 @@ const Wrapper = styled.div`
     left: 0;
     width: 40px;
     height: 4px;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
+  }
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
   ${({ theme }) => theme.mediaQueries.xxl} {
     width: 454px;
     min-width: 454px;
-    margin-left: 16px;
+    margin-left: 24px;
     margin-top: 0;
+
+
+    .corner1 {
+      border-bottom: 1px solid #ffffff30;
+      border-left: 1px solid #ffffff30;
+    }
+  
+    .edge1 {
+      width: 1px;
+    }
+  
+    .corner2 {
+      border-bottom: 1px solid #ffffff30;
+      border-right: 1px solid #ffffff30;
+    }
+  
+    .edge2 {
+      width: 1px;
+    }
   }
 `
 
@@ -123,7 +191,7 @@ const Address = styled.div`
   & > input {
     background: transparent;
     border: 0;
-    color: #3d8aff;
+    color: rgba(255, 255, 255, 0.87);
     font-family: 'Inter';
     font-style: normal;
     font-weight: 500;
@@ -158,8 +226,9 @@ const TableWrapper = styled(Flex)`
   width: 100%;
   flex-direction: column;
   gap: 16px;
-  background-color: ${({ theme }) => theme.card.background};
-  border-radius: 10px;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   height: 100%;
   width: 100%;
   padding: 18px;
@@ -193,7 +262,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   const [rateXOX, setRateXOX] = useState(0)
   const contractUSD = useERC20(USD_ADDRESS[chainId])
   const contractXOX = useERC20(XOX_ADDRESS[chainId])
-  const [colors, setColors] = useState<string[]>([])
+  const [colors, setColors] = useState<any[]>([])
 
   const tokenRateUSD = useCallback(
     (symbol: string): number => {
@@ -294,32 +363,39 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     )
     const xoxBalance = balanceXOX ? formatAmountNumber(balanceXOX.balance * rateXOX) : 0
     const result = [
-      ['Label', 'Value', { role: 'tooltip', type: 'string', p: { html: true } }],
-      [native.symbol, nativeBalance, `${native.symbol}: $${nativeBalance}`],
-      ['XOX', xoxBalance, `XOX: $${xoxBalance}`],
+      { name: native.symbol, value: nativeBalance },
+      { name: 'XOX', value: xoxBalance },
     ]
     let sum = 0
     tokensBalance.forEach((balance: any) => {
       if (balance.contractAddress.toLowerCase() === USD_ADDRESS[chainId].toLowerCase()) {
         const balanceUSD = formatAmountNumber(balance.balance * tokenRateUSD(balance.symbol))
-        result.push([balance.symbol, balanceUSD, `${balance.symbol}: $${balanceUSD}`])
+        result.push({ name: balance.symbol, value: balanceUSD })
       } else if (balance.contractAddress.toLowerCase() !== XOX_ADDRESS[chainId].toLowerCase()) {
         sum += formatAmountNumber(balance.balance * tokenRateUSD(balance.symbol))
       }
     })
-    if (chainId === 1 || chainId === 5) {
-      setColors(['#60A5FA', '#9072FF', '#2563EB', '#A8A29E'])
-    } else {
-      setColors(['#FBBF24', '#9072FF', '#FDE047', '#A8A29E'])
-    }
-    result.push(['Others', sum, `Others: $${sum}`])
-    total = nativeBalance + xoxBalance + result[2][1] + sum
+    setColors([
+      { start: '#2A56D9', end: '#66B5F8' },
+      { start: '#791CE7', end: '#BD2AE8' },
+      { start: '#C2785B', end: '#C39B5F' },
+      { start: '#B02E79', end: '#C043BB' },
+    ])
+    result.push({
+      name: 'Others',
+      value: sum,
+    })
+    total = nativeBalance + xoxBalance + result[2].value + sum
     setTotalAsset(total)
     setDataChart(result)
   }, [balanceNative, tokensBalance, chainId, currencyDatas, rateXOX])
 
   return (
     <Wrapper className={className}>
+      <div className="corner1"></div>
+      <div className="edge1"></div>
+      <div className="corner2"></div>
+      <div className="edge2"></div>
       <TableWrapper>
         <Flex justifyContent="space-between" alignItems="flex-end">
           <Text
@@ -348,21 +424,45 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                   text={account}
                   tooltipMessage="Copied"
                   button={
-                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="17" viewBox="0 0 17 17" fill="none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18" fill="none">
                       <path
-                        d="M14.3432 12.2183V2.65576H4.78027"
-                        stroke="#8E8E8E"
+                        d="M14.3432 12.7188V3.15625H4.78027"
+                        stroke="url(#paint0_linear_10957_45072)"
                         strokeWidth="1.4"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
-                        d="M12.2182 4.78101H2.65527V14.3435H12.2182V4.78101Z"
-                        stroke="#8E8E8E"
+                        d="M12.2182 5.28125H2.65527V14.8438H12.2182V5.28125Z"
+                        stroke="url(#paint1_linear_10957_45072)"
                         strokeWidth="1.4"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
+                      <defs>
+                        <linearGradient
+                          id="paint0_linear_10957_45072"
+                          x1="4.78027"
+                          y1="7.93753"
+                          x2="14.3432"
+                          y2="7.93753"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stopColor="#EE0979" />
+                          <stop offset="1" stopColor="#FF6A00" />
+                        </linearGradient>
+                        <linearGradient
+                          id="paint1_linear_10957_45072"
+                          x1="2.65527"
+                          y1="10.0625"
+                          x2="12.2182"
+                          y2="10.0625"
+                          gradientUnits="userSpaceOnUse"
+                        >
+                          <stop stopColor="#EE0979" />
+                          <stop offset="1" stopColor="#FF6A00" />
+                        </linearGradient>
+                      </defs>
                     </svg>
                   }
                 />
@@ -376,7 +476,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
             <InfoPieChart data={dataChart} colors={colors} total={totalAsset} />
 
             <CoinListWrapper flexDirection="column">
-              <Flex alignItems="center" p="16px" borderRadius="6px" background="#303030" mb="6px">
+              <Flex alignItems="center" p="16px" borderRadius="6px" background="rgba(255, 255, 255, 0.05)" mb="6px">
                 <CurrencyLogo currency={native} size="30px" />
                 <Flex flexDirection="column" ml="10px">
                   <Flex mb="6px">
@@ -429,7 +529,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                     alignItems="center"
                     p="16px"
                     borderRadius="6px"
-                    background="#303030"
+                    background="rgba(255, 255, 255, 0.05)"
                     mb={index === tokensBalance.length - 1 ? '0' : '6px'}
                   >
                     <CurrencyLogo currency={getToken(balance)} size="30px" />

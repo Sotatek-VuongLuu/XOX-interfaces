@@ -18,11 +18,60 @@ import { Arrow, ClickableColumnHeader } from './shared'
 const Wrapper = styled.div`
   width: 100%;
   grid-column: 1;
-  background: #242424;
-  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  background: background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
   padding: 18px;
   margin-bottom: 70px;
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
 
   & > div {
     max-width: calc(100vw - 80px);
@@ -52,7 +101,7 @@ const Wrapper = styled.div`
     left: 0;
     width: 40px;
     height: 4px;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
   }
 
   .btn-filter button {
@@ -102,6 +151,23 @@ const Wrapper = styled.div`
     .btn-filter button {
       padding: 10px 16px;
     }
+    .corner1 {
+      border-bottom: 1px solid #ffffff30;
+      border-left: 1px solid #ffffff30;
+    }
+  
+    .edge1 {
+      width: 1px;
+    }
+  
+    .corner2 {
+      border-bottom: 1px solid #ffffff30;
+      border-right: 1px solid #ffffff30;
+    }
+  
+    .edge2 {
+      width: 1px;
+    }
   }
 `
 
@@ -146,7 +212,7 @@ export const CustomTableWrapper = styled(Flex)`
   }
 
   & > div {
-    min-width: 1400px;
+    min-width: 1300px;
   }
 
   &::-webkit-scrollbar {
@@ -217,8 +283,12 @@ export const PageButtons = styled(Flex)`
   }
 
   & .page.current {
-    color: #9072ff;
-    background: rgba(110, 70, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
   }
 
   & .go-page {
@@ -248,6 +318,23 @@ const NoTransactionWrapper = styled(Flex)`
   ${({ theme }) => theme.mediaQueries.md} {
     grid-column: 1 / span 7;
   }
+`
+
+const CustomLink = styled(Link)`
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: right;
+
+  /* Gradient/9 */
+
+  background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 `
 
 const SORT_FIELD = {
@@ -343,7 +430,6 @@ const DataRow: React.FC<
         {index + 1 + (page - 1) * perPage}
       </Text>
       <LinkExternal
-        color="#9072FF"
         href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
         key={`${transaction.hash}-type`}
       >
@@ -414,21 +500,20 @@ const DataRow: React.FC<
       >
         {stablCoin}
       </Text>
-      <Link
+      <CustomLink
         width="100%"
         fontSize="16px"
         fontFamily="Inter"
         fontStyle="normal"
         fontWeight="400"
         lineHeight="19px"
-        color="#3D8AFF"
         style={{ justifySelf: 'right' }}
         target="_blank"
         href={getBlockExploreLink(transaction.sender, 'address', chainIdLink)}
         key={`${transaction.hash}-sender`}
       >
         {truncateHash(transaction.sender, 4, 5)}
-      </Link>
+      </CustomLink>
     </>
   )
 }
@@ -673,7 +758,11 @@ const TransactionsTable: React.FC = () => {
 
   return (
     <Wrapper>
-      <Flex mb="16px" justifyContent="space-between">
+      <div className="corner1"></div>
+      <div className="edge1"></div>
+      <div className="corner2"></div>
+      <div className="edge2"></div>
+      <Flex mb="16px" justifyContent="space-between" flexDirection={['column', , 'row']}>
         <Text
           className="heading"
           fontSize="20px"
@@ -683,10 +772,11 @@ const TransactionsTable: React.FC = () => {
           lineHeight="24px"
           color="rgba(255, 255, 255, 0.87)"
           height="24px"
+          mb={28}
         >
           Transactions History
         </Text>
-        <Flex flexDirection="column" alignItems="flex-end">
+        <Flex flexDirection="column" alignItems={['flex-start', , 'flex-end']}>
           <Flex className="btn-filter" mb="8px">
             <Button
               onClick={() => handleFilterFrom(TransactionFrom.XOX)}
@@ -712,7 +802,7 @@ const TransactionsTable: React.FC = () => {
             )}
           </Flex>
           {transactionFrom === TransactionFrom.XOX && (
-            <Flex className="btn-filter" mb="8px">
+            <Flex className="btn-filter" mb="8px" justifyContent="space-between" width={'100%'}>
               <Button
                 onClick={() => handleFilter(undefined)}
                 className={undefined === txFilter ? 'active' : 'inactive'}
@@ -893,15 +983,35 @@ const TransactionsTable: React.FC = () => {
                 setPagePagination(page === 1 ? page : page - 1)
               }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="7"
+                height="11"
+                viewBox="0 0 7 11"
+                fill="none"
+                style={{ transform: 'rotate(180deg' }}
+              >
                 <path
-                  d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
-                  stroke={page === 1 ? 'white' : '#9072FF'}
+                  d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
+                  stroke={page === 1 ? 'white' : 'url(#paint0_linear_11079_7639)'}
                   strokeOpacity={page === 1 ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_11079_7639"
+                    x1="3.85449"
+                    y1="9.75"
+                    x2="3.85449"
+                    y2="1.25"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#EE0979" />
+                    <stop offset="1" stopColor="#FF6A00" />
+                  </linearGradient>
+                </defs>
               </svg>
             </Arrow>
 
@@ -986,12 +1096,25 @@ const TransactionsTable: React.FC = () => {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke={page === maxPage ? 'white' : '#9072FF'}
+                  stroke={page === maxPage ? 'white' : 'url(#paint0_linear_11079_7639)'}
                   strokeOpacity={page === maxPage ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_11079_7639"
+                    x1="3.85449"
+                    y1="9.75"
+                    x2="3.85449"
+                    y2="1.25"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#EE0979" />
+                    <stop offset="1" stopColor="#FF6A00" />
+                  </linearGradient>
+                </defs>
               </svg>
             </Arrow>
           </div>
