@@ -196,7 +196,7 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-  min-height: 458px;
+  min-height: 250px;
   &::-webkit-scrollbar {
     height: 6px;
   }
