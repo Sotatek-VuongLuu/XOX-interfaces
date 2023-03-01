@@ -310,7 +310,11 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                   </TableCell>
                   <TableCell align="left">{row.time}</TableCell>
                   <TableCell align="left">{row.point} points</TableCell>
-                  <TableCell align="right">${row.claim}</TableCell>
+
+                  <TableCell align="right">
+                    <span>$</span>
+                    {new BigNumber(row.claim).multipliedBy(100).div(99).toFixed(0, BigNumber.ROUND_DOWN)}
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>

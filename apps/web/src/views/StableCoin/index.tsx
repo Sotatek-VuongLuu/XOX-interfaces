@@ -18,6 +18,7 @@ import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
 // eslint-disable-next-line import/no-cycle
 import Earned from './earned'
+import { useRouter } from 'next/router'
 
 const TYPE = {
   default: 'DEFAULT',
@@ -276,6 +277,7 @@ export default function StableCoin() {
   const [currentReward, setCurrentReward] = useState<number | string>(0)
   const [keyContainer, setKeyContainer] = useState(Math.random())
   const { isMobile } = useMatchBreakpoints()
+  const [isLoadingData, setIsLoadingData] = useState(false)
 
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async (accountId: any) => {
@@ -309,13 +311,14 @@ export default function StableCoin() {
   }
 
   useEffect(() => {
-    const myInterval = setInterval(() => {
-      if (account) {
-        handleCheckPendingRewardAll(account)
-      }
-    }, 10000)
-    return () => clearInterval(myInterval)
-  }, [account])
+    if (account) {
+      handleCheckPendingRewardAll(account)
+    }
+  }, [account, isLoadingData])
+
+  useEffect(() => {
+    setIsLoadingData(true)
+  }, [])
 
   // const [loadOk, setLoadOk] = useState(false)
   useEffect(() => {
@@ -338,7 +341,7 @@ export default function StableCoin() {
             />
           </div>
         </ContainerBanner>
-        <Container style={{ marginBottom: 100 }} key={`container-stablecoin${chainId}`}>
+        <Container style={{ marginBottom: 130 }} key={`container-stablecoin${chainId}`}>
           <div className="content">
             {account && (
               <Row>

@@ -340,10 +340,16 @@ export default function Refferal() {
       const totalClaimedAmount = new BigNumber(result.analysisDatas[0]?.total_claimed_amount)
         .div(10 ** USD_DECIMALS[chainId])
         .toNumber()
-      const totalUnClaimed = new BigNumber(totalReward).minus(totalClaimedAmount).toString()
+
+      const totalClaimedAmountIn100Percent = new BigNumber(totalClaimedAmount)
+        .multipliedBy(100)
+        .div(99)
+        .toFixed(0, BigNumber.ROUND_DOWN)
+
+      const totalUnClaimed = new BigNumber(totalReward).minus(totalClaimedAmountIn100Percent).toString()
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
       listData[1].volumn = totalUnClaimed.toString()
-      listData[2].volumn = totalClaimedAmount.toString()
+      listData[2].volumn = totalClaimedAmountIn100Percent.toString()
       listData[3].volumn = result.analysisDatas[0]?.total_transactions.toString()
       listData[4].volumn = totalReward.toString()
       setVolumnData(listData)
@@ -361,8 +367,17 @@ export default function Refferal() {
         const volumnETH = resETH.analysisDatas[0]?.total_claimed_amount
           ? formatUnits(resETH.analysisDatas[0]?.total_claimed_amount, 6)
           : 0
+
+        // 99%
         const totalVolumn = new BigNumber(volumnBSC).plus(volumnETH).toString()
-        setVolumnTotalEarn(totalVolumn)
+
+        // 100%
+        const totalVolumnIn100Percent = new BigNumber(totalVolumn)
+          .multipliedBy(100)
+          .div(99)
+          .toFixed(0, BigNumber.ROUND_DOWN)
+
+        setVolumnTotalEarn(totalVolumnIn100Percent)
       }
     } catch (error) {
       console.log(`error >>>>`, error)

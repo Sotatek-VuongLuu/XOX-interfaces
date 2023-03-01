@@ -490,7 +490,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)
   const [iconSortStable, setIconSortStable] = useState<any>(null)
-  const [perPage, setPerPage] = useState(10)
+  const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
@@ -942,6 +942,10 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
           <div>
             <Select
               options={[
+                {
+                  value: 5,
+                  label: '5/Page',
+                },
                 {
                   value: 10,
                   label: '10/Page',

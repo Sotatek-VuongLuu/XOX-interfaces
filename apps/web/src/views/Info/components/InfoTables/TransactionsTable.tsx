@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 18px;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
 
   & > div {
     max-width: calc(100vw - 80px);
@@ -440,7 +440,7 @@ const TransactionsTable: React.FC = () => {
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)
   const [iconSortStable, setIconSortStable] = useState<any>(null)
-  const [perPage, setPerPage] = useState(10)
+  const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
@@ -998,6 +998,10 @@ const TransactionsTable: React.FC = () => {
           <div>
             <Select
               options={[
+                {
+                  value: 5,
+                  label: '5/Page',
+                },
                 {
                   value: 10,
                   label: '10/Page',
