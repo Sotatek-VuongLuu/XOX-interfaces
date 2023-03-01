@@ -311,16 +311,20 @@ export default function StableCoin() {
   }
 
   useEffect(() => {
+    let id
     if (account) {
       handleCheckPendingRewardAll(account)
+      id = setInterval(() => {
+        handleCheckPendingRewardAll(account)
+      }, 7000)
     }
+    return () => clearInterval(id)
   }, [account, isLoadingData])
 
   useEffect(() => {
     setIsLoadingData(true)
   }, [])
 
-  // const [loadOk, setLoadOk] = useState(false)
   useEffect(() => {
     if (!chainId || !account) return
     if (loadOk) window.location.reload()
