@@ -129,20 +129,6 @@ export const PageContainer = styled(Flex)`
   }
 `
 
-const MainBackground = styled.div`
-  position: absolute;
-  z-index: -1;
-  top: -50px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  svg {
-    width: 100vw;
-    /* height: auto; */
-    object-fit: cover;
-  }
-`
-
 const FullContentInside = styled.div`
   display: flex;
   justify-content: center;
@@ -178,6 +164,7 @@ const FullContentInside = styled.div`
 
 const PageOverViewStyled = styled(Page)`
   display: grid;
+  position: relative;
   @media screen and (max-width: 1200px) {
     display: block;
   }
@@ -337,7 +324,6 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
 
   return (
     <PageOverViewStyled>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <FullContentInside>
         <div className="content">
           <InfoNav
