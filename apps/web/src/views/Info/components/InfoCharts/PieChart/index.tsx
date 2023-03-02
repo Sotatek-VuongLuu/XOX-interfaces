@@ -1,46 +1,55 @@
 import { isAddress } from '@ethersproject/address'
+import { Token } from '@pancakeswap/sdk'
+import { CurrencyLogo } from 'components/Logo'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import React from 'react'
 import { Cell, Pie, PieChart, Tooltip } from 'recharts'
 import styled from 'styled-components'
 import { formatAmount } from 'utils/formatInfoNumbers'
-import { CurrencyLogo } from '../../CurrencyLogo'
 
 // const RADIAN = Math.PI / 180
 
 const CustomTooltipStyle = styled.div`
   position: relative;
   .content {
-    width: 132px;
+    width: fit-content !important;
     height: 38px;
-    padding: 7px;
     background: #242424;
     border-radius: 10px;
+    padding: 8px;
+    display: flex;
+    align-items: center;
 
     .symbol {
       font-weight: 500;
       font-size: 16px;
-      line-height: 24px;
+      line-height: 19px;
       color: rgba(255, 255, 255, 0.87);
-      position: relative;
+      margin-right: 4px;
     }
 
     .label {
       font-weight: 400;
       font-size: 12px;
-      line-height: 24px;
+      line-height: 15px;
       color: rgba(255, 255, 255, 0.6);
     }
 
-    img {
-      display: inline-block;
-      margin-bottom: -10px;
+    .image {
+      margin-right: 4px;
+      margin-top: 4px;
+    }
+
+    .image * {
+      margin-bottom: 0;
+      width: 24px;
+      height: 24px;
     }
   }
 
   .border {
-    width: 134px;
+    width: calc(100% + 2px);
     height: 40px;
     background: linear-gradient(180deg, rgba(220, 96, 50, 0.3) 0%, rgba(254, 64, 57, 0.3) 100%);
     position: absolute;
@@ -90,18 +99,16 @@ const CustomTooltip = ({ active, payload }: any) => {
   const icon = () => {
     if (!active || !payload || !payload.length) return null
 
-    const chainName = chainId === 1 || chainId === 5 ? 'ETH' : 'BSC'
-
     switch (payload[0].name) {
       case 'ETH':
       case 'BNB':
-        return <CurrencyLogo address={payload[0].name} size="24" chainName={chainName} />
+        return <CurrencyLogo currency={new Token(chainId, payload[0].name, 18, payload[0].name)} />
       case 'Others':
-        return null
+        return <></>
       case 'XOX':
-        return <CurrencyLogo address={XOX_ADDRESS[chainId]} size="24" chainName={chainName} />
+        return <CurrencyLogo currency={new Token(chainId, XOX_ADDRESS[chainId], 18, 'XOX')} />
       default:
-        return <CurrencyLogo address={USD_ADDRESS[chainId]} size="24" chainName={chainName} />
+        return <CurrencyLogo currency={new Token(chainId, USD_ADDRESS[chainId], 18, 'USD')} />
     }
   }
 
@@ -110,7 +117,7 @@ const CustomTooltip = ({ active, payload }: any) => {
       <CustomTooltipStyle>
         <div className="border"></div>
         <div className="content">
-          {icon()}
+          <span className="image">{icon()}</span>
           <span className="symbol">{payload[0].name}</span>
           <span className="label">{payload[0].value}%</span>
         </div>
