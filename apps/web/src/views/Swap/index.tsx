@@ -1,6 +1,6 @@
 /* eslint-disable import/no-duplicates */
 /* eslint-disable import/order */
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 import { Currency } from '@pancakeswap/sdk'
 import { Flex, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useWrapCallback, { WrapType } from 'hooks/useWrapCallback'
@@ -111,6 +111,14 @@ export default function Swap() {
   } = useWrapCallback(currencies[Field.INPUT], currencies[Field.OUTPUT], typedValue)
   const showWrap: boolean = wrapType !== WrapType.NOT_APPLICABLE
   const trade = showWrap ? undefined : v2Trade
+
+  const [loadOk, setLoadOk] = useState(false)
+  useEffect(() => {
+    if (!chainId || !account) return
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
+  }, [chainId, account])
+
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>

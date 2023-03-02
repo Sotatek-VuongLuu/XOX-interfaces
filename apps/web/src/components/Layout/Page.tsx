@@ -9,7 +9,6 @@ import Container from './Container'
 const StyledPage = styled(Container)`
   width: 100%;
   min-height: calc(100vh - 64px);
-  padding-top: 16px;
   padding-bottom: 40px;
 
   ${({ theme }) => theme.mediaQueries.sm} {
@@ -41,7 +40,7 @@ export const PageMeta: React.FC<React.PropsWithChildren<{ symbol?: string }>> = 
 
   return (
     <Head>
-      <title>XOX</title>
+      <title>XOX Labs</title>
       {/* <title>{pageTitle}</title> */}
       {/* <meta property="og:title" content={title} />
       <meta property="og:description" content={description} /> */}

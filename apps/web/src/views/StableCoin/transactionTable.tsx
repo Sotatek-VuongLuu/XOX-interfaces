@@ -156,7 +156,7 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-  min-height: 458px;
+  min-height: 250px;
   &::-webkit-scrollbar {
     height: 6px;
   }
@@ -283,37 +283,39 @@ const TableLoader: React.FC<React.PropsWithChildren> = () => {
 }
 
 const decimalCount = (n: any) => {
-  if(!n) return false;
-  const nString = parseFloat(n).toString();
-  if(nString.indexOf('.') === -1 ||  nString.split(".")[1]?.length < 7){
+  if (!n) return false
+  const nString = parseFloat(n).toString()
+  if (nString.indexOf('.') === -1 || nString.split('.')[1]?.length < 7) {
     return false
   }
-  return true;
+  return true
 }
 
 const getPowerOfTen = (n: any) => {
-  const nString = parseFloat(n).toString();
-  const eIndex = nString.indexOf("e");
-  return nString.substring(eIndex + 2);
+  const nString = parseFloat(n).toString()
+  const eIndex = nString.indexOf('e')
+  return nString.substring(eIndex + 2)
 }
 
 const fullNumber = (n: any) => {
-  let nString = parseFloat(n).toString();
-  if(nString.indexOf('e') !== -1){
-    const numberPower = getPowerOfTen(n);
-    nString = parseFloat(n).toFixed(parseFloat(numberPower)).toString();
+  let nString = parseFloat(n).toString()
+  if (nString.indexOf('e') !== -1) {
+    const numberPower = getPowerOfTen(n)
+    nString = parseFloat(n).toFixed(parseFloat(numberPower)).toString()
   }
-  return nString;
+  return nString
 }
 
 const formatNumberDecimal = (n: any, decimal?: number) => {
-  let nString = parseFloat(n).toString();
-  if(nString.indexOf('e') !== -1){
-    const numberPower = getPowerOfTen(n);
-    nString = parseFloat(n).toFixed(parseFloat(numberPower)).toString();
+  let nString = parseFloat(n).toString()
+  if (nString.indexOf('e') !== -1) {
+    const numberPower = getPowerOfTen(n)
+    nString = parseFloat(n).toFixed(parseFloat(numberPower)).toString()
   }
-  const nSlice = decimal || 6;
-  return `${nString.split(".")[0]}${nString.indexOf('.') !== -1 ? '.' : ''}${nString.split(".")?.[1]?.slice(0, nSlice) || ''}`;
+  const nSlice = decimal || 6
+  return `${nString.split('.')[0]}${nString.indexOf('.') !== -1 ? '.' : ''}${
+    nString.split('.')?.[1]?.slice(0, nSlice) || ''
+  }`
 }
 
 const DataRow: React.FC<
@@ -359,7 +361,7 @@ const DataRow: React.FC<
           fontWeight="400"
           lineHeight="19px"
           color="rgba(255, 255, 255, 0.87)"
-          style={{whiteSpace: 'nowrap'}}
+          style={{ whiteSpace: 'nowrap' }}
         >
           {transaction.type === TransactionType.MINT
             ? t('Add %token0% and %token1%', { token0: symbolToken0, token1: symbolToken1 })
@@ -376,7 +378,7 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-time`}
-        style={{whiteSpace: 'nowrap'}}
+        style={{ whiteSpace: 'nowrap' }}
       >
         {formatISO9075(parseInt(transaction.timestamp, 10) * 1000)}
       </Text>
@@ -391,7 +393,8 @@ const DataRow: React.FC<
       >
         <Tooltip placement="top-start" title={`${fullNumber(abs1)} ${symbolToken0}S`}>
           <span>{`${formatNumberDecimal(abs1)}${decimalCount(abs1) ? '...' : ''} ${symbolToken0}S`}</span>
-        </Tooltip></Text>
+        </Tooltip>
+      </Text>
     </>
   )
 }
@@ -403,7 +406,7 @@ const TransactionsTable: React.FC = () => {
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)
   const [iconSortStable, setIconSortStable] = useState<any>(null)
-  const [perPage, setPerPage] = useState(10)
+  const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
@@ -529,7 +532,7 @@ const TransactionsTable: React.FC = () => {
       <path
         d="M1 4.66667L4.66667 1L8.33333 4.66667"
         stroke="#8E8E8E"
-        strokeWidth="1.6"
+        strokeWidth="1.6"   
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -796,18 +799,34 @@ const TransactionsTable: React.FC = () => {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke={page === maxPage ? 'white' : '#9072FF'}
-                  strokeOpacity={page === maxPage ? '0.38' : '1'}
+                  stroke="url(#paint0_linear_11079_7639)"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_11079_7639"
+                    x1="3.85449"
+                    y1="9.75"
+                    x2="3.85449"
+                    y2="1.25"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#EE0979" />
+                    <stop offset="1" stopColor="#FF6A00" />
+                  </linearGradient>
+                </defs>
               </svg>
             </Arrow>
           </div>
           <div>
             <Select
               options={[
+                {
+                  value: 5,
+                  label: '5/Page',
+                },
                 {
                   value: 10,
                   label: '10/Page',

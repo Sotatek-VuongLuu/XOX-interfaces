@@ -57,12 +57,12 @@ const StyledButton = styled.button<BaseButtonProps>`
   line-height: 1;
   opacity: ${getOpacity};
   outline: 0;
-  background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-  border-radius: 6px;
+  background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
+  border-radius: 8px;
   height: 100%;
 
   &:hover:not(:disabled):not(.pancake-button--disabled):not(.pancake-button--disabled):not(:active) {
-    background: #5f35eb;
+    opacity: 0.9;
   }
 
   &:active:not(:disabled):not(.pancake-button--disabled):not(.pancake-button--disabled) {

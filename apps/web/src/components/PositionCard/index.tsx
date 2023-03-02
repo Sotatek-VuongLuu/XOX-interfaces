@@ -1,4 +1,4 @@
-import { useState, useMemo, useContext } from 'react'
+import { useState, useMemo, useContext, useEffect } from 'react'
 import { Currency, CurrencyAmount, JSBI, Pair, Percent } from '@pancakeswap/sdk'
 import {
   Button,
@@ -318,6 +318,8 @@ const withLPValuesFactory =
   (Component) =>
   (props) => {
     const { address: account } = useAccount()
+    const [finishTransaction, setFinishTransaction] = useState()
+    const { transactionState, setTransactionState } = props
 
     const currency0 = props.showUnwrapped ? props.pair.token0 : unwrappedToken(props.pair.token0)
     const currency1 = props.showUnwrapped ? props.pair.token1 : unwrappedToken(props.pair.token1)
@@ -341,6 +343,16 @@ const withLPValuesFactory =
     const [token0Deposited, token1Deposited] = useLPValuesHook(args)
 
     const totalUSDValue = useTotalUSDValue({ currency0, currency1, token0Deposited, token1Deposited })
+
+    useEffect(() => {
+      if (!finishTransaction) setFinishTransaction(token0Deposited?.toFixed())
+      else if (finishTransaction !== token0Deposited?.toFixed()) {
+        setFinishTransaction(token0Deposited?.toFixed())
+        if (transactionState === 'start' || transactionState === 'submited') {
+          console.log(transactionState)
+        }
+      }
+    }, [token0Deposited])
 
     return (
       <Component

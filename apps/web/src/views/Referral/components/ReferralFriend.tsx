@@ -27,7 +27,7 @@ import { getUserFriend } from 'services/referral'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { formatAmountNumber, roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
 import axios from 'axios'
-import { CopyButton } from '@pancakeswap/uikit'
+import { CopyButton, useToast } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { GridLoader } from 'react-spinners'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
@@ -482,6 +482,7 @@ const ReferralFriend = ({
   const [typeOfClaim, setTypeOfClaim] = useState<number | null>(null)
   const [listFriends, setListFriends] = useState([])
   const { t } = useTranslation()
+  const { toastError, toastSuccess } = useToast()
   const [cacheAmountUnClaimOfUser, setCacheAmountUnClaimOfUser] = useState<null | number>(null)
 
   const handleClaimAll = async () => {
@@ -511,6 +512,9 @@ const ReferralFriend = ({
       if (error && error?.code === 'ACTION_REJECTED') {
         setModalReject(true)
       }
+      if (error?.code !== 'ACTION_REJECTED') {
+        toastError('Error', 'Transaction failed')
+      }
     }
   }
 
@@ -538,6 +542,10 @@ const ReferralFriend = ({
       setIsOpenLoadingClaimModal(false)
       if (error && error?.code === 'ACTION_REJECTED') {
         setModalReject(true)
+      }
+
+      if (error?.code !== 'ACTION_REJECTED') {
+        toastError('Error', 'Transaction failed')
       }
     }
   }
@@ -804,20 +812,16 @@ const ReferralFriend = ({
         title="Claim"
       >
         <Content>
-          {/* <div className="discription">
-            Receive {dataClaim.dollar?.toLocaleString()}$ at level "<span>{dataClaim.point?.toLocaleString()}</span>{' '}
-            points"?
-          </div> */}
           <div className="discription">
-            Withdraw Amount ${roundingAmountNumber(Number(totalUnClaimed))}
+            Withdraw Amount ${roundingAmountNumber(Number(dataClaim.dollar))}
             <br />
             You will receive:{' '}
-            {`${roundingAmountNumber(Number(totalUnClaimed) * 0.99)} ${
+            {`${roundingAmountNumber(Number(dataClaim.dollar) * 0.99)} ${
               chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
             }`}
             <br />
             Platform Fee:{' '}
-            {`${roundingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)} ${
+            {`${roundingAmountNumber(Number(dataClaim.dollar) - Number(dataClaim.dollar) * 0.99)} ${
               chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
             }`}
           </div>
@@ -844,7 +848,19 @@ const ReferralFriend = ({
         title="Claim"
       >
         <Content>
-          <div className="discription">Receive {Number(totalUnClaimed)?.toLocaleString()}$?</div>
+          <div className="discription">
+            Withdraw Amount ${Number(totalUnClaimed)?.toLocaleString()}
+            <br />
+            You will receive:{' '}
+            {`${roundingAmountNumber(Number(totalUnClaimed) * 0.99)} ${
+              chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
+            }`}
+            <br />
+            Platform Fee:{' '}
+            {`${roundingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)} ${
+              chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
+            }`}
+          </div>
           <div className="btn-group">
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimAll(false)}>
               Cancel
@@ -865,11 +881,11 @@ const ReferralFriend = ({
       <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Success">
         <Content>
           <div className="noti">
-            You have gotten{' '}
+            You have got{' '}
             <span>
               {typeOfClaim === TYPE_OF_CLAIM.CLAIM_BY_LEVEL
-                ? dataClaim.dollar?.toLocaleString()
-                : Number(cacheAmountUnClaimOfUser)?.toLocaleString()}
+                ? (dataClaim.dollar * 0.99).toLocaleString()
+                : (Number(cacheAmountUnClaimOfUser) * 0.99).toLocaleString()}
               $.
             </span>
           </div>

@@ -24,7 +24,7 @@ export const SubTitleStyle = styled.span`
     left: 0;
     width: 40px;
     height: 2px;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   }
 `;
 
@@ -43,7 +43,7 @@ export const FooterMainContent = styled.div`
     height: 4px;
     left: 0px;
     top: 0px;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   }
 
   @media screen and (max-width: 560px) {

@@ -63,7 +63,8 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
                 marginBottom="24px"
                 marginTop="24px"
               >
-                Managed by XOX Labs. Building the economy of the Future.
+                Managed by XOX Labs. <br />
+                Building the economy of the Future.
               </Text>
 
               <Flex

@@ -29,7 +29,7 @@ import { useRouter } from 'next/router'
 import { callWithEstimateGas } from 'utils/calls'
 import { SUPPORT_ZAP } from 'config/constants/supportChains'
 import { ContractMethodName } from 'utils/types'
-import { ROUTER_XOX } from 'config/constants/exchange'
+import { ROUTER_ADDRESS, ROUTER_XOX } from 'config/constants/exchange'
 import { useLPApr } from 'state/swap/useLPApr'
 import SwapbackgroundDesktop from 'components/Svg/SwapBackgroundDesktop'
 import SwapbackgroundDesktopNone from 'components/Svg/SwapBackgroundDesktopNone'
@@ -61,6 +61,9 @@ import { formatAmount } from '../../utils/formatInfoNumbers'
 import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
 import { MinimalPositionCard } from 'components/PositionCard'
+import useNativeCurrency from 'hooks/useNativeCurrency'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
+import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 
 const Wrapper = styled(Flex)`
   width: 100%;
@@ -148,32 +151,37 @@ const SwapbackgroundWrapper = styled.div`
   z-index: 1;
 `
 
+const MainBackground = styled.div`
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  svg {
+    width: 100vw;
+    height: auto;
+    object-fit: cover;
+  }
+`
+
 enum Steps {
   Choose,
   Add,
 }
 
 export default function AddLiquidity({ currencyA, currencyB }) {
-  const router = useRouter()
   const { account, chainId, isWrongNetwork } = useActiveWeb3React()
   const { isMobile } = useMatchBreakpoints()
   const addPair = usePairAdder()
   const zapMode = false
   const expertMode = useIsExpertMode()
-  const zapAddress = getZapAddress(chainId)
+  const native = useNativeCurrency()
 
   const [temporarilyZapMode, setTemporarilyZapMode] = useState(true)
 
-  const [steps, setSteps] = useState(Steps.Choose)
-
   const { t } = useTranslation()
   const gasPrice = useGasPrice()
-
-  useEffect(() => {
-    if (router.query.step === '1') {
-      setSteps(Steps.Add)
-    }
-  }, [router.query])
 
   const zapModeStatus = useMemo(() => !!zapMode && temporarilyZapMode, [zapMode, temporarilyZapMode])
 
@@ -304,12 +312,29 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   )
 
   // check whether the user has approved the router on the tokens
-  const [approvalA, approveACallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_A], ROUTER_XOX[chainId])
-  const [approvalB, approveBCallback] = useApproveCallback(parsedAmounts[Field.CURRENCY_B], ROUTER_XOX[chainId])
+  const [approvalA, approveACallback] = useApproveCallback(
+    parsedAmounts[Field.CURRENCY_A],
+    currencies[Field.CURRENCY_A]?.symbol === native.symbol || currencies[Field.CURRENCY_B]?.symbol === native.symbol
+      ? ROUTER_ADDRESS[chainId]
+      : ROUTER_XOX[chainId],
+  )
+  const [approvalB, approveBCallback] = useApproveCallback(
+    parsedAmounts[Field.CURRENCY_B],
+    currencies[Field.CURRENCY_A]?.symbol === native.symbol || currencies[Field.CURRENCY_B]?.symbol === native.symbol
+      ? ROUTER_ADDRESS[chainId]
+      : ROUTER_XOX[chainId],
+  )
 
   const addTransaction = useTransactionAdder()
 
-  const routerContract = useRouterContractXOX(false)
+  const routerContractXOX = useRouterContractXOX(false)
+  const routerContractNormal = useRouterContractXOX(true)
+  const routerContract = useMemo(() => {
+    return currencies[Field.CURRENCY_A]?.symbol === native.symbol ||
+      currencies[Field.CURRENCY_B]?.symbol === native.symbol
+      ? routerContractNormal
+      : routerContractXOX
+  }, [routerContractNormal, routerContractXOX, currencies[Field.CURRENCY_A], currencies[Field.CURRENCY_B]])
 
   async function onAdd() {
     if (!chainId || !account || !routerContract) return
@@ -650,6 +675,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   return (
     <Page>
+      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
         width={['290px', , '100%']}
         marginTop="100px"
@@ -690,7 +716,11 @@ export default function AddLiquidity({ currencyA, currencyB }) {
             <AppHeader
               title={
                 currencies[Field.CURRENCY_A]?.symbol && currencies[Field.CURRENCY_B]?.symbol
-                  ? `${getLPSymbol(currencies[Field.CURRENCY_A].symbol, currencies[Field.CURRENCY_B].symbol, chainId)}`
+                  ? `${getLPSymbol(
+                      currencies[Field.CURRENCY_A]?.symbol,
+                      currencies[Field.CURRENCY_B]?.symbol,
+                      chainId,
+                    )}`
                   : t('Add Liquidity')
               }
               subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
@@ -703,7 +733,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
             />
             <CardBody p={['18px 0', , '24px 0']}>
               <AutoColumn gap="16px">
-                {noLiquidity && (
+                {/* {noLiquidity && (
                   <ColumnCenter>
                     <Message variant="warning">
                       <div>
@@ -715,7 +745,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                       </div>
                     </Message>
                   </ColumnCenter>
-                )}
+                )} */}
                 <CurrencyInputPanel
                   showBUSD
                   onInputBlur={canZap ? zapIn.onInputBlurOnce : undefined}

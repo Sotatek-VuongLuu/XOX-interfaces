@@ -3,12 +3,11 @@ import { useTranslation } from '@pancakeswap/localization'
 import TransactionConfirmationModal, { TransactionErrorContent } from 'components/TransactionConfirmationModal'
 import _toNumber from 'lodash/toNumber'
 import { roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
+import BigNumber from 'bignumber.js'
 
 const StableCoinModal = (props: any) => {
-  const { onDismiss, isBUSD, amount, txHas, pending, withdrawErrorMessage } = props
-  const { t } = useTranslation()
-
-  console.log(withdrawErrorMessage)
+  const { onDismiss, isUSDT, amount, txHas, pending, withdrawErrorMessage } = props
+  const amountParse = new BigNumber(amount).toNumber()
 
   const confirmationContent = useCallback(
     () =>
@@ -28,11 +27,11 @@ const StableCoinModal = (props: any) => {
       content={confirmationContent}
       pendingText={
         <>
-          Withdraw Amount ${roundingAmountNumber(amount, 6)}
+          Withdraw Amount ${roundingAmountNumber(amountParse, 6)}
           <br />
-          You will receive: {`${roundingAmountNumber(amount * 0.99, 6)} ${isBUSD ? 'USDT' : 'USDC'}`}
+          You will receive: {`${roundingAmountNumber(amountParse * 0.99, 6)} ${isUSDT ? 'USDT' : 'USDC'}`}
           <br />
-          Platform Fee: {`${roundingAmountNumber(amount * 0.01, 6)} ${isBUSD ? 'USDT' : 'USDC'}`}
+          Platform Fee: {`${roundingAmountNumber(amountParse * 0.01, 6)} ${isUSDT ? 'USDT' : 'USDC'}`}
         </>
       }
       attemptingTxn={pending}

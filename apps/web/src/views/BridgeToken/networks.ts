@@ -29,8 +29,8 @@ export const NETWORK_LINK: { [chainId in ChainId]?: any } = {
 }
 
 export const CONTRACT_BRIDGE_POOL: { [chainId in ChainId]?: any } = {
-  [ChainId.GOERLI]: '0x7b56ec4a1D7c24357189329eEB929C435128a78D',
+  [ChainId.GOERLI]: '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
   [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0xdBE930b1ED1925D6d65ac7E332396d84f984e589',
+  [ChainId.BSC_TESTNET]: '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
   [ChainId.ETHEREUM]: '',
 }

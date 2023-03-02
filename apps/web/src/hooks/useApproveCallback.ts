@@ -112,12 +112,12 @@ export function useApproveCallback(
         console.log('error', error?.code)
         console.error('Failed to approve token', error)
         if (error?.code === 'ACTION_REJECTED') {
-          return
+          toastError(t('Error'), error.message)
         }
         if (error?.code !== 4001) {
           toastError(t('Error'), error.message)
         }
-        throw error
+        // throw error
       })
   }, [approvalState, token, tokenContract, amountToApprove, spender, addTransaction, callWithGasPrice, t, toastError])
 

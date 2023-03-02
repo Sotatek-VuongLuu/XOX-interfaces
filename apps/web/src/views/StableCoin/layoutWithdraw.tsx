@@ -17,6 +17,8 @@ import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
 import WidthdrawForm from './widthdrawForm'
 import Earned from './earned'
+import BigNumber from 'bignumber.js'
+import { ChainId } from '@pancakeswap/sdk'
 
 const TYPE = {
   default: 'DEFAULT',
@@ -158,8 +160,10 @@ export default function WithDrawLayout() {
   const [currentReward, setCurrentReward] = useState<number | string>(0)
   const chainIdLocal: any = useMultiChainId() || chainId
   const [keyContainer, setKeyContainer] = useState(Math.random())
+  const isUSDT = chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET
+  const decimalCompare = isUSDT ? 18 : 6
   const { isMobile } = useMatchBreakpoints()
-
+  const [loadOk, setLoadOk] = useState(false)
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async (accountId: any) => {
     if (!accountId) return null
@@ -172,12 +176,15 @@ export default function WithDrawLayout() {
       const dataParse: any[] = infosUser.map((item) => {
         return formatUnits(item, USD_DECIMALS[chainIdLocal])
       })
-      const amountPoint = Number(dataParse[1])
-      const rewardPoint = Number(dataParse[2])
+
+      const amountPoint = new BigNumber(dataParse[1]).toNumber()
+      const rewardPoint = new BigNumber(dataParse[2]).toNumber()
       if (rewardPoint === 0 || rewardPoint) {
-        const numberReward = Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdLocal])) + rewardPoint
+        const numberReward = new BigNumber(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdLocal]))
+          .plus(rewardPoint)
+          .toFixed(decimalCompare)
         setCurrentReward(numberReward || 0)
-        const totalCurrentXOXS = amountPoint + numberReward
+        const totalCurrentXOXS = new BigNumber(amountPoint).plus(numberReward).toNumber()
         setCurrentXOX(totalCurrentXOXS || 0)
       }
     } catch (error) {
@@ -194,6 +201,12 @@ export default function WithDrawLayout() {
     }
   }, [account])
 
+  useEffect(() => {
+    if (!chainId || !account) return
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
+  }, [chainId, account])
+
   return (
     <>
       <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
@@ -201,7 +214,7 @@ export default function WithDrawLayout() {
         <div className="banner">
           <InfoNav
             allTokens={allTokens}
-            textContentBanner="Earn BUSD/USDC from your XOXS Indefinitely"
+            textContentBanner="Earn USDT/USDC from your XOXS Indefinitely"
             hasPadding={false}
           />
         </div>

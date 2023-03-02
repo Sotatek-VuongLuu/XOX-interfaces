@@ -18,6 +18,7 @@ import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
 // eslint-disable-next-line import/no-cycle
 import Earned from './earned'
+import { useRouter } from 'next/router'
 
 const TYPE = {
   default: 'DEFAULT',
@@ -247,7 +248,7 @@ const CustomRow = styled(Row)`
   grid-template-columns: 1fr;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: calc(50% - 12px) calc(50% - 12px);
   }
 `
 
@@ -270,11 +271,13 @@ export default function StableCoin() {
   const { account, chainId } = useWeb3React()
   const [widthDraw, setWidthDraw] = useState(TYPE.default)
   const allTokens = useAllTokens()
+  const [loadOk, setLoadOk] = useState(false)
   const contractTreasuryXOX = useTreasuryXOX()
   const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
   const [keyContainer, setKeyContainer] = useState(Math.random())
   const { isMobile } = useMatchBreakpoints()
+  const [isLoadingData, setIsLoadingData] = useState(false)
 
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async (accountId: any) => {
@@ -308,10 +311,21 @@ export default function StableCoin() {
   }
 
   useEffect(() => {
+    let id
     if (account) {
       handleCheckPendingRewardAll(account)
+      id = setInterval(() => {
+        handleCheckPendingRewardAll(account)
+      }, 5000)
     }
+    return () => clearInterval(id)
   }, [account])
+
+  useEffect(() => {
+    if (!chainId || !account) return
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
+  }, [chainId, account])
 
   return (
     <>
@@ -327,7 +341,7 @@ export default function StableCoin() {
             />
           </div>
         </ContainerBanner>
-        <Container style={{ marginBottom: 100 }} key={`container-stablecoin${chainId}`}>
+        <Container style={{ marginBottom: 130 }} key={`container-stablecoin${chainId}`}>
           <div className="content">
             {account && (
               <Row>
@@ -394,12 +408,12 @@ export default function StableCoin() {
             )}
             <CustomRow>
               <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
-                <Box className="wrap-table" style={{ height: '100%' }}>
+                <Box className="wrap-table" style={{ height: '100%', maxWidth: '100%', overflow: 'visible' }}>
                   <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
                 </Box>
               </WrapperBorder>
               <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
-                <Box className="wrap-table" style={{ height: '100%' }}>
+                <Box className="wrap-table" style={{ height: '100%', maxWidth: '100%', overflow: 'visible' }}>
                   <TransactionTable />
                 </Box>
               </WrapperBorder>

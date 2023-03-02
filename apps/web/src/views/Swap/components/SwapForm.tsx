@@ -96,6 +96,7 @@ export default function SwapForm() {
   const [referralCode, setReferralCode] = useState(null)
   const { account, chainId } = useActiveWeb3React()
   const [referralError, setReferralError] = useState(null)
+  const [codeRef, setCodeRef] = useState('')
   // for expert mode
   const [isExpertMode] = useExpertModeManager()
 
@@ -248,6 +249,7 @@ export default function SwapForm() {
   const isShowReferralBox = useShowReferralCode(inputCurrency, outputCurrency, chainId)
   const hasAmount = Boolean(parsedAmount)
   const handleChangeReferal = (value: string) => {
+    if (!account) return
     if (value.length === 0) {
       setReferralError(null)
       return
@@ -271,6 +273,13 @@ export default function SwapForm() {
         }
       })
   }
+
+  useEffect(() => {
+    setReferralError(null)
+    if (!account || !codeRef) return
+    handleChangeReferal(codeRef)
+  }, [account])
+
   const onRefreshPrice = useCallback(() => {
     if (hasAmount) {
       refreshBlockNumber()
@@ -395,7 +404,13 @@ export default function SwapForm() {
                 <Text bold fontSize={['14px', , '18px']} color="rgba(255, 255, 255, 0.87)" fontWeight={400}>
                   {t('Referral Code')}
                 </Text>
-                <ReferralInput onChange={(e) => handleChangeReferal(e.target.value)} maxLength={8} />
+                <ReferralInput
+                  onChange={(e) => {
+                    handleChangeReferal(e.target.value)
+                    setCodeRef(e.target.value)
+                  }}
+                  maxLength={8}
+                />
               </ReferralCode>
               {referralError && <ErrorReferral>{referralError}</ErrorReferral>}
             </>

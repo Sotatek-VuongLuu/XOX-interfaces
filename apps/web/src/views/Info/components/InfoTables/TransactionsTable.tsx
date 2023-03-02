@@ -18,11 +18,108 @@ import { Arrow, ClickableColumnHeader } from './shared'
 const Wrapper = styled.div`
   width: 100%;
   grid-column: 1;
-  background: #242424;
-  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  background: background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 20px;
   padding: 18px;
-  margin-bottom: 50px;
+  margin-bottom: 70px;
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
 
   & > div {
     max-width: calc(100vw - 80px);
@@ -52,7 +149,7 @@ const Wrapper = styled.div`
     left: 0;
     width: 40px;
     height: 4px;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
   }
 
   .btn-filter button {
@@ -102,6 +199,23 @@ const Wrapper = styled.div`
     .btn-filter button {
       padding: 10px 16px;
     }
+    .corner1 {
+      border-bottom: 1px solid #ffffff30;
+      border-left: 1px solid #ffffff30;
+    }
+  
+    .edge1 {
+      width: 1px;
+    }
+  
+    .corner2 {
+      border-bottom: 1px solid #ffffff30;
+      border-right: 1px solid #ffffff30;
+    }
+  
+    .edge2 {
+      width: 1px;
+    }
   }
 `
 
@@ -146,7 +260,7 @@ export const CustomTableWrapper = styled(Flex)`
   }
 
   & > div {
-    min-width: 1400px;
+    min-width: 1300px;
   }
 
   &::-webkit-scrollbar {
@@ -217,8 +331,12 @@ export const PageButtons = styled(Flex)`
   }
 
   & .page.current {
-    color: #9072ff;
-    background: rgba(110, 70, 255, 0.1);
+    background: rgba(255, 255, 255, 0.05);
+    background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
   }
 
   & .go-page {
@@ -248,6 +366,23 @@ const NoTransactionWrapper = styled(Flex)`
   ${({ theme }) => theme.mediaQueries.md} {
     grid-column: 1 / span 7;
   }
+`
+
+const CustomLink = styled(Link)`
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 19px;
+  text-align: right;
+
+  /* Gradient/9 */
+
+  background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
 `
 
 const SORT_FIELD = {
@@ -325,8 +460,8 @@ const DataRow: React.FC<
   //   }
   // }
   const stablCoin =
-    (inputTokenSymbol === 'USDC' || inputTokenSymbol === 'BUSD') && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
-      ? `${formatAmount(amountUSD / 10)} Stable coin`
+    (inputTokenSymbol === 'USDC' || inputTokenSymbol === 'USDT') && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
+      ? `${formatAmount(abs1 * 0.1)} Stable coin`
       : '--'
 
   return (
@@ -343,7 +478,6 @@ const DataRow: React.FC<
         {index + 1 + (page - 1) * perPage}
       </Text>
       <LinkExternal
-        color="#9072FF"
         href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
         key={`${transaction.hash}-type`}
       >
@@ -400,7 +534,9 @@ const DataRow: React.FC<
         lineHeight="19px"
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token1`}
-      >{`${formatAmount(abs1)} ${transaction.token1Symbol.toUpperCase()}`}</Text>
+      >
+        {`${formatAmount(abs1)} ${transaction.token1Symbol.toUpperCase()}`}
+      </Text>
       <Text
         fontSize="16px"
         fontFamily="Inter"
@@ -412,21 +548,20 @@ const DataRow: React.FC<
       >
         {stablCoin}
       </Text>
-      <Link
+      <CustomLink
         width="100%"
         fontSize="16px"
         fontFamily="Inter"
         fontStyle="normal"
         fontWeight="400"
         lineHeight="19px"
-        color="#3D8AFF"
         style={{ justifySelf: 'right' }}
         target="_blank"
         href={getBlockExploreLink(transaction.sender, 'address', chainIdLink)}
         key={`${transaction.hash}-sender`}
       >
         {truncateHash(transaction.sender, 4, 5)}
-      </Link>
+      </CustomLink>
     </>
   )
 }
@@ -438,12 +573,12 @@ const TransactionsTable: React.FC = () => {
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)
   const [iconSortStable, setIconSortStable] = useState<any>(null)
-  const [perPage, setPerPage] = useState(10)
+  const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
   const { chainId } = useActiveChainId()
   const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
-  const transactions = useProtocolTransactionsSWR()
   const [currentTransactions, setCurrentTransactions] = useState([])
+  const transactions = useProtocolTransactionsSWR()
   const { t } = useTranslation()
 
   const [page, setPage] = useState(1)
@@ -454,54 +589,6 @@ const TransactionsTable: React.FC = () => {
   const handleChangeTempPage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
   }, [])
-
-  const sortedTransactions = useMemo(() => {
-    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD, SORT_FIELD.stableCoin]
-    return currentTransactions
-      ? currentTransactions
-          .slice(0, 300)
-          .filter((x) => {
-            return txFilter === undefined || x.type === txFilter
-          })
-          .map((item: any) => {
-            const outputTokenSymbol = item.amountToken0 < 0 ? item.token0Symbol : item.token1Symbol
-            const inputTokenSymbol = item.amountToken1 < 0 ? item.token0Symbol : item.token1Symbol
-            const amountStable =
-              inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
-                ? item.amountUSD / 10 + 1
-                : 0
-            return { ...item, amountStable }
-          })
-          .sort((a, b) => {
-            if (a && b) {
-              const firstField = a[sortField as keyof Transaction]
-              const secondField = b[sortField as keyof Transaction]
-              const [first, second] = toBeAbsList.includes(sortField)
-                ? [Math.abs(firstField as number), Math.abs(secondField as number)]
-                : [firstField, secondField]
-              return first > second ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
-            }
-            return -1
-          })
-          .slice(perPage * (page - 1), page * perPage)
-      : []
-  }, [currentTransactions, page, sortField, sortDirection, sortStable, txFilter, perPage])
-
-  // Update maxPage based on amount of items & applied filtering
-  useEffect(() => {
-    if (currentTransactions) {
-      const filteredTransactions = currentTransactions
-        .filter((tx) => {
-          return txFilter === undefined || tx.type === txFilter
-        })
-        .slice(0, 300)
-      if (filteredTransactions.length % perPage === 0) {
-        setMaxPage(Math.floor(filteredTransactions.length / perPage))
-      } else {
-        setMaxPage(Math.floor(filteredTransactions.length / perPage) + 1)
-      }
-    }
-  }, [currentTransactions, txFilter, perPage])
 
   const handleFilter = useCallback(
     (newFilter: TransactionType) => {
@@ -633,17 +720,6 @@ const TransactionsTable: React.FC = () => {
   }, [])
 
   useEffect(() => {
-    switch (transactionFrom) {
-      case TransactionFrom.XOX:
-        setCurrentTransactions(transactions?.transactionsXOX)
-        break
-      default:
-        setCurrentTransactions(transactions?.transactionsOther)
-        break
-    }
-  }, [transactions, transactionFrom])
-
-  useEffect(() => {
     setTempPage(page.toString())
   }, [page])
 
@@ -657,9 +733,84 @@ const TransactionsTable: React.FC = () => {
     setCurrentTransactions([])
   }, [chainId])
 
+  useEffect(() => {
+    setCurrentTransactions([])
+  }, [])
+
+  // Update maxPage based on amount of items & applied filtering
+  useEffect(() => {
+    if (!transactions) return
+
+    let trans
+    if (TransactionFrom.XOX === transactionFrom) {
+      trans = [...transactions?.transactionsXOX]
+    } else {
+      trans = [...transactions?.transactionsOther]
+    }
+    setCurrentTransactions(trans)
+
+    if (trans) {
+      const filteredTransactions = currentTransactions
+        .filter((tx) => {
+          return txFilter === undefined || tx.type === txFilter
+        })
+        .slice(0, 300)
+      if (filteredTransactions.length % perPage === 0) {
+        setMaxPage(Math.floor(filteredTransactions.length / perPage))
+      } else {
+        setMaxPage(Math.floor(filteredTransactions.length / perPage) + 1)
+      }
+    }
+  }, [transactions, txFilter, perPage])
+
+  const sortedTransactions = useMemo(() => {
+    if (!transactions) return []
+
+    let trans
+    if (TransactionFrom.XOX === transactionFrom) {
+      trans = [...transactions?.transactionsXOX]
+    } else {
+      trans = [...transactions?.transactionsOther]
+    }
+    setCurrentTransactions(trans)
+    const toBeAbsList = [SORT_FIELD.timestamp, SORT_FIELD.amountUSD, SORT_FIELD.stableCoin]
+    return trans
+      ? trans
+          .slice(0, 300)
+          .filter((x) => {
+            return txFilter === undefined || x.type === txFilter
+          })
+          .map((item: any) => {
+            const outputTokenSymbol = item.amountToken0 < 0 ? item.token0Symbol : item.token1Symbol
+            const inputTokenSymbol = item.amountToken1 < 0 ? item.token0Symbol : item.token1Symbol
+            const amountStable =
+              inputTokenSymbol.indexOf('USD') !== -1 && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
+                ? item.amountUSD / 10 + 1
+                : 0
+            return { ...item, amountStable }
+          })
+          .sort((a, b) => {
+            if (a && b) {
+              const firstField = a[sortField as keyof Transaction]
+              const secondField = b[sortField as keyof Transaction]
+              const [first, second] = toBeAbsList.includes(sortField)
+                ? [Math.abs(firstField as number), Math.abs(secondField as number)]
+                : [firstField, secondField]
+              return first > second ? (sortDirection ? -1 : 1) * 1 : (sortDirection ? -1 : 1) * -1
+            }
+            return -1
+          })
+          .slice(perPage * (page - 1), page * perPage)
+      : []
+  }, [transactions, page, sortField, sortDirection, sortStable, txFilter, perPage])
+
   return (
     <Wrapper>
-      <Flex mb="16px" justifyContent="space-between">
+      <div className="corner1"></div>
+      <div className="edge1"></div>
+      <div className="corner2"></div>
+      <div className="edge2"></div>
+      <Flex mb="16px" justifyContent="space-between" flexDirection={['column', , 'row']}>
         <Text
           className="heading"
           fontSize="20px"
@@ -669,10 +820,11 @@ const TransactionsTable: React.FC = () => {
           lineHeight="24px"
           color="rgba(255, 255, 255, 0.87)"
           height="24px"
+          mb={28}
         >
           Transactions History
         </Text>
-        <Flex flexDirection="column" alignItems="flex-end">
+        <Flex flexDirection="column" alignItems={['flex-start', , 'flex-end']}>
           <Flex className="btn-filter" mb="8px">
             <Button
               onClick={() => handleFilterFrom(TransactionFrom.XOX)}
@@ -698,7 +850,7 @@ const TransactionsTable: React.FC = () => {
             )}
           </Flex>
           {transactionFrom === TransactionFrom.XOX && (
-            <Flex className="btn-filter" mb="8px">
+            <Flex className="btn-filter" mb="8px" justifyContent="space-between" width={'100%'}>
               <Button
                 onClick={() => handleFilter(undefined)}
                 className={undefined === txFilter ? 'active' : 'inactive'}
@@ -879,15 +1031,35 @@ const TransactionsTable: React.FC = () => {
                 setPagePagination(page === 1 ? page : page - 1)
               }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="7"
+                height="11"
+                viewBox="0 0 7 11"
+                fill="none"
+                style={{ transform: 'rotate(180deg' }}
+              >
                 <path
-                  d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
-                  stroke={page === 1 ? 'white' : '#9072FF'}
+                  d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
+                  stroke={page === 1 ? 'white' : 'url(#paint0_linear_11079_7639)'}
                   strokeOpacity={page === 1 ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_11079_7639"
+                    x1="3.85449"
+                    y1="9.75"
+                    x2="3.85449"
+                    y2="1.25"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#EE0979" />
+                    <stop offset="1" stopColor="#FF6A00" />
+                  </linearGradient>
+                </defs>
               </svg>
             </Arrow>
 
@@ -972,18 +1144,35 @@ const TransactionsTable: React.FC = () => {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke={page === maxPage ? 'white' : '#9072FF'}
+                  stroke={page === maxPage ? 'white' : 'url(#paint0_linear_11079_7639)'}
                   strokeOpacity={page === maxPage ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
+                <defs>
+                  <linearGradient
+                    id="paint0_linear_11079_7639"
+                    x1="3.85449"
+                    y1="9.75"
+                    x2="3.85449"
+                    y2="1.25"
+                    gradientUnits="userSpaceOnUse"
+                  >
+                    <stop stopColor="#EE0979" />
+                    <stop offset="1" stopColor="#FF6A00" />
+                  </linearGradient>
+                </defs>
               </svg>
             </Arrow>
           </div>
           <div>
             <Select
               options={[
+                {
+                  value: 5,
+                  label: '5/Page',
+                },
                 {
                   value: 10,
                   label: '10/Page',

@@ -80,6 +80,7 @@ export function useDerivedMintInfo(
   const { address: account } = useAccount()
 
   const { t } = useTranslation()
+  const native = useNativeCurrency()
 
   const { independentField, typedValue, otherTypedValue } = useMintState()
 
@@ -96,7 +97,12 @@ export function useDerivedMintInfo(
 
   // pair
   // const [pairState, pair] = usePair(currencies[Field.CURRENCY_A], currencies[Field.CURRENCY_B])
-  const [pairState, pair] = usePairSingleXOX();
+  const [pairStateUSDXOX, pairUSDXOX] = usePairSingleXOX()
+  const [pairStateNativeXOX, pairNativeXOX] = usePair(currencies[Field.CURRENCY_A], currencies[Field.CURRENCY_B])
+  const [pairState, pair] =
+    currencies[Field.CURRENCY_A]?.symbol === native.symbol || currencies[Field.CURRENCY_B]?.symbol === native.symbol
+      ? [pairStateNativeXOX, pairNativeXOX]
+      : [pairStateUSDXOX, pairUSDXOX]
 
   const totalSupply = useTotalSupply(pair?.liquidityToken)
 

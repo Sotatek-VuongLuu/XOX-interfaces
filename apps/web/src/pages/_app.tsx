@@ -1,5 +1,5 @@
 import '@pancakeswap/ui/css/reset.css'
-import { ResetCSS, ToastListener, ScrollToTopButtonV2 } from '@pancakeswap/uikit'
+import { ResetCSS, ToastListener, ScrollToTopButtonV2, useMatchBreakpoints } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
 import GlobalCheckClaimStatus from 'components/GlobalCheckClaimStatus'
 import { NetworkModal } from 'components/NetworkModal'
@@ -26,6 +26,23 @@ import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
+import styled from 'styled-components'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
+
+const MainBackground = styled.div`
+  position: fixed;
+  z-index: -1;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: fit-content;
+  svg,
+  img {
+    width: 100vw;
+    /* height: auto; */
+    object-fit: cover;
+  }
+`
 
 const EasterEgg = dynamic(() => import('components/EasterEgg'), { ssr: false })
 
@@ -79,7 +96,7 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="🥞 XOX - A next evolution DeFi exchange on BNB Smart Chain (BSC)" />
-        <title>XOX</title>
+        <title>XOX Labs</title>
         {/* {(Component as NextPageWithLayout).mp && (
           // eslint-disable-next-line @next/next/no-sync-scripts
           <script src="https://public.bnbstatic.com/static/js/mp-webview-sdk/webview-v1.0.0.min.js" id="mp-webview" />
@@ -136,6 +153,7 @@ const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? SentryEr
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const modal = useRef(null)
+  const { isMobile } = useMatchBreakpoints()
 
   const route = useRouter()
 
@@ -150,6 +168,9 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
 
   return (
     <ProductionErrorBoundary>
+      <MainBackground>
+        {isMobile ? <img src="/images/asset_page_bg.svg" /> : <SwapMainBackgroundDesktop />}
+      </MainBackground>
       <ShowMenu>
         <Layout>
           <Component {...pageProps} />

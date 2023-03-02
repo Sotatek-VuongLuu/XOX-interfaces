@@ -16,15 +16,19 @@ import InfoNav from '../components/InfoNav'
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import { useDataChartXOXSWR } from 'state/info/hooks'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 
 export const ChartCardsContainer = styled(Flex)`
   justify-content: space-between;
   flex-direction: column;
+  position: relative;
+  z-index: 1;
   width: 100%;
   padding: 0;
-  background: #242424;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
 
   & > * {
     width: 100%;
@@ -32,7 +36,75 @@ export const ChartCardsContainer = styled(Flex)`
 
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
-  } ;
+  }
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  ${({ theme }) => theme.mediaQueries.xxl} {
+    .corner1 {
+      border-bottom: 1px solid #ffffff30;
+      border-left: 1px solid #ffffff30;
+    }
+
+    .edge1 {
+      width: 1px;
+    }
+
+    .corner2 {
+      border-bottom: 1px solid #ffffff30;
+      border-right: 1px solid #ffffff30;
+    }
+
+    .edge2 {
+      width: 1px;
+    }
+  }
 `
 
 export const PageContainer = styled(Flex)`
@@ -43,7 +115,7 @@ export const PageContainer = styled(Flex)`
   & > div {
     display: flex;
     flex-direction: column;
-    margin-bottom: 16px;
+    margin-bottom: 24px;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -51,24 +123,9 @@ export const PageContainer = styled(Flex)`
   }
 
   ${({ theme }) => theme.mediaQueries.xxl} {
-    padding-top: 48px;
     & > div {
       flex-direction: row;
     }
-  }
-`
-
-const MainBackground = styled.div`
-  position: absolute;
-  z-index: -1;
-  top: -50px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  svg {
-    width: 100vw;
-    /* height: auto; */
-    object-fit: cover;
   }
 `
 
@@ -78,13 +135,20 @@ const FullContentInside = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
-  padding-top: 28px;
+  padding: 24px 8px 0 8px;
   .content {
     width: 1400px;
   }
 
-  @media screen and (max-width: 1400px) {
-    padding: 24px;
+  @media screen and (min-width: 968px) and (max-width: 1400px) {
+    padding: 24px 0;
+    .content {
+      width: 1200px;
+    }
+  }
+
+  @media screen and (min-width: 560px) and (max-width: 967px) {
+    padding: 0 24px;
     .content {
       width: 1200px;
     }
@@ -100,6 +164,7 @@ const FullContentInside = styled.div`
 
 const PageOverViewStyled = styled(Page)`
   display: grid;
+  position: relative;
   @media screen and (max-width: 1200px) {
     display: block;
   }
@@ -134,11 +199,14 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const loadChartData = useCallback(() => {
     if (!coinmarketcapIds || Object.keys(coinmarketcapIds).length === 0) return
 
-    const tempIds = Object.values(coinmarketcapIds)
+    const unPackage = Array.from(Object.values(coinmarketcapIds))
+      .map((item) => Object.values(item))
+      .flat()
+
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/price`, {
         params: {
-          id: tempIds.filter((id, index) => tempIds.indexOf(id) === index).join(','),
+          id: unPackage.filter((id, index) => unPackage.indexOf(id) === index).join(','),
         },
       })
       .then((response) => {
@@ -151,7 +219,10 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             price: data[key]?.quote?.USD?.price,
             percent_change_24h: data[key]?.quote?.USD?.percent_change_24h,
             volume_24h: data[key]?.quote?.USD?.volume_24h,
-            market_cap: data[key]?.quote?.USD?.market_cap,
+            market_cap:
+              data[key]?.self_reported_market_cap === null
+                ? data[key]?.quote?.USD?.market_cap
+                : data[key]?.self_reported_market_cap,
           }
         })
         setCurrencyDatas(result)
@@ -167,7 +238,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       .map((key: any) => {
         const token = allTokens[key]
         const { address } = token
-        if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[address]) {
+        if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[chainId][address]) {
           return undefined
         }
         return token
@@ -191,11 +262,11 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
           })
       }),
     ).then((values) => {
-      let tokenIds = { ..._tokenList }
+      let tokenIds = { ..._tokenList[chainId] }
       values.forEach((value) => {
         tokenIds = { ...tokenIds, ...value }
       })
-      setCoinmarketcapIds(tokenIds)
+      setCoinmarketcapIds({ ..._tokenList, [chainId]: tokenIds })
       setFetchingTokenId(true)
     })
   }, [allTokens])
@@ -217,12 +288,17 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
         const points = result.data?.data?.points
         if (!points) return
         const pointKeys = Object.keys(points)
+        console.log(points)
+        let prevPrice
         const data = pointKeys.map((key) => {
-          return {
+          const res = {
             date: key,
             priceUSD: points[key]?.v?.[0],
+            priceChange: prevPrice ? formatAmountNumber(((points[key]?.v?.[0] - prevPrice) * 100) / prevPrice, 2) : 0,
             VolUSD: points[key]?.v?.[1],
           }
+          prevPrice = points[key]?.v?.[0]
+          return res
         })
         setChardData(data)
       })
@@ -248,41 +324,41 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
 
   return (
     <PageOverViewStyled>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <FullContentInside>
         <div className="content">
-          <InfoNav allTokens={allTokens} textContentBanner="One Dapp. Unlimited possibilities" hasPadding={false} />
+          <InfoNav
+            allTokens={allTokens}
+            textContentBanner={<>One Dapp. {isMobile ? <br /> : ''}Unlimited possibilities</>}
+            hasPadding={false}
+          />
           <PageContainer>
             <div>
               <ChartCardsContainer>
-                <div className="border-gradient-style">
-                  <HoverableChart
-                    chartData={chartData}
-                    dataChartXOX={dataChartXOX}
-                    valueProperty="priceUSD"
-                    ChartComponent={LineChart}
-                    filter={filter}
-                    setFilter={setFilter}
-                    currencyDatas={currencyDatas}
-                    setCoinmarketcapId={setCoinmarketcapId}
-                    chainId={chainId}
-                    native={native}
-                    defaultToken={xoxToken}
-                    allTokens={allTokens}
-                    fetchingTokenId={fetchingTokenId}
-                    setFetchingTokenId={setFetchingTokenId}
-                    unsupported={unsupported}
-                  />
-                </div>
+                <div className="corner1"></div>
+                <div className="edge1"></div>
+                <div className="corner2"></div>
+                <div className="edge2"></div>
+                <HoverableChart
+                  chartData={chartData}
+                  dataChartXOX={dataChartXOX}
+                  valueProperty="priceUSD"
+                  ChartComponent={LineChart}
+                  filter={filter}
+                  setFilter={setFilter}
+                  currencyDatas={currencyDatas}
+                  setCoinmarketcapId={setCoinmarketcapId}
+                  chainId={chainId}
+                  native={native}
+                  defaultToken={xoxToken}
+                  allTokens={allTokens}
+                  fetchingTokenId={fetchingTokenId}
+                  setFetchingTokenId={setFetchingTokenId}
+                  unsupported={unsupported}
+                />
               </ChartCardsContainer>
-              <WalletInfoTable
-                currencyDatas={currencyDatas}
-                native={native}
-                allTokens={allTokens}
-                className="border-gradient-style"
-              />
+              <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} />
             </div>
-            <div className="border-gradient-style border-gradient-restyle-bottom">
+            <div>
               <TransactionTable />
             </div>
           </PageContainer>

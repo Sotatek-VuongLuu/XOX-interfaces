@@ -241,7 +241,7 @@ export default function AddStableLiquidity({ currencyA, currencyB }) {
           <AppHeader
             title={
               currencies[Field.CURRENCY_A]?.symbol && currencies[Field.CURRENCY_B]?.symbol
-                ? `${currencies[Field.CURRENCY_A].symbol}-${currencies[Field.CURRENCY_B].symbol} Stable LP`
+                ? `${currencies[Field.CURRENCY_A]?.symbol}-${currencies[Field.CURRENCY_B]?.symbol} Stable LP`
                 : t('Add Stable Liquidity')
             }
             backTo="/liquidity"

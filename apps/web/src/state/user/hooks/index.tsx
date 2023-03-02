@@ -1,4 +1,5 @@
 import { ChainId, Pair, ERC20Token } from '@pancakeswap/sdk'
+import BigNumber from 'bignumber.js'
 import { deserializeToken } from '@pancakeswap/token-lists'
 import { differenceInDays } from 'date-fns'
 import flatMap from 'lodash/flatMap'
@@ -436,7 +437,7 @@ export function useGasPrice(chainIdOverride?: number): string {
     return GAS_PRICE_GWEI.testnet
   }
   if (chain?.testnet) {
-    return data?.formatted?.gasPrice
+    return new BigNumber(data?.formatted?.gasPrice).multipliedBy(1.3).toFixed(0)
   }
   return data?.formatted?.gasPrice
 }

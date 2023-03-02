@@ -202,6 +202,9 @@ export default function Refferal() {
   const [maxAmount, setMaxAmount] = useState('')
   const [listPoint, setListPoint] = useState<IListPoint[]>([])
 
+  const [subTabIndex, setSubTabIndex] = useState(0)
+  const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
+
   const functionList: FunctionList = useMemo(() => {
     return {
       'All Time': [listUserRanksAllTime, rankOfUserAllTime, setListUserRanksAllTime, setRankOfUserAllTime],
@@ -323,6 +326,7 @@ export default function Refferal() {
     const res: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/point/config`).catch((error) => {
       console.warn(error)
     })
+
     if (res && res.data) {
       setListPoint(res.data)
     }
@@ -336,10 +340,16 @@ export default function Refferal() {
       const totalClaimedAmount = new BigNumber(result.analysisDatas[0]?.total_claimed_amount)
         .div(10 ** USD_DECIMALS[chainId])
         .toNumber()
-      const totalUnClaimed = Number(totalReward) - Number(totalClaimedAmount)
+
+      const totalClaimedAmountIn100Percent = new BigNumber(totalClaimedAmount)
+        .multipliedBy(100)
+        .div(99)
+        .toFixed(0, BigNumber.ROUND_DOWN)
+
+      const totalUnClaimed = new BigNumber(totalReward).minus(totalClaimedAmountIn100Percent).toString()
       listData[0].volumn = result.analysisDatas[0]?.number_of_referral
       listData[1].volumn = totalUnClaimed.toString()
-      listData[2].volumn = totalClaimedAmount.toString()
+      listData[2].volumn = totalClaimedAmountIn100Percent.toString()
       listData[3].volumn = result.analysisDatas[0]?.total_transactions.toString()
       listData[4].volumn = totalReward.toString()
       setVolumnData(listData)
@@ -348,10 +358,26 @@ export default function Refferal() {
 
   const getUserVolumn = async () => {
     try {
-      const result = await userAmount(chainId)
-      if (result) {
-        const volumn = formatUnits(result.analysisDatas[0]?.total_claimed_amount, USD_DECIMALS[chainId])
-        setVolumnTotalEarn(volumn)
+      const isDevEnv = chainId === ChainId.BSC_TESTNET || chainId === ChainId.GOERLI
+      const [resBSC, resETH] = await Promise.all([userAmount(isDevEnv ? 97 : 56), userAmount(isDevEnv ? 5 : 1)])
+      if (resBSC || resETH) {
+        const volumnBSC = resBSC.analysisDatas[0]?.total_claimed_amount
+          ? formatUnits(resBSC.analysisDatas[0]?.total_claimed_amount, 18)
+          : 0
+        const volumnETH = resETH.analysisDatas[0]?.total_claimed_amount
+          ? formatUnits(resETH.analysisDatas[0]?.total_claimed_amount, 6)
+          : 0
+
+        // 99%
+        const totalVolumn = new BigNumber(volumnBSC).plus(volumnETH).toString()
+
+        // 100%
+        const totalVolumnIn100Percent = new BigNumber(totalVolumn)
+          .multipliedBy(100)
+          .div(99)
+          .toFixed(0, BigNumber.ROUND_DOWN)
+
+        setVolumnTotalEarn(totalVolumnIn100Percent)
       }
     } catch (error) {
       console.log(`error >>>>`, error)
@@ -586,9 +612,16 @@ export default function Refferal() {
   }, [account, chainId])
 
   useEffect(() => {
-    if (!chainId) return
+    const myInterval = setInterval(() => {
+      handleGetCurrentPoint()
+    }, 10000)
+    return () => clearInterval(myInterval)
+  }, [])
+
+  useEffect(() => {
+    if (!chainId || !account) return
     getUserVolumn()
-  }, [chainId])
+  }, [chainId, account, subTabIndex])
 
   useEffect(() => {
     if (account) {
@@ -621,6 +654,9 @@ export default function Refferal() {
               maxAmount={maxAmount}
               listPoint={listPoint}
               listLevelMustReach={listLevelMustReach}
+              subTab={subTab}
+              subTabIndex={subTabIndex}
+              setSubTabIndex={setSubTabIndex}
             />
             <ReferralFriend
               currentLevelReach={currentLevelReach}
@@ -739,68 +775,3 @@ export const listLever: IItemLevel[] = [
     isReach: false,
   },
 ]
-// export const listLever: IItemLevel[] = [
-//   {
-//     icon: '/images/lever_1.svg',
-//     point: 100,
-//     dollar: 10,
-//     lever: 1,
-//     isReach: false,
-//   },
-//   {
-//     icon: '/images/lever_2.svg',
-//     point: 500,
-//     dollar: 50,
-//     lever: 2,
-//     isReach: false,
-//   },
-//   {
-//     icon: '/images/lever_3.svg',
-//     point: 1000,
-//     dollar: 100,
-//     lever: 3,
-//     isReach: false,
-//   },
-//   {
-//     icon: '/images/lever_4.svg',
-//     point: 5000,
-//     dollar: 300,
-//     lever: 4,
-//     isReach: false,
-//   },
-//   {
-//     icon: '/images/lever_5.svg',
-//     point: 10000,
-//     dollar: 500,
-//     lever: 5,
-//     isReach: false,
-//   },
-//   {
-//     icon: '/images/lever_6.svg',
-//     point: 50000,
-//     dollar: 2000,
-//     lever: 6,
-//     isReach: false,
-//   },
-//   {
-//     icon: '/images/lever_7.svg',
-//     point: 100000,
-//     dollar: 5000,
-//     lever: 7,
-//     isReach: false,
-//   },
-//   {
-//     icon: '/images/lever_8.svg',
-//     point: 500000,
-//     dollar: 10000,
-//     lever: 8,
-//     isReach: false,
-//   },
-//   {
-//     icon: '/images/lever_9.svg',
-//     point: 1000000,
-//     dollar: 20000,
-//     lever: 9,
-//     isReach: false,
-//   },
-// ]

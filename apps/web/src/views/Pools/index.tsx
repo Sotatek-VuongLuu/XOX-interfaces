@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import styled from 'styled-components'
-import { Flex, Text, Button, useModal, useMatchBreakpoints, LinkExternal } from '@pancakeswap/uikit'
+import { Flex, Text, Button, useModal, useMatchBreakpoints, LinkExternal, useToast } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
@@ -511,6 +511,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
     getContractFarmingLPAddress(chainId),
   )
+  const { toastError } = useToast()
 
   const handleGetDataFarming = async () => {
     try {
@@ -570,8 +571,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     }
   }
 
-  useEffect(() => {
-    if (!account || !chainId) return
+  const handleGetBalanceOfUser = () => {
     const currentProvider = provider
     getBalancesForEthereumAddress({
       // erc20 tokens you want to query!
@@ -589,6 +589,12 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       .catch((error) => {
         console.warn(error)
       })
+  }
+
+  useEffect(() => {
+    if (!account || !chainId) return
+    handleGetBalanceOfUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId, provider, isOpenSuccessModal])
 
   const handleWithdraw = async () => {
@@ -618,6 +624,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       }
       if (error?.message.includes('rejected')) {
         setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
+      }
+      if (error?.code !== 'ACTION_REJECTED') {
+        toastError('Error', 'Transaction failed')
       }
     }
   }
@@ -687,6 +696,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       if (error?.message.includes('rejected')) {
         setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
       }
+      if (error?.code !== 'ACTION_REJECTED') {
+        toastError('Error', 'Transaction failed')
+      }
     }
   }
 
@@ -719,6 +731,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       }
       if (error?.message.includes('rejected')) {
         setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
+      }
+      if (error?.code !== 'ACTION_REJECTED') {
+        toastError('Error', 'Transaction failed')
       }
     }
   }
@@ -993,7 +1008,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           <CustomButton
                             type="button"
                             className="nable"
-                            onClick={onModalStake}
+                            onClick={() => {
+                              onModalStake()
+                              handleGetBalanceOfUser()
+                            }}
                             disabled={!reserve || !totalSupplyLP}
                           >
                             Stake
@@ -1003,7 +1021,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         <CustomButton
                           type="button"
                           className="nable mt"
-                          onClick={onModalStake}
+                          onClick={() => {
+                            onModalStake()
+                            handleGetBalanceOfUser()
+                          }}
                           disabled={!reserve || !totalSupplyLP}
                         >
                           Stake

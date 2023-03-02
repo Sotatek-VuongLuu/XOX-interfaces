@@ -783,7 +783,8 @@ export default function BridgeToken() {
                 </div>
                 <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
                 <div className="noti_claim_pending_h3">
-                  Bridging {amountInput} XOX and {amountTo} XOX
+                  Bridging {amountInput} XOX <span>(</span> {NETWORK_LABEL[chainId]} <span>)</span> to {amountTo} XOX{' '}
+                  <span>(</span> {NETWORK_LABEL[getChainIdToByChainId(chainId)]} <span>)</span>
                 </div>
                 <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
                 <img

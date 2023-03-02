@@ -182,6 +182,7 @@ interface CurrencyInputPanelProps {
   disabled?: boolean
   error?: boolean
   showBUSD?: boolean
+  forLiquidity?: boolean
 }
 export default function CurrencyInputPanel({
   value,
@@ -206,6 +207,7 @@ export default function CurrencyInputPanel({
   disabled,
   error,
   showBUSD,
+  forLiquidity,
 }: CurrencyInputPanelProps) {
   const { address: account } = useAccount()
   const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
@@ -226,6 +228,7 @@ export default function CurrencyInputPanel({
       otherSelectedCurrency={otherCurrency}
       showCommonBases={showCommonBases}
       commonBasesType={commonBasesType}
+      forliquidity={forLiquidity}
     />,
   )
   const isShowPercent = account && currency && selectedCurrencyBalance?.greaterThan(0) && !disabled && label !== 'To'

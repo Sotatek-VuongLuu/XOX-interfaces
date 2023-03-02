@@ -203,11 +203,11 @@ const WelcomeXOX = (): JSX.Element => {
     const canvas = document.getElementById('canvas3d_mobile')
     if (canvasPC) {
       const app = new Application(canvasPC as any)
-      app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode')
+      app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode').catch((error) => console.log(error))
     }
     if (canvas) {
       const app = new Application(canvas as any)
-      app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode')
+      app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode').catch((error) => console.log(error))
     }
   }, [])
 

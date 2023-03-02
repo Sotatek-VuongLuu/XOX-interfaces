@@ -4,6 +4,7 @@ import { ChainId } from '@pancakeswap/sdk'
 import { formatUnits, parseEther, parseUnits } from 'ethers/lib/utils'
 import debounce from 'lodash/debounce'
 import { fetchBridgeTokenFee } from '../../context/globalData'
+import BigNumber from 'bignumber.js'
 
 const Wrapper = styled.div`
   border-radius: 8px;
@@ -139,7 +140,7 @@ const Reminder: React.FC<Props> = ({
     const totalFeeParsed = parseUnits(gasFee, decimals).add(parseUnits(crosschainFee, decimals))
     const amountToParsed = amountBri && amountBri !== ('.' || '') && parseUnits(amountBri, decimals).sub(totalFeeParsed)
     return amountBri && amountBri !== ('.' || '') && !amountToParsed.isNegative()
-      ? Number(formatUnits(amountToParsed, decimals)).toFixed(6)
+      ? new BigNumber(formatUnits(amountToParsed, decimals)).toFixed(6, BigNumber.ROUND_DOWN)
       : amountBri && amountBri !== ('.' || '')
       ? '0'
       : ''
@@ -160,7 +161,7 @@ const Reminder: React.FC<Props> = ({
           Minimum Crosschain Amount is {formatNumberStr(bridgeTokenFee?.minAmount)} {tokenInput?.symbol}
         </li>
         {/* <li>Maximum Crosschain Amount is {formatNumberStr(bridgeTokenFee?.maxAmount)} STAND</li> */}
-        <li>Estimated Time of Crosschain Arrival is 10-30 mins</li>
+        <li>Estimated Time of Crosschain Arrival is 0.5-3 mins</li>
         {/* <li>
           Crosschain amount larger than {bridgeTokenFee?.maxAmount}{" "}
           {tokenInput?.symbol} could take up to 24 hours
