@@ -1,17 +1,54 @@
+import { isAddress } from '@ethersproject/address'
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 import React from 'react'
 import { Cell, Pie, PieChart, Tooltip } from 'recharts'
 import styled from 'styled-components'
 import { formatAmount } from 'utils/formatInfoNumbers'
+import { CurrencyLogo } from '../../CurrencyLogo'
 
 // const RADIAN = Math.PI / 180
 
 const CustomTooltipStyle = styled.div`
-  background: #fff;
-  padding: 5px 10px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: black;
+  position: relative;
+  .content {
+    width: 132px;
+    height: 38px;
+    padding: 7px;
+    background: #242424;
+    border-radius: 10px;
+
+    .symbol {
+      font-weight: 500;
+      font-size: 16px;
+      line-height: 24px;
+      color: rgba(255, 255, 255, 0.87);
+      position: relative;
+    }
+
+    .label {
+      font-weight: 400;
+      font-size: 12px;
+      line-height: 24px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    img {
+      display: inline-block;
+      margin-bottom: -10px;
+    }
+  }
+
+  .border {
+    width: 134px;
+    height: 40px;
+    background: linear-gradient(180deg, rgba(220, 96, 50, 0.3) 0%, rgba(254, 64, 57, 0.3) 100%);
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    z-index: -1;
+    border-radius: 10px;
+  }
 `
 
 const PieWrapper = styled.div`
@@ -25,6 +62,10 @@ const PieWrapper = styled.div`
   height: 200px;
   margin-bottom: 16px;
   position: relative;
+
+  .recharts-wrapper {
+    cursor: pointer !important;
+  }
 
   .circle {
     position: absolute;
@@ -43,11 +84,36 @@ const PieWrapper = styled.div`
   }
 `
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+const CustomTooltip = ({ active, payload }: any) => {
+  const { chainId } = useActiveChainId()
+
+  const icon = () => {
+    if (!active || !payload || !payload.length) return null
+
+    const chainName = chainId === 1 || chainId === 5 ? 'ETH' : 'BSC'
+
+    switch (payload[0].name) {
+      case 'ETH':
+      case 'BNB':
+        return <CurrencyLogo address={payload[0].name} size="24" chainName={chainName} />
+      case 'Others':
+        return null
+      case 'XOX':
+        return <CurrencyLogo address={XOX_ADDRESS[chainId]} size="24" chainName={chainName} />
+      default:
+        return <CurrencyLogo address={USD_ADDRESS[chainId]} size="24" chainName={chainName} />
+    }
+  }
+
   if (active && payload && payload.length) {
     return (
       <CustomTooltipStyle>
-        <p className="label">{`${payload[0].name}: $${formatAmount(payload[0].value, { displayThreshold: 2 })}`}</p>
+        <div className="border"></div>
+        <div className="content">
+          {icon()}
+          <span className="symbol">{payload[0].name}</span>
+          <span className="label">{payload[0].value}%</span>
+        </div>
       </CustomTooltipStyle>
     )
   }
@@ -56,35 +122,6 @@ const CustomTooltip = ({ active, payload, label }: any) => {
 }
 
 export default function InfoPieChart({ data, colors, total }) {
-  // const renderCustomizedLabel = ({ cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
-  //   const radius = innerRadius + (outerRadius - innerRadius) * 0.5
-  //   const x = cx + radius * Math.cos(-midAngle * RADIAN)
-  //   const y = cy + radius * Math.sin(-midAngle * RADIAN)
-
-  //   return (
-  //     <text x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
-  //       {`${(percent * 100).toFixed(0)}%`}
-  //     </text>
-  //   )
-  // }
-
-  // const options = {
-  //   title: '',
-  //   is3D: true,
-  //   slices: {
-  //     0: { color: colors[0], offset: 0.03 },
-  //     1: { color: colors[1], offset: 0.03 },
-  //     2: { color: colors[2], offset: 0.03 },
-  //     3: { color: colors[3] },
-  //   },
-  //   backgroundColor: 'transparent',
-  //   legend: { textStyle: { color: '#ffffff' } },
-  //   labelTextColor: '#ffffff',
-  //   sliceVisibilityThreshold: 0,
-  // }
-
-  console.log(data, colors, total)
-
   return (
     <PieWrapper>
       {total > 0 ? (
@@ -125,10 +162,10 @@ export default function InfoPieChart({ data, colors, total }) {
                 />
               ))}
             </Pie>
-            <Tooltip content={<CustomTooltip />} />
+            <Tooltip content={<CustomTooltip />} wrapperStyle={{ outline: 'none' }} />
           </PieChart>
           <svg height="160" width="160" className="circle">
-            <circle cx="80" cy="80" r="75" stroke="rgba(255,255,255,0.3)" stroke-width="1" />
+            <circle cx="80" cy="80" r="75" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
           </svg>
           <svg
             xmlns="http://www.w3.org/2000/svg"
