@@ -25,15 +25,15 @@ const ModalStyle = styled.div`
 const FormWrapper = styled.div`
   width: calc(100vw - 48px);
   max-width: 464px;
-  background: #242424;
-  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+  background: #1d1c1c;
   border-radius: 20px;
   padding: 32px 24px;
   display: flex;
   flex-direction: column;
-  flexgrow: 1;
+  flex-grow: 1;
   position: relative;
-
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
   & > button {
     position: absolute;
     top: 10px;
@@ -68,6 +68,10 @@ const FormWrapper = styled.div`
 
     .form__error-message-avata {
       text-align: center;
+    }
+    .error {
+      border-color: #f44336;
+      background-color: #342120;
     }
   }
 
@@ -134,6 +138,10 @@ const FormInput = styled.input`
 
   &:place-holder {
     color: rgba(255, 255, 255, 0.38);
+  }
+  &:focus {
+    border-color: #c20da3;
+    caret-color: #c20da3;
   }
 `
 
@@ -351,10 +359,10 @@ const FormReferralModal = (_, ref) => {
     }
     return (
       <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100" viewBox="0 0 100 100" fill="none">
-        <circle cx="50" cy="50" r="48" fill="#8E8E8E" />
+        <circle cx="50" cy="50" r="48" fill="#4A4949" />
         <path
           d="M50 86C37.5 86 26.45 79.6 20 70C20.15 60 40 54.5 50 54.5C60 54.5 79.85 60 80 70C76.6944 74.922 72.2293 78.9558 66.9978 81.7459C61.7663 84.536 55.929 85.9969 50 86ZM50 15C53.9782 15 57.7936 16.5804 60.6066 19.3934C63.4197 22.2064 65 26.0218 65 30C65 33.9782 63.4197 37.7936 60.6066 40.6066C57.7936 43.4197 53.9782 45 50 45C46.0218 45 42.2064 43.4197 39.3934 40.6066C36.5803 37.7936 35 33.9782 35 30C35 26.0218 36.5803 22.2064 39.3934 19.3934C42.2064 16.5804 46.0218 15 50 15ZM50 0C43.4339 0 36.9321 1.29329 30.8658 3.80602C24.7995 6.31876 19.2876 10.0017 14.6447 14.6447C5.26784 24.0215 0 36.7392 0 50C0 63.2608 5.26784 75.9785 14.6447 85.3553C19.2876 89.9983 24.7995 93.6812 30.8658 96.194C36.9321 98.7067 43.4339 100 50 100C63.2608 100 75.9785 94.7322 85.3553 85.3553C94.7322 75.9785 100 63.2608 100 50C100 22.35 77.5 0 50 0Z"
-          fill="#444444"
+          fill="#1D1C1C"
         />
       </svg>
     )
@@ -515,7 +523,7 @@ const FormReferralModal = (_, ref) => {
             >
               Set up your profile by filling in all the fields below.
             </Text>
-            {!userProfile && (
+            {/* {!userProfile && (
               <button
                 onClick={() => {
                   // logout()
@@ -549,31 +557,32 @@ const FormReferralModal = (_, ref) => {
                   />
                 </svg>
               </button>
-            )}
+            )} */}
             <div className="avatar">
               <label htmlFor="avatar" style={{ height: '100px' }}>
                 {renderAvataImage()}
-                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 25 25" fill="none">
-                  <circle cx="12.5" cy="12.5" r="12.5" fill="url(#paint0_linear_6060_13564)" />
+                <svg width="25" height="25" viewBox="0 0 25 25" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12.5" cy="12.5" r="12.5" fill="url(#paint0_linear_11218_49247)" />
                   <path
-                    d="M12.5001 10.625C11.4838 10.625 10.6251 11.4837 10.6251 12.5C10.6251 13.5162 11.4838 14.375 12.5001 14.375C13.5163 14.375 14.3751 13.5162 14.3751 12.5C14.3751 11.4837 13.5163 10.625 12.5001 10.625Z"
+                    d="M12.5 10.6248C11.4838 10.6248 10.625 11.4835 10.625 12.4998C10.625 13.516 11.4838 14.3748 12.5 14.3748C13.5163 14.3748 14.375 13.516 14.375 12.4998C14.375 11.4835 13.5163 10.6248 12.5 10.6248Z"
                     fill="white"
                   />
                   <path
-                    d="M17.5001 8.125H15.8838L14.1919 6.43313C14.134 6.37497 14.0651 6.32886 13.9893 6.29743C13.9134 6.266 13.8321 6.24988 13.7501 6.25H11.2501C11.168 6.24988 11.0867 6.266 11.0108 6.29743C10.935 6.32886 10.8661 6.37497 10.8082 6.43313L9.1163 8.125H7.50005C6.81068 8.125 6.25005 8.68563 6.25005 9.375V16.25C6.25005 16.9394 6.81068 17.5 7.50005 17.5H17.5001C18.1894 17.5 18.7501 16.9394 18.7501 16.25V9.375C18.7501 8.68563 18.1894 8.125 17.5001 8.125ZM12.5001 15.625C10.8063 15.625 9.37505 14.1938 9.37505 12.5C9.37505 10.8063 10.8063 9.375 12.5001 9.375C14.1938 9.375 15.6251 10.8063 15.6251 12.5C15.6251 14.1938 14.1938 15.625 12.5001 15.625Z"
+                    d="M17.5 8.12476H15.8838L14.1919 6.43288C14.1339 6.37473 14.0651 6.32861 13.9892 6.29718C13.9134 6.26576 13.8321 6.24964 13.75 6.24976H11.25C11.1679 6.24964 11.0866 6.26576 11.0108 6.29718C10.9349 6.32861 10.8661 6.37473 10.8081 6.43288L9.11625 8.12476H7.5C6.81063 8.12476 6.25 8.68538 6.25 9.37476V16.2498C6.25 16.9391 6.81063 17.4998 7.5 17.4998H17.5C18.1894 17.4998 18.75 16.9391 18.75 16.2498V9.37476C18.75 8.68538 18.1894 8.12476 17.5 8.12476ZM12.5 15.6248C10.8063 15.6248 9.375 14.1935 9.375 12.4998C9.375 10.806 10.8063 9.37476 12.5 9.37476C14.1938 9.37476 15.625 10.806 15.625 12.4998C15.625 14.1935 14.1938 15.6248 12.5 15.6248Z"
                     fill="white"
                   />
                   <defs>
                     <linearGradient
-                      id="paint0_linear_6060_13564"
-                      x1="0"
-                      y1="0"
-                      x2="28.698"
-                      y2="5.42015"
+                      id="paint0_linear_11218_49247"
+                      x1="-1.9802"
+                      y1="7.37683e-09"
+                      x2="30.633"
+                      y2="3.03468"
                       gradientUnits="userSpaceOnUse"
                     >
-                      <stop stopColor="#6473FF" />
-                      <stop offset="1" stopColor="#A35AFF" />
+                      <stop stopColor="#B809B5" />
+                      <stop offset="0.510417" stopColor="#ED1C51" />
+                      <stop offset="1" stopColor="#FFB000" />
                     </linearGradient>
                   </defs>
                 </svg>
@@ -601,6 +610,7 @@ const FormReferralModal = (_, ref) => {
                 onChange={handleUsername}
                 maxLength={20}
                 className={errorMessages.username ? 'error' : ''}
+                placeholder="Enter username"
               />
               {errorMessages.username && <span className="form__error-message">{errorMessages.username}</span>}
             </div>
@@ -610,6 +620,7 @@ const FormReferralModal = (_, ref) => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={errorMessages.email ? 'error' : ''}
+                placeholder="Enter email address"
               />
               {errorMessages.email && <span className="form__error-message">{errorMessages.email}</span>}
             </div>
@@ -619,23 +630,22 @@ const FormReferralModal = (_, ref) => {
                 value={telegram}
                 onChange={(e) => setTelegram(e.target.value)}
                 className={errorMessages.telegram ? 'error' : ''}
+                placeholder="Enter telegram ID"
               />
               {errorMessages.telegram && <span className="form__error-message">{errorMessages.telegram}</span>}
             </div>
             <div
               className="btns"
-              style={{ display: 'grid', gridTemplateColumns: editForm ? '1fr 1fr' : '1fr', gap: '16px' }}
+              style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '16px', marginBottom: 0 }}
             >
-              {editForm && (
-                <Button
-                  width="100%"
-                  mt="8px"
-                  onClick={onCloseBtnClicked}
-                  style={{ background: '#313131', height: '43px' }}
-                >
-                  Cancel
-                </Button>
-              )}
+              <Button
+                width="100%"
+                mt="8px"
+                onClick={onCloseBtnClicked}
+                style={{ background: '#313131', height: '43px' }}
+              >
+                Cancel
+              </Button>
               <Button
                 width="100%"
                 mt="8px"
