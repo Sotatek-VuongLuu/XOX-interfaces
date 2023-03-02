@@ -255,7 +255,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
     const estimatedGas: any = await contractTreasuryXOX.estimateGas
       .claimFarmingReward(fullDecimalWithdrawAmount.toString())
       .catch((err) => {
-        toastError('Error', err?.message || err)
+        toastError('Error', 'Can not estimate gas')
       })
 
     onPresentConfirmModal()
