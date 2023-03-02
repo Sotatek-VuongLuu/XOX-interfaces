@@ -102,7 +102,7 @@ const config: (
       items: [],
     },
     {
-      label: t('Vesting'),
+      label: t('Pre-sales'),
       href: '/vesting',
       icon: EarnIcon,
       fillIcon: EarnFillIcon,
