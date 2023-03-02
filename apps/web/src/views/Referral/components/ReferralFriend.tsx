@@ -27,7 +27,7 @@ import { getUserFriend } from 'services/referral'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { formatAmountNumber, roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
 import axios from 'axios'
-import { CopyButton } from '@pancakeswap/uikit'
+import { CopyButton, useToast } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { GridLoader } from 'react-spinners'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
@@ -482,6 +482,7 @@ const ReferralFriend = ({
   const [typeOfClaim, setTypeOfClaim] = useState<number | null>(null)
   const [listFriends, setListFriends] = useState([])
   const { t } = useTranslation()
+  const { toastError, toastSuccess } = useToast()
   const [cacheAmountUnClaimOfUser, setCacheAmountUnClaimOfUser] = useState<null | number>(null)
 
   const handleClaimAll = async () => {
@@ -511,6 +512,9 @@ const ReferralFriend = ({
       if (error && error?.code === 'ACTION_REJECTED') {
         setModalReject(true)
       }
+      if (error?.code !== 'ACTION_REJECTED') {
+        toastError('Error', 'Transaction failed')
+      }
     }
   }
 
@@ -538,6 +542,10 @@ const ReferralFriend = ({
       setIsOpenLoadingClaimModal(false)
       if (error && error?.code === 'ACTION_REJECTED') {
         setModalReject(true)
+      }
+
+      if (error?.code !== 'ACTION_REJECTED') {
+        toastError('Error', 'Transaction failed')
       }
     }
   }

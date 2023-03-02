@@ -3,7 +3,7 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import styled from 'styled-components'
-import { Flex, Text, Button, useModal, useMatchBreakpoints, LinkExternal } from '@pancakeswap/uikit'
+import { Flex, Text, Button, useModal, useMatchBreakpoints, LinkExternal, useToast } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
@@ -511,6 +511,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
     getContractFarmingLPAddress(chainId),
   )
+  const { toastError } = useToast()
+
   const handleGetDataFarming = async () => {
     try {
       const [reserves, totalSupplyBN, amountFarmingBN, endBlock, startBlock, rewardPBlock, pendingReward, userInfo] =
@@ -623,6 +625,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       if (error?.message.includes('rejected')) {
         setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
       }
+      if (error?.code !== 'ACTION_REJECTED') {
+        toastError('Error', 'Transaction failed')
+      }
     }
   }
 
@@ -691,6 +696,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       if (error?.message.includes('rejected')) {
         setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
       }
+      if (error?.code !== 'ACTION_REJECTED') {
+        toastError('Error', 'Transaction failed')
+      }
     }
   }
 
@@ -723,6 +731,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       }
       if (error?.message.includes('rejected')) {
         setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
+      }
+      if (error?.code !== 'ACTION_REJECTED') {
+        toastError('Error', 'Transaction failed')
       }
     }
   }

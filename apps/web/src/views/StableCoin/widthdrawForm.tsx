@@ -274,7 +274,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
           return
         }
         if (error?.code !== 4001) {
-          toastError('Error', error.message)
+          toastError('Error', 'Transaction failed')
         }
         // throw error
       })
@@ -390,7 +390,9 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
           {amount === undefined || amount === '' ? (
             <TextStyle></TextStyle>
           ) : (
-            <TextStyle className="color-white">{0.01 * amount < 0.01 ? '< 0.01' : formatAmountNumber(0.01 * amount)}$</TextStyle>
+            <TextStyle className="color-white">
+              {0.01 * amount < 0.01 ? '< 0.01' : formatAmountNumber(0.01 * amount)}$
+            </TextStyle>
           )}
         </BoxRight>
       </Flex>
