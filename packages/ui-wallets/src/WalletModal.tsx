@@ -20,6 +20,7 @@ import {
 import { atom, useAtom } from 'jotai'
 import { FC, lazy, PropsWithChildren, Suspense, useMemo, useState } from 'react'
 import { isMobile } from 'react-device-detect'
+
 import { StepIntro } from './components/Intro'
 import {
   desktopWalletSelectionClass,
@@ -222,7 +223,7 @@ function WalletSelect<T>({
               letterSpacing: 'normal',
               padding: '0',
               height: '142px',
-              background: '#303030',
+              background: '#1D1C1C',
               width: '150px',
               maxWidth: '45%',
               margin: '0 10px',
@@ -251,7 +252,9 @@ function WalletSelect<T>({
                   inset="0"
                   opacity="0.5"
                   borderRadius="12px"
-                  style={{ backgroundColor: '#9A6AFF' }}
+                  style={{
+                    border: '1px solid red',
+                  }}
                 />
               )}
             </AtomBox>
@@ -329,6 +332,7 @@ function DesktopModal<T>({
         zIndex="modal"
         borderRadius="card"
         className={desktopWalletSelectionClass}
+        style={{ border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.2)' }}
       >
         <div style={{ position: 'absolute', top: '11px', right: '11px', cursor: 'pointer' }} onClick={onDismiss}>
           <CloseIcon />
