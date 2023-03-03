@@ -23,7 +23,6 @@ const Wrapper = styled.div`
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   padding: 18px;
-  margin-bottom: 70px;
 
   .corner1 {
     position: absolute;

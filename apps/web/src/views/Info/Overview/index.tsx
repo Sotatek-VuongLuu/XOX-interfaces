@@ -358,7 +358,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
               </ChartCardsContainer>
               <WalletInfoTable currencyDatas={currencyDatas} native={native} allTokens={allTokens} />
             </div>
-            <div>
+            <div style={{ marginBottom: '6px' }}>
               <TransactionTable />
             </div>
           </PageContainer>
