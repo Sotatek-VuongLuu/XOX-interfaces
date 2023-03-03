@@ -175,7 +175,7 @@ const Table = styled.div`
   grid-gap: 16px 35px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1fr repeat(3, 0.7fr) 1fr 0.4fr;
+  grid-template-columns: 0.15fr 1.4fr 1.1fr repeat(3, 0.7fr) 1.2fr 0.4fr;
   .table-header {
     margin-bottom: 16px;
   }
