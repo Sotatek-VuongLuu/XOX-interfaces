@@ -27,7 +27,7 @@ export const TitleChart = styled.div`
     .boxed-child {
       width: 100%;
       height: 100%;
-      background-color: #1d1d1d;
+      background-color: #000000;
       padding: 9px 20px;
       border-radius: inherit;
       span {
@@ -179,7 +179,7 @@ export const ChartContent = styled.div`
     button {
       border-radius: 8px;
       height: 33px;
-      padding: 8px 15px;
+      width: 40px;
       border: none;
       outline: none;
       cursor: pointer;
@@ -217,6 +217,7 @@ export const ChartContent = styled.div`
 
       button {
         margin-left: 8px;
+        width: 50px;
       }
     }
 
