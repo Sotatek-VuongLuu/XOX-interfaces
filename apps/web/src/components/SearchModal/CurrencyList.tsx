@@ -34,7 +34,7 @@ const FixedContentRow = styled.div`
 
 const MenuItem = styled(RowBetween)<{ disabled: boolean; selected: boolean }>`
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 12px;
   height: 56px;
   display: grid;
   grid-template-columns: auto minmax(auto, 1fr);
@@ -48,9 +48,23 @@ const MenuItem = styled(RowBetween)<{ disabled: boolean; selected: boolean }>`
   line-height: 24px;
   color: rgba(255, 255, 255, 0.87);
   :hover {
-    background-color: ${({ disabled }) => !disabled && 'rgba(144, 114, 255, 0.2)'};
+    background-color: ${({ disabled }) => !disabled && 'rgba(255, 255, 255, 0.1);'};
   }
   opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
+
+  & div div {
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.87);
+  }
 `
 
 function CurrencyRow({
@@ -76,7 +90,7 @@ function CurrencyRow({
       disabled={isSelected}
       selected={otherSelected}
     >
-      <CurrencyLogo currency={currency} size="24px" />
+      <CurrencyLogo currency={currency} size="30px" />
       <Column>
         <Text bold>{currency.symbol}</Text>
       </Column>

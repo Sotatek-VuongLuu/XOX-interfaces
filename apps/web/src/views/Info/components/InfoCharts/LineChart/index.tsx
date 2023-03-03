@@ -126,7 +126,7 @@ const CustomResponsiveContainer = styled(ResponsiveContainer)`
   }
 
   .recharts-wrapper {
-    cursor: pointer!important;
+    cursor: pointer !important;
   }
 `
 
@@ -342,7 +342,7 @@ const LineChart = ({
         //   left: 0,
         //   bottom: 5,
         // }}
-        style={{cursor: 'pointer!important'}}
+        style={{ cursor: 'pointer!important' }}
         onMouseLeave={() => {
           if (setHoverDate) setHoverDate(undefined)
           if (setHoverValue) setHoverValue(undefined)
@@ -419,7 +419,8 @@ const LineChart = ({
             position={{
               x: (lineGraphData?.activeTooltipIndex * chartWidth) / (data.length - 1) - 10 || 0,
               y:
-                145 -
+                chartHeight -
+                65 -
                 (((lineGraphData?.activePayload?.[0]?.payload?.value || maxYAxis) - minYAxis) * chartHeight) /
                   (maxYAxis - minYAxis),
             }}

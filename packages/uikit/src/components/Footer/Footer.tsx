@@ -131,8 +131,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
         // flexDirection={["column", null, "row"]}
         justifyContent="center"
         width="100%"
-        p={["24px", null, null]}
-        background="rgba(255, 255, 255, 0.1)"
+        background="#1c1c1c"
       >
         <Wrapper>
           <Text
@@ -142,7 +141,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             fontWeight="400"
             lineHeight="17px"
             color="rgba(255, 255, 255, 0.87)"
-            marginBottom="20px"
+            textAlign="center"
           >
             © {new Date().getFullYear()} XOX. All Rights Reserved
           </Text>

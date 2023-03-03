@@ -43,7 +43,7 @@ export const FooterMainContent = styled.div`
     height: 4px;
     left: 0px;
     top: 0px;
-    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    background: linear-gradient(89.21deg, #9bf3cb 0.16%, #3ec0a6 35.42%, #f44234 65.49%, #9f3a83 99.71%);
   }
 
   @media screen and (max-width: 560px) {
@@ -82,6 +82,8 @@ export const Wrapper = styled.div`
   width: 1400px;
   display: flex;
   justify-content: center;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 24px;
 
   @media screen and (max-width: 560px) {
     flex-direction: column;
