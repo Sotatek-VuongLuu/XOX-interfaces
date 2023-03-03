@@ -39,6 +39,7 @@ const InputWrapper = styled.div`
 
   & input::placeholder {
     color: rgba(255, 255, 255, 0.38);
+    font-size: 16px;
   }
 
   & svg {
@@ -46,6 +47,12 @@ const InputWrapper = styled.div`
     transform: translateY(-50%);
     left: 16px;
     top: 50%;
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    & input::placeholder {
+      font-size: 18px;
+    }
   }
 `
 
