@@ -36,6 +36,7 @@ const StyledModalContainer = styled(ModalContainer)`
   position: relative;
   background: #1d1c1c;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 10px;
   ${({ theme }) => theme.mediaQueries.md} {
     min-height: auto;

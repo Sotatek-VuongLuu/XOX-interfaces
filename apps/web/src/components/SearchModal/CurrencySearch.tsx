@@ -35,6 +35,7 @@ const InputWrapper = styled.div`
     padding-left: 52px;
     outline: none;
     box-shadow: none !important;
+    color: rgba(255, 255, 255, 0.38);
   }
 
   & input::placeholder {

@@ -10,10 +10,22 @@ interface Props {
 }
 
 export const CurrencyInputHeader = ({ title, subtitle }: Props) => {
-  const {isMobile} = useMatchBreakpoints()
+  const { isMobile } = useMatchBreakpoints();
   return (
-    <AtomBox width='full' alignItems="center" flexDirection="column" style={isMobile?{width:''}:{padding: '24px'}} borderBottom="1">
-      <AtomBox width='full' display="flex"  alignItems="center" justifyContent="space-between" style={{padding:'0 18px'}}>
+    <AtomBox
+      width="full"
+      alignItems="center"
+      flexDirection="column"
+      style={isMobile ? { width: "" } : { padding: "20px 0px" }}
+      borderBottom="1"
+    >
+      <AtomBox
+        width="full"
+        display="flex"
+        alignItems="center"
+        justifyContent="space-between"
+        style={{ padding: "0 18px" }}
+      >
         {title}
       </AtomBox>
       {subtitle}
@@ -21,27 +33,36 @@ export const CurrencyInputHeader = ({ title, subtitle }: Props) => {
   );
 };
 
-export const CurrencyInputHeaderTitle = ({ children }: { children: ReactNode }) => (
-  <Text
-    fontSize="24px"
-    fontFamily="Inter"
-    fontStyle="normal"
-    fontWeight="700"
-    lineHeight="29px"
-    color="rgba(255, 255, 255, 0.87)"
-  >
-    {children}
-  </Text>
-);
-export const CurrencyInputHeaderSubTitle = ({ children }: { children: ReactNode }) => (
-  <Text
-    fontSize="14px"
-    fontFamily="Inter"
-    fontStyle="normal"
-    fontWeight="400"
-    lineHeight="17px"
-    color="rgba(255, 255, 255, 0.6)"
-  >
-    {children}
-  </Text>
-);
+export const CurrencyInputHeaderTitle = ({ children }: { children: ReactNode }) => {
+  const { isMobile } = useMatchBreakpoints();
+  return (
+    <Text
+      fontSize={isMobile ? "16px" : "24px"}
+      fontFamily="Inter"
+      fontStyle="normal"
+      fontWeight="700"
+      lineHeight={isMobile ? "19px" : "29px"}
+      color="rgba(255, 255, 255, 0.87)"
+      marginBottom="8px"
+    >
+      {children}
+    </Text>
+  );
+};
+
+export const CurrencyInputHeaderSubTitle = ({ children }: { children: ReactNode }) => {
+  const { isMobile } = useMatchBreakpoints();
+  return (
+    <Text
+      fontSize={isMobile ? "12px" : "16px"}
+      fontFamily="Inter"
+      fontStyle="normal"
+      fontWeight="400"
+      lineHeight={isMobile ? "13px" : "17px"}
+      marginBottom={isMobile ? "16px" : "0"}
+      color="rgba(255, 255, 255, 0.6)"
+    >
+      {children}
+    </Text>
+  );
+};
