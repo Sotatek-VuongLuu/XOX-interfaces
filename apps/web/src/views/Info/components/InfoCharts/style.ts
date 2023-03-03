@@ -166,8 +166,8 @@ export const ChartContent = styled.div`
 
     span.val {
       font-weight: 700;
-      font-size: 20px;
-      line-height: 24px;
+      font-size: 18px;
+      line-height: 22px;
       color: #ffffff;
     }
   }
