@@ -41,15 +41,15 @@ const InputRow = styled.div<{ selected: boolean }>`
 `
 const PercentButton = styled(Button)`
   background: unset;
-  border: 1px solid #9072ff;
-  padding: 6px 16px;
-  color: #9072ff;
+  border: 2px solid #fb8618;
+  padding: 14px 16px;
+  color: #fb8618;
   font-size: 12px;
   font-weight: 700;
   height: 27px;
   border-radius: 30px;
   :hover {
-    background: #9072ff !important;
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%) !important;
     color: #fff !important;
   }
 `
@@ -372,8 +372,11 @@ export default function CurrencyInputPanel({
                       variant="secondary"
                       style={{
                         textTransform: 'uppercase',
-                        background: activePercent === percent ? '#9072ff' : 'none',
-                        color: activePercent === percent ? '#fff' : '#9072ff',
+                        background:
+                          activePercent === percent
+                            ? 'linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)'
+                            : 'none',
+                        color: activePercent === percent ? '#fff' : '#FB8618',
                       }}
                     >
                       {percent}%
@@ -393,8 +396,11 @@ export default function CurrencyInputPanel({
                     variant="secondary"
                     style={{
                       textTransform: 'uppercase',
-                      background: activePercent === 100 ? '#9072ff' : 'none',
-                      color: activePercent === 100 ? '#fff' : '#9072ff',
+                      background:
+                        activePercent === 100
+                          ? 'linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)'
+                          : 'none',
+                      color: activePercent === 100 ? '#fff' : '#FB8618',
                     }}
                   >
                     {t('Max')}
