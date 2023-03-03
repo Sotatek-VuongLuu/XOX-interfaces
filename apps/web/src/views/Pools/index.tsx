@@ -1159,6 +1159,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         className="withdraw"
                         onClick={handleWithdraw}
                         disabled={!Number(pendingRewardOfUser) || approvalState !== ApprovalState.APPROVED}
+                        mt={16}
                       >
                         Withdraw
                       </CustomButton>
