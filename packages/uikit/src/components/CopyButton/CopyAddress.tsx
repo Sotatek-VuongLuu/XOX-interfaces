@@ -68,49 +68,25 @@ export const CopyAddress: React.FC<React.PropsWithChildren<CopyAddressProps>> = 
         )}
         <Flex ml="10px">
           <CopyButton
-            width="24px"
+            // width="24px"
             text={account}
             tooltipMessage={tooltipMessage}
             button={
-              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18" fill="none">
+              <svg width="17" height="17" viewBox="0 0 17 17" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
-                  d="M14.3432 12.7188V3.15625H4.78027"
-                  stroke="url(#paint0_linear_10957_45072)"
+                  d="M14.3432 12.2183V2.65576H4.78027"
+                  stroke="#515151"
                   strokeWidth="1.4"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
                 <path
-                  d="M12.2182 5.28125H2.65527V14.8438H12.2182V5.28125Z"
-                  stroke="url(#paint1_linear_10957_45072)"
+                  d="M12.2182 4.78101H2.65527V14.3435H12.2182V4.78101Z"
+                  stroke="#515151"
                   strokeWidth="1.4"
                   strokeLinecap="round"
                   strokeLinejoin="round"
                 />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_10957_45072"
-                    x1="4.78027"
-                    y1="7.93753"
-                    x2="14.3432"
-                    y2="7.93753"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#EE0979" />
-                    <stop offset="1" stopColor="#FF6A00" />
-                  </linearGradient>
-                  <linearGradient
-                    id="paint1_linear_10957_45072"
-                    x1="2.65527"
-                    y1="10.0625"
-                    x2="12.2182"
-                    y2="10.0625"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#EE0979" />
-                    <stop offset="1" stopColor="#FF6A00" />
-                  </linearGradient>
-                </defs>
               </svg>
             }
           />

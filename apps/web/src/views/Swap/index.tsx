@@ -64,6 +64,7 @@ const MainBackground = styled.div`
   left: 0;
   right: 0;
   bottom: 0;
+  background-color: #0a0a0a;
   svg {
     width: 100vw;
     height: auto;
@@ -157,7 +158,10 @@ export default function Swap() {
               </SwapbackgroundNone2Wrapper>
             </>
           )}
-          <StyledSwapContainer $isChartExpanded={isChartExpanded} style={isMobile ? { left: 0 } : {}}>
+          <StyledSwapContainer
+            $isChartExpanded={isChartExpanded}
+            style={isMobile ? { left: 0, padding: '15px 0' } : {}}
+          >
             <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
               {/* <SwapTab>
                   {(swapTypeState) =>

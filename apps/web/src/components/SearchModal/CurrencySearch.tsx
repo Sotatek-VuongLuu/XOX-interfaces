@@ -30,11 +30,12 @@ const InputWrapper = styled.div`
   & input {
     width: 100%;
     height: 54px;
-    background: #303030;
+    background: #0a0a0a;
     border-radius: 8px;
     padding-left: 52px;
     outline: none;
     box-shadow: none !important;
+    color: rgba(255, 255, 255, 0.38);
   }
 
   & svg {

@@ -7,7 +7,7 @@ export const baseColors = {
   primary3D: '#1FC7D43D',
   primaryBright: '#53DEE9',
   primaryDark: '#0098A1',
-  success: '#31D0AA',
+  success: '#64C66D',
   success19: '#31D0AA19',
   warning: '#FFB237',
   warning2D: '#ED4B9E2D',
@@ -60,7 +60,7 @@ export const lightColors = {
   gradientGold: 'linear-gradient(180deg, #FFD800 0%, #FDAB32 100%)',
   gradientBold: 'linear-gradient(#53DEE9, #9A6AFF)',
   dark3: '#303030',
-  while87 : '#ffffffde'
+  while87: '#ffffffde',
 }
 
 export const darkColors = {
@@ -101,5 +101,5 @@ export const darkColors = {
   gradientGold: 'linear-gradient(180deg, #FFD800 0%, #FDAB32 100%)',
   gradientBold: 'linear-gradient(#53DEE9, #9A6AFF)',
   dark3: '#303030',
-  while87 : '#ffffffde'
+  while87: '#ffffffde',
 }

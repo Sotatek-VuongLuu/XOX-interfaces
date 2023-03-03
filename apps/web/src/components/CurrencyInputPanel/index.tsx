@@ -134,7 +134,7 @@ const InputPanel = styled.div`
 const Container = styled.div<{ zapStyle?: ZapStyle; error?: boolean }>`
   border-radius: 10px;
   position: relative;
-  background-color: ${({ theme }) => theme.colors.dark3};
+  background-color: rgba(255, 255, 255, 0.03);
   box-shadow: ${({ theme, error }) => theme.shadows[error ? 'warning' : 'inset']};
   ${({ zapStyle }) =>
     !!zapStyle &&
@@ -151,7 +151,7 @@ const Overlay = styled.div`
 `
 
 const NumericalInputWrapper = styled(NumericalInput)`
-  font-size: 18px;
+  font-size: 24px;
   @media screen and (max-width: 576px) {
     font-size: 16px;
   }

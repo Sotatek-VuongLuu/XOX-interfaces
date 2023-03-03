@@ -48,7 +48,7 @@ const MenuItem = styled(RowBetween)<{ disabled: boolean; selected: boolean }>`
   line-height: 24px;
   color: rgba(255, 255, 255, 0.87);
   :hover {
-    background-color: ${({ disabled }) => !disabled && 'rgba(144, 114, 255, 0.2)'};
+    background-color: ${({ disabled }) => !disabled && 'rgba(255, 255, 255, 0.1)'};
   }
   opacity: ${({ disabled, selected }) => (disabled || selected ? 0.5 : 1)};
 `

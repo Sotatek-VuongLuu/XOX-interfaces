@@ -1,9 +1,7 @@
 import { useTranslation } from "@pancakeswap/localization";
 import { useIsMounted } from "@pancakeswap/hooks";
 import { PropsWithChildren, ReactNode } from "react";
-import {
-  useMatchBreakpoints,
-} from '@pancakeswap/uikit'
+import { useMatchBreakpoints } from "@pancakeswap/uikit";
 import { AutoColumn, RowBetween, Text, TextProps } from "../../components";
 
 type SwapInfoType = {
@@ -13,8 +11,16 @@ type SwapInfoType = {
 
 export const SwapInfoLabel = (props: PropsWithChildren<TextProps>) => {
   const { isMobile } = useMatchBreakpoints();
-  return <Text style={{marginBottom:'14px', marginTop:'6px', fontWeight:'400'}} fontSize={isMobile ? '14px' :'18px'} bold color="#FFFFFFDE" {...props} />
-}
+  return (
+    <Text
+      style={{ marginBottom: "14px", marginTop: "6px", fontWeight: "400" }}
+      fontSize={isMobile ? "14px" : "18px"}
+      bold
+      color="#FFFFFFDE"
+      {...props}
+    />
+  );
+};
 
 export const SwapInfo = ({ allowedSlippage, price }: SwapInfoType) => {
   const { t } = useTranslation();
@@ -27,7 +33,7 @@ export const SwapInfo = ({ allowedSlippage, price }: SwapInfoType) => {
       <RowBetween alignItems="center">
         <SwapInfoLabel>{t("Slippage Tolerance")}</SwapInfoLabel>
         {isMounted && (
-          <Text bold color="#9072FF" style={{fontSize: isMobile ? '14px' :'18px', fontWeight:'700'}}>
+          <Text bold color="#FB8618" style={{ fontSize: isMobile ? "14px" : "18px", fontWeight: "700" }}>
             {allowedSlippage / 100}%
           </Text>
         )}

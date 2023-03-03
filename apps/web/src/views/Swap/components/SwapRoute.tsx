@@ -12,11 +12,11 @@ export default memo(function SwapRoute({ trade }: { trade: Trade<Currency, Curre
         return (
           <Fragment key={token.address}>
             <Flex alignItems="end">
-              <Text fontSize="16px" ml="0.125rem" mr="0.125rem" color='while87'>
+              <Text fontSize="16px" ml="0.125rem" mr="0.125rem" color="while87">
                 {currency.symbol}
               </Text>
             </Flex>
-            {!isLastItem && <ChevronRightIcon width="12px" />}
+            {!isLastItem && <ChevronRightIcon width="22px" color="#515151" />}
           </Fragment>
         )
       })}
