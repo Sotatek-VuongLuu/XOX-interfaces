@@ -23,7 +23,6 @@ const Wrapper = styled.div`
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   padding: 18px;
-  margin-bottom: 70px;
 
   .corner1 {
     position: absolute;
@@ -32,7 +31,7 @@ const Wrapper = styled.div`
     width: 50%;
     height: 50px;
     border-radius: 20px;
-    z-index: 1;
+    z-index: -1;
     border-bottom: 2px solid #ffffff30;
     border-left: 2px solid #ffffff30;
     border-bottom-right-radius: unset;
@@ -45,7 +44,7 @@ const Wrapper = styled.div`
     position: absolute;
     bottom: 50px;
     left: 0;
-    z-index: 1;
+    z-index: -1;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
@@ -56,7 +55,7 @@ const Wrapper = styled.div`
     width: 50%;
     height: 50px;
     border-radius: 20px;
-    z-index: 1;
+    z-index: -1;
     border-bottom: 2px solid #ffffff30;
     border-right: 2px solid #ffffff30;
     border-bottom-left-radius: unset;
@@ -69,55 +68,7 @@ const Wrapper = styled.div`
     position: absolute;
     bottom: 50px;
     right: 0;
-    z-index: 1;
-    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
-  }
-
-  .corner1 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50%;
-    height: 50px;
-    border-radius: 20px;
-    z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-left: 2px solid #ffffff30;
-    border-bottom-right-radius: unset;
-    border-top-left-radius: unset;
-  }
-
-  .edge1 {
-    width: 2px;
-    height: calc(100% - 50px);
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    z-index: 1;
-    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
-  }
-
-  .corner2 {
-    position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 50%;
-    height: 50px;
-    border-radius: 20px;
-    z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-right: 2px solid #ffffff30;
-    border-bottom-left-radius: unset;
-    border-top-right-radius: unset;
-  }
-
-  .edge2 {
-    width: 2px;
-    height: calc(100% - 50px);
-    position: absolute;
-    bottom: 50px;
-    right: 0;
-    z-index: 1;
+    z-index: -1;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
@@ -224,7 +175,7 @@ const Table = styled.div`
   grid-gap: 16px 35px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1fr repeat(3, 0.7fr) 1fr 0.4fr;
+  grid-template-columns: 0.15fr 1.4fr 1.1fr repeat(3, 0.7fr) 1.2fr 0.4fr;
   .table-header {
     margin-bottom: 16px;
   }
@@ -317,7 +268,7 @@ export const PageButtons = styled(Flex)`
   & .page {
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 14px;
     line-height: 17px;
     color: rgba(255, 255, 255, 0.87);

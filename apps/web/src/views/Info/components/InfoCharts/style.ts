@@ -178,7 +178,7 @@ export const ChartContent = styled.div`
     justify-content: flex-start;
     button {
       border-radius: 8px;
-      height: 33px;
+      height: 31px;
       width: 40px;
       border: none;
       outline: none;
@@ -191,7 +191,7 @@ export const ChartContent = styled.div`
     }
     @media (max-width: 576px) {
       button {
-        padding: 8px 12px;
+        padding: 8px 0;
         margin-right: 8px;
       }
     }

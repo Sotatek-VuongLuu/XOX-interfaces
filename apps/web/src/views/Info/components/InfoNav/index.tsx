@@ -9,6 +9,7 @@ import {
   Button,
   Text,
   NextLinkFromReactRouter,
+  useMatchBreakpoints,
 } from '@pancakeswap/uikit'
 import { useCallback } from 'react'
 import { ChainId } from '@pancakeswap/sdk'
@@ -43,11 +44,68 @@ const NavWrapper = styled(Flex)<INavWrapper>`
 const MainContent = styled.div`
   height: 292px;
   width: 100%;
-  background: url('/images/bg_mobile_info.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 10px;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   padding: 20px 16px;
+  position: relative;
+
+  & > img {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0;
+    width: 397px;
+    max-width: unset;
+  }
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
 
   .get-xox {
     font-weight: 700;
@@ -56,10 +114,11 @@ const MainContent = styled.div`
     color: #ffffff;
     height: 37px;
     border: 1px solid #ffffff;
-    border-radius: 6px;
+    border-radius: 10px;
     background: transparent;
     padding: 10px 20px;
     box-shadow: none;
+    position: relative;
   }
 
   .learn-more {
@@ -69,11 +128,84 @@ const MainContent = styled.div`
     color: #ffffff;
     height: 37px;
     border: 1px solid #ffffff;
-    border-radius: 6px;
+    border-radius: 10px;
     margin-left: 16px;
     background: transparent;
     padding: 10px 20px;
     box-shadow: none;
+    position: relative;
+  }
+
+  .get-xox:hover,
+  .learn-more:hover {
+    border-left: 1px solid #b809b5;
+    border-top: none;
+    border-right: 1px solid #ffb000;
+    border-bottom: none;
+    &:before {
+      content: '';
+      display: block;
+      width: calc(100% - 16px);
+      height: 1px;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      position: absolute;
+      top: 0;
+      left: 8px;
+    }
+    &:after {
+      content: '';
+      display: block;
+      width: calc(100% - 16px);
+      height: 1px;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      position: absolute;
+      bottom: 0;
+      left: 8px;
+    }
+
+    .top-left {
+      position: absolute;
+      top: 0;
+      left: -1px;
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid #b809b5;
+      background: transparent;
+      border-top-left-radius: 10px;
+    }
+
+    .bottom-left {
+      position: absolute;
+      bottom: 0;
+      left: -1px;
+      width: 10px;
+      height: 10px;
+      border-bottom: 1px solid #b809b5;
+      background: transparent;
+      border-bottom-left-radius: 10px;
+    }
+
+    .top-right {
+      position: absolute;
+      top: 0;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid #f4801c;
+      background: transparent;
+      border-top-right-radius: 10px;
+    }
+
+    .bottom-right {
+      position: absolute;
+      bottom: 0;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-bottom: 1px solid #f4801c;
+      background: transparent;
+      border-bottom-right-radius: 10px;
+    }
   }
 
   .title {
@@ -94,11 +226,36 @@ const MainContent = styled.div`
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    height: 208px;
+    height: 200px;
     padding: 30px 24px;
-    background: url('/images/bg.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
+
+    & > img {
+      position: absolute;
+      transform: translate(0, -50%);
+      top: 50%;
+      left: unset;
+      right: 0;
+      width: auto;
+    }
+
+    .corner1 {
+      border-bottom: 1px solid #ffffff30;
+      border-left: 1px solid #ffffff30;
+    }
+
+    .edge1 {
+      width: 1px;
+    }
+
+    .corner2 {
+      border-bottom: 1px solid #ffffff30;
+      border-right: 1px solid #ffffff30;
+    }
+
+    .edge2 {
+      width: 1px;
+    }
+
     .title {
       font-weight: 500;
       font-size: 18px;
@@ -124,7 +281,7 @@ const MainContent = styled.div`
       width: 149px;
       height: 43px;
       border: 1px solid #ffffff;
-      border-radius: 6px;
+      border-radius: 10px;
       background: transparent;
       box-shadow: none;
     }
@@ -137,7 +294,7 @@ const MainContent = styled.div`
       width: 149px;
       height: 43px;
       border: 1px solid #ffffff;
-      border-radius: 6px;
+      border-radius: 10px;
       margin-left: 16px;
       background: transparent;
       box-shadow: none;
@@ -154,6 +311,7 @@ const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: 
   const chainPath = useMultiChainPath()
   const { chainId } = useActiveChainId()
   const native = useNativeCurrency()
+  const { isMobile } = useMatchBreakpoints()
 
   const baseToken = chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'
 
@@ -161,27 +319,42 @@ const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: 
 
   return (
     <NavWrapper hasPadding={hasPadding}>
-      <div className="corner1"></div>
-      <div className="edge1"></div>
-      <div className="corner2"></div>
-      <div className="edge2"></div>
       <MainContent>
-        <Text className="title" marginBottom="8px" mt={[118, 0, 0]}>
+        <img alt="" src={isMobile ? 'images/galaxy-mo.svg' : 'images/galaxy-dk.svg'} />
+        <div className="corner1"></div>
+        <div className="edge1"></div>
+        <div className="corner2"></div>
+        <div className="edge2"></div>
+        <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
           Swap to get XOX & XOXS. Earn like a Pro
         </Text>
         <Text className="subtitle" marginBottom={['16px', , '24px']}>
           {textContentBanner || 'Stake XOXS automatically to earn more'}
         </Text>
-        <a
-          href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
-          target="_blank"
-          rel="noreferrer"
-        >
-          <Button className="get-xox">Get XOX</Button>
-        </a>
-        <a href="/whitepaper" target="_blank" rel="noreferrer">
-          <Button className="learn-more">Learn More</Button>
-        </a>
+        <Flex>
+          <a
+            href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <Button className="get-xox">
+              <div className="top-left"></div>
+              <div className="top-right"></div>
+              <div className="bottom-left"></div>
+              <div className="bottom-right"></div>
+              Get XOX
+            </Button>
+          </a>
+          <a href="/whitepaper" target="_blank" rel="noreferrer">
+            <Button className="learn-more">
+              <div className="top-left"></div>
+              <div className="top-right"></div>
+              <div className="bottom-left"></div>
+              <div className="bottom-right"></div>
+              Learn More
+            </Button>
+          </a>
+        </Flex>
       </MainContent>
       {/* <Flex>
         <Box>

@@ -313,7 +313,7 @@ const HoverableChart = ({
         <Skeleton width="128px" height="36px" />
       )}
       <Text>{dateHover ?? currentDate}</Text> */}
-      <Box height="250px" className="" style={{ position: 'relative', width: '100%', paddingBottom: '250px' }}>
+      <Box height="200px" className="" style={{ position: 'relative', width: '100%', paddingBottom: '200px' }}>
         <div
           style={{
             position: 'absolute',
