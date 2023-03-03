@@ -50,20 +50,82 @@ const NavWrapper = styled(Flex)`
 `
 
 const Banner = styled.div`
-  height: 315px;
   width: 100%;
-  background: url('/images/bg_mobile_info.svg');
-  background-repeat: no-repeat;
-  background-size: cover;
-  border-radius: 10px;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   padding: 20px 16px;
+  margin-top: 20px;
+
+  & > img {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0;
+    width: 397px;
+    max-width: unset;
+  }
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
 
   .get-xox {
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
     color: #ffffff;
-    height: 43px;
+    height: 37px;
+    border: 1px solid #ffffff;
+    border-radius: 10px;
+    background: transparent;
+    padding: 10px 20px;
+    box-shadow: none;
+    position: relative;
   }
 
   .learn-more {
@@ -71,56 +133,167 @@ const Banner = styled.div`
     font-size: 14px;
     line-height: 17px;
     color: #ffffff;
-    width: 149px;
-    height: 43px;
+    height: 37px;
     border: 1px solid #ffffff;
-    border-radius: 6px;
+    border-radius: 10px;
     margin-left: 16px;
     background: transparent;
+    padding: 10px 20px;
+    box-shadow: none;
+    position: relative;
+  }
+
+  .get-xox:hover,
+  .learn-more:hover {
+    border-left: 1px solid #b809b5;
+    border-top: none;
+    border-right: 1px solid #ffb000;
+    border-bottom: none;
+    &:before {
+      content: '';
+      display: block;
+      width: calc(100% - 16px);
+      height: 1px;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      position: absolute;
+      top: 0;
+      left: 8px;
+    }
+    &:after {
+      content: '';
+      display: block;
+      width: calc(100% - 16px);
+      height: 1px;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      position: absolute;
+      bottom: 0;
+      left: 8px;
+    }
+
+    .top-left {
+      position: absolute;
+      top: 0;
+      left: -1px;
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid #b809b5;
+      background: transparent;
+      border-top-left-radius: 10px;
+    }
+
+    .bottom-left {
+      position: absolute;
+      bottom: 0;
+      left: -1px;
+      width: 10px;
+      height: 10px;
+      border-bottom: 1px solid #b809b5;
+      background: transparent;
+      border-bottom-left-radius: 10px;
+    }
+
+    .top-right {
+      position: absolute;
+      top: 0;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-top: 1px solid #f4801c;
+      background: transparent;
+      border-top-right-radius: 10px;
+    }
+
+    .bottom-right {
+      position: absolute;
+      bottom: 0;
+      right: -1px;
+      width: 10px;
+      height: 10px;
+      border-bottom: 1px solid #f4801c;
+      background: transparent;
+      border-bottom-right-radius: 10px;
+    }
   }
 
   .title {
-    font-weight: 700;
+    font-weight: 500;
     font-size: 12px;
     line-height: 15px;
-    color: #ffbd3c;
+    letter-spacing: 0.075em;
+    color: rgba(255, 255, 255, 0.6);
   }
 
   .subtitle {
-    font-weight: 700;
+    font-weight: 600;
     font-size: 18px;
-    line-height: 22px;
+    line-height: 32px;
+    letter-spacing: 0.075em;
+    text-transform: uppercase;
     color: rgba(255, 255, 255, 0.87);
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
     height: 200px;
     padding: 30px 24px;
-    background: url('/images/bg.svg');
-    background-repeat: no-repeat;
-    background-size: cover;
+    background: rgba(16, 16, 16, 0.3);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+
+    & > img {
+      position: absolute;
+      transform: translate(0, -50%);
+      top: 50%;
+      left: unset;
+      right: 0;
+      width: auto;
+    }
+
+    .corner1 {
+      border-bottom: 1px solid #ffffff30;
+      border-left: 1px solid #ffffff30;
+    }
+
+    .edge1 {
+      width: 1px;
+    }
+
+    .corner2 {
+      border-bottom: 1px solid #ffffff30;
+      border-right: 1px solid #ffffff30;
+    }
+
+    .edge2 {
+      width: 1px;
+    }
+
     .title {
-      font-weight: 700;
+      font-weight: 500;
       font-size: 18px;
       line-height: 22px;
-      color: #ffbd3c;
+      letter-spacing: 0.075em;
+      color: rgba(255, 255, 255, 0.6);
     }
 
     .subtitle {
-      font-weight: 700;
-      font-size: 36px;
-      line-height: 44px;
+      font-weight: 600;
+      font-size: 24px;
+      line-height: 29px;
+      letter-spacing: 0.075em;
+      text-transform: uppercase;
       color: rgba(255, 255, 255, 0.87);
     }
 
     .get-xox {
-      font-family: 'Inter';
-      font-style: normal;
       font-weight: 700;
       font-size: 16px;
       line-height: 19px;
       color: #ffffff;
+      width: auto;
       height: 43px;
+      border: 1px solid #ffffff;
+      border-radius: 10px;
+      background: transparent;
+      box-shadow: none;
     }
 
     .learn-more {
@@ -131,9 +304,10 @@ const Banner = styled.div`
       width: 149px;
       height: 43px;
       border: 1px solid #ffffff;
-      border-radius: 6px;
+      border-radius: 10px;
       margin-left: 16px;
       background: transparent;
+      box-shadow: none;
     }
   }
 `
@@ -226,7 +400,7 @@ const Main = styled.div`
         font-weight: 500;
         font-size: 14px;
         line-height: 17px;
-        color: #9072ff;
+        color: #ffffff;
       }
       .rectangle {
         padding: 16px;
@@ -296,7 +470,7 @@ const Main = styled.div`
         justify-content: space-between;
         .nable {
           padding: 12px 0px;
-          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+          background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
           border-radius: 6px;
           border: none;
           font-weight: 700;
@@ -315,7 +489,7 @@ const Main = styled.div`
       }
       .withdraw {
         padding: 12px 30px;
-        background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
         border-radius: 6px;
         border: none;
         font-weight: 700;
@@ -349,8 +523,8 @@ const Main = styled.div`
       }
       .value {
         font-weight: 700;
-        font-size: 14px;
-        line-height: 17px;
+        font-size: 20px;
+        line-height: 24px;
         color: rgba(255, 255, 255, 0.87);
         /* text-overflow: ellipsis;
         white-space: nowrap;
@@ -372,7 +546,7 @@ const Main = styled.div`
         margin-top: 16px;
         width: 100%;
         .container_unstake_border {
-          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+          background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
           border-radius: 6px;
           padding: 2px;
           cursor: pointer;
@@ -388,7 +562,7 @@ const Main = styled.div`
               font-weight: 700;
               font-size: 16px;
               line-height: 19px;
-              background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+              background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
               -webkit-background-clip: text;
               -webkit-text-fill-color: transparent;
               background-clip: text;
@@ -400,6 +574,16 @@ const Main = styled.div`
       @media screen and (max-width: 576px) {
         grid-template-columns: 1fr;
         padding: 21px 18px;
+        .value {
+          font-weight: 700;
+          font-size: 14px;
+          line-height: 17px;
+          color: rgba(255, 255, 255, 0.87);
+          /* text-overflow: ellipsis;
+          white-space: nowrap;
+          overflow: hidden;
+          max-width: 100px; */
+        }
       }
     }
   }
@@ -791,7 +975,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    if (loadOk) window.location.reload()
+    // if (loadOk) window.location.reload()
     setLoadOk(true)
     const id = setInterval(() => {
       handleGetDataFarming()
@@ -819,22 +1003,41 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         <div className="content">
           <NavWrapper>
             <Banner>
-              <Text className="title" marginBottom="16px">
+              <img alt="" src={isMobile ? 'images/galaxy-mo.svg' : 'images/galaxy-dk.svg'} />
+              <div className="corner1"></div>
+              <div className="edge1"></div>
+              <div className="corner2"></div>
+              <div className="edge2"></div>
+              <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
                 Add Liquidity. Earn Trading Fees
               </Text>
-              <Text className="subtitle" marginBottom="16px">
+              <Text className="subtitle" marginBottom="24px">
                 Level Up your DeFi Game
               </Text>
-              <a
-                href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
-                target="_blank"
-                rel="noreferrer"
-              >
-                <Button className="get-xox">Get LP Token</Button>
-              </a>
-              <a href="/whitepaper" target="_blank" rel="noreferrer">
-                <Button className="learn-more">Learn More</Button>
-              </a>
+              <Flex>
+                <a
+                  href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <Button className="get-xox">
+                    <div className="top-left"></div>
+                    <div className="top-right"></div>
+                    <div className="bottom-left"></div>
+                    <div className="bottom-right"></div>
+                    Get LP Token
+                  </Button>
+                </a>
+                <a href="/whitepaper" target="_blank" rel="noreferrer">
+                  <Button className="learn-more">
+                    <div className="top-left"></div>
+                    <div className="top-right"></div>
+                    <div className="bottom-left"></div>
+                    <div className="bottom-right"></div>
+                    Learn More
+                  </Button>
+                </a>
+              </Flex>
             </Banner>
           </NavWrapper>
 
@@ -940,7 +1143,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     </div>
                   )}
                   <div>
-                    <div className="rectangle _flex space_between">
+                    <div className="rectangle _flex" style={{ flexDirection: 'column' }}>
                       <div>
                         <p className="current_XOX_reward">Current XOX reward</p>
                         {account ? (
@@ -1136,7 +1339,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       >
         <Content>
           <div className="xox_loading" style={{ margin: '24px 0px' }}>
-            <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+            <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
           </div>
           <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
           <div className="noti_claim_pending_h3"> {notiMess}</div>
@@ -1161,7 +1364,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               href={`${linkTransaction(chainId)}${txHash}`}
               target="_blank"
               rel="noreferrer"
-              color="#3D8AFF"
+              color="#FB8618"
             >
               <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
             </LinkExternal>

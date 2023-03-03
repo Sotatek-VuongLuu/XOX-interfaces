@@ -42,7 +42,6 @@ const NavWrapper = styled(Flex)<INavWrapper>`
 `
 
 const MainContent = styled.div`
-  height: 292px;
   width: 100%;
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
@@ -227,7 +226,7 @@ const MainContent = styled.div`
 
   ${({ theme }) => theme.mediaQueries.md} {
     height: 200px;
-    padding: 30px 24px;
+    padding: 30px 40px;
 
     & > img {
       position: absolute;
@@ -328,7 +327,7 @@ const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: 
         <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
           Swap to get XOX & XOXS. Earn like a Pro
         </Text>
-        <Text className="subtitle" marginBottom={['16px', , '24px']}>
+        <Text className="subtitle" mb={['16px', , '24px']}>
           {textContentBanner || 'Stake XOXS automatically to earn more'}
         </Text>
         <Flex>

@@ -23,6 +23,7 @@ const Wrapper = styled.div`
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
   padding: 18px;
+  position: relative;
 
   .corner1 {
     position: absolute;
@@ -268,7 +269,7 @@ export const PageButtons = styled(Flex)`
   & .page {
     font-family: 'Inter';
     font-style: normal;
-    font-weight: 700;
+    font-weight: 400;
     font-size: 14px;
     line-height: 17px;
     color: rgba(255, 255, 255, 0.87);
@@ -288,6 +289,7 @@ export const PageButtons = styled(Flex)`
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
+    font-weight: 700;
   }
 
   & .go-page {
@@ -418,11 +420,11 @@ const DataRow: React.FC<
   return (
     <>
       <Text
-        fontSize="16px"
+        fontSize={['14px', , '16px']}
         fontFamily="Inter"
         fontStyle="normal"
         fontWeight="400"
-        lineHeight="19px"
+        lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-id`}
       >
@@ -433,12 +435,13 @@ const DataRow: React.FC<
         key={`${transaction.hash}-type`}
       >
         <Text
-          fontSize="16px"
+          fontSize={['14px', , '16px']}
           fontFamily="Inter"
           fontStyle="normal"
           fontWeight="400"
-          lineHeight="19px"
+          lineHeight={['17px', , '19px']}
           color="rgba(255, 255, 255, 0.87)"
+          mr="4px"
         >
           {transaction.type === TransactionType.MINT
             ? t('Add %token0% and %token1%', { token0: symbolToken0, token1: symbolToken1 })
@@ -448,52 +451,52 @@ const DataRow: React.FC<
         </Text>
       </LinkExternal>
       <Text
-        fontSize="16px"
+        fontSize={['14px', , '16px']}
         fontFamily="Inter"
         fontStyle="normal"
         fontWeight="400"
-        lineHeight="19px"
+        lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-time`}
       >
         {formatISO9075(parseInt(transaction.timestamp, 10) * 1000)}
       </Text>
       <Text
-        fontSize="16px"
+        fontSize={['14px', , '16px']}
         fontFamily="Inter"
         fontStyle="normal"
         fontWeight="400"
-        lineHeight="19px"
+        lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
         ${formatAmount(transaction.amountUSD === 0 ? amountUSD : transaction.amountUSD)}
       </Text>
       <Text
-        fontSize="16px"
+        fontSize={['14px', , '16px']}
         fontFamily="Inter"
         fontStyle="normal"
         fontWeight="400"
-        lineHeight="19px"
+        lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token0`}
       >{`${formatAmount(abs0)} ${transaction.token0Symbol.toUpperCase()}`}</Text>
       <Text
-        fontSize="16px"
+        fontSize={['14px', , '16px']}
         fontFamily="Inter"
         fontStyle="normal"
         fontWeight="400"
-        lineHeight="19px"
+        lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-token1`}
       >
         {`${formatAmount(abs1)} ${transaction.token1Symbol.toUpperCase()}`}
       </Text>
       <Text
-        fontSize="16px"
+        fontSize={['14px', , '16px']}
         fontFamily="Inter"
         fontStyle="normal"
         fontWeight="400"
-        lineHeight="19px"
+        lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
         key={`${transaction.hash}-stable-coin`}
       >
@@ -501,11 +504,11 @@ const DataRow: React.FC<
       </Text>
       <CustomLink
         width="100%"
-        fontSize="16px"
+        fontSize={['14px', , '16px']}
         fontFamily="Inter"
         fontStyle="normal"
         fontWeight="400"
-        lineHeight="19px"
+        lineHeight={['17px', , '19px']}
         style={{ justifySelf: 'right' }}
         target="_blank"
         href={getBlockExploreLink(transaction.sender, 'address', chainIdLink)}
@@ -844,34 +847,34 @@ const TransactionsTable: React.FC = () => {
       <CustomTableWrapper>
         <Table>
           <Text
-            fontSize="16px"
+            fontSize={['14px', , '16px']}
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
+            lineHeight={['17px', , '19px']}
+            color="rgba(255, 255, 255, 0.87)"
             className="table-header"
           >
             No
           </Text>
           <Text
-            fontSize="16px"
+            fontSize={['14px', , '16px']}
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
+            lineHeight={['17px', , '19px']}
+            color="rgba(255, 255, 255, 0.87)"
             className="table-header"
           >
             Action
           </Text>
           <ClickableColumnHeader
-            fontSize="16px"
+            fontSize={['14px', , '16px']}
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
+            lineHeight={['17px', , '19px']}
+            color="rgba(255, 255, 255, 0.87)"
             onClick={() => handleSort(SORT_FIELD.timestamp)}
             className="table-header"
           >
@@ -881,12 +884,12 @@ const TransactionsTable: React.FC = () => {
             </Flex>
           </ClickableColumnHeader>
           <ClickableColumnHeader
-            fontSize="16px"
+            fontSize={['14px', , '16px']}
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
+            lineHeight={['17px', , '19px']}
+            color="rgba(255, 255, 255, 0.87)"
             onClick={() => handleSort(SORT_FIELD.amountUSD)}
             className="table-header"
           >
@@ -896,34 +899,34 @@ const TransactionsTable: React.FC = () => {
             </Flex>
           </ClickableColumnHeader>
           <Text
-            fontSize="16px"
+            fontSize={['14px', , '16px']}
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
+            lineHeight={['17px', , '19px']}
+            color="rgba(255, 255, 255, 0.87)"
             className="table-header"
           >
             Token Amount
           </Text>
           <Text
-            fontSize="16px"
+            fontSize={['14px', , '16px']}
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
+            lineHeight={['17px', , '19px']}
+            color="rgba(255, 255, 255, 0.87)"
             className="table-header"
           >
             Token Amount
           </Text>
           <ClickableColumnHeader
-            fontSize="16px"
+            fontSize={['14px', , '16px']}
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
+            lineHeight={['17px', , '19px']}
+            color="rgba(255, 255, 255, 0.87)"
             onClick={() => handleSort(SORT_FIELD.stableCoin)}
             className="table-header"
           >
@@ -933,12 +936,12 @@ const TransactionsTable: React.FC = () => {
             </Flex>
           </ClickableColumnHeader>
           <Text
-            fontSize="16px"
+            fontSize={['14px', , '16px']}
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
+            lineHeight={['17px', , '19px']}
+            color="rgba(255, 255, 255, 0.87)"
             style={{ justifySelf: 'right' }}
             className="table-header"
           >

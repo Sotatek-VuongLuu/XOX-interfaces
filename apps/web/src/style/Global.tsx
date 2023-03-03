@@ -95,7 +95,7 @@ const GlobalStyle = createGlobalStyle`
       right: -2px;
       bottom: -2px;
       left: -2px;
-      background-image: linear-gradient(179.95deg, #6034FF 0.08%, rgba(163, 90, 255, 0) 99.95%);
+      background-image: linear-gradient(358.38deg, rgba(184, 9, 181, 0) 10.87%, rgba(237, 28, 81, 0.5) 45.58%, rgba(255, 176, 0, 0.5) 78.88%);
       z-index: 1;
       border-radius: 10px;
     }

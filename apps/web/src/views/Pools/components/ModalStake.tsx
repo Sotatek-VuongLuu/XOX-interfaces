@@ -127,17 +127,17 @@ const ContentStake = styled.div`
     margin-top: 16px;
     .item_percent_btn {
       padding: 6px 24px;
-      border: 1px solid #9072ff;
+      border: 1px solid #fb8618;
       border-radius: 40px;
       background: transparent;
       font-weight: 700;
       font-size: 12px;
       line-height: 15px;
-      color: #9072ff;
+      color: #fb8618;
       margin-left: 8px;
       cursor: pointer;
       &:hover {
-        background: #9072ff !important;
+        background: #fb8618 !important;
         color: #ffffff !important;
       }
       @media screen and (max-width: 576px) {
@@ -177,7 +177,7 @@ const ButtonGroup = styled.div`
     color: #ffffff;
   }
   .confirm {
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
@@ -203,7 +203,7 @@ const GetLP = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 19px;
-    color: #9072ff;
+    color: #fb8618;
     align-items: center;
     @media screen and (max-width: 576px) {
       font-size: 14px;
@@ -212,7 +212,7 @@ const GetLP = styled.div`
   }
   a:hover {
     text-decoration: underline;
-    text-decoration-color: #9072ff;
+    text-decoration-color: #fb8618;
   }
 `
 const ContentContainer = styled.div`
@@ -373,8 +373,8 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
                       handlePercent(item)
                     }}
                     style={{
-                      background: amountActive?.[`${item}`] === amount ? '#9072ff' : 'none',
-                      color: amountActive?.[`${item}`] === amount ? '#fff' : '#9072ff',
+                      background: amountActive?.[`${item}`] === amount ? '#fb8618' : 'none',
+                      color: amountActive?.[`${item}`] === amount ? '#fff' : '#fb8618',
                     }}
                     disabled={!Number(balanceLP)}
                   >

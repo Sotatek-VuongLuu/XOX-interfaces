@@ -44,8 +44,8 @@ const MenuItem = styled(RowBetween)<{ disabled: boolean; selected: boolean }>`
   font-family: 'Inter';
   font-style: normal;
   font-weight: 400;
-  font-size: 20px;
-  line-height: 24px;
+  font-size: 16px;
+  line-height: 19px;
   color: rgba(255, 255, 255, 0.87);
   :hover {
     background-color: ${({ disabled }) => !disabled && 'rgba(255, 255, 255, 0.1);'};
@@ -54,16 +54,23 @@ const MenuItem = styled(RowBetween)<{ disabled: boolean; selected: boolean }>`
 
   & div div {
     font-weight: 400;
-    font-size: 20px;
-    line-height: 24px;
+    font-size: 16px;
+    line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
     font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
+    font-size: 20px;
+    line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
+
+    & div div {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 24px;
+      color: rgba(255, 255, 255, 0.87);
+    }
   }
 `
 

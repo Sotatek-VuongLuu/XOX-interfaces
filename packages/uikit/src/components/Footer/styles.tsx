@@ -79,7 +79,7 @@ export const Container = styled.div`
 `;
 
 export const Wrapper = styled.div`
-  width: 1400px;
+  width: 100%;
   display: flex;
   justify-content: center;
   background: rgba(255, 255, 255, 0.05);
