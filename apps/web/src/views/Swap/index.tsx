@@ -58,7 +58,7 @@ const Wrapper = styled(Flex)`
 `
 
 const MainBackground = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 0;
   top: -50px;
   left: 0;
@@ -122,7 +122,6 @@ export default function Swap() {
 
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
         width={['328px', , '100%']}
         marginTop="100px"

@@ -6,7 +6,6 @@ import { AutoColumn, ColumnCenter } from 'components/Layout/Column'
 import { Trade, Currency, TradeType } from '@pancakeswap/sdk'
 import { StableTrade } from '../StableSwap/hooks/useStableTradeExactIn'
 
-
 const Wrapper = styled.div`
   width: 100%;
 `
@@ -30,10 +29,10 @@ function ConfirmationPendingContent({ trade }: { trade: Trade<Currency, Currency
     <Wrapper>
       <ConfirmedIcon>
         {/* <Spinner /> */}
-        <GridLoader color="#9072FF" style={{width:'51px', height:'51px'}} />
+        <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
         {/* <img src='/images/swap/confirm-loading.svg' alt='' /> */}
       </ConfirmedIcon>
-      
+
       <AutoColumn gap="12px" justify="center">
         <Text fontSize="18px">{t('Waiting For Confirmation')}</Text>
         <AutoColumn gap="12px" justify="center">
