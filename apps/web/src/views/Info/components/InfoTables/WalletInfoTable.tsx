@@ -405,11 +405,11 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       <TableWrapper>
         <Flex justifyContent="space-between" alignItems="flex-end">
           <Text
-            fontSize="20px"
+            fontSize={['16px', , '20px']}
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="700"
-            lineHeight="24px"
+            lineHeight={['19px', , '24px']}
             color="rgba(255, 255, 255, 0.87)"
             className="heading"
           >

@@ -764,14 +764,14 @@ const TransactionsTable: React.FC = () => {
       <div className="edge1"></div>
       <div className="corner2"></div>
       <div className="edge2"></div>
-      <Flex mb="16px" justifyContent="space-between" flexDirection={['column', , 'row']}>
+      <Flex justifyContent="space-between" flexDirection={['column', , 'row']}>
         <Text
           className="heading"
-          fontSize="20px"
+          fontSize={['16px', , '20px']}
           fontFamily="Inter"
           fontStyle="normal"
           fontWeight="700"
-          lineHeight="24px"
+          lineHeight={['19px', , '24px']}
           color="rgba(255, 255, 255, 0.87)"
           height="24px"
           mb={28}
@@ -804,7 +804,7 @@ const TransactionsTable: React.FC = () => {
             )}
           </Flex>
           {transactionFrom === TransactionFrom.XOX && (
-            <Flex className="btn-filter" mb="8px" justifyContent="space-between" width={'100%'}>
+            <Flex className="btn-filter" mb="16px" justifyContent="space-between" width={'100%'}>
               <Button
                 onClick={() => handleFilter(undefined)}
                 className={undefined === txFilter ? 'active' : 'inactive'}
@@ -1147,7 +1147,9 @@ const TransactionsTable: React.FC = () => {
               onOptionChange={(option: any) => setPerPage(option.value)}
               className="select-page"
             />
-            <Text className="go-page">Go to page</Text>
+            <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
+              Go to page
+            </Text>
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}
