@@ -324,7 +324,7 @@ export default function CurrencyInputPanel({
                 }
                 color="textSubtle"
                 // fontSize="14px"
-                style={{ display: 'inline', cursor: 'pointer' }}
+                style={{ display: 'inline', cursor: 'pointer', fontSize: '16px' }}
               >
                 {!hideBalance && !!currency
                   ? t('Balance: %balance%', {

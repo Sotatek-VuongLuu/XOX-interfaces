@@ -1,5 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Button, Text, useModal } from '@pancakeswap/uikit'
+import { Button, Text, useModal, useToast } from '@pancakeswap/uikit'
 import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk'
 import axios from 'axios'
 import { GreyCard } from 'components/Card'
@@ -85,6 +85,8 @@ export default function SwapCommitButton({
   // the callback to execute the swap
   const swapCalls = useSwapXOXCallArguments(trade, allowedSlippage, recipient, referral, isRouterNormal)
 
+  const { toastWarning } = useToast()
+
   const { callback: swapCallback, error: swapCallbackError } = useSwapCallback(
     trade,
     allowedSlippage,
@@ -111,7 +113,6 @@ export default function SwapCommitButton({
     if (!swapCallback) {
       return
     }
-
     setSwapState({ attemptingTxn: true, tradeToConfirm, swapErrorMessage: undefined, txHash: undefined })
     swapCallback()
       .then((hash) => {
@@ -119,9 +120,15 @@ export default function SwapCommitButton({
       })
       .catch((error) => {
         let message = error?.message
+
         if (error?.message.length > 250) {
           message = 'Transaction failed.'
         }
+        if (error?.message.includes('rejected transaction')) {
+          message = 'Transaction rejected.'
+        }
+
+        toastWarning('Confirm Swap', message)
 
         setSwapState({
           attemptingTxn: false,
@@ -183,6 +190,7 @@ export default function SwapCommitButton({
     }
     return ''
   }
+
   const onSwapHandler = useCallback(() => {
     if (isExpertMode) {
       handleSwap()
@@ -219,19 +227,19 @@ export default function SwapCommitButton({
   }, [referral])
   if (swapIsUnsupported) {
     return (
-      <Button width="100%" disabled>
+      <Button width="100%" disabled style={{ fontSize: '18px' }}>
         {t('Unsupported Asset')}
       </Button>
     )
   }
 
   if (!account) {
-    return <ConnectWalletButton width="100%" />
+    return <ConnectWalletButton width="100%" style={{ fontSize: '18px' }} />
   }
 
   if (showWrap) {
     return (
-      <CommitButton width="100%" disabled={Boolean(wrapInputError)} onClick={onWrap}>
+      <CommitButton width="100%" disabled={Boolean(wrapInputError)} onClick={onWrap} style={{ fontSize: '18px' }}>
         {wrapInputError ?? (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
       </CommitButton>
     )
@@ -324,6 +332,7 @@ export default function SwapCommitButton({
         height={43}
         width="100%"
         disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
+        style={{ fontSize: '18px' }}
       >
         {swapInputError ||
           (priceImpactSeverity > 3 && !isExpertMode

@@ -105,25 +105,25 @@ const ConfirmSwapModal: React.FC<React.PropsWithChildren<InjectedModalProps & Co
   }, [customOnDismiss, onDismiss])
 
   const confirmationContent = useCallback(
-    () =>
-      swapErrorMessage ? (
-        <SwapTransactionErrorContent
-          openSettingModal={openSettingModal}
-          onDismiss={onDismiss}
-          message={swapErrorMessage}
-        />
-      ) : (
-        <TransactionConfirmSwapContent
-          isStable={isStable}
-          trade={trade}
-          currencyBalances={currencyBalances}
-          originalTrade={originalTrade}
-          onAcceptChanges={onAcceptChanges}
-          allowedSlippage={allowedSlippage}
-          onConfirm={onConfirm}
-          recipient={recipient}
-        />
-      ),
+    () => (
+      // swapErrorMessage ? (
+      //   <SwapTransactionErrorContent
+      //     openSettingModal={openSettingModal}
+      //     onDismiss={onDismiss}
+      //     message={swapErrorMessage}
+      //   />
+      // ) : (
+      <TransactionConfirmSwapContent
+        isStable={isStable}
+        trade={trade}
+        currencyBalances={currencyBalances}
+        originalTrade={originalTrade}
+        onAcceptChanges={onAcceptChanges}
+        allowedSlippage={allowedSlippage}
+        onConfirm={onConfirm}
+        recipient={recipient}
+      />
+    ),
     [
       isStable,
       trade,

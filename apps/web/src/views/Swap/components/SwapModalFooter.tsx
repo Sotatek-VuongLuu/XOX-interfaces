@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import styled from 'styled-components'
 import { Trade, TradeType, CurrencyAmount, Currency } from '@pancakeswap/sdk'
-import { Button, Text, QuestionHelper } from '@pancakeswap/uikit'
+import { Button, Text, QuestionHelper, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { Field } from 'state/swap/actions'
 import CircleRefresh from 'components/Svg/CircleRefresh'
@@ -11,6 +11,13 @@ import { AutoRow, RowBetween, RowFixed } from 'components/Layout/Row'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import { SwapCallbackError } from './styleds'
+
+const BottomText = styled(Text)`
+  word-break: break-word;
+  @media screen and (max-width: 500px) {
+    font-size: 12px;
+  }
+`
 
 const SwapModalFooterContainer = styled(AutoColumn)`
   margin-top: 24px;
@@ -48,16 +55,18 @@ export default function SwapModalFooter({
   const { priceImpactWithoutFee, realizedLPFee } = computeTradePriceBreakdown(trade)
   const severity = warningSeverity(priceImpactWithoutFee)
 
+  const { isMobile } = useMatchBreakpoints()
+
   const totalFeePercent = chainId === 1 || chainId === 5 ? '0.3%' : '0.25%'
 
   return (
     <>
       <SwapModalFooterContainer>
         <RowBetween align="center" marginBottom="8px">
-          <Text fontSize="16px" color="textSubtle">
+          <BottomText fontSize="16px" color="textSubtle">
             {t('Price')}
-          </Text>
-          <Text
+          </BottomText>
+          <BottomText
             fontSize="16px"
             style={{
               justifyContent: 'center',
@@ -71,53 +80,55 @@ export default function SwapModalFooter({
             <CircleBox onClick={() => setShowInverted(!showInverted)}>
               <CircleRefresh />
             </CircleBox>
-          </Text>
+          </BottomText>
         </RowBetween>
 
         <RowBetween marginBottom="8px">
           <RowFixed>
-            <Text fontSize="16px" color="textSubtle">
+            <BottomText fontSize="16px" color="textSubtle">
               {trade.tradeType === TradeType.EXACT_INPUT ? t('Minimum received') : t('Maximum sold')}
-            </Text>
+            </BottomText>
             <QuestionHelper
               text={t(
                 'Your transaction will revert if there is a large, unfavorable price movement before it is confirmed.',
               )}
               ml="4px"
               placement="auto"
+              size={isMobile ? '18px' : '24px'}
             />
           </RowFixed>
           <RowFixed>
-            <Text fontSize="16px">
+            <BottomText fontSize="16px">
               {trade.tradeType === TradeType.EXACT_INPUT
                 ? slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4) ?? '-'
                 : slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4) ?? '-'}
-            </Text>
-            <Text fontSize="16px" marginLeft="4px">
+            </BottomText>
+            <BottomText fontSize="16px" marginLeft="4px">
               {trade.tradeType === TradeType.EXACT_INPUT
                 ? trade.outputAmount.currency.symbol
                 : trade.inputAmount.currency.symbol}
-            </Text>
+            </BottomText>
           </RowFixed>
         </RowBetween>
         <RowBetween marginBottom="8px">
           <RowFixed>
-            <Text fontSize="16px" color="textSubtle">
+            <BottomText fontSize="16px" color="textSubtle">
               {t('Price Impact')}
-            </Text>
+            </BottomText>
             <QuestionHelper
               text={t('The difference between the market price and your price due to trade size.')}
               ml="4px"
               placement="auto"
+              size={isMobile ? '18px' : '24px'}
             />
           </RowFixed>
           <FormattedPriceImpact priceImpact={priceImpactWithoutFee} />
         </RowBetween>
         <RowBetween>
           <RowFixed>
-            <Text fontSize="16px" color="textSubtle">
+            <BottomText fontSize="16px" color="textSubtle">
               {t('Liquidity Provider Fee')}
-            </Text>
+            </BottomText>
             <QuestionHelper
               text={
                 <>
@@ -126,11 +137,12 @@ export default function SwapModalFooter({
               }
               ml="4px"
               placement="auto"
+              size={isMobile ? '18px' : '24px'}
             />
           </RowFixed>
-          <Text fontSize="16px">
+          <BottomText fontSize="16px">
             {realizedLPFee ? `${realizedLPFee?.toSignificant(6)} ${trade.inputAmount.currency.symbol}` : '-'}
-          </Text>
+          </BottomText>
         </RowBetween>
       </SwapModalFooterContainer>
 
@@ -144,6 +156,7 @@ export default function SwapModalFooter({
           id="confirm-swap-or-send"
           width="100%"
           height="43px"
+          style={{ fontSize: isMobile ? '14px' : '16px' }}
         >
           {severity > 2 || (trade.tradeType === TradeType.EXACT_OUTPUT && !isEnoughInputBalance)
             ? t('Swap Anyway')

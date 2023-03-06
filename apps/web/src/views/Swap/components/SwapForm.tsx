@@ -68,6 +68,7 @@ const ReferralInput = styled.input`
   border-radius: 4px;
   text-transform: uppercase;
   font-size: 14px;
+  outline: none;
 `
 const ErrorReferral = styled.div`
   font-size: 12px;

@@ -4,7 +4,7 @@ import { SvgProps } from "../types";
 
 const Icon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
+    <Svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none" {...props}>
       <path
         d="M7.125 2.375H3.5625C2.90666 2.375 2.375 2.90666 2.375 3.5625V15.4375C2.375 16.0934 2.90666 16.625 3.5625 16.625H15.4375C16.0934 16.625 16.625 16.0934 16.625 15.4375V11.875"
         stroke="url(#paint0_linear_10957_45145)"
@@ -42,7 +42,7 @@ const Icon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
           <stop offset="1" stopColor="#FF6A00" />
         </linearGradient>
       </defs>
-    </svg>
+    </Svg>
   );
 };
 

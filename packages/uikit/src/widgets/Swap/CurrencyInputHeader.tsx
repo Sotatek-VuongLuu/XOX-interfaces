@@ -54,7 +54,7 @@ export const CurrencyInputHeaderSubTitle = ({ children }: { children: ReactNode 
   const { isMobile } = useMatchBreakpoints();
   return (
     <Text
-      fontSize={isMobile ? "12px" : "16px"}
+      fontSize={isMobile ? "12px" : "14px"}
       fontFamily="Inter"
       fontStyle="normal"
       fontWeight="400"

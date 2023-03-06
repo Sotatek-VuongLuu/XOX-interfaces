@@ -1,6 +1,6 @@
 import { useMemo } from 'react'
 import { Trade, TradeType, CurrencyAmount, Currency } from '@pancakeswap/sdk'
-import { Button, Text, ErrorIcon, ArrowDownIcon } from '@pancakeswap/uikit'
+import { Button, Text, ErrorIcon, ArrowDownIcon, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { Field } from 'state/swap/actions'
 import { useTranslation } from '@pancakeswap/localization'
 import { computeTradePriceBreakdown, warningSeverity } from 'utils/exchange'
@@ -21,6 +21,36 @@ const RowPrice = styled(RowBetween)`
     margin-bottom: 0;
   }
 `
+
+const TextLogoNetwork = styled(Text)`
+  font-size: 18px;
+  @media (max-width: 574px) {
+    font-size: 16px;
+  }
+`
+
+const TextSlippage = styled(Text)`
+  font-size: 18px;
+  color: #ffffffde;
+  @media (max-width: 574px) {
+    font-size: 14px;
+  }
+`
+
+const TextPercent = styled(Text)`
+  font-size: 18px;
+  @media (max-width: 574px) {
+    font-size: 14px;
+  }
+`
+const TextDescription = styled(Text)`
+  font-size: 14px;
+  width: 100%;
+  @media (max-width: 574px) {
+    font-size: 12px;
+  }
+`
+
 export default function SwapModalHeader({
   trade,
   slippageAdjustedAmounts,
@@ -39,6 +69,7 @@ export default function SwapModalHeader({
   allowedSlippage: number
 }) {
   const { t } = useTranslation()
+  const { isMobile } = useMatchBreakpoints()
 
   // const { priceImpactWithoutFee } = useMemo(() => computeTradePriceBreakdown(trade), [trade])
   const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade)
@@ -77,13 +108,13 @@ export default function SwapModalHeader({
     <AutoColumn gap="md">
       <RowPrice align="flex-end">
         <RowFixed gap="4px">
-          <TruncatedText fontSize="18px" color={inputTextColor}>
+          <TruncatedText fontSize={isMobile ? '16px' : '18px'} color={inputTextColor}>
             {trade.inputAmount.toSignificant(6)}
           </TruncatedText>
         </RowFixed>
         <RowFixed gap="4px">
           <CurrencyLogo currency={trade.inputAmount.currency} size="18px" />
-          <Text fontSize="18px">{trade.inputAmount.currency.symbol}</Text>
+          <TextLogoNetwork>{trade.inputAmount.currency.symbol}</TextLogoNetwork>
         </RowFixed>
       </RowPrice>
       <RowFixed style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', width: '100%' }}>
@@ -92,7 +123,7 @@ export default function SwapModalHeader({
       <RowPrice align="flex-end">
         <RowFixed gap="4px">
           <TruncatedText
-            fontSize="18px"
+            fontSize={isMobile ? '16px' : '18px'}
             color={
               priceImpactSeverity > 2
                 ? 'failure'
@@ -106,7 +137,7 @@ export default function SwapModalHeader({
         </RowFixed>
         <RowFixed gap="4px">
           <CurrencyLogo currency={trade.outputAmount.currency} size="18px" />
-          <Text fontSize="18px">{trade.outputAmount.currency.symbol}</Text>
+          <TextLogoNetwork>{trade.outputAmount.currency.symbol}</TextLogoNetwork>
         </RowFixed>
       </RowPrice>
       {showAcceptChanges ? (
@@ -122,20 +153,20 @@ export default function SwapModalHeader({
       ) : null}
       <AutoColumn justify="flex-start" gap="sm">
         <RowFixed style={{ width: '100%' }}>
-          <Text style={{ color: '#FFFFFFDE', fontSize: '18px' }}>{t('Slippage Tolerance')}</Text>
-          <Text bold color="#FB8618" ml="auto" textAlign="end" style={{ fontSize: '18px' }}>
+          <TextSlippage>{t('Slippage Tolerance')}</TextSlippage>
+          <TextPercent bold color="#FB8618" ml="auto" textAlign="end">
             {`${allowedSlippage / 100}%`}
-          </Text>
+          </TextPercent>
         </RowFixed>
         {trade.tradeType === TradeType.EXACT_OUTPUT && !isEnoughInputBalance && (
-          <Text small color="failure" textAlign="left" style={{ width: '100%' }}>
+          <TextDescription small color="failure" textAlign="left">
             {t('Insufficient input token balance. Your transaction may fail.')}
-          </Text>
+          </TextDescription>
         )}
-        <Text small color="textSubtle" textAlign="left" style={{ width: '100%' }}>
+        <TextDescription small color="textSubtle" textAlign="left" style={{ width: '100%' }}>
           {estimatedText}
           {transactionRevertText}
-        </Text>
+        </TextDescription>
       </AutoColumn>
       {recipient !== null ? (
         <AutoColumn justify="flex-start" gap="sm" style={{ padding: '12px 0 0 0px' }}>
