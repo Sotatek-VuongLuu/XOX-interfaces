@@ -263,42 +263,47 @@ export default function SwapCommitButton({
 
   const isValid = !swapInputError
 
+  const isSwap = !isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)
+
   if (showApproveFlow) {
     return (
       <>
         <RowBetween>
-          <CommitButton
-            variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
-            onClick={approveCallback}
-            disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
-            width="48%"
-          >
-            {approval === ApprovalState.PENDING ? (
-              <AutoRow gap="6px" justify="center">
-                {t('Enabling')} <CircleLoader stroke="white" />
-              </AutoRow>
-            ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
-              t('Enabled')
-            ) : (
-              t('Enable %asset%', { asset: currencies[Field.INPUT]?.symbol ?? '' })
-            )}
-          </CommitButton>
-          <CommitButton
-            variant={isValid && priceImpactSeverity > 2 ? 'danger' : 'primary'}
-            onClick={() => {
-              onSwapHandler()
-            }}
-            width="48%"
-            id="swap-button"
-            height={43}
-            disabled={!isValid || approval !== ApprovalState.APPROVED || (priceImpactSeverity > 3 && !isExpertMode)}
-          >
-            {priceImpactSeverity > 3 && !isExpertMode
-              ? t('Price Impact High')
-              : priceImpactSeverity > 2
-              ? t('Swap Anyway')
-              : t('Swap')}
-          </CommitButton>
+          {isSwap ? (
+            <CommitButton
+              variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
+              onClick={approveCallback}
+              disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
+              width="100%"
+            >
+              {approval === ApprovalState.PENDING ? (
+                <AutoRow gap="6px" justify="center">
+                  {t('Enabling')} <CircleLoader stroke="white" />
+                </AutoRow>
+              ) : approvalSubmitted && approval === ApprovalState.APPROVED ? (
+                t('Enabled')
+              ) : (
+                t('Enable %asset%', { asset: currencies[Field.INPUT]?.symbol ?? '' })
+              )}
+            </CommitButton>
+          ) : (
+            <CommitButton
+              variant={isValid && priceImpactSeverity > 2 ? 'danger' : 'primary'}
+              onClick={() => {
+                onSwapHandler()
+              }}
+              width="100%"
+              id="swap-button"
+              height={43}
+              disabled={isSwap}
+            >
+              {priceImpactSeverity > 3 && !isExpertMode
+                ? t('Price Impact High')
+                : priceImpactSeverity > 2
+                ? t('Swap Anyway')
+                : t('Swap')}
+            </CommitButton>
+          )}
         </RowBetween>
         <Column style={{ marginTop: '1rem' }}>
           <ProgressSteps steps={[approval === ApprovalState.APPROVED]} />

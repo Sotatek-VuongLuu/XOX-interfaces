@@ -78,9 +78,10 @@ const ErrorReferral = styled.div`
   margin-bottom: 24px;
 `
 const PerPriceTitle = styled.div`
-  color: #9072ff;
+  color: #fb8618;
   font-weight: 700;
   font-size: 16px;
+  margin-top: 6px;
   @media (max-width: 574px) {
     font-size: 14px;
   }
@@ -391,7 +392,7 @@ export default function SwapForm() {
                   <Text bold fontSize={['14px', , '18px']} color="rgba(255, 255, 255, 0.87)" fontWeight={400}>
                     {t('Slippage Tolerance')}
                   </Text>
-                  <Text bold fontSize={['14px', , '18px']} color="#9072FF">
+                  <Text bold fontSize={['14px', , '18px']} color="#FB8618">
                     {allowedSlippage / 100}%
                   </Text>
                 </RowBetween>

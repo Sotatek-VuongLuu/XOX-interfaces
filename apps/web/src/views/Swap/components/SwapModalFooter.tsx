@@ -14,13 +14,16 @@ import { SwapCallbackError } from './styleds'
 
 const SwapModalFooterContainer = styled(AutoColumn)`
   margin-top: 24px;
-  padding: 16px;
+  padding: 20px;
   border-radius: ${({ theme }) => theme.radii.default};
-  border: 1px solid ${({ theme }) => theme.colors.cardBorder};
-  background-color: ${({ theme }) => theme.colors.dark3};
+  background-color: #1d1c1c;
 `
 const CircleBox = styled.div`
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-left: 8px;
 `
 
 export default function SwapModalFooter({
@@ -50,7 +53,7 @@ export default function SwapModalFooter({
   return (
     <>
       <SwapModalFooterContainer>
-        <RowBetween align="center">
+        <RowBetween align="center" marginBottom="8px">
           <Text fontSize="16px" color="textSubtle">
             {t('Price')}
           </Text>
@@ -71,7 +74,7 @@ export default function SwapModalFooter({
           </Text>
         </RowBetween>
 
-        <RowBetween>
+        <RowBetween marginBottom="8px">
           <RowFixed>
             <Text fontSize="16px" color="textSubtle">
               {trade.tradeType === TradeType.EXACT_INPUT ? t('Minimum received') : t('Maximum sold')}
@@ -97,7 +100,7 @@ export default function SwapModalFooter({
             </Text>
           </RowFixed>
         </RowBetween>
-        <RowBetween>
+        <RowBetween marginBottom="8px">
           <RowFixed>
             <Text fontSize="16px" color="textSubtle">
               {t('Price Impact')}

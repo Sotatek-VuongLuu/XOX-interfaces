@@ -141,7 +141,7 @@ export function TransactionSubmittedContent({
           {chainId && hash && (
             <LinkExternal
               href={getBlockExploreLink(hash, 'transaction', chainId)}
-              color="#3D8AFF"
+              color="#FB8618"
               style={{ fontWeight: 400, marginBottom: '16px' }}
             >
               {t(`View on ${chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}`)}

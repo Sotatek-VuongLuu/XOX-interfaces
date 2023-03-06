@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import styled, { css } from "styled-components";
+import { useMatchBreakpoints } from "../../contexts";
 import { Box, BoxProps } from "../Box";
 import { ArrowDropDownIcon } from "../Svg";
 import { Text } from "../Text";
@@ -26,7 +27,7 @@ const DropDownHeader = styled.div`
   }
 `;
 
-const DropDownListContainer = styled.div`
+const DropDownListContainer = styled.div<{ isMobile: boolean }>`
   min-width: 136px;
   height: 0;
   position: absolute;
@@ -38,7 +39,7 @@ const DropDownListContainer = styled.div`
   transform-origin: top;
   opacity: 0;
   width: 100%;
-  top: calc(100% + 1px);
+  ${({ isMobile }) => (isMobile ? "bottom: calc(100% + 1px);" : "top: calc(100% + 1px);")}
 
   ${({ theme }) => theme.mediaQueries.sm} {
     min-width: 168px;
@@ -107,7 +108,7 @@ const ListItem = styled.li`
   }
 
   &:hover {
-    background: #9072ff;
+    background: rgba(255, 255, 255, 0.05);
   }
 `;
 
@@ -133,6 +134,7 @@ const Select: React.FunctionComponent<React.PropsWithChildren<SelectProps>> = ({
   const [isOpen, setIsOpen] = useState(false);
   const [optionSelected, setOptionSelected] = useState(false);
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(defaultOptionIndex);
+  const { isMobile } = useMatchBreakpoints();
 
   const toggling = (event: React.MouseEvent<HTMLDivElement>) => {
     setIsOpen(!isOpen);
@@ -175,7 +177,7 @@ const Select: React.FunctionComponent<React.PropsWithChildren<SelectProps>> = ({
         </Text>
       </DropDownHeader>
       <ArrowDropDownIcon color="text" onClick={toggling} />
-      <DropDownListContainer>
+      <DropDownListContainer isMobile={isMobile}>
         <DropDownList>
           {options.map((option, index) =>
             placeHolderText || index !== selectedOptionIndex ? (

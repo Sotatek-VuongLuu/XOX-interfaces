@@ -27,7 +27,7 @@ export const TitleChart = styled.div`
     .boxed-child {
       width: 100%;
       height: 100%;
-      background-color: #1d1d1d;
+      background-color: #000000;
       padding: 9px 20px;
       border-radius: inherit;
       span {
@@ -166,8 +166,8 @@ export const ChartContent = styled.div`
 
     span.val {
       font-weight: 700;
-      font-size: 20px;
-      line-height: 24px;
+      font-size: 18px;
+      line-height: 22px;
       color: #ffffff;
     }
   }
@@ -178,8 +178,8 @@ export const ChartContent = styled.div`
     justify-content: flex-start;
     button {
       border-radius: 8px;
-      height: 33px;
-      padding: 8px 15px;
+      height: 31px;
+      width: 40px;
       border: none;
       outline: none;
       cursor: pointer;
@@ -191,7 +191,7 @@ export const ChartContent = styled.div`
     }
     @media (max-width: 576px) {
       button {
-        padding: 8px 12px;
+        padding: 8px 0;
         margin-right: 8px;
       }
     }
@@ -217,6 +217,7 @@ export const ChartContent = styled.div`
 
       button {
         margin-left: 8px;
+        width: 50px;
       }
     }
 

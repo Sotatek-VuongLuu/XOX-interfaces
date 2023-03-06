@@ -82,7 +82,7 @@ const UserMenuStyle = styled.div`
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
-    color: #9072ff;
+    color: #c20da3;
   }
 `
 
@@ -289,10 +289,12 @@ const UserMenu = () => {
 
         <Flex flexDirection="column" mb="12px" mt="12px">
           <CopyAddress tooltipMessage={t('Copied')} account={account} />
-          <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)">
-            {/* eslint-disable react/jsx-boolean-value */}
-            <CopyAddress tooltipMessage={t('Copied')} account={userProfile?.referralCode} referralCode={true} />
-          </Text>
+          {userProfile?.referralCode && (
+            <Text fontSize="14px" fontWeight="500" lineHeight="17px" color="rgba(255, 255, 255, 0.87)" marginTop="8px">
+              {/* eslint-disable react/jsx-boolean-value */}
+              <CopyAddress tooltipMessage={t('Copied')} account={userProfile?.referralCode} referralCode={true} />
+            </Text>
+          )}
         </Flex>
 
         <UserMenuDivider />
@@ -315,7 +317,7 @@ const UserMenu = () => {
               {chainName()} Smart Chain
             </Text>
           </Flex>
-          <LinkExternal href={getBlockExploreLink(account, 'address', chainId)} className="link-bnb" color="#9072FF">
+          <LinkExternal href={getBlockExploreLink(account, 'address', chainId)} className="link-bnb">
             {getBlockExploreName(chainId)}
           </LinkExternal>
         </Flex>

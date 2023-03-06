@@ -21,6 +21,7 @@ const BottomText = styled(Text)`
 `
 
 const RowBetweenStyle = styled(RowBetween)`
+  margin-bottom: 10px;
   @media screen and (max-width: 576px) {
     margin-bottom: 8px;
   }

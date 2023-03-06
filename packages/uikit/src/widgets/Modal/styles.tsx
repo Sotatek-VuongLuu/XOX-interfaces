@@ -13,7 +13,7 @@ export const ModalHeader = styled.div<{ background?: string }>`
   background: transparent;
   // border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder};
   display: flex;
-  padding: 32px 24px 12px 24px;
+  padding: 32px 24px 24px 24px;
   border: none;
 
   & > div {
@@ -83,7 +83,7 @@ export const ModalCloseButton: React.FC<React.PropsWithChildren<{ onDismiss: Mod
 export const ModalBackButton: React.FC<React.PropsWithChildren<{ onBack: ModalProps["onBack"] }>> = ({ onBack }) => {
   return (
     <IconButton variant="text" onClick={onBack} area-label="go back" mr="8px">
-      <ArrowBackIcon color="primary" />
+      <ArrowBackIcon />
     </IconButton>
   );
 };
@@ -100,7 +100,7 @@ export const ModalContainer = styled(MotionBox)<IMotionBox>`
   z-index: ${({ theme }) => theme.zIndices.modal};
   position: absolute;
   min-width: ${({ $minWidth }) => $minWidth};
-  background: #242424;
+  background: #101010;
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 24px;
   max-width: calc(100vw - 48px) !important;

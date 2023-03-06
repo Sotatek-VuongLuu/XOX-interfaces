@@ -58,12 +58,13 @@ const Wrapper = styled(Flex)`
 `
 
 const MainBackground = styled.div`
-  position: absolute;
+  position: fixed;
   z-index: 0;
   top: -50px;
   left: 0;
   right: 0;
   bottom: 0;
+  background-color: #0a0a0a;
   svg {
     width: 100vw;
     height: auto;
@@ -121,7 +122,6 @@ export default function Swap() {
 
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
       <Flex
         width={['328px', , '100%']}
         marginTop="100px"
@@ -157,7 +157,10 @@ export default function Swap() {
               </SwapbackgroundNone2Wrapper>
             </>
           )}
-          <StyledSwapContainer $isChartExpanded={isChartExpanded} style={isMobile ? { left: 0 } : {}}>
+          <StyledSwapContainer
+            $isChartExpanded={isChartExpanded}
+            style={isMobile ? { left: 0, padding: '15px 0' } : {}}
+          >
             <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
               {/* <SwapTab>
                   {(swapTypeState) =>

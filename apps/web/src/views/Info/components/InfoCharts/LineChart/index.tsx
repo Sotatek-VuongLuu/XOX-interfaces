@@ -124,6 +124,10 @@ const CustomResponsiveContainer = styled(ResponsiveContainer)`
   .recharts-wrapper .recharts-cartesian-grid-horizontal line:last-child {
     stroke-opacity: 0 !important;
   }
+
+  .recharts-wrapper {
+    cursor: pointer !important;
+  }
 `
 
 export type LineChartProps = {
@@ -200,9 +204,9 @@ const CustomTooltip = ({ active, payload, label }: any) => {
                 width="45.8184"
                 height="45.8184"
                 filterUnits="userSpaceOnUse"
-                color-interpolation-filters="sRGB"
+                colorInterpolationFilters="sRGB"
               >
-                <feFlood flood-opacity="0" result="BackgroundImageFix" />
+                <feFlood floodOpacity="0" result="BackgroundImageFix" />
                 <feColorMatrix
                   in="SourceAlpha"
                   type="matrix"
@@ -338,6 +342,7 @@ const LineChart = ({
         //   left: 0,
         //   bottom: 5,
         // }}
+        style={{ cursor: 'pointer!important' }}
         onMouseLeave={() => {
           if (setHoverDate) setHoverDate(undefined)
           if (setHoverValue) setHoverValue(undefined)
@@ -414,7 +419,8 @@ const LineChart = ({
             position={{
               x: (lineGraphData?.activeTooltipIndex * chartWidth) / (data.length - 1) - 10 || 0,
               y:
-                145 -
+                chartHeight -
+                65 -
                 (((lineGraphData?.activePayload?.[0]?.payload?.value || maxYAxis) - minYAxis) * chartHeight) /
                   (maxYAxis - minYAxis),
             }}

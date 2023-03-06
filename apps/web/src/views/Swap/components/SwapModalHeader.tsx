@@ -12,7 +12,7 @@ import truncateHash from '@pancakeswap/utils/truncateHash'
 import { TruncatedText, SwapShowAcceptChanges } from './styleds'
 
 const RowPrice = styled(RowBetween)`
-  background: ${({ theme }) => theme.colors.dark3};
+  background: #1d1c1c;
   padding: 24px 17px;
   border-radius: 10px;
   width: 100%;
@@ -123,7 +123,7 @@ export default function SwapModalHeader({
       <AutoColumn justify="flex-start" gap="sm">
         <RowFixed style={{ width: '100%' }}>
           <Text style={{ color: '#FFFFFFDE', fontSize: '18px' }}>{t('Slippage Tolerance')}</Text>
-          <Text bold color="#9072FF" ml="auto" textAlign="end">
+          <Text bold color="#FB8618" ml="auto" textAlign="end" style={{ fontSize: '18px' }}>
             {`${allowedSlippage / 100}%`}
           </Text>
         </RowFixed>
