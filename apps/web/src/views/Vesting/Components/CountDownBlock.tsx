@@ -3,14 +3,17 @@ import React from 'react'
 import styled from 'styled-components'
 import CountDown from './CountDown'
 import PricingInfo from './PricingInfo'
+import StartingSoon from './StartingSoon'
 
 const Wrapper = styled.div`
   margin-top: 36px;
+  margin-bottom: 24px;
 `
 
 const Content = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 49% 49%;
+  gap: 24px;
 `
 
 function CountDownBlock() {
@@ -18,7 +21,7 @@ function CountDownBlock() {
     <Wrapper>
       <Content>
         <PricingInfo />
-        <CountDown startTime={1679257779000} />
+        <StartingSoon />
       </Content>
     </Wrapper>
   )

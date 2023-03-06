@@ -8,6 +8,54 @@ const CountDownWrapper = styled.div`
   div {
     color: white;
   }
+
+  .blur {
+    width: 130px;
+    height: 98px;
+    border: 5px solid #ff701f;
+    border-radius: 20px;
+    position: relative;
+  }
+
+  .item_border {
+    width: 130px;
+    height: 98px;
+    border: 8px solid #ff701f;
+    filter: blur(12px);
+    border-radius: 20px;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+  }
+
+  .time_item {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .two_dot {
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 44px;
+    color: #ffffff;
+    margin: 0px 14px;
+    padding-top: 25px;
+  }
+
+  .title_time {
+    text-align: center;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-top: 20px;
+  }
 `
 
 interface Props {
@@ -50,23 +98,35 @@ const CountDown = ({ startTime }: Props) => {
   return (
     <CountDownWrapper>
       <div>
-        <div>{handleTime(timeList.days)}</div>
-        <div>Days</div>
+        <div className="blur">
+          <div className="item_border" />
+          <div className="time_item">{handleTime(timeList.days)}</div>
+        </div>
+        <div className="title_time">Days</div>
       </div>
-
+      <span className="two_dot">:</span>
       <div>
-        <div>{handleTime(timeList.hours)}</div>
-        <div>hours</div>
+        <div className="blur">
+          <div className="item_border" />
+          <div className="time_item">{handleTime(timeList.hours)}</div>
+        </div>
+        <div className="title_time">hours</div>
       </div>
-
+      <span className="two_dot">:</span>
       <div>
-        <div>{handleTime(timeList.minutes)}</div>
-        <div>mins</div>
+        <div className="blur">
+          <div className="item_border" />
+          <div className="time_item">{handleTime(timeList.minutes)}</div>
+        </div>
+        <div className="title_time">mins</div>
       </div>
-
+      <span className="two_dot">:</span>
       <div>
-        <div>{handleTime(timeList.seconds)}</div>
-        <div>secs</div>
+        <div className="blur">
+          <div className="item_border" />
+          <div className="time_item">{handleTime(timeList.seconds)}</div>
+        </div>
+        <div className="title_time">secs</div>
       </div>
     </CountDownWrapper>
   )

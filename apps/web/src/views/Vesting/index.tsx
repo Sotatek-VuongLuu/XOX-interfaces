@@ -1,9 +1,13 @@
 /* eslint-disable import/no-cycle */
 import React, { ReducerAction, ReducerState, useMemo, useReducer, useState } from 'react'
 import styled from 'styled-components'
+import BackedBy from './Components/BackedBy'
+import ChartSalePage from './Components/Chart'
 import CountDownBlock from './Components/CountDownBlock'
 import MainInfoBlock from './Components/MainInfoBlock'
 import SaleMechanism from './Components/SaleMechanism'
+import SaleStats from './Components/SaleStats'
+import SaleStatus from './Components/SaleStatus'
 
 const Page = styled.div`
   height: 100%;
@@ -193,6 +197,42 @@ const initialTokenMetrics = [
     initialMarketcap: '0',
     fullyDilitedMc: '0',
   },
+  {
+    id: 15,
+    title: 'Total Exclude LP',
+    tokenAllocationPercent: '0',
+    tokenAllocation: '0',
+    tge: '0',
+    tokenAllocationatTge: '0',
+    initialMarketcap: '0',
+    fullyDilitedMc: '0',
+  },
+]
+
+/// for stats
+
+const initStat = [
+  {
+    id: 1,
+    title: 'Total Current Raised',
+    amount: '10.000',
+    icon: '$',
+  },
+  {
+    id: 2,
+    title: 'XOX amount bought',
+    amount: '5.000',
+  },
+  {
+    id: 3,
+    title: 'Number of Investors',
+    amount: '+500',
+  },
+  {
+    id: 4,
+    title: 'Total XOXS Amount Rewarded',
+    amount: '5.000',
+  },
 ]
 
 function useSelectors(reducer, mapStateToSelectors) {
@@ -215,8 +255,13 @@ const reducer = (state = initialYourInfo, action) => {
   }
 }
 
-export const tabInfo: string[] = ['Dashboard', 'Sale History', 'Vesting Schedule', 'Your Information']
-export const tabSaleMechanism: string[] = ['Private Sale Mechanism', 'Sale Referral Program', 'Token Metrics']
+export const tabSaleMechanism: string[] = [
+  'Private Sale Mechanism',
+  'Sale Referral Program',
+  'Token Metrics',
+  'Vesting Schedule',
+  'Your Information',
+]
 
 function VestingPage() {
   const [tabActiveInfo, setTabActiveInfo] = useState<string>('Dashboard')
@@ -231,19 +276,18 @@ function VestingPage() {
     <Page>
       <ContentContainer>
         <CountDownBlock />
-        <MainInfoBlock
-          tabInfo={tabInfo}
-          setTabActiveInfo={setTabActiveInfo}
-          tabActiveInfo={tabActiveInfo}
-          dataInfo={getCount()}
-          dataRefInfo={initialRefInfo}
-        />
+        <SaleStats dataStat={initStat} />
+        <ChartSalePage />
+        <SaleStatus />
         <SaleMechanism
           tabSaleMechanism={tabSaleMechanism}
           tabActiveMechansim={tabActiveMechansim}
           setTabActiveMechansim={setTabActiveMechansim}
           initialTokenMetrics={initialTokenMetrics}
+          dataInfo={getCount()}
+          dataRefInfo={initialRefInfo}
         />
+        <BackedBy />
       </ContentContainer>
     </Page>
   )

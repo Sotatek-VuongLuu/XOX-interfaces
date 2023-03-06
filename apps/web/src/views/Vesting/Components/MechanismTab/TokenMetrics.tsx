@@ -8,8 +8,12 @@ interface IProps {
 }
 
 const CustomTable = styled(Table)`
-  grid-template-columns: 2fr repeat(6, 1.5fr);
-  gap: 10px;
+  grid-template-columns: 5fr 2fr 2fr 1fr repeat(3, 1.5fr);
+  gap: 20px;
+
+  &::before {
+    top: 52px;
+  }
 `
 
 const Wrapper = styled.div`
@@ -22,22 +26,54 @@ const Wrapper = styled.div`
       left: 0px;
       width: 40px;
       height: 4px;
-      background: linear-gradient(100.7deg, rgb(100, 115, 255) 0%, rgb(163, 90, 255) 100%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
+  }
+
+  .text-token-metrics {
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .item_15,
+  .item_14 {
+    .text-token-metrics {
+      font-weight: 700 !important;
+    }
+  }
+`
+
+const CustomTableSale = styled(CustomTableWrapper)`
+  & > div {
+    min-width: 1600px;
+  }
+`
+
+const Row = styled(CustomTable)`
+  &::before {
+    top: 25px;
+  }
+
+  &.item_15::before {
+    border: 1px solid transparent;
   }
 `
 
 const DataRow = ({ item }) => {
   return (
-    <>
+    <Row className={`item_${item.id}`}>
       <Text className="text-token-metrics">{item.title}</Text>
       <Text className="text-token-metrics">{item.tokenAllocationPercent}</Text>
       <Text className="text-token-metrics">{item.tokenAllocation}</Text>
       <Text className="text-token-metrics">{item.tge}</Text>
       <Text className="text-token-metrics">{item.tokenAllocationatTge}</Text>
       <Text className="text-token-metrics">{item.initialMarketcap}</Text>
-      <Text className="text-token-metrics">{item.fullyDilitedMc}</Text>
-    </>
+      <Text className="text-token-metrics" textAlign="right">
+        {item.fullyDilitedMc}
+      </Text>
+    </Row>
   )
 }
 
@@ -58,7 +94,7 @@ function TokenMetrics({ initialTokenMetrics }: IProps) {
           Tokenomics:
         </Text>
       </Flex>
-      <CustomTableWrapper>
+      <CustomTableSale>
         <CustomTable>
           <Text
             fontSize="16px"
@@ -140,15 +176,14 @@ function TokenMetrics({ initialTokenMetrics }: IProps) {
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Fully Dilited MC ($)</span>
+              <span style={{ marginRight: '12px', textAlign: 'right' }}>Fully Dilited MC ($)</span>
             </Flex>
           </ClickableColumnHeader>
-
-          {Array.from(initialTokenMetrics).map((item) => {
-            return <DataRow item={item} />
-          })}
         </CustomTable>
-      </CustomTableWrapper>
+        {Array.from(initialTokenMetrics).map((item) => {
+          return <DataRow item={item} />
+        })}
+      </CustomTableSale>
     </Wrapper>
   )
 }

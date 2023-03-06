@@ -1,9 +1,8 @@
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import styled from 'styled-components'
-import Dashboard from './MainInfoTab/Dashboard'
-import SaleHistory from './MainInfoTab/SaleHistory'
 import VestingSchedule from './MainInfoTab/VestingSchedule'
+import YourInfo from './MainInfoTab/YourInfo'
 import PrivateSale from './MechanismTab/PrivateSale'
 import ReferralProgram from './MechanismTab/ReferralProgram'
 import TokenMetrics from './MechanismTab/TokenMetrics'
@@ -13,18 +12,64 @@ interface IProps {
   tabActiveMechansim: string
   setTabActiveMechansim: (tabActiveMechansim: string) => void
   initialTokenMetrics: any[]
+  dataInfo: any[]
+  dataRefInfo: any
 }
 
 const Wrapper = styled.div`
-  padding: 40px 65px;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  padding: 24px;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   margin-top: 24px;
   margin-bottom: 40px;
 
-  div {
-    color: white;
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 `
 const Content = styled.div`
@@ -32,10 +77,34 @@ const Content = styled.div`
     display: flex;
     color: white;
     cursor: pointer;
+    margin-bottom: 24px;
+
+    .item-tab-mechanism {
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      color: #ffffff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      &:hover {
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      }
+    }
+
+    .item-tab-mechanism.active {
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    }
   }
 `
 
-function SaleMechanism({ tabSaleMechanism, tabActiveMechansim, setTabActiveMechansim, initialTokenMetrics }: IProps) {
+function SaleMechanism({
+  tabSaleMechanism,
+  tabActiveMechansim,
+  setTabActiveMechansim,
+  initialTokenMetrics,
+  dataInfo,
+  dataRefInfo,
+}: IProps) {
   const { account } = useActiveWeb3React()
   const renderBody = (tab: string) => {
     if (!account) {
@@ -50,17 +119,29 @@ function SaleMechanism({ tabSaleMechanism, tabActiveMechansim, setTabActiveMecha
         return <ReferralProgram />
       case 'Token Metrics':
         return <TokenMetrics initialTokenMetrics={initialTokenMetrics} />
+      case 'Vesting Schedule':
+        return <VestingSchedule />
+      case 'Your Information':
+        return <YourInfo dataInfo={dataInfo} dataRefInfo={dataRefInfo} />
       default:
         return <PrivateSale />
     }
   }
   return (
     <Wrapper>
+      <div className="corner1" />
+      <div className="edge1" />
+      <div className="corner2" />
+      <div className="edge2" />
       <Content>
         <div className="tab-mechanism">
           {Array.from(tabSaleMechanism).map((item) => {
             return (
-              <div className="item-tab-mechanism" onClick={() => setTabActiveMechansim(item)} aria-hidden="true">
+              <div
+                className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
+                onClick={() => setTabActiveMechansim(item)}
+                aria-hidden="true"
+              >
                 {item}
               </div>
             )

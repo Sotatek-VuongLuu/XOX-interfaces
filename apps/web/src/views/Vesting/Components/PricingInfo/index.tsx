@@ -1,5 +1,6 @@
 import { Button, Flex, Text } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -54,6 +55,77 @@ const Wrapper = styled.div`
     right: 0;
     z-index: 1;
     background: linear-gradient(to bottom, rgba(16, 16, 16, 0.3) 15%, #ed1c51, #ffb000);
+  }
+
+  .btn_group {
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 16px;
+
+    .btn_get_eth {
+      position: relative;
+      cursor: pointer;
+      .corner_btn_1 {
+        position: absolute;
+        left: 0;
+        width: 40px;
+        height: 100%;
+        border-radius: 30px;
+        z-index: 1;
+        border-bottom: 2px solid #b809b5;
+        border-top: 2px solid #b809b5;
+        border-left: 2px solid #b809b5;
+        border-bottom-right-radius: unset;
+        border-top-right-radius: unset;
+      }
+
+      .edge_btn_1 {
+        position: absolute;
+        top: 0;
+        left: 40px;
+        height: 2px;
+        width: calc(100% - 80px);
+        background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
+      }
+
+      .corner_btn_2 {
+        position: absolute;
+        right: 0;
+        width: 40px;
+        height: 100%;
+        border-radius: 30px;
+        z-index: 1;
+        border-bottom: 2px solid #ffb000;
+        border-top: 2px solid #ffb000;
+        border-right: 2px solid #ffb000;
+        border-bottom-left-radius: unset;
+        border-top-left-radius: unset;
+      }
+
+      .edge_btn_2 {
+        position: absolute;
+        bottom: 0;
+        left: 40px;
+        height: 2px;
+        width: calc(100% - 80px);
+        background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
+      }
+      span {
+        position: absolute;
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 22px;
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        text-fill-color: transparent;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
   }
 `
 
@@ -151,6 +223,7 @@ const Table = styled.div`
 `
 
 function PricingInfo() {
+  const { account } = useActiveWeb3React()
   return (
     <Wrapper>
       <div className="corner1" />
@@ -252,7 +325,7 @@ function PricingInfo() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              15.000.000 XOX
+              15.000 XOX
             </Text>
             <Text
               fontSize="16px"
@@ -307,7 +380,7 @@ function PricingInfo() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              15.000.000 XOX
+              15.000 XOX
             </Text>
             <Text
               fontSize="16px"
@@ -362,7 +435,7 @@ function PricingInfo() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              15.000.000 XOX
+              15.000 XOX
             </Text>
             <Text
               fontSize="16px"
@@ -388,7 +461,19 @@ function PricingInfo() {
             </Text>
           </Table>
         </CustomTableWrapper>
-        <ConnectWalletButton></ConnectWalletButton>
+        {!account && <ConnectWalletButton width="100%" />}
+        {account && (
+          <div className="btn_group">
+            <Button height={54}>Buy with USDT</Button>
+            <div className="btn_get_eth">
+              <div className="corner_btn_1" />
+              <div className="edge_btn_1" />
+              <div className="corner_btn_2" />
+              <div className="edge_btn_2" />
+              <span>Buy with USDC</span>
+            </div>
+          </div>
+        )}
       </Content>
     </Wrapper>
   )
