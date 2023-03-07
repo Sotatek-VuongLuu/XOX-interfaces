@@ -121,6 +121,7 @@ const CustomTooltipStyle = styled.div`
 `
 
 const CustomResponsiveContainer = styled(ResponsiveContainer)`
+  .recharts-wrapper .recharts-cartesian-grid-horizontal line:nth-last-child(2),
   .recharts-wrapper .recharts-cartesian-grid-horizontal line:last-child {
     stroke-opacity: 0 !important;
   }
@@ -400,7 +401,7 @@ const LineChart = ({
         )}
         <YAxis
           dataKey="value"
-          tickCount={6}
+          tickCount={2}
           scale="linear"
           axisLine={false}
           tickLine={false}

@@ -81,7 +81,7 @@ const HoverableChart = ({
       (o) => o[valueProperty],
     ),
   )
-  const minYAxis = minValue - (maxValue - minValue) * 0.2 > 0 ? minValue - (maxValue - minValue) * 0.2 : 0
+  const minYAxis = minValue - (maxValue - minValue) * 0.2 > 0 ? minValue - (maxValue - minValue) * 0.2 : 0.0001
   const maxYAxis = maxValue + (maxValue - minValue) * 0.2
 
   const formattedData = useMemo(() => {
