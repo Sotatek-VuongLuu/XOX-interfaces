@@ -10,8 +10,58 @@ const WrapperLeft = styled.div`
   width: 100%;
   height: 100%;
   padding: 24px;
-  background: linear-gradient(27.06deg, #4919d0 13.81%, #9a56f9 136.8%);
-  border-radius: 10px;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  position: relative;
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 70px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 70px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
 
   .title {
     font-weight: 700;
@@ -37,6 +87,7 @@ const WrapperLeft = styled.div`
     }
     .description {
       font-weight: 400;
+      line-height: 26px;
       font-size: 16px;
     }
   }
@@ -45,10 +96,17 @@ const WrapperLeft = styled.div`
 const WrapperRight = styled.div`
   width: 100%;
   height: 100%;
-  background: linear-gradient(27.06deg, #4919d0 13.81%, #9a56f9 136.8%);
-  border-radius: 10px;
-  padding: 24px;
-
+  border-radius: 20px;
+  padding: 1px;
+  background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+  backdrop-filter: blur(4px);
+  .content_referral {
+    width: 100%;
+    height: 100%;
+    background: #0d0d0d;
+    border-radius: 20px;
+    padding: 24px;
+  }
   .my_code {
     font-weight: 700;
     font-size: 24px;
@@ -59,7 +117,7 @@ const WrapperRight = styled.div`
   .code {
     padding: 16px;
     margin-top: 16px;
-    background: rgba(255, 255, 255, 0.15);
+    background: #1d1c1c;
     border-radius: 8px;
     .content_code_number {
       display: flex;
@@ -76,7 +134,7 @@ const WrapperRight = styled.div`
   }
 
   @media screen and (max-width: 900px) {
-    padding: 22px;
+    padding: 1px;
 
     .my_code {
       font-size: 18px;
@@ -104,8 +162,11 @@ const Banner = () => {
       <Grid container spacing={2}>
         <Grid item xs={12} lg={8}>
           <WrapperLeft>
+            <div className="corner1" />
+            <div className="edge1" />
+            <div className="corner2" />
+            <div className="edge2" />
             <p className="title">Invite Your Friends. Earn Together</p>
-
             <p className="description">
               Start Earning passive/active income with the XOX Multi-Chain Gamified Referral Program.
             </p>
@@ -114,22 +175,24 @@ const Banner = () => {
 
         <Grid item xs={12} lg={4}>
           <WrapperRight>
-            <p className="my_code">My Referral Code</p>
-            <div className="code">
-              <div className="content_code_number">
-                {account && (
-                  <>
-                    <span className="code_number">{userProfile?.referralCode}</span>
-                    <span>
-                      <CopyButton
-                        width="24px"
-                        text={userProfile?.referralCode}
-                        tooltipMessage={t('Copied')}
-                        button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
-                      />
-                    </span>
-                  </>
-                )}
+            <div className="content_referral">
+              <p className="my_code">My Referral Code</p>
+              <div className="code">
+                <div className="content_code_number">
+                  {account && (
+                    <>
+                      <span className="code_number">{userProfile?.referralCode}</span>
+                      <span>
+                        <CopyButton
+                          width="24px"
+                          text={userProfile?.referralCode}
+                          tooltipMessage={t('Copied')}
+                          button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
+                        />
+                      </span>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </WrapperRight>

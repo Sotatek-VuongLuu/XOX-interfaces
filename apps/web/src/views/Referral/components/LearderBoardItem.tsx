@@ -101,7 +101,7 @@ const Wrapper = styled(Box)`
         font-size: 14px;
         line-height: 17px;
         text-align: right;
-        background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;

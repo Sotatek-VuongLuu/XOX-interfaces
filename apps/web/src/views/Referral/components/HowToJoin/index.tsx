@@ -30,6 +30,14 @@ const Wrapper = styled.div`
       left: 0;
       border-radius: 17px;
       overflow: hidden;
+      .react-player__preview {
+        .react-player__shadow {
+          background: #ffffff !important;
+          .react-player__play-icon {
+            border-color: transparent transparent transparent #fb8618 !important;
+          }
+        }
+      }
     }
 
     @media screen and (max-width: 900px) {

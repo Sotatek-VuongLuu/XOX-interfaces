@@ -25,7 +25,10 @@ const Wrapper = styled.div`
     font-size: 36px;
     line-height: 44px;
     text-align: center;
-    color: rgba(255, 255, 255, 0.87);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
     margin: 16px 0;
   }
 
@@ -90,11 +93,11 @@ const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
     <Wrapper>
       <div className="img_container">
         {/* ref_xox_mb */}
-        {width <= 900 ? (
+        {/* {width <= 900 ? (
           <img src="/images/ref_xox_mb.svg" alt="ref_xox" className="ref_xox" />
-        ) : (
-          <img src="/images/ref_xox.svg" alt="ref_xox" className="ref_xox" />
-        )}
+        ) : ( */}
+        <img src="/images/ref_xox.svg" alt="ref_xox" className="ref_xox" />
+        {/* )} */}
         <img src="/images/ref_chart_bg.svg" alt="ref_chart_bg" className="ref_chart_bg" />
       </div>
       <p className="title">Total Earned By Referrals</p>

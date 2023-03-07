@@ -81,10 +81,59 @@ interface IPropsWR {
 
 const WrapperLeft = styled(Box)`
   padding: 24px;
-  background: #242424;
-  border-radius: 10px;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
   min-height: 248px;
   position: relative;
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 80px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 80px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
   &::before {
     content: '';
     display: inline-block;
@@ -142,6 +191,10 @@ export const WrapperRight = styled(Box)<IPropsWR>`
       }
       .main-img .sec-img {
         opacity: 1;
+      }
+
+      div.inner-text .shadow {
+        background: radial-gradient(50% 50% at 50% 50%, #f97d1d 0%, rgba(64, 25, 21, 0) 100%) !important;
       }
     }
   }
@@ -262,19 +315,21 @@ export const WrapperRight = styled(Box)<IPropsWR>`
   .claim_total {
     display: flex;
     justify-content: center;
+    flex-direction: column;
+    align-items: center;
     button {
       background-color: transparent;
       border: none;
       cursor: pointer;
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-      border-radius: 4px;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      border-radius: 8px;
       font-weight: 700;
       font-size: 14px;
       line-height: 17px;
       color: #ffffff;
       padding: 8px 20px;
       &:hover {
-        background: #5f35eb;
+        opacity: 0.9;
       }
     }
 
@@ -285,26 +340,37 @@ export const WrapperRight = styled(Box)<IPropsWR>`
       cursor: not-allowed;
     }
 
+    .total_un_claimed {
+      color: rgba(255, 255, 255, 0.6);
+      font-weight: 700;
+      font-size: 14px;
+      margin: 20px 0;
+    }
+
     .unclaim_reward_container {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      /* background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
       padding: 2px;
       border-radius: 4px;
-      margin-right: 16px;
+      margin-right: 16px; */
 
       .unclaim_reward {
-        width: 100%;
+        /* width: 100%;
         height: 100%;
         background: black;
-        border-radius: 4px;
+        border-radius: 4px; */
         div {
+          color: rgba(255, 255, 255, 0.6);
           font-weight: 700;
+          font-size: 14px;
+
+          /* font-weight: 700;
           font-size: 14px;
           line-height: 17px;
           padding: 8px 20px;
           background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
-          background-clip: text;
+          background-clip: text; */
           /* text-fill-color: transparent; */
         }
       }
@@ -341,15 +407,18 @@ export const WrapperRight = styled(Box)<IPropsWR>`
 
 const Content = styled.div`
   .discription {
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 19px;
-    color: rgba(255, 255, 255, 0.87);
-    text-align: center;
     padding: 24px 0px;
+    text-align: center;
+    .value {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      color: rgba(255, 255, 255, 0.87);
+      margin-bottom: 10px;
 
-    span {
-      font-weight: 700;
+      span {
+        font-weight: 700;
+      }
     }
   }
 
@@ -371,7 +440,7 @@ const Content = styled.div`
       background: #313131;
     }
     & > .confirm {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
   }
 
@@ -627,99 +696,106 @@ const ReferralFriend = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
 
+  console.log(listLevelMustReach)
+
   return (
     <>
       <Box sx={{ marginTop: '16px', zIndex: 9 }}>
         <Grid container spacing={2}>
           <Grid item xs={12} lg={4} sx={{ zIndex: 7 }}>
             {account && (
-              <div className="border-gradient-style">
-                <WrapperLeft>
-                  <p className="title">Referral friends</p>
-                  {listFriends.length !== 0 ? (
-                    <TableContainer component={Paper} sx={{ height: 170, background: '#242424', boxShadow: 'none' }}>
-                      <Table sx={{ minWidth: 400 }} aria-label="simple table">
-                        <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#242424' }}>
+              <WrapperLeft>
+                <div className="corner1" />
+                <div className="edge1" />
+                <div className="corner2" />
+                <div className="edge2" />
+                <p className="title">Referral friends</p>
+                {listFriends.length !== 0 ? (
+                  <TableContainer
+                    component={Paper}
+                    sx={{ height: 170, background: 'rgba(16, 16, 16, 0.3)', boxShadow: 'none' }}
+                  >
+                    <Table sx={{ minWidth: 400 }} aria-label="simple table">
+                      <TableHead style={{ position: 'sticky', top: 0, zIndex: 1 }}>
+                        <TableRow
+                          sx={{
+                            '& td, & th': {
+                              borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                              fontWeight: 700,
+                              fontSize: 14,
+                              color: ' rgba(255, 255, 255, 0.6)',
+                              padding: '8px 8px 8px 0px',
+                            },
+                          }}
+                        >
+                          <TableCell align="left">Username</TableCell>
+                          <TableCell align="center">Referral Code</TableCell>
+                          <TableCell align="right">Total Points</TableCell>
+                        </TableRow>
+                      </TableHead>
+                      <TableBody>
+                        {listFriends.map((row) => (
                           <TableRow
+                            key={row.name}
                             sx={{
                               '& td, & th': {
-                                borderBottom: '1px solid #444444',
-                                fontWeight: 700,
+                                border: 0,
+                                fontWeight: 400,
                                 fontSize: 14,
-                                color: ' rgba(255, 255, 255, 0.6)',
+                                color: ' rgba(255, 255, 255, 0.87)',
                                 padding: '8px 8px 8px 0px',
                               },
                             }}
                           >
-                            <TableCell align="left">Username</TableCell>
-                            <TableCell align="center">Referral Code</TableCell>
-                            <TableCell align="right">Total Points</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody>
-                          {listFriends.map((row) => (
-                            <TableRow
-                              key={row.name}
-                              sx={{
-                                '& td, & th': {
-                                  border: 0,
-                                  fontWeight: 400,
-                                  fontSize: 14,
-                                  color: ' rgba(255, 255, 255, 0.87)',
-                                  padding: '8px 8px 8px 0px',
-                                },
-                              }}
-                            >
-                              <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                                <Avatar
-                                  alt="Remy Sharp"
-                                  src={row.avatar}
-                                  sx={{ marginRight: '8px', height: '24px', width: '24px' }}
-                                />
-                                <Tooltip title={row?.name}>
-                                  <p>
-                                    {row.name?.length > 9
-                                      ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
-                                      : row.name}
-                                  </p>
-                                </Tooltip>
-                              </TableCell>
-                              <TableCell align="left">
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                  <div>
-                                    {row?.refCode?.length > 9
-                                      ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
-                                          row.refCode.length - 2,
-                                        )}`
-                                      : row.refCode}
-                                  </div>
-                                  <div>
-                                    <CopyButton
-                                      width="24px"
-                                      text={row?.refCode}
-                                      tooltipMessage={t('Copied')}
-                                      button={
-                                        <img
-                                          src="/images/copy_purple.svg"
-                                          alt="copy_purple"
-                                          style={{ marginBottom: '-2px', marginLeft: '8px' }}
-                                        />
-                                      }
-                                    />
-                                  </div>
+                            <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                              <Avatar
+                                alt="Remy Sharp"
+                                src={row.avatar}
+                                sx={{ marginRight: '8px', height: '24px', width: '24px' }}
+                              />
+                              <Tooltip title={row?.name}>
+                                <p>
+                                  {row.name?.length > 9
+                                    ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                                    : row.name}
+                                </p>
+                              </Tooltip>
+                            </TableCell>
+                            <TableCell align="left">
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                <div>
+                                  {row?.refCode?.length > 9
+                                    ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
+                                        row.refCode.length - 2,
+                                      )}`
+                                    : row.refCode}
                                 </div>
-                              </TableCell>
-                              <TableCell align="right">{formatAmountNumber(row.point, 2)}</TableCell>
-                            </TableRow>
-                          ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
-                  ) : (
-                    <div className="no-data">No Data</div>
-                  )}
-                </WrapperLeft>
-              </div>
+                                <div>
+                                  <CopyButton
+                                    width="24px"
+                                    text={row?.refCode}
+                                    tooltipMessage={t('Copied')}
+                                    button={
+                                      <img
+                                        src="/images/copy_purple.svg"
+                                        alt="copy_purple"
+                                        style={{ marginBottom: '-2px', marginLeft: '8px' }}
+                                      />
+                                    }
+                                  />
+                                </div>
+                              </div>
+                            </TableCell>
+                            <TableCell align="right">{formatAmountNumber(row.point, 2)}</TableCell>
+                          </TableRow>
+                        ))}
+                      </TableBody>
+                    </Table>
+                  </TableContainer>
+                ) : (
+                  <div className="no-data">No Data</div>
+                )}
+              </WrapperLeft>
             )}
           </Grid>
 
@@ -786,11 +862,13 @@ const ReferralFriend = ({
                 </Swiper>
                 <div className="claim_total">
                   {account && (
-                    <div className="unclaim_reward_container">
-                      <div className="unclaim_reward">
-                        <div>${Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)} Unclaimed Rewards</div>
-                      </div>
-                    </div>
+                    // <div className="unclaim_reward_container">
+                    //   <div className="unclaim_reward">
+                    <p className="total_un_claimed">
+                      ${Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)} Unclaimed Rewards
+                    </p>
+                    //   </div>
+                    // </div>
                   )}
                   <button
                     type="button"
@@ -813,17 +891,23 @@ const ReferralFriend = ({
       >
         <Content>
           <div className="discription">
-            Withdraw Amount ${roundingAmountNumber(Number(dataClaim.dollar))}
-            <br />
-            You will receive:{' '}
-            {`${roundingAmountNumber(Number(dataClaim.dollar) * 0.99)} ${
-              chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
-            }`}
-            <br />
-            Platform Fee:{' '}
-            {`${roundingAmountNumber(Number(dataClaim.dollar) - Number(dataClaim.dollar) * 0.99)} ${
-              chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
-            }`}
+            <p className="value">
+              Withdraw Amount <span>${roundingAmountNumber(Number(dataClaim.dollar))}</span>
+            </p>
+            <p className="value">
+              You will receive:{' '}
+              <span>
+                ${roundingAmountNumber(Number(dataClaim.dollar) * 0.99)} $
+                {chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'}
+              </span>
+            </p>
+            <p className="value">
+              Platform Fee:{' '}
+              <span>
+                ${roundingAmountNumber(Number(dataClaim.dollar) - Number(dataClaim.dollar) * 0.99)} $
+                {chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'}
+              </span>{' '}
+            </p>
           </div>
           <div className="btn-group">
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>
@@ -846,20 +930,30 @@ const ReferralFriend = ({
         open={isShowModalConfirmClaimAll}
         handleClose={() => setIsShowModalConfirmClaimAll(false)}
         title="Claim"
+        width="464px"
       >
         <Content>
           <div className="discription">
-            Withdraw Amount ${Number(totalUnClaimed)?.toLocaleString()}
-            <br />
-            You will receive:{' '}
-            {`${roundingAmountNumber(Number(totalUnClaimed) * 0.99)} ${
-              chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
-            }`}
-            <br />
-            Platform Fee:{' '}
-            {`${roundingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)} ${
-              chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
-            }`}
+            <p className="value">
+              {' '}
+              Withdraw Amount <span>${Number(totalUnClaimed)?.toLocaleString()}</span>{' '}
+            </p>
+            <p className="value">
+              You will receive:{' '}
+              <span>
+                {`${roundingAmountNumber(Number(totalUnClaimed) * 0.99)} ${
+                  chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
+                }`}
+              </span>
+            </p>
+            <p className="value">
+              Platform Fee:{' '}
+              <span>
+                {`${roundingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)} ${
+                  chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
+                }`}
+              </span>
+            </p>
           </div>
           <div className="btn-group">
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimAll(false)}>
@@ -909,7 +1003,7 @@ const ReferralFriend = ({
       >
         <Content>
           <div className="xox_loading" style={{ margin: '24px 0px' }}>
-            <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+            <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
           </div>
           <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
           <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>

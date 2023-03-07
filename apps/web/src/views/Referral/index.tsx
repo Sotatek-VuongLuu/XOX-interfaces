@@ -631,7 +631,7 @@ export default function Refferal() {
 
   return (
     <>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <Wrapper>
         <BoxStyled>
           <div className="content">
@@ -679,27 +679,27 @@ const listData = [
   {
     volumn: '',
     title: 'Number of Referral Participants',
-    svg: '/images/referral/icon-user.svg',
+    svg: '/images/icon-user.svg',
   },
   {
     volumn: '',
     title: 'Total Money Unclaimed',
-    svg: '/images/referral/icon-unclaimed-money.svg',
+    svg: '/images/icon-unclaimed-money.svg',
   },
   {
     volumn: '',
     title: 'Total Money Claimed',
-    svg: '/images/referral/icon-total-claim-money.svg',
+    svg: '/images/icon-total-claim-money.svg',
   },
   {
     volumn: '0',
     title: 'Number of referral transactions',
-    svg: '/images/referral/icon-number-of-referral.svg',
+    svg: '/images/icon-number-of-referral.svg',
   },
   {
     volumn: '0',
     title: 'Total reward earned',
-    svg: '/images/referral/icon-reward-earn.svg',
+    svg: '/images/icon-reward-earn.svg',
   },
 ]
 

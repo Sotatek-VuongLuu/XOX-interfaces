@@ -62,8 +62,8 @@ const Wrapper = styled(Box)`
       gap: 17px;
       .info_volumn_item {
         padding: 16px 17px;
-        background: #303030;
-        border-radius: 6px;
+        background: rgba(255, 255, 255, 0.03);
+        border-radius: 16px;
         width: 100%;
         // height: 126px;
 
@@ -251,13 +251,16 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       </div>
 
       <div className="second" style={{ position: 'relative' }}>
-        <TableContainer component={Paper} sx={{ height: '165px', background: '#303030' }}>
+        <TableContainer
+          component={Paper}
+          sx={{ height: '165px', background: ' rgba(255, 255, 255, 0.03)', borderRadius: '16px' }}
+        >
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#303030' }}>
+            <TableHead style={{ position: 'sticky', top: 0, zIndex: 1 }}>
               <TableRow
                 sx={{
                   '& td, & th': {
-                    borderBottom: '1px solid #444444',
+                    borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
                     fontWeight: 700,
                     fontSize: 14,
                     color: ' rgba(255, 255, 255, 0.6)',
