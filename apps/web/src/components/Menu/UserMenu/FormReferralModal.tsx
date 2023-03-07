@@ -421,6 +421,7 @@ const FormReferralModal = (_, ref) => {
   useEffect(() => {
     if (!account) {
       dispatch(updateUserProfile({ userProfile: undefined }))
+      dispatch(updateUserProfileEdit({ userProfile: undefined }))
       dispatch(updateOpenFormReferral({ openFormReferral: false }))
       return
     }

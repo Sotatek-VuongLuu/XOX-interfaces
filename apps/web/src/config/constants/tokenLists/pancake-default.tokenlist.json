@@ -27,9 +27,9 @@
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"
     },
     {
-      "name": "USDT Token",
+      "name": "Tether",
       "symbol": "USDT",
-      "address": "0x55d398326f99059ff775485246999027b3197955",
+      "address": "0x55d398326f99059fF775485246999027B3197955",
       "chainId": 56,
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
@@ -100,7 +100,7 @@
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/1027.png"
     },
     {
-      "name": "USDT Token",
+      "name": "Tether USD",
       "symbol": "USDT",
       "address": "0xCc7283a00481de9AdBE379c3c2459691a6ee274a",
       "chainId": 97,
