@@ -12,8 +12,12 @@ const Wrapper = styled.div`
 
 const Content = styled.div`
   display: grid;
-  grid-template-columns: 49% 49%;
+  grid-template-columns: 1fr 1fr;
   gap: 24px;
+
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
 `
 
 function CountDownBlock({ onModalExchangeSale }) {

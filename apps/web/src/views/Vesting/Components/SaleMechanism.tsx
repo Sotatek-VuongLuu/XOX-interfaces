@@ -78,6 +78,7 @@ const Content = styled.div`
     color: white;
     cursor: pointer;
     margin-bottom: 24px;
+    justify-content: center;
 
     .item-tab-mechanism {
       font-weight: 700;
@@ -86,6 +87,7 @@ const Content = styled.div`
       color: #ffffff;
       padding: 10px 20px;
       border-radius: 8px;
+      white-space: nowrap;
       &:hover {
         background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       }
@@ -93,6 +95,14 @@ const Content = styled.div`
 
     .item-tab-mechanism.active {
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    }
+
+    @media screen and (max-width: 900px) {
+      justify-content: flex-start;
+      overflow-x: auto;
+      &::-webkit-scrollbar {
+        display: none;
+      }
     }
   }
 `

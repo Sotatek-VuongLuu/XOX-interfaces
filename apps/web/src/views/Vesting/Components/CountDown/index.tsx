@@ -56,6 +56,44 @@ const CountDownWrapper = styled.div`
     color: rgba(255, 255, 255, 0.6);
     margin-top: 20px;
   }
+
+  @media screen and (max-width: 900px) {
+    .blur {
+      width: 54px;
+      height: 49.56px;
+      border: 5px solid #ff701f;
+      border-radius: 20px;
+      position: relative;
+    }
+
+    .item_border {
+      width: 54px;
+      height: 49.56px;
+      border: 8px solid #ff701f;
+      filter: blur(12px);
+      border-radius: 20px;
+      position: absolute;
+      top: -5px;
+      left: -5px;
+    }
+
+    .time_item {
+      font-size: 16px;
+      line-height: 19px;
+    }
+
+    .title_time {
+      font-size: 12px;
+      line-height: 15px;
+      margin-top: 14px;
+    }
+
+    .two_dot {
+      font-size: 16px;
+      margin-top: -23px !important;
+      margin: 0px 8px;
+    }
+  }
 `
 
 interface Props {
@@ -63,7 +101,7 @@ interface Props {
 }
 
 const handleTime = (time: number) => {
-  return time < 10 ? `0 ${time}` : time
+  return time < 10 ? `0${time}` : time
 }
 
 // const timeStart = 1665892723

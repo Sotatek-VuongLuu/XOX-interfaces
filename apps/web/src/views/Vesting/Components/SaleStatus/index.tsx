@@ -127,6 +127,33 @@ const WrapperItem = styled(Box)`
       background: #ffffff30;
     }
   }
+
+  @media screen and (max-width: 900px) {
+    .status_name {
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .status_value {
+      font-size: 14px;
+      line-height: 17px;
+    }
+
+    .sold {
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+`
+
+const CustomGrid = styled(Grid)`
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 24px;
+
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+    gap: 45px;
+  }
 `
 
 const Item = ({ item }) => {
@@ -143,7 +170,7 @@ const Item = ({ item }) => {
         <div className="edge_name_2" />
         {item.name}
       </div>
-      <Grid gridTemplateColumns="1fr 1fr" padding="35px 34px" gridGap="22px">
+      <Grid gridTemplateColumns="1.25fr 0.75fr" padding="35px 34px" gridGap="22px">
         <div>
           <p className="status_name">Status</p>
           <p className="status_value">{item.status}</p>
@@ -206,11 +233,11 @@ function SaleStatus() {
   ]
 
   return (
-    <Grid gridTemplateColumns="1fr 1fr 1fr" gridGap="24px">
+    <CustomGrid>
       {arrStatus.map((item) => {
         return <Item item={item} />
       })}
-    </Grid>
+    </CustomGrid>
   )
 }
 

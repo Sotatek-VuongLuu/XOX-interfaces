@@ -2,57 +2,38 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   position: relative;
-  background: rgba(16, 16, 16, 0.3);
-  backdrop-filter: blur(10px);
   border-radius: 20px;
   margin-bottom: 24px;
 
-  .corner1 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50%;
-    height: 50px;
-    border-radius: 20px;
-    z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-left: 2px solid #ffffff30;
-    border-bottom-right-radius: unset;
-    border-top-left-radius: unset;
-  }
+  background-image: url('/images/ngu.png');
+  background-repeat: no-repeat;
+  height: 276px;
+  background-size: contain;
+  position: relative;
 
-  .edge1 {
-    width: 2px;
-    height: calc(100% - 50px);
+  .fake_blur {
     position: absolute;
-    bottom: 50px;
-    left: 0;
-    z-index: 1;
-    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+    height: 194px;
+    backdrop-filter: blur(10px);
+    z-index: -1;
+    bottom: 27px;
+    left: 1px;
+    right: 2px;
+    border-radius: 20px !important;
   }
-
-  .corner2 {
+  #trapezoid {
+    border-top: 53px solid transparent;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    background: transparent;
+    height: 0;
+    width: 166px;
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 50%;
-    height: 50px;
-    border-radius: 20px;
-    z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-right: 2px solid #ffffff30;
-    border-bottom-left-radius: unset;
-    border-top-right-radius: unset;
-  }
-
-  .edge2 {
-    width: 2px;
-    height: calc(100% - 50px);
-    position: absolute;
-    bottom: 50px;
-    right: 0;
-    z-index: 1;
-    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+    left: 50%;
+    backdrop-filter: blur(10px);
+    z-index: -1;
+    top: 2px;
+    border-radius: 25px;
   }
 
   .title {
@@ -113,6 +94,44 @@ const Wrapper = styled.div`
         color: rgba(255, 255, 255, 0.6);
         margin-top: 12px;
       }
+
+      @media screen and (max-width: 900px) {
+        & {
+          margin-bottom: 0px;
+        }
+        .divide_0,
+        .divide_1,
+        .divide_2 {
+          position: absolute;
+          right: 0;
+          width: 1px;
+          height: 100%;
+          background: none;
+        }
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      grid-template-columns: 1fr;
+      gap: 24px;
+    }
+  }
+
+  @media screen and (max-width: 900px) {
+    height: 470px;
+    background-image: url('/images/dadsad.png');
+    background-size: 100% 470px;
+
+    .title {
+      font-size: 16px;
+      margin-bottom: 40px;
+      line-height: 24px;
+      padding-top: 13px;
+    }
+
+    .fake_blur {
+      position: absolute;
+      height: 400px;
     }
   }
 `
@@ -124,10 +143,7 @@ interface IProps {
 function SaleStats({ dataStat }: IProps) {
   return (
     <Wrapper>
-      <div className="corner1" />
-      <div className="edge1" />
-      <div className="corner2" />
-      <div className="edge2" />
+      <div className="fake_blur" />
       <p className="title">Sale Stats</p>
       <div className="content_stat">
         {Array.from(dataStat).map((item: any, index: number) => {

@@ -66,6 +66,7 @@ const Wrapper = styled.div`
     .btn_get_eth {
       position: relative;
       cursor: pointer;
+
       .corner_btn_1 {
         position: absolute;
         left: 0;
@@ -111,6 +112,7 @@ const Wrapper = styled.div`
         width: calc(100% - 80px);
         background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
       }
+
       span {
         position: absolute;
         font-weight: 700;
@@ -124,6 +126,14 @@ const Wrapper = styled.div`
         left: 50%;
         top: 50%;
         transform: translate(-50%, -50%);
+      }
+
+      @media screen and (max-width: 900px) {
+        span {
+          font-size: 16px;
+          line-height: 19px;
+          white-space: nowrap;
+        }
       }
     }
   }
@@ -143,6 +153,13 @@ const Content = styled.div`
     letter-spacing: 0.075em;
     text-transform: uppercase;
     color: rgba(255, 255, 255, 0.87);
+  }
+
+  @media screen and (max-width: 900px) {
+    .title {
+      font-size: 16px;
+      line-height: 19px;
+    }
   }
 `
 
@@ -165,6 +182,10 @@ export const CustomTableWrapper = styled(Flex)`
       rgba(255, 176, 0, 0.2) 113.13%
     );
     border-radius: 30px;
+  }
+
+  @media screen and (max-width: 900px) {
+    padding-top: 12px;
   }
 `
 
@@ -220,10 +241,85 @@ const Table = styled.div`
     width: calc(100% - 80px);
     background: linear-gradient(95.32deg, #ffb000, #ed1c51, #b809b5);
   }
+
+  .table-header_col {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 22px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .table-header {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: rgba(255, 255, 255, 0.87);
+  }
+
+  .active_text {
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 22px;
+    color: #64c66d;
+  }
+
+  @media screen and (max-width: 900px) {
+    & {
+      padding: 8px 10px;
+    }
+    .table-header_col {
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .table-header {
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .active_text {
+      font-size: 12px;
+      line-height: 15px;
+    }
+  }
+`
+
+const CustomButton = styled(Button)`
+  height: 54px;
+
+  @media screen and (max-width: 900px) {
+    font-size: 16px;
+    line-height: 19px;
+    padding: 12px 14px;
+  }
 `
 
 function PricingInfo({ onModalExchangeSale }) {
   const { account } = useActiveWeb3React()
+
+  const dataPricing = [
+    {
+      status: 'Live',
+      round: 'Round 1',
+      xOXCoin: '100',
+      price: '0.06',
+      xOXBonus: '10',
+    },
+    {
+      status: null,
+      round: 'Round 2',
+      xOXCoin: '100',
+      price: '0.06',
+      xOXBonus: '10',
+    },
+    {
+      status: null,
+      round: 'Round 3',
+      xOXCoin: '100',
+      price: '0.06',
+      xOXBonus: '10',
+    },
+  ]
   return (
     <Wrapper>
       <div className="corner1" />
@@ -234,239 +330,53 @@ function PricingInfo({ onModalExchangeSale }) {
         <p className="title">ROUNDS AND PRICING INFORMATION</p>
         <CustomTableWrapper>
           <Table>
-            <Text
-              fontSize="18px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="400"
-              lineHeight="22px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            />
-            <Text
-              fontSize="18px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="400"
-              lineHeight="22px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              Round
-            </Text>
-            <Text
-              fontSize="18px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="400"
-              lineHeight="22px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              XOX Coins
-            </Text>
-            <Text
-              fontSize="18px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="400"
-              lineHeight="22px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              Price
-            </Text>
-            <Text
-              fontSize="18px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="400"
-              lineHeight="22px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              XOXS Bonus
-            </Text>
+            <Text className="table-header_col" />
+            <Text className="table-header_col">Round</Text>
+            <Text className="table-header_col">XOX Coins</Text>
+            <Text className="table-header_col">Price</Text>
+            <Text className="table-header_col">XOXS Bonus</Text>
           </Table>
 
-          <Table className="active">
-            <div className="corner_active1" />
-            <div className="edge_active1" />
-            <div className="corner_active2" />
-            <div className="edge_active2" />
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="#64C66D"
-              className="table-header"
-            >
-              Live
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              Round 1
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              15.000 XOX
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              $0.06
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              10%
-            </Text>
-          </Table>
-          <Table>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            />
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              Round 2
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              15.000 XOX
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              $0.06
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              10%
-            </Text>
-          </Table>
-          <Table>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            />
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              Round 3
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              15.000 XOX
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              $0.06
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              10%
-            </Text>
-          </Table>
+          {Array.from(dataPricing).map((item) => {
+            return (
+              <Table className={!!item.status && `active`}>
+                {!!item.status && (
+                  <>
+                    <div className="corner_active1" />
+                    <div className="edge_active1" />
+                    <div className="corner_active2" />
+                    <div className="edge_active2" />
+                  </>
+                )}
+
+                {item.status ? (
+                  <Text
+                    fontSize="16px"
+                    fontFamily="Inter"
+                    fontStyle="normal"
+                    fontWeight="700"
+                    lineHeight="19px"
+                    color="#64C66D"
+                    className={!!item.status && `active_text`}
+                  >
+                    Live
+                  </Text>
+                ) : (
+                  <Text className="table-header" />
+                )}
+
+                <Text className="table-header">Round 1</Text>
+                <Text className="table-header">15.000 XOX</Text>
+                <Text className="table-header">$0.06</Text>
+                <Text className="table-header">10%</Text>
+              </Table>
+            )
+          })}
         </CustomTableWrapper>
         {!account && <ConnectWalletButton width="100%" />}
         {account && (
           <div className="btn_group">
-            <Button height={54} onClick={onModalExchangeSale}>
-              Buy with USDT
-            </Button>
+            <CustomButton onClick={onModalExchangeSale}>Buy with USDT</CustomButton>
             <div className="btn_get_eth">
               <div className="corner_btn_1" />
               <div className="edge_btn_1" />

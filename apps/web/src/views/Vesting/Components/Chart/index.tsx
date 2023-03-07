@@ -9,57 +9,39 @@ import ChartColumnSale from './ChartColumnSale'
 
 const Wrapper = styled.div`
   position: relative;
-  background: rgba(16, 16, 16, 0.3);
-  backdrop-filter: blur(10px);
   border-radius: 20px;
   margin-bottom: 40px;
   padding: 28px 64px;
-  .corner1 {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 50%;
-    height: 50px;
-    border-radius: 20px;
-    z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-left: 2px solid #ffffff30;
-    border-bottom-right-radius: unset;
-    border-top-left-radius: unset;
-  }
 
-  .edge1 {
-    width: 2px;
-    height: calc(100% - 50px);
-    position: absolute;
-    bottom: 50px;
-    left: 0;
-    z-index: 1;
-    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
-  }
+  background-image: url('/images/ngu.png');
+  background-repeat: no-repeat;
+  height: 276px;
+  background-size: contain;
+  position: relative;
 
-  .corner2 {
+  .fake_blur {
     position: absolute;
-    bottom: 0;
-    right: 0;
-    width: 50%;
-    height: 50px;
-    border-radius: 20px;
-    z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-right: 2px solid #ffffff30;
-    border-bottom-left-radius: unset;
-    border-top-right-radius: unset;
+    height: 194px;
+    backdrop-filter: blur(10px);
+    z-index: -1;
+    bottom: 27px;
+    left: 1px;
+    right: 2px;
+    border-radius: 20px !important;
   }
-
-  .edge2 {
-    width: 2px;
-    height: calc(100% - 50px);
+  #trapezoid {
+    border-top: 53px solid transparent;
+    border-left: 25px solid transparent;
+    border-right: 25px solid transparent;
+    background: transparent;
+    height: 0;
+    width: 166px;
     position: absolute;
-    bottom: 50px;
-    right: 0;
-    z-index: 1;
-    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+    left: 50%;
+    backdrop-filter: blur(10px);
+    z-index: -1;
+    top: 2px;
+    border-radius: 25px;
   }
 
   .title {
@@ -71,6 +53,26 @@ const Wrapper = styled.div`
     color: rgba(255, 255, 255, 0.87);
     text-align: center;
     margin-bottom: 40px;
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 15px 24px 24px;
+    height: 270px;
+    background-image: url('/images/char_bg_image.png');
+    background-size: 100% 253px;
+
+    .title {
+      font-size: 16px;
+      line-height: 24px;
+      padding-top: 0px;
+    }
+
+    .fake_blur {
+      position: absolute;
+      height: 208px;
+      bottom: 16px;
+      border-radius: 20px !important;
+    }
   }
 `
 
@@ -137,10 +139,7 @@ function ChartSalePage() {
 
   return (
     <Wrapper>
-      <div className="corner1" />
-      <div className="edge1" />
-      <div className="corner2" />
-      <div className="edge2" />
+      <div className="fake_blur" />
       <p className="title">Daily Raise (USDT)</p>
       <ChartColumnSale data={dataChart} />
     </Wrapper>

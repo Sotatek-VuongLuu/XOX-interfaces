@@ -1,10 +1,18 @@
 import { Flex, Grid } from '@pancakeswap/uikit'
+import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
   margin: 24px 0px;
 `
-const Content = styled(Grid)``
+const Content = styled(Grid)`
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+
+  @media screen and (max-width: 900px) {
+    grid-template-columns: 1fr;
+  }
+`
 
 const WrapperItem = styled(Flex)`
   padding: 24px 109px;
@@ -80,9 +88,24 @@ const WrapperItem = styled(Flex)`
   .airbnb {
     margin-top: 35px;
   }
+
+  @media screen and (max-width: 900px) {
+    padding: 24px 15px;
+
+    .title {
+      font-size: 16px;
+      line-height: 24px;
+    }
+    .describe {
+      font-size: 14px;
+      line-height: 24px;
+      margin-top: 10px;
+    }
+  }
 `
 
 const SecuredByItem = ({ item }) => {
+  const { width } = useWindowSize()
   return (
     <WrapperItem
       className="container"
@@ -97,8 +120,14 @@ const SecuredByItem = ({ item }) => {
       <div className="edge2" />
       <p className="title">{item.title}</p>
       <p className="describe">{item.describe}</p>
-      <img src={item.sv2} alt="microsoft" />
-      <img src={item.sv1} alt="airbnb" className="airbnb" />
+
+      {width <= 900 && <img src="/images/logo_backed_mb.svg" alt="microsoft" />}
+      {width > 900 && (
+        <>
+          <img src={item.sv2} alt="microsoft" />
+          <img src={item.sv1} alt="airbnb" className="airbnb" />
+        </>
+      )}
     </WrapperItem>
   )
 }
@@ -120,7 +149,7 @@ function BackedBy() {
   ]
   return (
     <Wrapper>
-      <Content gridTemplateColumns="1fr 1fr" gridGap="24px">
+      <Content>
         {arrBackedBy.map((item) => {
           return <SecuredByItem item={item} />
         })}

@@ -17,10 +17,16 @@ const Page = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
+  @media screen and (max-width: 900px) {
+    padding: 24px;
+  }
 `
 
 const ContentContainer = styled.div`
   width: 1400px;
+  @media screen and (max-width: 900px) {
+    width: 100%;
+  }
 `
 
 const initialYourInfo = [

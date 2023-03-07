@@ -33,6 +33,17 @@ const Content = styled.div`
     color: rgba(255, 255, 255, 0.87);
     margin-top: 24px;
   }
+
+  @media screen and (max-width: 900px) {
+    .normal {
+      font-size: 14px;
+      line-height: 20px;
+    }
+    .description {
+      font-size: 14px;
+      line-height: 20px;
+    }
+  }
 `
 
 const CustomTable = styled(Table)`
@@ -61,11 +72,25 @@ const CustomTableRow = styled(CustomTable)`
   &::before {
     border: none;
   }
+
+  .value {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.87);
+
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
 `
 
 const CustomTableSale = styled(CustomTableWrapper)`
   & > div {
-    min-width: 100%;
+    min-width: 1200;
+    @media screen and (max-width: 900px) {
+    }
   }
 `
 
@@ -194,72 +219,12 @@ function PrivateSale() {
           {Array.from(arrToken).map((item) => {
             return (
               <CustomTableRow>
-                <Text
-                  fontSize="16px"
-                  fontFamily="Inter"
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="19px"
-                  color="rgba(255, 255, 255, 0.87)"
-                  className="table-header"
-                >
-                  {item.title}
-                </Text>
-                <Text
-                  fontSize="16px"
-                  fontFamily="Inter"
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="19px"
-                  color="rgba(255, 255, 255, 0.87)"
-                  className="table-header"
-                >
-                  {item.total}
-                </Text>
-                <Text
-                  fontSize="16px"
-                  fontFamily="Inter"
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="19px"
-                  color="rgba(255, 255, 255, 0.87)"
-                  className="table-header"
-                >
-                  {item.amountToken}
-                </Text>
-                <Text
-                  fontSize="16px"
-                  fontFamily="Inter"
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="19px"
-                  color="rgba(255, 255, 255, 0.87)"
-                  className="table-header"
-                >
-                  {item.price}
-                </Text>
-                <Text
-                  fontSize="16px"
-                  fontFamily="Inter"
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="19px"
-                  color="rgba(255, 255, 255, 0.87)"
-                  className="table-header"
-                >
-                  {item.totalMoneyRaise}
-                </Text>
-                <Text
-                  fontSize="16px"
-                  fontFamily="Inter"
-                  fontStyle="normal"
-                  fontWeight="700"
-                  lineHeight="19px"
-                  color="rgba(255, 255, 255, 0.87)"
-                  className="table-header"
-                >
-                  {item.launchPrice}
-                </Text>
+                <Text className="value">{item.title}</Text>
+                <Text className="value">{item.total}</Text>
+                <Text className="value">{item.amountToken}</Text>
+                <Text className="value">{item.price}</Text>
+                <Text className="value">{item.totalMoneyRaise}</Text>
+                <Text className="value">{item.launchPrice}</Text>
               </CustomTableRow>
             )
           })}

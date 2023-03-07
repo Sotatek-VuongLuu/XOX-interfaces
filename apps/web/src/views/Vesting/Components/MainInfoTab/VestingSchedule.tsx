@@ -13,6 +13,7 @@ const Content = styled.div`
       display: flex;
       align-items: center;
     }
+
     .sale-schedule-item.flex-col {
       flex-direction: column;
       align-items: flex-start;
@@ -20,7 +21,7 @@ const Content = styled.div`
   }
 
   .heading-sale {
-    position: relative;
+    position: absolute;
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
@@ -38,6 +39,7 @@ const Content = styled.div`
 
   .sale_item {
     padding: 16px 24px;
+    position: relative;
     gap: 10px;
     background: rgba(255, 255, 255, 0.05);
     border-radius: 16px;
@@ -80,8 +82,8 @@ const SaleItem = ({ item, index }) => {
   return (
     <div className={`sale_item sale_item_${index}`}>
       <div className="heading-sale">{item.title}</div>
-      <div className="sale-container-bottom">
-        <div className="sale-schedule-item">
+      <div className="sale-container-bottom ">
+        <div className="sale-schedule-item ">
           <p>
             <Img src="/images/1/tokens/xox_new_style.svg" alt="icon" height={30} width={30} className="token_first" />
           </p>

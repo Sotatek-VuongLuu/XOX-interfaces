@@ -95,6 +95,26 @@ const Wrapper = styled.div`
     z-index: 1;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
+
+  @media screen and (max-width: 900px) {
+    .title {
+      font-size: 16px;
+      line-height: 24px;
+    }
+
+    .notice {
+      font-size: 14px;
+      line-height: 17px;
+      margin-top: 10px;
+      margin-bottom: 24px;
+    }
+
+    .processing {
+      font-size: 14px;
+      line-height: 17px;
+      height: 6px;
+    }
+  }
 `
 
 function StartingSoon() {
