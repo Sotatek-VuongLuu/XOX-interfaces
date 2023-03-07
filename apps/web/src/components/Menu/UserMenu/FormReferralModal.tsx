@@ -646,7 +646,12 @@ const FormReferralModal = (_, ref) => {
               <Button
                 width="100%"
                 mt="8px"
-                onClick={onCloseBtnClicked}
+                onClick={() => {
+                  // logout()
+                  // eslint-disable-next-line no-unused-expressions
+                  !editForm && handleRenderUserName(account)
+                  onCloseBtnClicked()
+                }}
                 style={{ background: '#313131', height: '43px' }}
               >
                 Cancel
