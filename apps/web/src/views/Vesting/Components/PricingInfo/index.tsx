@@ -71,7 +71,7 @@ const Wrapper = styled.div`
         left: 0;
         width: 40px;
         height: 100%;
-        border-radius: 30px;
+        border-radius: 10px;
         z-index: 1;
         border-bottom: 2px solid #b809b5;
         border-top: 2px solid #b809b5;
@@ -94,7 +94,7 @@ const Wrapper = styled.div`
         right: 0;
         width: 40px;
         height: 100%;
-        border-radius: 30px;
+        border-radius: 10px;
         z-index: 1;
         border-bottom: 2px solid #ffb000;
         border-top: 2px solid #ffb000;
@@ -222,7 +222,7 @@ const Table = styled.div`
   }
 `
 
-function PricingInfo() {
+function PricingInfo({ onModalExchangeSale }) {
   const { account } = useActiveWeb3React()
   return (
     <Wrapper>
@@ -464,7 +464,9 @@ function PricingInfo() {
         {!account && <ConnectWalletButton width="100%" />}
         {account && (
           <div className="btn_group">
-            <Button height={54}>Buy with USDT</Button>
+            <Button height={54} onClick={onModalExchangeSale}>
+              Buy with USDT
+            </Button>
             <div className="btn_get_eth">
               <div className="corner_btn_1" />
               <div className="edge_btn_1" />

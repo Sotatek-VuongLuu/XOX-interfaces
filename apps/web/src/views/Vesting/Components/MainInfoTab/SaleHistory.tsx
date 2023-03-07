@@ -5,6 +5,12 @@ import { isMobile } from 'react-device-detect'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
 
 const Wrapper = styled.div`
+  position: relative;
+  padding: 24px;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+
+  border-radius: 20px;
   .heading_info_vesting {
     position: relative;
     &::after {
@@ -14,8 +20,56 @@ const Wrapper = styled.div`
       left: 0px;
       width: 40px;
       height: 4px;
-      background: linear-gradient(100.7deg, rgb(100, 115, 255) 0%, rgb(163, 90, 255) 100%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
+  }
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: 1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 `
 
@@ -93,6 +147,7 @@ export const PageButtons = styled(Flex)`
   align-items: center;
   justify-content: flex-start;
   padding: 3px;
+  margin: 24px 0px;
 
   & > div:first-child {
     margin-bottom: 13px;
@@ -134,8 +189,8 @@ export const PageButtons = styled(Flex)`
   }
 
   & .page.current {
-    color: #9072ff;
-    background: rgba(110, 70, 255, 0.1);
+    color: #fb8618;
+    background: rgba(251, 134, 24, 0.1);
   }
 
   & .go-page {
@@ -194,113 +249,121 @@ function SaleHistory() {
   }, [])
 
   return (
-    <Wrapper>
-      <Flex mb="16px" justifyContent="space-between">
-        <Text
-          className="heading_info_vesting"
-          fontSize="20px"
-          fontFamily="Inter"
-          fontStyle="normal"
-          fontWeight="700"
-          lineHeight="24px"
-          color="rgba(255, 255, 255, 0.87)"
-          height="24px"
-        >
-          Sale History
-        </Text>
-      </Flex>
-      <CustomTableWrapper>
-        <Table>
+    <>
+      <Wrapper>
+        <div className="corner1" />
+        <div className="edge1" />
+        <div className="corner2" />
+        <div className="edge2" />
+
+        <Flex mb="16px" justifyContent="space-between">
           <Text
-            fontSize="16px"
+            className="heading_info_vesting"
+            fontSize="20px"
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
+            lineHeight="24px"
+            color="rgba(255, 255, 255, 0.87)"
+            height="24px"
           >
-            No
+            Sale History
           </Text>
-          <Text
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            Wallet Address
-          </Text>
-          <ClickableColumnHeader
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Time</span>{' '}
-            </Flex>
-          </ClickableColumnHeader>
-          <ClickableColumnHeader
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Total Value</span>{' '}
-            </Flex>
-          </ClickableColumnHeader>
-          <Text
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            XOX Bought
-          </Text>
-          <Text
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            XOXS Received
-          </Text>
-          <ClickableColumnHeader
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Txh</span>
-            </Flex>
-          </ClickableColumnHeader>
-          {currentTransactions.length === 0 ? (
-            <NoTransactionWrapper justifyContent="center">
-              <Text textAlign="center">No Transactions</Text>
-            </NoTransactionWrapper>
-          ) : undefined}
-        </Table>
-      </CustomTableWrapper>
+        </Flex>
+        <CustomTableWrapper>
+          <Table>
+            <Text
+              fontSize="16px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="19px"
+              color="rgba(255, 255, 255, 0.6)"
+              className="table-header"
+            >
+              No
+            </Text>
+            <Text
+              fontSize="16px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="19px"
+              color="rgba(255, 255, 255, 0.6)"
+              className="table-header"
+            >
+              Wallet Address
+            </Text>
+            <ClickableColumnHeader
+              fontSize="16px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="19px"
+              color="rgba(255, 255, 255, 0.6)"
+              className="table-header"
+            >
+              <Flex alignItems="center">
+                <span style={{ marginRight: '12px' }}>Time</span>{' '}
+              </Flex>
+            </ClickableColumnHeader>
+            <ClickableColumnHeader
+              fontSize="16px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="19px"
+              color="rgba(255, 255, 255, 0.6)"
+              className="table-header"
+            >
+              <Flex alignItems="center">
+                <span style={{ marginRight: '12px' }}>Total Value</span>{' '}
+              </Flex>
+            </ClickableColumnHeader>
+            <Text
+              fontSize="16px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="19px"
+              color="rgba(255, 255, 255, 0.6)"
+              className="table-header"
+            >
+              XOX Bought
+            </Text>
+            <Text
+              fontSize="16px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="19px"
+              color="rgba(255, 255, 255, 0.6)"
+              className="table-header"
+            >
+              XOXS Received
+            </Text>
+            <ClickableColumnHeader
+              fontSize="16px"
+              fontFamily="Inter"
+              fontStyle="normal"
+              fontWeight="700"
+              lineHeight="19px"
+              color="rgba(255, 255, 255, 0.6)"
+              className="table-header"
+            >
+              <Flex alignItems="center">
+                <span style={{ marginRight: '12px' }}>Txh</span>
+              </Flex>
+            </ClickableColumnHeader>
+            {currentTransactions.length === 0 ? (
+              <NoTransactionWrapper justifyContent="center">
+                <Text textAlign="center">No Transactions</Text>
+              </NoTransactionWrapper>
+            ) : undefined}
+          </Table>
+        </CustomTableWrapper>
+      </Wrapper>
+
       {currentTransactions && currentTransactions.length > 0 && (
         <PageButtons>
           <div>
@@ -453,7 +516,7 @@ function SaleHistory() {
           </div>
         </PageButtons>
       )}
-    </Wrapper>
+    </>
   )
 }
 

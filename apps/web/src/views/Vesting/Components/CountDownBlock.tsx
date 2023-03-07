@@ -16,11 +16,11 @@ const Content = styled.div`
   gap: 24px;
 `
 
-function CountDownBlock() {
+function CountDownBlock({ onModalExchangeSale }) {
   return (
     <Wrapper>
       <Content>
-        <PricingInfo />
+        <PricingInfo onModalExchangeSale={onModalExchangeSale} />
         <StartingSoon />
       </Content>
     </Wrapper>

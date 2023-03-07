@@ -2,7 +2,7 @@ import { Flex, Grid } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
-  margin-bottom: 24px;
+  margin: 24px 0px;
 `
 const Content = styled(Grid)``
 

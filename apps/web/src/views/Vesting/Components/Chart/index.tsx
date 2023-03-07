@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-  margin-bottom: 24px;
+  margin-bottom: 40px;
   padding: 28px 64px;
   .corner1 {
     position: absolute;

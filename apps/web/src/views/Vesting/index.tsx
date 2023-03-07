@@ -1,13 +1,16 @@
 /* eslint-disable import/no-cycle */
+import { useModal } from '@pancakeswap/uikit'
 import React, { ReducerAction, ReducerState, useMemo, useReducer, useState } from 'react'
 import styled from 'styled-components'
 import BackedBy from './Components/BackedBy'
 import ChartSalePage from './Components/Chart'
 import CountDownBlock from './Components/CountDownBlock'
 import MainInfoBlock from './Components/MainInfoBlock'
+import ModalSaleExchange from './Components/ModalExchange'
 import SaleMechanism from './Components/SaleMechanism'
 import SaleStats from './Components/SaleStats'
 import SaleStatus from './Components/SaleStatus'
+import SaleHistorySession from './VestingSaleHistory'
 
 const Page = styled.div`
   height: 100%;
@@ -263,19 +266,32 @@ export const tabSaleMechanism: string[] = [
   'Your Information',
 ]
 
+enum TYPE_BY {
+  BY_USDC,
+  BY_USDT,
+}
+
 function VestingPage() {
   const [tabActiveInfo, setTabActiveInfo] = useState<string>('Dashboard')
   const [tabActiveMechansim, setTabActiveMechansim] = useState<string>('Private Sale Mechanism')
   const counterReducer = useReducer(reducer, initialYourInfo)
-
+  const [typeBuyPrice, setTypeBuyPrice] = useState(TYPE_BY.BY_USDC)
+  const [amount, setAmount] = useState('')
   const { getCount } = useSelectors(counterReducer, (state) => ({
     getCount: () => state,
   }))
 
+  const [onModalExchangeSale] = useModal(
+    <ModalSaleExchange amount={amount} setAmount={setAmount} />,
+    true,
+    true,
+    'exchange-sale',
+  )
+
   return (
     <Page>
       <ContentContainer>
-        <CountDownBlock />
+        <CountDownBlock onModalExchangeSale={onModalExchangeSale} />
         <SaleStats dataStat={initStat} />
         <ChartSalePage />
         <SaleStatus />
@@ -287,6 +303,7 @@ function VestingPage() {
           dataInfo={getCount()}
           dataRefInfo={initialRefInfo}
         />
+        <SaleHistorySession />
         <BackedBy />
       </ContentContainer>
     </Page>

@@ -22,7 +22,7 @@ const Wrapper = styled.div`
   backdrop-filter: blur(10px);
   border-radius: 20px;
   margin-top: 24px;
-  margin-bottom: 40px;
+  margin-bottom: 24px;
 
   .corner1 {
     position: absolute;
