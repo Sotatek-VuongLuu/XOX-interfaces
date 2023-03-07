@@ -79,7 +79,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
       })}
 
       <CustomMessage variant="warning">
-        <Text fontSize="14px" fontFamily="Inter" fontStyle="normal" fontWeight="400" lineHeight="17px" color="#FFBD3C">
+        <Text fontSize={['12px', , '14px']} fontWeight="400" lineHeight={['15px', , '17px']} color="#FFBD3C">
           {t(
             'Anyone can create a %standard% token on %network% with any name, including creating fake versions of existing tokens and tokens that claim to represent projects that do not have a token.',
             {
@@ -100,9 +100,9 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
           <Grid key={token.address} gridTemplateRows="1fr 1fr 1fr" gridGap="16px">
             {list !== undefined ? (
               <Text
-                fontSize="16px"
+                fontSize={['14px', , '16px']}
                 fontWeight="700"
-                lineHeight="19px"
+                lineHeight={['17px', , '19px']}
                 color="#FB8618"
                 style={{ display: 'flex', alignItems: 'center' }}
               >
@@ -111,9 +111,9 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
               </Text>
             ) : (
               <Text
-                fontSize="16px"
+                fontSize={['14px', , '16px']}
                 fontWeight="700"
-                lineHeight="24px"
+                lineHeight={['17px', , '19px']}
                 color="#FB8618"
                 style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}
               >
@@ -148,16 +148,31 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
               </Text>
             )}
             <Flex alignItems="center">
-              <Text fontSize="16px" fontWeight="400" lineHeight="19px" color="rgba(255, 255, 255, 0.87)">
+              <Text
+                fontSize={['14px', , '16px']}
+                fontWeight="400"
+                lineHeight={['17px', , '19px']}
+                color="rgba(255, 255, 255, 0.87)"
+              >
                 {token.name}
               </Text>
-              <Text fontSize="16px" fontWeight="400" lineHeight="19px" color="rgba(255, 255, 255, 0.87)">
+              <Text
+                fontSize={['14px', , '16px']}
+                fontWeight="400"
+                lineHeight={['17px', , '19px']}
+                color="rgba(255, 255, 255, 0.87)"
+              >
                 ({token.symbol})
               </Text>
             </Flex>
             {token.chainId && (
               <Flex justifyContent="space-between" width="100%">
-                <Text fontSize="16px" fontWeight="400" lineHeight="19px" color="rgba(255, 255, 255, 0.87)">
+                <Text
+                  fontSize={['14px', , '16px']}
+                  fontWeight="400"
+                  lineHeight={['17px', , '19px']}
+                  color="rgba(255, 255, 255, 0.87)"
+                >
                   {address}
                 </Text>
                 <LinkExternal
@@ -202,9 +217,9 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
           <Text
             ml="8px"
             style={{ userSelect: 'none' }}
-            fontSize="16px"
+            fontSize={['14px', , '16px']}
             fontWeight="400"
-            lineHeight="19px"
+            lineHeight={['17px', , '19px']}
             color="rgba(255, 255, 255, 0.87)"
           >
             {t('I understand')}

@@ -90,7 +90,13 @@ const ConfirmImg = styled.div`
   }
 `
 
-function ConfirmationPendingContent({ pendingText, iconGridLoader }: { pendingText: string | React.ReactNode; iconGridLoader?: any }) {
+function ConfirmationPendingContent({
+  pendingText,
+  iconGridLoader,
+}: {
+  pendingText: string | React.ReactNode
+  iconGridLoader?: any
+}) {
   const { t } = useTranslation()
   return (
     <Wrapper>
@@ -141,8 +147,9 @@ export function TransactionSubmittedContent({
           {chainId && hash && (
             <LinkExternal
               href={getBlockExploreLink(hash, 'transaction', chainId)}
-              color="#FB8618"
+              color="#3D8AFF"
               style={{ fontWeight: 400, marginBottom: '16px' }}
+              hiddenIcon
             >
               {t(`View on ${chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}`)}
             </LinkExternal>

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import React, { useState, useCallback, useEffect, useImperativeHandle, forwardRef } from 'react'
-import { Button, Text } from '@pancakeswap/uikit'
+import { Button, Text, useToast } from '@pancakeswap/uikit'
 import axios from 'axios'
 import { useSigner, useAccount } from 'wagmi'
 import { createPortal } from 'react-dom'
@@ -187,6 +187,8 @@ const FormReferralModal = (_, ref) => {
   const [isSaveable, setSaveable] = useState(false)
   const { logout } = useAuth()
 
+  const { toastSuccess } = useToast()
+
   const modalElement = document.getElementById('modal-root')
 
   const { openFormReferral, userProfileEdit: userProfile } = useSelector<AppState, AppState['user']>(
@@ -329,7 +331,9 @@ const FormReferralModal = (_, ref) => {
                   console.warn(error)
                 })
               setAvata(undefined)
-              setProfileSuccess(true)
+              // setProfileSuccess(true)
+              setOpenFormReferral(false)
+              toastSuccess('Success.', 'You have set your profile successfully.')
             })
             .catch((error) => {
               console.warn(error)

@@ -11,7 +11,7 @@ const LinkExternal: React.FC<React.PropsWithChildren<LinkProps> & { hiddenIcon?:
   return (
     <Link external {...props}>
       {children}
-      {!hiddenIcon && <OpenNewIcon ml="4px" />}
+      {!hiddenIcon && <OpenNewIcon style={{ marginLeft: "8px", fill: "transparent" }} />}
     </Link>
   );
 };

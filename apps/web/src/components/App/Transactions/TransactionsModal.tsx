@@ -20,6 +20,7 @@ const RecentButton = styled(Button)`
   border-radius: 4px;
   font-size: 14px;
   font-weight: 700;
+  text-transform: capitalize;
 `
 const NoTransaction = styled.div`
   text-align: center;
@@ -47,6 +48,17 @@ const NoTransactionText = styled(Text)`
   margin-top: 16px;
   color: #ffffff99;
 `
+
+const TitleTransactionText = styled(Text)`
+  font-size: 16px;
+  line-height: 19px;
+  color: 'FFFFFFDE';
+  margin-bottom: 20px;
+  @media (max-width: 576px) {
+    font-size: 14px;
+  }
+`
+
 function renderTransactions(transactions: TransactionDetails[], chainId: number, hiddenIcon: boolean) {
   return (
     <Flex flexDirection="column" mb="8px">
@@ -97,9 +109,9 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
 
                   return (
                     <>
-                      <Text fontSize="16px" lineHeight="19px" color="#FFFFFFDE">
+                      <TitleTransactionText>
                         {chains.find((c) => c.id === chainIdNumber)?.name ?? 'Unknown network'}
-                      </Text>
+                      </TitleTransactionText>
                       <div key={`transactions#${chainIdNumber}`}>
                         {renderTransactions(pending, chainIdNumber, isMobile)}
                         {renderTransactions(confirmed, chainIdNumber, isMobile)}

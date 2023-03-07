@@ -6,75 +6,84 @@ import { useUserSlippageTolerance, useUserTransactionTTL } from 'state/user/hook
 import styled from 'styled-components'
 
 const IconPercent = styled.span`
-  position:absolute;
-  color:#F4EEFF;
-  right:-5px;
-  top:50%;
-  transform:translate(-50%, -50%);
+  position: absolute;
+  color: #f4eeff;
+  right: -5px;
+  top: 50%;
+  transform: translate(-50%, -50%);
   @media screen and (max-width: 425px) {
-    font-size:14px;
+    font-size: 14px;
   }
 `
-const SettingButton = styled(Button)`                                                           
-  background:unset;
-  border:1px solid #444444;
-  padding:12px 11px;
-  font-size:16px;
-  min-height:43px;
-  font-weight:400;
+const SettingButton = styled(Button)`
+  background: unset;
+  border: 1px solid #444444;
+  padding: 12px 11px;
+  font-size: 16px;
+  min-height: 43px;
+  font-weight: 400;
   &.active {
-    border:1px solid #9072FF;
+    border: 1px solid #fb8618;
   }
 
   @media screen and (max-width: 425px) {
-    padding:10px 9px;
-    font-size:14px;
-    min-height:37px;
-    margin-right:14px;
+    padding: 10px 9px;
+    font-size: 14px;
+    min-height: 37px;
+    margin-right: 14px;
   }
 `
 const SettingInput = styled(Input)`
-  border-radius:6px;
-  border:1px solid #444444;
-  background:unset;
-  min-height:43px;
-  padding:0 9px;
-  width:60px;
+  border-radius: 6px;
+  border: 1px solid #444444;
+  background: unset;
+  min-height: 43px;
+  padding: 0 9px;
+  width: 60px;
   &.active {
-    border:1px solid #9072FF;
+    border: 1px solid #fb8618;
+  }
+  &:focus {
+    border: 1px solid #fb8618 !important;
+    box-shadow: none !important;
   }
 
   @media screen and (max-width: 425px) {
-    border-radius:6px;
-    padding:10px 9px;
-    font-size:14px;
-    width:49px;
-    min-height:37px;
+    border-radius: 6px;
+    padding: 10px 9px;
+    font-size: 14px;
+    width: 49px;
+    min-height: 37px;
   }
 `
 const MinsInput = styled(Input)`
-  border-radius:6px;
-  border:1px solid #444444;
-  background:unset;
-  min-height:43px;
-  width:62px;
+  border-radius: 6px;
+  border: 1px solid #444444;
+  background: unset;
+  min-height: 43px;
+  width: 62px;
   padding: 0 0 0 20px;
   &.active {
-    border:1px solid #9072FF;
+    border: 1px solid #fb8618;
+  }
+
+  &:focus {
+    border: 1px solid #fb8618 !important;
+    box-shadow: none !important;
   }
 
   @media screen and (max-width: 425px) {
-    border-radius:6px;
-    padding:10px 9px;
-    font-size:14px;
-    width:49px;
-    min-height:37px;
+    border-radius: 6px;
+    padding: 10px 9px;
+    font-size: 14px;
+    width: 49px;
+    min-height: 37px;
   }
 `
 const SettingBox = styled(Box)`
-  width:76px;
+  width: 76px;
   @media screen and (max-width: 425px) {
-    width:53px;
+    width: 53px;
   }
 `
 enum SlippageError {
@@ -155,7 +164,7 @@ const SlippageTabs = () => {
     <Flex flexDirection="column">
       <Flex flexDirection="column" mb="24px">
         <Flex mb="12px">
-          <Text color='#FFFFFFDE'>{t('Slippage Tolerance')}</Text>
+          <Text color="#FFFFFFDE">{t('Slippage Tolerance')}</Text>
           <QuestionHelper
             text={t(
               'Setting a high slippage tolerance can help transactions succeed, but you may not get such a good price. Use with caution.',
@@ -173,7 +182,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(10)
             }}
-            className ={userSlippageTolerance=== 10 ?'active':''}
+            className={userSlippageTolerance === 10 ? 'active' : ''}
           >
             0.1%
           </SettingButton>
@@ -185,7 +194,7 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(50)
             }}
-            className ={userSlippageTolerance=== 50 ?'active':''}
+            className={userSlippageTolerance === 50 ? 'active' : ''}
           >
             0.5%
           </SettingButton>
@@ -197,11 +206,11 @@ const SlippageTabs = () => {
               setSlippageInput('')
               setUserSlippageTolerance(100)
             }}
-            className ={userSlippageTolerance=== 100 ?'active':''}
+            className={userSlippageTolerance === 100 ? 'active' : ''}
           >
             1.0%
           </SettingButton>
-          
+
           <Flex alignItems="center">
             <SettingBox mt="4px">
               <SettingInput
@@ -220,10 +229,10 @@ const SlippageTabs = () => {
                 }}
                 isWarning={!slippageInputIsValid}
                 // isSuccess={![10, 50, 100].includes(userSlippageTolerance)}
-                className={![10, 50, 100].includes(userSlippageTolerance)?'active':''}
+                className={![10, 50, 100].includes(userSlippageTolerance) ? 'active' : ''}
               />
             </SettingBox>
-            <Text color="#9072FF" bold ml="2px">
+            <Text color="#fb8618" bold ml="2px">
               %
             </Text>
           </Flex>
@@ -240,7 +249,7 @@ const SlippageTabs = () => {
       </Flex>
       <Flex justifyContent="space-between" alignItems="center" mb="24px">
         <Flex alignItems="center">
-          <Text color='#FFFFFFDE'>{t('Tx deadline (mins)')}</Text>
+          <Text color="#FFFFFFDE">{t('Tx deadline (mins)')}</Text>
           <QuestionHelper
             text={t('Your transaction will revert if it is left confirming for longer than this time.')}
             placement="top-start"
@@ -248,7 +257,7 @@ const SlippageTabs = () => {
           />
         </Flex>
         <Flex>
-          <Box width= {isMobile? '45px' : '52px'} mt="4px" style={{position:'relative'}}>
+          <Box width={isMobile ? '45px' : '52px'} mt="4px" style={{ position: 'relative' }}>
             <MinsInput
               scale="sm"
               inputMode="numeric"
@@ -264,7 +273,7 @@ const SlippageTabs = () => {
                   parseCustomDeadline(event.target.value)
                 }
               }}
-              style={ isMobile? {marginLeft:'-10px'} :{}}
+              style={isMobile ? { marginLeft: '-10px' } : {}}
             />
           </Box>
         </Flex>
