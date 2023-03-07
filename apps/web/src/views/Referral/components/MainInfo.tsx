@@ -80,11 +80,60 @@ export interface IMappingFormat {
 const First = styled.div<IPropsTotal>`
   width: 100%;
   height: 100%;
-  background: #242424;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 10px;
   padding: 24px;
+  position: relative;
 
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 70px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 1px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 1px;
+    height: calc(100% - 70px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
   .tab_filter {
     display: grid;
     grid-template-columns: repeat(4, auto) 1fr;
@@ -100,7 +149,7 @@ const First = styled.div<IPropsTotal>`
       cursor: pointer;
       border-radius: 4px;
       &:hover {
-        background: #5f35eb;
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       }
 
       @media screen and (min-width: 1200px) and (max-width: 1401px) {
@@ -109,9 +158,9 @@ const First = styled.div<IPropsTotal>`
     }
 
     .tab_item.active {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       &:hover {
-        background: #5f35eb;
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       }
     }
   }
@@ -149,12 +198,110 @@ const First = styled.div<IPropsTotal>`
 
 const Second = styled.div<IPropsTotal>`
   margin-top: 16px;
+  position: relative;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+  border-radius: 20px;
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #7e5c19ad;
+    border-left: 2px solid #7e5c19ad;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 70px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #7e5c19ad 0%, #7614304a 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #7e5c19ad;
+    border-right: 2px solid #7e5c19ad;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 70px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #7e5c19ad 0%, #7614304a 100%);
+  }
   .total_point {
     padding: 24px;
     position: relative;
-    background: #242424;
-    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     border-radius: 10px;
+
+    .corner1 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50%;
+      height: 50px;
+      border-radius: 20px;
+      z-index: -1;
+      border-bottom: 2px solid #ffffff30;
+      border-left: 2px solid #ffffff30;
+      border-bottom-right-radius: unset;
+      border-top-left-radius: unset;
+    }
+
+    .edge1 {
+      width: 2px;
+      height: calc(100% - 70px);
+      position: absolute;
+      bottom: 50px;
+      left: 0;
+      z-index: -1;
+      background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+    }
+
+    .corner2 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50%;
+      height: 50px;
+      border-radius: 20px;
+      z-index: -1;
+      border-bottom: 2px solid #ffffff30;
+      border-right: 1px solid #ffffff30;
+      border-bottom-left-radius: unset;
+      border-top-right-radius: unset;
+    }
+
+    .edge2 {
+      width: 1px;
+      height: calc(100% - 70px);
+      position: absolute;
+      bottom: 50px;
+      right: 0;
+      z-index: -1;
+      background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+    }
 
     .title {
       font-weight: 700;
@@ -170,7 +317,8 @@ const Second = styled.div<IPropsTotal>`
     }
 
     .total_point_bar {
-      background: #444444;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 255, 255, 0.1);
       border-radius: 30px;
       padding: 3px;
 
@@ -215,13 +363,63 @@ const WrapperRight = styled.div<IPropsContainer>`
   .container {
     width: 100%;
     height: 600px;
-    background: #242424;
-    border-radius: 10px;
     padding: 27px;
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
     position: relative;
+    background: rgba(16, 16, 16, 0.3);
+    backdrop-filter: blur(10px);
+    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
+    border-radius: 20px;
+
+    .corner1 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50%;
+      height: 50px;
+      border-radius: 20px;
+      z-index: -1;
+      border-bottom: 2px solid #ffffff30;
+      border-left: 2px solid #ffffff30;
+      border-bottom-right-radius: unset;
+      border-top-left-radius: unset;
+    }
+
+    .edge1 {
+      width: 2px;
+      height: calc(100% - 70px);
+      position: absolute;
+      bottom: 50px;
+      left: 0;
+      z-index: -1;
+      background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+    }
+
+    .corner2 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50%;
+      height: 50px;
+      border-radius: 20px;
+      z-index: -1;
+      border-bottom: 2px solid #ffffff30;
+      border-right: 1px solid #ffffff30;
+      border-bottom-left-radius: unset;
+      border-top-right-radius: unset;
+    }
+
+    .edge2 {
+      width: 1px;
+      height: calc(100% - 70px);
+      position: absolute;
+      bottom: 50px;
+      right: 0;
+      z-index: -1;
+      background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+    }
 
     .filter {
       display: grid;
@@ -234,9 +432,9 @@ const WrapperRight = styled.div<IPropsContainer>`
       overflow: hidden;
 
       .subTab_item.active {
-        background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
         &:hover {
-          background: #5f35eb;
+          background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
         }
       }
 
@@ -250,7 +448,7 @@ const WrapperRight = styled.div<IPropsContainer>`
         white-space: nowrap;
         border-radius: 4px;
         &:hover {
-          background: #5f35eb;
+          background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
         }
       }
     }
@@ -492,7 +690,59 @@ const FakeSwiper = styled.div`
 const ConnectBoxContainer = styled.div`
   margin-top: 20px;
   height: 100%;
+  background: rgba(16, 16, 16, 0.3);
 
+  backdrop-filter: blur(10px);
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 70px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 1px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 1px;
+    height: calc(100% - 70px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  border-radius: 20px;
   .total_point_content {
     display: grid;
     place-content: center;
@@ -537,10 +787,14 @@ const BoxWrapper = styled(Box)`
   }
 `
 const SubTitle = styled.div`
-  color: #ffffffde;
+  color: rgba(255, 255, 255, 0.87);
   text-align: center;
   max-width: 242px;
   margin: 0 auto;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 17px;
+  margin-bottom: 32px;
 `
 
 interface IPropsWrapperLeft {
@@ -560,7 +814,7 @@ const FilterChainWrap = styled.div`
   .tab_filter_chain_container {
     display: flex;
     padding: 3px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 30px;
     margin-bottom: 35px;
     .filter_chain {
@@ -573,7 +827,7 @@ const FilterChainWrap = styled.div`
 
     .filter_chain.active,
     .filter_chain:hover {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       border-radius: 30px;
     }
 
@@ -721,7 +975,7 @@ const MainInfo = ({
       return (
         <NoDataWraper>
           <ConfirmedIcon>
-            <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+            <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
           </ConfirmedIcon>
         </NoDataWraper>
       )
@@ -759,68 +1013,72 @@ const MainInfo = ({
       <Grid container spacing={2}>
         <Grid item xs={12} lg={4}>
           <WrapperLeft>
-            <div className="border-gradient-style">
-              <First account={account}>
-                <FilterChainWrap>
-                  <div className="tab_filter_chain_container">
-                    {filterChain.map((item: FilterChain) => {
-                      return (
-                        <div
-                          key={item}
-                          className={tabChainLeaderBoard === item ? 'filter_chain active' : 'filter_chain'}
-                          onClick={() => handleOnChangeChainTab(item)}
-                          role="button"
-                        >
-                          {item}
-                        </div>
-                      )
-                    })}
-                  </div>
-                </FilterChainWrap>
-                <div className="tab_filter">
-                  {filterTime.map((item: FilterTime) => {
+            {/* <div className="border-gradient-style"> */}
+            <First account={account}>
+              <div className="corner1" />
+              <div className="edge1" />
+              <div className="corner2" />
+              <div className="edge2" />
+              <FilterChainWrap>
+                <div className="tab_filter_chain_container">
+                  {filterChain.map((item: FilterChain) => {
                     return (
-                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events
                       <div
                         key={item}
-                        onClick={() => handleOnChangeRankTab(item)}
-                        className={tabLeaderBoard === item ? 'tab_item active' : 'tab_item'}
+                        className={tabChainLeaderBoard === item ? 'filter_chain active' : 'filter_chain'}
+                        onClick={() => handleOnChangeChainTab(item)}
+                        role="button"
                       >
                         {item}
                       </div>
                     )
                   })}
                 </div>
+              </FilterChainWrap>
+              <div className="tab_filter">
+                {filterTime.map((item: FilterTime) => {
+                  return (
+                    // eslint-disable-next-line jsx-a11y/click-events-have-key-events
+                    <div
+                      key={item}
+                      onClick={() => handleOnChangeRankTab(item)}
+                      className={tabLeaderBoard === item ? 'tab_item active' : 'tab_item'}
+                    >
+                      {item}
+                    </div>
+                  )
+                })}
+              </div>
 
-                <div className="learder_board">
-                  {renderListUserRank}
-                  {/* {listUserRanks &&
+              <div className="learder_board">
+                {renderListUserRank}
+                {/* {listUserRanks &&
                     listUserRanks[tabChainLeaderBoard].length > 0 &&
                     listUserRanks[tabChainLeaderBoard]?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
                       // eslint-disable-next-line react/no-array-index-key
                       return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
                     })}
                   {listUserRanks[tabChainLeaderBoard].length === 0 && <NoDataWraper>No data</NoDataWraper>} */}
+              </div>
+
+              {!rankOfUser || !rankOfUser[tabChainLeaderBoard]?.rank ? null : rankOfUser[tabChainLeaderBoard].rank <=
+                6 ? null : (
+                <div className="dot">
+                  <div className="dot_item" />
+                  <div className="dot_item" />
+                  <div className="dot_item" />
                 </div>
+              )}
 
-                {!rankOfUser || !rankOfUser[tabChainLeaderBoard]?.rank ? null : rankOfUser[tabChainLeaderBoard].rank <=
-                  6 ? null : (
-                  <div className="dot">
-                    <div className="dot_item" />
-                    <div className="dot_item" />
-                    <div className="dot_item" />
-                  </div>
-                )}
-
-                {account && rankOfUser ? (
-                  rankOfUser[tabChainLeaderBoard]?.rank ? (
-                    [1, 2, 3, 4, 5].includes(rankOfUser[tabChainLeaderBoard].rank) ? null : (
-                      <LeaderBoardItem item={rankOfUser[tabChainLeaderBoard]} mb={false} />
-                    )
-                  ) : null
-                ) : null}
-              </First>
-            </div>
+              {account && rankOfUser ? (
+                rankOfUser[tabChainLeaderBoard]?.rank ? (
+                  [1, 2, 3, 4, 5].includes(rankOfUser[tabChainLeaderBoard].rank) ? null : (
+                    <LeaderBoardItem item={rankOfUser[tabChainLeaderBoard]} mb={false} />
+                  )
+                ) : null
+              ) : null}
+            </First>
+            {/* </div> */}
 
             {account && (
               <Second
@@ -828,8 +1086,12 @@ const MainInfo = ({
                 account={account}
                 chainid={chainId}
                 totalPoint={totalPoint}
-                className="border-gradient-style"
+                // className="border-gradient-style"
               >
+                <div className="corner1" />
+                <div className="edge1" />
+                <div className="corner2" />
+                <div className="edge2" />
                 <div className="total_point">
                   <p className="title">Your current total points</p>
                   <div className="total_point_bar">
@@ -850,7 +1112,11 @@ const MainInfo = ({
               </Second>
             )}
             {!account && width > 1200 && (
-              <ConnectBoxContainer className="border-gradient-style">
+              <ConnectBoxContainer>
+                <div className="corner1" />
+                <div className="edge1" />
+                <div className="corner2" />
+                <div className="edge2" />
                 <div className="total_point_content " style={{ height: '100%', padding: '58px 0' }}>
                   <SubTitle className="please-connec">Please connect wallet to view your referral information</SubTitle>
                   <ConnectBox>
@@ -870,9 +1136,13 @@ const MainInfo = ({
                 account={account}
                 chainid={chainId}
                 totalPoint={totalPoint}
-                className={`border-gradient-style ${width > 1200 && `border-gradient-style_expand`}`}
+                // className={`border-gradient-style ${width > 1200 && `border-gradient-style_expand`}`}
               >
-                <div className="total_point " style={{ height: '203px', padding: '58px 0' }}>
+                <div className="total_point" style={{ height: '203px', padding: '58px 0' }}>
+                  <div className="corner1" />
+                  <div className="edge1" />
+                  <div className="corner2" />
+                  <div className="edge2" />
                   <SubTitle className="please-connec">Please connect wallet to view your referral information</SubTitle>
                   <ConnectBox>
                     <ConnectWalletButtonWraper scale="sm">
@@ -887,8 +1157,12 @@ const MainInfo = ({
           </WrapperLeft>
         </Grid>
         <Grid item xs={12} lg={8}>
-          <WrapperRight subTabIndex={subTabIndex} className="border-gradient-style">
+          <WrapperRight subTabIndex={subTabIndex}>
             <div className="container">
+              <div className="corner1" />
+              <div className="edge1" />
+              <div className="corner2" />
+              <div className="edge2" />
               <div className="filter">
                 {subTab.map((item, index) => {
                   return (

@@ -19,10 +19,10 @@ const ModalConfirmClaim: React.FC<React.PropsWithChildren<IProps>> = ({ open, ha
     left: 50%;
     transform: translate(-50%, -50%);
     width: 464px;
-    background: #242424;
-    border: none;
+    background: #101010;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     boxshadow: 24;
-    borderradius: '20px';
+    border-radius: '20px';
     padding: 32px 24px;
     border-radius: 6px;
     :focus-visible {

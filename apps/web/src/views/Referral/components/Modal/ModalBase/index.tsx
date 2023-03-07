@@ -16,11 +16,11 @@ const ModalBase: React.FC<React.PropsWithChildren<IProps>> = ({ open, handleClos
     left: '50%',
     transform: 'translate(-50%, -50%)',
     width,
-    bgcolor: '#242424',
-    border: 'none',
+    bgcolor: '#101010',
     boxShadow: 24,
     borderRadius: '20px',
     p: '32px 24px',
+    border: '1px solid rgba(255, 255, 255, 0.1)',
   }
   return (
     <Modal open={open} onClose={handleClose}>
