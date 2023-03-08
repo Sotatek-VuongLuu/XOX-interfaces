@@ -28,6 +28,7 @@ const WrapForm = styled.div`
   flex-direction: column;
   gap: 10px;
   @media (max-width: 576px) {
+    width: auto;
     > div {
       flex-direction: column;
       align-items: flex-start;
@@ -40,7 +41,7 @@ const TextStyle = styled(Text)`
   font-size: 14px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.6);
-  line-height: 20px;
+  line-height: 17px;
   &.primary {
     color: ${({ theme }) => theme.colors.violet};
   }
@@ -66,14 +67,16 @@ const BoxRight = styled.div`
   input {
     width: 100%;
     height: 100%;
-    border: 1px solid #444;
     background: none;
-    border-radius: 6px;
     padding: 0 15px;
     height: 44px;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.87);
     padding-right: 80px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.38);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 10px;
+
     &:focus {
       outline: none;
     }
@@ -83,6 +86,8 @@ const BoxRight = styled.div`
       border: none;
       padding: 0;
       height: inherit;
+      font-size: 14px;
+      line-height: 17px;
       color: rgba(255, 255, 255, 0.87);
       font-weight: 700;
     }
@@ -98,6 +103,10 @@ const BoxRight = styled.div`
         width: 100%;
         justify-content: flex-start;
         position: relative;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        border-radius: 10px;
+        padding: 12px 14px 13px;
+        white-space: nowrap;
         > div {
           padding-right: 50px;
           width: 100%;
@@ -121,6 +130,17 @@ const BoxRight = styled.div`
             position: absolute !important;
             top: 100% !important;
             transform: translate(0px) !important;
+            > div {
+              background: #1D1C1C;
+              box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+              border-radius: 10px;
+              > button {
+                padding: 12px 14px 13px;
+                > div {
+                  padding-left: 8px;
+                }
+              }
+            }
           }
           svg {
             position: absolute;
@@ -149,6 +169,7 @@ const InputFill = styled.div`
   border-radius: 6px;
   height: 44px;
   font-size: 16px;
+  line-height: 19px;
   display: flex;
   align-items: center;
   color: rgba(255, 255, 255, 0.87);

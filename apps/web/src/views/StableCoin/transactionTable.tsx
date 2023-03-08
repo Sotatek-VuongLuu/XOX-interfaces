@@ -46,7 +46,7 @@ const Wrapper = styled.div`
     left: 0;
     width: 40px;
     height: 4px;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
   }
 
   & .total {
@@ -145,7 +145,7 @@ const Table = styled.div`
     display: block;
     width: 100%;
     height: 0px;
-    border: 1px solid #444444;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     position: absolute;
     top: 35px;
   }
@@ -225,8 +225,10 @@ export const PageButtons = styled(Flex)`
   }
 
   & .page.current {
-    color: #9072ff;
-    background: rgba(110, 70, 255, 0.1);
+    font-weight: 700;
+    background: rgba(251, 134, 24, 0.1);
+    border-radius: 4px;
+    color: #FB8618;
   }
 
   & .go-page {
@@ -245,9 +247,9 @@ export const PageButtons = styled(Flex)`
     color: rgba(255, 255, 255, 0.87);
     width: 70px;
     height: 37px;
-    border: 1px solid #444444;
-    border-radius: 4px;
     background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    border-radius: 8px;
   }
 `
 
@@ -714,15 +716,8 @@ const TransactionsTable: React.FC = () => {
                 setPagePagination(page === 1 ? page : page - 1)
               }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
-                <path
-                  d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
-                  stroke={page === 1 ? 'white' : '#9072FF'}
-                  strokeOpacity={page === 1 ? '0.38' : '1'}
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
+              <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5.97949 1.25L1.72949 5.5L5.97949 9.75" stroke={page === 1 ? 'white' : '#FB8618'} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </Arrow>
 
@@ -796,27 +791,8 @@ const TransactionsTable: React.FC = () => {
                 setPagePagination(page === maxPage ? page : page + 1)
               }}
             >
-              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
-                <path
-                  d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke="url(#paint0_linear_11079_7639)"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <defs>
-                  <linearGradient
-                    id="paint0_linear_11079_7639"
-                    x1="3.85449"
-                    y1="9.75"
-                    x2="3.85449"
-                    y2="1.25"
-                    gradientUnits="userSpaceOnUse"
-                  >
-                    <stop stopColor="#EE0979" />
-                    <stop offset="1" stopColor="#FF6A00" />
-                  </linearGradient>
-                </defs>
+              <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.72949 1.25L5.97949 5.5L1.72949 9.75" stroke={page === maxPage ? 'white' : '#FB8618'} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
             </Arrow>
           </div>

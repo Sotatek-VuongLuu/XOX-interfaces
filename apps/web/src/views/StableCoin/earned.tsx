@@ -12,22 +12,28 @@ import { formatNumberDecimal } from './index'
 const WrapText = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   p {
     margin-bottom: 0;
+    font-weight: 400;
     font-size: 18px;
-    color: rgba(255, 255, 255, 0.87);
+    line-height: 22px;
+    color: rgba(255, 255, 255, 0.6);
     &.number {
-      color: ${({ theme }) => theme.colors.violet};
-      font-size: 36px;
+      /* color: ${({ theme }) => theme.colors.violet}; */
       font-weight: 700;
+      font-size: 24px;
+      line-height: 29px;
+      color: rgba(255, 255, 255, 0.87);
     }
   }
   @media (max-width: 576px) {
     p {
       font-size: 16px;
+      line-height: 19px;
       &.number {
         font-size: 24px;
+        line-height: 24px;
       }
     }
   }
@@ -50,7 +56,7 @@ const Earned = ({ address }: { address?: string }) => {
 
   return (
     <>
-      <Flex justifyContent="space-between" alignItems="center" width="100%" style={{ marginBottom: 15 }}>
+      <Flex justifyContent="space-between" alignItems="center" width="100%" style={{ marginBottom: 16 }}>
         <WrapText>
           <p>USDT earned</p>
           <p className="number">{priceUSDT ? formatNumberDecimal(priceUSDT) : 0}</p>
