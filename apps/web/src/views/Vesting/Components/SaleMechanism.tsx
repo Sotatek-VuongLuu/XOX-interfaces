@@ -1,5 +1,7 @@
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import useWindowSize from 'hooks/useWindowSize'
+import { useState } from 'react'
 import styled from 'styled-components'
 import VestingSchedule from './MainInfoTab/VestingSchedule'
 import YourInfo from './MainInfoTab/YourInfo'
@@ -17,6 +19,7 @@ interface IProps {
 }
 
 const Wrapper = styled.div`
+  position: relative;
   padding: 24px;
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
@@ -71,6 +74,44 @@ const Wrapper = styled.div`
     z-index: 1;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
+
+  /* .overlay_learmore {
+    position: absolute;
+    width: 100%;
+    height: 290px;
+    background: linear-gradient(360deg, #0a0a0a 16.15%, rgba(22, 20, 44, 0) 100%);
+    border-radius: 0px 0px 20px 20px;
+    bottom: 0;
+    left: 0;
+    z-index: 9;
+  }
+
+  .btn_learnmore {
+    position: absolute;
+    padding: 10px 20px;
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: #ffffff;
+    border: 1px solid #ffffff;
+    border-radius: 8px;
+    background: transparent;
+    bottom: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  .fi_chevrons-down {
+    position: absolute;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+
+  @media screen and (max-width: 900px) {
+    height: 540px;
+    overflow-y: hidden;
+  } */
 `
 const Content = styled.div`
   .tab-mechanism {
@@ -116,6 +157,9 @@ function SaleMechanism({
   dataRefInfo,
 }: IProps) {
   const { account } = useActiveWeb3React()
+  const { width } = useWindowSize()
+  const [isMore, setIsMore] = useState(false)
+
   const renderBody = (tab: string) => {
     if (!account) {
       return (
@@ -159,6 +203,15 @@ function SaleMechanism({
         </div>
         <div className="body">{renderBody(tabActiveMechansim)}</div>
       </Content>
+
+      {/* {width <= 900 && !isMore && (
+        <div className="overlay_learmore">
+          <button type="button" className="btn_learnmore">
+            Learn More
+          </button>
+          <img src="/images/fi_chevrons-down.svg" alt="fi_chevrons-down" className="fi_chevrons-down" />
+        </div>
+      )} */}
     </Wrapper>
   )
 }
