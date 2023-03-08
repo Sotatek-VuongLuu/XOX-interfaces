@@ -9,7 +9,7 @@ const Wrapper = styled.div`
     position: absolute;
     left: 50%;
     transform: translateX(-50%);
-    background-color: #ffffff;
+    /* background-color: #ffffff; */
     padding: 7px;
     border-radius: 20px;
     margin-top: 65px;
@@ -28,9 +28,11 @@ const Wrapper = styled.div`
       position: absolute;
       top: 0;
       left: 0;
-      border-radius: 17px;
+      border-radius: 10px;
       overflow: hidden;
       .react-player__preview {
+        border: 4px solid #ffffff;
+        border-radius: 10px;
         .react-player__shadow {
           background: #ffffff !important;
           .react-player__play-icon {
