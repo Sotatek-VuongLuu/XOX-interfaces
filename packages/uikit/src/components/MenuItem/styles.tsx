@@ -24,7 +24,8 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
   position: relative;
   display: inline-block;
   align-items: center;
-  background: ${({ $isActive }) => ($isActive ? "linear-gradient(90deg, #EE0979 0%, #FF6A00 100%)" : "#1d1d1d")};
+  background: ${({ $isActive }) =>
+    $isActive ? "linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)" : "#1d1d1d"};
   font-family: "Inter";
   font-style: normal;
   font-size: 16px;
@@ -67,7 +68,7 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
 
 
   &:hover {
-    background: linear-gradient(90deg, #ee0979 0%, #ff6a00 100%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;

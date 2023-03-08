@@ -114,12 +114,16 @@ const Wrapper = styled.div`
     color: #ffffff;
     margin-right: 8px;
     padding: 10px 10px;
+    :hover {
+      opacity: 0.8 !important;
+    }
   }
 
   .btn-filter button.inactive {
     background: transparent;
     border: none;
     box-shadow: none;
+   
   }
 
   ${({ theme }) => theme.mediaQueries.xl} {
@@ -150,6 +154,7 @@ const Wrapper = styled.div`
 
     .btn-filter button {
       padding: 10px 16px;
+      
     }
     .corner1 {
       border-bottom: 1px solid #ffffff30;
@@ -799,7 +804,7 @@ const TransactionsTable: React.FC = () => {
                 onClick={() => handleFilterFrom(TransactionFrom.PANCAKE)}
                 className={TransactionFrom.PANCAKE === transactionFrom ? 'active' : 'inactive'}
               >
-                Pancake swap
+                PancakeSwap
               </Button>
             )}
           </Flex>

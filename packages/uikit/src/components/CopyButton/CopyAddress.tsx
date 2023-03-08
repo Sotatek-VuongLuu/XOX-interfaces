@@ -59,7 +59,7 @@ export const CopyAddress: React.FC<React.PropsWithChildren<CopyAddressProps>> = 
     <Box position="relative" {...props}>
       <Wrapper>
         {account && (
-          <Address title={account} style={{ color: referralCode ? "rgba(255, 255, 255, 0.87)" : "#3d8aff" }}>
+          <Address title={account} style={{ color: referralCode ? "rgba(255, 255, 255, 0.87)" : "#FB8618" }}>
             {referralCode
               ? `Referral Code: ${account}`
               : `${account.substring(0, 8)}...${account.substring(account.length - 4)}`}

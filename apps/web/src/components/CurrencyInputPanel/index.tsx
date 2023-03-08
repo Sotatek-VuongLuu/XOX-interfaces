@@ -41,7 +41,7 @@ const InputRow = styled.div<{ selected: boolean }>`
 `
 const PercentButton = styled(Button)`
   background: unset;
-  border: 2px solid #fb8618;
+  border: 1px solid #fb8618;
   padding: 14px 16px;
   color: #fb8618;
   font-size: 12px;
@@ -395,7 +395,6 @@ export default function CurrencyInputPanel({
                     scale="xs"
                     variant="secondary"
                     style={{
-                      textTransform: 'uppercase',
                       background:
                         activePercent === 100
                           ? 'linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)'
