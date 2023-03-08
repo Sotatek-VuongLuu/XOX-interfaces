@@ -21,15 +21,25 @@ const Wrapper = styled.div`
   }
 
   .amount {
-    font-weight: 700;
-    font-size: 36px;
-    line-height: 44px;
-    text-align: center;
-    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
     margin: 16px 0;
+    position: relative;
+    display: flex;
+    .dollar {
+      font-size: 20px;
+      color: #c20da3;
+      margin-right: 2px;
+      margin-top: 2px;
+    }
+    .value {
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 44px;
+      text-align: center;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
   }
 
   .guide {
@@ -77,8 +87,14 @@ const Wrapper = styled.div`
       line-height: 17px;
     }
     .amount {
-      font-size: 24px;
-      line-height: 29px;
+      .dollar {
+        font-size: 16px;
+        line-height: 19px;
+      }
+      .value {
+        font-size: 24px;
+        line-height: 29px;
+      }
     }
     .guide {
       font-size: 14px;
@@ -101,7 +117,11 @@ const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
         <img src="/images/ref_chart_bg.svg" alt="ref_chart_bg" className="ref_chart_bg" />
       </div>
       <p className="title">Total Earned By Referrals</p>
-      <p className="amount">${Number(volumnTotalEarn)}</p>
+
+      <p className="amount">
+        <span className="dollar">$</span>
+        <p className="value">{Number(volumnTotalEarn)}</p>
+      </p>
 
       <p className="guide">
         This number represents the total value in $ earned so far by all referral users since day one till today. Start

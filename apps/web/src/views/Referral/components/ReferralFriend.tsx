@@ -310,6 +310,7 @@ export const WrapperRight = styled(Box)<IPropsWR>`
 
   .swiper.swiper-initialized {
     padding-top: 16px;
+    margin-top: -20px;
   }
 
   .claim_total {
@@ -391,7 +392,7 @@ export const WrapperRight = styled(Box)<IPropsWR>`
   }
 
   .claim {
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: #ffffff;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -777,7 +778,7 @@ const ReferralFriend = ({
                                     tooltipMessage={t('Copied')}
                                     button={
                                       <img
-                                        src="/images/copy_purple.svg"
+                                        src="/images/external-icon.svg"
                                         alt="copy_purple"
                                         style={{ marginBottom: '-2px', marginLeft: '8px' }}
                                       />
@@ -829,9 +830,7 @@ const ReferralFriend = ({
                             <div className="shadow" />
 
                             <p className="title">
-                              {item.point.toLocaleString()} points
-                              <br />
-                              ~${item.dollar.toLocaleString()}
+                              {item.point.toLocaleString()} points ~ ${item.dollar.toLocaleString()}
                             </p>
 
                             {account && (
