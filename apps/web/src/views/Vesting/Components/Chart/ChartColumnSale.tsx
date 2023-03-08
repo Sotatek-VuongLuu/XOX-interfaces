@@ -1,6 +1,5 @@
 import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 import useWindowSize from 'hooks/useWindowSize'
-import React from 'react'
 import { Bar, BarChart, ResponsiveContainer, Tooltip, XAxis } from 'recharts'
 import styled from 'styled-components'
 
@@ -15,12 +14,14 @@ interface PropsColumnChart {
 }
 
 const CustomTooltipStyle = styled.div`
-  background: #fff;
-  padding: 5px 10px;
-  font-weight: 400;
-  font-size: 14px;
-  line-height: 17px;
-  color: black;
+  background: #242424;
+  border-radius: 10px;
+  padding: 8px;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(255, 255, 255, 0.87);
+  border: 1px solid rgba(254, 64, 57, 0.3);
 `
 
 const CustomTooltip = ({ active, payload, label }: any) => {
@@ -55,7 +56,7 @@ function ChartColumnSale(props: PropsColumnChart) {
         </defs>
         <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} />
         <XAxis dataKey="name" tick={{ fontSize: 10, fontWeight: 400, fill: 'rgba(255, 255, 255, 0.6)' }} />
-        <Bar dataKey="uv" fill="url(#colorUv)" radius={[20, 20, 20, 20]} />
+        <Bar dataKey="uv" fill="url(#colorUv)" radius={[20, 20, 20, 20]} style={{ cursor: 'pointer' }} />
       </BarChart>
     </ResponsiveContainer>
   )

@@ -34,6 +34,18 @@ const Content = styled.div`
     margin-top: 24px;
   }
 
+  .high-light {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: #fb8618;
+
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+
   @media screen and (max-width: 900px) {
     .normal {
       font-size: 14px;
@@ -158,7 +170,7 @@ function PrivateSale() {
             Blockchains, which will be selected by community voting, popularity, capabilities, volume and scalability
             potential. Learn More in our Docs
           </p>
-          <p>XOX Token Pre-Sales</p>
+          <p className="high-light">XOX Token Pre-Sales</p>
           <p>Total Allocation 10.800.000 XOX Tokens 6% of the Total Supply (180.000.000 Tokens)</p>
         </div>
 
@@ -208,7 +220,7 @@ function PrivateSale() {
             Public Sales have Ended
           </p>
           <p className="normal">
-            <strong>XOXS Bonus on each Round</strong>
+            <strong className="high-light">XOXS Bonus on each Round</strong>
           </p>
           <p className="normal">
             1. Round 1 - 8% XOXS Bonus <br />

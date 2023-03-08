@@ -84,7 +84,7 @@ export const CustomTableWrapper = styled(Flex)`
   }
 
   & > div {
-    min-width: 1400px;
+    min-width: 1300px;
   }
 
   &::-webkit-scrollbar {

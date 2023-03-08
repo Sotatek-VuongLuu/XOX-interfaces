@@ -14,6 +14,13 @@ const CustomTable = styled(Table)`
   &::before {
     top: 52px;
   }
+
+  .table-header {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    color: rgba(255, 255, 255, 0.6);
+  }
 `
 
 const Wrapper = styled.div`
@@ -65,13 +72,21 @@ const DataRow = ({ item }) => {
   return (
     <Row className={`item_${item.id}`}>
       <Text className="text-token-metrics">{item.title}</Text>
-      <Text className="text-token-metrics">{item.tokenAllocationPercent}</Text>
-      <Text className="text-token-metrics">{item.tokenAllocation}</Text>
-      <Text className="text-token-metrics">{item.tge}</Text>
-      <Text className="text-token-metrics">{item.tokenAllocationatTge}</Text>
-      <Text className="text-token-metrics">{item.initialMarketcap}</Text>
+      <Text className="text-token-metrics">
+        {item.tokenAllocationPercent ? `${item.tokenAllocationPercent}%` : `-`}
+      </Text>
+      <Text className="text-token-metrics">
+        {item.tokenAllocationPercent ? Number(item.tokenAllocation).toLocaleString() : '-'}
+      </Text>
+      <Text className="text-token-metrics">{item.tge}%</Text>
+      <Text className="text-token-metrics">
+        {item.tokenAllocationatTge ? Number(item.initialMarketcap).toLocaleString() : '-'}
+      </Text>
+      <Text className="text-token-metrics">
+        {item.initialMarketcap ? Number(item.initialMarketcap).toLocaleString() : '-'}
+      </Text>
       <Text className="text-token-metrics" textAlign="right">
-        {item.fullyDilitedMc}
+        {item.fullyDilitedMc ? Number(item.fullyDilitedMc).toLocaleString() : '-'}
       </Text>
     </Row>
   )
@@ -96,89 +111,13 @@ function TokenMetrics({ initialTokenMetrics }: IProps) {
       </Flex>
       <CustomTableSale>
         <CustomTable>
-          <Text
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            Tokenometrics
-          </Text>
-          <Text
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            Token Allocation (%)
-          </Text>
-          <ClickableColumnHeader
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Token Allocation</span>{' '}
-            </Flex>
-          </ClickableColumnHeader>
-          <ClickableColumnHeader
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>TGE (%)</span>{' '}
-            </Flex>
-          </ClickableColumnHeader>
-          <Text
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            Token Allocation at TGE
-          </Text>
-          <Text
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            Initial Marketcap
-          </Text>
-          <ClickableColumnHeader
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            <Flex alignItems="center">
-              <span style={{ marginRight: '12px', textAlign: 'right' }}>Fully Dilited MC ($)</span>
-            </Flex>
-          </ClickableColumnHeader>
+          <Text className="table-header">Tokenometrics</Text>
+          <Text className="table-header">Token Allocation (%)</Text>
+          <Text className="table-header">Token Allocation</Text>
+          <Text className="table-header">TGE (%)</Text>
+          <Text className="table-header">Token Allocation at TGE</Text>
+          <Text className="table-header">Initial Marketcap</Text>
+          <Text className="table-header">Fully Dilited MC ($)</Text>
         </CustomTable>
         {Array.from(initialTokenMetrics).map((item) => {
           return <DataRow item={item} />
