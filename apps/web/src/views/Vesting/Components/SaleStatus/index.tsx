@@ -16,14 +16,14 @@ const WrapperItem = styled(Box)`
     height: 50px;
     border-radius: 20px;
     z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-left: 2px solid #ffffff30;
+    border-bottom: 1px solid #ffffff30;
+    border-left: 1px solid #ffffff30;
     border-bottom-right-radius: unset;
     border-top-left-radius: unset;
   }
 
   .edge1 {
-    width: 2px;
+    width: 1px;
     height: calc(100% - 50px);
     position: absolute;
     bottom: 50px;
@@ -40,14 +40,14 @@ const WrapperItem = styled(Box)`
     height: 50px;
     border-radius: 20px;
     z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-right: 2px solid #ffffff30;
+    border-bottom: 1px solid #ffffff30;
+    border-right: 1px solid #ffffff30;
     border-bottom-left-radius: unset;
     border-top-right-radius: unset;
   }
 
   .edge2 {
-    width: 2px;
+    width: 1px;
     height: calc(100% - 50px);
     position: absolute;
     bottom: 50px;
@@ -100,8 +100,8 @@ const WrapperItem = styled(Box)`
       height: 100%;
       border-radius: 30px;
       z-index: 1;
-      border-left: 2px solid #ffffff30;
-      border-bottom: 2px solid #ffffff30;
+      border-left: 1px solid #ffffff30;
+      border-bottom: 1px solid #ffffff30;
       border-bottom-right-radius: unset;
       transform: translateY(-10px);
     }
@@ -112,8 +112,8 @@ const WrapperItem = styled(Box)`
       height: 100%;
       border-radius: 30px;
       z-index: 1;
-      border-right: 2px solid #ffffff30;
-      border-bottom: 2px solid #ffffff30;
+      border-right: 1px solid #ffffff30;
+      border-bottom: 1px solid #ffffff30;
       border-bottom-left-radius: unset;
       transform: translateY(-10px);
     }
@@ -122,7 +122,7 @@ const WrapperItem = styled(Box)`
       position: absolute;
       bottom: 0;
       left: 33px;
-      height: 2px;
+      height: 1px;
       width: calc(100% - 66px);
       background: #ffffff30;
     }

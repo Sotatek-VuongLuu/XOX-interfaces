@@ -131,7 +131,8 @@ const Wrapper = styled.div`
 
     .fake_blur {
       position: absolute;
-      height: 400px;
+      bottom: 0;
+      height: 428px;
     }
   }
 `

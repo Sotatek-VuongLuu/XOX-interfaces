@@ -17,14 +17,14 @@ const Wrapper = styled.div`
     height: 28px;
     border-radius: 20px;
     z-index: 1;
-    border-bottom: 2px solid #ffb000;
-    border-left: 2px solid #ffb000;
+    border-bottom: 1px solid #ffb000;
+    border-left: 1px solid #ffb000;
     border-bottom-right-radius: unset;
     border-top-left-radius: unset;
   }
 
   .edge1 {
-    width: 2px;
+    width: 1px;
     height: calc(75% - 28px);
     position: absolute;
     bottom: 28px;
@@ -41,14 +41,14 @@ const Wrapper = styled.div`
     height: 28px;
     border-radius: 20px;
     z-index: 1;
-    border-bottom: 2px solid #ffb000;
-    border-right: 2px solid #ffb000;
+    border-bottom: 1px solid #ffb000;
+    border-right: 1px solid #ffb000;
     border-bottom-left-radius: unset;
     border-top-right-radius: unset;
   }
 
   .edge2 {
-    width: 2px;
+    width: 1px;
     height: calc(75% - 28px);
     position: absolute;
     bottom: 28px;
@@ -74,9 +74,9 @@ const Wrapper = styled.div`
         height: 100%;
         border-radius: 10px;
         z-index: 1;
-        border-bottom: 2px solid #b809b5;
-        border-top: 2px solid #b809b5;
-        border-left: 2px solid #b809b5;
+        border-bottom: 1px solid #b809b5;
+        border-top: 1px solid #b809b5;
+        border-left: 1px solid #b809b5;
         border-bottom-right-radius: unset;
         border-top-right-radius: unset;
       }
@@ -85,7 +85,7 @@ const Wrapper = styled.div`
         position: absolute;
         top: 0;
         left: 40px;
-        height: 2px;
+        height: 1px;
         width: calc(100% - 80px);
         background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
       }
@@ -97,9 +97,9 @@ const Wrapper = styled.div`
         height: 100%;
         border-radius: 10px;
         z-index: 1;
-        border-bottom: 2px solid #ffb000;
-        border-top: 2px solid #ffb000;
-        border-right: 2px solid #ffb000;
+        border-bottom: 1px solid #ffb000;
+        border-top: 1px solid #ffb000;
+        border-right: 1px solid #ffb000;
         border-bottom-left-radius: unset;
         border-top-left-radius: unset;
       }
@@ -108,7 +108,7 @@ const Wrapper = styled.div`
         position: absolute;
         bottom: 0;
         left: 40px;
-        height: 2px;
+        height: 1px;
         width: calc(100% - 80px);
         background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
       }
@@ -204,9 +204,9 @@ const Table = styled.div`
     height: 100%;
     border-radius: 30px;
     z-index: 1;
-    border-bottom: 2px solid #ffb000;
-    border-top: 2px solid #ffb000;
-    border-left: 2px solid #ffb000;
+    border-bottom: 1px solid #ffb000;
+    border-top: 1px solid #ffb000;
+    border-left: 1px solid #ffb000;
     border-bottom-right-radius: unset;
     border-top-right-radius: unset;
   }
@@ -217,9 +217,9 @@ const Table = styled.div`
     height: 100%;
     border-radius: 30px;
     z-index: 1;
-    border-bottom: 2px solid #b809b5;
-    border-top: 2px solid #b809b5;
-    border-right: 2px solid #b809b5;
+    border-bottom: 1px solid #b809b5;
+    border-top: 1px solid #b809b5;
+    border-right: 1px solid #b809b5;
     border-bottom-left-radius: unset;
     border-top-left-radius: unset;
   }
@@ -228,7 +228,7 @@ const Table = styled.div`
     position: absolute;
     top: 0;
     left: 40px;
-    height: 2px;
+    height: 1px;
     width: calc(100% - 80px);
     background: linear-gradient(95.32deg, #ffb000, #ed1c51, #b809b5);
   }
@@ -237,7 +237,7 @@ const Table = styled.div`
     position: absolute;
     bottom: 0;
     left: 40px;
-    height: 2px;
+    height: 1px;
     width: calc(100% - 80px);
     background: linear-gradient(95.32deg, #ffb000, #ed1c51, #b809b5);
   }

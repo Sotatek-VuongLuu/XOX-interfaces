@@ -44,6 +44,21 @@ const Content = styled.div`
         color: rgba(255, 255, 255, 0.87);
       }
     }
+
+    @media screen and (max-width: 900px) {
+      grid-template-columns: 1fr;
+
+      .item {
+        .item_amount {
+          font-size: 20px;
+          line-height: 24px;
+        }
+        .item_title {
+          font-size: 14px;
+          line-height: 17px;
+        }
+      }
+    }
   }
 
   .your_ref {
@@ -94,6 +109,38 @@ const Content = styled.div`
         font-size: 18px;
         line-height: 22px;
         color: rgba(255, 255, 255, 0.87);
+        margin-top: 8px;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      grid-template-columns: 1fr;
+
+      .my_code {
+        font-size: 12px;
+        line-height: 15px;
+      }
+      .code {
+        padding: 10px 14px;
+        margin-top: 8px;
+
+        .content_code_number {
+          .code_number {
+            font-size: 14px;
+            line-height: 17px;
+          }
+        }
+      }
+
+      .item_your-ref {
+        .item_your-ref_amount {
+          font-size: 20px;
+          line-height: 24px;
+        }
+        .item_your-ref_title {
+          font-size: 14px;
+          line-height: 17px;
+        }
       }
     }
   }
@@ -129,14 +176,14 @@ const Content = styled.div`
     height: 20px;
     border-radius: 10px;
     z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-left: 2px solid #ffffff30;
+    border-bottom: 1px solid #ffffff30;
+    border-left: 1px solid #ffffff30;
     border-bottom-right-radius: unset;
     border-top-left-radius: unset;
   }
 
   .edge_1 {
-    width: 2px;
+    width: 1px;
     height: calc(100% - 50px);
     position: absolute;
     bottom: 20px;
@@ -153,14 +200,14 @@ const Content = styled.div`
     height: 20px;
     border-radius: 10px;
     z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-right: 2px solid #ffffff30;
+    border-bottom: 1px solid #ffffff30;
+    border-right: 1px solid #ffffff30;
     border-bottom-left-radius: unset;
     border-top-right-radius: unset;
   }
 
   .edge_2 {
-    width: 2px;
+    width: 1px;
     height: calc(100% - 50px);
     position: absolute;
     bottom: 20px;
@@ -251,56 +298,55 @@ function YourInfo({ dataInfo, dataRefInfo }: IProps) {
         {tab === 0 && <TabSaleHistory />}
         {tab === 1 && <TabClaimHistory />}
 
-        <>
-          <Flex mb="16px" mt="24px" justifyContent="space-between">
-            <Text
-              className="heading_info_vesting"
-              fontSize="20px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="24px"
-              color="rgba(255, 255, 255, 0.87)"
-              height="24px"
-            >
-              Referral
-            </Text>
-          </Flex>
-          <div className="your_ref">
-            {Array.from(dataRefInfo).map((item) => {
-              return (
-                <div className="item_your-ref">
-                  <div className="corner_1" />
-                  <div className="edge_1" />
-                  <div className="corner_2" />
-                  <div className="edge_2" />
-                  <p className="item_your-ref_amount">{item.amount}</p>
-                  <p className="item_your-ref_title">{item.title}</p>
-                </div>
-              )
-            })}
-            <div>
-              <p className="my_code">My Referral Code</p>
-              <div className="code">
-                <div className="content_code_number">
-                  {account && (
-                    <>
-                      <span className="code_number">{userProfile?.referralCode}</span>
-                      <span>
-                        <CopyButton
-                          width="24px"
-                          text={userProfile?.referralCode}
-                          tooltipMessage={t('Copied')}
-                          button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
-                        />
-                      </span>
-                    </>
-                  )}
-                </div>
+        <Flex mb="16px" mt="24px" justifyContent="space-between">
+          <Text
+            className="heading_info_vesting"
+            fontSize="20px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="700"
+            lineHeight="24px"
+            color="rgba(255, 255, 255, 0.87)"
+            height="24px"
+          >
+            Referral
+          </Text>
+        </Flex>
+
+        <div className="your_ref">
+          {Array.from(dataRefInfo).map((item) => {
+            return (
+              <div className="item_your-ref">
+                <div className="corner_1" />
+                <div className="edge_1" />
+                <div className="corner_2" />
+                <div className="edge_2" />
+                <p className="item_your-ref_amount">{item.amount}</p>
+                <p className="item_your-ref_title">{item.title}</p>
+              </div>
+            )
+          })}
+          <div>
+            <p className="my_code">My Referral Code</p>
+            <div className="code">
+              <div className="content_code_number">
+                {account && (
+                  <>
+                    <span className="code_number">{userProfile?.referralCode}</span>
+                    <span>
+                      <CopyButton
+                        width="24px"
+                        text={userProfile?.referralCode}
+                        tooltipMessage={t('Copied')}
+                        button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
+                      />
+                    </span>
+                  </>
+                )}
               </div>
             </div>
           </div>
-        </>
+        </div>
       </Content>
     </Wrapper>
   )

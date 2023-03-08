@@ -2,7 +2,15 @@ import { Button } from '@pancakeswap/uikit'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  .total_vested {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.87);
+    margin-bottom: 16px;
+  }
+`
 
 const Content = styled.div`
   .sale-container-bottom {
@@ -27,14 +35,6 @@ const Content = styled.div`
     line-height: 19px;
     color: #fb8618;
     margin-bottom: 21px;
-  }
-
-  .total_vested {
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 19px;
-    color: rgba(255, 255, 255, 0.87);
-    margin-bottom: 16px;
   }
 
   .sale_item {
@@ -68,6 +68,12 @@ const Content = styled.div`
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 16px;
   }
+
+  .over_flow {
+    min-width: 1300px;
+  }
+
+  overflow-x: scroll;
 `
 
 const Img = styled.img`
@@ -299,12 +305,13 @@ const CountDown = ({ startTime }: Props) => {
 function VestingSchedule() {
   return (
     <Wrapper>
+      <div className="total_vested">Total vested at this time: 2,000</div>
       <Content>
-        <div className="total_vested">Total vested at this time: 2,000</div>
-
-        {Array.from(vestingTiming).map((item, index) => {
-          return <SaleItem item={item} index={index} />
-        })}
+        <div className="over_flow">
+          {Array.from(vestingTiming).map((item, index) => {
+            return <SaleItem item={item} index={index} />
+          })}
+        </div>
       </Content>
     </Wrapper>
   )

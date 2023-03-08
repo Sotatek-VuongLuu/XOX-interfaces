@@ -63,6 +63,28 @@ const CustomTable = styled(Table)`
     position: absolute;
     top: -13px;
   }
+
+  .table-header {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.6);
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+
+  .table_header_total {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.87);
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
 `
 
 const CustomTableRow = styled(CustomTable)`
@@ -88,9 +110,7 @@ const CustomTableRow = styled(CustomTable)`
 
 const CustomTableSale = styled(CustomTableWrapper)`
   & > div {
-    min-width: 1200;
-    @media screen and (max-width: 900px) {
-    }
+    min-width: 1300px;
   }
 `
 
@@ -144,76 +164,12 @@ function PrivateSale() {
 
         <CustomTableSale>
           <CustomTable>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              TOKEN SALES
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              Total Sale (%)
-            </Text>
-            <ClickableColumnHeader
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              <Flex alignItems="center">
-                <span style={{ marginRight: '12px' }}>Amount of tokens</span>{' '}
-              </Flex>
-            </ClickableColumnHeader>
-            <ClickableColumnHeader
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              <Flex alignItems="center">
-                <span style={{ marginRight: '12px' }}>Price</span>{' '}
-              </Flex>
-            </ClickableColumnHeader>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              Total Money Raise ($)
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.6)"
-              className="table-header"
-            >
-              Launch price 0.06$ ($)
-            </Text>
+            <Text className="table-header">TOKEN SALES</Text>
+            <Text className="table-header">Total Sale (%)</Text>
+            <Text className="table-header">Amount of tokens</Text>
+            <Text className="table-header">Price</Text>
+            <Text className="table-header">Total Money Raise ($)</Text>
+            <Text className="table-header">Launch price 0.06$ ($)</Text>
           </CustomTable>
 
           {Array.from(arrToken).map((item) => {
@@ -230,72 +186,12 @@ function PrivateSale() {
           })}
 
           <CustomTable>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.87)"
-              className="table-header"
-            >
-              TOTAL
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.87)"
-              className="table-header"
-            >
-              6%
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.87)"
-              className="table-header"
-            >
-              10,800,000
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.87)"
-              className="table-header"
-            >
-              {null}
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.87)"
-              className="table-header"
-            >
-              487,800
-            </Text>
-            <Text
-              fontSize="16px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="19px"
-              color="rgba(255, 255, 255, 0.87)"
-              className="table-header"
-            >
-              648,000
-            </Text>
+            <Text className="table_header_total">TOTAL</Text>
+            <Text className="table_header_total">6%</Text>
+            <Text className="table_header_total">10,800,000</Text>
+            <Text className="table_header_total">{null}</Text>
+            <Text className="table_header_total">487,800</Text>
+            <Text className="table_header_total">648,000</Text>
           </CustomTable>
         </CustomTableSale>
 

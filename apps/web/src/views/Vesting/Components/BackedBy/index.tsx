@@ -45,14 +45,14 @@ const WrapperItem = styled(Flex)`
     height: 50px;
     border-radius: 20px;
     z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-left: 2px solid #ffffff30;
+    border-bottom: 1px solid #ffffff30;
+    border-left: 1px solid #ffffff30;
     border-bottom-right-radius: unset;
     border-top-left-radius: unset;
   }
 
   .edge1 {
-    width: 2px;
+    width: 1px;
     height: calc(100% - 50px);
     position: absolute;
     bottom: 50px;
@@ -69,14 +69,14 @@ const WrapperItem = styled(Flex)`
     height: 50px;
     border-radius: 20px;
     z-index: 1;
-    border-bottom: 2px solid #ffffff30;
-    border-right: 2px solid #ffffff30;
+    border-bottom: 1px solid #ffffff30;
+    border-right: 1px solid #ffffff30;
     border-bottom-left-radius: unset;
     border-top-right-radius: unset;
   }
 
   .edge2 {
-    width: 2px;
+    width: 1px;
     height: calc(100% - 50px);
     position: absolute;
     bottom: 50px;
