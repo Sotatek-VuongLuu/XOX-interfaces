@@ -102,7 +102,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
   }
 
   return (
-    <Modal title={t('Settings')} onDismiss={onDismiss}>
+    <Modal title={t('Settings')} onDismiss={onDismiss} style={{ border: '1px solid rgba(255, 255, 255, 0.1)' }}>
       <ScrollableContainer>
         {mode === SettingsMode.GLOBAL && (
           <>
@@ -159,7 +159,7 @@ const SettingsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
         {mode === SettingsMode.SWAP_LIQUIDITY && (
           <>
             <Flex pt="3px" flexDirection="column">
-              <Text bold fontSize="18px" color='#FFFFFFDE'>
+              <Text bold fontSize="18px" color="#FFFFFFDE">
                 {t('Swaps & Liquidity')}
               </Text>
               <Flex justifyContent="space-between" alignItems="center" mb="26.5px">

@@ -1,5 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Button, Text, useModal, useToast } from '@pancakeswap/uikit'
+import { Button, Text, useMatchBreakpoints, useModal, useToast } from '@pancakeswap/uikit'
 import { Currency, CurrencyAmount, Trade, TradeType } from '@pancakeswap/sdk'
 import axios from 'axios'
 import { GreyCard } from 'components/Card'
@@ -84,6 +84,7 @@ export default function SwapCommitButton({
   const { priceImpactWithoutFee } = computeTradePriceBreakdown(trade)
   // the callback to execute the swap
   const swapCalls = useSwapXOXCallArguments(trade, allowedSlippage, recipient, referral, isRouterNormal)
+  const { isMobile } = useMatchBreakpoints()
 
   const { toastWarning } = useToast()
 
@@ -227,19 +228,24 @@ export default function SwapCommitButton({
   }, [referral])
   if (swapIsUnsupported) {
     return (
-      <Button width="100%" disabled style={{ fontSize: '18px' }}>
+      <Button width="100%" disabled style={{ fontSize: isMobile ? '16px' : '18px' }}>
         {t('Unsupported Asset')}
       </Button>
     )
   }
 
   if (!account) {
-    return <ConnectWalletButton width="100%" style={{ fontSize: '18px' }} />
+    return <ConnectWalletButton width="100%" style={{ fontSize: isMobile ? '16px' : '18px' }} />
   }
 
   if (showWrap) {
     return (
-      <CommitButton width="100%" disabled={Boolean(wrapInputError)} onClick={onWrap} style={{ fontSize: '18px' }}>
+      <CommitButton
+        width="100%"
+        disabled={Boolean(wrapInputError)}
+        onClick={onWrap}
+        style={{ fontSize: isMobile ? '16px' : '18px' }}
+      >
         {wrapInputError ?? (wrapType === WrapType.WRAP ? 'Wrap' : wrapType === WrapType.UNWRAP ? 'Unwrap' : null)}
       </CommitButton>
     )
@@ -283,6 +289,7 @@ export default function SwapCommitButton({
               onClick={approveCallback}
               disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
               width="100%"
+              style={{ fontSize: isMobile ? '16px' : '18px' }}
             >
               {approval === ApprovalState.PENDING ? (
                 <AutoRow gap="6px" justify="center">
@@ -304,6 +311,7 @@ export default function SwapCommitButton({
               id="swap-button"
               height={43}
               disabled={isSwap}
+              style={{ fontSize: isMobile ? '16px' : '18px' }}
             >
               {priceImpactSeverity > 3 && !isExpertMode
                 ? t('Price Impact High')
@@ -332,7 +340,7 @@ export default function SwapCommitButton({
         height={43}
         width="100%"
         disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
-        style={{ fontSize: '18px' }}
+        style={{ fontSize: isMobile ? '16px' : '18px' }}
       >
         {swapInputError ||
           (priceImpactSeverity > 3 && !isExpertMode

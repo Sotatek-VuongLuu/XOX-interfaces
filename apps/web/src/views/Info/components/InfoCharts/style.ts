@@ -24,6 +24,10 @@ export const TitleChart = styled.div`
     cursor: pointer;
     margin-right: 8px;
 
+    &:hover {
+      opacity: 0.8;
+    }
+
     .boxed-child {
       width: 100%;
       height: 100%;
@@ -70,6 +74,9 @@ export const TitleChart = styled.div`
     color: #ffffff;
     border: none;
     cursor: pointer;
+    &:hover {
+      opacity: 0.8;
+    }
   }
 
   @media screen and (max-width: 900px) {
@@ -188,6 +195,9 @@ export const ChartContent = styled.div`
       line-height: 17px;
       color: rgba(255, 255, 255, 0.6);
       background: rgba(255, 255, 255, 0.05);
+      &:hover {
+        opacity: 0.8;
+      }
     }
     @media (max-width: 576px) {
       button {

@@ -141,7 +141,7 @@ const ConfirmSwapModal: React.FC<React.PropsWithChildren<InjectedModalProps & Co
 
   if (!chainId) return null
   return (
-    <ConfirmSwapModalContainer handleDismiss={handleDismiss}>
+    <ConfirmSwapModalContainer handleDismiss={handleDismiss} hideCloseButton={!!txHash}>
       {attemptingTxn ? (
         <ConfirmationPendingContent trade={trade} />
       ) : txHash ? (

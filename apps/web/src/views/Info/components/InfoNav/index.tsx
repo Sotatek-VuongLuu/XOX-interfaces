@@ -137,6 +137,12 @@ const MainContent = styled.div`
 
   .get-xox:hover,
   .learn-more:hover {
+    background: #ffffff;
+    color: #000000;
+  }
+
+  /* .get-xox:hover,
+  .learn-more:hover {
     border-left: 1px solid #b809b5;
     border-top: none;
     border-right: 1px solid #ffb000;
@@ -160,7 +166,7 @@ const MainContent = styled.div`
       position: absolute;
       bottom: 0;
       left: 8px;
-    }
+    } */
 
     .top-left {
       position: absolute;
@@ -283,6 +289,7 @@ const MainContent = styled.div`
       border-radius: 10px;
       background: transparent;
       box-shadow: none;
+      
     }
 
     .learn-more {
@@ -337,19 +344,19 @@ const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: 
             rel="noreferrer"
           >
             <Button className="get-xox">
-              <div className="top-left"></div>
+              {/* <div className="top-left"></div>
               <div className="top-right"></div>
               <div className="bottom-left"></div>
-              <div className="bottom-right"></div>
+              <div className="bottom-right"></div> */}
               Get XOX
             </Button>
           </a>
           <a href="/whitepaper" target="_blank" rel="noreferrer">
             <Button className="learn-more">
-              <div className="top-left"></div>
+              {/* <div className="top-left"></div>
               <div className="top-right"></div>
               <div className="bottom-left"></div>
-              <div className="bottom-right"></div>
+              <div className="bottom-right"></div> */}
               Learn More
             </Button>
           </a>

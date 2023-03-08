@@ -4,31 +4,31 @@ import { SvgProps } from "../types";
 
 const Icon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
-      <circle cx="12" cy="12" r="12" fill="white" fillOpacity="0.1" />
-      <g clipPath="url(#clip0_11079_25588)">
+    <svg width="30" height="31" viewBox="0 0 30 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="15" cy="15.5" r="14.5" stroke="url(#paint0_linear_11606_20622)" />
+      <g clipPath="url(#clip0_11606_20622)">
         <path
           fillRule="evenodd"
           clipRule="evenodd"
-          d="M14.3696 5.86621C14.5697 7.60691 15.5303 8.6447 17.2003 8.7551V10.7129C16.2325 10.8086 15.3847 10.4884 14.3987 9.8849V13.5466C14.3987 18.1983 9.38503 19.6519 7.36937 16.3177C6.0741 14.1722 6.86727 10.4075 11.0223 10.2566V12.3211C10.7058 12.3727 10.3674 12.4536 10.0581 12.5603C9.13399 12.8768 8.61006 13.4693 8.75559 14.5145C9.03575 16.5165 12.6669 17.109 12.3649 13.197V5.86989H14.3696V5.86621Z"
-          fill="url(#paint0_linear_11079_25588)"
+          d="M17.9617 7.83301C18.2118 10.0089 19.4125 11.3061 21.5 11.4441V13.8914C20.2902 14.011 19.2306 13.6108 17.9981 12.8564V17.4335C17.9981 23.2481 11.7309 25.0652 9.21134 20.8974C7.59226 18.2155 8.58372 13.5096 13.7775 13.321V15.9017C13.3818 15.9661 12.9589 16.0673 12.5723 16.2007C11.4171 16.5963 10.7622 17.3369 10.9441 18.6434C11.2943 21.1458 15.8332 21.8865 15.4557 16.9965V7.83761H17.9617V7.83301Z"
+          fill="white"
         />
       </g>
       <defs>
         <linearGradient
-          id="paint0_linear_11079_25588"
-          x1="5.97653"
-          y1="5.86621"
-          x2="19.5764"
-          y2="6.93912"
+          id="paint0_linear_11606_20622"
+          x1="-2.37624"
+          y1="0.5"
+          x2="36.7596"
+          y2="4.14161"
           gradientUnits="userSpaceOnUse"
         >
           <stop stopColor="#B809B5" />
           <stop offset="0.510417" stopColor="#ED1C51" />
           <stop offset="1" stopColor="#FFB000" />
         </linearGradient>
-        <clipPath id="clip0_11079_25588">
-          <rect width="13.3333" height="13.3333" fill="white" transform="translate(5.3335 5.33301)" />
+        <clipPath id="clip0_11606_20622">
+          <rect width="16.6667" height="16.6667" fill="white" transform="translate(6.66663 7.1665)" />
         </clipPath>
       </defs>
     </svg>

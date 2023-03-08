@@ -82,7 +82,7 @@ const UserMenuStyle = styled.div`
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
-    color: #c20da3;
+    color: #fb8618;
   }
 `
 

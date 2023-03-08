@@ -3,7 +3,7 @@ import { FlexProps } from "../Box";
 
 export type FooterLinkType = {
   label: string;
-  items: { label: string; href?: string; isHighlighted?: boolean; icon?: any; label2?: string }[];
+  items: { label: string; href?: string; isHighlighted?: boolean; icon?: any; label2?: string; product?: boolean }[];
 };
 
 export type FooterProps = {

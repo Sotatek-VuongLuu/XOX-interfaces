@@ -184,3 +184,9 @@ export const ImagBGFooterTow = styled.img`
   bottom: 130px;
   z-index: 1;
 `;
+
+export const StyledIconArrow = styled.div`
+  position: relative;
+  left: 4px;
+  bottom: 3px;
+`;
