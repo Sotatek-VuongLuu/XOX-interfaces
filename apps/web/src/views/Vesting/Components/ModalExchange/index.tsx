@@ -12,6 +12,7 @@ import {
   NumericalInput,
   Text,
 } from '@pancakeswap/uikit'
+import useWindowSize from 'hooks/useWindowSize'
 import React from 'react'
 import styled from 'styled-components'
 
@@ -71,6 +72,10 @@ const StyledModalContainer = styled(ModalContainer)`
 
 const StyledModalHeader = styled(ModalHeader)`
   padding: 0px !important;
+
+  @media screen and (max-width: 900px) {
+    margin-bottom: 16px;
+  }
 `
 
 const StyledModalBody = styled(ModalBody)`
@@ -79,6 +84,11 @@ const StyledModalBody = styled(ModalBody)`
     width: 20px;
     margin-right: 8px;
     object-fit: cover;
+
+    @media screen and (max-width: 900px) {
+      height: 16px;
+      width: 16px;
+    }
   }
 
   .coin {
@@ -90,6 +100,11 @@ const StyledModalBody = styled(ModalBody)`
     font-size: 16px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
+    @media screen and (max-width: 900px) {
+      font-size: 12px;
+      line-height: 15px;
+      margin-left: 8px;
+    }
   }
   .balance {
     font-weight: 400;
@@ -97,6 +112,39 @@ const StyledModalBody = styled(ModalBody)`
     line-height: 15px;
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 8px;
+  }
+
+  .balance_mb {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 15px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+  .buy_xox {
+    width: 400px;
+    @media screen and (max-width: 900px) {
+      width: 100%;
+    }
+  }
+
+  .text_mb {
+    font-size: 12px;
+    line-height: 15px;
+  }
+
+  @media screen and (max-width: 900px) {
+    .xox_amount {
+      margin: 16px 0px !important;
+    }
+
+    .xoxs_amount {
+      margin-bottom: 16px;
+    }
+
+    .value {
+      font-size: 14px !important;
+      line-height: 17px !important;
+    }
   }
 `
 
@@ -134,6 +182,12 @@ const BoxCenter = styled(Box)`
       outline: none;
     }
   }
+
+  @media screen and (max-width: 900px) {
+    width: 100%;
+    padding: 10px 14px;
+    margin-top: 8px;
+  }
 `
 interface INumericalInputStyledProps {
   amount?: string
@@ -163,12 +217,37 @@ const NumericalInputStyled = styled(NumericalInput)<INumericalInputStyledProps>`
   }
 `
 
+const FlexCustom = styled(Flex)`
+  align-items: center;
+
+  .title_ref {
+    color: rgba(255, 255, 255, 0.6);
+    font-weight: 700;
+    font-size: 12px;
+    margin-right: 20px;
+  }
+
+  @media screen and (max-width: 900px) {
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-start;
+
+    .title_ref {
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 15px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+`
+
 interface Props extends InjectedModalProps {
   amount: any
   setAmount: any
 }
 
 function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
+  const { width } = useWindowSize()
   return (
     <StyledModalContainer>
       <div className="corner1" />
@@ -184,55 +263,87 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
         <ModalCloseButton onDismiss={onDismiss} />
       </StyledModalHeader>
       <StyledModalBody>
-        <p style={{ textAlign: 'right', paddingRight: '83px' }} className="balance">
-          Balance:
-        </p>
-        <Flex alignItems="center">
-          <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="53px">
-            Amount
-          </Text>
-          <BoxCenter>
-            <NumericalInputStyled
-              value={amount}
-              amount={amount}
-              onUserInput={(value) => setAmount(value)}
-              placeholder="0.00"
-            />
-            <ButtonStyle>All</ButtonStyle>
-          </BoxCenter>
-          <Text className="coin">
-            <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
-            <span>USDT</span>
-          </Text>
-        </Flex>
-        <Flex alignItems="center" margin="26px 0px">
+        {width > 900 && (
+          <>
+            <p style={{ textAlign: 'right', paddingRight: '83px' }} className="balance">
+              Balance:
+            </p>
+            <Flex alignItems="center">
+              <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="53px">
+                Amount
+              </Text>
+              <BoxCenter>
+                <NumericalInputStyled
+                  value={amount}
+                  amount={amount}
+                  onUserInput={(value) => setAmount(value)}
+                  placeholder="0.00"
+                />
+                <ButtonStyle>All</ButtonStyle>
+              </BoxCenter>
+              <Text className="coin">
+                <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
+                <span>USDT</span>
+              </Text>
+            </Flex>
+          </>
+        )}
+
+        {width <= 900 && (
+          <>
+            <Flex alignItems="center" justifyContent="space-between">
+              <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} className="text_mb">
+                Amount
+              </Text>
+              <p className="balance_mb">Balance:</p>
+              <Text className="coin">
+                <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
+                <span>USDT</span>
+              </Text>
+            </Flex>
+            <BoxCenter>
+              <NumericalInputStyled
+                value={amount}
+                amount={amount}
+                onUserInput={(value) => setAmount(value)}
+                placeholder="0.00"
+              />
+              <ButtonStyle>All</ButtonStyle>
+            </BoxCenter>
+          </>
+        )}
+
+        <Flex alignItems="center" margin="26px 0px" className="xox_amount">
           <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="25px">
             XOX Amount
           </Text>
-          <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px">
+          <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
             - XOX
           </Text>
         </Flex>
-        <Flex alignItems="center" marginBottom="26px">
+        <Flex alignItems="center" marginBottom="26px" className="xoxs_amount">
           <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="20px">
             XOXS Reward
           </Text>
-          <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px">
+          <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
             - XOXS
           </Text>
         </Flex>
 
-        <Flex alignItems="center">
-          <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="20px">
-            Referral Code
-          </Text>
+        <FlexCustom>
+          <Text className="title_ref">Referral Code</Text>
           <BoxCenter>
             <input placeholder="Optional" className="ref_code" />
           </BoxCenter>
-        </Flex>
+        </FlexCustom>
 
-        <Flex alignItems="center" justifyContent="center" paddingLeft={19} marginTop={48}>
-          <Button width="400px">Buy XOX</Button>
+        <Flex
+          alignItems="center"
+          justifyContent="center"
+          paddingLeft={width <= 900 ? 0 : 19}
+          marginTop={width <= 900 ? 16 : 48}
+        >
+          <Button className="buy_xox">Buy XOX</Button>
         </Flex>
       </StyledModalBody>
     </StyledModalContainer>
