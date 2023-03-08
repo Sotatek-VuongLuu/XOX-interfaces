@@ -43,6 +43,35 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
     ],
   },
   {
+    label: 'Explore',
+    items: [
+      {
+        label: 'Company',
+        href: '/',
+      },
+      {
+        label: 'Audits',
+        href: '/',
+      },
+      {
+        label: 'Partners',
+        href: '/',
+      },
+      {
+        label: 'Smart Contracts',
+        href: '/',
+      },
+      {
+        label: 'CoinMarketCap',
+        href: '/',
+      },
+      {
+        label: 'XOX Dex V2',
+        href: '/',
+      },
+    ],
+  },
+  {
     label: 'Support',
     items: [
       {

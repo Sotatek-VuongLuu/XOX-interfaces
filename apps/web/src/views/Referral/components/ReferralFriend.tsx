@@ -134,7 +134,7 @@ const WrapperLeft = styled(Box)`
     z-index: -1;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
-  &::before {
+  /* &::before {
     content: '';
     display: inline-block;
     width: 7px;
@@ -143,7 +143,7 @@ const WrapperLeft = styled(Box)`
     position: absolute;
     right: 23px;
     bottom: 23px;
-  }
+  } */
   .title {
     font-weight: 700;
     font-size: 20px;
@@ -697,8 +697,6 @@ const ReferralFriend = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
 
-  console.log(listLevelMustReach)
-
   return (
     <>
       <Box sx={{ marginTop: '16px', zIndex: 9 }}>
@@ -717,7 +715,7 @@ const ReferralFriend = ({
                     sx={{ height: 170, background: 'rgba(16, 16, 16, 0.3)', boxShadow: 'none' }}
                   >
                     <Table sx={{ minWidth: 400 }} aria-label="simple table">
-                      <TableHead style={{ position: 'sticky', top: 0, zIndex: 1 }}>
+                      <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'rgba(16, 16, 16)' }}>
                         <TableRow
                           sx={{
                             '& td, & th': {
@@ -735,7 +733,7 @@ const ReferralFriend = ({
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {listFriends.map((row) => (
+                        {[...listFriends].map((row) => (
                           <TableRow
                             key={row.name}
                             sx={{
