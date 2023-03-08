@@ -148,7 +148,7 @@ const CountDown = ({ startTime }: Props) => {
           <div className="item_border" />
           <div className="time_item">{handleTime(timeList.hours)}</div>
         </div>
-        <div className="title_time">hours</div>
+        <div className="title_time">Hours</div>
       </div>
       <span className="two_dot">:</span>
       <div>
@@ -156,7 +156,7 @@ const CountDown = ({ startTime }: Props) => {
           <div className="item_border" />
           <div className="time_item">{handleTime(timeList.minutes)}</div>
         </div>
-        <div className="title_time">mins</div>
+        <div className="title_time">Minutes</div>
       </div>
       <span className="two_dot">:</span>
       <div>
@@ -164,7 +164,7 @@ const CountDown = ({ startTime }: Props) => {
           <div className="item_border" />
           <div className="time_item">{handleTime(timeList.seconds)}</div>
         </div>
-        <div className="title_time">secs</div>
+        <div className="title_time">Seconds</div>
       </div>
     </CountDownWrapper>
   )

@@ -2,7 +2,11 @@ import { Box, Grid } from '@pancakeswap/uikit'
 import React from 'react'
 import styled from 'styled-components'
 
-const WrapperItem = styled(Box)`
+interface IPropsWrapperItem {
+  status?: boolean
+}
+
+const WrapperItem = styled(Box)<IPropsWrapperItem>`
   position: relative;
   background: rgba(16, 16, 16, 0.5);
   backdrop-filter: blur(10px);
@@ -88,7 +92,8 @@ const WrapperItem = styled(Box)`
     font-size: 14px;
     line-height: 17px;
     color: #ffffff;
-    background: #0d0d0d;
+    background: ${({ status }) =>
+      status ? ' linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)' : '#0d0d0d'};
     border-radius: 30px;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -128,6 +133,87 @@ const WrapperItem = styled(Box)`
     }
   }
 
+  .corner_active_1 {
+    position: absolute;
+    left: 0;
+    width: 40px;
+    height: 100%;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 1px solid #b809b5;
+    border-top: 1px solid #b809b5;
+    border-left: 1px solid #b809b5;
+    border-bottom-right-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge_active_1 {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    height: 1px;
+    width: calc(100% - 80px);
+    background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
+  }
+
+  .corner_active_2 {
+    position: absolute;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 1px solid #ffb000;
+    border-top: 1px solid #ffb000;
+    border-right: 1px solid #ffb000;
+    border-bottom-left-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge_active_2 {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    height: 1px;
+    width: calc(100% - 80px);
+    background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
+  }
+
+  .status {
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+  }
+
+  .live {
+    color: #64c66d;
+  }
+
+  .end {
+    color: #ff5353;
+  }
+
+  .incoming {
+    color: rgba(255, 255, 255, 0.38);
+  }
+
+  .dot_contain {
+    position: relative;
+  }
+
+  .dot {
+    top: -7px;
+    margin-left: 5px;
+    position: absolute;
+    font-weight: 700;
+    font-size: 36px;
+    line-height: 19px;
+    color: #64c66d;
+    @media screen and (max-width: 900px) {
+      top: -8px !important;
+    }
+  }
+
   @media screen and (max-width: 900px) {
     .status_name {
       font-size: 12px;
@@ -156,24 +242,56 @@ const CustomGrid = styled(Grid)`
   }
 `
 
+enum StatusSale {
+  LIVE = 'Live',
+  END = 'End',
+  INCOMING = 'Incoming',
+}
+
 const Item = ({ item }) => {
   return (
-    <WrapperItem>
-      <div className="corner1" />
-      <div className="edge1" />
-      <div className="corner2" />
-      <div className="edge2" />
+    <WrapperItem status={item.status === StatusSale.LIVE}>
+      {item.status === StatusSale.LIVE && (
+        <>
+          <div className="corner_active_1" />
+          <div className="edge_active_1" />
+          <div className="corner_active_2" />
+          <div className="edge_active_2" />
+        </>
+      )}
+
+      {item.status !== StatusSale.LIVE && (
+        <>
+          <div className="corner1" />
+          <div className="edge1" />
+          <div className="corner2" />
+          <div className="edge2" />
+        </>
+      )}
+
       <div className="name">
-        <div className="corner_name_1" />
-        <div className="edge_name_1" />
-        <div className="corner_name_2" />
-        <div className="edge_name_2" />
+        {item.status !== StatusSale.LIVE && (
+          <>
+            <div className="corner_name_1" />
+            <div className="edge_name_1" />
+            <div className="corner_name_2" />
+            <div className="edge_name_2" />
+          </>
+        )}
         {item.name}
       </div>
       <Grid gridTemplateColumns="1.25fr 0.75fr" padding="35px 34px" gridGap="22px">
         <div>
           <p className="status_name">Status</p>
-          <p className="status_value">{item.status}</p>
+          <p className={`status_value ${String(item.status).toLocaleLowerCase()} status`}>
+            {item.status === StatusSale.LIVE ? (
+              <span className="dot_contain">
+                <span>{item.status}</span> <span className="dot">.</span>
+              </span>
+            ) : (
+              `${item.status}`
+            )}
+          </p>
         </div>
         <div>
           <p className="status_name">Current raise</p>
@@ -205,7 +323,7 @@ function SaleStatus() {
   const arrStatus = [
     {
       name: 'Sale 1',
-      status: 'Live',
+      status: StatusSale.LIVE,
       currentRaise: '10.000',
       price: '1 XOX',
       xOXforSale: '2.700.000',
@@ -214,7 +332,7 @@ function SaleStatus() {
     },
     {
       name: 'Sale 2',
-      status: 'Live',
+      status: StatusSale.END,
       currentRaise: '10.000',
       price: '1 XOX',
       xOXforSale: '2.700.000',
@@ -223,7 +341,7 @@ function SaleStatus() {
     },
     {
       name: 'Sale 3',
-      status: 'Live',
+      status: StatusSale.INCOMING,
       currentRaise: '10.000',
       price: '1 XOX',
       xOXforSale: '2.700.000',

@@ -162,7 +162,7 @@ interface Props {
 }
 
 const handleTime = (time: number) => {
-  return time < 10 ? `0 ${time}` : time
+  return time < 10 ? `0${time}` : time
 }
 
 const WrapperTime = styled.div`
