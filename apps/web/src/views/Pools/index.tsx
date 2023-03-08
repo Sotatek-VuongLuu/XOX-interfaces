@@ -145,7 +145,10 @@ const Banner = styled.div`
 
   .get-xox:hover,
   .learn-more:hover {
-    border-left: 1px solid #b809b5;
+    background: #ffffff;
+    color: #000000;
+  }
+      /* border-left: 1px solid #b809b5;
     border-top: none;
     border-right: 1px solid #ffb000;
     border-bottom: none;
@@ -168,9 +171,8 @@ const Banner = styled.div`
       position: absolute;
       bottom: 0;
       left: 8px;
-    }
-
-    .top-left {
+    } */
+      .top-left {
       position: absolute;
       top: 0;
       left: -1px;
@@ -329,10 +331,66 @@ const Main = styled.div`
     align-items: center;
   }
   .content_container {
-    border-radius: 10px;
-    box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-    background: #242424;
+    background: rgba(16, 16, 16, 0.3);
     padding: 24px 0px;
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    width: 1126px;
+    margin: 0 auto;
+    position: relative;
+    .corner1 {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 50%;
+      height: 50px;
+      border-radius: 20px;
+      z-index: -1;
+      border-bottom: 2px solid #7e5c19ad;
+      border-left: 2px solid #7e5c19ad;
+      border-bottom-right-radius: unset;
+      border-top-left-radius: unset;
+    }
+
+    .edge1 {
+      width: 2px;
+      height: calc(100% - 120px);
+      position: absolute;
+      bottom: 50px;
+      left: 0;
+      z-index: -1;
+      background: linear-gradient(0deg, #7e5c19ad 0%, #721430e5 40%, #76143020 100%);
+      @media screen and (max-width: 576px) {
+        height: calc(100% - 250px);
+      }
+    }
+
+    .corner2 {
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      width: 50%;
+      height: 50px;
+      border-radius: 20px;
+      z-index: -1;
+      border-bottom: 2px solid #7e5c19ad;
+      border-right: 2px solid #7e5c19ad;
+      border-bottom-left-radius: unset;
+      border-top-right-radius: unset;
+    }
+
+    .edge2 {
+      width: 2px;
+      height: calc(100% - 120px);
+      position: absolute;
+      bottom: 50px;
+      right: 0;
+      z-index: -1;
+      background: linear-gradient(0deg, #7e5c19ad 0%, #721430e5 40%, #76143020 100%);
+      @media screen and (max-width: 576px) {
+        height: calc(100% - 250px);
+      }
+    }
     .header_container {
       padding: 0px 21px;
 
@@ -379,18 +437,25 @@ const Main = styled.div`
         }
       }
       @media screen and (max-width: 576px) {
-        padding: 0px 10px;
+        padding: 0px 18px;
+        .header {
+          .name {
+            margin-bottom: 16px;
+          }
+        }
       }
     }
     .diver {
       border-bottom: 1px solid #444444;
       margin-top: 24px;
+      @media screen and (max-width: 576px) {
+        margin-top: 16px;
+      }
     }
 
     .create_lp {
       padding: 24px;
       margin-top: 24px;
-      background: #1d1d1d;
       display: grid;
       grid-template-columns: 0.5fr 1.25fr 1.25fr;
       gap: 20px;
@@ -401,6 +466,21 @@ const Main = styled.div`
         font-size: 14px;
         line-height: 17px;
         color: #ffffff;
+        @media screen and (max-width: 576px) {
+          div {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+          }
+        }
+      }
+      .rectangle._flex {
+        align-items: center;
+        justify-content: space-between;
+        @media screen and (max-width: 576px) {
+          align-items: flex-start;
+        }
       }
       .rectangle {
         padding: 16px;
@@ -416,6 +496,7 @@ const Main = styled.div`
             color: #9072ff !important;
           }
         }
+
         .current_XOX_reward_value {
           font-weight: 700;
           font-size: 20px;
@@ -490,13 +571,14 @@ const Main = styled.div`
       .withdraw {
         padding: 12px 30px;
         background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-        border-radius: 6px;
+        border-radius: 10px;
         border: none;
         font-weight: 700;
         font-size: 16px;
         line-height: 19px;
         color: #ffffff;
         cursor: pointer;
+        margin-top: 0;
         &:disabled,
         button[disabled] {
           font-weight: 700;
@@ -537,6 +619,9 @@ const Main = styled.div`
       }
       .lp_mb {
         margin-bottom: 16px;
+        @media screen and (max-width: 576px) {
+          margin-bottom: 0px;
+        }
       }
 
       .group_btn_stake {
@@ -585,6 +670,9 @@ const Main = styled.div`
           max-width: 100px; */
         }
       }
+    }
+    @media screen and (max-width: 576px) {
+      width: 100%;
     }
   }
 `
@@ -998,7 +1086,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   return (
     <>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <Container>
         <div className="content">
           <NavWrapper>
@@ -1021,19 +1109,19 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   rel="noreferrer"
                 >
                   <Button className="get-xox">
-                    <div className="top-left"></div>
+                    {/* <div className="top-left"></div>
                     <div className="top-right"></div>
                     <div className="bottom-left"></div>
-                    <div className="bottom-right"></div>
+                    <div className="bottom-right"></div> */}
                     Get LP Token
                   </Button>
                 </a>
                 <a href="/whitepaper" target="_blank" rel="noreferrer">
                   <Button className="learn-more">
-                    <div className="top-left"></div>
+                    {/* <div className="top-left"></div>
                     <div className="top-right"></div>
                     <div className="bottom-left"></div>
-                    <div className="bottom-right"></div>
+                    <div className="bottom-right"></div> */}
                     Learn More
                   </Button>
                 </a>
@@ -1042,8 +1130,12 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           </NavWrapper>
 
           <NavWrapper>
-            <Main className="border-gradient-style">
+            <Main>
               <div className="content_container">
+                <div className="corner1" />
+                <div className="edge1" />
+                <div className="corner2" />
+                <div className="edge2" />
                 <div className="header_container">
                   <div className="header">
                     <div className="flex">
@@ -1093,19 +1185,36 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         </div>
                       </>
                     ) : (
-                      <div className="flex">
-                        <div className="flex flex_direction mb_mr">
+                      <div>
+                        <p className="flex space_between apr_mb">
                           <span className="name">APR:</span>
                           {account ? (
                             <ShowBalance balance={aprPercent} unit="%" notSpace />
                           ) : (
                             <span className="value">-</span>
                           )}
-                        </div>
-                        <div className="flex flex_direction">
+                        </p>
+                        <p className="flex space_between earned_mb">
                           <span className="name">Earned:</span>
                           {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
-                        </div>
+                        </p>
+                        <p className="flex space_between liquidity_mb">
+                          <span className="name">Liquidity:</span>
+                          <span className="_flex">
+                            {account ? (
+                              <>
+                                <ShowBalance balance={liquidity} name="liquidity" />
+                                <Tooltip title="Total value of the funds in this farm’s liquidity pair" placement="top">
+                                  <span className="u_question">
+                                    <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                                  </span>
+                                </Tooltip>
+                              </>
+                            ) : (
+                              <span className="value">-</span>
+                            )}
+                          </span>
+                        </p>
                       </div>
                     )}
                   </div>
@@ -1120,7 +1229,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           target="_blank"
                           rel="noreferrer"
                         >
-                          <p className="_flex">
+                          <p className="_flex" style={{ marginBottom: '8px' }}>
                             <span>Get {chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP</span>
                             <span style={{ marginLeft: 8 }}>
                               <img src="/images/external-icon.svg" alt="external-icon" />
@@ -1143,7 +1252,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     </div>
                   )}
                   <div>
-                    <div className="rectangle _flex" style={{ flexDirection: 'column' }}>
+                    <div className="rectangle _flex">
                       <div>
                         <p className="current_XOX_reward">Current XOX reward</p>
                         {account ? (
@@ -1238,37 +1347,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   </div>
                   {width <= 576 && (
                     <>
-                      <div>
-                        <p className="flex space_between apr_mb">
-                          <span className="name">APR:</span>
-                          {account ? (
-                            <ShowBalance balance={aprPercent} unit="%" notSpace />
-                          ) : (
-                            <span className="value">-</span>
-                          )}
-                        </p>
-                        <p className="flex space_between earned_mb">
-                          <span className="name">Earned:</span>
-                          {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
-                        </p>
-                        <p className="flex space_between liquidity_mb">
-                          <span className="name">Liquidity:</span>
-                          <span className="_flex">
-                            {account ? (
-                              <>
-                                <ShowBalance balance={liquidity} name="liquidity" />
-                                <Tooltip title="Total value of the funds in this farm’s liquidity pair" placement="top">
-                                  <span className="u_question">
-                                    <img src="/images/u_question-circle.svg" alt="u_question-circle" />
-                                  </span>
-                                </Tooltip>
-                              </>
-                            ) : (
-                              <span className="value">-</span>
-                            )}
-                          </span>
-                        </p>
-                      </div>
                       <div className="get_xox_lp">
                         <div>
                           <a
