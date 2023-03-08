@@ -203,7 +203,7 @@ export default function Refferal() {
   const [listPoint, setListPoint] = useState<IListPoint[]>([])
 
   const [subTabIndex, setSubTabIndex] = useState(0)
-  const subTab = ['Total Earned', 'Platform Stats', 'How to Join']
+  const subTab = ['Price Pool', 'Platform Stats', 'How to Join']
 
   const functionList: FunctionList = useMemo(() => {
     return {

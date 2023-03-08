@@ -208,7 +208,7 @@ const Second = styled.div<IPropsTotal>`
     bottom: 0;
     left: 0;
     width: 50%;
-    height: 50px;
+    height: 20px;
     border-radius: 20px;
     z-index: -1;
     border-bottom: 2px solid #7e5c19ad;
@@ -219,12 +219,12 @@ const Second = styled.div<IPropsTotal>`
 
   .edge1 {
     width: 2px;
-    height: calc(100% - 70px);
+    height: calc(100% - 50px);
     position: absolute;
-    bottom: 50px;
+    bottom: 20px;
     left: 0;
     z-index: -1;
-    background: linear-gradient(0deg, #7e5c19ad 0%, #7614304a 100%);
+    background: linear-gradient(0deg, #7e5c19ad 0%, #721430e5 40%, #76143020 100%);
   }
 
   .corner2 {
@@ -232,7 +232,7 @@ const Second = styled.div<IPropsTotal>`
     bottom: 0;
     right: 0;
     width: 50%;
-    height: 50px;
+    height: 20px;
     border-radius: 20px;
     z-index: -1;
     border-bottom: 2px solid #7e5c19ad;
@@ -243,12 +243,12 @@ const Second = styled.div<IPropsTotal>`
 
   .edge2 {
     width: 2px;
-    height: calc(100% - 70px);
+    height: calc(100% - 50px);
     position: absolute;
-    bottom: 50px;
+    bottom: 20px;
     right: 0;
     z-index: -1;
-    background: linear-gradient(0deg, #7e5c19ad 0%, #7614304a 100%);
+    background: linear-gradient(0deg, #7e5c19ad 0%, #721430e5 40%, #76143020 100%);
   }
   .total_point {
     padding: 24px;
@@ -273,7 +273,7 @@ const Second = styled.div<IPropsTotal>`
       width: 2px;
       height: calc(100% - 70px);
       position: absolute;
-      bottom: 50px;
+      bottom: 20px;
       left: 0;
       z-index: -1;
       background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
@@ -324,7 +324,9 @@ const Second = styled.div<IPropsTotal>`
 
       .current_point_bar {
         background: ${({ account, chainid, totalPoint }) =>
-          account && chainid && totalPoint ? 'linear-gradient(90deg, #fc6d40 0%, #fa9204 100%)' : 'transparent'};
+          account && chainid && totalPoint
+            ? 'linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)'
+            : 'transparent'};
         border-radius: 30px;
         height: 18px;
         width: ${({ percentPoint }) => `${percentPoint}%`};
