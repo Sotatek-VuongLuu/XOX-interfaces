@@ -16,6 +16,17 @@ import { NumericalInputStyled, ShowBalance } from './ModalUnStake'
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
   width: fit-content;
+  background: #101010;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 32px 27px;
+  width: 556px;
+  @media screen and (max-width: 576px) {
+    padding: 24px;
+  }
 `
 const StyledModalHeader = styled(ModalHeader)`
   display: flex;
@@ -26,12 +37,13 @@ const StyledModalHeader = styled(ModalHeader)`
   text-align: center;
   color: rgba(255, 255, 255, 0.87);
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 24px;
+  padding: 0;
 `
 
 const ContentStake = styled.div`
   padding: 20px;
-  background: #303030;
+  background: #1d1c1c;
   border-radius: 10px;
   width: 100%;
   margin-top: 24px;
@@ -39,10 +51,15 @@ const ContentStake = styled.div`
   .balance_container {
     text-align: right;
     display: flex;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 16px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
+    @media screen and (max-width: 576px) {
+      font-size: 12px;
+      line-height: 15px;
+      font-weight: 400;
+    }
   }
 
   .balanceLP {
@@ -65,16 +82,21 @@ const ContentStake = styled.div`
   }
   .stake {
     p:first-child {
-      font-weight: 400;
+      font-weight: 700;
       font-size: 16px;
       line-height: 19px;
       color: rgba(255, 255, 255, 0.6);
+      @media screen and (max-width: 576px) {
+        font-size: 12px;
+        line-height: 15px;
+        font-weight: 400;
+      }
     }
     p:last-child {
-      font-weight: 400;
+      font-weight: 700;
       font-size: 16px;
       line-height: 19px;
-      color: rgba(255, 255, 255, 0.87);
+      color: rgba(255, 255, 255, 0.38);
     }
 
     @media screen and (max-width: 576px) {
@@ -137,7 +159,7 @@ const ContentStake = styled.div`
       margin-left: 8px;
       cursor: pointer;
       &:hover {
-        background: #fb8618 !important;
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%) !important;
         color: #ffffff !important;
       }
       @media screen and (max-width: 576px) {
@@ -175,6 +197,10 @@ const ButtonGroup = styled.div`
     font-size: 16px;
     line-height: 13px;
     color: #ffffff;
+    @media screen and (max-width: 576px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
   }
   .confirm {
     background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
@@ -182,6 +208,10 @@ const ButtonGroup = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: #ffffff;
+    @media screen and (max-width: 576px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
   }
   button:disabled,
   button[disabled] {
@@ -191,6 +221,10 @@ const ButtonGroup = styled.div`
     background: #313131;
     color: rgba(255, 255, 255, 0.38);
     cursor: not-allowed;
+    @media screen and (max-width: 576px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
   }
 `
 
@@ -216,8 +250,6 @@ const GetLP = styled.div`
   }
 `
 const ContentContainer = styled.div`
-  padding: 0px 27px 27px;
-
   .mes_error {
     font-weight: 400;
     font-size: 14px;
@@ -226,7 +258,6 @@ const ContentContainer = styled.div`
     margin-top: 8px;
   }
   @media screen and (max-width: 576px) {
-    padding: 0px 24px 24px;
     .mes_error {
       font-size: 12px;
       line-height: 15px;
@@ -263,7 +294,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   const chainIdSupport = [97, 56]
   const { chainId } = useActiveChainId()
   const { account } = useActiveWeb3React()
-  const listTimesPercents = ['25%', '50%', '75%', 'MAX']
+  const listTimesPercents = ['25%', '50%', '75%', 'Max']
   const [messageError, setMessageError] = useState('')
   const [amountUSD, setAmountUSD] = useState<any>()
   const [amountActive, setAmountActive] = useState<any>(null)
@@ -327,7 +358,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
           '75%': parseFloat(new BigNumber(balanceLP).multipliedBy(0.75).toFixed(14).toString()),
         })
         break
-      case 'MAX':
+      case 'Max':
         setAmount(balanceLP)
         setAmountActive({ ...amountActive, MAX: balanceLP })
         break
@@ -373,7 +404,10 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
                       handlePercent(item)
                     }}
                     style={{
-                      background: amountActive?.[`${item}`] === amount ? '#fb8618' : 'none',
+                      background:
+                        amountActive?.[`${item}`] === amount
+                          ? 'linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)'
+                          : 'none',
                       color: amountActive?.[`${item}`] === amount ? '#fff' : '#fb8618',
                     }}
                     disabled={!Number(balanceLP)}
@@ -407,10 +441,10 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
               target="_blank"
               rel="noreferrer"
             >
-              <p>
+              <p style={{ display: 'flex', alignItems: 'center' }}>
                 <span>Get {chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP</span>
-                <span style={{ marginLeft: 8 }}>
-                  <img src="/images/stake_external_link.svg" alt="external-icon" />
+                <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center' }}>
+                  <img src="/images/external-icon.svg" alt="external-icon" />
                 </span>
               </p>
             </a>
