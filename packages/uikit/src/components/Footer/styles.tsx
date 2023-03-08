@@ -110,6 +110,18 @@ export const StyledListItem = styled.li`
     font-size: 14px;
     line-height: 17px;
     color: rgba(255, 255, 255, 0.87);
+
+    div {
+      position: relative;
+      left: 3px;
+      bottom: 2px;
+    }
+
+    :hover div {
+      transition: 0.5s ease;
+      left: 6px;
+      bottom: 5px;
+    }
   }
 
   & .iconx {
@@ -187,8 +199,4 @@ export const ImagBGFooterTow = styled.img`
   z-index: 1;
 `;
 
-export const StyledIconArrow = styled.div`
-  position: relative;
-  left: 4px;
-  bottom: 3px;
-`;
+export const StyledIconArrow = styled.div``;
