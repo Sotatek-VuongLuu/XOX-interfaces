@@ -717,7 +717,7 @@ const TransactionsTable: React.FC = () => {
               }}
             >
               <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.97949 1.25L1.72949 5.5L5.97949 9.75" stroke={page === 1 ? 'white' : '#FB8618'} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M5.97949 1.25L1.72949 5.5L5.97949 9.75" stroke={page === 1 ? 'white' : '#FB8618'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Arrow>
 
@@ -792,7 +792,7 @@ const TransactionsTable: React.FC = () => {
               }}
             >
               <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1.72949 1.25L5.97949 5.5L1.72949 9.75" stroke={page === maxPage ? 'white' : '#FB8618'} stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M1.72949 1.25L5.97949 5.5L1.72949 9.75" stroke={page === maxPage ? 'white' : '#FB8618'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
               </svg>
             </Arrow>
           </div>
