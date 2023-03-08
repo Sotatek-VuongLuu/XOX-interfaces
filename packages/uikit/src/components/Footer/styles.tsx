@@ -53,7 +53,7 @@ export const FooterMainContent = styled.div`
 
 export const Container = styled.div`
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 123px;
   width: 1400px;
 
@@ -63,8 +63,7 @@ export const Container = styled.div`
     padding: 40px;
     width: 100%;
 
-    & > div:first-child,
-    & > div:last-child {
+    & > div:first-child {
       grid-column: 1 / 2 span;
     }
 
@@ -75,6 +74,9 @@ export const Container = styled.div`
 
   @media screen and (max-width: 560px) {
     padding: 40px 24px;
+    br {
+      display: block;
+    }
   }
 `;
 
