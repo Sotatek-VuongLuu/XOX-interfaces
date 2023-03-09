@@ -1,50 +1,21 @@
 const SwapbackgroundMobile = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="360" height="380" viewBox="0 0 360 380" fill="none">
-      <g filter="url(#filter0_d_7074_21655)">
-        <path
-          d="M338.813 32.0012L318.803 17.838C317.113 16.6423 315.095 16.0002 313.025 16.0002H46.3342C44.2646 16.0002 42.2461 16.6423 40.5568 17.8379L20.5517 31.9978C17.902 33.8734 16.3275 36.9184 16.329 40.1647L16.5 412.512V421.5C16.5 427.023 20.9772 431.5 26.5 431.5H43.3266H316.379H333.206C338.729 431.5 343.206 427.023 343.206 421.5V412.512L343.035 40.1589C343.034 36.9158 341.46 33.8748 338.813 32.0012Z"
-          fill="#0a0a0a"
-        />
-        <path
-          d="M18 412.511V412.512V421.5C18 426.194 21.8056 430 26.5 430H43.3266H316.379H333.206C337.9 430 341.706 426.194 341.706 421.5V412.513V412.512L341.535 40.1596C341.534 37.403 340.196 34.8181 337.946 33.2255L317.936 19.0623C316.5 18.046 314.784 17.5002 313.025 17.5002H46.3342C44.5751 17.5002 42.8593 18.046 41.4234 19.0623L21.4183 33.2222C19.166 34.8164 17.8278 37.4046 17.829 40.164L18 412.511Z"
-          stroke="url(#paint0_linear_7074_21655)"
-          strokeWidth="1.5"
-        />
+    <svg width={327} height={250} viewBox="0 0 327 250" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g filter="url(#filter0_b_7067_19190)">
+        <path d="M318.275 13.0204L305.072 3.67531C301.694 1.28403 297.657 -0.000167847 293.518 -0.000167847H33.1885C29.0494 -0.000167847 25.0122 1.28403 21.6338 3.67531L8.45975 13C3.15492 16.7548 0.0053778 22.8532 0.0144203 29.3524L0.294259 230.484C0.294259 240.97 8.79545 249.472 19.2822 249.472H27.1208H300.173H308.012C318.499 249.472 327 240.97 327 230.484L326.72 29.3171C326.711 22.8375 323.564 16.7639 318.275 13.0204Z" fill="white" fillOpacity="0.03" />
+        <path d="M0.794258 230.484V230.483L0.51442 29.3517C0.505603 23.015 3.57641 17.0691 8.74862 13.4081L21.9227 4.08342C25.2166 1.75192 29.1529 0.499832 33.1885 0.499832H293.518C297.553 0.499832 301.489 1.75192 304.783 4.08342L317.986 13.4285C323.143 17.0784 326.212 23.0002 326.22 29.3178L326.5 230.484H0.794258ZM0.794258 230.484C0.794258 240.694 9.0716 248.972 19.2822 248.972M0.794258 230.484L19.2822 248.972M19.2822 248.972H27.1208M19.2822 248.972H27.1208M27.1208 248.972H300.173M27.1208 248.972H300.173M300.173 248.972H308.012M300.173 248.972H308.012M308.012 248.972C318.222 248.972 326.5 240.695 326.5 230.484L308.012 248.972Z" stroke="url(#paint0_linear_7067_19190)" strokeOpacity="0.5" />
       </g>
       <defs>
-        <filter
-          id="filter0_d_7074_21655"
-          x="0.329102"
-          y="0"
-          width="358.877"
-          height="447.5"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" />
-          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_7074_21655" />
-          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_7074_21655" result="shape" />
+        <filter id="filter0_b_7067_19190" x="-19.9858" y={-20} width="366.986" height="289.472" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
+          <feGaussianBlur in="BackgroundImageFix" stdDeviation={10} />
+          <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_7067_19190" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_7067_19190" result="shape" />
         </filter>
-        <linearGradient
-          id="paint0_linear_7074_21655"
-          x1="155.717"
-          y1="15.9998"
-          x2="154.857"
-          y2="317.577"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#855D08" />
-          <stop offset="0.442708" stopColor="#E30B2A" stopOpacity="0" />
+        <linearGradient id="paint0_linear_7067_19190" x1={327} y1="157.126" x2="330.257" y2="2.14599" gradientUnits="userSpaceOnUse">
+          <stop offset="0.0153197" stopColor="#B809B5" stopOpacity={0} />
+          <stop offset="0.510417" stopColor="#ED1C51" />
+          <stop offset={1} stopColor="#FFB000" />
         </linearGradient>
       </defs>
     </svg>

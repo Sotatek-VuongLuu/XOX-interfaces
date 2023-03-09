@@ -85,7 +85,7 @@ const AmountWrapper = styled(RowBetween)`
     font-weight: 700;
     font-size: 12px;
     line-height: 15px;
-    color: #3d8aff;
+    color: #FB8618;
     background: none !important;
     outline: none;
   }
@@ -122,22 +122,22 @@ const CustomCardBody = styled(CardBody)`
     font-weight: 700;
     font-size: 12px;
     line-height: 15px;
-    color: #9072ff;
+    color:  #FB8618;
     background: none !important;
     height: 27px;
-    border: 1px solid #9072ff;
+    border: 1px solid  #FB8618;
     border-radius: 40px;
     padding: 0 12px;
 
     &:hover {
-      background: #9072ff !important;
+      background:  #FB8618 !important;
       color: #ffffff;
       box-shadow: none;
     }
   }
 
   .btn-percent.active {
-    background: #9072ff !important;
+    background:  #FB8618 !important;
     color: #ffffff;
     box-shadow: none;
   }
@@ -185,7 +185,7 @@ const CustomCardBody = styled(CardBody)`
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-    color: #9072ff;
+    color: #FB8618;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -202,8 +202,8 @@ const CustomCardBody = styled(CardBody)`
     }
 
     .text-symbol {
-      font-size: 16px;
-      line-height: 19px;
+      font-size: 18px;
+      line-height: 22px;
     }
 
     .text-amount {
@@ -283,6 +283,9 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
+  background: #101010;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
 `
 
 const MainBackground = styled.div`
@@ -824,7 +827,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
         position="relative"
       >
         <Wrapper flex="column" position="relative">
-          {isMobile ? (
+          {/* {isMobile ? (
             <>
               <SwapBackgroundWrapper>
                 <LiquidityBackgroundMobile />
@@ -845,7 +848,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
               </SwapBackgroundWrapper>
             </>
           )}
-          <BackgroundWrapper />
+          <BackgroundWrapper /> */}
 
           <StyledLiquidityContainer>
             {/* <Header>
@@ -1097,7 +1100,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                 </Box>
               )}
               {pair && (
-                <Flex justifyContent="space-between" style={{ marginTop: '16px' }}>
+                <Flex justifyContent="space-between" style={{ marginTop: '16px', padding: '0 20px' }}>
                   <Text className="text-price">{t('Prices')}</Text>
                   <Flex flexDirection="column" alignItems="flex-end">
                     <Text>
