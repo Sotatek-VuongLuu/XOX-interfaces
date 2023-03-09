@@ -7,10 +7,10 @@ import { fetchBridgeTokenFee } from '../../context/globalData'
 import BigNumber from 'bignumber.js'
 
 const Wrapper = styled.div`
-  border-radius: 8px;
-  padding: 16px;
+  border-radius: 10px;
+  padding: 16px 17px;
   margin-top: 25px;
-  background: ${({ theme }) => theme.colors.dark3};
+  background: rgba(255, 255, 255, 0.03);
 `
 
 const Heading = styled.h5`
@@ -29,6 +29,7 @@ const ReminderList = styled.ul`
   li {
     display: flex;
     margin-bottom: 8px;
+    color: rgba(255, 255, 255, 0.87);
     &::before {
       content: '-';
       display: block;

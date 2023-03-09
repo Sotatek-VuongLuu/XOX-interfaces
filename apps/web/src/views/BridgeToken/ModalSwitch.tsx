@@ -11,9 +11,12 @@ const StyledModalContainer = styled(ModalContainer)`
   max-width: calc(100vw - 48px) !important;
   max-height: 90vh;
   position: relative;
-  background: #242424;
-  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-  border-radius: 10px;
+  background: #101010;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
   ${({ theme }) => theme.mediaQueries.md} {
     min-height: auto;
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
@@ -46,6 +49,9 @@ const StyledModalHeader = styled(ModalHeader)`
     font-size: 20px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
+    @media screen and (max-width: 576px) {
+      font-size: 20px;
+    }
   }
 
   button {
@@ -84,11 +90,10 @@ const ListNetWork = styled.div`
     }
   }
   button.active {
-    border-color: rgba(0, 0, 0, 0);
-    background: ${({ theme }) => theme.colors.gradientViolet};
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     cursor: auto;
     &:hover {
-      background: ${({ theme }) => theme.colors.gradientViolet};
+      opacity: 0.8;
     }
   }
   .title-network {
