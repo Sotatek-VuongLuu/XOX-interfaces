@@ -57,6 +57,7 @@ const Banner = styled.div`
   border-radius: 20px;
   padding: 20px 16px;
   margin-top: 20px;
+  position: relative;
 
   & > img {
     position: absolute;
@@ -734,11 +735,6 @@ const Container = styled.div`
   }
 `
 
-const StyledTooltip = styled(Tooltip)`
-  .tooltip {
-    background: red;
-  }
-`
 interface IPropsButtonUnStake {
   disabled?: boolean
 }
@@ -1109,10 +1105,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           <NavWrapper>
             <Banner>
               <img alt="" src={isMobile ? 'images/galaxy-mo.svg' : 'images/galaxy-dk.svg'} />
-              <div className="corner1"></div>
-              <div className="edge1"></div>
-              <div className="corner2"></div>
-              <div className="edge2"></div>
+              <div className="corner1" />
+              <div className="edge1" />
+              <div className="corner2" />
+              <div className="edge2" />
               <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
                 Add Liquidity. Earn Trading Fees
               </Text>
@@ -1185,15 +1181,27 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             {account ? (
                               <>
                                 <ShowBalance balance={liquidity} name="liquidity" />
-                                <StyledTooltip
+                                <Tooltip
                                   title="Total value of the funds in this farm’s liquidity pair"
                                   placement="top"
                                   id="u_question_farming"
+                                  PopperProps={{
+                                    sx: (theme) => ({
+                                      '& .MuiTooltip-tooltip': {
+                                        border: '1px solid #FE4039',
+                                        background: '#242424',
+                                        padding: '6px',
+                                        color: 'rgba(255, 255, 255, 0.6) !important',
+                                        borderRadius: '10px',
+                                        fontSize: '14px !important',
+                                      },
+                                    }),
+                                  }}
                                 >
-                                  <span className="u_question">
+                                  <span className="u_question" style={{ cursor: 'pointer' }}>
                                     <img src="/images/u_question-circle.svg" alt="u_question-circle" />
                                   </span>
-                                </StyledTooltip>
+                                </Tooltip>
                               </>
                             ) : (
                               <span className="liquidity">-</span>
@@ -1221,14 +1229,26 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             {account ? (
                               <>
                                 <ShowBalance balance={liquidity} name="liquidity" />
-                                <StyledTooltip
+                                <Tooltip
                                   title="Total value of the funds in this farm’s liquidity pair"
                                   placement="top"
+                                  PopperProps={{
+                                    sx: (theme) => ({
+                                      '& .MuiTooltip-tooltip': {
+                                        border: '1px solid #FE4039',
+                                        background: '#242424',
+                                        padding: '6px',
+                                        color: 'rgba(255, 255, 255, 0.6) !important',
+                                        borderRadius: '10px',
+                                        fontSize: '14px !important',
+                                      },
+                                    }),
+                                  }}
                                 >
-                                  <span className="u_question">
+                                  <span className="u_question" style={{ cursor: 'pointer' }}>
                                     <img src="/images/u_question-circle.svg" alt="u_question-circle" />
                                   </span>
-                                </StyledTooltip>
+                                </Tooltip>
                               </>
                             ) : (
                               <span className="value">-</span>
