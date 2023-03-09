@@ -16,8 +16,8 @@ const DropDownHeader = styled.div`
   background: transparent;
   transition: border-radius 0.15s;
   height: 37px;
-  border-radius: 4px;
-  border: 1px solid #444444;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 8px;
 
   & > div {
     font-weight: 400;
@@ -66,7 +66,7 @@ const DropDownContainer = styled(Box)<{ isOpen: boolean }>`
     css`
       ${DropDownHeader} {
         box-shadow: ${({ theme }) => theme.tooltip.boxShadow};
-        border-radius: 4px;
+        border-radius: 8px;
       }
 
       ${DropDownListContainer} {

@@ -56,20 +56,23 @@ const WrapperBorder = styled.div`
 `
 
 const Box = styled.div`
-  padding: 17px 30px;
+  padding: 24px;
   border-radius: 10px;
-  background: ${({ theme }) => theme.colors.bgBox};
-  box-shadow: 0px 0px 16px #00000080;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+
   flex: 1;
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+  position: relative;
   img {
     max-width: 60px;
   }
   &.wrap-table {
     align-items: flex-start;
-    min-height: 633px;
+    min-height: 430px;
   }
   &.h-190 {
     min-height: 190px;
@@ -88,6 +91,55 @@ const Box = styled.div`
     &.wrap-withdraw {
       padding: 18px;
     }
+  }
+
+  
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 `
 
@@ -180,7 +232,8 @@ const TextStyle = styled(Text)`
   color: rgba(255, 255, 255, 0.6);
   line-height: 20px;
   &.primary {
-    color: ${({ theme }) => theme.colors.violet};
+    color: #FB8618;
+    /* color: ${({ theme }) => theme.colors.primary}; */
   }
 `
 
@@ -257,12 +310,24 @@ export default function LayoutHistory() {
             <TextStyle>|</TextStyle>
             <TextStyle className="primary">History</TextStyle>
           </Flex>
-          <Row style={{ marginTop: 24, alignItems: 'flex-start' }}>
-            <WrapperBorder className="border-gradient-style flex-50">
-              <Box className="wrap-table">{account && <HistoryTable typePage={TYPE_HISTORY.stake} />}</Box>
+          <Row style={{ marginTop: 20, alignItems: 'flex-start' }}>
+            <WrapperBorder className="flex-50">
+              <Box className="wrap-table">
+                <div className="corner1" />
+                <div className="edge1" />
+                <div className="corner2" />
+                <div className="edge2" />
+                {account && <HistoryTable typePage={TYPE_HISTORY.stake} />}
+              </Box>
             </WrapperBorder>
-            <WrapperBorder className="border-gradient-style flex-50">
-              <Box className="wrap-table">{account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />}</Box>
+            <WrapperBorder className="flex-50">
+              <Box className="wrap-table">
+                <div className="corner1" />
+                <div className="edge1" />
+                <div className="corner2" />
+                <div className="edge2" />
+                {account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />}
+              </Box>
             </WrapperBorder>
           </Row>
         </div>

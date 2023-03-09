@@ -59,26 +59,43 @@ const WrapperBorder = styled.div`
   }
 `
 
-const Box = styled.div`
-  border-radius: 10px;
-  background: ${({ theme }) => theme.colors.bgBox};
-  box-shadow: 0px 0px 16px #00000080;
+const WrapBorder = styled.div`
+  background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%), linear-gradient(0deg, rgba(16, 16, 16, 0.3), rgba(16, 16, 16, 0.3));
+  padding: 1px;
+  flex: 1;
+  border-radius: 20px;
+  height: 100%;
+  > div {
+    background: #0d0d0d;
+  }
+`
+
+const Box = styled.div` 
   flex: 1;
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  padding: 17px 30px;
+  padding: 33px 30px 33px 29px;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  position: relative;
+  height: 100%;
   img {
     max-width: 60px;
   }
   &.wrap-table {
     align-items: flex-start;
   }
-  &.h-190 {
-    min-height: 190px;
+  &.h-186 {
+    min-height: 186px;
+  }
+  &.border {
+    border-image-source: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    border: 1px solid linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
   }
   @media (max-width: 576px) {
-    &.h-190 {
+    &.h-186 {
       min-height: 193px;
     }
     img {
@@ -91,6 +108,54 @@ const Box = styled.div`
     &.wrap-withdraw {
       padding: 18px;
     }
+  }
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 50px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 `
 
@@ -131,22 +196,28 @@ const Container = styled.div`
 const WrapText = styled.div`
   display: flex;
   flex-direction: column;
-  gap: 15px;
+  gap: 10px;
   p {
-    margin-bottom: 0;
+    font-weight: 400;
     font-size: 18px;
-    color: rgba(255, 255, 255, 0.87);
+    line-height: 22px;
+    color: rgba(255, 255, 255, 0.6);
     &.number {
       color: ${({ theme }) => theme.colors.violet};
-      font-size: 36px;
+      margin-bottom: 12px;
       font-weight: 700;
+      font-size: 24px;
+      line-height: 29px;
+      color: rgba(255, 255, 255, 0.87);
     }
   }
   @media (max-width: 576px) {
     p {
       font-size: 16px;
+      line-height: 19px;
       &.number {
         font-size: 24px;
+        line-height: 24px;
       }
     }
   }
@@ -341,12 +412,16 @@ export default function StableCoin() {
             />
           </div>
         </ContainerBanner>
-        <Container style={{ marginBottom: 130 }} key={`container-stablecoin${chainId}`}>
+        <Container style={{ marginBottom: 59 }} key={`container-stablecoin${chainId}`}>
           <div className="content">
             {account && (
               <Row>
-                <WrapperBorder className="border-gradient-style">
-                  <Box className="h-190">
+                <WrapperBorder>
+                  <Box className="h-186">
+                    <div className="corner1" />
+                    <div className="edge1" />
+                    <div className="corner2" />
+                    <div className="edge2" />
                     <Flex justifyContent="space-between" alignItems="center" width="100%">
                       <WrapText>
                         <p>Your current XOXS</p>
@@ -357,37 +432,47 @@ export default function StableCoin() {
                           </Button>
                         </Link>
                       </WrapText>
-                      <img src="/images/1/tokens/XOX.png" alt="icon" />
+                      <img src="/images/1/tokens/XOX.svg" alt="icon" />
                     </Flex>
                   </Box>
                 </WrapperBorder>
-                <WrapperBorder className="border-gradient-style">
-                  <Box className="h-190">
+                <WrapperBorder>
+                  <Box className="h-186">
+                    <div className="corner1" />
+                    <div className="edge1" />
+                    <div className="corner2" />
+                    <div className="edge2" />
                     <Earned address={account} />
                   </Box>
                 </WrapperBorder>
-                <WrapperBorder className="border-gradient-style">
-                  <Box className="h-190">
-                    <Flex justifyContent="space-between" alignItems="center" width="100%">
-                      <WrapText>
-                        <p>Your current reward</p>
-                        <p className="number">{currentReward}</p>
-                        <Link href="/stable-coin/withdraw">
-                          <Button height={37} style={{ fontSize: 14 }}>
-                            Withdraw reward
-                          </Button>
-                        </Link>
-                      </WrapText>
-                      <img src="/images/1/tokens/XOX.png" alt="icon" />
-                    </Flex>
-                  </Box>
+                <WrapperBorder>
+                  <WrapBorder>
+                    <Box className="h-186">
+                      <Flex justifyContent="space-between" alignItems="center" width="100%">
+                        <WrapText>
+                          <p>Your current reward</p>
+                          <p className="number">{currentReward}</p>
+                          <Link href="/stable-coin/withdraw">
+                            <Button height={37} style={{ fontSize: 14 }}>
+                              Withdraw reward
+                            </Button>
+                          </Link>
+                        </WrapText>
+                        <img src="/images/1/tokens/XOX.svg" alt="icon" />
+                      </Flex>
+                    </Box>
+                  </WrapBorder>
                 </WrapperBorder>
               </Row>
             )}
             {!account && (
               <Row>
-                <WrapperBorder className="border-gradient-style">
-                  <Box className="h-190">
+                <WrapperBorder>
+                  <Box className="h-186">
+                    <div className="corner1" />
+                    <div className="edge1" />
+                    <div className="corner2" />
+                    <div className="edge2" />
                     <Flex
                       flexDirection="column"
                       justifyContent="center"
@@ -407,13 +492,21 @@ export default function StableCoin() {
               </Row>
             )}
             <CustomRow>
-              <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
+              <WrapperBorder style={{ height: '100%' }}>
                 <Box className="wrap-table" style={{ height: '100%', maxWidth: '100%', overflow: 'visible' }}>
+                  <div className="corner1" />
+                  <div className="edge1" />
+                  <div className="corner2" />
+                  <div className="edge2" />
                   <HistoryTable typePage={TYPE_HISTORY.widthDraw} key="withdraw" />
                 </Box>
               </WrapperBorder>
-              <WrapperBorder className="border-gradient-style" style={{ height: '100%' }}>
+              <WrapperBorder style={{ height: '100%' }}>
                 <Box className="wrap-table" style={{ height: '100%', maxWidth: '100%', overflow: 'visible' }}>
+                  <div className="corner1" />
+                  <div className="edge1" />
+                  <div className="corner2" />
+                  <div className="edge2" />
                   <TransactionTable />
                 </Box>
               </WrapperBorder>
