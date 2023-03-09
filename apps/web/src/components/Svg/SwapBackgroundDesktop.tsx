@@ -1,50 +1,21 @@
 const SwapbackgroundDesktop = () => {
   return (
-    <svg xmlns="http://www.w3.org/2000/svg" width="591" height="480" viewBox="0 0 591 480" fill="none">
-      <g filter="url(#filter0_d_5810_3573)">
-        <path
-          d="M570.777 45.4999L531.696 17.8377C530.006 16.6421 527.988 16 525.918 16H65.0847C63.0152 16 60.9966 16.6421 59.3074 17.8377L20.2259 45.4999C17.5776 47.3745 16.0033 50.4175 16.0033 53.6622L16 596.511V619C16 624.523 20.4772 629 26 629H61.9005H529.096H564.997C570.519 629 574.997 624.523 574.997 619V596.511L575 53.6622C575 50.4175 573.426 47.3745 570.777 45.4999Z"
-          fill="#0a0a0a"
-        />
-        <path
-          d="M569.911 46.7242L530.829 19.0621C529.393 18.0458 527.677 17.5 525.918 17.5H65.0847C63.3256 17.5 61.6098 18.0458 60.174 19.0621L21.0925 46.7243C18.8414 48.3177 17.5033 50.9042 17.5033 53.6622L17.5 596.511V619C17.5 623.694 21.3056 627.5 26 627.5H61.9005H529.096H564.997C569.691 627.5 573.497 623.694 573.497 619V596.511L573.5 53.6622C573.5 50.9042 572.162 48.3176 569.911 46.7242Z"
-          stroke="url(#paint0_linear_5810_3573)"
-          strokeWidth="3"
-        />
+    <svg width={560} height={311} viewBox="0 0 560 311" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <g filter="url(#filter0_b_5810_3640)">
+        <path d="M550.573 26.5261L518.289 3.67548C514.911 1.28418 510.874 0 506.735 0H52.2624C48.1233 0 44.0862 1.28418 40.7077 3.67548L8.46659 26.496C3.15795 30.2535 0.00793384 36.3577 0.0212709 42.8616L0.503479 278.011V290.5C0.503479 301.546 9.45778 310.5 20.5035 310.5H46.404H513.599H539.5C550.546 310.5 559.5 301.546 559.5 290.5V278.011L559.018 42.8096C559.005 36.3347 555.858 30.2668 550.573 26.5261Z" fill="white" fillOpacity="0.03" />
+        <path d="M1.00348 278.01V278.011V290.5C1.00348 301.27 9.73392 310 20.5035 310H46.404H513.599H539.5C550.27 310 559 301.27 559 290.5V278.012V278.011L558.518 42.8107C558.505 36.4976 555.437 30.5815 550.284 26.9342L518 4.08359C514.706 1.75208 510.77 0.5 506.735 0.5H52.2624C48.2268 0.5 44.2906 1.75208 40.9966 4.08359L8.75545 26.9041C3.57953 30.5677 0.508266 36.5193 0.52127 42.8605L1.00348 278.01Z" stroke="url(#paint0_linear_5810_3640)" strokeOpacity="0.5" />
       </g>
       <defs>
-        <filter
-          id="filter0_d_5810_3573"
-          x="0"
-          y="0"
-          width="591"
-          height="645"
-          filterUnits="userSpaceOnUse"
-          colorInterpolationFilters="sRGB"
-        >
-          <feFlood floodOpacity="0" result="BackgroundImageFix" />
-          <feColorMatrix
-            in="SourceAlpha"
-            type="matrix"
-            values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 127 0"
-            result="hardAlpha"
-          />
-          <feOffset />
-          <feComposite in2="hardAlpha" operator="out" />
-          <feColorMatrix type="matrix" values="0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0.5 0" />
-          <feBlend mode="normal" in2="BackgroundImageFix" result="effect1_dropShadow_5810_3573" />
-          <feBlend mode="normal" in="SourceGraphic" in2="effect1_dropShadow_5810_3573" result="shape" />
+        <filter id="filter0_b_5810_3640" x="-19.979" y={-20} width="599.479" height="350.5" filterUnits="userSpaceOnUse" colorInterpolationFilters="sRGB">
+          <feFlood floodOpacity={0} result="BackgroundImageFix" />
+          <feGaussianBlur in="BackgroundImageFix" stdDeviation={10} />
+          <feComposite in2="SourceAlpha" operator="in" result="effect1_backgroundBlur_5810_3640" />
+          <feBlend mode="normal" in="SourceGraphic" in2="effect1_backgroundBlur_5810_3640" result="shape" />
         </filter>
-        <linearGradient
-          id="paint0_linear_5810_3573"
-          x1="254.5"
-          y1="16"
-          x2="253.029"
-          y2="531.999"
-          gradientUnits="userSpaceOnUse"
-        >
-          <stop stopColor="#855D08" />
-          <stop offset="0.442708" stopColor="#E30B2A" stopOpacity="0" />
+        <linearGradient id="paint0_linear_5810_3640" x1="559.5" y1="195.564" x2="562.45" y2="2.63107" gradientUnits="userSpaceOnUse">
+          <stop offset="0.0153197" stopColor="#B809B5" stopOpacity={0} />
+          <stop offset="0.510417" stopColor="#ED1C51" />
+          <stop offset={1} stopColor="#FFB000" />
         </linearGradient>
       </defs>
     </svg>

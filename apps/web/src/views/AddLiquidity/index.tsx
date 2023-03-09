@@ -84,15 +84,15 @@ const LiquidityBody = styled.div`
 
   .text-left {
     font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    color: rgba(255, 255, 255, 0.87);
+    font-size: 16px;
+    line-height: 19px;
+    color: #ffffff;
   }
 
   .text-right {
     font-weight: 700;
-    font-size: 14px;
-    line-height: 17px;
+    font-size: 18px;
+    line-height: 22px;
     color: rgba(255, 255, 255);
   }
 
@@ -100,11 +100,15 @@ const LiquidityBody = styled.div`
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
-    color: #9072ff;
+    color: #FB8618;;
   }
 
   .purple {
-    color: #9072ff;
+    color: #FB8618;;
+  }
+
+  .slippage {
+    color: rgba(255, 255, 255, 0.87);
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -112,11 +116,9 @@ const LiquidityBody = styled.div`
       font-weight: 700;
       font-size: 16px;
       line-height: 19px;
-      color: #9072ff;
     }
 
     .purple {
-      color: #9072ff;
       font-size: 18px;
       line-height: 22px;
     }
@@ -126,6 +128,16 @@ const LiquidityBody = styled.div`
       line-height: 22px;
     }
   }
+`
+const WrapIcon = styled.div`
+  width: 30px;
+  height: 30px;
+  background: #1D1C1C;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: -8px 0;
 `
 
 const SwapbackgroundNoneWrapper = styled.div`
@@ -780,7 +792,9 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                   disableCurrencySelect
                 />
                 <ColumnCenter>
-                  <AddIcon width="16px" />
+                  <WrapIcon>
+                    <AddIcon />
+                  </WrapIcon>
                 </ColumnCenter>
                 <CurrencyInputPanel
                   showBUSD

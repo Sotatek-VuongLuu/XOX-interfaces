@@ -13,7 +13,7 @@ const Icon: React.FC<React.PropsWithChildren<SvgProps>> = (props) => {
     >
       <path
         d="M5.04199 13.75L10.542 8.25L16.042 13.75"
-        stroke="#8E8E8E"
+        stroke="#515151"
         strokeWidth="2"
         strokeLinecap="round"
         strokeLinejoin="round"
