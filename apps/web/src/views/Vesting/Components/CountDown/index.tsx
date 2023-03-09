@@ -12,9 +12,40 @@ const CountDownWrapper = styled.div`
   .blur {
     width: 130px;
     height: 98px;
-    border: 5px solid #ff701f;
+    border: 5px solid rgb(255, 252, 221);
     border-radius: 20px;
     position: relative;
+    &::before {
+      top: -5px;
+      left: -5px;
+      bottom: -5px;
+      right: -5px;
+      display: block;
+      content: '';
+      width: 130px;
+      height: 98px;
+      position: absolute;
+      border: 9px solid #ff701f;
+      filter: blur(10px);
+      border-radius: 20px;
+      /* overflow: hidden; */
+      z-index: -1;
+    }
+
+    &::after {
+      top: -5px;
+      left: -5px;
+      display: block;
+      content: '';
+      width: 130px;
+      height: 98px;
+      position: absolute;
+      border: 9px solid #ff701f;
+      filter: blur(10px);
+      border-radius: 20px;
+      /* overflow: hidden; */
+      z-index: -1;
+    }
   }
 
   .item_border {
@@ -61,9 +92,19 @@ const CountDownWrapper = styled.div`
     .blur {
       width: 54px;
       height: 49.56px;
-      border: 5px solid #ff701f;
+      border: 5px solid rgb(255, 252, 221);
       border-radius: 20px;
       position: relative;
+
+      &::before {
+        width: 54px;
+        height: 49.56px;
+      }
+
+      &::after {
+        width: 54px;
+        height: 49.56px;
+      }
     }
 
     .item_border {
@@ -137,7 +178,6 @@ const CountDown = ({ startTime }: Props) => {
     <CountDownWrapper>
       <div>
         <div className="blur">
-          <div className="item_border" />
           <div className="time_item">{handleTime(timeList.days)}</div>
         </div>
         <div className="title_time">Days</div>
@@ -145,7 +185,6 @@ const CountDown = ({ startTime }: Props) => {
       <span className="two_dot">:</span>
       <div>
         <div className="blur">
-          <div className="item_border" />
           <div className="time_item">{handleTime(timeList.hours)}</div>
         </div>
         <div className="title_time">Hours</div>
@@ -153,7 +192,6 @@ const CountDown = ({ startTime }: Props) => {
       <span className="two_dot">:</span>
       <div>
         <div className="blur">
-          <div className="item_border" />
           <div className="time_item">{handleTime(timeList.minutes)}</div>
         </div>
         <div className="title_time">Minutes</div>
@@ -161,7 +199,6 @@ const CountDown = ({ startTime }: Props) => {
       <span className="two_dot">:</span>
       <div>
         <div className="blur">
-          <div className="item_border" />
           <div className="time_item">{handleTime(timeList.seconds)}</div>
         </div>
         <div className="title_time">Seconds</div>

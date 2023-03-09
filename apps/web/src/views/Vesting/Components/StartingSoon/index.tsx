@@ -97,6 +97,8 @@ const Wrapper = styled.div`
   }
 
   @media screen and (max-width: 900px) {
+    padding: 24px 18px;
+
     .title {
       font-size: 16px;
       line-height: 24px;
