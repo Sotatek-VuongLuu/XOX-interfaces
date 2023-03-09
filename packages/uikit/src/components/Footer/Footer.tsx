@@ -163,7 +163,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             color="rgba(255, 255, 255, 0.87)"
             textAlign="center"
           >
-            © {new Date().getFullYear()} XOX. All Rights Reserved
+            © {new Date().getFullYear()} XOX Labs. All Rights Reserved
           </Text>
         </Wrapper>
       </Flex>

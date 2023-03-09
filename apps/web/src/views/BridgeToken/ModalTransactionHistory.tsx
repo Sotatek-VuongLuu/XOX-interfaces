@@ -20,6 +20,7 @@ const StyledModalContainer = styled(ModalContainer)`
 
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
   border-radius: 20px;
+  z-index: 30 !important;
 
   .x-close-icon {
     position: absolute;
@@ -245,7 +246,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                         <div
                           style={
                             row.status === 'completed'
-                              ? { color: '#6BB372' }
+                              ? { color: '#64C66D' }
                               : row.status === 'rejected'
                               ? { color: '#F44336' }
                               : (row.status === 'processing' || row.status === 'excuting') && { color: '#FFBD3C' }
@@ -253,7 +254,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                         >
                           {row.status === 'processing' || row.status === 'excuting'
                             ? 'Processing'
-                            : capitalizeFirstLetter(row.status)}
+                            : capitalizeFirstLetter(row.status === 'completed' ? 'Success' : row.status)}
                         </div>
                       </StyledHeader>
                       <StyledHeader align="left" sx={{ display: 'flex', alignItems: 'center' }}>
@@ -272,7 +273,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
         ) : (
           <NoData>
             <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-              <img src="/images/bridge/nodata_bridge.svg" alt="nodata" />
+              {/* <img src="/images/bridge/nodata_bridge.svg" alt="nodata" /> */}
             </div>
             <p
               style={{
