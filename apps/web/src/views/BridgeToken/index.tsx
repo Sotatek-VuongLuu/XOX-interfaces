@@ -5,7 +5,14 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { useState, useCallback, useEffect, useMemo } from 'react'
-import { Flex, Button as PancakeButton, useMatchBreakpoints, useModal, LinkExternal } from '@pancakeswap/uikit'
+import {
+  Flex,
+  Button as PancakeButton,
+  useMatchBreakpoints,
+  useModal,
+  LinkExternal,
+  useToast,
+} from '@pancakeswap/uikit'
 import Page from '../Page'
 import { useTranslation } from '@pancakeswap/localization'
 import { useSwitchNetwork } from 'hooks/useSwitchNetwork'
@@ -43,17 +50,20 @@ import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
 import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
+import { ToastDescriptionWithTx } from 'components/Toast'
 
 const SwapButton = styled(PancakeButton)`
   background: ${({ disabled }) =>
-    disabled ? 'rgba(255, 255, 255, 0.05) ' : 'linear-gradient(100.7deg, #6473FF 0%, #A35AFF 100%)'};
+    disabled
+      ? 'rgba(255, 255, 255, 0.05) '
+      : 'linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)'};
   color: ${({ theme, disabled }) => (disabled ? 'rgba(255, 255, 255, 0.38)' : theme.colors.white)};
   width: 100%;
-  border-radius: 8px;
-  padding: 17px 20px;
+  border-radius: 12px;
+  padding: 16px 20px;
   font-weight: 700;
-  font-size: 16px;
-  height: 43px;
+  font-size: 18px;
+  height: 54px;
   margin-bottom: 24px;
   cursor: ${({ disabled }) => (disabled ? 'not-allowed' : 'pointer')};
   display: flex;
@@ -117,7 +127,7 @@ const WapperConnectBtn = styled(PancakeButton)`
   line-height: 19px;
   font-weight: 700;
   border-radius: 8px;
-  background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+  background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   color: white;
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -159,7 +169,7 @@ const Content = styled.div`
       background: #313131;
     }
     & > .confirm {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
   }
 
@@ -173,7 +183,7 @@ const Content = styled.div`
     margin-top: 8px;
     margin-bottom: 24px;
     span {
-      color: #9072ff;
+      color: #fb8618;
       font-weight: 700;
     }
   }
@@ -238,7 +248,7 @@ const Content = styled.div`
     justify-content: center;
     margin-top: 24px;
     .btn_dismiss {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       border-radius: 6px;
       padding: 12px 30px;
       font-weight: 700;
@@ -249,7 +259,7 @@ const Content = styled.div`
       cursor: pointer;
 
       &:hover {
-        background: #5f35eb;
+        background: #fb8618;
       }
     }
   }
@@ -268,7 +278,7 @@ const Content = styled.div`
     font-size: 16px;
     line-height: 24px;
     text-align: center;
-    color: #3d8aff;
+    color: #fb8618;
     margin-bottom: 24px;
   }
 
@@ -304,7 +314,7 @@ const BackgroundWrapper = styled.div`
   height: calc(100% - 200px);
   border-bottom-left-radius: 10px;
   border-bottom-right-radius: 10px;
-  background: #242424;
+  background: #0a0a0a;
 `
 
 const Wrapper = styled(Flex)`
@@ -386,6 +396,9 @@ export default function BridgeToken() {
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')
   const { isMobile } = useMatchBreakpoints()
+
+  const { toastWarning, toastError, toastSuccess } = useToast()
+
   const handleGetBalancePool = async () => {
     try {
       setBalancePool('')
@@ -433,14 +446,14 @@ export default function BridgeToken() {
         parseUnits(balanceInput?.toExact(), addressTokenInput.decimals),
       )
     ) {
-      setMessageButton(`Insuficient Your ${addressTokenInput.symbol} Balance`)
+      setMessageButton(`Insufficient Your ${addressTokenInput.symbol} Balance`)
     } else if (
       balancePool !== '-' &&
       balancePool &&
       amountTo &&
       parseEther(Number(amountTo).toFixed(18)).gt(parseEther(balancePool))
     ) {
-      setMessageButton('Insuficient Pool Balance')
+      setMessageButton('Insufficient Pool Balance')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amountInput, balanceInput, amountTo, balancePool])
@@ -524,13 +537,17 @@ export default function BridgeToken() {
         setTxHash(tx?.transactionHash)
         setLoading(false)
         setAmountInput('')
+        toastSuccess('Confirm Bridge', <ToastDescriptionWithTx txHash={tx.transactionHash} />)
       }
       setLoading(false)
     } catch (error: any) {
       setLoading(false)
       setIsOpenLoadingClaimModal(false)
       if (error?.message.includes('rejected')) {
-        setModalReject(true)
+        // setModalReject(true)
+        toastWarning('Confirm Bridge', 'Transaction rejected.')
+      } else {
+        toastError('Confirm Bridge', 'Transaction failed!.')
       }
     }
   }
@@ -575,7 +592,7 @@ export default function BridgeToken() {
   return (
     <Page>
       <WapperHeight>
-        <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+        {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
         <Flex width={['328px', , '559px']} className="container_bridge">
           <Wrapper flex="column" position="relative">
             {isMobile ? (
@@ -608,24 +625,24 @@ export default function BridgeToken() {
                     <p>{t('Bridge tokens in an instant')} </p>
                   </div>
                   <Button onClick={onHistoryTransactionsModal}>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none">
+                    <svg width="24" height="25" viewBox="0 0 24 25" fill="none" xmlns="http://www.w3.org/2000/svg">
                       <path
-                        d="M2.90918 3.36365V7H6.54556"
-                        stroke="#8E8E8E"
+                        d="M2.90918 3.86377V7.50012H6.54556"
+                        stroke="#515151"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
-                        d="M2 12C2 17.5229 6.47715 22 12 22C17.5229 22 22 17.5229 22 12C22 6.47715 17.5229 2 12 2C8.299 2 5.06755 4.01056 3.33839 6.99905"
-                        stroke="#8E8E8E"
+                        d="M2 12.5C2 18.0229 6.47715 22.5 12 22.5C17.5229 22.5 22 18.0229 22 12.5C22 6.97715 17.5229 2.5 12 2.5C8.299 2.5 5.06755 4.51056 3.33839 7.49905"
+                        stroke="#515151"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
-                        d="M12.0026 6L12.002 12.0044L16.2417 16.2441"
-                        stroke="#8E8E8E"
+                        d="M12.0026 6.5L12.002 12.5044L16.2417 16.7441"
+                        stroke="#515151"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -657,17 +674,17 @@ export default function BridgeToken() {
                       aria-hidden="true"
                       style={{ cursor: 'pointer' }}
                     >
-                      <circle cx="15.5" cy="15" r="15" fill="#303030" />
+                      <circle cx="15.5" cy="15" r="15" fill="#1D1C1C" />
                       <path
                         d="M15.5042 20.9498V9"
-                        stroke="#8E8E8E"
+                        stroke="#FB8618"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
                       />
                       <path
                         d="M21.5 15L15.5 21L9.5 15"
-                        stroke="#8E8E8E"
+                        stroke="#FB8618"
                         strokeWidth="2"
                         strokeLinecap="round"
                         strokeLinejoin="round"
@@ -733,8 +750,9 @@ export default function BridgeToken() {
                   href={`${linkTransaction(chainId)}${txHash}`}
                   target="_blank"
                   rel="noreferrer"
-                  color="rgb(61, 138, 255)"
+                  color="#FB8618"
                   fontWeight={400}
+                  hiddenIcon
                   style={{ margin: '0 auto 24px' }}
                 >
                   View on {chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}
@@ -779,7 +797,7 @@ export default function BridgeToken() {
             >
               <Content>
                 <div className="xox_loading" style={{ margin: '24px 0px' }}>
-                  <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+                  <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
                 </div>
                 <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
                 <div className="noti_claim_pending_h3">

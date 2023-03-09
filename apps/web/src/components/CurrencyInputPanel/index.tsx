@@ -124,6 +124,9 @@ const LabelRow = styled.div`
   font-size: 0.75rem;
   line-height: 1rem;
   padding: 15px 1rem 0 1rem;
+  > div {
+    font-size: 14px !important;
+  }
 `
 const InputPanel = styled.div`
   display: flex;
@@ -152,6 +155,7 @@ const Overlay = styled.div`
 
 const NumericalInputWrapper = styled(NumericalInput)`
   font-size: 24px;
+  caret-color: #FB8618;
   @media screen and (max-width: 576px) {
     font-size: 16px;
   }

@@ -82,8 +82,8 @@ const AutoColumnWrapper = styled(AutoColumn)`
     div {
       font-style: italic;
       font-weight: 400;
-      font-size: 12px;
-      line-height: 17px;
+      font-size: 14px;
+      line-height: 20px;
       color: rgba(255, 255, 255, 0.6);
     }
   }
@@ -299,7 +299,7 @@ export const AddLiquidityModalHeader = ({
         </CustomRowBetweenWrapper>
       </AutoColumn>
       <CustomRowBetween className="pool">
-        <Text fontSize="18px" fontWeight="500" lineHeight="22px" color="#9072FF">
+        <Text fontSize="18px" margin="16px 0" fontWeight="500" lineHeight="22px" color="#FB8618">
           {currencies[Field.CURRENCY_A]?.symbol &&
             currencies[Field.CURRENCY_B]?.symbol &&
             getLPSymbol2(

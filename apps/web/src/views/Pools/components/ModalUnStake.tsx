@@ -15,6 +15,17 @@ import { formatToShowBalance } from './utils/formatBalance'
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
   width: fit-content;
+  background: #101010;
+
+  border: 1px solid rgba(255, 255, 255, 0.1);
+
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
+  padding: 32px 27px;
+  width: 556px;
+  @media screen and (max-width: 576px) {
+    padding: 24px;
+  }
 `
 const StyledModalHeader = styled(ModalHeader)`
   display: flex;
@@ -26,11 +37,12 @@ const StyledModalHeader = styled(ModalHeader)`
   color: rgba(255, 255, 255, 0.87);
   width: 100%;
   margin-bottom: 15px;
+  padding: 0;
 `
 
 const ContentUnStake = styled.div`
   padding: 20px;
-  background: #303030;
+  background: #1d1c1c;
   border-radius: 10px;
   width: 100%;
   margin-top: 24px;
@@ -38,10 +50,15 @@ const ContentUnStake = styled.div`
   .balance_container {
     text-align: right;
     display: flex;
-    font-weight: 400;
+    font-weight: 700;
     font-size: 16px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
+    @media screen and (max-width: 576px) {
+      font-size: 12px;
+      line-height: 15px;
+      font-weight: 400;
+    }
   }
 
   .balanceLP {
@@ -64,16 +81,21 @@ const ContentUnStake = styled.div`
   }
   .stake {
     p:first-child {
-      font-weight: 400;
+      font-weight: 700;
       font-size: 16px;
       line-height: 19px;
       color: rgba(255, 255, 255, 0.6);
+      @media screen and (max-width: 576px) {
+        font-size: 12px;
+        line-height: 15px;
+        font-weight: 400;
+      }
     }
     p:last-child {
-      font-weight: 400;
+      font-weight: 700;
       font-size: 16px;
       line-height: 19px;
-      color: rgba(255, 255, 255, 0.87);
+      color: rgba(255, 255, 255, 0.38);
     }
 
     @media screen and (max-width: 576px) {
@@ -83,7 +105,6 @@ const ContentUnStake = styled.div`
       }
     }
   }
-
   .token_lp {
     font-weight: 700;
     font-size: 16px;
@@ -126,17 +147,17 @@ const ContentUnStake = styled.div`
     margin-top: 16px;
     .item_percent_btn {
       padding: 6px 24px;
-      border: 1px solid #9072ff;
+      border: 1px solid #fb8618;
       border-radius: 40px;
       background: transparent;
       font-weight: 700;
       font-size: 12px;
       line-height: 15px;
-      color: #9072ff;
+      color: #fb8618;
       margin-left: 8px;
       cursor: pointer;
       &:hover {
-        background: #9072ff !important;
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%) !important;
         color: #ffffff !important;
       }
       @media screen and (max-width: 576px) {
@@ -174,13 +195,21 @@ const ButtonGroup = styled.div`
     font-size: 16px;
     line-height: 13px;
     color: #ffffff;
+    @media screen and (max-width: 576px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
   }
   .confirm {
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
     color: #ffffff;
+    @media screen and (max-width: 576px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
   }
   button:disabled,
   button[disabled] {
@@ -190,12 +219,14 @@ const ButtonGroup = styled.div`
     background: #313131;
     color: rgba(255, 255, 255, 0.38);
     cursor: not-allowed;
+    @media screen and (max-width: 576px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
   }
 `
 
 const ContentContainer = styled.div`
-  padding: 0px 27px 27px;
-
   .mes_error {
     font-weight: 400;
     font-size: 14px;
@@ -204,7 +235,6 @@ const ContentContainer = styled.div`
     margin-top: 8px;
   }
   @media screen and (max-width: 576px) {
-    padding: 0px 24px 24px;
     .mes_error {
       font-size: 12px;
       line-height: 15px;
@@ -408,8 +438,11 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
                       setActivePercent(item)
                     }}
                     style={{
-                      background: amountActive?.[`${item}`] === amount ? '#9072ff' : 'none',
-                      color: amountActive?.[`${item}`] === amount ? '#fff' : '#9072ff',
+                      background:
+                        amountActive?.[`${item}`] === amount
+                          ? 'linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)'
+                          : 'none',
+                      color: amountActive?.[`${item}`] === amount ? '#fff' : '#fb8618',
                     }}
                     disabled={!Number(balanceLP)}
                   >

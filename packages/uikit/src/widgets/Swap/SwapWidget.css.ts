@@ -38,7 +38,7 @@ export const inputVariants = recipe({
   base: {
     width: 0,
     position: "relative",
-    fontWeight: 500,
+    fontWeight: 400,
     outline: "none",
     border: "none",
     flex: "1 1 auto",
@@ -49,7 +49,7 @@ export const inputVariants = recipe({
     textOverflow: "ellipsis",
     padding: 0,
     WebkitAppearance: "textfield",
-    color: vars.colors.text,
+    color: "rgba(255, 255, 255, 0.38)",
     selectors: {
       "&::-webkit-search-decoration": {
         WebkitAppearance: "none",

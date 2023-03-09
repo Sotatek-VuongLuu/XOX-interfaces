@@ -41,10 +41,8 @@ const FixedHeightRow = styled(RowBetween)`
 `
 
 const CustomCard = styled(Card)`
-  border: 1px solid #444444;
+  background: #1D1C1C;
   border-radius: 20px;
-  background: unset;
-  padding: 0;
 
   & > div {
     background: unset;
@@ -190,7 +188,7 @@ const CustomCardMinimal = styled(Card)`
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
-    color: #9072ff;
+    color: #FB8618;
     text-transform: uppercase;
   }
 

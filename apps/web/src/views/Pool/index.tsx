@@ -32,15 +32,8 @@ import useNativeCurrency from 'hooks/useNativeCurrency'
 import { unwrappedToken } from 'utils/wrappedCurrency'
 import { Token } from '@pancakeswap/sdk'
 import CurrencySelectButton from './CurrencySelectButton'
-
-const SwapBackgroundWrapper = styled.div`
-  position: absolute;
-  top: 0;
-  left: 50%;
-  transform: translateX(-50%);
-  z-index: 1;
-  width: 100%;
-`
+import SwapbackgroundMobile from 'components/Svg/SwapBackgroundMobile'
+import SwapbackgroundDesktop from 'components/Svg/SwapBackgroundDesktop'
 
 const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
   width: 100%;
@@ -51,16 +44,48 @@ const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
   }
 `
 
+const SwapbackgroundWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  height: 300px;
+  overflow: hidden;
+`
 const BackgroundWrapper = styled.div`
   position: absolute;
-  top: 150px;
+  top: 300px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: calc(100% - 150px);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  background: #242424;
+  height: calc(100% - 300px);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
+`
+const SwapBackgroundWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: 100%;
+  height: 225px;
+  overflow: hidden;
+`
+const BackgroundWrapperMoblie = styled.div`
+  position: absolute;
+  top: 225px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: calc(100% - 225px);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  backdrop-filter: blur(10px);
 `
 
 const MainBackground = styled.div`
@@ -86,7 +111,7 @@ const Wrapper = styled(Flex)`
 `
 
 const Body = styled.div`
-  padding-top: 25px;
+  padding-top: 24px;
 `
 
 const ButtonWrapper = styled(Button)`
@@ -101,7 +126,7 @@ const ButtonWrapper = styled(Button)`
 
 const StyledCardFooter = styled(CardFooter)`
   border-top: none !important;
-  padding: 24px 0;
+  padding: 24px 0 31.5px 0;
 `
 
 const StyledLiquidityContainer = styled.div`
@@ -175,8 +200,10 @@ const Background = styled.div<I>`
 `
 const ConnectSub = styled(Text)`
   text-align: center;
-  margin-top: 25px;
-  color: #ffffff61;
+  margin-top: 24px;
+  font-size: 16px;
+  line-height: 19px;
+  color: rgba(255, 255, 255, 0.38);
 `
 
 const PoolWrapper = styled(Flex)`
@@ -496,7 +523,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
 
   return (
     <Page>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <Flex
         width={['330px', , '559px']}
         marginTop="100px"
@@ -507,7 +534,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
         position="relative"
       >
         <Wrapper flex="column" position="relative">
-          {isMobile ? (
+          {/* {isMobile ? (
             <>
               <SwapBackgroundWrapper>
                 <LiquidityBackgroundMobile />
@@ -527,8 +554,22 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
                 <LiquidityBackgroundBorderDesktop />
               </SwapBackgroundWrapper>
             </>
+          ) */}
+          {isMobile ? (
+            <>
+              <SwapBackgroundWrapper>
+                <SwapbackgroundMobile />
+              </SwapBackgroundWrapper>
+              <BackgroundWrapperMoblie />
+            </>
+          ) : (
+            <>
+              <SwapbackgroundWrapper>
+                <SwapbackgroundDesktop />
+              </SwapbackgroundWrapper>
+              <BackgroundWrapper />
+            </>
           )}
-          <BackgroundWrapper />
 
           <StyledLiquidityContainer>
             {/* <Header>
@@ -558,7 +599,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
 
             {v2IsLoading ? (
               <ConfirmedIcon>
-                <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+                <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
               </ConfirmedIcon>
             ) : (
               <>

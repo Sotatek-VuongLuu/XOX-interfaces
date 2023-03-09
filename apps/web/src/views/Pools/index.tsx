@@ -24,6 +24,7 @@ import { Tooltip } from '@mui/material'
 import { useActiveHandle } from 'hooks/useEagerConnect.bmp'
 import { useSelector } from 'react-redux'
 import useAuth from 'hooks/useAuth'
+import { ToastDescriptionWithTx } from 'components/Toast'
 import { AppState } from 'state'
 import { createWallets, getDocLink } from 'config/wallet'
 import { useTranslation } from '@pancakeswap/localization'
@@ -56,6 +57,7 @@ const Banner = styled.div`
   border-radius: 20px;
   padding: 20px 16px;
   margin-top: 20px;
+  position: relative;
 
   & > img {
     position: absolute;
@@ -637,7 +639,7 @@ const Main = styled.div`
           cursor: pointer;
           .inner_container {
             display: flex;
-            background: #1d1d1d;
+            background: #0d0d0d;
             height: 100%;
             width: 100%;
             border-radius: inherit;
@@ -732,6 +734,7 @@ const Container = styled.div`
     }
   }
 `
+
 interface IPropsButtonUnStake {
   disabled?: boolean
 }
@@ -783,7 +786,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
     getContractFarmingLPAddress(chainId),
   )
-  const { toastError } = useToast()
+  const { toastError, toastWarning, toastSuccess } = useToast()
 
   const handleGetDataFarming = async () => {
     try {
@@ -884,6 +887,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setIsOpenLoadingClaimModal(false)
         setIsOpenSuccessModal(true)
         setTxHash(tx?.transactionHash)
+
         handleCallbackAfterSuccess()
       }
     } catch (error: any) {
@@ -892,13 +896,15 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       setIsOpenLoadingClaimModal(false)
       setNotiMess('')
       if (error?.error?.message === 'execution reverted: ERC20: transfer amount exceeds balance') {
-        setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
+        // setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
+        toastError('Confirm Farming', 'Transfer amount exceeds balance.')
       }
       if (error?.message.includes('rejected')) {
-        setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
+        // setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
+        toastWarning('Confirm Farming', 'Transaction rejected.')
       }
       if (error?.code !== 'ACTION_REJECTED') {
-        toastError('Error', 'Transaction failed')
+        toastError('Confirm Farming', 'Transaction failed')
       }
     }
   }
@@ -955,6 +961,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setTxHash(tx?.transactionHash)
         onDismissStake()
         setIsOpenSuccessModal(true)
+
         handleCallbackAfterSuccess()
       }
     } catch (error: any) {
@@ -963,10 +970,13 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       setNotiMess('')
       setIsOpenLoadingClaimModal(false)
       if (error?.error?.message === 'execution reverted: ERC20: transfer amount exceeds balance') {
-        setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
+        toastError('Confirm Farming', 'Transfer amount exceeds balance.')
+
+        // setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
       }
       if (error?.message.includes('rejected')) {
-        setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
+        // setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
+        toastWarning('Confirm Farming', 'Transaction rejected.')
       }
       if (error?.code !== 'ACTION_REJECTED') {
         toastError('Error', 'Transaction failed')
@@ -991,6 +1001,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setAmount('')
         onDismissUnStake()
         setIsOpenSuccessModal(true)
+
         handleCallbackAfterSuccess()
       }
     } catch (error: any) {
@@ -999,13 +1010,15 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       setNotiMess('')
       setIsOpenLoadingClaimModal(false)
       if (error?.error?.message === 'execution reverted: ERC20: transfer amount exceeds balance') {
-        setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
+        // setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
+        toastError('Confirm Farming', 'Transfer amount exceeds balance.')
       }
       if (error?.message.includes('rejected')) {
-        setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
+        // setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
+        toastWarning('Confirm Farming', 'Transaction rejected.')
       }
       if (error?.code !== 'ACTION_REJECTED') {
-        toastError('Error', 'Transaction failed')
+        toastError('Confirm Farming', 'Transaction failed')
       }
     }
   }
@@ -1092,10 +1105,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           <NavWrapper>
             <Banner>
               <img alt="" src={isMobile ? 'images/galaxy-mo.svg' : 'images/galaxy-dk.svg'} />
-              <div className="corner1"></div>
-              <div className="edge1"></div>
-              <div className="corner2"></div>
-              <div className="edge2"></div>
+              <div className="corner1" />
+              <div className="edge1" />
+              <div className="corner2" />
+              <div className="edge2" />
               <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
                 Add Liquidity. Earn Trading Fees
               </Text>
@@ -1172,8 +1185,20 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                                   title="Total value of the funds in this farm’s liquidity pair"
                                   placement="top"
                                   id="u_question_farming"
+                                  PopperProps={{
+                                    sx: (theme) => ({
+                                      '& .MuiTooltip-tooltip': {
+                                        border: '1px solid #FE4039',
+                                        background: '#242424',
+                                        padding: '6px',
+                                        color: 'rgba(255, 255, 255, 0.6) !important',
+                                        borderRadius: '10px',
+                                        fontSize: '14px !important',
+                                      },
+                                    }),
+                                  }}
                                 >
-                                  <span className="u_question">
+                                  <span className="u_question" style={{ cursor: 'pointer' }}>
                                     <img src="/images/u_question-circle.svg" alt="u_question-circle" />
                                   </span>
                                 </Tooltip>
@@ -1204,8 +1229,23 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             {account ? (
                               <>
                                 <ShowBalance balance={liquidity} name="liquidity" />
-                                <Tooltip title="Total value of the funds in this farm’s liquidity pair" placement="top">
-                                  <span className="u_question">
+                                <Tooltip
+                                  title="Total value of the funds in this farm’s liquidity pair"
+                                  placement="top"
+                                  PopperProps={{
+                                    sx: (theme) => ({
+                                      '& .MuiTooltip-tooltip': {
+                                        border: '1px solid #FE4039',
+                                        background: '#242424',
+                                        padding: '6px',
+                                        color: 'rgba(255, 255, 255, 0.6) !important',
+                                        borderRadius: '10px',
+                                        fontSize: '14px !important',
+                                      },
+                                    }),
+                                  }}
+                                >
+                                  <span className="u_question" style={{ cursor: 'pointer' }}>
                                     <img src="/images/u_question-circle.svg" alt="u_question-circle" />
                                   </span>
                                 </Tooltip>

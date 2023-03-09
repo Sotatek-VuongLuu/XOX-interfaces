@@ -2,7 +2,6 @@
 import React, { useState } from 'react'
 import { ChainId } from '@pancakeswap/sdk'
 import styled from 'styled-components'
-import { Tooltip } from '@mui/material'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { NumericalInput, useMatchBreakpoints } from '@pancakeswap/uikit'
 import SelectNetworkButton from './SelectNetworkButton'
@@ -13,7 +12,7 @@ import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 
 const Wrapper = styled.div`
   border-radius: 8px;
-  background: ${({ theme }) => theme.colors.dark3};
+  background: rgba(255, 255, 255, 0.03);
   padding: 12px;
 
   @media screen and (min-width: 576px) {
@@ -60,7 +59,7 @@ const TextRow = styled.div<IPropsTextRow>`
   }
 
   @media (max-width: 576px) {
-    font-size: 14px;
+    font-size: 12px;
   }
 `
 
@@ -73,7 +72,7 @@ const AmountRow = styled.div`
   .tooltip {
     background: transparent;
     padding: 7px 0 7px 0;
-    font-size: 16px;
+    font-size: 24px;
     color: ${({ theme }) => theme.colors.textSubTitle};
     font-weight: 400;
     width: calc(100%);
@@ -81,10 +80,18 @@ const AmountRow = styled.div`
     white-space: nowrap;
     overflow: hidden;
 
-    @media screen and (min-width: 576px) {
+    .holer {
+      font-size: 24px;
+      color: rgba(255, 255, 255, 0.38);
+    }
+
+    @media screen and (max-width: 576px) {
       padding: 10px 0 10px 0;
       font-size: 18px;
       width: calc(100%);
+      .holer {
+        font-size: 18px;
+      }
     }
   }
 
@@ -110,7 +117,7 @@ const AmountRow = styled.div`
 const NumericalInputStyled = styled(NumericalInput)`
   background: transparent;
   padding: 10px 8px 10px 0;
-  font-size: 18px;
+  font-size: 24px;
   width: auto;
   color: ${({ theme }) => theme.colors.textSubTitle};
   font-weight: 400;
@@ -118,15 +125,15 @@ const NumericalInputStyled = styled(NumericalInput)`
   & {
     -webkit-text-fill-color: ${({ theme }) => theme.colors.textSubTitle};
     ::placeholder {
-      -webkit-text-fill-color: ${({ theme }) => theme.colors.textSubTitle};
+      -webkit-text-fill-color: rgba(255, 255, 255, 0.38);
     }
     opacity: 1;
   }
   &::placeholder {
-    color: ${({ theme }) => theme.colors.textSubTitle};
+    color: rgba(255, 255, 255, 0.38);
   }
   @media (max-width: 576px) {
-    font-size: 16px;
+    font-size: 18px;
   }
 `
 
@@ -196,7 +203,7 @@ const AmountInput: React.FC<Props> = ({
             onUserInput={(value) => handleUserInput(value)}
           />
         ) : (
-          <div className="tooltip">{amount || <span>0.0</span>}</div>
+          <div className="tooltip">{amount || <span className="holer">0.0</span>}</div>
         )}
 
         <div className="buttons-group">

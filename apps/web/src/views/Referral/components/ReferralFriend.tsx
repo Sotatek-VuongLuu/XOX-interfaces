@@ -825,7 +825,16 @@ const ReferralFriend = ({
                           <div className="inner-text">
                             <img src={item.icon} alt="icons" className="jewellery" />
 
-                            <div className="shadow" />
+                            <div
+                              className="shadow"
+                              style={{
+                                background: `${
+                                  item.lever === currentLevelReach
+                                    ? 'radial-gradient(50% 50% at 50% 50%, #f97d1d 0%, rgba(64, 25, 21, 0) 100%)'
+                                    : 'radial-gradient(50% 50% at 50% 50%, #000000 0%, rgba(48, 48, 48, 0) 100%)'
+                                }`,
+                              }}
+                            />
 
                             <p className="title">
                               {item.point.toLocaleString()} points ~ ${item.dollar.toLocaleString()}

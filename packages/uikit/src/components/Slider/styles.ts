@@ -24,7 +24,7 @@ const bunnyButt = `"data:image/svg+xml,%3Csvg width='15' height='32' viewBox='0 
 
 const getBaseThumbStyles = ({ isMax, disabled }: StyledInputProps) => `
   -webkit-appearance: none;
-  background: #9072FF;
+  background: #FB8618;
   box-shadow: none;
   border: 0;
   cursor: pointer;
@@ -71,12 +71,7 @@ export const StyledInput = styled.input<StyledInputProps>`
   cursor: ${getCursorStyle};
   height: 2px;
   position: relative;
-  background: linear-gradient(
-    -90deg,
-    rgba(21, 191, 253, 0) 8.19%,
-    rgba(21, 191, 253, 0.7) 70.61%,
-    rgba(156, 55, 253, 0.7) 100%
-  ) !important;
+  background: linear-gradient(275.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%) !important;
   ::-webkit-slider-thumb {
     ${getBaseThumbStyles}
   }

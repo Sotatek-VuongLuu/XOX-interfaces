@@ -101,7 +101,7 @@ function ConfirmationPendingContent({
   return (
     <Wrapper>
       <ConfirmedIcon>
-        <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+        <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
       </ConfirmedIcon>
       <AutoColumn gap="16px" justify="center">
         <Text className="waiting">{t('Waiting For Confirmation')}</Text>
@@ -147,7 +147,7 @@ export function TransactionSubmittedContent({
           {chainId && hash && (
             <LinkExternal
               href={getBlockExploreLink(hash, 'transaction', chainId)}
-              color="#FB8618"
+              color="#3D8AFF"
               style={{ fontWeight: 400, marginBottom: '16px' }}
               hiddenIcon
             >
