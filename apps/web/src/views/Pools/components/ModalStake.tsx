@@ -37,8 +37,7 @@ const StyledModalHeader = styled(ModalHeader)`
   text-align: center;
   color: rgba(255, 255, 255, 0.87);
   width: 100%;
-  margin-bottom: 24px;
-  padding: 0;
+  margin-bottom: 15px;
 `
 
 const ContentStake = styled.div`
