@@ -29,14 +29,14 @@ const StyledModalContainer = styled(ModalContainer)`
     height: 28px;
     border-radius: 20px;
     z-index: 1;
-    border-top: 2px solid #ffb000;
-    border-left: 2px solid #ffb000;
+    border-top: 1px solid #ffb000;
+    border-left: 1px solid #ffb000;
     border-top-right-radius: unset;
     border-bottom-left-radius: unset;
   }
 
   .edge1 {
-    width: 2px;
+    width: 1px;
     height: calc(75% - 28px);
     position: absolute;
     top: 28px;
@@ -53,14 +53,14 @@ const StyledModalContainer = styled(ModalContainer)`
     height: 28px;
     border-radius: 20px;
     z-index: 1;
-    border-top: 2px solid #ffb000;
-    border-right: 2px solid #ffb000;
+    border-top: 1px solid #ffb000;
+    border-right: 1px solid #ffb000;
     border-top-left-radius: unset;
     border-bottom-right-radius: unset;
   }
 
   .edge2 {
-    width: 2px;
+    width: 1px;
     height: calc(75% - 28px);
     position: absolute;
     top: 28px;

@@ -156,6 +156,7 @@ const Content = styled.div`
   }
 
   @media screen and (max-width: 900px) {
+    padding: 18px 12px;
     .title {
       font-size: 16px;
       line-height: 19px;
@@ -166,7 +167,7 @@ const Content = styled.div`
 export const CustomTableWrapper = styled(Flex)`
   padding-top: 24px;
   flex-direction: column;
-  gap: 16px;
+  /* gap: 16px; */
   overflow-x: auto;
 
   & > div:last-child {
@@ -180,17 +181,24 @@ export const CustomTableWrapper = styled(Flex)`
       rgba(184, 9, 181, 0.2) -7.25%,
       rgba(237, 28, 81, 0.2) 54.2%,
       rgba(255, 176, 0, 0.2) 113.13%
-    );
+    ) !important;
     border-radius: 30px;
+  }
+
+  .item_pricing_0 {
+    margin-top: 10px;
   }
 
   @media screen and (max-width: 900px) {
     padding-top: 12px;
+    .item_pricing_0 {
+      margin-top: 3px;
+    }
   }
 `
 
 const Table = styled.div`
-  padding: 16px 20px;
+  padding: 0px 20px;
   display: grid;
   gap: 10px;
   align-items: center;
@@ -264,9 +272,8 @@ const Table = styled.div`
   }
 
   @media screen and (max-width: 900px) {
-    & {
-      padding: 8px 10px;
-    }
+    padding: 0px;
+
     .table-header_col {
       font-size: 12px;
       line-height: 15px;
@@ -281,6 +288,13 @@ const Table = styled.div`
       font-size: 12px;
       line-height: 15px;
     }
+  }
+`
+
+const CustomTable = styled(Table)`
+  padding: 16px 20px;
+  @media screen and (max-width: 900px) {
+    padding: 8px 10px;
   }
 `
 
@@ -337,9 +351,9 @@ function PricingInfo({ onModalExchangeSale }) {
             <Text className="table-header_col">XOXS Bonus</Text>
           </Table>
 
-          {Array.from(dataPricing).map((item) => {
+          {Array.from(dataPricing).map((item, index) => {
             return (
-              <Table className={!!item.status && `active`}>
+              <CustomTable className={item.status ? `active item_pricing_${index}` : `item_pricing_${index}`}>
                 {!!item.status && (
                   <>
                     <div className="corner_active1" />
@@ -369,7 +383,7 @@ function PricingInfo({ onModalExchangeSale }) {
                 <Text className="table-header">15.000 XOX</Text>
                 <Text className="table-header">$0.06</Text>
                 <Text className="table-header">10%</Text>
-              </Table>
+              </CustomTable>
             )
           })}
         </CustomTableWrapper>

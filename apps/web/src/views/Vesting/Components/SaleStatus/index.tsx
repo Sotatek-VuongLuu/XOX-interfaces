@@ -215,6 +215,9 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
   }
 
   @media screen and (max-width: 900px) {
+    .mbpadding {
+      padding: 35px 24px !important;
+    }
     .status_name {
       font-size: 12px;
       line-height: 15px;
@@ -280,7 +283,7 @@ const Item = ({ item }) => {
         )}
         {item.name}
       </div>
-      <Grid gridTemplateColumns="1.25fr 0.75fr" padding="35px 34px" gridGap="22px">
+      <Grid gridTemplateColumns="1.25fr 0.75fr" padding="35px 34px" gridGap="22px" className="mbpadding">
         <div>
           <p className="status_name">Status</p>
           <p className={`status_value ${String(item.status).toLocaleLowerCase()} status`}>
