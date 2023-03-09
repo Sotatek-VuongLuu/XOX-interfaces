@@ -50,6 +50,7 @@ import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
 import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
+import { ToastDescriptionWithTx } from 'components/Toast'
 
 const SwapButton = styled(PancakeButton)`
   background: ${({ disabled }) =>
@@ -396,7 +397,7 @@ export default function BridgeToken() {
   const [txHash, setTxHash] = useState('')
   const { isMobile } = useMatchBreakpoints()
 
-  const { toastWarning, toastError } = useToast()
+  const { toastWarning, toastError, toastSuccess } = useToast()
 
   const handleGetBalancePool = async () => {
     try {
@@ -445,14 +446,14 @@ export default function BridgeToken() {
         parseUnits(balanceInput?.toExact(), addressTokenInput.decimals),
       )
     ) {
-      setMessageButton(`Insuficient Your ${addressTokenInput.symbol} Balance`)
+      setMessageButton(`Insufficient Your ${addressTokenInput.symbol} Balance`)
     } else if (
       balancePool !== '-' &&
       balancePool &&
       amountTo &&
       parseEther(Number(amountTo).toFixed(18)).gt(parseEther(balancePool))
     ) {
-      setMessageButton('Insuficient Pool Balance')
+      setMessageButton('Insufficient Pool Balance')
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amountInput, balanceInput, amountTo, balancePool])
@@ -536,6 +537,7 @@ export default function BridgeToken() {
         setTxHash(tx?.transactionHash)
         setLoading(false)
         setAmountInput('')
+        toastSuccess('Confirm Bridge', <ToastDescriptionWithTx txHash={tx.transactionHash} />)
       }
       setLoading(false)
     } catch (error: any) {

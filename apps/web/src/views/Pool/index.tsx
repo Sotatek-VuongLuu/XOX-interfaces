@@ -35,7 +35,6 @@ import CurrencySelectButton from './CurrencySelectButton'
 import SwapbackgroundMobile from 'components/Svg/SwapBackgroundMobile'
 import SwapbackgroundDesktop from 'components/Svg/SwapBackgroundDesktop'
 
-
 const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
   width: 100%;
   height: 37px;
@@ -44,7 +43,6 @@ const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
     height: 43px;
   }
 `
-
 
 const SwapbackgroundWrapper = styled.div`
   position: absolute;
@@ -66,7 +64,7 @@ const BackgroundWrapper = styled.div`
   border-bottom-right-radius: 20px;
   background: rgba(255, 255, 255, 0.03);
   backdrop-filter: blur(10px);
-  `
+`
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
   top: 0;
@@ -525,7 +523,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
 
   return (
     <Page>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <Flex
         width={['330px', , '559px']}
         marginTop="100px"
@@ -536,7 +534,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
         position="relative"
       >
         <Wrapper flex="column" position="relative">
-        {/* {isMobile ? (
+          {/* {isMobile ? (
             <>
               <SwapBackgroundWrapper>
                 <LiquidityBackgroundMobile />
@@ -557,7 +555,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
               </SwapBackgroundWrapper>
             </>
           ) */}
-        {isMobile ? (
+          {isMobile ? (
             <>
               <SwapBackgroundWrapper>
                 <SwapbackgroundMobile />
