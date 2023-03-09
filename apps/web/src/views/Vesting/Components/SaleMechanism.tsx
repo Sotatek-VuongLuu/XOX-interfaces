@@ -2,7 +2,7 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useWindowSize from 'hooks/useWindowSize'
 import { useState } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 import VestingSchedule from './MainInfoTab/VestingSchedule'
 import YourInfo from './MainInfoTab/YourInfo'
 import PrivateSale from './MechanismTab/PrivateSale'
@@ -18,7 +18,11 @@ interface IProps {
   dataRefInfo: any
 }
 
-const Wrapper = styled.div`
+interface IPropsWrapper {
+  isMore?: boolean
+}
+
+const Wrapper = styled.div<IPropsWrapper>`
   position: relative;
   padding: 24px;
   background: rgba(16, 16, 16, 0.3);
@@ -75,7 +79,7 @@ const Wrapper = styled.div`
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
-  /* .overlay_learmore {
+  .overlay_learmore {
     position: absolute;
     width: 100%;
     height: 290px;
@@ -101,17 +105,72 @@ const Wrapper = styled.div`
     transform: translateX(-50%);
   }
 
+  @keyframes MoveDown {
+    0%,
+    100% {
+      bottom: 20px;
+    }
+    50% {
+      bottom: 10px;
+    }
+  }
+
+  @keyframes MoveUp {
+    0%,
+    100% {
+      top: 0px;
+    }
+    50% {
+      top: 10px;
+    }
+  }
+
   .fi_chevrons-down {
     position: absolute;
     bottom: 20px;
     left: 50%;
     transform: translateX(-50%);
+    animation: MoveDown 2s linear infinite;
+  }
+
+  .container_learnless {
+    display: flex;
+    justify-content: center;
+    margin-top: 24px;
+
+    & > div {
+      width: max-content;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      position: relative;
+      img {
+        max-width: 24px;
+        position: absolute;
+        transform: rotate(180deg);
+        top: 0;
+        margin-bottom: 6px;
+        animation: MoveUp 2s linear infinite;
+      }
+      button {
+        padding: 10px 20px;
+        font-weight: 700;
+        font-size: 14px;
+        line-height: 17px;
+        color: #ffffff;
+        border: 1px solid #ffffff;
+        border-radius: 8px;
+        background: transparent;
+        margin-top: 40px;
+      }
+    }
   }
 
   @media screen and (max-width: 900px) {
-    height: 540px;
+    height: ${({ isMore }) => (isMore ? 'auto' : '540px')};
     overflow-y: hidden;
-  } */
+  }
 `
 const Content = styled.div`
   .tab-mechanism {
@@ -181,8 +240,9 @@ function SaleMechanism({
         return <PrivateSale />
     }
   }
+
   return (
-    <Wrapper>
+    <Wrapper isMore={isMore}>
       <div className="corner1" />
       <div className="edge1" />
       <div className="corner2" />
@@ -204,14 +264,25 @@ function SaleMechanism({
         <div className="body">{renderBody(tabActiveMechansim)}</div>
       </Content>
 
-      {/* {width <= 900 && !isMore && (
+      {width <= 900 && isMore && (
+        <div className="container_learnless">
+          <div>
+            <img src="/images/fi_chevrons-down.png" alt="fi_chevrons-down" className="fi_chevrons-up" />
+            <button type="button" className="btn_learnless" onMouseDown={() => setIsMore(false)}>
+              Learn Less
+            </button>
+          </div>
+        </div>
+      )}
+
+      {width <= 900 && !isMore && (
         <div className="overlay_learmore">
-          <button type="button" className="btn_learnmore">
+          <button type="button" className="btn_learnmore" onClick={() => setIsMore(true)}>
             Learn More
           </button>
           <img src="/images/fi_chevrons-down.svg" alt="fi_chevrons-down" className="fi_chevrons-down" />
         </div>
-      )} */}
+      )}
     </Wrapper>
   )
 }

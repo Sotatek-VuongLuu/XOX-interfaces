@@ -11,6 +11,17 @@ const Content = styled.div`
     line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
     margin-bottom: 20px;
+    position: relative;
+
+    &::before {
+      content: '';
+      position: absolute;
+      top: 30px;
+      left: 0px;
+      width: 40px;
+      height: 4px;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    }
   }
   .description {
     font-weight: 400;

@@ -74,6 +74,46 @@ const Content = styled.div`
   }
 
   overflow-x: scroll;
+
+  @media screen and (max-width: 900px) {
+    .heading-sale {
+      font-size: 14px;
+      line-height: 17px;
+    }
+
+    .title_vested {
+      font-size: 12px;
+      line-height: 15px;
+    }
+
+    .amount_vested {
+      font-size: 12px;
+      line-height: 15px;
+      margin-bottom: 8px;
+    }
+    .next_day {
+      font-size: 12px;
+      line-height: 15px;
+      margin-bottom: 12px;
+    }
+    .sale_item {
+      padding: 16px;
+    }
+  }
+`
+
+const CustomButtom = styled(Button)`
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 19px;
+  color: #ffffff;
+  padding: 12px 30px;
+
+  @media screen and (max-width: 900px) {
+    padding: 12px 20px;
+    font-size: 14px;
+    line-height: 17px;
+  }
 `
 
 const Img = styled.img`
@@ -123,7 +163,7 @@ const SaleItem = ({ item, index }) => {
           </p>
         </div>
         <div className="sale-schedule-item">
-          <Button type="button">Claim</Button>
+          <CustomButtom type="button">Claim</CustomButtom>
         </div>
       </div>
     </div>
@@ -240,6 +280,25 @@ const WrapperTime = styled.div`
       z-index: 1;
       background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
     }
+
+    @media screen and (max-width: 900px) {
+      width: 66px;
+      height: 59px;
+      gap: 8px;
+
+      .number_time {
+        font-size: 20px;
+        line-height: 24px;
+      }
+
+      .name_time {
+        font-size: 12px;
+        line-height: 15px;
+      }
+    }
+  }
+  @media screen and (max-width: 900px) {
+    gap: 8px;
   }
 `
 
