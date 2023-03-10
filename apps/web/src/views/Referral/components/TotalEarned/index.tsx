@@ -109,12 +109,14 @@ const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
     <Wrapper>
       <div className="img_container">
         {/* ref_xox_mb */}
-        {/* {width <= 900 ? (
+        {width <= 900 ? (
           <img src="/images/ref_xox_mb.svg" alt="ref_xox" className="ref_xox" />
-        ) : ( */}
-        <img src="/images/ref_xox.svg" alt="ref_xox" className="ref_xox" />
-        {/* )} */}
-        <img src="/images/ref_chart_bg.svg" alt="ref_chart_bg" className="ref_chart_bg" />
+        ) : (
+          <>
+            <img src="/images/ref_xox.svg" alt="ref_xox" className="ref_xox" />
+            <img src="/images/ref_chart_bg.svg" alt="ref_chart_bg" className="ref_chart_bg" />
+          </>
+        )}
       </div>
       <p className="title">Total Earned By Referrals</p>
 
