@@ -537,7 +537,7 @@ export default function BridgeToken() {
         setTxHash(tx?.transactionHash)
         setLoading(false)
         setAmountInput('')
-        toastSuccess('Confirm Bridge', <ToastDescriptionWithTx txHash={tx.transactionHash} />)
+        toastSuccess('Transaction Receipt', <ToastDescriptionWithTx txHash={tx.transactionHash} />)
       }
       setLoading(false)
     } catch (error: any) {

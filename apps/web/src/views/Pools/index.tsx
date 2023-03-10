@@ -786,7 +786,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
     getContractFarmingLPAddress(chainId),
   )
-  const { toastError, toastWarning, toastSuccess } = useToast()
+  const { toastError, toastWarning } = useToast()
 
   const handleGetDataFarming = async () => {
     try {
@@ -1484,6 +1484,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               target="_blank"
               rel="noreferrer"
               color="#FB8618"
+              hiddenIcon
             >
               <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
             </LinkExternal>
