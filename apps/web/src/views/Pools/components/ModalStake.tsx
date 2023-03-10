@@ -218,7 +218,7 @@ const ButtonGroup = styled.div`
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-    background: #313131;
+    background: rgba(255, 255, 255, 0.1);
     color: rgba(255, 255, 255, 0.38);
     cursor: not-allowed;
     @media screen and (max-width: 576px) {

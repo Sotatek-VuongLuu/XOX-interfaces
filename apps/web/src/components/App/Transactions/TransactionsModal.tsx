@@ -97,7 +97,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
                   {t('Clear all')}
                 </RecentButton>
               </AutoRow>
-              <div style={{ height: '200px', overflowY: 'auto', overflowX: 'hidden' }}>
+              <div style={{ maxHeight: '200px', overflowY: 'auto', overflowX: 'hidden' }}>
                 {Object.entries(sortedRecentTransactions).map(([chainId, transactions]) => {
                   const chainIdNumber = Number(chainId)
                   const groupedTransactions = groupBy(Object.values(transactions), (trxDetails) =>

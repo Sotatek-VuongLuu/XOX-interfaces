@@ -330,6 +330,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
             allTokens={allTokens}
             textContentBanner={<>One Dapp. {isMobile ? <br /> : ''}Unlimited possibilities</>}
             hasPadding={false}
+            titleBtn1="XOX"
           />
           <PageContainer>
             <div>
