@@ -60,7 +60,8 @@ const WrapperBorder = styled.div`
 `
 
 const WrapBorder = styled.div`
-  background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%), linear-gradient(0deg, rgba(16, 16, 16, 0.3), rgba(16, 16, 16, 0.3));
+  background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%),
+    linear-gradient(0deg, rgba(16, 16, 16, 0.3), rgba(16, 16, 16, 0.3));
   padding: 1px;
   flex: 1;
   border-radius: 20px;
@@ -70,7 +71,7 @@ const WrapBorder = styled.div`
   }
 `
 
-const Box = styled.div` 
+const Box = styled.div`
   flex: 1;
   align-items: center;
   display: flex;
@@ -91,8 +92,8 @@ const Box = styled.div`
     min-height: 186px;
   }
   &.border {
-    border-image-source: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
-    border: 1px solid linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    border-image-source: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    border: 1px solid linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   }
   @media (max-width: 576px) {
     &.h-186 {
@@ -400,7 +401,7 @@ export default function StableCoin() {
 
   return (
     <>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
 
       <FullWrapper>
         <ContainerBanner>

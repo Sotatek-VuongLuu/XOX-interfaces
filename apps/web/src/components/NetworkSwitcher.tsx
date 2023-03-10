@@ -40,7 +40,7 @@ const NetworkSelect = ({ switchNetwork, chainId, removeTxtHeader }) => {
       {chains.map((chain) => (
         <UserMenuItem key={chain.id} style={{ justifyContent: 'flex-start' }} onClick={() => switchNetwork(chain.id)}>
           <ChainLogo chainId={chain.id} />
-          <Text color={chain.id === chainId ? '#9072FF' : 'text'} bold={chain.id === chainId} pl="12px">
+          <Text color={chain.id === chainId ? '#FB8618' : 'text'} bold={chain.id === chainId} pl="12px">
             {chain.name}
           </Text>
         </UserMenuItem>

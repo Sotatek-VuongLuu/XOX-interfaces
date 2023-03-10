@@ -2,7 +2,24 @@
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
-import { Box, Grid } from '@mui/material'
+import {
+  Box,
+  Grid,
+  Paper,
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Tooltip,
+  Avatar,
+} from '@mui/material'
+import { CopyButton, useToast } from '@pancakeswap/uikit'
+import { ColumnCenter } from 'components/Layout/Column'
+import { GridLoader } from 'react-spinners'
+import { useTranslation } from '@pancakeswap/localization'
+
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import Trans from 'components/Trans'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -20,13 +37,12 @@ import { getUserFriend } from 'services/referral'
 import { formatUnits } from '@ethersproject/units'
 import axios from 'axios'
 import HowToJoin from './HowToJoin'
+
 // eslint-disable-next-line import/no-cycle
 import LeaderBoardItem from './LearderBoardItem'
 import PlatformStat from './PlatformStats'
 import TotalEarned from './TotalEarned'
 import { filterChain, FilterChain, filterTime, FilterTime, ListRankingByChain, RankingByChain } from '..'
-import { ColumnCenter } from 'components/Layout/Column'
-import { GridLoader } from 'react-spinners'
 
 const floatingAnim = (x: string, y: string) => keyframes`
   from {
@@ -176,8 +192,8 @@ const First = styled.div<IPropsTotal>`
     margin-bottom: ${({ account }) => (account ? '18px' : '')};
 
     .dot_item {
-      background: #9072ff;
-      border: 2px solid #9072ff;
+      background: #fb8618;
+      border: 2px solid #fb8618;
       border-radius: 50%;
     }
   }
@@ -476,6 +492,97 @@ const WrapperRight = styled.div<IPropsContainer>`
         }
       }
     }
+  }
+`
+
+const WrapperLeftV2 = styled(Box)`
+  padding: 24px;
+  background: #0d0d0d;
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  min-height: 248px;
+  position: relative;
+
+  .corner1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-left: 2px solid #ffffff30;
+    border-bottom-right-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge1 {
+    width: 2px;
+    height: calc(100% - 80px);
+    position: absolute;
+    bottom: 50px;
+    left: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .corner2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 50%;
+    height: 50px;
+    border-radius: 20px;
+    z-index: -1;
+    border-bottom: 2px solid #ffffff30;
+    border-right: 2px solid #ffffff30;
+    border-bottom-left-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge2 {
+    width: 2px;
+    height: calc(100% - 80px);
+    position: absolute;
+    bottom: 50px;
+    right: 0;
+    z-index: -1;
+    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+  /* &::before {
+    content: '';
+    display: inline-block;
+    width: 7px;
+    height: 7px;
+    background: #242424;
+    position: absolute;
+    right: 23px;
+    bottom: 23px;
+  } */
+  .title {
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.87);
+    margin-bottom: 16px;
+
+    @media screen and (max-width: 900px) {
+      font-size: 18px;
+      line-height: 24px;
+    }
+  }
+  .no-data {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: fit-content;
+    text-align: center;
+    font-weight: 700;
+    font-size: 18px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.6);
   }
 `
 
@@ -902,6 +1009,7 @@ const MainInfo = ({
   const percentPoint = (currentPoint / totalPoint) * 100
   const { width } = useWindowSize()
   const [listFriends, setListFriends] = useState([])
+  const { t } = useTranslation()
 
   const controlWidth = useMemo(() => {
     let slidesPerView = 5
@@ -1155,6 +1263,102 @@ const MainInfo = ({
                   </ConnectBox>
                 </div>
               </Second>
+            )}
+
+            {width < 1200 && (
+              <Grid item xs={12} lg={4} sx={{ zIndex: 7, marginTop: '16px' }}>
+                {account && (
+                  <WrapperLeftV2>
+                    <div className="corner1" />
+                    <div className="edge1" />
+                    <div className="corner2" />
+                    <div className="edge2" />
+                    <p className="title">Referral friends</p>
+                    {listFriends.length !== 0 ? (
+                      <TableContainer component={Paper} sx={{ height: 170, background: '#0d0d0d', boxShadow: 'none' }}>
+                        <Table sx={{ minWidth: 400 }} aria-label="simple table">
+                          <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#0d0d0d' }}>
+                            <TableRow
+                              sx={{
+                                '& td, & th': {
+                                  borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                                  fontWeight: 700,
+                                  fontSize: 14,
+                                  color: ' rgba(255, 255, 255, 0.6)',
+                                  padding: '8px 8px 8px 0px',
+                                },
+                              }}
+                            >
+                              <TableCell align="left">Username</TableCell>
+                              <TableCell align="center">Referral Code</TableCell>
+                              <TableCell align="right">Total Points</TableCell>
+                            </TableRow>
+                          </TableHead>
+                          <TableBody style={{ maxHeight: '50px' }}>
+                            {[...listFriends].map((row) => (
+                              <TableRow
+                                key={row.name}
+                                sx={{
+                                  '& td, & th': {
+                                    border: 0,
+                                    fontWeight: 400,
+                                    fontSize: 14,
+                                    color: ' rgba(255, 255, 255, 0.87)',
+                                    padding: '8px 8px 8px 0px',
+                                  },
+                                }}
+                              >
+                                <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                                  <Avatar
+                                    alt="Remy Sharp"
+                                    src={row.avatar}
+                                    sx={{ marginRight: '8px', height: '24px', width: '24px' }}
+                                  />
+                                  <Tooltip title={row?.name}>
+                                    <p>
+                                      {row.name?.length > 9
+                                        ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                                        : row.name}
+                                    </p>
+                                  </Tooltip>
+                                </TableCell>
+                                <TableCell align="left">
+                                  <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <div>
+                                      {row?.refCode?.length > 9
+                                        ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
+                                            row.refCode.length - 2,
+                                          )}`
+                                        : row.refCode}
+                                    </div>
+                                    <div>
+                                      <CopyButton
+                                        width="24px"
+                                        text={row?.refCode}
+                                        tooltipMessage={t('Copied')}
+                                        button={
+                                          <img
+                                            src="/images/copy_referral.svg"
+                                            alt="copy_purple"
+                                            style={{ marginBottom: '-2px', marginLeft: '8px' }}
+                                          />
+                                        }
+                                      />
+                                    </div>
+                                  </div>
+                                </TableCell>
+                                <TableCell align="right">{formatAmountNumber(row.point, 2)}</TableCell>
+                              </TableRow>
+                            ))}
+                          </TableBody>
+                        </Table>
+                      </TableContainer>
+                    ) : (
+                      <div className="no-data">No Data</div>
+                    )}
+                  </WrapperLeftV2>
+                )}
+              </Grid>
             )}
           </WrapperLeft>
         </Grid>

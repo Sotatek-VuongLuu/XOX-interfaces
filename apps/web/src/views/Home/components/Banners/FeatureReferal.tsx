@@ -203,8 +203,8 @@ const First = styled.div`
     margin-bottom: 18px;
 
     .dot_item {
-      background: #9072ff;
-      border: 2px solid #9072ff;
+      background: #fb8618;
+      border: 2px solid #fb8618;
       border-radius: 50%;
     }
   }

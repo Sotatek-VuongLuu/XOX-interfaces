@@ -292,7 +292,7 @@ export default function SwapForm() {
     <>
       <CurrencyInputHeader
         title={t('Swap')}
-        subtitle={t('Trade tokens in a instant')}
+        subtitle="Trade tokens in an instant"
         hasAmount={hasAmount}
         onRefreshPrice={onRefreshPrice}
       />

@@ -31,7 +31,7 @@ export default function CurrencyLogo({
       const tokenLogoURL = getTokenLogoURL(currency)
       if (currency instanceof WrappedTokenInfo) {
         if (!tokenLogoURL) return [...uriLocations]
-        return [...uriLocations, tokenLogoURL]
+        return [tokenLogoURL, ...uriLocations]
       }
       if (!tokenLogoURL) return []
       return [tokenLogoURL]
@@ -45,6 +45,5 @@ export default function CurrencyLogo({
     }
     return <StyledLogo size={size} srcs={[`/images/chains/${currency.chainId}.png`]} width={size} style={style} />
   }
-
   return <StyledLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} />
 }
