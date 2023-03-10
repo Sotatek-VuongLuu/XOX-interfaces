@@ -34,6 +34,9 @@ const WrapForm = styled.div`
       align-items: flex-start;
       gap: 8px;
     }
+    > div:last-child {
+      align-items: end;
+    }
     padding: 0;
   }
 `
@@ -73,10 +76,12 @@ const BoxRight = styled.div`
     font-size: 16px;
     padding-right: 80px;
     line-height: 19px;
-    color: rgba(255, 255, 255, 0.38);
+    color: rgba(255, 255, 255, 0.87);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
-
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.38);
+    }
     &:focus {
       outline: none;
     }

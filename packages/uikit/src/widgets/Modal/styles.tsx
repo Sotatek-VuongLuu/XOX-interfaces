@@ -94,21 +94,20 @@ interface IMotionBox {
 
 export const ModalContainer = styled(MotionBox)<IMotionBox>`
   overflow: hidden;
-  border: none;
   width: calc(100% - 48px);
   max-height: calc(var(--vh, 1vh) * 100);
   z-index: ${({ theme }) => theme.zIndices.modal};
   position: absolute;
   min-width: ${({ $minWidth }) => $minWidth};
   background: #101010;
-  box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
-  border-radius: 24px;
   max-width: calc(100vw - 48px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: auto;
     bottom: auto;
-    border-radius: 24px;
     max-height: 100vh;
   }
 `;

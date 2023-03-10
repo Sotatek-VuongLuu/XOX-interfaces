@@ -348,7 +348,7 @@ const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: 
               <div className="top-right"></div>
               <div className="bottom-left"></div>
               <div className="bottom-right"></div> */}
-              Get XOX
+              Get XOXS
             </Button>
           </a>
           <a href="/whitepaper" target="_blank" rel="noreferrer">

@@ -216,6 +216,7 @@ const WrapText = styled.div`
       font-size: 16px;
       line-height: 19px;
       &.number {
+        margin-bottom: 6px;
         font-size: 24px;
         line-height: 24px;
       }

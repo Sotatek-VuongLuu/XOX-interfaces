@@ -38,6 +38,7 @@ const StableCoinModal = (props: any) => {
       hash={txHas}
       onDismiss={onDismiss}
       iconGridLoader
+      hideCloseButton={Boolean(txHas)}
     />
   )
 }
