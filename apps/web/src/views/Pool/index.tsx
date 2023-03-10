@@ -200,13 +200,13 @@ const Background = styled.div<I>`
   background: #242424;
 `
 const ConnectSub = styled(Text)`
-  text-align: center;
   margin-top: 24px;
   font-size: 12px;
   line-height: 19px;
-  text-align: left;
   color: rgba(255, 255, 255, 0.38);
+  text-align: left;
   ${({ theme }) => theme.mediaQueries.md} {
+    text-align: center;
     font-size: 16px;
   }
 `
