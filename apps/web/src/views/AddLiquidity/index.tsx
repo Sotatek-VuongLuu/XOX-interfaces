@@ -14,6 +14,7 @@ import {
   MessageText,
   useMatchBreakpoints,
   Flex,
+  useToast,
 } from '@pancakeswap/uikit'
 import { logError } from 'utils/sentry'
 import styled from 'styled-components'
@@ -195,7 +196,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
   const native = useNativeCurrency()
 
   const [temporarilyZapMode, setTemporarilyZapMode] = useState(true)
-
+  const { toastWarning } = useToast()
   const { t } = useTranslation()
   const gasPrice = useGasPrice()
 
@@ -427,6 +428,10 @@ export default function AddLiquidity({ currencyA, currencyB }) {
         }),
       )
       .catch((err) => {
+        onDismissModal();
+        if (err?.code === 'ACTION_REJECTED') {
+          return toastWarning('Confirm add liquidity', 'Transaction rejected.')
+        }
         if (err && err.code !== 4001) {
           logError(err)
           console.error(`Add Liquidity failed`, err, args, value)
@@ -465,7 +470,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   const zapContract = useZapContract()
 
-  const [onPresentAddLiquidityModal] = useModal(
+  const [onPresentAddLiquidityModal, onDismissModal] = useModal(
     <ConfirmAddLiquidityModal
       title={
         noLiquidity
