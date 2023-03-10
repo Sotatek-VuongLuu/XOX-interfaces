@@ -155,7 +155,11 @@ const Overlay = styled.div`
 
 const NumericalInputWrapper = styled(NumericalInput)`
   font-size: 24px;
-  caret-color: #FB8618;
+  /* caret-color: #fb8618; */
+  color: rgba(255, 255, 255, 0.87);
+  ::placeholder {
+    color: rgba(255, 255, 255, 0.38);
+  }
   @media screen and (max-width: 576px) {
     font-size: 16px;
   }

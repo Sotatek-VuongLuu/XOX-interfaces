@@ -195,6 +195,8 @@ const ModalWrapper = styled.div`
       box-shadow: none !important;
       margin-bottom: 16px;
       margin-top: 16px;
+    
+  }
     }
 
     & .input-token svg {

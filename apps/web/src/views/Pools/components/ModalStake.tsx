@@ -38,6 +38,7 @@ const StyledModalHeader = styled(ModalHeader)`
   color: rgba(255, 255, 255, 0.87);
   width: 100%;
   margin-bottom: 15px;
+  padding: 0;
 `
 
 const ContentStake = styled.div`

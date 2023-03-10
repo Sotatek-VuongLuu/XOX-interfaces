@@ -1,5 +1,8 @@
 import { Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Tooltip } from '@mui/material'
 import { ModalContainer, ModalHeader, InjectedModalProps } from '@pancakeswap/uikit'
+import { GridLoader } from 'react-spinners'
+import { ColumnCenter } from 'components/Layout/Column'
+
 import styled from 'styled-components'
 import axios from 'axios'
 import { useEffect, useState } from 'react'
@@ -83,6 +86,10 @@ const StyledHeader = styled(TableCell)`
   }
 `
 
+const ConfirmedIcon = styled(ColumnCenter)`
+  padding: 14px 0 34px 0;
+`
+
 export const shortenAddress = (address = '', start = 8, chars = 4) => {
   return address ? `${address?.substring(0, start)}...${address?.substring(address.length - chars)}` : ``
 }
@@ -98,6 +105,7 @@ export function capitalizeFirstLetter(string) {
 const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss }) => {
   const { account, chainId } = useActiveWeb3React()
   const [historyData, setHistoryData] = useState<Array<any>>([])
+  const [loading, setLoading] = useState<boolean>(false)
   const [tableOptions, _] = useState({
     current: 1,
     pageSize: 10,
@@ -108,6 +116,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
 
   const handleGetBridgeHistory = async () => {
     try {
+      setLoading(true)
       const response = await axios.get(`${process.env.NEXT_PUBLIC_API_BRIDGE_TOKEN}/history`, {
         params: {
           limit: tableOptions.pageSize,
@@ -123,6 +132,8 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error>>>`, error)
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -156,137 +167,154 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
         aria-hidden="true"
       />
       <Content isHistoryData={historyData.length !== 0}>
-        {historyData && historyData.length !== 0 ? (
-          <TableContainer component={Paper} sx={{ height: '165px', background: '#101010', boxShadow: 'none' }}>
-            <Table sx={{ minWidth: 650 }} aria-label="simple table">
-              <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#101010' }}>
-                <TableRow
-                  sx={{
-                    '& td, & th': {
+        {loading ? (
+          <ConfirmedIcon>
+            <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
+          </ConfirmedIcon>
+        ) : (
+          <>
+            {historyData && historyData.length !== 0 ? (
+              <TableContainer component={Paper} sx={{ height: '165px', background: '#101010', boxShadow: 'none' }}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                  <TableHead
+                    style={{
+                      position: 'sticky',
+                      top: 0,
+                      zIndex: 1,
+                      background: '#101010',
                       borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-                      fontWeight: 700,
-                      // fontSize: 14,
-                      color: ' rgba(255, 255, 255, 0.6)',
-                      padding: ' 0px 8px 8px 0px',
-                    },
-                  }}
-                >
-                  <StyledHeader style={{ minWidth: '50px' }}>No</StyledHeader>
-                  <StyledHeader align="left" style={{ minWidth: '170px' }}>
-                    Input Transaction
-                  </StyledHeader>
-                  <StyledHeader align="left" style={{ minWidth: '150px' }}>
-                    Input Amount
-                  </StyledHeader>
-                  <StyledHeader style={{ minWidth: '170px' }} align="left">
-                    Output Transaction
-                  </StyledHeader>
-                  <StyledHeader style={{ minWidth: '170px' }} align="left">
-                    Output Amount
-                  </StyledHeader>
-                  <StyledHeader style={{ minWidth: '100px' }} align="left">
-                    Type
-                  </StyledHeader>
-                  <StyledHeader style={{ minWidth: '120px' }} align="left">
-                    Status
-                  </StyledHeader>
-                  <StyledHeader style={{ minWidth: '150px' }} align="left" />
-                </TableRow>
-              </TableHead>
-              <TableBody>
-                {historyData.map((row, index) => {
-                  return (
+                    }}
+                  >
                     <TableRow
-                      // eslint-disable-next-line react/no-array-index-key
-                      key={`${index}`}
                       sx={{
                         '& td, & th': {
-                          border: 0,
-                          fontWeight: 400,
-                          fontSize: 16,
-                          color: ' rgba(255, 255, 255, 0.87)',
+                          border: 'none',
+                          fontWeight: 700,
+                          // fontSize: 14,
+                          color: ' rgba(255, 255, 255, 0.6)',
                           padding: ' 0px 8px 8px 0px',
                         },
                       }}
                     >
-                      <StyledHeader component="th" scope="row" align="left">
-                        {index + 1}
+                      <StyledHeader style={{ minWidth: '50px' }}>No</StyledHeader>
+                      <StyledHeader align="left" style={{ minWidth: '170px' }}>
+                        Input Transaction
                       </StyledHeader>
-                      <StyledHeader align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                        <TxHash href={row.txHash && `${linkTransaction(row.chainId)}${row.txHash}`} target="blank">
-                          {row.txHash ? shortenAddress(row.txHash) : '........................'}
-                        </TxHash>
+                      <StyledHeader align="left" style={{ minWidth: '150px' }}>
+                        Input Amount
                       </StyledHeader>
-                      <StyledHeader align="left">
-                        <div style={{ display: 'flex' }}>
-                          <Tooltip title={row.amount} placement="top-start">
-                            <span className="out_amount">{parseFloat(row.amount)}</span>
-                          </Tooltip>
-                          <span>XOX</span>
-                        </div>
+                      <StyledHeader style={{ minWidth: '170px' }} align="left">
+                        Output Transaction
                       </StyledHeader>
-                      <StyledHeader align="left">
-                        <TxHash
-                          href={
-                            row.txSwapHash && `${linkTransaction(getChainIdToByChainId(row.chainId))}${row.txSwapHash}`
-                          }
-                          target="blank"
-                        >
-                          {row.txSwapHash ? shortenAddress(row.txSwapHash) : '........................'}
-                        </TxHash>
+                      <StyledHeader style={{ minWidth: '170px' }} align="left">
+                        Output Amount
                       </StyledHeader>
-                      <StyledHeader align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                        <Tooltip title={row.outAmount} placement="top-start">
-                          <span className="out_amount">{parseFloat(row.outAmount)}</span>
-                        </Tooltip>
-                        <span>XOX</span>
+                      <StyledHeader style={{ minWidth: '100px' }} align="left">
+                        Type
                       </StyledHeader>
-                      <StyledHeader align="left">{handleType(row.from, row.to, row.chainId)}</StyledHeader>
-                      <StyledHeader align="left">
-                        <div
-                          style={
-                            row.status === 'completed'
-                              ? { color: '#64C66D' }
-                              : row.status === 'rejected'
-                              ? { color: '#F44336' }
-                              : (row.status === 'processing' || row.status === 'excuting') && { color: '#FFBD3C' }
-                          }
-                        >
-                          {row.status === 'processing' || row.status === 'excuting'
-                            ? 'Processing'
-                            : capitalizeFirstLetter(row.status === 'completed' ? 'Success' : row.status)}
-                        </div>
+                      <StyledHeader style={{ minWidth: '120px' }} align="left">
+                        Status
                       </StyledHeader>
-                      <StyledHeader align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                        <span>{NETWORK_LABEL[row.chainId]}</span>
-                        <span style={{ margin: '5px 10px 0px 10px' }}>
-                          <img src="/images/bridge/arrow_bridge.svg" alt="bridge" />
-                        </span>
-                        <span>{NETWORK_LABEL[getChainIdToByChainId(row.chainId)]}</span>
-                      </StyledHeader>
+                      <StyledHeader style={{ minWidth: '150px' }} align="left" />
                     </TableRow>
-                  )
-                })}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        ) : (
-          <NoData>
-            <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-              {/* <img src="/images/bridge/nodata_bridge.svg" alt="nodata" /> */}
-            </div>
-            <p
-              style={{
-                textAlign: 'center',
-                fontWeight: 400,
-                fontSize: '14px',
-                color: 'rgba(255, 255, 255, 0.6)',
-                marginTop: '16px',
-              }}
-            >
-              No transactions
-            </p>
-          </NoData>
+                  </TableHead>
+                  <TableBody>
+                    {historyData.map((row, index) => {
+                      return (
+                        <TableRow
+                          // eslint-disable-next-line react/no-array-index-key
+                          key={`${index}`}
+                          sx={{
+                            '& td, & th': {
+                              border: 0,
+                              fontWeight: 400,
+                              fontSize: 16,
+                              color: ' rgba(255, 255, 255, 0.87)',
+                              padding: ' 0px 8px 8px 0px',
+                            },
+                          }}
+                        >
+                          <StyledHeader component="th" scope="row" align="left">
+                            {index + 1}
+                          </StyledHeader>
+                          <StyledHeader align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                            <TxHash href={row.txHash && `${linkTransaction(row.chainId)}${row.txHash}`} target="blank">
+                              {row.txHash ? shortenAddress(row.txHash) : '........................'}
+                            </TxHash>
+                          </StyledHeader>
+                          <StyledHeader align="left">
+                            <div style={{ display: 'flex' }}>
+                              <Tooltip title={row.amount} placement="top-start">
+                                <span className="out_amount">{parseFloat(row.amount)}</span>
+                              </Tooltip>
+                              <span>XOX</span>
+                            </div>
+                          </StyledHeader>
+                          <StyledHeader align="left">
+                            <TxHash
+                              href={
+                                row.txSwapHash &&
+                                `${linkTransaction(getChainIdToByChainId(row.chainId))}${row.txSwapHash}`
+                              }
+                              target="blank"
+                            >
+                              {row.txSwapHash ? shortenAddress(row.txSwapHash) : '........................'}
+                            </TxHash>
+                          </StyledHeader>
+                          <StyledHeader align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                            <Tooltip title={row.outAmount} placement="top-start">
+                              <span className="out_amount">{parseFloat(row.outAmount)}</span>
+                            </Tooltip>
+                            <span>XOX</span>
+                          </StyledHeader>
+                          <StyledHeader align="left">{handleType(row.from, row.to, row.chainId)}</StyledHeader>
+                          <StyledHeader align="left">
+                            <div
+                              style={
+                                row.status === 'completed'
+                                  ? { color: '#64C66D' }
+                                  : row.status === 'rejected'
+                                  ? { color: '#F44336' }
+                                  : (row.status === 'processing' || row.status === 'excuting') && { color: '#FFBD3C' }
+                              }
+                            >
+                              {row.status === 'processing' || row.status === 'excuting'
+                                ? 'Processing'
+                                : capitalizeFirstLetter(row.status === 'completed' ? 'Success' : row.status)}
+                            </div>
+                          </StyledHeader>
+                          <StyledHeader align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                            <span>{NETWORK_LABEL[row.chainId]}</span>
+                            <span style={{ margin: '5px 10px 0px 10px' }}>
+                              <img src="/images/bridge/arrow_bridge.svg" alt="bridge" />
+                            </span>
+                            <span>{NETWORK_LABEL[getChainIdToByChainId(row.chainId)]}</span>
+                          </StyledHeader>
+                        </TableRow>
+                      )
+                    })}
+                  </TableBody>
+                </Table>
+              </TableContainer>
+            ) : (
+              <NoData>
+                <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
+                  <img src="/images/nodata_history.png" alt="nodata" />
+                </div>
+                <p
+                  style={{
+                    textAlign: 'center',
+                    fontWeight: 400,
+                    fontSize: '14px',
+                    color: 'rgba(255, 255, 255, 0.6)',
+                    marginTop: '16px',
+                  }}
+                >
+                  No transactions
+                </p>
+              </NoData>
+            )}
+          </>
         )}
       </Content>
     </StyledModalContainer>

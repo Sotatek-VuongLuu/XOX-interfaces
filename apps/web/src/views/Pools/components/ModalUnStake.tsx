@@ -326,7 +326,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
 }) => {
   const chainIdSupport = [97, 56]
   const { chainId } = useActiveChainId()
-  const listTimesPercents = ['25%', '50%', '75%', 'MAX']
+  const listTimesPercents = ['25%', '50%', '75%', 'Max']
   const { account } = useActiveWeb3React()
   const [messageError, setMessageError] = useState('')
   const [amountUSD, setAmountUSD] = useState<any>()
@@ -356,7 +356,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
           '75%': parseFloat(new BigNumber(balanceLP).multipliedBy(0.75).toFixed(14).toString()),
         })
         break
-      case 'MAX':
+      case 'Max':
         setAmount(balanceLP)
         setAmountActive({ ...amountActive, MAX: balanceLP })
         break
