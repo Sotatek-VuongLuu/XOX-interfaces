@@ -60,11 +60,28 @@ const Content = styled.div<IContentProps>`
     display: inline-block;
     margin-right: 2px;
   }
+
   div {
     ::-webkit-scrollbar-corner {
       display: none;
     }
+    ::-webkit-scrollbar {
+      width: 6px;
+      background-color: transparent;
+    }
+    ::-webkit-scrollbar-track {
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      background-color: transparent;
+    }
+
+    ::-webkit-scrollbar-thumb {
+      border-radius: 10px;
+      -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+      background-color: rgba(255, 255, 255, 0.2);
+    }
   }
+
   @media screen and (min-width: 1400px) {
     overflow-x: ${({ isHistoryData }) => (isHistoryData ? 'hidden' : 'unset')};
   }
