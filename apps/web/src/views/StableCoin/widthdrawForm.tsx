@@ -136,7 +136,7 @@ const BoxRight = styled.div`
             top: 100% !important;
             transform: translate(0px) !important;
             > div {
-              background: #1D1C1C;
+              background: #1d1c1c;
               box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
               border-radius: 10px;
               > button {
@@ -239,11 +239,25 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
   const [amount, setAmount] = useState<any>()
   const [error, setError] = useState<any>()
   const { callWithGasPrice } = useCallWithGasPrice()
-  const { toastError, toastSuccess } = useToast()
+  const { toastError, toastSuccess, toastWarning } = useToast()
   const symbol = 'USDT'
   const [txHas, setTxHas] = useState('')
   const [decimalError, setDecimalError] = useState(false)
   const tokenContract = useTokenContract(USD_ADDRESS[chainId], false)
+
+  const [onPresentConfirmModal, onDismissModal] = useModal(
+    <StableCoinModal
+      isUSDT={isUSDT}
+      amount={amount}
+      txHas={txHas}
+      pending={pending}
+      withdrawErrorMessage={withdrawErrorMessage}
+      iconGridLoader
+    />,
+    true,
+    true,
+    'transactionConfirmationModal',
+  )
 
   useEffect(() => {
     if (priceAvailable) {
@@ -294,31 +308,17 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
       })
       .catch((error: any) => {
         setTxHas('')
+        onDismissModal()
         setWithdrawErrorMessage('Transaction rejected.')
         setPending(false)
         if (error?.code === 'ACTION_REJECTED') {
-          return
+          return toastWarning('Confirm Withdraw', 'Transaction rejected.')
         }
         if (error?.code !== 4001) {
           toastError('Error', 'Transaction failed')
         }
-        // throw error
       })
   }
-
-  const [onPresentConfirmModal] = useModal(
-    <StableCoinModal
-      isUSDT={isUSDT}
-      amount={amount}
-      txHas={txHas}
-      pending={pending}
-      withdrawErrorMessage={withdrawErrorMessage}
-      iconGridLoader
-    />,
-    true,
-    true,
-    'transactionConfirmationModal',
-  )
 
   const formatE = (numberTo: any) => {
     const stringTo = numberTo.toString()

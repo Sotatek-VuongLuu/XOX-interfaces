@@ -60,6 +60,9 @@ const TextRow = styled.div<IPropsTextRow>`
 
   @media (max-width: 576px) {
     font-size: 12px;
+    .label {
+      font-size: 14px;
+    }
   }
 `
 

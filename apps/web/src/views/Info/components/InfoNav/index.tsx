@@ -308,10 +308,11 @@ const MainContent = styled.div`
   }
 `
 
-const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: boolean }> = ({
+const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: boolean; titleBtn1?: string }> = ({
   allTokens,
   textContentBanner,
   hasPadding = true,
+  titleBtn1 = 'XOXS',
 }) => {
   const router = useRouter()
   const chainPath = useMultiChainPath()
@@ -348,7 +349,7 @@ const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: 
               <div className="top-right"></div>
               <div className="bottom-left"></div>
               <div className="bottom-right"></div> */}
-              Get XOXS
+              Get {titleBtn1}
             </Button>
           </a>
           <a href="/whitepaper" target="_blank" rel="noreferrer">

@@ -564,6 +564,7 @@ const Main = styled.div`
           width: 100%;
           @media screen and (max-width: 576px) {
             width: 100%;
+            font-size: 14px;
           }
         }
         .mt {
@@ -592,7 +593,12 @@ const Main = styled.div`
         }
         @media screen and (max-width: 576px) {
           width: 100%;
-          margin-top: 16px;
+          margin-top: 14px;
+          font-size: 14px;
+          &:disabled,
+          button[disabled] {
+            font-size: 14px;
+          }
         }
       }
 
@@ -654,6 +660,9 @@ const Main = styled.div`
               -webkit-text-fill-color: transparent;
               background-clip: text;
               text-fill-color: transparent;
+              @media screen and (max-width: 576px) {
+                font-size: 14px;
+              }
             }
           }
         }
@@ -786,7 +795,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
     getContractFarmingLPAddress(chainId),
   )
-  const { toastError, toastWarning } = useToast()
+  const { toastError, toastWarning, toastSuccess } = useToast()
 
   const handleGetDataFarming = async () => {
     try {
@@ -887,6 +896,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setIsOpenLoadingClaimModal(false)
         setIsOpenSuccessModal(true)
         setTxHash(tx?.transactionHash)
+        toastSuccess('Transaction Receipt', <ToastDescriptionWithTx txHash={tx?.transactionHash} />)
 
         handleCallbackAfterSuccess()
       }
@@ -961,6 +971,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setTxHash(tx?.transactionHash)
         onDismissStake()
         setIsOpenSuccessModal(true)
+        toastSuccess('Transaction Receipt', <ToastDescriptionWithTx txHash={tx?.transactionHash} />)
 
         handleCallbackAfterSuccess()
       }
@@ -1001,6 +1012,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setAmount('')
         onDismissUnStake()
         setIsOpenSuccessModal(true)
+        toastSuccess('Transaction Receipt', <ToastDescriptionWithTx txHash={tx?.transactionHash} />)
 
         handleCallbackAfterSuccess()
       }
@@ -1297,7 +1309,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         <p className="current_XOX_reward">Current XOX reward</p>
                         {account ? (
                           <div style={{ width: '100%', marginTop: 16 }}>
-                            <ShowBalance balance={pendingRewardOfUser} unit="XOX" />
+                            <ShowBalance balance={pendingRewardOfUser} unit="" />
                           </div>
                         ) : (
                           <span className="current_XOX_reward_value">-</span>
