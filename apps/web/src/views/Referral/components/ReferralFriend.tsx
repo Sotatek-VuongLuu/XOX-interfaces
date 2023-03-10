@@ -32,6 +32,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { GridLoader } from 'react-spinners'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
 import ModalBase from './Modal/ModalBase'
+import { ToastDescriptionWithTx } from 'components/Toast'
 
 const floatingAnim = (x: string, y: string) => keyframes`
   from {
@@ -81,8 +82,8 @@ interface IPropsWR {
 
 const WrapperLeft = styled(Box)`
   padding: 24px;
-  background: rgba(16, 16, 16, 0.3);
-  backdrop-filter: blur(10px);
+  background: #0d0d0d;
+  backdrop-filter: blur(20px);
   border-radius: 20px;
   min-height: 248px;
   position: relative;
@@ -332,6 +333,10 @@ export const WrapperRight = styled(Box)<IPropsWR>`
       &:hover {
         opacity: 0.9;
       }
+
+      @media screen and (max-width: 900px) {
+        width: 100%;
+      }
     }
 
     button:disabled,
@@ -455,7 +460,7 @@ const Content = styled.div`
     margin-top: 8px;
     margin-bottom: 24px;
     span {
-      color: #9072ff;
+      color: #fb8618;
       font-weight: 700;
     }
   }
@@ -552,7 +557,7 @@ const ReferralFriend = ({
   const [typeOfClaim, setTypeOfClaim] = useState<number | null>(null)
   const [listFriends, setListFriends] = useState([])
   const { t } = useTranslation()
-  const { toastError, toastSuccess } = useToast()
+  const { toastError, toastSuccess, toastWarning } = useToast()
   const [cacheAmountUnClaimOfUser, setCacheAmountUnClaimOfUser] = useState<null | number>(null)
 
   const handleClaimAll = async () => {
@@ -573,14 +578,15 @@ const ReferralFriend = ({
         handleCheckReachLevel()
         handleCheckPendingRewardAll(account)
         setIsOpenLoadingClaimModal(false)
-        setIsOpenSuccessModal(true)
+        // setIsOpenSuccessModal(true)
+        toastSuccess('Success', `$${(Number(cacheAmountUnClaimOfUser) * 0.99).toLocaleString()}`)
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
       setIsOpenLoadingClaimModal(false)
       if (error && error?.code === 'ACTION_REJECTED') {
-        setModalReject(true)
+        toastWarning('Claim', 'Transaction rejected.')
       }
       if (error?.code !== 'ACTION_REJECTED') {
         toastError('Error', 'Transaction failed')
@@ -604,14 +610,16 @@ const ReferralFriend = ({
         handleCheckReachLevel()
         handleCheckPendingRewardAll(account)
         setIsOpenLoadingClaimModal(false)
-        setIsOpenSuccessModal(true)
+        // setIsOpenSuccessModal(true)
+        toastSuccess('Success.', `$${(dataClaim.dollar * 0.99).toLocaleString()}`)
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
       setIsOpenLoadingClaimModal(false)
       if (error && error?.code === 'ACTION_REJECTED') {
-        setModalReject(true)
+        // setModalReject(true)
+        toastWarning('Claim', 'Transaction rejected.')
       }
 
       if (error?.code !== 'ACTION_REJECTED') {
@@ -701,102 +709,101 @@ const ReferralFriend = ({
     <>
       <Box sx={{ marginTop: '16px', zIndex: 9 }}>
         <Grid container spacing={2}>
-          <Grid item xs={12} lg={4} sx={{ zIndex: 7 }}>
-            {account && (
-              <WrapperLeft>
-                <div className="corner1" />
-                <div className="edge1" />
-                <div className="corner2" />
-                <div className="edge2" />
-                <p className="title">Referral friends</p>
-                {listFriends.length !== 0 ? (
-                  <TableContainer
-                    component={Paper}
-                    sx={{ height: 170, background: 'rgba(16, 16, 16, 0.3)', boxShadow: 'none' }}
-                  >
-                    <Table sx={{ minWidth: 400 }} aria-label="simple table">
-                      <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: 'rgba(16, 16, 16)' }}>
-                        <TableRow
-                          sx={{
-                            '& td, & th': {
-                              borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-                              fontWeight: 700,
-                              fontSize: 14,
-                              color: ' rgba(255, 255, 255, 0.6)',
-                              padding: '8px 8px 8px 0px',
-                            },
-                          }}
-                        >
-                          <TableCell align="left">Username</TableCell>
-                          <TableCell align="center">Referral Code</TableCell>
-                          <TableCell align="right">Total Points</TableCell>
-                        </TableRow>
-                      </TableHead>
-                      <TableBody>
-                        {[...listFriends].map((row) => (
+          {width > 1200 && (
+            <Grid item xs={12} lg={4} sx={{ zIndex: 7 }}>
+              {account && (
+                <WrapperLeft>
+                  <div className="corner1" />
+                  <div className="edge1" />
+                  <div className="corner2" />
+                  <div className="edge2" />
+                  <p className="title">Referral friends</p>
+                  {listFriends.length !== 0 ? (
+                    <TableContainer component={Paper} sx={{ height: 170, background: '#0d0d0d', boxShadow: 'none' }}>
+                      <Table sx={{ minWidth: 400 }} aria-label="simple table">
+                        <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#0d0d0d' }}>
                           <TableRow
-                            key={row.name}
                             sx={{
                               '& td, & th': {
-                                border: 0,
-                                fontWeight: 400,
+                                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
+                                fontWeight: 700,
                                 fontSize: 14,
-                                color: ' rgba(255, 255, 255, 0.87)',
+                                color: ' rgba(255, 255, 255, 0.6)',
                                 padding: '8px 8px 8px 0px',
                               },
                             }}
                           >
-                            <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
-                              <Avatar
-                                alt="Remy Sharp"
-                                src={row.avatar}
-                                sx={{ marginRight: '8px', height: '24px', width: '24px' }}
-                              />
-                              <Tooltip title={row?.name}>
-                                <p>
-                                  {row.name?.length > 9
-                                    ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
-                                    : row.name}
-                                </p>
-                              </Tooltip>
-                            </TableCell>
-                            <TableCell align="left">
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                <div>
-                                  {row?.refCode?.length > 9
-                                    ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
-                                        row.refCode.length - 2,
-                                      )}`
-                                    : row.refCode}
-                                </div>
-                                <div>
-                                  <CopyButton
-                                    width="24px"
-                                    text={row?.refCode}
-                                    tooltipMessage={t('Copied')}
-                                    button={
-                                      <img
-                                        src="/images/external-icon.svg"
-                                        alt="copy_purple"
-                                        style={{ marginBottom: '-2px', marginLeft: '8px' }}
-                                      />
-                                    }
-                                  />
-                                </div>
-                              </div>
-                            </TableCell>
-                            <TableCell align="right">{formatAmountNumber(row.point, 2)}</TableCell>
+                            <TableCell align="left">Username</TableCell>
+                            <TableCell align="center">Referral Code</TableCell>
+                            <TableCell align="right">Total Points</TableCell>
                           </TableRow>
-                        ))}
-                      </TableBody>
-                    </Table>
-                  </TableContainer>
-                ) : (
-                  <div className="no-data">No Data</div>
-                )}
-              </WrapperLeft>
-            )}
-          </Grid>
+                        </TableHead>
+                        <TableBody style={{ maxHeight: '50px' }}>
+                          {[...listFriends].map((row) => (
+                            <TableRow
+                              key={row.name}
+                              sx={{
+                                '& td, & th': {
+                                  border: 0,
+                                  fontWeight: 400,
+                                  fontSize: 14,
+                                  color: ' rgba(255, 255, 255, 0.87)',
+                                  padding: '8px 8px 8px 0px',
+                                },
+                              }}
+                            >
+                              <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                                <Avatar
+                                  alt="Remy Sharp"
+                                  src={row.avatar}
+                                  sx={{ marginRight: '8px', height: '24px', width: '24px' }}
+                                />
+                                <Tooltip title={row?.name}>
+                                  <p>
+                                    {row.name?.length > 9
+                                      ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                                      : row.name}
+                                  </p>
+                                </Tooltip>
+                              </TableCell>
+                              <TableCell align="left">
+                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                  <div>
+                                    {row?.refCode?.length > 9
+                                      ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
+                                          row.refCode.length - 2,
+                                        )}`
+                                      : row.refCode}
+                                  </div>
+                                  <div>
+                                    <CopyButton
+                                      width="24px"
+                                      text={row?.refCode}
+                                      tooltipMessage={t('Copied')}
+                                      button={
+                                        <img
+                                          src="/images/copy_referral.svg"
+                                          alt="copy_purple"
+                                          style={{ marginBottom: '-2px', marginLeft: '8px' }}
+                                        />
+                                      }
+                                    />
+                                  </div>
+                                </div>
+                              </TableCell>
+                              <TableCell align="right">{formatAmountNumber(row.point, 2)}</TableCell>
+                            </TableRow>
+                          ))}
+                        </TableBody>
+                      </Table>
+                    </TableContainer>
+                  ) : (
+                    <div className="no-data">No Data</div>
+                  )}
+                </WrapperLeft>
+              )}
+            </Grid>
+          )}
 
           <Grid item xs={12} lg={8}>
             {account && (

@@ -251,12 +251,9 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       </div>
 
       <div className="second" style={{ position: 'relative' }}>
-        <TableContainer
-          component={Paper}
-          sx={{ height: '165px', background: ' rgba(255, 255, 255, 0.03)', borderRadius: '16px' }}
-        >
+        <TableContainer component={Paper} sx={{ height: '165px', background: '#010101', borderRadius: '16px' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
-            <TableHead style={{ position: 'sticky', top: 0, zIndex: 1 }}>
+            <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#010101' }}>
               <TableRow
                 sx={{
                   '& td, & th': {
