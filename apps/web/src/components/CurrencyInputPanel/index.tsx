@@ -63,7 +63,7 @@ const TextBalance = styled.div`
 
   ${({ theme }) => theme.mediaQueries.md} {
     font-weight: 400;
-    font-size: 14px;
+    font-size: 16px;
     line-height: 17px;
   }
 `
@@ -124,9 +124,6 @@ const LabelRow = styled.div`
   font-size: 0.75rem;
   line-height: 1rem;
   padding: 15px 1rem 0 1rem;
-  > div {
-    font-size: 14px !important;
-  }
 `
 const InputPanel = styled.div`
   display: flex;
@@ -332,7 +329,7 @@ export default function CurrencyInputPanel({
                 }
                 color="textSubtle"
                 // fontSize="14px"
-                style={{ display: 'inline', cursor: 'pointer', fontSize: '16px' }}
+                // style={{ display: 'inline', cursor: 'pointer', fontSize: '16px' }}
               >
                 {!hideBalance && !!currency
                   ? t('Balance: %balance%', {

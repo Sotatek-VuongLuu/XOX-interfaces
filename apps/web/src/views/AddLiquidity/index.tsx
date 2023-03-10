@@ -111,6 +111,10 @@ const LiquidityBody = styled.div`
     color: rgba(255, 255, 255, 0.87);
   }
 
+  .btn {
+    font-size: 18px;
+  }
+
   ${({ theme }) => theme.mediaQueries.md} {
     .text-share {
       font-weight: 700;
@@ -687,7 +691,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   return (
     <Page>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <Flex
         width={['290px', , '100%']}
         marginTop="100px"
@@ -973,7 +977,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                 )}
 
                 {addIsUnsupported || addIsWarning ? (
-                  <Button disabled mb="4px" height={43}>
+                  <Button disabled mb="4px" height={43} className="btn">
                     {t('Unsupported Asset')}
                   </Button>
                 ) : !account ? (
@@ -990,6 +994,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                             disabled={approvalA === ApprovalState.PENDING}
                             width="100%"
                             height={43}
+                            className="btn"
                           >
                             {approvalA === ApprovalState.PENDING ? (
                               <Dots>{t('Enabling %asset%', { asset: currencies[Field.CURRENCY_A]?.symbol })}</Dots>
@@ -1004,6 +1009,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                             disabled={approvalB === ApprovalState.PENDING}
                             width="100%"
                             height={43}
+                            className="btn"
                           >
                             {approvalB === ApprovalState.PENDING ? (
                               <Dots>{t('Enabling %asset%', { asset: currencies[Field.CURRENCY_B]?.symbol })}</Dots>
@@ -1040,6 +1046,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                       }}
                       disabled={buttonDisabled}
                       height={43}
+                      className="btn"
                     >
                       {errorText || t('Supply')}
                     </CommitButton>
@@ -1049,6 +1056,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
               {pair ? (
                 <AutoColumn style={{ width: '100%', marginTop: '24px' }}>
+                  
                   <MinimalPositionCard showUnwrapped={oneCurrencyIsWNATIVE} pair={pair} />
                 </AutoColumn>
               ) : null}

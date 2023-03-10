@@ -128,6 +128,7 @@ const ConfirmAddLiquidityModal: React.FC<
       content={confirmationContent}
       pendingText={pendingText}
       currencyToAdd={currencyToAdd}
+      hideCloseButton={Boolean(hash)}
     />
   )
 }

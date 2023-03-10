@@ -188,6 +188,13 @@ const CustomCardBody = styled(CardBody)`
     color: #FB8618;
   }
 
+  .bg-simple {
+    background: #1D1C1C;
+    border-radius: 10px;
+    height: 53px;
+    justify-content: end;;
+  }
+
   ${({ theme }) => theme.mediaQueries.md} {
     padding: 16px 0 32px 0;
 
@@ -816,7 +823,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
 
   return (
     <Page>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <Flex
         width={['330px', , '559px']}
         marginTop="100px"
@@ -874,9 +881,9 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
             />
 
             <CustomCardBody>
-              <AutoColumn gap="20px">
-                <AmountWrapper>
-                  <Text>{t('Amount')}</Text>
+              <AutoColumn gap="8px">
+                <AmountWrapper className={showDetailed &&'bg-simple'}>
+                  {!showDetailed && <Text>{t('Amount')}</Text>}
                   <Button variant="text" scale="sm" onClick={() => setShowDetailed(!showDetailed)}>
                     {showDetailed ? t('Simple') : t('Detailed')}
                   </Button>
@@ -1014,7 +1021,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
               )}
 
               {showDetailed && (
-                <Box my="16px">
+                <Box margin={['8px 0px 16px 0px', ,'8px 0px 24px 0px']}>
                   <CurrencyInputPanel
                     value={formattedAmounts[Field.LIQUIDITY]}
                     onUserInput={onLiquidityInput}
@@ -1100,21 +1107,21 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                 </Box>
               )}
               {pair && (
-                <Flex justifyContent="space-between" style={{ marginTop: '16px', padding: '0 20px' }}>
+                <Flex justifyContent="space-between" style={{ marginTop: '24px', padding: '0 20px' }}>
                   <Text className="text-price">{t('Prices')}</Text>
                   <Flex flexDirection="column" alignItems="flex-end">
                     <Text>
                       1 {currencyA?.symbol} = {tokenA ? formatAmountString(pair.priceOf(tokenA), 6) : '-'}{' '}
                       {currencyB?.symbol}
                     </Text>
-                    <Text>
+                    <Text mt="8px">
                       1 {currencyB?.symbol} ={tokenB ? formatAmountString(pair.priceOf(tokenB), 6) : '-'}{' '}
                       {currencyA?.symbol}
                     </Text>
                   </Flex>
                 </Flex>
               )}
-              <RowBetween mt="16px">
+              <RowBetween mt="24px">
                 <Text fontSize={['16px', , '18px']} fontWeight={400} lineHeight={['19px', , '22px']}>
                   {t('Slippage Tolerance')}
                 </Text>
