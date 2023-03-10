@@ -350,7 +350,7 @@ export const WrapperRight = styled(Box)<IPropsWR>`
       color: rgba(255, 255, 255, 0.6);
       font-weight: 700;
       font-size: 14px;
-      margin: 20px 0;
+      margin: 10px 0 20px 0;
     }
 
     .unclaim_reward_container {
@@ -579,7 +579,7 @@ const ReferralFriend = ({
         handleCheckPendingRewardAll(account)
         setIsOpenLoadingClaimModal(false)
         // setIsOpenSuccessModal(true)
-        toastSuccess('Success', `$${(Number(cacheAmountUnClaimOfUser) * 0.99).toLocaleString()}`)
+        toastSuccess('Success', `You have received $${(Number(cacheAmountUnClaimOfUser) * 0.99).toLocaleString()}`)
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console

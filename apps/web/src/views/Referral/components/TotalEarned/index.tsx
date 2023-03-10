@@ -85,6 +85,7 @@ const Wrapper = styled.div`
     .title {
       font-size: 14px;
       line-height: 17px;
+      margin-top: 70px;
     }
     .amount {
       .dollar {
