@@ -183,7 +183,7 @@ const ButtonWrapper = styled.div`
 
 const CustomCardMinimal = styled(Card)`
   padding: 0;
-
+  background: none;
   .lp-token-text {
     font-weight: 700;
     font-size: 14px;
@@ -193,7 +193,7 @@ const CustomCardMinimal = styled(Card)`
   }
 
   & > div {
-    background: #303030;
+    background: #1D1C1C;
     border-radius: 20px;
   }
 
@@ -223,6 +223,11 @@ const CustomCardMinimal = styled(Card)`
     width: 80px;
   }
 
+  .gap {
+    gap: 8.5px;
+    margin-top: 10.5px;
+  }
+
   ${({ theme }) => theme.mediaQueries.md} {
     .lp-token-text {
       font-size: 16px;
@@ -244,6 +249,10 @@ const CustomCardMinimal = styled(Card)`
       overflow: visible;
       text-overflow: unset;
       width: auto;
+    }
+    .gap {
+      margin-top: 18.5px;
+      gap: 8.5px;
     }
   }
 `
@@ -401,13 +410,13 @@ function MinimalPositionCardView({
   return (
     <CustomCardMinimal>
       <CardBody>
-        <AutoColumn gap="16px">
+        <AutoColumn>
           <CustomFixedHeightRow>
             <CustomRowFixed>
               <Text className="lp-token-text">{t('LP tokens in your wallet')}</Text>
             </CustomRowFixed>
           </CustomFixedHeightRow>
-          <AutoColumn gap="4px">
+          <AutoColumn className='gap'>
             <CustomFixedHeightRow>
               <CustomRowFixed>
                 <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin size={20} />

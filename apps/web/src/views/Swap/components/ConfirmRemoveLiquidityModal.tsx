@@ -173,6 +173,7 @@ const ConfirmRemoveLiquidityModal: React.FC<
       hash={hash}
       content={confirmationContent}
       pendingText={pendingText}
+      hideCloseButton={Boolean(hash)}
     />
   )
 }

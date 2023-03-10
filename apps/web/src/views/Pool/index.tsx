@@ -118,9 +118,10 @@ const ButtonWrapper = styled(Button)`
   height: 37px;
   width: 100%;
   border-radius: 6px;
-
+  font-size: 16px;
   ${({ theme }) => theme.mediaQueries.md} {
     height: 43px;
+    font-size: 18px;
   }
 `
 
@@ -201,9 +202,13 @@ const Background = styled.div<I>`
 const ConnectSub = styled(Text)`
   text-align: center;
   margin-top: 24px;
-  font-size: 16px;
+  font-size: 12px;
   line-height: 19px;
+  text-align: left;
   color: rgba(255, 255, 255, 0.38);
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-size: 16px;
+  }
 `
 
 const PoolWrapper = styled(Flex)`
