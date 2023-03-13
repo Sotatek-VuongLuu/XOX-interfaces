@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-shadow */
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import styled from 'styled-components'
-import { Flex, Button, Text, Select, Dropdown, useToast, useModal } from '@pancakeswap/uikit'
+import { Flex, Button, Text, Select, Dropdown, useToast, useModal, Input } from '@pancakeswap/uikit'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { ChainId } from '@pancakeswap/sdk'
@@ -345,6 +345,8 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
     }
   }
 
+  console.log(amount)
+
   return (
     <WrapForm>
       <Flex justifyContent="space-between" alignItems="center">
@@ -386,17 +388,18 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         <BoxRight>
           <input
             ref={inputRef}
-            type="number"
-            pattern="^[0-9]*[.,]?[0-9]*$"
+            type="text"
+            pattern="[0-9]*"
             inputMode="decimal"
             key={keyInput}
-            defaultValue={amount}
+            value={amount}
             placeholder="0.00"
             onChange={(e: any) => {
-              setAmount(e?.target?.value)
-              handleValidateForm(e?.target?.value)
+              setAmount(formatE(e?.target?.value.replace(/,/g, '.')))
+              handleValidateForm(formatE(e?.target?.value.replace(/,/g, '.')))
             }}
           />
+
           <ButtonRight
             width={43}
             height={27}
