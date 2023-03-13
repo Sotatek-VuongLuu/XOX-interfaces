@@ -64,7 +64,7 @@ const Wrapper = styled.div`
     left: 0;
     width: 40px;
     height: 4px;
-    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   }
 
   & .total {
@@ -268,7 +268,7 @@ export const PageButtons = styled(Flex)`
     font-weight: 700;
     background: rgba(251, 134, 24, 0.1);
     border-radius: 4px;
-    color: #FB8618;
+    color: #fb8618;
   }
 
   & .go-page {
@@ -848,7 +848,13 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
               }}
             >
               <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.97949 1.25L1.72949 5.5L5.97949 9.75" stroke={page === 1 ? 'white' : '#FB8618'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path
+                  d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
+                  stroke={page === 1 ? 'white' : '#FB8618'}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Arrow>
 
@@ -923,7 +929,13 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
               }}
             >
               <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1.72949 1.25L5.97949 5.5L1.72949 9.75" stroke={page === maxPage ? 'white' : '#FB8618'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path
+                  d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
+                  stroke={page === maxPage ? 'white' : '#FB8618'}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Arrow>
           </div>
