@@ -386,9 +386,9 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         <BoxRight>
           <input
             ref={inputRef}
-            pattern="[0-9]*"
-            inputmode="decimal"
             type="number"
+            pattern="^[0-9]*[.,]?[0-9]*$"
+            inputMode="decimal"
             key={keyInput}
             defaultValue={amount}
             placeholder="0.00"
