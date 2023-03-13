@@ -46,7 +46,7 @@ const Wrapper = styled.div`
     left: 0;
     width: 40px;
     height: 4px;
-    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   }
 
   & .total {
@@ -105,7 +105,7 @@ const Wrapper = styled.div`
       }
 
       & > div:first-child {
-        margin-bottom: 28px;
+        margin-bottom: 36px;
       }
     }
   }
@@ -228,7 +228,7 @@ export const PageButtons = styled(Flex)`
     font-weight: 700;
     background: rgba(251, 134, 24, 0.1);
     border-radius: 4px;
-    color: #FB8618;
+    color: #fb8618;
   }
 
   & .go-page {
@@ -534,7 +534,7 @@ const TransactionsTable: React.FC = () => {
       <path
         d="M1 4.66667L4.66667 1L8.33333 4.66667"
         stroke="#8E8E8E"
-        strokeWidth="1.6"   
+        strokeWidth="1.6"
         strokeLinecap="round"
         strokeLinejoin="round"
       />
@@ -614,7 +614,7 @@ const TransactionsTable: React.FC = () => {
 
   return (
     <Wrapper>
-      <Flex mb="16px" justifyContent="space-between">
+      <Flex justifyContent="space-between">
         <Text
           className="heading"
           fontSize="20px"
@@ -629,7 +629,7 @@ const TransactionsTable: React.FC = () => {
         </Text>
       </Flex>
       <CustomTableWrapper>
-        <Table>
+        <Table style={{ width: 'fit-content' }}>
           <Text
             fontSize="16px"
             fontFamily="Inter"
@@ -717,7 +717,13 @@ const TransactionsTable: React.FC = () => {
               }}
             >
               <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M5.97949 1.25L1.72949 5.5L5.97949 9.75" stroke={page === 1 ? 'white' : '#FB8618'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path
+                  d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
+                  stroke={page === 1 ? 'white' : '#FB8618'}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Arrow>
 
@@ -792,7 +798,13 @@ const TransactionsTable: React.FC = () => {
               }}
             >
               <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1.72949 1.25L5.97949 5.5L1.72949 9.75" stroke={page === maxPage ? 'white' : '#FB8618'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                <path
+                  d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
+                  stroke={page === maxPage ? 'white' : '#FB8618'}
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
               </svg>
             </Arrow>
           </div>

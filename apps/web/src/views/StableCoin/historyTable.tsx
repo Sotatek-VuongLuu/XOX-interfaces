@@ -123,7 +123,7 @@ const Wrapper = styled.div`
       }
 
       & > div:first-child {
-        margin-bottom: 28px;
+        margin-bottom: 36px;
       }
     }
   }
@@ -137,6 +137,7 @@ const Table = styled.div`
   grid-template-columns: 0.15fr 1.4fr 1.2fr 0.8fr;
   &.table-withdraw {
     grid-gap: 15px 25px;
+    width: fit-content;
   }
   .text-ellipsis {
     max-width: 90px;
@@ -376,7 +377,7 @@ const DataRow: React.FC<
       </Text>
       {typePage === TYPE_HISTORY.myWidthDraw && (
         <LinkExternal
-          color="#9072FF"
+          color="#FB8618"
           href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
           key={`${transaction.hash}-type`}
         >
@@ -445,7 +446,7 @@ const DataRow: React.FC<
       )}
       {typePage === TYPE_HISTORY.widthDraw && (
         <LinkExternal
-          color="#9072FF"
+          color="#FB8618"
           href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
           key={`${transaction.hash}-type`}
         >
@@ -709,7 +710,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
 
   return (
     <Wrapper>
-      <Flex mb="16px" justifyContent="space-between">
+      <Flex justifyContent="space-between">
         <Text
           className="heading"
           fontSize="20px"
@@ -725,7 +726,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
         </Text>
       </Flex>
       <CustomTableWrapper>
-        <Table className={typePage === TYPE_HISTORY.widthDraw ? 'table-withdraw' : ''}>
+        <Table className={typePage === TYPE_HISTORY.widthDraw ? 'table-withdraw' : ''} style={{ width: 'fit-content' }}>
           <Text
             fontSize="16px"
             fontFamily="Inter"

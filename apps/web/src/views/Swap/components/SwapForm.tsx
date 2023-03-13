@@ -57,6 +57,19 @@ const ReferralCode = styled.div`
   align-items: center;
   justify-content: space-between;
   margin-bottom: 10px;
+  .referral {
+    display: flex;
+    align-items: center;
+    p {
+      margin-left: 6px;
+      font-size: 16px;
+      color: #a0a0a0;
+      @media (max-width: 574px) {
+        font-size: 12px;
+        margin-left: 4px;
+      }
+    }
+  }
 `
 const ReferralInput = styled.input`
   background: unset;
@@ -403,8 +416,15 @@ export default function SwapForm() {
           {isShowReferralBox && (
             <>
               <ReferralCode>
-                <Text bold fontSize={['14px', , '18px']} color="rgba(255, 255, 255, 0.87)" fontWeight={400}>
+                <Text
+                  bold
+                  fontSize={['14px', , '18px']}
+                  color="rgba(255, 255, 255, 0.87)"
+                  fontWeight={400}
+                  className="referral"
+                >
                   {t('Referral Code')}
+                  <p>(Optional)</p>
                 </Text>
                 <ReferralInput
                   onChange={(e) => {

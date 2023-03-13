@@ -82,7 +82,7 @@ const BoxRight = styled.div`
     opacity: 1;
 
     &::placeholder {
-      color: rgba(255, 255, 255, 0.87);
+      color: rgba(255, 255, 255, 0.38);
     }
     &:focus {
       outline: none;
@@ -386,7 +386,8 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         <BoxRight>
           <input
             ref={inputRef}
-            pattern="\d*"
+            pattern="[0-9]*"
+            inputmode="decimal"
             type="number"
             key={keyInput}
             defaultValue={amount}

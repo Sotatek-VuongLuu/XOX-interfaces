@@ -76,7 +76,7 @@ const Box = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  padding: 33px 30px 33px 29px;
+  padding: 24px;
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
   border-radius: 20px;
