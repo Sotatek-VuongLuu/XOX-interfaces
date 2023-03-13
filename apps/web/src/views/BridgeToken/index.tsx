@@ -312,9 +312,10 @@ const BackgroundWrapper = styled.div`
   transform: translateX(-50%);
   width: 100%;
   height: calc(100% - 200px);
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-  background: #0a0a0a;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  /* backdrop-filter: blur(10px); */
 `
 
 const Wrapper = styled(Flex)`
@@ -600,7 +601,6 @@ export default function BridgeToken() {
                 <SwapBackgroundWrapper>
                   <LiquidityBackgroundMobile />
                 </SwapBackgroundWrapper>
-
                 <SwapBackgroundWrapper>
                   <LiquidityBackgroundBorderMobile />
                 </SwapBackgroundWrapper>

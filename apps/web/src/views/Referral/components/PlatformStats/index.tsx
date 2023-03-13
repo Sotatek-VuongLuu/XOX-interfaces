@@ -167,6 +167,81 @@ const Line = styled.div`
     width: 97%;
   }
 `
+const StyledTable = styled.div`
+  overflow-x: scroll;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 16px 16px 8px 16px;
+  backdrop-filter: blur(10px);
+
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }
+  .table {
+    min-width: 800px;
+    width: 100%;
+    .table-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+      padding-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      /* p:first-child {
+        width: 40%;
+      } */
+      p:last-child {
+        text-align: end;
+      }
+      p {
+        /* width: 25%; */
+        font-size: 14px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.6);
+        font-family: 'Inter';
+      }
+    }
+    .table-row {
+      width: 100%;
+      max-height: 120px;
+      overflow: scroll;
+      ::-webkit-scrollbar-corner {
+        display: none;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 8px 0;
+        /* .row-item:first-child {
+          width: 40%;
+        } */
+        .row-item:last-child {
+          p {
+            text-align: end;
+            width: 100%;
+          }
+        }
+        .row-item {
+          /* width: 25%; */
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          .name,
+          .code,
+          .point {
+            color: rgba(255, 255, 255, 0.87);
+            font-size: 14px;
+            font-weight: 400;
+            font-family: 'Inter';
+          }
+        }
+      }
+    }
+  }
+`
+
 const PlatformStat = (props: IPropsItem): JSX.Element => {
   const { chainId } = useActiveWeb3React()
   const { listPoint, volumnData, dataChart, minAmount, middleAmount, maxAmount } = props
@@ -251,7 +326,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
       </div>
 
       <div className="second" style={{ position: 'relative' }}>
-        <TableContainer component={Paper} sx={{ height: '165px', background: '#0d0d0d', borderRadius: '16px' }}>
+        {/* <TableContainer component={Paper} sx={{ height: '165px', background: '#0d0d0d', borderRadius: '16px' }}>
           <Table sx={{ minWidth: 650 }} aria-label="simple table">
             <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, backgroundColor: '#0d0d0d' }}>
               <TableRow
@@ -319,7 +394,53 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
               ))}
             </TableBody>
           </Table>
-        </TableContainer>
+        </TableContainer> */}
+        <StyledTable>
+          <div className="table">
+            <div className="table-head">
+              <p style={{ width: '7%' }}>No</p>
+              <p style={{ width: '30%' }}>Username</p>
+              <p style={{ width: '25%' }}>Time</p>
+              <p style={{ width: '15%' }}>Point Level</p>
+              <p style={{ width: '20%' }}>Claimed Amount</p>
+            </div>
+            <div className="table-row">
+              {[...userClaimHistories].map((row, index) => (
+                <div className="row" key={`${row.name}_${index}`}>
+                  <div className="row-item" style={{ width: '7%' }}>
+                    <p className="point">{index}</p>
+                  </div>
+                  <div className="row-item" style={{ width: '30%' }}>
+                    <Avatar
+                      alt="Remy Sharp"
+                      src={row.avatar}
+                      sx={{ marginRight: '8px', height: '24px', width: '24px' }}
+                    />
+                    <Tooltip title={row?.name}>
+                      <p className="name">
+                        {row.name?.length > 9
+                          ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                          : row.name}
+                      </p>
+                    </Tooltip>
+                  </div>
+                  <div className="row-item" style={{ width: '25%' }}>
+                    <p className="code">{row.time}</p>
+                  </div>
+
+                  <div className="row-item" style={{ width: '15%' }}>
+                    <p className="point">{row.point} points</p>
+                  </div>
+                  <div className="row-item" style={{ width: '20%' }}>
+                    <p className="point">
+                      {new BigNumber(row.claim).multipliedBy(100).div(99).toFixed(0, BigNumber.ROUND_DOWN)}$
+                    </p>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </StyledTable>
       </div>
 
       <div className="third" style={{ marginTop: '30px' }}>
