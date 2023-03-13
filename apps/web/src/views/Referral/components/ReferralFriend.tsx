@@ -890,10 +890,8 @@ const ReferralFriend = ({
                               }}
                             />
 
-                            <p className="title">
-                              {item.point.toLocaleString()} points ~ ${item.dollar.toLocaleString()}
-                            </p>
-
+                            <p className="title">{item.point.toLocaleString()} points</p>
+                            <p className="title">~ ${item.dollar.toLocaleString()}</p>
                             {account && (
                               <button
                                 type="button"
