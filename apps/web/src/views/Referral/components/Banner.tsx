@@ -96,17 +96,37 @@ const WrapperLeft = styled.div`
 const WrapperRight = styled.div`
   width: 100%;
   height: 100%;
+  display: flow-root;
+  position: relative;
+  padding: 20px;
   border-radius: 20px;
+  background-color: rgba(16, 16, 16, 0.3);
+  ::before {
+    content: '';
+    position: absolute;
+    padding: 20px;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%) border-box;
+    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: destination-out;
+    mask-composite: exclude;
+  }
+  /* border-radius: 20px;
   padding: 1px;
   background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-  backdrop-filter: blur(4px);
-  .content_referral {
+  backdrop-filter: blur(4px); */
+  /* .content_referral {
     width: 100%;
     height: 100%;
     background: #0d0d0d;
     border-radius: 20px;
     padding: 24px;
-  }
+  } */
   .my_code {
     font-weight: 700;
     font-size: 24px;
@@ -134,8 +154,6 @@ const WrapperRight = styled.div`
   }
 
   @media screen and (max-width: 900px) {
-    padding: 1px;
-
     .my_code {
       font-size: 18px;
       line-height: 22px;
@@ -175,26 +193,26 @@ const Banner = () => {
 
         <Grid item xs={12} lg={4}>
           <WrapperRight>
-            <div className="content_referral">
-              <p className="my_code">My Referral Code</p>
-              <div className="code">
-                <div className="content_code_number">
-                  {account && (
-                    <>
-                      <span className="code_number">{userProfile?.referralCode}</span>
-                      <span>
-                        <CopyButton
-                          width="24px"
-                          text={userProfile?.referralCode}
-                          tooltipMessage={t('Copied')}
-                          button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
-                        />
-                      </span>
-                    </>
-                  )}
-                </div>
+            {/* <div className="content_referral"> */}
+            <p className="my_code">My Referral Code</p>
+            <div className="code">
+              <div className="content_code_number">
+                {account && (
+                  <>
+                    <span className="code_number">{userProfile?.referralCode}</span>
+                    <span>
+                      <CopyButton
+                        width="24px"
+                        text={userProfile?.referralCode}
+                        tooltipMessage={t('Copied')}
+                        button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
+                      />
+                    </span>
+                  </>
+                )}
               </div>
             </div>
+            {/* </div> */}
           </WrapperRight>
         </Grid>
       </Grid>

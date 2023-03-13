@@ -81,12 +81,12 @@ interface IPropsWR {
 }
 
 const WrapperLeft = styled(Box)`
-  padding: 24px;
-  background: #0d0d0d;
-  backdrop-filter: blur(20px);
+  padding: 24px 24px 12px 24px;
   border-radius: 20px;
-  min-height: 248px;
+  min-height: 240px;
   position: relative;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
 
   .corner1 {
     position: absolute;
@@ -150,7 +150,6 @@ const WrapperLeft = styled(Box)`
     font-size: 20px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
-    margin-bottom: 16px;
 
     @media screen and (max-width: 900px) {
       font-size: 18px;
@@ -531,6 +530,74 @@ const Pad = styled.div`
   z-index: 7;
 `
 
+const StyledTable = styled.div`
+  overflow-x: scroll;
+  ::-webkit-scrollbar-corner {
+    display: none;
+  }
+  .table {
+    min-width: 400px;
+    width: 100%;
+    .table-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 0 8px;
+      margin-bottom: 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      p:first-child {
+        width: 40%;
+      }
+      p:last-child {
+        text-align: end;
+      }
+      p {
+        width: 25%;
+        font-size: 14px;
+        font-weight: 700;
+        color: rgba(255, 255, 255, 0.6);
+        font-family: 'Inter';
+      }
+    }
+    .table-row {
+      width: 100%;
+      max-height: 128px;
+      overflow: scroll;
+      ::-webkit-scrollbar-corner {
+        display: none;
+      }
+      .row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 8px 0;
+        .row-item:first-child {
+          width: 40%;
+        }
+        .row-item {
+          width: 25%;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          .name,
+          .code,
+          .point {
+            color: rgba(255, 255, 255, 0.87);
+            font-size: 14px;
+            font-weight: 400;
+            font-family: 'Inter';
+          }
+          .point {
+            text-align: end;
+            width: 100%;
+          }
+        }
+      }
+    }
+  }
+`
+
 const ReferralFriend = ({
   listLevelMustReach,
   isClaimAll,
@@ -579,17 +646,22 @@ const ReferralFriend = ({
         handleCheckPendingRewardAll(account)
         setIsOpenLoadingClaimModal(false)
         // setIsOpenSuccessModal(true)
-        toastSuccess('Success', `You have received $${(Number(cacheAmountUnClaimOfUser) * 0.99).toLocaleString()}`)
+        toastSuccess(
+          'Success',
+          `You have received $${(
+            Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])) * 0.99
+          ).toLocaleString()}`,
+        )
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
       setIsOpenLoadingClaimModal(false)
       if (error && error?.code === 'ACTION_REJECTED') {
-        toastWarning('Claim', 'Transaction rejected.')
+        toastWarning('Confirm Claim', 'Transaction rejected.')
       }
       if (error?.code !== 'ACTION_REJECTED') {
-        toastError('Error', 'Transaction failed')
+        toastError('Confirm Claim', 'Transaction failed')
       }
     }
   }
@@ -611,7 +683,7 @@ const ReferralFriend = ({
         handleCheckPendingRewardAll(account)
         setIsOpenLoadingClaimModal(false)
         // setIsOpenSuccessModal(true)
-        toastSuccess('Success.', `$${(dataClaim.dollar * 0.99).toLocaleString()}`)
+        toastSuccess('Success.', `You have received $${(dataClaim.dollar * 0.99).toLocaleString()}`)
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -619,11 +691,11 @@ const ReferralFriend = ({
       setIsOpenLoadingClaimModal(false)
       if (error && error?.code === 'ACTION_REJECTED') {
         // setModalReject(true)
-        toastWarning('Claim', 'Transaction rejected.')
+        toastWarning('Confirm Claim', 'Transaction rejected.')
       }
 
       if (error?.code !== 'ACTION_REJECTED') {
-        toastError('Error', 'Transaction failed')
+        toastError('Confirm Claim', 'Transaction failed')
       }
     }
   }
@@ -719,84 +791,59 @@ const ReferralFriend = ({
                   <div className="edge2" />
                   <p className="title">Referral friends</p>
                   {listFriends.length !== 0 ? (
-                    <TableContainer component={Paper} sx={{ height: 170, background: '#0d0d0d', boxShadow: 'none' }}>
-                      <Table sx={{ minWidth: 400 }} aria-label="simple table">
-                        <TableHead style={{ position: 'sticky', top: 0, zIndex: 1, background: '#0d0d0d' }}>
-                          <TableRow
-                            sx={{
-                              '& td, & th': {
-                                borderBottom: '1px solid rgba(255, 255, 255, 0.2)',
-                                fontWeight: 700,
-                                fontSize: 14,
-                                color: ' rgba(255, 255, 255, 0.6)',
-                                padding: '8px 8px 8px 0px',
-                              },
-                            }}
-                          >
-                            <TableCell align="left">Username</TableCell>
-                            <TableCell align="center">Referral Code</TableCell>
-                            <TableCell align="right">Total Points</TableCell>
-                          </TableRow>
-                        </TableHead>
-                        <TableBody style={{ maxHeight: '50px' }}>
+                    <StyledTable>
+                      <div className="table">
+                        <div className="table-head">
+                          <p>Username</p>
+                          <p>Referral Code</p>
+                          <p>Total Points</p>
+                        </div>
+                        <div className="table-row">
                           {[...listFriends].map((row) => (
-                            <TableRow
-                              key={row.name}
-                              sx={{
-                                '& td, & th': {
-                                  border: 0,
-                                  fontWeight: 400,
-                                  fontSize: 14,
-                                  color: ' rgba(255, 255, 255, 0.87)',
-                                  padding: '8px 8px 8px 0px',
-                                },
-                              }}
-                            >
-                              <TableCell align="left" sx={{ display: 'flex', alignItems: 'center' }}>
+                            <div className="row" key={row.name}>
+                              <div className="row-item">
                                 <Avatar
                                   alt="Remy Sharp"
                                   src={row.avatar}
                                   sx={{ marginRight: '8px', height: '24px', width: '24px' }}
                                 />
                                 <Tooltip title={row?.name}>
-                                  <p>
+                                  <p className="name">
                                     {row.name?.length > 9
                                       ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
                                       : row.name}
                                   </p>
                                 </Tooltip>
-                              </TableCell>
-                              <TableCell align="left">
-                                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                  <div>
-                                    {row?.refCode?.length > 9
-                                      ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
-                                          row.refCode.length - 2,
-                                        )}`
-                                      : row.refCode}
-                                  </div>
-                                  <div>
-                                    <CopyButton
-                                      width="24px"
-                                      text={row?.refCode}
-                                      tooltipMessage={t('Copied')}
-                                      button={
-                                        <img
-                                          src="/images/copy_referral.svg"
-                                          alt="copy_purple"
-                                          style={{ marginBottom: '-2px', marginLeft: '8px' }}
-                                        />
-                                      }
+                              </div>
+                              <div className="row-item">
+                                <p className="code">
+                                  {row?.refCode?.length > 9
+                                    ? `${row.refCode.substring(0, 7)}...${row.refCode.substring(
+                                        row.refCode.length - 2,
+                                      )}`
+                                    : row.refCode}
+                                </p>
+                                <CopyButton
+                                  width="24px"
+                                  text={row?.refCode}
+                                  tooltipMessage={t('Copied')}
+                                  button={
+                                    <img
+                                      src="/images/copy_referral.svg"
+                                      alt="copy_purple"
+                                      style={{ marginBottom: '-2px', marginLeft: '8px' }}
                                     />
-                                  </div>
-                                </div>
-                              </TableCell>
-                              <TableCell align="right">{formatAmountNumber(row.point, 2)}</TableCell>
-                            </TableRow>
+                                  }
+                                />
+                              </div>
+                              <div className="row-item">
+                                <p className="point">{formatAmountNumber(row.point, 2)}</p>
+                              </div>
+                            </div>
                           ))}
-                        </TableBody>
-                      </Table>
-                    </TableContainer>
+                        </div>
+                      </div>
+                    </StyledTable>
                   ) : (
                     <div className="no-data">No Data</div>
                   )}

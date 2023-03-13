@@ -145,10 +145,10 @@ const Banner = styled.div`
     position: relative;
   }
 
-  .get-xox:hover,
   .learn-more:hover {
     background: #ffffff;
     color: #000000;
+    opacity: 1 !important;
   }
       /* border-left: 1px solid #b809b5;
     border-top: none;
@@ -291,13 +291,18 @@ const Banner = styled.div`
       font-weight: 700;
       font-size: 16px;
       line-height: 19px;
-      color: #ffffff;
+      color: #000;
       width: auto;
       height: 43px;
-      border: 1px solid #ffffff;
       border-radius: 10px;
-      background: transparent;
       box-shadow: none;
+      background:#ffffff ;
+
+      :hover {
+      border: 1px solid #ffffff;
+      background:transparent ;
+      color: #fff;
+      }
     }
 
     .learn-more {

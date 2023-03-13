@@ -135,10 +135,11 @@ const MainContent = styled.div`
     position: relative;
   }
 
-  .get-xox:hover,
+ 
   .learn-more:hover {
     background: #ffffff;
     color: #000000;
+    opacity: 1 !important;
   }
 
   /* .get-xox:hover,
@@ -282,13 +283,20 @@ const MainContent = styled.div`
       font-weight: 700;
       font-size: 16px;
       line-height: 19px;
-      color: #ffffff;
       width: 149px;
       height: 43px;
-      border: 1px solid #ffffff;
       border-radius: 10px;
       background: transparent;
       box-shadow: none;
+      background: #ffffff;
+      color: #000000; 
+        :hover {
+          border: 1px solid #ffffff; 
+          color: #ffffff; 
+          background: #000000;
+
+
+    }
       
     }
 
