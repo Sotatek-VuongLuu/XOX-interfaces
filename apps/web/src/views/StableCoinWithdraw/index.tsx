@@ -1,23 +1,25 @@
 /* eslint-disable react-hooks/rules-of-hooks */
 import { useState, useEffect, useMemo } from 'react'
 import { Flex, Button, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { ChainId } from '@pancakeswap/sdk'
+import BigNumber from 'bignumber.js'
+
 import { useAllTokens } from 'hooks/Tokens'
 import styled from 'styled-components'
 import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { useStableCoinSWR, useMultiChainId } from 'state/info/hooks'
-import ConnectWalletButton from 'components/ConnectWalletButton'
+import { useMultiChainId } from 'state/info/hooks'
 import Trans from 'components/Trans'
 import Link from 'next/link'
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import InfoNav from '../Info/components/InfoNav'
-import HistoryTable, { TYPE_HISTORY } from './historyTable'
-import TransactionTable from './transactionTable'
-import WidthdrawForm from './widthdrawForm'
-import Earned from './earned'
+import HistoryTable, { TYPE_HISTORY } from '../StableCoin/historyTable'
+import TransactionTable from '../StableCoin/transactionTable'
+import WidthdrawForm from '../StableCoin/widthdrawForm'
+import Earned from '../StableCoin/earned'
 
 const TYPE = {
   default: 'DEFAULT',
@@ -36,7 +38,6 @@ const Row = styled.div`
     flex-direction: column;
   }
 `
-
 const WrapperBorder = styled.div`
   border-radius: 10px;
   box-shadow: 0px 0px 16px #00000080;
@@ -44,35 +45,24 @@ const WrapperBorder = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  @media (min-width: 577px) {
-    &.flex-50 {
-      flex: 0 0 calc(50% - 15px);
-      max-width: calc(50% - 15px);
-      > div {
-        width: 100%;
-      }
-    }
-  }
 `
 
 const Box = styled.div`
-  padding: 24px;
   border-radius: 10px;
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
   border-radius: 20px;
-
   flex: 1;
   align-items: center;
   display: flex;
   flex-wrap: wrap;
-  position: relative;
+  max-width: 100%;
   img {
     max-width: 60px;
   }
   &.wrap-table {
     align-items: flex-start;
-    min-height: 430px;
+    max-width: calc(50% - 15px);
   }
   &.h-190 {
     min-height: 190px;
@@ -93,7 +83,6 @@ const Box = styled.div`
     }
   }
 
-  
   .corner1 {
     position: absolute;
     bottom: 0;
@@ -148,9 +137,7 @@ const Container = styled.div`
   margin-bottom: 24px;
   color: rgba(0, 0, 0, 0.87);
   justify-content: center;
-  .content {
-    margin: 0 auto;
-  }
+  display: flex;
   @media (min-width: 1200px) {
     .content {
       width: 1200px;
@@ -169,6 +156,7 @@ const Container = styled.div`
     }
   }
 `
+
 const ContainerBanner = styled.div`
   display: flex;
   justify-content: center;
@@ -189,54 +177,16 @@ const ContainerBanner = styled.div`
   }
 `
 
-const WrapText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  p {
-    margin-bottom: 0;
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.87);
-    &.number {
-      color: ${({ theme }) => theme.colors.violet};
-      font-size: 36px;
-      font-weight: 700;
-    }
-  }
-  @media (max-width: 576px) {
-    p {
-      font-size: 16px;
-      &.number {
-        font-size: 24px;
-      }
-    }
-  }
-`
-
-const TextConnectWallet = styled.div`
-  text-align: center;
-  line-height: 1.3;
-  br {
-    display: none;
-  }
-  @media (max-width: 576px) {
-    br {
-      display: block;
-    }
-  }
-`
-
 const TextStyle = styled(Text)`
   font-size: 14px;
   font-weight: 700;
   color: rgba(255, 255, 255, 0.6);
   line-height: 20px;
   &.primary {
-    color: #FB8618;
-    /* color: ${({ theme }) => theme.colors.primary}; */
+    /* color: ${({ theme }) => theme.colors.violet}; */
+    color: #fb8618;
   }
 `
-
 const MainBackground = styled.div`
   position: absolute;
   z-index: -1;
@@ -251,7 +201,16 @@ const MainBackground = styled.div`
   }
 `
 
-export default function LayoutHistory() {
+const FullWrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+`
+
+export default function WithDrawLayout() {
   const { account, chainId } = useWeb3React()
   const [widthDraw, setWidthDraw] = useState(TYPE.default)
   const allTokens = useAllTokens()
@@ -260,9 +219,47 @@ export default function LayoutHistory() {
   const [currentReward, setCurrentReward] = useState<number | string>(0)
   const chainIdLocal: any = useMultiChainId() || chainId
   const [keyContainer, setKeyContainer] = useState(Math.random())
+  const isUSDT = chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET
+  const decimalCompare = isUSDT ? 18 : 6
   const { isMobile } = useMatchBreakpoints()
-
   const [loadOk, setLoadOk] = useState(false)
+  // eslint-disable-next-line consistent-return
+  const handleCheckPendingRewardAll = async (accountId: any) => {
+    if (!accountId) return null
+    try {
+      const [infosUser, res2] = await Promise.all([
+        contractTreasuryXOX.userInfo(accountId),
+        contractTreasuryXOX.pendingReward(accountId),
+      ])
+      const txPendingReward: any = res2
+      const dataParse: any[] = infosUser.map((item) => {
+        return formatUnits(item, USD_DECIMALS[chainIdLocal])
+      })
+
+      const amountPoint = new BigNumber(dataParse[1]).toNumber()
+      const rewardPoint = new BigNumber(dataParse[2]).toNumber()
+      if (rewardPoint === 0 || rewardPoint) {
+        const numberReward = new BigNumber(formatUnits(txPendingReward._hex, USD_DECIMALS[chainIdLocal]))
+          .plus(rewardPoint)
+          .toFixed(decimalCompare)
+        setCurrentReward(numberReward || 0)
+        const totalCurrentXOXS = new BigNumber(amountPoint).plus(numberReward).toNumber()
+        setCurrentXOX(totalCurrentXOXS || 0)
+      }
+    } catch (error) {
+      // eslint-disable-next-line no-console
+      console.log(`error>>>>>`, error)
+      setCurrentReward(0)
+      setCurrentXOX(0)
+    }
+  }
+
+  useEffect(() => {
+    if (account) {
+      handleCheckPendingRewardAll(account)
+    }
+  }, [account])
+
   useEffect(() => {
     if (!chainId || !account) return
     if (loadOk) window.location.reload()
@@ -270,13 +267,13 @@ export default function LayoutHistory() {
   }, [chainId, account])
 
   return (
-    <>
-      <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground>
+    <FullWrapper>
+      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <ContainerBanner>
         <div className="banner">
           <InfoNav
             allTokens={allTokens}
-            textContentBanner="Earn BUSD/USDC from your XOXS Indefinitely"
+            textContentBanner="Earn USDT/USDC from your XOXS Indefinitely"
             hasPadding={false}
           />
         </div>
@@ -307,31 +304,22 @@ export default function LayoutHistory() {
                 <TextStyle>Stable coin</TextStyle>
               </Link>
             </Flex>
-            <TextStyle>|</TextStyle>
-            <TextStyle className="primary">History</TextStyle>
+            <TextStyle style={{ transform: 'translateY(1px)' }}>|</TextStyle>
+            <TextStyle className="primary">Withdraw reward</TextStyle>
           </Flex>
-          <Row style={{ marginTop: 20, alignItems: 'flex-start' }}>
-            <WrapperBorder className="flex-50">
-              <Box className="wrap-table">
+          <Row style={{ marginTop: 25 }}>
+            <WrapperBorder>
+              <Box className="wrap-withdraw">
                 <div className="corner1" />
                 <div className="edge1" />
                 <div className="corner2" />
                 <div className="edge2" />
-                {account && <HistoryTable typePage={TYPE_HISTORY.stake} />}
-              </Box>
-            </WrapperBorder>
-            <WrapperBorder className="flex-50">
-              <Box className="wrap-table">
-                <div className="corner1" />
-                <div className="edge1" />
-                <div className="corner2" />
-                <div className="edge2" />
-                {account && <HistoryTable typePage={TYPE_HISTORY.myWidthDraw} />}
+                <WidthdrawForm priceAvailable={currentReward} />
               </Box>
             </WrapperBorder>
           </Row>
         </div>
       </Container>
-    </>
+    </FullWrapper>
   )
 }

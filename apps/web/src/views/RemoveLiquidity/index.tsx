@@ -85,7 +85,7 @@ const AmountWrapper = styled(RowBetween)`
     font-weight: 700;
     font-size: 12px;
     line-height: 15px;
-    color: #FB8618;
+    color: #fb8618;
     background: none !important;
     outline: none;
   }
@@ -122,22 +122,22 @@ const CustomCardBody = styled(CardBody)`
     font-weight: 700;
     font-size: 12px;
     line-height: 15px;
-    color:  #FB8618;
+    color: #fb8618;
     background: none !important;
     height: 27px;
-    border: 1px solid  #FB8618;
+    border: 1px solid #fb8618;
     border-radius: 40px;
     padding: 0 12px;
 
     &:hover {
-      background:  #FB8618 !important;
+      background: #fb8618 !important;
       color: #ffffff;
       box-shadow: none;
     }
   }
 
   .btn-percent.active {
-    background:  #FB8618 !important;
+    background: #fb8618 !important;
     color: #ffffff;
     box-shadow: none;
   }
@@ -185,14 +185,14 @@ const CustomCardBody = styled(CardBody)`
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
-    color: #FB8618;
+    color: #fb8618;
   }
 
   .bg-simple {
-    background: #1D1C1C;
+    background: #1d1c1c;
     border-radius: 10px;
     height: 53px;
-    justify-content: end;;
+    justify-content: end;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -336,7 +336,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   const [temporarilyZapMode, setTemporarilyZapMode] = useState(false)
   const { account, chainId, isWrongNetwork } = useActiveWeb3React()
   const library = useWeb3LibraryContext()
-  const { toastError } = useToast()
+  const { toastError, toastWarning } = useToast()
   const [tokenA, tokenB] = useMemo(() => [currencyA?.wrapped, currencyB?.wrapped], [currencyA, currencyB])
   const { isMobile } = useMatchBreakpoints()
   const [btnPercent, setBtnPercent] = useState<number>()
@@ -724,11 +724,16 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
             if (err && err.code !== 4001) {
               logError(err)
             }
-            setLiquidityState({
-              attemptingTxn: false,
-              liquidityErrorMessage: t('Transaction rejected.'),
-              txHash: undefined,
-            })
+            if (err && err.code === 'ACTION_REJECTED') {
+              toastWarning('Confirm remove liquidity', t('Transaction rejected.'))
+            }
+            onDismissRemoveLiquidity()
+            throw new Error(err?.message)
+            // setLiquidityState({
+            //   attemptingTxn: false,
+            //   liquidityErrorMessage: t('Transaction rejected.'),
+            //   txHash: undefined,
+            // })
           })
       }
     } catch (e) {
@@ -795,7 +800,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     [setInnerLiquidityPercentage],
   )
 
-  const [onPresentRemoveLiquidity] = useModal(
+  const [onPresentRemoveLiquidity, onDismissRemoveLiquidity] = useModal(
     <ConfirmLiquidityModal
       title={t('Confirm remove liquidity')}
       customOnDismiss={handleDismissConfirmation}
@@ -882,7 +887,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
 
             <CustomCardBody>
               <AutoColumn gap="8px">
-                <AmountWrapper className={showDetailed &&'bg-simple'}>
+                <AmountWrapper className={showDetailed && 'bg-simple'}>
                   {!showDetailed && <Text>{t('Amount')}</Text>}
                   <Button variant="text" scale="sm" onClick={() => setShowDetailed(!showDetailed)}>
                     {showDetailed ? t('Simple') : t('Detailed')}
@@ -1021,7 +1026,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
               )}
 
               {showDetailed && (
-                <Box margin={['8px 0px 16px 0px', ,'8px 0px 24px 0px']}>
+                <Box margin={['8px 0px 16px 0px', , '8px 0px 24px 0px']}>
                   <CurrencyInputPanel
                     value={formattedAmounts[Field.LIQUIDITY]}
                     onUserInput={onLiquidityInput}

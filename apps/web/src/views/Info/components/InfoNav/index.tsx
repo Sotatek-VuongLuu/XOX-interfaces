@@ -49,15 +49,6 @@ const MainContent = styled.div`
   padding: 20px 16px;
   position: relative;
 
-  & > img {
-    position: absolute;
-    transform: translateX(-50%);
-    left: 50%;
-    top: 0;
-    width: 397px;
-    max-width: unset;
-  }
-
   .corner1 {
     position: absolute;
     bottom: 0;
@@ -106,18 +97,33 @@ const MainContent = styled.div`
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
+  & > img {
+    position: absolute;
+    transform: translateX(-50%);
+    left: 50%;
+    top: 0;
+    width: 397px;
+    max-width: unset;
+  }
+
   .get-xox {
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
-    color: #ffffff;
     height: 37px;
-    border: 1px solid #ffffff;
     border-radius: 10px;
-    background: transparent;
     padding: 10px 20px;
     box-shadow: none;
     position: relative;
+    border: 1px solid #ffffff;
+    color: #ffffff;
+    background: #ffffff;
+    color: #000000;
+    :hover {
+      border: 1px solid #ffffff;
+      color: #ffffff;
+      background: #000000;
+    }
   }
 
   .learn-more {
@@ -135,83 +141,10 @@ const MainContent = styled.div`
     position: relative;
   }
 
- 
   .learn-more:hover {
     background: #ffffff;
     color: #000000;
     opacity: 1 !important;
-  }
-
-  /* .get-xox:hover,
-  .learn-more:hover {
-    border-left: 1px solid #b809b5;
-    border-top: none;
-    border-right: 1px solid #ffb000;
-    border-bottom: none;
-    &:before {
-      content: '';
-      display: block;
-      width: calc(100% - 16px);
-      height: 1px;
-      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-      position: absolute;
-      top: 0;
-      left: 8px;
-    }
-    &:after {
-      content: '';
-      display: block;
-      width: calc(100% - 16px);
-      height: 1px;
-      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-      position: absolute;
-      bottom: 0;
-      left: 8px;
-    } */
-
-    .top-left {
-      position: absolute;
-      top: 0;
-      left: -1px;
-      width: 10px;
-      height: 10px;
-      border-top: 1px solid #b809b5;
-      background: transparent;
-      border-top-left-radius: 10px;
-    }
-
-    .bottom-left {
-      position: absolute;
-      bottom: 0;
-      left: -1px;
-      width: 10px;
-      height: 10px;
-      border-bottom: 1px solid #b809b5;
-      background: transparent;
-      border-bottom-left-radius: 10px;
-    }
-
-    .top-right {
-      position: absolute;
-      top: 0;
-      right: -1px;
-      width: 10px;
-      height: 10px;
-      border-top: 1px solid #f4801c;
-      background: transparent;
-      border-top-right-radius: 10px;
-    }
-
-    .bottom-right {
-      position: absolute;
-      bottom: 0;
-      right: -1px;
-      width: 10px;
-      height: 10px;
-      border-bottom: 1px solid #f4801c;
-      background: transparent;
-      border-bottom-right-radius: 10px;
-    }
   }
 
   .title {
@@ -286,18 +219,16 @@ const MainContent = styled.div`
       width: 149px;
       height: 43px;
       border-radius: 10px;
-      background: transparent;
       box-shadow: none;
+
+      background: transparent;
       background: #ffffff;
-      color: #000000; 
-        :hover {
-          border: 1px solid #ffffff; 
-          color: #ffffff; 
-          background: #000000;
-
-
-    }
-      
+      color: #000000;
+      :hover {
+        border: 1px solid #ffffff;
+        color: #ffffff;
+        background: #000000;
+      }
     }
 
     .learn-more {
@@ -335,11 +266,12 @@ const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: 
   return (
     <NavWrapper hasPadding={hasPadding}>
       <MainContent>
+        <div className="corner1" />
+        <div className="edge1" />
+        <div className="corner2" />
+        <div className="edge2" />
         <img alt="" src={isMobile ? 'images/galaxy-mo.svg' : 'images/galaxy-dk.svg'} />
-        <div className="corner1"></div>
-        <div className="edge1"></div>
-        <div className="corner2"></div>
-        <div className="edge2"></div>
+
         <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
           Swap to get XOX & XOXS. Earn like a Pro
         </Text>

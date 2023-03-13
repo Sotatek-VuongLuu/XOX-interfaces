@@ -120,14 +120,18 @@ const Banner = styled.div`
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
-    color: #ffffff;
+    color: #000;
     height: 37px;
-    border: 1px solid #ffffff;
     border-radius: 10px;
-    background: transparent;
+    background: #fff;
     padding: 10px 20px;
     box-shadow: none;
     position: relative;
+    :hover {
+    border: 1px solid #ffffff;
+      background: transparent;
+      color: #fff
+    }
   }
 
   .learn-more {
