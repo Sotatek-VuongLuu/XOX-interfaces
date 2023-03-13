@@ -115,13 +115,13 @@ const WrapperRight = styled.div`
     -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
     /* @supports (-webkit-touch-callout: none) { */
     /* CSS specific to iOS devices */
-    -webkit-mask-composite: destination-out;
 
     /* } */
-    /* mask-composite: exclude; */
+    mask-composite: exclude;
   }
   @media screen and (min-width: 576px) {
     ::before {
+      -webkit-mask-composite: destination-out;
     }
   }
   /* border-radius: 20px;
