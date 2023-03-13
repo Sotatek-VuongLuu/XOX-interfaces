@@ -79,8 +79,10 @@ const BoxRight = styled.div`
     color: rgba(255, 255, 255, 0.87);
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 10px;
+    opacity: 1;
+
     &::placeholder {
-      color: rgba(255, 255, 255, 0.38);
+      color: rgba(255, 255, 255, 0.87);
     }
     &:focus {
       outline: none;
@@ -311,10 +313,9 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         onDismissModal()
         setWithdrawErrorMessage('Transaction rejected.')
         setPending(false)
-        if (error?.code === 'ACTION_REJECTED') {
-          return toastWarning('Confirm Withdraw', 'Transaction rejected.')
-        }
-        if (error?.code !== 4001) {
+        if (error?.code === 'ACTION_REJECTED' || error?.message?.includes('User rejected')) {
+          toastWarning('Confirm Withdraw', 'Transaction rejected.')
+        } else {
           toastError('Error', 'Transaction failed')
         }
       })
@@ -385,6 +386,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         <BoxRight>
           <input
             ref={inputRef}
+            pattern="\d*"
             type="number"
             key={keyInput}
             defaultValue={amount}

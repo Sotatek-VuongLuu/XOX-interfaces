@@ -57,6 +57,8 @@ const Box = styled.div`
   display: flex;
   flex-wrap: wrap;
   max-width: 100%;
+  position: relative;
+
   img {
     max-width: 60px;
   }
