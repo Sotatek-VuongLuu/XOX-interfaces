@@ -428,7 +428,7 @@ export default function StableCoin() {
                       <WrapText>
                         <p>Your current XOXS</p>
                         <p className="number">{currentXOX}</p>
-                        <Link href="/stable-coin/history">
+                        <Link href="/stable-coin-history">
                           <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
                             View your history
                           </Button>
@@ -454,7 +454,7 @@ export default function StableCoin() {
                         <WrapText>
                           <p>Your current reward</p>
                           <p className="number">{currentReward}</p>
-                          <Link href="/stable-coin/withdraw">
+                          <Link href="/stable-coin-withdraw">
                             <Button height={37} style={{ fontSize: 14 }}>
                               Withdraw reward
                             </Button>

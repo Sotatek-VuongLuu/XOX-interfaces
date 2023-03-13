@@ -472,9 +472,9 @@ const WrapperRight = styled.div<IPropsContainer>`
     }
 
     @media screen and (max-width: 900px) {
-      padding: 22px;
+      padding: 22px 22px 40px;
       overflow: hidden;
-      height: ${({ subTabIndex }) => (subTabIndex !== 1 ? '540px' : 'fit-content')};
+      height: ${({ subTabIndex }) => (subTabIndex !== 1 ? 'fit-content' : 'fit-content')};
       .filter {
         .subTab_item {
           padding: 8px;
