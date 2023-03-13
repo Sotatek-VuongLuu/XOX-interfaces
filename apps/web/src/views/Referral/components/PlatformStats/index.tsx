@@ -433,7 +433,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                   </div>
                   <div className="row-item" style={{ width: '20%' }}>
                     <p className="point">
-                      {new BigNumber(row.claim).multipliedBy(100).div(99).toFixed(0, BigNumber.ROUND_DOWN)}$
+                      ${new BigNumber(row.claim).multipliedBy(100).div(99).toFixed(0, BigNumber.ROUND_DOWN)}
                     </p>
                   </div>
                 </div>
