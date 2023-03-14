@@ -72,9 +72,6 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 576px) {
-    & > div {
-      margin-bottom: 16px;
-    }
     & .heading {
       font-size: 16px;
     }
@@ -108,7 +105,7 @@ const Wrapper = styled.div`
       }
 
       & > div:first-child {
-        margin-bottom: 36px;
+        margin-bottom: 28px;
       }
     }
   }
@@ -148,7 +145,7 @@ const Table = styled.div`
     display: block;
     width: 100%;
     height: 0px;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid #444444;
     position: absolute;
     top: 35px;
   }
@@ -160,6 +157,14 @@ export const CustomTableWrapper = styled(Flex)`
   gap: 16px;
   overflow-x: auto;
   min-height: 230px;
+  width: fit-content;
+  min-width: 100%;
+  margin-bottom: 20px;
+
+  .table {
+    width: fit-content;
+    min-width: 100%;
+  }
   &::-webkit-scrollbar {
     height: 6px;
   }
@@ -177,7 +182,7 @@ export const CustomTableWrapper = styled(Flex)`
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: 100%;
-    min-height: 250px;
+    margin-bottom: 0;
   }
 `
 
@@ -189,6 +194,11 @@ export const PageButtons = styled(Flex)`
   justify-content: flex-start;
   padding: 3px;
 
+  .footer_page {
+    .footer_input {
+      box-shadow: none !important;
+    }
+  }
   & > div:first-child {
     margin-bottom: 13px;
   }
@@ -219,8 +229,8 @@ export const PageButtons = styled(Flex)`
     font-size: 14px;
     line-height: 17px;
     color: rgba(255, 255, 255, 0.87);
-    width: 37px;
-    height: 37px;
+    width: 32px;
+    height: 32px;
     border: none;
     outline: none;
     border-radius: 4px;
@@ -229,10 +239,8 @@ export const PageButtons = styled(Flex)`
   }
 
   & .page.current {
-    font-weight: 700;
-    background: rgba(251, 134, 24, 0.1);
-    border-radius: 4px;
     color: #fb8618;
+    background: rgba(251, 134, 24, 0.1);
   }
 
   & .go-page {
@@ -251,9 +259,9 @@ export const PageButtons = styled(Flex)`
     color: rgba(255, 255, 255, 0.87);
     width: 70px;
     height: 37px;
+    border: 1px solid #444444;
+    border-radius: 4px;
     background: transparent;
-    border: 1px solid rgba(255, 255, 255, 0.2);
-    border-radius: 8px;
   }
 `
 
@@ -618,7 +626,7 @@ const TransactionsTable: React.FC = () => {
 
   return (
     <Wrapper>
-      <Flex justifyContent="space-between">
+      <Flex mb="8px" justifyContent="space-between">
         <Text
           className="heading"
           fontSize="20px"
@@ -633,7 +641,7 @@ const TransactionsTable: React.FC = () => {
         </Text>
       </Flex>
       <CustomTableWrapper>
-        <Table style={{ width: 'fit-content' }}>
+        <Table className="table">
           <Text
             fontSize="16px"
             fontFamily="Inter"
@@ -720,10 +728,11 @@ const TransactionsTable: React.FC = () => {
                 setPagePagination(page === 1 ? page : page - 1)
               }}
             >
-              <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
                   stroke={page === 1 ? 'white' : '#FB8618'}
+                  strokeOpacity={page === 1 ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -804,7 +813,7 @@ const TransactionsTable: React.FC = () => {
               <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke={page === maxPage ? 'white' : '#FB8618'}
+                  stroke="#FB8618"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -812,7 +821,7 @@ const TransactionsTable: React.FC = () => {
               </svg>
             </Arrow>
           </div>
-          <div>
+          <div className="footer_page">
             <Select
               options={[
                 {
@@ -844,6 +853,7 @@ const TransactionsTable: React.FC = () => {
             </Text>
             <Input
               value={tempPage}
+              className="footer_input"
               onChange={handleChangeTempPage}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') {

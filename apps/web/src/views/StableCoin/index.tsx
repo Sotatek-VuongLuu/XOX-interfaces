@@ -45,6 +45,7 @@ const WrapperBorder = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+
   @media (min-width: 577px) {
     &.flex-50 {
       flex: 0 0 calc(50% - 15px);
@@ -56,6 +57,9 @@ const WrapperBorder = styled.div`
   }
   @media (max-width: 576px) {
     width: 100%;
+    .container-table {
+      min-height: 290px !important;
+    }
   }
 `
 

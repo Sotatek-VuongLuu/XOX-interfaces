@@ -38,7 +38,6 @@ const Wrapper = styled.div`
   grid-column: 1;
   & > div {
     max-width: calc(100vw - 80px);
-    margin-bottom: 16px;
   }
 
   & > div:first-child {
@@ -91,9 +90,6 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 576px) {
-    & > div {
-      margin-bottom: 16px;
-    }
     & .heading {
       font-size: 16px;
     }
@@ -127,7 +123,7 @@ const Wrapper = styled.div`
       }
 
       & > div:first-child {
-        margin-bottom: 24px;
+        margin-bottom: 28px;
       }
     }
   }
@@ -141,7 +137,6 @@ const Table = styled.div`
   grid-template-columns: 0.15fr 1.4fr 1.2fr 0.8fr;
   &.table-withdraw {
     grid-gap: 15px 25px;
-    width: fit-content;
   }
   .text-ellipsis {
     max-width: 90px;
@@ -201,10 +196,15 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-  min-height: fit-content;
+  min-height: 230px;
   width: fit-content;
   min-width: 100%;
-  padding-bottom: 30px;
+  margin-bottom: 20px;
+  .table {
+    width: fit-content;
+    min-width: 100%;
+  }
+
   &::-webkit-scrollbar {
     height: 6px;
   }
@@ -220,15 +220,9 @@ export const CustomTableWrapper = styled(Flex)`
     border-radius: 10px;
   }
 
-  .table {
-    width: fit-content;
-    min-width: 100%;
-  }
-
   ${({ theme }) => theme.mediaQueries.md} {
     width: 100%;
-    min-height: fit-content;
-    padding-bottom: 0px;
+    margin-bottom: 0px;
   }
 `
 
@@ -248,6 +242,12 @@ export const PageButtons = styled(Flex)`
     display: flex;
     flex-direction: row;
     align-items: center;
+  }
+
+  .footer_page {
+    .footer_input {
+      box-shadow: none !important;
+    }
   }
 
   ${({ theme }) => theme.mediaQueries.sm} {
@@ -270,8 +270,8 @@ export const PageButtons = styled(Flex)`
     font-size: 14px;
     line-height: 17px;
     color: rgba(255, 255, 255, 0.87);
-    width: 37px;
-    height: 37px;
+    width: 32px;
+    height: 32px;
     border: none;
     outline: none;
     border-radius: 4px;
@@ -280,10 +280,10 @@ export const PageButtons = styled(Flex)`
   }
 
   & .page.current {
-    font-weight: 700;
-    background: rgba(251, 134, 24, 0.1);
-    border-radius: 4px;
     color: #fb8618;
+    background: rgba(251, 134, 24, 0.1);
+    font-weight: 700;
+    border-radius: 4px;
   }
 
   & .go-page {
@@ -302,9 +302,9 @@ export const PageButtons = styled(Flex)`
     color: rgba(255, 255, 255, 0.87);
     width: 70px;
     height: 37px;
-    background: transparent;
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 8px;
+    background: transparent;
   }
 `
 
@@ -724,7 +724,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
 
   return (
     <Wrapper>
-      <Flex justifyContent="space-between">
+      <Flex mb="8px" justifyContent="space-between">
         <Text
           className="heading"
           fontSize="20px"
@@ -739,8 +739,8 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
           {(typePage === TYPE_HISTORY.widthDraw || typePage === TYPE_HISTORY.myWidthDraw) && 'Withdraw History'}
         </Text>
       </Flex>
-      <CustomTableWrapper>
-        <Table className={[typePage === TYPE_HISTORY.widthDraw ? 'table-withdraw' : '', 'table'].join(' ')}>
+      <CustomTableWrapper className="container-table">
+        <Table className={typePage === TYPE_HISTORY.widthDraw ? 'table-withdraw table' : 'table'}>
           <Text
             fontSize="16px"
             fontFamily="Inter"
@@ -862,10 +862,11 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
                 setPagePagination(page === 1 ? page : page - 1)
               }}
             >
-              <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
                   stroke={page === 1 ? 'white' : '#FB8618'}
+                  strokeOpacity={page === 1 ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -946,7 +947,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
               <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke={page === maxPage ? 'white' : '#FB8618'}
+                  stroke="#FB8618"
                   strokeWidth="2"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -954,7 +955,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
               </svg>
             </Arrow>
           </div>
-          <div>
+          <div className="footer_page">
             <Select
               options={[
                 {
@@ -985,6 +986,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
               Go to page
             </Text>
             <Input
+              className="footer_input"
               value={tempPage}
               onChange={handleChangeTempPage}
               onKeyUp={(e) => {
