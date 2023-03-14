@@ -408,7 +408,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
               {[...userClaimHistories].map((row, index) => (
                 <div className="row" key={`${row.name}_${index}`}>
                   <div className="row-item" style={{ width: '7%' }}>
-                    <p className="point">{index}</p>
+                    <p className="point">{index + 1}</p>
                   </div>
                   <div className="row-item" style={{ width: '30%' }}>
                     <Avatar
