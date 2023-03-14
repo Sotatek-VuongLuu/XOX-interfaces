@@ -8,7 +8,6 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import React from 'react'
 import { Cell, Pie, PieChart, Tooltip } from 'recharts'
 import styled from 'styled-components'
-import { formatAmount } from 'utils/formatInfoNumbers'
 
 // const RADIAN = Math.PI / 180
 
@@ -110,7 +109,11 @@ const CustomTooltip = ({ active, payload }: any) => {
       case 'XOX':
         return <CurrencyLogo currency={new Token(chainId, XOX_ADDRESS[chainId], 18, 'XOX')} />
       default:
-        return <CurrencyLogo currency={new Token(chainId, USD_ADDRESS[chainId], 18, 'USD')} />
+        return (
+          <CurrencyLogo
+            currency={new Token(chainId, USD_ADDRESS[chainId === 1 || chainId === 5 ? 1 : 56], 18, 'USD')}
+          />
+        )
     }
   }
 

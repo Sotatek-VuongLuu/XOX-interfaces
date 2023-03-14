@@ -81,20 +81,23 @@ const HoverableChart = ({
       (o) => o[valueProperty],
     ),
   )
-  const minYAxis = minValue - (maxValue - minValue) * 0.2 > 0 ? minValue - (maxValue - minValue) * 0.2 : 0.0001
-  const maxYAxis = maxValue + (maxValue - minValue) * 0.2
+
+  const subValue = maxValue - minValue === 0 ? 0.2 * maxValue : maxValue - minValue
+
+  const minYAxis = minValue - subValue * 0.2 > 0 ? minValue - subValue * 0.2 : 0.0001
+  const maxYAxis = maxValue + subValue * 0.2
 
   const formattedData = useMemo(() => {
     let data = chartData
     if (selectedCurrency.symbol.toUpperCase() === 'XOX') data = dataChartXOX
     if (data) {
       let prev = data[0]?.priceUSD
-      return data.map((day) => {
+      return data.map((day, index) => {
         const result = {
           time: fromUnixTime(day.date),
-          value: day[valueProperty],
+          value: minValue === maxValue && index === 0 ? day[valueProperty] - 0.000001 : day[valueProperty],
           vol: day.VolUSD,
-          priceChange: day.priceChange || ((day?.priceUSD - prev) / prev).toFixed(2),
+          priceChange: formatAmountNumber(day.priceChange || ((day?.priceUSD - prev) / prev)),
           month: fromUnixTime(day.date).getMonth(),
         }
         prev = day.priceUSD

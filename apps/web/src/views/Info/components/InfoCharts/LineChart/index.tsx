@@ -355,12 +355,6 @@ const LineChart = ({
         <CartesianGrid vertical={false} stroke="rgba(255, 255, 255, 0.1)" strokeDasharray="3 3" />
         {/* <CartesianGrid strokeDasharray="4 1 2" /> */}
         <defs>
-          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#00FF00" stopOpacity={1} />
-            <stop offset="45%" stopColor="#FF000000" stopOpacity={0.5} />
-            <stop offset="55%" stopColor="#FF000000" stopOpacity={0.5} />
-            <stop offset="100%" stopColor="#FF0000" stopOpacity={0.5} />
-          </linearGradient>
           <linearGradient id="color" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#9BF3CB" />
             <stop offset="30%" stopColor="#3EC0A6" />
