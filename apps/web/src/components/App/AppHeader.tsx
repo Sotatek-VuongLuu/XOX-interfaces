@@ -21,6 +21,12 @@ const AppHeaderContainer = styled(Flex)`
   width: 100%;
   /* border-bottom: 1px solid ${({ theme }) => theme.colors.cardBorder}; */
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  .header {
+    gap: 16px;
+    @media (max-width: 576px) {
+      gap: 10px;
+    }
+  }
 `
 
 const AppHeader: React.FC<React.PropsWithChildren<Props>> = ({ title, subtitle, helper, backTo, noConfig = false }) => {
@@ -28,7 +34,7 @@ const AppHeader: React.FC<React.PropsWithChildren<Props>> = ({ title, subtitle, 
 
   return (
     <AppHeaderContainer>
-      <Flex alignItems="center" width="100%" style={{ gap: '16px' }}>
+      <Flex alignItems="center" width="100%" className="header">
         {backTo &&
           (typeof backTo === 'string' ? (
             <Link passHref href={backTo}>
@@ -44,7 +50,12 @@ const AppHeader: React.FC<React.PropsWithChildren<Props>> = ({ title, subtitle, 
         <Flex flexDirection="column" width="100%">
           <Flex alignItems="center" justifyContent="space-between">
             <Flex>
-              <Text color="rgba(255, 255, 255, 0.87)" fontSize={['16px', , '24px']} fontWeight={700} lineHeight={["19px", , "29px"]}>
+              <Text
+                color="rgba(255, 255, 255, 0.87)"
+                fontSize={['16px', , '24px']}
+                fontWeight={700}
+                lineHeight={['19px', , '29px']}
+              >
                 {title}
               </Text>
             </Flex>

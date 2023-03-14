@@ -72,6 +72,9 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 576px) {
+    & > div {
+      margin-bottom: 16px;
+    }
     & .heading {
       font-size: 16px;
     }
@@ -156,7 +159,7 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-  min-height: 250px;
+  min-height: 230px;
   &::-webkit-scrollbar {
     height: 6px;
   }
@@ -174,6 +177,7 @@ export const CustomTableWrapper = styled(Flex)`
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: 100%;
+    min-height: 250px;
   }
 `
 
@@ -352,7 +356,7 @@ const DataRow: React.FC<
         {index + 1 + (page - 1) * perPage}
       </Text>
       <LinkExternal
-        color="#9072FF"
+        color="#FB8618"
         href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
         key={`${transaction.hash}-type`}
       >
