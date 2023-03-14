@@ -38,6 +38,7 @@ const Wrapper = styled.div`
   grid-column: 1;
   & > div {
     max-width: calc(100vw - 80px);
+    margin-bottom: 16px;
   }
 
   & > div:first-child {
@@ -90,6 +91,9 @@ const Wrapper = styled.div`
   }
 
   @media (max-width: 576px) {
+    & > div {
+      margin-bottom: 16px;
+    }
     & .heading {
       font-size: 16px;
     }
@@ -197,7 +201,7 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-  min-height: 300px;
+  min-height: 280px;
   &::-webkit-scrollbar {
     height: 6px;
   }

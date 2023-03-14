@@ -724,7 +724,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
             if (err && err.code !== 4001) {
               logError(err)
             }
-            if (err && err.code === 'ACTION_REJECTED') {
+            if ((err && err.code === 'ACTION_REJECTED') || err?.message.includes('rejected transaction')) {
               toastWarning('Confirm remove liquidity', t('Transaction rejected.'))
             }
             onDismissRemoveLiquidity()

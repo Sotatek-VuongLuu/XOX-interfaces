@@ -18,7 +18,7 @@ import { Arrow, ClickableColumnHeader } from './shared'
 const Wrapper = styled.div`
   width: 100%;
   grid-column: 1;
-  background: background: rgba(16, 16, 16, 0.3);
+  background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
   box-shadow: inset 0px 0px 5px rgba(0, 0, 0, 0.3);
   border-radius: 20px;
@@ -123,7 +123,6 @@ const Wrapper = styled.div`
     background: transparent;
     border: none;
     box-shadow: none;
-   
   }
 
   ${({ theme }) => theme.mediaQueries.xl} {
@@ -154,22 +153,21 @@ const Wrapper = styled.div`
 
     .btn-filter button {
       padding: 10px 16px;
-      
     }
     .corner1 {
       border-bottom: 1px solid #ffffff30;
       border-left: 1px solid #ffffff30;
     }
-  
+
     .edge1 {
       width: 1px;
     }
-  
+
     .corner2 {
       border-bottom: 1px solid #ffffff30;
       border-right: 1px solid #ffffff30;
     }
-  
+
     .edge2 {
       width: 1px;
     }
@@ -343,6 +341,13 @@ const CustomLink = styled(Link)`
   text-fill-color: transparent;
 `
 
+const StyledActionText = styled(Text)`
+  :hover {
+    text-decoration: underline;
+    text-decoration-color: #fb8618;
+  }
+`
+
 const SORT_FIELD = {
   timestamp: 'timestamp',
   amountUSD: 'amountUSD',
@@ -439,7 +444,7 @@ const DataRow: React.FC<
         href={getBlockExploreLink(transaction.hash, 'transaction', chainIdLink)}
         key={`${transaction.hash}-type`}
       >
-        <Text
+        <StyledActionText
           fontSize={['14px', , '16px']}
           fontFamily="Inter"
           fontStyle="normal"
@@ -453,7 +458,7 @@ const DataRow: React.FC<
             : transaction.type === TransactionType.SWAP
             ? t('Swap %token0% for %token1%', { token0: inputTokenSymbol, token1: outputTokenSymbol })
             : t('Remove %token0% and %token1%', { token0: symbolToken0, token1: symbolToken1 })}
-        </Text>
+        </StyledActionText>
       </LinkExternal>
       <Text
         fontSize={['14px', , '16px']}
