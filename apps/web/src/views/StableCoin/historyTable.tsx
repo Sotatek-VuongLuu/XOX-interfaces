@@ -50,7 +50,7 @@ const Wrapper = styled.div`
     }
 
     & > div:first-child {
-      margin-bottom: 28px;
+      margin-bottom: 20px;
     }
   }
 
@@ -127,7 +127,7 @@ const Wrapper = styled.div`
       }
 
       & > div:first-child {
-        margin-bottom: 36px;
+        margin-bottom: 24px;
       }
     }
   }
@@ -201,7 +201,10 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-  min-height: 280px;
+  min-height: fit-content;
+  width: fit-content;
+  min-width: 100%;
+  padding-bottom: 30px;
   &::-webkit-scrollbar {
     height: 6px;
   }
@@ -217,9 +220,15 @@ export const CustomTableWrapper = styled(Flex)`
     border-radius: 10px;
   }
 
+  .table {
+    width: fit-content;
+    min-width: 100%;
+  }
+
   ${({ theme }) => theme.mediaQueries.md} {
     width: 100%;
-    min-height: 250px;
+    min-height: fit-content;
+    padding-bottom: 0px;
   }
 `
 
@@ -731,7 +740,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
         </Text>
       </Flex>
       <CustomTableWrapper>
-        <Table className={typePage === TYPE_HISTORY.widthDraw ? 'table-withdraw' : ''} style={{ width: 'fit-content' }}>
+        <Table className={[typePage === TYPE_HISTORY.widthDraw ? 'table-withdraw' : '', 'table'].join(' ')}>
           <Text
             fontSize="16px"
             fontFamily="Inter"
