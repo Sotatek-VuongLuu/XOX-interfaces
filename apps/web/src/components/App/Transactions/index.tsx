@@ -6,7 +6,7 @@ const Transactions = () => {
   return (
     <>
       <IconButton scale="sm" variant="text" onClick={onPresentTransactionsModal}>
-        <HistoryIcon color="#515151" width="24px" />
+        <HistoryIcon />
       </IconButton>
     </>
   )

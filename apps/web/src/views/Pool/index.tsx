@@ -6,11 +6,14 @@ import Link from 'next/link'
 import { useAccount } from 'wagmi'
 import { useTranslation } from '@pancakeswap/localization'
 import { useLPTokensWithBalanceByAccount } from 'views/Swap/StableSwap/hooks/useStableConfig'
+import useNativeCurrency from 'hooks/useNativeCurrency'
+import { unwrappedToken } from 'utils/wrappedCurrency'
+import { Token } from '@pancakeswap/sdk'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
 import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
-import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
+import LiquidityMainBackgroundBorderDesktop from 'components/Svg/LiquidityMainBackgroundBorderDesktop'
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
@@ -28,12 +31,11 @@ import FullPositionCard, { StableFullPositionCard } from '../../components/Posit
 import { useCurrencyBalances, useTokenBalance, useTokenBalancesWithLoadingIndicator } from '../../state/wallet/hooks'
 import { usePair, usePairs, PairState, usePairXOX } from '../../hooks/usePairs'
 import { toV2LiquidityToken, useTrackedTokenPairs } from '../../state/user/hooks'
-import useNativeCurrency from 'hooks/useNativeCurrency'
-import { unwrappedToken } from 'utils/wrappedCurrency'
-import { Token } from '@pancakeswap/sdk'
+
 import CurrencySelectButton from './CurrencySelectButton'
-import SwapbackgroundMobile from 'components/Svg/SwapBackgroundMobile'
-import SwapbackgroundDesktop from 'components/Svg/SwapBackgroundDesktop'
+import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
+import LiquidityMainBackgroundDesktop from 'components/Svg/LiquidityMainBackgroundDesktop'
+import LiquidityMainBackgroundBorderMobile from 'components/Svg/LiquidityMainBackgroundBorderMobile'
 
 const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
   width: 100%;
@@ -55,15 +57,15 @@ const SwapbackgroundWrapper = styled.div`
 `
 const BackgroundWrapper = styled.div`
   position: absolute;
-  top: 300px;
+  top: 200px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: calc(100% - 300px);
+  height: calc(100% - 200px);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   background: rgba(255, 255, 255, 0.03);
-  backdrop-filter: blur(10px);
+  /* backdrop-filter: blur(10px); */
 `
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -72,8 +74,6 @@ const SwapBackgroundWrapper = styled.div`
   transform: translateX(-50%);
   z-index: 1;
   width: 100%;
-  height: 225px;
-  overflow: hidden;
 `
 const BackgroundWrapperMoblie = styled.div`
   position: absolute;
@@ -237,6 +237,13 @@ const PoolWrapper = styled(Flex)`
       grid-template-columns: 1fr 30px 1fr;
     }
   }
+`
+
+const WapperHeight = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 820px;
 `
 
 const ConfirmedIcon = styled(ColumnCenter)`
@@ -528,126 +535,76 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
 
   return (
     <Page>
-      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
-      <Flex
-        width={['330px', , '559px']}
-        marginTop="100px"
-        marginBottom="100px"
-        height="100%"
-        justifyContent="center"
-        alignItems="center"
-        position="relative"
-      >
-        <Wrapper flex="column" position="relative">
-          {/* {isMobile ? (
-            <>
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundMobile />
-              </SwapBackgroundWrapper>
-
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundBorderMobile />
-              </SwapBackgroundWrapper>
-            </>
-          ) : (
-            <>
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundDesktop />
-              </SwapBackgroundWrapper>
-
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundBorderDesktop />
-              </SwapBackgroundWrapper>
-            </>
-          ) */}
-          {isMobile ? (
-            <>
-              <SwapBackgroundWrapper>
-                <SwapbackgroundMobile />
-              </SwapBackgroundWrapper>
-              <BackgroundWrapperMoblie />
-            </>
-          ) : (
-            <>
-              <SwapbackgroundWrapper>
-                <SwapbackgroundDesktop />
-              </SwapbackgroundWrapper>
-              <BackgroundWrapper />
-            </>
-          )}
-
-          <StyledLiquidityContainer>
-            {/* <Header>
-              <div>
-                <p className="title">Liquidity</p>
-                <p className="sub_title">Add liquidity to receive LP tokens</p>
-              </div>
-              <div style={{ display: 'flex' }}>
-                <span style={{ marginRight: '8px' }}>
-                  <img src="/images/liquidity/setting-icon.svg" alt="" />
-                </span>
-                <span>
-                  <img src="/images/liquidity/history-icon.svg" alt="" />
-                </span>
-              </div>
-            </Header> */}
-            <AppHeader
-              title="Liquidity"
-              subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
-              helper={t(
-                `Liquidity providers earn a ${
-                  chainId === 5 || chainId === 1 ? 0.3 : 0.25
-                }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
-              )}
-              backTo={stateAdd ? '/liquidity' : undefined}
-            />
-
-            {v2IsLoading ? (
-              <ConfirmedIcon>
-                <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
-              </ConfirmedIcon>
+      <WapperHeight>
+        {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
+        <Flex width={['328px', , '559px']}>
+          <Wrapper flex="column" position="relative">
+            {isMobile ? (
+              <>
+                <SwapBackgroundWrapper>
+                  <LiquidityBackgroundMobile />
+                </SwapBackgroundWrapper>
+                <SwapBackgroundWrapper>
+                  <LiquidityMainBackgroundBorderMobile />
+                </SwapBackgroundWrapper>
+              </>
             ) : (
               <>
-                <Body>
-                  {renderBody()}
-                  {/* {account && !v2IsLoading && (
-                <Flex flexDirection="column" alignItems="center" mt="24px">
-                  <Text color="textSubtle" mb="8px">
-                    {t("Don't see a pool you joined?")}
-                  </Text>
-                  <Link href="/find" passHref>
-                    <Button id="import-pool-link" variant="secondary" scale="sm" as="a">
-                      {t('Find other LP tokens')}
-                    </Button>
-                  </Link>
-                </Flex>
-              )} */}
-                </Body>
-                <StyledCardFooter style={{ textAlign: 'center' }}>
-                  {account ? (
-                    <Link
-                      href={
-                        allV2PairsWithLiquidity.length > 0 && !stateAdd
-                          ? '/add'
-                          : `/add/${XOX_ADDRESS[chainId]}/${
-                              selectedCurrency?.isNative ? native.symbol : selectedCurrency?.wrapped?.address
-                            }`
-                      }
-                      passHref
-                    >
-                      <ButtonWrapper id="join-pool-button" width="100%">
-                        {t('Add Liquidity')}
-                      </ButtonWrapper>
-                    </Link>
-                  ) : (
-                    <ConnectWalletButtonWrapper />
-                  )}
-                </StyledCardFooter>
+                <SwapBackgroundWrapper>
+                  <LiquidityMainBackgroundDesktop />
+                </SwapBackgroundWrapper>
+                <SwapBackgroundWrapper>
+                  <LiquidityMainBackgroundBorderDesktop />
+                </SwapBackgroundWrapper>
               </>
             )}
-          </StyledLiquidityContainer>
-        </Wrapper>
-      </Flex>
+            <BackgroundWrapper />
+
+            <StyledLiquidityContainer>
+              <AppHeader
+                title="Liquidity"
+                subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
+                helper={t(
+                  `Liquidity providers earn a ${
+                    chainId === 5 || chainId === 1 ? 0.3 : 0.25
+                  }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+                )}
+                backTo={stateAdd ? '/liquidity' : undefined}
+              />
+
+              {v2IsLoading ? (
+                <ConfirmedIcon>
+                  <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
+                </ConfirmedIcon>
+              ) : (
+                <>
+                  <Body>{renderBody()}</Body>
+                  <StyledCardFooter style={{ textAlign: 'center' }}>
+                    {account ? (
+                      <Link
+                        href={
+                          allV2PairsWithLiquidity.length > 0 && !stateAdd
+                            ? '/add'
+                            : `/add/${XOX_ADDRESS[chainId]}/${
+                                selectedCurrency?.isNative ? native.symbol : selectedCurrency?.wrapped?.address
+                              }`
+                        }
+                        passHref
+                      >
+                        <ButtonWrapper id="join-pool-button" width="100%">
+                          {t('Add Liquidity')}
+                        </ButtonWrapper>
+                      </Link>
+                    ) : (
+                      <ConnectWalletButtonWrapper />
+                    )}
+                  </StyledCardFooter>
+                </>
+              )}
+            </StyledLiquidityContainer>
+          </Wrapper>
+        </Flex>
+      </WapperHeight>
     </Page>
   )
 }
