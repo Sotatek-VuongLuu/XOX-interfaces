@@ -24,6 +24,10 @@ import SwapbackgroundMobileNone2 from 'components/Svg/SwapBackgroundMobileNone2'
 import SwapbackgroundDesktopNone2 from 'components/Svg/SwapBackgroundDesktopNone2'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
+import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
+import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
+import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
+import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
 
 const SwapbackgroundNoneWrapper = styled.div`
   position: absolute;
@@ -70,6 +74,35 @@ const MainBackground = styled.div`
     height: auto;
     object-fit: cover;
   }
+`
+
+const WapperHeight = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 820px;
+`
+
+const SwapBackgroundWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
+  width: 100%;
+`
+
+const BackgroundWrapper = styled.div`
+  position: absolute;
+  top: 200px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  height: calc(100% - 200px);
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  background: rgba(255, 255, 255, 0.03);
+  /* backdrop-filter: blur(10px); */
 `
 
 export default function Swap() {
@@ -122,56 +155,43 @@ export default function Swap() {
 
   return (
     <Page removePadding={isChartExpanded} hideFooterOnDesktop={isChartExpanded}>
-      <Flex
-        width={['328px', , '100%']}
-        marginTop="100px"
-        marginBottom="100px"
-        height="100%"
-        justifyContent="center"
-        alignItems="center"
-        position="relative"
-      >
-        <Wrapper flex="column" position="relative">
-          {isMobile ? (
-            <>
-              <SwapbackgroundWrapper>
-                <SwapbackgroundMobile />
-              </SwapbackgroundWrapper>
-              <SwapbackgroundNoneWrapper>
-                <SwapbackgroundMobileNone />
-              </SwapbackgroundNoneWrapper>
-              <SwapbackgroundNone2Wrapper>
-                <SwapbackgroundMobileNone2 />
-              </SwapbackgroundNone2Wrapper>
-            </>
-          ) : (
-            <>
-              <SwapbackgroundWrapper>
-                <SwapbackgroundDesktop />
-              </SwapbackgroundWrapper>
-              <SwapbackgroundNoneWrapper>
-                <SwapbackgroundDesktopNone />
-              </SwapbackgroundNoneWrapper>
-              <SwapbackgroundNone2Wrapper>
-                <SwapbackgroundDesktopNone2 />
-              </SwapbackgroundNone2Wrapper>
-            </>
-          )}
-          <StyledSwapContainer
-            $isChartExpanded={isChartExpanded}
-            style={isMobile ? { left: 0, padding: '15px 0' } : {}}
-          >
-            <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
-              {/* <SwapTab>
-                  {(swapTypeState) =>
-                    swapTypeState === SwapType.STABLE_SWAP ? <StableSwapFormContainer /> : 
-                  }
-                </SwapTab> */}
-              <SwapForm />
-            </StyledInputCurrencyWrapper>
-          </StyledSwapContainer>
-        </Wrapper>
-      </Flex>
+      <WapperHeight>
+        <Flex width={['328px', , '559px']}>
+          <Wrapper flex="column" position="relative">
+            {isMobile ? (
+              <>
+                <SwapBackgroundWrapper>
+                  <LiquidityBackgroundMobile />
+                </SwapBackgroundWrapper>
+                <SwapBackgroundWrapper>
+                  <LiquidityBackgroundBorderMobile />
+                </SwapBackgroundWrapper>
+              </>
+            ) : (
+              <>
+                <SwapBackgroundWrapper>
+                  <LiquidityBackgroundDesktop />
+                </SwapBackgroundWrapper>
+
+                <SwapBackgroundWrapper>
+                  <LiquidityBackgroundBorderDesktop />
+                </SwapBackgroundWrapper>
+              </>
+            )}
+            <BackgroundWrapper />
+            <StyledSwapContainer $isChartExpanded={isChartExpanded}>
+              <StyledInputCurrencyWrapper mt={isChartExpanded ? '24px' : '0'}>
+                {/* <SwapTab>
+      {(swapTypeState) =>
+        swapTypeState === SwapType.STABLE_SWAP ? <StableSwapFormContainer /> : 
+      }
+    </SwapTab> */}
+                <SwapForm />
+              </StyledInputCurrencyWrapper>
+            </StyledSwapContainer>
+          </Wrapper>
+        </Flex>
+      </WapperHeight>
     </Page>
   )
 }

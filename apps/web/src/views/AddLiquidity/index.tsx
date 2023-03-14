@@ -122,7 +122,7 @@ const LiquidityBody = styled.div`
   }
 
   .btn {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -140,6 +140,9 @@ const LiquidityBody = styled.div`
     .slippage {
       font-size: 18px;
       line-height: 22px;
+    }
+    .btn {
+      font-size: 18px;
     }
   }
 `
@@ -466,7 +469,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
         }),
       )
       .catch((err) => {
-        if (err?.code === 'ACTION_REJECTED' || err?.message.includes('rejected transaction')) {
+        if (err?.code === 'ACTION_REJECTED' || err?.message.includes('rejected')) {
           toastWarning('Confirm add liquidity', 'Transaction rejected.')
         }
         if (err && err.code !== 4001) {

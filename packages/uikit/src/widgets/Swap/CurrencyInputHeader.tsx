@@ -16,16 +16,10 @@ export const CurrencyInputHeader = ({ title, subtitle }: Props) => {
       width="full"
       alignItems="center"
       flexDirection="column"
-      style={isMobile ? { width: "" } : { padding: "20px 0px" }}
+      style={isMobile ? { width: "" } : { padding: "0px 0px 20px" }}
       borderBottom="1"
     >
-      <AtomBox
-        width="full"
-        display="flex"
-        alignItems="center"
-        justifyContent="space-between"
-        style={{ padding: "0 18px" }}
-      >
+      <AtomBox width="full" display="flex" alignItems="center" justifyContent="space-between">
         {title}
       </AtomBox>
       {subtitle}

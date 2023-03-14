@@ -11,8 +11,8 @@ import { getChainIdToByChainId } from '..'
 import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 
 const Wrapper = styled.div`
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.03);
+  border-radius: 10px;
+  background: #1d1c1c;
   padding: 12px;
 
   @media screen and (min-width: 576px) {

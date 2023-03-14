@@ -18,6 +18,7 @@ import {
   useTooltip,
   useToast,
   useMatchBreakpoints,
+  ArrowBackIcon,
 } from '@pancakeswap/uikit'
 import { useWeb3LibraryContext } from '@pancakeswap/wagmi'
 import { BigNumber } from '@ethersproject/bignumber'
@@ -63,12 +64,13 @@ import { logError } from '../../utils/sentry'
 import { formatAmount } from '../../utils/formatInfoNumbers'
 import { CommonBasesType } from '../../components/SearchModal/types'
 import { formatAmountString } from '@pancakeswap/utils/formatBalance'
+import Link from 'next/link'
 
 const BorderCard = styled.div`
   border: solid 1px ${({ theme }) => theme.colors.cardBorder};
-  border-radius: 16px;
+  border-radius: 10px;
   padding: 16px;
-  background: #303030;
+  background: #1d1c1c;
   border: none;
 `
 
@@ -104,7 +106,8 @@ const AmountWrapper = styled(RowBetween)`
 `
 
 const CustomLightGreyCard = styled(LightGreyCard)`
-  background: #303030;
+  background: #1d1c1c;
+  border-radius: 10px;
   border: none;
 `
 
@@ -130,14 +133,14 @@ const CustomCardBody = styled(CardBody)`
     padding: 0 12px;
 
     &:hover {
-      background: #fb8618 !important;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%) !important;
       color: #ffffff;
       box-shadow: none;
     }
   }
 
   .btn-percent.active {
-    background: #fb8618 !important;
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%) !important;
     color: #ffffff;
     box-shadow: none;
   }
@@ -258,7 +261,7 @@ const StyledLiquidityContainer = styled.div`
   width: 100%;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    width: 560px;
+    /* width: 560px; */
     padding: 0 28px;
   }
 `
@@ -322,6 +325,25 @@ const ButtonWrapper = styled.div`
     grid-template-columns: 1fr 1fr;
     button {
       height: 43px;
+    }
+  }
+`
+const StyledHeader = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px 0;
+  .title {
+    font-family: 'Inter';
+    font-weight: 700;
+    font-size: 16px;
+    line-height: 19px;
+    margin-left: 14px;
+    color: rgba(255, 255, 255, 0.87);
+    ${({ theme }) => theme.mediaQueries.md} {
+      font-size: 20px;
+      line-height: 24px;
     }
   }
 `
@@ -724,7 +746,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
             if (err && err.code !== 4001) {
               logError(err)
             }
-            if ((err && err.code === 'ACTION_REJECTED') || err?.message.includes('rejected transaction')) {
+            if ((err && err.code === 'ACTION_REJECTED') || err?.message.includes('rejected')) {
               toastWarning('Confirm remove liquidity', t('Transaction rejected.'))
             }
             onDismissRemoveLiquidity()
@@ -830,7 +852,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     <Page>
       {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <Flex
-        width={['330px', , '559px']}
+        width={['330px', , '450px']}
         marginTop="100px"
         marginBottom="100px"
         height="100%"
@@ -863,27 +885,19 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
           <BackgroundWrapper /> */}
 
           <StyledLiquidityContainer>
-            {/* <Header>
-              <div>
-                <p className="title">Liquidity</p>
-                <p className="sub_title">Add liquidity to receive LP tokens</p>
-              </div>
-              <div style={{ display: 'flex' }}>
-                <span style={{ marginRight: '8px' }}>
-                  <img src="/images/liquidity/setting-icon.svg" alt="" />
-                </span>
-                <span>
-                  <img src="/images/liquidity/history-icon.svg" alt="" />
-                </span>
-              </div>
-            </Header> */}
-            <AppHeader
-              backTo="/liquidity"
-              title={t('Remove %assetA%-%assetB% liquidity', {
-                assetA: currencyA?.symbol ?? '',
-                assetB: currencyB?.symbol ?? '',
-              })}
-            />
+            <StyledHeader>
+              <Link passHref href="/liquidity">
+                <div style={{ cursor: 'pointer' }}>
+                  <ArrowBackIcon width="24px" />
+                </div>
+              </Link>
+              <p className="title">
+                {t('Remove %assetA%-%assetB% liquidity', {
+                  assetA: currencyA?.symbol ?? '',
+                  assetB: currencyB?.symbol ?? '',
+                })}
+              </p>
+            </StyledHeader>
 
             <CustomCardBody>
               <AutoColumn gap="8px">

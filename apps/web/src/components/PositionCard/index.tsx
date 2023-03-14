@@ -41,7 +41,7 @@ const FixedHeightRow = styled(RowBetween)`
 `
 
 const CustomCard = styled(Card)`
-  background: #1D1C1C;
+  background: #1d1c1c;
   border-radius: 20px;
 
   & > div {
@@ -57,6 +57,8 @@ const CustomCard = styled(Card)`
 
   .button {
     padding: 16px;
+    display: flex;
+    align-items: center;
   }
 
   img {
@@ -188,12 +190,12 @@ const CustomCardMinimal = styled(Card)`
     font-weight: 700;
     font-size: 14px;
     line-height: 17px;
-    color: #FB8618;
+    color: #fb8618;
     text-transform: uppercase;
   }
 
   & > div {
-    background: #1D1C1C;
+    background: #1d1c1c;
     border-radius: 20px;
   }
 
@@ -416,7 +418,7 @@ function MinimalPositionCardView({
               <Text className="lp-token-text">{t('LP tokens in your wallet')}</Text>
             </CustomRowFixed>
           </CustomFixedHeightRow>
-          <AutoColumn className='gap'>
+          <AutoColumn className="gap">
             <CustomFixedHeightRow>
               <CustomRowFixed>
                 <DoubleCurrencyLogo currency0={currency0} currency1={currency1} margin size={20} />

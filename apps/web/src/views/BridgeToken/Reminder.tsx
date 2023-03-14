@@ -10,7 +10,7 @@ const Wrapper = styled.div`
   border-radius: 10px;
   padding: 16px 17px;
   margin-top: 25px;
-  background: rgba(255, 255, 255, 0.03);
+  background: #1d1c1c;
 `
 
 const Heading = styled.h5`
