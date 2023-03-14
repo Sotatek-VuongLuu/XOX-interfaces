@@ -31,7 +31,7 @@ import fetchDataChartXOX from './queries/protocol/dataChart'
 // Protocol hooks
 
 const refreshIntervalForInfo = 15000 // 15s
-const SWR_SETTINGS: SWRConfiguration = {
+export const SWR_SETTINGS: SWRConfiguration = {
   refreshInterval: refreshIntervalForInfo,
   errorRetryCount: 3,
   errorRetryInterval: 3000,

@@ -168,7 +168,7 @@ const CountDown = ({ startTime }: Props) => {
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (Math.floor(periodTime) > 0) {
+    if (Math.floor(periodTime) >= 0) {
       const refreshInterval = setInterval(handleCountDown, 1000)
       return () => clearInterval(refreshInterval)
     }

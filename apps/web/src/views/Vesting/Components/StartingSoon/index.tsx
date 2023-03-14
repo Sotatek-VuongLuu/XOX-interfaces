@@ -1,6 +1,14 @@
-import React from 'react'
+/* eslint-disable consistent-return */
+import { formatEther } from '@ethersproject/units'
+import BigNumber from 'bignumber.js'
+import { logger } from 'ethers'
+import moment from 'moment'
+import React, { useState } from 'react'
 import styled from 'styled-components'
+import IfoFoldableCard from 'views/Ifos/components/IfoFoldableCard'
+import { RoundInfo } from 'views/Vesting'
 import CountDown from '../CountDown'
+import { TOKEN_IN_ROUND } from '../PricingInfo'
 
 const Wrapper = styled.div`
   padding: 24px;
@@ -43,9 +51,15 @@ const Wrapper = styled.div`
   .processing {
     height: 10px;
     width: 100%;
-    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    background: transparent;
     box-shadow: 0px 4px 20px rgba(255, 112, 31, 0.5);
     border-radius: 20px;
+  }
+
+  .processing_child {
+    height: 100%;
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    border-radius: inherit;
   }
 
   .corner1 {
@@ -96,6 +110,17 @@ const Wrapper = styled.div`
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
+  .rocket_container {
+    display: flex;
+    justify-content: center;
+    img {
+      max-width: 100% !important;
+      height: auto;
+      display: block;
+      margin-top: 30px;
+    }
+  }
+
   @media screen and (max-width: 900px) {
     padding: 24px 18px;
 
@@ -116,21 +141,193 @@ const Wrapper = styled.div`
       line-height: 17px;
       height: 6px;
     }
+
+    .processing_child {
+      height: 100%;
+    }
   }
 `
 
-function StartingSoon() {
+interface IProps {
+  currentRound: number
+  infoRoundOne: RoundInfo
+  infoRoundTow: RoundInfo
+  infoRoundThree: RoundInfo
+  totalXOXTokenInRound: number | string
+  isInTimeRangeSale: boolean
+  isUserInWhiteList: boolean
+  isTimeAllowWhitelist: boolean
+}
+
+const now = new Date()
+const timeStampOfNow = now.getTime()
+
+function StartingSoon({
+  infoRoundOne,
+  infoRoundTow,
+  infoRoundThree,
+  totalXOXTokenInRound,
+  currentRound,
+  isInTimeRangeSale,
+  isUserInWhiteList,
+  isTimeAllowWhitelist,
+}: IProps) {
+  const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
+  const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
+
+  const handleReturnPercent = (round: any) => {
+    const roundCheckWithWhitelist = isTimeAllowWhitelist ? 1 : round
+    switch (roundCheckWithWhitelist) {
+      case 1: {
+        const percent = new BigNumber(totalXOXTokenInRound)
+          .multipliedBy(100)
+          .dividedBy(TOKEN_IN_ROUND.ROUND_ONE)
+          .toNumber()
+        return (
+          <>
+            <p className="percent_sale">{`${percent}%`} SOLD</p>
+            <div className="processing">
+              <div className="processing_child" style={{ width: `${percent}%` }} />
+            </div>
+          </>
+        )
+      }
+
+      case 2: {
+        const percent = new BigNumber(totalXOXTokenInRound)
+          .multipliedBy(100)
+          .dividedBy(TOKEN_IN_ROUND.ROUND_TOW)
+          .toNumber()
+        return (
+          <>
+            <p className="percent_sale">{`${percent}%`} SOLD</p>
+            <div className="processing">
+              <div className="processing_child" style={{ width: `${percent}%` }} />
+            </div>
+          </>
+        )
+      }
+
+      case 3: {
+        const percent = new BigNumber(totalXOXTokenInRound)
+          .multipliedBy(100)
+          .dividedBy(TOKEN_IN_ROUND.ROUND_ONE)
+          .toNumber()
+        return (
+          <>
+            <p className="percent_sale">
+              <p className="percent_sale">{`${percent}%`} SOLD</p>
+            </p>
+            <div className="processing">
+              <div className="processing_child" style={{ width: `${percent}%` }} />
+            </div>
+          </>
+        )
+      }
+      default:
+        break
+    }
+  }
+
+  const handleRenderCountdown = (timeStamp: any) => {
+    if (timeStamp < infoRoundOne.startDate) {
+      return (
+        <>
+          <p className="notice">
+            Sale 1 will start on {moment.unix(infoRoundOne.startDate / 1000).format('DD/MM/YYYY')}.
+          </p>
+          <CountDown startTime={infoRoundOne.startDate} />
+        </>
+      )
+    }
+
+    if (infoRoundOne.startDate <= timeStamp && timeStamp < infoRoundOne.endDate) {
+      return (
+        <>
+          <p className="notice">Sale 1 will end on {moment.unix(infoRoundOne.endDate / 1000).format('DD/MM/YYYY')}.</p>
+          <CountDown startTime={infoRoundOne.endDate} />
+        </>
+      )
+    }
+
+    if (infoRoundTow.startDate && timeStamp >= infoRoundOne.endDate && timeStamp < infoRoundTow.endDate) {
+      if (infoRoundOne.endDate <= timeStamp && timeStamp < infoRoundTow.startDate) {
+        return (
+          <>
+            <p className="notice">
+              Sale 2 will start on {moment.unix(infoRoundTow.startDate / 1000).format('DD/MM/YYYY')}.
+            </p>
+            <CountDown startTime={infoRoundTow.startDate} />
+          </>
+        )
+      }
+
+      if (infoRoundTow.startDate <= timeStamp && timeStamp < infoRoundTow.endDate) {
+        return (
+          <>
+            <p className="notice">
+              Sale 2 will end on {moment.unix(infoRoundTow.endDate / 1000).format('DD/MM/YYYY')}.
+            </p>
+            <CountDown startTime={infoRoundTow.endDate} />
+          </>
+        )
+      }
+    }
+    if (infoRoundThree.startDate && timeStamp >= infoRoundTow.endDate && timeStamp <= infoRoundThree.endDate) {
+      if (infoRoundTow.endDate <= timeStamp && timeStamp < infoRoundThree.startDate) {
+        return (
+          <>
+            <p className="notice">
+              Sale 3 will start on {moment.unix(infoRoundThree.startDate / 1000).format('DD/MM/YYYY')}.
+            </p>
+            <CountDown startTime={infoRoundThree.startDate} />
+          </>
+        )
+      }
+
+      if (infoRoundThree.startDate <= timeStamp && timeStamp < infoRoundThree.endDate) {
+        return (
+          <>
+            <p className="notice">
+              Sale 3 will end on {moment.unix(infoRoundThree.endDate / 1000).format('DD/MM/YYYY')}.
+            </p>
+            <CountDown startTime={infoRoundThree.endDate} />
+          </>
+        )
+      }
+
+      if (infoRoundThree.endDate <= timeStamp) {
+        return (
+          <>
+            <p className="notice">Pre-Sale is end!.</p>
+            <CountDown startTime={null} />
+          </>
+        )
+      }
+    }
+
+    return (
+      <div className="rocket_container">
+        <img src="/images/rocket_xox.png" alt="rocket_xox" />
+      </div>
+    )
+  }
+
   return (
     <Wrapper>
       <div className="corner1" />
       <div className="edge1" />
       <div className="corner2" />
       <div className="edge2" />
-      <p className="title">XOX Token Private Sale Starting Soon</p>
-      <p className="notice">Sale 1 will start on mm/dd/yyyy.</p>
-      <CountDown startTime={1679257779000} />
-      <p className="percent_sale">57.13% SOLD</p>
-      <div className="processing" />
+      <p className="title">{isInTimeRangeSale ? 'XOX Token is on sale' : 'New Sale Will Start Soon'}</p>
+      {isNotSetDataForAll ? (
+        <div className="rocket_container">
+          <img src="/images/rocket_xox.png" alt="rocket_xox" />
+        </div>
+      ) : (
+        handleRenderCountdown(timeStampOfNow)
+      )}
+      {(isInTimeRangeSale || isCanBuyWithWhitelistUser) && handleReturnPercent(currentRound)}
     </Wrapper>
   )
 }

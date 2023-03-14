@@ -1,4 +1,6 @@
+import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
+import { RoundInfo, Start } from 'views/Vesting'
 
 const Wrapper = styled.div`
   position: relative;
@@ -138,7 +140,7 @@ const Wrapper = styled.div`
 `
 
 interface IProps {
-  dataStat: any
+  dataStat: Start[]
 }
 
 function SaleStats({ dataStat }: IProps) {
@@ -147,12 +149,16 @@ function SaleStats({ dataStat }: IProps) {
       <div className="fake_blur" />
       <p className="title">Sale Stats</p>
       <div className="content_stat">
-        {Array.from(dataStat).map((item: any, index: number) => {
+        {Array.from(dataStat).map((item: Start, index: number) => {
           return (
-            <div className="item_content_container">
+            <div className="item_content_container" key={`${item.title}`}>
               <p className="item_content_amount">
                 <span className="icon">{item?.icon}</span>
-                <span>{item.amount}</span>
+                <span>
+                  {item.decimal
+                    ? new BigNumber(item.amount).div(new BigNumber(10).pow(item.decimal)).toFixed(2)
+                    : item.amount}
+                </span>
               </p>
               <p className="item_content_title">{item.title}</p>
               <div className={`divide divide_${index}`} />

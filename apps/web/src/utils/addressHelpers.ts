@@ -156,3 +156,7 @@ export const getBridgeTokenAddress = (chainId?: number) => {
 export const getContractFarmingLPAddress = (chainId?: number) => {
   return getAddress(addresses.farmingLP, chainId)
 }
+
+export const getContractPreSaleAddress = (chainId?: number) => {
+  return getAddress(addresses.preSaleContactAddress, chainId)
+}

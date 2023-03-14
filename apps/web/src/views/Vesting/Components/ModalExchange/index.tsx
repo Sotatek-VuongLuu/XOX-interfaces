@@ -1,6 +1,8 @@
 import {
+  AutoRow,
   Box,
   Button,
+  CircleLoader,
   Flex,
   Heading,
   InjectedModalProps,
@@ -12,9 +14,13 @@ import {
   NumericalInput,
   Text,
 } from '@pancakeswap/uikit'
+import BigNumber from 'bignumber.js'
+import { ApprovalState } from 'hooks/useApproveCallback'
 import useWindowSize from 'hooks/useWindowSize'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { TYPE_BY } from 'views/Vesting'
+import { getPriceUsdPerToken } from '../getPrice'
 
 const StyledModalContainer = styled(ModalContainer)`
   padding: 32px 24px;
@@ -189,6 +195,13 @@ const BoxCenter = styled(Box)`
     margin-top: 8px;
   }
 `
+
+const ErrorReferral = styled.div`
+  font-size: 12px;
+  color: #f44336;
+  width: 100%;
+  margin-top: 8px;
+`
 interface INumericalInputStyledProps {
   amount?: string
 }
@@ -242,12 +255,78 @@ const FlexCustom = styled(Flex)`
 `
 
 interface Props extends InjectedModalProps {
-  amount: any
-  setAmount: any
+  amount: string
+  setAmount: (amount: string) => void
+  typeBuyPrice: number
+  approvalState: number
+  handeInvest: () => void
+  approvalSubmitted: boolean
+  handleApprove: () => void
+  ethPerDolla: number
+  currentRound: number
+  handleChangeReferal: (value: string) => void
+  setCodeRef: (value: any) => void
+  referralError: any
+  isTimeAllowWhitelist: boolean
+  amountXOX: string | number
+  amountXOXS: string | number
+  setAmountXOX: (value: string | number) => void
+  setAmountXOXS: (value: string | number) => void
 }
 
-function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
+function ModalSaleExchange({
+  onDismiss,
+  amount,
+  setAmount,
+  typeBuyPrice,
+  approvalState,
+  handeInvest,
+  approvalSubmitted,
+  handleApprove,
+  ethPerDolla,
+  currentRound,
+  handleChangeReferal,
+  setCodeRef,
+  referralError,
+  isTimeAllowWhitelist,
+  amountXOX,
+  amountXOXS,
+  setAmountXOX,
+  setAmountXOXS,
+}: Props) {
   const { width } = useWindowSize()
+
+  const isSwap = approvalState !== ApprovalState.APPROVED && typeBuyPrice === TYPE_BY.BY_USDC
+
+  const handleRenderXOXAmount = (typeBuy: number, round: number, amountToken: any) => {
+    const roundCheckWithWhitelist = isTimeAllowWhitelist ? 1 : round
+    const totalDolla =
+      typeBuy === TYPE_BY.BY_ETH
+        ? new BigNumber(amountToken || 0).multipliedBy(ethPerDolla).toNumber()
+        : amountToken || 0
+    switch (roundCheckWithWhitelist) {
+      case 1:
+        setAmountXOX(new BigNumber(totalDolla).div(0.044).toNumber())
+        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.08).toNumber())
+        break
+      case 2:
+        setAmountXOX(new BigNumber(totalDolla).div(0.045).toNumber())
+        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.06).toNumber())
+        break
+      case 3:
+        setAmountXOX(new BigNumber(totalDolla).div(0.046).toNumber())
+        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.04).toNumber())
+        break
+      default:
+        break
+    }
+  }
+
+  useEffect(() => {
+    handleRenderXOXAmount(typeBuyPrice, currentRound, amount)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [typeBuyPrice, currentRound, amount])
+
   return (
     <StyledModalContainer>
       <div className="corner1" />
@@ -282,8 +361,18 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
                 <ButtonStyle>All</ButtonStyle>
               </BoxCenter>
               <Text className="coin">
-                <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
-                <span>USDT</span>
+                {typeBuyPrice === TYPE_BY.BY_USDC && (
+                  <>
+                    <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt="logo" />
+                    <span>USDC</span>
+                  </>
+                )}
+                {typeBuyPrice === TYPE_BY.BY_ETH && (
+                  <>
+                    <img src="/images/1/tokens/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2.svg" alt="logo" />
+                    <span>ETH</span>
+                  </>
+                )}
               </Text>
             </Flex>
           </>
@@ -318,7 +407,7 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
             XOX Amount
           </Text>
           <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
-            - XOX
+            {amountXOX} XOX
           </Text>
         </Flex>
         <Flex alignItems="center" marginBottom="26px" className="xoxs_amount">
@@ -326,15 +415,27 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
             XOXS Reward
           </Text>
           <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
-            - XOXS
+            {amountXOXS} XOXS
           </Text>
         </Flex>
 
         <FlexCustom>
           <Text className="title_ref">Referral Code</Text>
-          <BoxCenter>
-            <input placeholder="Optional" className="ref_code" />
-          </BoxCenter>
+
+          <Flex flexDirection="column">
+            <BoxCenter>
+              <input
+                placeholder="Optional"
+                className="ref_code"
+                onChange={(e) => {
+                  handleChangeReferal(e.target.value)
+                  setCodeRef(e.target.value)
+                }}
+                maxLength={8}
+              />
+            </BoxCenter>
+            {referralError && <ErrorReferral>{referralError}</ErrorReferral>}
+          </Flex>
         </FlexCustom>
 
         <Flex
@@ -343,7 +444,28 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
           paddingLeft={width <= 900 ? 0 : 19}
           marginTop={width <= 900 ? 16 : 48}
         >
-          <Button className="buy_xox">Buy XOX</Button>
+          {isSwap ? (
+            <Button
+              className="buy_xox"
+              onClick={handleApprove}
+              disabled={approvalState !== ApprovalState.NOT_APPROVED || approvalSubmitted}
+            >
+              {approvalState === ApprovalState.PENDING || approvalSubmitted ? (
+                <AutoRow justifyContent="center" gap="8px">
+                  Approving
+                  <CircleLoader stroke="white" />
+                </AutoRow>
+              ) : approvalState === ApprovalState.APPROVED ? (
+                'Approved'
+              ) : (
+                'Approve USDC'
+              )}
+            </Button>
+          ) : (
+            <Button className="buy_xox" onClick={handeInvest} disabled={referralError || !amount}>
+              Buy XOX
+            </Button>
+          )}
         </Flex>
       </StyledModalBody>
     </StyledModalContainer>

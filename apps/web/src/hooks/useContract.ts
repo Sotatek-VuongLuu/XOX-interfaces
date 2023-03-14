@@ -69,6 +69,7 @@ import {
   getContractXOXPool,
   getContractXOXTokenBridge,
   getContractFarmingLP,
+  getContractPreSale,
 } from 'utils/contractHelpers'
 
 import { useAccount, useProvider, useSigner } from 'wagmi'
@@ -454,4 +455,10 @@ export const useContractFarmingLP = (withSignerIfPossible = true) => {
 
 export function useBridgeTokenContract(chainId: ChainId, withSignerIfPossible?: boolean): Contract | null {
   return useContract(getBridgeTokenAddress(chainId), BRIDGE_TOKEN_ABI, withSignerIfPossible)
+}
+
+export const useXOXPreSaleContract = (withSignerIfPossible = true) => {
+  const { chainId } = useActiveChainId()
+  const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
+  return useMemo(() => getContractPreSale(providerOrSigner as any, chainId), [providerOrSigner, chainId])
 }
