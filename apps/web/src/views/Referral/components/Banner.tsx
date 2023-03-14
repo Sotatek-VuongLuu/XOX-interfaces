@@ -96,45 +96,58 @@ const WrapperLeft = styled.div`
 const WrapperRight = styled.div`
   width: 100%;
   height: 100%;
-  display: flow-root;
   position: relative;
-  padding: 20px;
+  padding: 24px;
   border-radius: 20px;
-  background-color: rgba(16, 16, 16, 0.3);
-  ::before {
-    content: '';
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  .corner_active_1 {
     position: absolute;
-    padding: 20px;
-    top: 0;
-    left: 0;
-    right: 0;
     bottom: 0;
-    border-radius: 20px;
-    border: 1px solid transparent;
-    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%) border-box;
-    -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
-    /* @supports (-webkit-touch-callout: none) { */
-    /* CSS specific to iOS devices */
-
-    /* } */
-    mask-composite: exclude;
-  }
-  @media screen and (min-width: 576px) {
-    ::before {
-      -webkit-mask-composite: destination-out;
-    }
-  }
-  /* border-radius: 20px;
-  padding: 1px;
-  background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-  backdrop-filter: blur(4px); */
-  /* .content_referral {
-    width: 100%;
+    left: 0;
+    width: 40px;
     height: 100%;
-    background: #0d0d0d;
     border-radius: 20px;
-    padding: 24px;
-  } */
+    z-index: 1;
+    border-bottom: 1px solid #b809b5;
+    border-top: 1px solid #b809b5;
+    border-left: 1px solid #b809b5;
+    border-bottom-right-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge_active_1 {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    height: 1px;
+    width: calc(100% - 80px);
+    background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
+  }
+
+  .corner_active_2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 1px solid #ffb000;
+    border-top: 1px solid #ffb000;
+    border-right: 1px solid #ffb000;
+    border-bottom-left-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge_active_2 {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    height: 1px;
+    width: calc(100% - 80px);
+    background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
+  }
   .my_code {
     font-weight: 700;
     font-size: 24px;
@@ -201,7 +214,10 @@ const Banner = () => {
 
         <Grid item xs={12} lg={4}>
           <WrapperRight>
-            {/* <div className="content_referral"> */}
+            <div className="corner_active_1" />
+            <div className="edge_active_1" />
+            <div className="corner_active_2" />
+            <div className="edge_active_2" />
             <p className="my_code">My Referral Code</p>
             <div className="code">
               <div className="content_code_number">
@@ -220,7 +236,6 @@ const Banner = () => {
                 )}
               </div>
             </div>
-            {/* </div> */}
           </WrapperRight>
         </Grid>
       </Grid>

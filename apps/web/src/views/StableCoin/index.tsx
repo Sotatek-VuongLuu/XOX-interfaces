@@ -39,7 +39,7 @@ const Row = styled.div`
 `
 
 const WrapperBorder = styled.div`
-  border-radius: 10px;
+  border-radius: 20px;
   box-shadow: 0px 0px 16px #00000080;
   flex: 1;
   align-items: center;
@@ -59,18 +59,6 @@ const WrapperBorder = styled.div`
   }
 `
 
-const WrapBorder = styled.div`
-  background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%),
-    linear-gradient(0deg, rgba(16, 16, 16, 0.3), rgba(16, 16, 16, 0.3));
-  padding: 1px;
-  flex: 1;
-  border-radius: 20px;
-  height: 100%;
-  > div {
-    background: #0d0d0d;
-  }
-`
-
 const Box = styled.div`
   flex: 1;
   align-items: center;
@@ -82,6 +70,53 @@ const Box = styled.div`
   border-radius: 20px;
   position: relative;
   height: 100%;
+  .corner_active_1 {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 100%;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 1px solid #b809b5;
+    border-top: 1px solid #b809b5;
+    border-left: 1px solid #b809b5;
+    border-bottom-right-radius: unset;
+    border-top-right-radius: unset;
+  }
+
+  .edge_active_1 {
+    position: absolute;
+    top: 0;
+    left: 40px;
+    height: 1px;
+    width: calc(100% - 80px);
+    background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
+  }
+
+  .corner_active_2 {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 40px;
+    height: 100%;
+    border-radius: 20px;
+    z-index: 1;
+    border-bottom: 1px solid #ffb000;
+    border-top: 1px solid #ffb000;
+    border-right: 1px solid #ffb000;
+    border-bottom-left-radius: unset;
+    border-top-left-radius: unset;
+  }
+
+  .edge_active_2 {
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    height: 1px;
+    width: calc(100% - 80px);
+    background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
+  }
   img {
     max-width: 60px;
   }
@@ -448,22 +483,24 @@ export default function StableCoin() {
                   </Box>
                 </WrapperBorder>
                 <WrapperBorder>
-                  <WrapBorder>
-                    <Box className="h-186">
-                      <Flex justifyContent="space-between" alignItems="center" width="100%">
-                        <WrapText>
-                          <p>Your current reward</p>
-                          <p className="number">{currentReward}</p>
-                          <Link href="/stable-coin-withdraw">
-                            <Button height={37} style={{ fontSize: 14 }}>
-                              Withdraw reward
-                            </Button>
-                          </Link>
-                        </WrapText>
-                        <img src="/images/1/tokens/XOX.svg" alt="icon" />
-                      </Flex>
-                    </Box>
-                  </WrapBorder>
+                  <Box className="h-186">
+                    <div className="corner_active_1" />
+                    <div className="edge_active_1" />
+                    <div className="corner_active_2" />
+                    <div className="edge_active_2" />
+                    <Flex justifyContent="space-between" alignItems="center" width="100%">
+                      <WrapText>
+                        <p>Your current reward</p>
+                        <p className="number">{currentReward}</p>
+                        <Link href="/stable-coin-withdraw">
+                          <Button height={37} style={{ fontSize: 14 }}>
+                            Withdraw reward
+                          </Button>
+                        </Link>
+                      </WrapText>
+                      <img src="/images/1/tokens/XOX.svg" alt="icon" />
+                    </Flex>
+                  </Box>
                 </WrapperBorder>
               </Row>
             )}

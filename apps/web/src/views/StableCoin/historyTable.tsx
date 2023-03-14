@@ -197,7 +197,7 @@ export const CustomTableWrapper = styled(Flex)`
   flex-direction: column;
   gap: 16px;
   overflow-x: auto;
-  min-height: 250px;
+  min-height: 300px;
   &::-webkit-scrollbar {
     height: 6px;
   }
@@ -215,6 +215,7 @@ export const CustomTableWrapper = styled(Flex)`
 
   ${({ theme }) => theme.mediaQueries.md} {
     width: 100%;
+    min-height: 250px;
   }
 `
 
