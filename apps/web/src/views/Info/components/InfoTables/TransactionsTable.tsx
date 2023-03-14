@@ -1166,6 +1166,7 @@ const TransactionsTable: React.FC = () => {
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}
+              style={{ boxShadow: 'none' }}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') {
                   const p = parseInt(tempPage) || 1

@@ -1129,11 +1129,11 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                 <Flex justifyContent="space-between" style={{ marginTop: '24px', padding: '0 20px' }}>
                   <Text className="text-price">{t('Prices')}</Text>
                   <Flex flexDirection="column" alignItems="flex-end">
-                    <Text>
+                    <Text fontSize={['14px', , '16px']}>
                       1 {currencyA?.symbol} = {tokenA ? formatAmountString(pair.priceOf(tokenA), 6) : '-'}{' '}
                       {currencyB?.symbol}
                     </Text>
-                    <Text mt="8px">
+                    <Text mt="8px" fontSize={['14px', , '16px']}>
                       1 {currencyB?.symbol} ={tokenB ? formatAmountString(pair.priceOf(tokenB), 6) : '-'}{' '}
                       {currencyA?.symbol}
                     </Text>
