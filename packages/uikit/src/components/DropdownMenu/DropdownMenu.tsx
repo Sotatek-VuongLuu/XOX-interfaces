@@ -22,6 +22,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   handleMouseEnter,
   handleMouseLeave,
   setIsHover,
+  isLanding = false,
   ...props
 }) => {
   const { linkComponent } = useContext(MenuContext);
@@ -70,7 +71,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   );
 
   return (
-    <Box ref={setTargetRef} {...props}>
+    <Box ref={setTargetRef} {...props} style={{ position: "relative" }}>
       <BoxDropdown
         onPointerDown={() => {
           setIsOpen((s) => !s);
@@ -87,6 +88,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
           {...attributes.popper}
           $isBottomNav={isBottomNav}
           $isOpen={isMenuShow}
+          $isLanding={isLanding}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
         >

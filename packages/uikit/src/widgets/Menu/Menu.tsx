@@ -57,8 +57,8 @@ const FixedContainer = styled.div<{ showMenu: boolean; height: number; isLanding
   height: ${({ height }) => `${height}px`};
   width: 100vw;
   z-index: 20;
-  background-color: ${({ theme, isLanding }) => (isLanding ? "black" : theme.nav.background)};
-  ${({ theme, isLanding }) => !isLanding && ` border-bottom: 1px solid ${theme.colors.cardBorder}`};
+  background-color: ${({ theme, isLanding }) => (isLanding ? "black" : "#101010")};
+  /* ${({ theme, isLanding }) => !isLanding && ` border-bottom: 1px solid ${theme.colors.cardBorder}`}; */
   display: flex;
   justify-content: center;
 `;
@@ -185,7 +185,13 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
               <Flex>
                 <Logo href={homeLink?.href ?? "/"} />
                 <AtomBox display={{ xs: "none", xxl: "block" }}>
-                  <MenuItems items={links} activeItem={activeItem} activeSubItem={activeSubItem} ml="24px" />
+                  <MenuItems
+                    items={links}
+                    activeItem={activeItem}
+                    activeSubItem={activeSubItem}
+                    ml="24px"
+                    isLanding={isLanding}
+                  />
                 </AtomBox>
               </Flex>
               <Flex alignItems="center" height="100%">

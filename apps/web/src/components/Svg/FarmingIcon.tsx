@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
-import { SvgProps } from "@pancakeswap/uikit";
-import React from "react";
+import { SvgProps } from '@pancakeswap/uikit'
+import React from 'react'
 
 const FarmingIcon: React.FC<React.PropsWithChildren<SvgProps>> = () => {
   return (
@@ -10,7 +10,7 @@ const FarmingIcon: React.FC<React.PropsWithChildren<SvgProps>> = () => {
         fill="#8E8E8E"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default FarmingIcon;
+export default FarmingIcon

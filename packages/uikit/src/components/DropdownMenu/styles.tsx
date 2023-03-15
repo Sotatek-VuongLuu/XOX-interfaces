@@ -18,7 +18,7 @@ const getTextColor = ({
 export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $isActive: boolean }>`
   align-items: center;
   border: 0;
-  background: transparent;
+  background: ${({ $isActive }) => ($isActive ? "rgba(255, 255, 255, 0.05)" : "transparent")};
   color: ${({ theme, disabled, $isActive }) => getTextColor({ theme, disabled, $isActive })};
   cursor: pointer;
   font-weight: ${({ $isActive = false }) => ($isActive ? "600" : "400")};
@@ -45,7 +45,7 @@ export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $i
   }
 
   &:hover:not(:disabled) {
-    background-color: ${({ theme }) => theme.colors.tertiary};
+    background-color: rgba(255, 255, 255, 0.05);
   }
 
   &:active:not(:disabled) {
@@ -61,25 +61,32 @@ export const DropdownMenuDivider = styled.hr`
   margin: 4px 0;
 `;
 
-export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: boolean }>`
+export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: boolean; $isLanding: boolean }>`
   border-radius: 6px;
-  padding-bottom: 4px;
-  padding-top: 4px;
+
   pointer-events: auto;
   margin-bottom: 0;
-  width: ${({ $isBottomNav }) => ($isBottomNav ? "100%" : "515px")};
+  width: ${({ $isBottomNav, $isLanding }) => ($isBottomNav ? "100%" : $isLanding ? "515px" : "160px")};
   visibility: visible;
   z-index: 1001;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: ${({ $isLanding }) => ($isLanding ? "1fr 1fr" : "1fr")};
   height: auto;
 
   ${({ theme }) => theme.mediaQueries.xxl} {
-    position: fixed;
-    top: 0;
+    position: absolute;
+    top: 45px;
     left: 0;
-    transform: translate(451px, 64px);
-    background-color: ${({ theme }) => theme.card.background};
+    /* transform: translate(451px, 64px); */
+    background: #1d1c1c;
+    padding-bottom: 4px;
+    padding-top: 4px;
+    box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+  }
+
+  @media (max-width: 576px) {
+    width: ${({ $isBottomNav, $isLanding }) => ($isBottomNav ? "100%" : $isLanding ? "515px" : "100%")};
   }
 
   ${({ $isOpen }) =>
