@@ -26,9 +26,11 @@ export const CurrencyLogo: React.FC<
 
   useEffect(() => {
     if (!address || !chainName) return
-    const coinmarketcapIds = localStorage.getItem('coinmarketcapIds')
-    if (coinmarketcapIds) {
-      const id = JSON.parse(coinmarketcapIds)?.[chainName === 'ETH' ? 1 : 56]?.[address.toUpperCase()]
+    let coinmarketcapIds = {}
+    const coinmarketcapIdsJSON = localStorage.getItem('coinmarketcapIds')
+    if (coinmarketcapIdsJSON) {
+      coinmarketcapIds = JSON.parse(coinmarketcapIdsJSON)
+      const id = coinmarketcapIds?.[chainName === 'ETH' ? 1 : 56]?.[address.toUpperCase()]
       if (id) {
         setCoinmarketcapId(id)
         return
@@ -41,8 +43,10 @@ export const CurrencyLogo: React.FC<
       })
       .then((response) => {
         const tokenInfos = response.data.data
-        const tokenInfo = Object.keys(tokenInfos).map((key) => tokenInfos[key])?.[0]
+        const tokenInfo = Object.values(tokenInfos)[0] as any
         coinmarketcapIds[chainName === 'ETH' ? 1 : 56][address.toUpperCase()] = tokenInfo.id
+        setCoinmarketcapId(tokenInfo.id)
+        localStorage.setItem('coinmarketcapIds', JSON.stringify(coinmarketcapIds))
       })
       .catch((e) => console.warn(e))
   }, [chainName, address])

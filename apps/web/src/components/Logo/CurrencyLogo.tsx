@@ -29,9 +29,11 @@ export default function CurrencyLogo({
   useEffect(() => {
     if (currency?.isNative) return
     const token = currency as Token
-    const coinmarketcapIds = localStorage.getItem('coinmarketcapIds')
-    if (coinmarketcapIds) {
-      const id = JSON.parse(coinmarketcapIds)?.[token.chainId]?.[token.address.toUpperCase()]
+    let coinmarketcapIds = {}
+    const coinmarketcapIdsJSON = localStorage.getItem('coinmarketcapIds')
+    if (coinmarketcapIdsJSON) {
+      coinmarketcapIds = JSON.parse(coinmarketcapIdsJSON)
+      const id = coinmarketcapIds?.[token.chainId]?.[token.address.toUpperCase()]
       if (id) {
         setCoinmarketcapId(id)
         return
@@ -44,10 +46,12 @@ export default function CurrencyLogo({
       })
       .then((response) => {
         const tokenInfos = response.data.data
-        const tokenInfo = Object.keys(tokenInfos).map((key) => tokenInfos[key])?.[0]
+        const tokenInfo = Object.values(tokenInfos)[0] as any
         coinmarketcapIds[token.chainId][token.address.toUpperCase()] = tokenInfo.id
+        setCoinmarketcapId(tokenInfo.id)
+        localStorage.setItem('coinmarketcapIds', JSON.stringify(coinmarketcapIds))
       })
-      .catch((e) => console.warn(e))
+      .catch((e) => console.warn(e, 'tokenInfo'))
   }, [currency])
 
   const srcs: string[] = useMemo(() => {
