@@ -977,6 +977,7 @@ const StyledTable = styled.div`
       }
       p:last-child {
         text-align: end;
+        padding-right: 8px;
       }
       p {
         width: 25%;
@@ -990,6 +991,7 @@ const StyledTable = styled.div`
       width: 100%;
       max-height: 128px;
       overflow: scroll;
+      padding-right: 8px;
       ::-webkit-scrollbar-corner {
         display: none;
       }

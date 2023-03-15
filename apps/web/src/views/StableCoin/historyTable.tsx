@@ -739,7 +739,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
           {(typePage === TYPE_HISTORY.widthDraw || typePage === TYPE_HISTORY.myWidthDraw) && 'Withdraw History'}
         </Text>
       </Flex>
-      <CustomTableWrapper className="container-table">
+      <CustomTableWrapper className="history-table">
         <Table className={typePage === TYPE_HISTORY.widthDraw ? 'table-withdraw table' : 'table'}>
           <Text
             fontSize="16px"

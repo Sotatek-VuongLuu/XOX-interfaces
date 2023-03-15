@@ -640,7 +640,7 @@ const TransactionsTable: React.FC = () => {
           Transactions History
         </Text>
       </Flex>
-      <CustomTableWrapper>
+      <CustomTableWrapper className="transaction-table">
         <Table className="table">
           <Text
             fontSize="16px"

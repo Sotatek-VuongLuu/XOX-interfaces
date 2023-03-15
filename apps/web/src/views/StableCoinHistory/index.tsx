@@ -44,6 +44,9 @@ const WrapperBorder = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+  .history-table {
+    min-height: 250px !important;
+  }
   @media (min-width: 577px) {
     &.flex-50 {
       flex: 0 0 calc(50% - 15px);
@@ -51,6 +54,11 @@ const WrapperBorder = styled.div`
       > div {
         width: 100%;
       }
+    }
+  }
+  @media (max-width: 576px) {
+    .history-table {
+      min-height: 235px !important;
     }
   }
 `
@@ -72,7 +80,7 @@ const Box = styled.div`
   }
   &.wrap-table {
     align-items: flex-start;
-    min-height: 430px;
+    min-height: 400px;
   }
   &.h-190 {
     min-height: 190px;
