@@ -125,4 +125,11 @@ export const BoxDropdown = styled(Box)<{ isActive: boolean }>`
   svg {
     ${({ isActive }) => (isActive ? "transform: rotate(0)" : "transform: rotate(180deg)")}
   }
+  :hover .hover_active {
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
 `;
