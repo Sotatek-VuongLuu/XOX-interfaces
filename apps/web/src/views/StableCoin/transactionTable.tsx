@@ -720,7 +720,7 @@ const TransactionsTable: React.FC = () => {
           </Flex>
         ) : undefined}
       </CustomTableWrapper>
-      {currentTransactions && currentTransactions?.length > 9 && (
+      {currentTransactions && currentTransactions?.length >= 1 && (
         <PageButtons>
           <div>
             <Arrow

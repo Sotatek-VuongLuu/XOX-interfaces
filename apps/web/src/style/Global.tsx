@@ -79,7 +79,7 @@ const GlobalStyle = createGlobalStyle`
   }
 
   .product_active_hover {
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%) !important;
+    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%) !important;
     -webkit-background-clip: text !important;
     -webkit-text-fill-color: transparent !important;
     background-clip: text !important;
