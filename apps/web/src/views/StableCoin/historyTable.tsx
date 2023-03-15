@@ -854,156 +854,156 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
           </Flex>
         ) : undefined}
       </CustomTableWrapper>
-      {currentTransactions?.length > 9 && (
-        <PageButtons>
-          <div>
-            <Arrow
-              onClick={() => {
-                setPagePagination(page === 1 ? page : page - 1)
-              }}
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
-                <path
-                  d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
-                  stroke={page === 1 ? 'white' : '#FB8618'}
-                  strokeOpacity={page === 1 ? '0.38' : '1'}
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Arrow>
+      {/* {currentTransactions?.length > 9 && ( */}
+      <PageButtons>
+        <div>
+          <Arrow
+            onClick={() => {
+              setPagePagination(page === 1 ? page : page - 1)
+            }}
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
+              <path
+                d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
+                stroke={page === 1 ? 'white' : '#FB8618'}
+                strokeOpacity={page === 1 ? '0.38' : '1'}
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Arrow>
 
-            <Flex>
-              {maxPage <= 5 ? (
-                [...Array(maxPage)].map((_, i) => (
-                  <button
-                    type="button"
-                    key={_}
-                    onClick={() => setPagePagination(i + 1)}
-                    className={`page ${page === i + 1 ? 'current' : ''}`}
-                  >
-                    {i + 1}
-                  </button>
-                ))
-              ) : (
-                <>
-                  {page - 2 <= 1 ? (
-                    [...Array(page - 1)].map((_, i) => (
-                      <button type="button" key={_} onClick={() => setPagePagination(i + 1)} className="page">
-                        {i + 1}
-                      </button>
-                    ))
-                  ) : (
-                    <>
-                      <button type="button" className="page" onClick={() => setPagePagination(1)}>
-                        1
-                      </button>
-                      <button type="button" className="page" onClick={() => setPagePagination(page - 3)}>
-                        ...
-                      </button>
-                      {/* <button type="button" className="page" onClick={() => setPagePagination(page - 2)}>
+          <Flex>
+            {maxPage <= 5 ? (
+              [...Array(maxPage)].map((_, i) => (
+                <button
+                  type="button"
+                  key={_}
+                  onClick={() => setPagePagination(i + 1)}
+                  className={`page ${page === i + 1 ? 'current' : ''}`}
+                >
+                  {i + 1}
+                </button>
+              ))
+            ) : (
+              <>
+                {page - 2 <= 1 ? (
+                  [...Array(page - 1)].map((_, i) => (
+                    <button type="button" key={_} onClick={() => setPagePagination(i + 1)} className="page">
+                      {i + 1}
+                    </button>
+                  ))
+                ) : (
+                  <>
+                    <button type="button" className="page" onClick={() => setPagePagination(1)}>
+                      1
+                    </button>
+                    <button type="button" className="page" onClick={() => setPagePagination(page - 3)}>
+                      ...
+                    </button>
+                    {/* <button type="button" className="page" onClick={() => setPagePagination(page - 2)}>
                         {page - 2}
                       </button> */}
-                      <button type="button" className="page" onClick={() => setPagePagination(page - 1)}>
-                        {page - 1}
-                      </button>
-                    </>
-                  )}
-                  <button type="button" className="page current">
-                    {page}
-                  </button>
-                  {page + 2 >= maxPage - 1 ? (
-                    [...Array(maxPage - page)].map((_, i) => (
-                      <button type="button" key={_} className="page" onClick={() => setPagePagination(page + i + 1)}>
-                        {page + i + 1}
-                      </button>
-                    ))
-                  ) : (
-                    <>
-                      <button type="button" className="page" onClick={() => setPagePagination(page + 1)}>
-                        {page + 1}
-                      </button>
-                      {/* <button type="button" className="page" onClick={() => setPagePagination(page + 2)}>
+                    <button type="button" className="page" onClick={() => setPagePagination(page - 1)}>
+                      {page - 1}
+                    </button>
+                  </>
+                )}
+                <button type="button" className="page current">
+                  {page}
+                </button>
+                {page + 2 >= maxPage - 1 ? (
+                  [...Array(maxPage - page)].map((_, i) => (
+                    <button type="button" key={_} className="page" onClick={() => setPagePagination(page + i + 1)}>
+                      {page + i + 1}
+                    </button>
+                  ))
+                ) : (
+                  <>
+                    <button type="button" className="page" onClick={() => setPagePagination(page + 1)}>
+                      {page + 1}
+                    </button>
+                    {/* <button type="button" className="page" onClick={() => setPagePagination(page + 2)}>
                         {page + 2}
                       </button> */}
-                      <button type="button" className="page" onClick={() => setPagePagination(page + 3)}>
-                        ...
-                      </button>
-                      <button type="button" className="page" onClick={() => setPagePagination(maxPage)}>
-                        {maxPage}
-                      </button>
-                    </>
-                  )}
-                </>
-              )}
-            </Flex>
+                    <button type="button" className="page" onClick={() => setPagePagination(page + 3)}>
+                      ...
+                    </button>
+                    <button type="button" className="page" onClick={() => setPagePagination(maxPage)}>
+                      {maxPage}
+                    </button>
+                  </>
+                )}
+              </>
+            )}
+          </Flex>
 
-            <Arrow
-              onClick={() => {
-                setPagePagination(page === maxPage ? page : page + 1)
-              }}
-            >
-              <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke="#FB8618"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </Arrow>
-          </div>
-          <div className="footer_page">
-            <Select
-              options={[
-                {
-                  value: 5,
-                  label: '5/Page',
-                },
-                {
-                  value: 10,
-                  label: '10/Page',
-                },
-                {
-                  value: 20,
-                  label: '20/Page',
-                },
-                {
-                  value: 50,
-                  label: '50/Page',
-                },
-                {
-                  value: 100,
-                  label: '100/Page',
-                },
-              ]}
-              onOptionChange={(option: any) => setPerPage(option.value)}
-              className="select-page"
-            />
-            <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
-              Go to page
-            </Text>
-            <Input
-              className="footer_input"
-              value={tempPage}
-              onChange={handleChangeTempPage}
-              onKeyUp={(e) => {
-                if (e.key === 'Enter') {
-                  const p = parseInt(tempPage) || 1
-                  if (p >= maxPage) {
-                    setPagePagination(maxPage)
-                    setTempPage(maxPage.toString())
-                  } else {
-                    setPagePagination(p)
-                  }
+          <Arrow
+            onClick={() => {
+              setPagePagination(page === maxPage ? page : page + 1)
+            }}
+          >
+            <svg width="7" height="11" viewBox="0 0 7 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path
+                d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
+                stroke="#FB8618"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
+            </svg>
+          </Arrow>
+        </div>
+        <div className="footer_page">
+          <Select
+            options={[
+              {
+                value: 5,
+                label: '5/Page',
+              },
+              {
+                value: 10,
+                label: '10/Page',
+              },
+              {
+                value: 20,
+                label: '20/Page',
+              },
+              {
+                value: 50,
+                label: '50/Page',
+              },
+              {
+                value: 100,
+                label: '100/Page',
+              },
+            ]}
+            onOptionChange={(option: any) => setPerPage(option.value)}
+            className="select-page"
+          />
+          <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
+            Go to page
+          </Text>
+          <Input
+            className="footer_input"
+            value={tempPage}
+            onChange={handleChangeTempPage}
+            onKeyUp={(e) => {
+              if (e.key === 'Enter') {
+                const p = parseInt(tempPage) || 1
+                if (p >= maxPage) {
+                  setPagePagination(maxPage)
+                  setTempPage(maxPage.toString())
+                } else {
+                  setPagePagination(p)
                 }
-              }}
-            />
-          </div>
-        </PageButtons>
-      )}
+              }
+            }}
+          />
+        </div>
+      </PageButtons>
+      {/* )} */}
     </Wrapper>
   )
 }

@@ -178,7 +178,7 @@ const StyledTable = styled.div`
     display: none;
   }
   .table {
-    min-width: 800px;
+    min-width: 700px;
     width: 100%;
     .table-head {
       display: flex;
@@ -187,12 +187,13 @@ const StyledTable = styled.div`
       margin-bottom: 8px;
       padding-bottom: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-right: 8px;
+
       /* p:first-child {
         width: 40%;
       } */
       p:last-child {
         text-align: end;
-        padding-right: 8px;
       }
       p {
         /* width: 25%; */
@@ -400,16 +401,16 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
         <StyledTable>
           <div className="table">
             <div className="table-head">
-              <p style={{ width: '7%' }}>No</p>
+              <p style={{ width: '5%' }}>No</p>
               <p style={{ width: '30%' }}>Username</p>
               <p style={{ width: '25%' }}>Time</p>
-              <p style={{ width: '15%' }}>Point Level</p>
+              <p style={{ width: '20%' }}>Point Level</p>
               <p style={{ width: '20%' }}>Claimed Amount</p>
             </div>
             <div className="table-row">
               {[...userClaimHistories].map((row, index) => (
                 <div className="row" key={`${row.name}_${index}`}>
-                  <div className="row-item" style={{ width: '7%' }}>
+                  <div className="row-item" style={{ width: '5%' }}>
                     <p className="point">{index + 1}</p>
                   </div>
                   <div className="row-item" style={{ width: '30%' }}>
@@ -430,7 +431,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                     <p className="code">{row.time}</p>
                   </div>
 
-                  <div className="row-item" style={{ width: '15%' }}>
+                  <div className="row-item" style={{ width: '20%' }}>
                     <p className="point">{row.point} points</p>
                   </div>
                   <div className="row-item" style={{ width: '20%' }}>
