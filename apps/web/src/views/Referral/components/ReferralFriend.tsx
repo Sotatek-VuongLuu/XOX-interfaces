@@ -545,12 +545,13 @@ const StyledTable = styled.div`
       padding: 16px 0 8px;
       margin-bottom: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-right: 8px;
+
       p:first-child {
         width: 40%;
       }
       p:last-child {
         text-align: end;
-        padding-right: 8px;
       }
       p {
         width: 25%;
