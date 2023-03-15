@@ -149,7 +149,7 @@ export default function CurrencyList({
   const Row = useCallback(
     ({ data, index, style }) => {
       const currency: Currency = data[index]
-      if(currency.symbol === 'USDT') console.log(selectedCurrency, currency, selectedCurrency.equals(currency))
+      // if(currency.symbol === 'USDT') console.log(selectedCurrency, currency, selectedCurrency.equals(currency))
       const isSelected = Boolean(selectedCurrency && currency && selectedCurrency.equals(currency))
       const otherSelected = Boolean(otherCurrency && currency && otherCurrency.equals(currency))
       const handleSelect = () => onCurrencySelect(currency)

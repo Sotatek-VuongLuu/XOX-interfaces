@@ -100,7 +100,11 @@ export const formatAmountNumber = (number: number, decimals = 2) => {
 }
 
 export const roundingAmountNumber = (number: number, decimals = 2) => {
-  return parseInt((parseFloat(number.toFixed(8)) * 10 ** decimals).toString()) / 10 ** decimals
+  try {
+    return parseInt((parseFloat(number.toFixed(8)) * 10 ** decimals).toString()) / 10 ** decimals
+  } catch (error) {
+    return parseInt((parseFloat(number.toFixed()) * 10 ** decimals).toString()) / 10 ** decimals
+  }
 }
 
 export const formatAmountString = (number: any, decimals = 2) => {

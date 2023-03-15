@@ -178,7 +178,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
                 <LinkExternal
                   href={getBlockExploreLink(token.address, 'address', token.chainId)}
                   external
-                  style={{ textDecoration: 'none' }}
+                  color='#FB8618'
                 >
                   <Text
                     fontSize={['14px', , '16px']}

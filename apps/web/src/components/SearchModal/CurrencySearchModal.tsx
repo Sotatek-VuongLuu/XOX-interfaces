@@ -89,7 +89,7 @@ const StyledModalHeader = styled(ModalHeader)`
 
 const StyledModalBody = styled(ModalBody)`
   padding: 16px 27px 32px 27px;
-  height: 428px;
+  height: 438px;
 
   ${({ theme }) => theme.mediaQueries.md} {
     height: unset;

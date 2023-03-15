@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import { useHttpLocations } from '@pancakeswap/hooks'
 import getTokenLogoURL from '../../utils/getTokenLogoURL'
 import Logo from './Logo'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 
 const StyledLogo = styled(Logo)<{ size: string }>`
   width: ${({ size }) => size};
@@ -23,12 +24,13 @@ export default function CurrencyLogo({
   style?: React.CSSProperties
 }) {
   const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
+  const { chainId } = useActiveChainId()
 
   const srcs: string[] = useMemo(() => {
     if (currency?.isNative) return []
 
     if (currency?.isToken) {
-      const tokenLogoURL = getTokenLogoURL(currency)
+      const tokenLogoURL = getTokenLogoURL(currency, chainId)
       if (currency instanceof WrappedTokenInfo) {
         if (!tokenLogoURL) return [...uriLocations]
         return [tokenLogoURL, ...uriLocations]

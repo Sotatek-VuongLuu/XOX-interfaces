@@ -65,7 +65,6 @@ const fetchDataChartXOX = async (chainId: number, filter: any): Promise<any> => 
       ['1D'].includes(filter) ? query_hour() : query_day(filter),
     )
 
-    console.log((dataChart?.pairHourDatas || dataChart.pairDayDatas || []).map(mapDataChartXOX), dataChart?.pairHourDatas, dataChart.pairDayDatas, 'pairDayDatas')
     return (dataChart?.pairHourDatas || dataChart.pairDayDatas || []).map(mapDataChartXOX)
   } catch (e) {
     return []
