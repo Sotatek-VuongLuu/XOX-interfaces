@@ -251,9 +251,11 @@ function SaleMechanism({
       <div className="edge2" />
       <Content>
         <div className="tab-mechanism">
-          {Array.from(tabSaleMechanism).map((item) => {
+          {Array.from(tabSaleMechanism).map((item, index) => {
             return (
               <div
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
                 className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
                 onClick={() => setTabActiveMechansim(item)}
                 aria-hidden="true"

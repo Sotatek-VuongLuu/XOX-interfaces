@@ -34,7 +34,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-id`}
       >
         {index + 1 + (page - 1) * perPage}
       </Text>
@@ -46,7 +45,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-stable-coin`}
       >
         {moment.unix(transaction?.timestamp).format('DD MM YYYY, HH:MM:ss')}
       </Text>
@@ -57,7 +55,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-stable-coin`}
       >
         {new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toString()}
       </Text>
@@ -68,7 +65,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-stable-coin`}
       >
         {new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)}
       </Text>
@@ -79,7 +75,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-stable-coin`}
       >
         {new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toString()}
       </Text>
@@ -90,7 +85,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-stable-coin`}
       >
         {truncateHash(transaction.id, 5, 6)}
       </Text>

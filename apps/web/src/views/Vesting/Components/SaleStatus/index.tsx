@@ -1,6 +1,8 @@
 import { Box, Grid } from '@pancakeswap/uikit'
-import React from 'react'
+import BigNumber from 'bignumber.js'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { RoundInfo } from 'views/Vesting'
 
 interface IPropsWrapperItem {
   status?: boolean
@@ -298,7 +300,11 @@ const Item = ({ item, isInTimeRangeSale }) => {
         </div>
         <div>
           <p className="status_name">Current raise</p>
-          <p className="status_value">{item.currentRaise}</p>
+          <p className="status_value">
+            {item?.total_raised_usd
+              ? new BigNumber(item?.total_raised_usd).div(10 ** 6).toString()
+              : item?.currentRaise}
+          </p>
         </div>
         <div>
           <p className="status_name">Price</p>
@@ -310,11 +316,15 @@ const Item = ({ item, isInTimeRangeSale }) => {
         </div>
         <div>
           <p className="status_name">Investors</p>
-          <p className="status_value">{item.investors}</p>
+          <p className="status_value">{item?.total_investor ? item?.total_investor : item.investors}</p>
         </div>
         <div>
           <p className="status_name">XOXS Rewarded</p>
-          <p className="status_value">{item.xOXSRewarded}</p>
+          <p className="status_value">
+            {item?.xox_amount_bought
+              ? new BigNumber(new BigNumber(item?.xox_amount_bought).div(10 ** 18).toString()).toFixed(2)
+              : item.xOXSRewarded}
+          </p>
         </div>
       </Grid>
       <div className="sold">30% SOLD</div>
@@ -324,43 +334,75 @@ const Item = ({ item, isInTimeRangeSale }) => {
 
 interface IProps {
   isInTimeRangeSale?: boolean
+  dataStatus: any[]
+  infoRoundOne: RoundInfo
+  infoRoundTow: RoundInfo
+  infoRoundThree: RoundInfo
 }
 
-function SaleStatus({ isInTimeRangeSale }: IProps) {
+function SaleStatus({ isInTimeRangeSale, dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: IProps) {
+  const [dataFormat, setDataFormat] = useState<any[]>([])
+
   const arrStatus = [
     {
       name: 'Sale 1',
-      status: StatusSale.END,
-      currentRaise: '10.000',
-      price: '1 XOX',
+      // status: infoRoundOne.startDate ?  : ,
+      currentRaise: '-',
+      price: '$0.044',
       xOXforSale: '2,700,000',
-      investors: '50',
-      xOXSRewarded: '7.3247',
+      investors: '-',
+      xOXSRewarded: '-',
     },
     {
       name: 'Sale 2',
-      status: StatusSale.INCOMING,
+      status: null,
       currentRaise: '-',
-      price: '1 XOX',
+      price: '$0.045',
       xOXforSale: '3,600.000',
       investors: '-',
       xOXSRewarded: '-',
     },
     {
       name: 'Sale 3',
-      status: StatusSale.INCOMING,
+      status: null,
       currentRaise: '-',
-      price: '1 XOX',
+      price: '$0.046',
       xOXforSale: '4,500,000',
       investors: '-',
       xOXSRewarded: '-',
     },
   ]
 
+  const handleFormatData = (roundArr: any[]) => {
+    const newDataFormat = []
+    let temp: any
+    if (roundArr.length === 0) {
+      setDataFormat(arrStatus)
+    }
+    for (let i = 0; i < 3; i++) {
+      if (roundArr[i]) {
+        temp = { ...roundArr[i], ...arrStatus[i] }
+        newDataFormat.push(temp)
+      } else {
+        temp = arrStatus[i]
+        newDataFormat.push(temp)
+      }
+    }
+    if (newDataFormat) {
+      setDataFormat(newDataFormat)
+    }
+  }
+
+  useEffect(() => {
+    handleFormatData(dataStatus)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataStatus])
+
   return (
     <CustomGrid>
-      {arrStatus.map((item) => {
-        return <Item item={item} isInTimeRangeSale={isInTimeRangeSale} />
+      {dataFormat.map((item, index) => {
+        // eslint-disable-next-line react/no-array-index-key
+        return <Item key={index} item={item} isInTimeRangeSale={isInTimeRangeSale} />
       })}
     </CustomGrid>
   )

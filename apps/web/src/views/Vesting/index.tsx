@@ -21,7 +21,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
 import { Content } from 'views/Pools/components/style'
 import { GridLoader } from 'react-spinners'
-import { getDataTransaction, getUserPreSaleInfo } from 'services/presale'
+import { getDataRoundStats, getDataTransaction, getUserPreSaleInfo } from 'services/presale'
 import BackedBy from './Components/BackedBy'
 import ChartSalePage from './Components/Chart'
 import CountDownBlock from './Components/CountDownBlock'
@@ -411,6 +411,7 @@ function VestingPage() {
   const [arrSaleStats, setArrSaleStats] = useState<Start[]>(initStat)
   const [isInTimeRangeSale, setIsInTimeRangeSale] = useState<boolean>(false)
   const resSaleStats = useGetSaleStats()
+  const [dataStatus, setDataStatus] = useState<any>([])
 
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     const dataUpdate = Array.from(arr).map((item: Start) => {
@@ -427,10 +428,6 @@ function VestingPage() {
     if (!resSaleStats) return
     handleUpdateDataSale(initStat, resSaleStats?.dataSaleStats[0])
   }, [resSaleStats])
-
-  const { getCount } = useSelectors(counterReducer, (state) => ({
-    getCount: () => state,
-  }))
 
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
   const [amountXOX, setAmountXOX] = useState<string | number>('-')
@@ -696,6 +693,13 @@ function VestingPage() {
     }
   }
 
+  const handleGetRoundStatus = async () => {
+    const data = await getDataRoundStats()
+    if (data && data.roundStats) {
+      setDataStatus(data.roundStats)
+    }
+  }
+
   const handleGetDataTransaction = async () => {
     const result = await getDataTransaction()
     if (result && result?.transactionPreSales) {
@@ -706,6 +710,7 @@ function VestingPage() {
   useEffect(() => {
     if (!account || !chainId) return
     handleGetDataTransaction()
+    handleGetRoundStatus()
   }, [account, chainId])
 
   useEffect(() => {
@@ -781,7 +786,13 @@ function VestingPage() {
           />
           <SaleStats dataStat={arrSaleStats} />
           <ChartSalePage />
-          <SaleStatus isInTimeRangeSale={isInTimeRangeSale} />
+          <SaleStatus
+            isInTimeRangeSale={isInTimeRangeSale}
+            dataStatus={dataStatus}
+            infoRoundOne={infoRoundOne}
+            infoRoundTow={infoRoundTow}
+            infoRoundThree={infoRoundThree}
+          />
           <SaleMechanism
             tabSaleMechanism={tabSaleMechanism}
             tabActiveMechansim={tabActiveMechansim}

@@ -150,8 +150,9 @@ function BackedBy() {
   return (
     <Wrapper>
       <Content>
-        {arrBackedBy.map((item) => {
-          return <SecuredByItem item={item} />
+        {arrBackedBy.map((item, index) => {
+          // eslint-disable-next-line react/no-array-index-key
+          return <SecuredByItem item={item} key={index} />
         })}
       </Content>
     </Wrapper>

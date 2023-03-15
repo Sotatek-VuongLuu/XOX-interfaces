@@ -60,3 +60,21 @@ export const getDataTransaction = async (chainId = ChainId.GOERLI) => {
   )
   return response
 }
+
+export const getDataRoundStats = async (chainId = ChainId.GOERLI) => {
+  const response = await request(
+    'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.7',
+    gql`
+      query getDataRoundStatsStatus {
+        roundStats {
+          id
+          total_raised_usd
+          xox_amount_bought
+          xoxs_amount_reward
+          total_investor
+        }
+      }
+    `,
+  )
+  return response
+}

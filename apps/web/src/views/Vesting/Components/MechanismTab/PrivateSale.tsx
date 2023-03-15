@@ -195,9 +195,10 @@ function PrivateSale() {
             <Text className="table-header">Launch price 0.06$ ($)</Text>
           </CustomTable>
 
-          {Array.from(arrToken).map((item) => {
+          {Array.from(arrToken).map((item, index) => {
             return (
-              <CustomTableRow>
+              // eslint-disable-next-line react/no-array-index-key
+              <CustomTableRow key={index}>
                 <Text className="value">{item.title}</Text>
                 <Text className="value">{item.total}</Text>
                 <Text className="value">{item.amountToken}</Text>

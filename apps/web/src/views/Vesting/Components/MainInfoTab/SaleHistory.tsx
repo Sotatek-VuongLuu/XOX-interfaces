@@ -243,7 +243,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-id`}
       >
         {index + 1 + (page - 1) * perPage}
       </Text>
@@ -254,7 +253,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-token1`}
       >
         {truncateHash(transaction.sender, 4, 5)}
       </Text>
@@ -265,7 +263,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-stable-coin`}
       >
         {moment.unix(transaction?.timestamp).format('DD MM YYYY, HH:MM:ss')}
       </Text>
@@ -276,7 +273,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-stable-coin`}
       >
         {new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toString()}
       </Text>
@@ -287,7 +283,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-stable-coin`}
       >
         {new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)}
       </Text>
@@ -298,7 +293,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-stable-coin`}
       >
         {new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toString()}
       </Text>
@@ -309,7 +303,6 @@ const DataRow: React.FC<
         fontWeight="400"
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
-        key={`${transaction.hash}-stable-coin`}
       >
         {truncateHash(transaction.id, 5, 6)}
       </Text>
@@ -504,7 +497,8 @@ function SaleHistory({ dataTransaction }: IProps) {
                 [...Array(maxPage)].map((_, i) => (
                   <button
                     type="button"
-                    key={_}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={i}
                     onClick={() => setPagePagination(i + 1)}
                     className={`page ${page === i + 1 ? 'current' : ''}`}
                   >
