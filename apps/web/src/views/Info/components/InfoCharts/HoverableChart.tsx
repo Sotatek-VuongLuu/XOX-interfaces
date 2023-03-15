@@ -57,7 +57,7 @@ const HoverableChart = ({
   const contractUSD = useERC20(USD_ADDRESS[chainId])
   const contractXOX = useERC20(XOX_ADDRESS[chainId])
   const [rateXOX, setRateXOX] = useState(0)
-  const [priceChangeXOX, setPriceChangeXOX] = useState('0')
+  const [priceChangeXOX, setPriceChangeXOX] = useState(0)
 
   // Getting latest data to display on top of chart when not hovered
   useEffect(() => {
