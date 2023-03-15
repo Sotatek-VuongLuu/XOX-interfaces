@@ -301,7 +301,7 @@ const Menu = (props) => {
                   <svg xmlns="http://www.w3.org/2000/svg" width="19" viewBox="0 0 14 15" fill="none">
                     <path
                       d="M7.0977 8.8998L2.1977 13.7998C2.01437 13.9831 1.78104 14.0748 1.4977 14.0748C1.21437 14.0748 0.981038 13.9831 0.797705 13.7998C0.614371 13.6165 0.522705 13.3831 0.522705 13.0998C0.522705 12.8165 0.614371 12.5831 0.797705 12.3998L5.69771 7.4998L0.797705 2.5998C0.614371 2.41647 0.522705 2.18314 0.522705 1.8998C0.522705 1.61647 0.614371 1.38314 0.797705 1.1998C0.981038 1.01647 1.21437 0.924805 1.4977 0.924805C1.78104 0.924805 2.01437 1.01647 2.1977 1.1998L7.0977 6.0998L11.9977 1.1998C12.181 1.01647 12.4144 0.924805 12.6977 0.924805C12.981 0.924805 13.2144 1.01647 13.3977 1.1998C13.581 1.38314 13.6727 1.61647 13.6727 1.8998C13.6727 2.18314 13.581 2.41647 13.3977 2.5998L8.4977 7.4998L13.3977 12.3998C13.581 12.5831 13.6727 12.8165 13.6727 13.0998C13.6727 13.3831 13.581 13.6165 13.3977 13.7998C13.2144 13.9831 12.981 14.0748 12.6977 14.0748C12.4144 14.0748 12.181 13.9831 11.9977 13.7998L7.0977 8.8998Z"
-                      fill="#9072FF"
+                      fill="#FB8618"
                     />
                   </svg>
                 </HamburgerButton>
@@ -407,7 +407,7 @@ const Menu = (props) => {
         setLang={setLanguage}
         cakePriceUsd={cakePriceUsd}
         links={route.pathname === '/' ? menuItemsLanding : menuItems}
-        subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : activeMenuItem?.items}
+        subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : []}
         footerLinks={getFooterLinks}
         activeItem={route.pathname === '/' ? activeMenuItemLanding?.href : activeMenuItem?.href}
         activeSubItem={activeSubMenuItem?.href}

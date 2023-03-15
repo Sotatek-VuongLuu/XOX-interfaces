@@ -57,6 +57,7 @@ const HoverableChart = ({
   const contractUSD = useERC20(USD_ADDRESS[chainId])
   const contractXOX = useERC20(XOX_ADDRESS[chainId])
   const [rateXOX, setRateXOX] = useState(0)
+  const [priceChangeXOX, setPriceChangeXOX] = useState(0)
 
   // Getting latest data to display on top of chart when not hovered
   useEffect(() => {
@@ -81,20 +82,33 @@ const HoverableChart = ({
       (o) => o[valueProperty],
     ),
   )
-  const minYAxis = minValue - (maxValue - minValue) * 0.2 > 0 ? minValue - (maxValue - minValue) * 0.2 : 0.0001
-  const maxYAxis = maxValue + (maxValue - minValue) * 0.2
+
+  const subValue = maxValue - minValue === 0 ? 0.2 * maxValue : maxValue - minValue
+
+  const minYAxis = minValue - subValue * 0.2 > 0 ? minValue - subValue * 0.2 : 0.0000000001
+  const maxYAxis = maxValue + subValue * 0.2
 
   const formattedData = useMemo(() => {
     let data = chartData
-    if (selectedCurrency.symbol.toUpperCase() === 'XOX') data = dataChartXOX
+    if (selectedCurrency.symbol.toUpperCase() === 'XOX') {
+      data = dataChartXOX
+      if (filter === '1D') {
+        const oldValue = data[0]
+        const currentValue = data[data.length - 1]
+        setPriceChangeXOX(formatAmountNumber(Math.round(currentValue.priceUSD / oldValue.priceUSD)))
+      }
+    }
     if (data) {
       let prev = data[0]?.priceUSD
-      return data.map((day) => {
+      return data.map((day, index) => {
         const result = {
           time: fromUnixTime(day.date),
-          value: day[valueProperty],
-          vol: day.VolUSD,
-          priceChange: day.priceChange || ((day?.priceUSD - prev) / prev).toFixed(2),
+          value: minValue === maxValue && index === 0 ? day[valueProperty] - 0.000001 : day[valueProperty],
+          vol:
+            index === data.length - 1 && selectedCurrency.symbol.toUpperCase() === 'XOX'
+              ? data[data.length - 2].VolUSD
+              : day.VolUSD,
+          priceChange: formatAmountNumber(day.priceChange || (day?.priceUSD - prev) / prev),
           month: fromUnixTime(day.date).getMonth(),
         }
         prev = day.priceUSD
@@ -102,7 +116,15 @@ const HoverableChart = ({
       })
     }
     return []
-  }, [chartData, valueProperty, dataChartXOX, selectedCurrency])
+  }, [chartData, valueProperty, dataChartXOX, selectedCurrency, filter])
+
+  const priceChange = useMemo(() => {
+    if (selectedCurrency.symbol.toUpperCase() === 'XOX') {
+      return priceChangeXOX
+    } else {
+      return currencyData?.percent_change_24h?.toFixed(2)
+    }
+  }, [currencyData, priceChangeXOX, selectedCurrency])
 
   const [onPresentCurrencyModal] = useModal(
     <CurrencySearchModal onCurrencySelect={setSelectedCurrency} selectedCurrency={selectedCurrency} />,
@@ -220,7 +242,7 @@ const HoverableChart = ({
               </div>
               <div className="group">
                 Price change (in last 24h)
-                {currencyData?.percent_change_24h?.toFixed(2) > 0 ? (
+                {priceChange && priceChange > 0 ? (
                   <div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
                       <path
@@ -230,11 +252,9 @@ const HoverableChart = ({
                         fill="#64C66D"
                       />
                     </svg>
-                    <span className="val">
-                      {currencyData ? `${currencyData.percent_change_24h?.toFixed(2)}%` : '--'}
-                    </span>
+                    <span className="val">{priceChange ? priceChange : '--'}</span>
                   </div>
-                ) : currencyData?.percent_change_24h?.toFixed(2) < 0 ? (
+                ) : priceChange && priceChange < 0 ? (
                   <div>
                     <svg
                       xmlns="http://www.w3.org/2000/svg"
@@ -251,13 +271,11 @@ const HoverableChart = ({
                         fill="#FF0000"
                       />
                     </svg>
-                    <span className="val">
-                      {currencyData ? `${Math.abs(currencyData.percent_change_24h?.toFixed(2))}%` : '--'}
-                    </span>
+                    <span className="val">{priceChange ? `${Math.abs(priceChange)}%` : '--'}</span>
                   </div>
                 ) : (
                   <div>
-                    <span className="val">{currencyData ? '0.00%' : '--'}</span>
+                    <span className="val">{priceChange ? '0%' : '--'}</span>
                   </div>
                 )}
               </div>

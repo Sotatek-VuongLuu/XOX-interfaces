@@ -45,6 +45,12 @@ const WrapperBorder = styled.div`
   align-items: center;
   display: flex;
   flex-wrap: wrap;
+
+  .history-table,
+  .transaction-table {
+    min-height: 260px !important;
+  }
+
   @media (min-width: 577px) {
     &.flex-50 {
       flex: 0 0 calc(50% - 15px);
@@ -56,6 +62,12 @@ const WrapperBorder = styled.div`
   }
   @media (max-width: 576px) {
     width: 100%;
+    .history-table {
+      min-height: 290px !important;
+    }
+    .transaction-table {
+      min-height: 240px !important;
+    }
   }
 `
 
@@ -443,7 +455,6 @@ export default function StableCoin() {
         <ContainerBanner>
           <div className="banner">
             <InfoNav
-              allTokens={allTokens}
               textContentBanner="Earn USDT/USDC from your XOXS Indefinitely"
               hasPadding={false}
             />

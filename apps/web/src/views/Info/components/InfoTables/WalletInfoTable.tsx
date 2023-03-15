@@ -278,7 +278,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       if (!currencyData) return 0
       return currencyData.price
     },
-    [currencyDatas],
+    [currencyDatas, chainId],
   )
 
   const tokenRateXOX = useCallback(
@@ -296,7 +296,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       if (!currencyData) return 0
       return currencyData.price / rateXOX
     },
-    [currencyDatas, rateXOX],
+    [currencyDatas, rateXOX, chainId],
   )
 
   const getXOXPrice = () => {
@@ -312,7 +312,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
 
   const getToken = useCallback((token: any) => {
     return new ERC20Token(chainId, token.contractAddress, token.decimals, token.symbol)
-  }, [])
+  }, [chainId])
 
   useEffect(() => {
     getXOXPrice()

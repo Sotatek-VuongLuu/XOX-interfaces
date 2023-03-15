@@ -236,8 +236,15 @@ export default function CurrencyInputPanel({
       forliquidity={forLiquidity}
     />,
   )
-  const isShowPercent = account && currency && selectedCurrencyBalance?.greaterThan(0) && !disabled && label !== 'To'
+  const isShowPercent =
+    account &&
+    currency &&
+    selectedCurrencyBalance?.greaterThan(0) &&
+    !disabled &&
+    label !== 'To' &&
+    label !== 'To (estimated)'
   const isShowDolar = !!currency && showBUSD && Number.isFinite(amountInDollar)
+
   const checkHeightInput = () => {
     let height
     if (isMobile) {
@@ -245,6 +252,8 @@ export default function CurrencyInputPanel({
         height = '112px'
         if (isShowPercent) {
           height = '122px'
+        } else {
+          height = '90px'
         }
       } else {
         height = '52px'

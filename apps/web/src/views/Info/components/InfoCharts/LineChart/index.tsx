@@ -164,6 +164,25 @@ const intToString = (num: any) => {
   return (num / si[index].v).toFixed(1).replace(/\.0+$|(\.[0-9]*[1-9])0+$/, '$1') + si[index].s
 }
 
+const displayNumber = (number: string) => {
+  const arr = number.split('.')
+  if (arr[0] === '0') {
+    let afterDot = ''
+    for (var i = 0; i < arr[1].length && i < 6; i++) {
+      if (arr[1].charAt(i) === '0') {
+        afterDot += arr[1].charAt(i)
+      } else {
+        afterDot += arr[1].charAt(i)
+        if (i + 1 < arr[1].length && i + 1 < 6) afterDot += arr[1].charAt(i + 1)
+        if (i + 2 < arr[1].length && i + 2 < 6) afterDot += arr[1].charAt(i + 2)
+        break
+      }
+    }
+    return `${arr[0]}.${afterDot}`
+  }
+  return intToString(formatAmountNumber(parseFloat(number), 2))
+}
+
 const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
@@ -171,7 +190,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
         <div className="content">
           <div className="price">
             <p className="dola">$</p>
-            <p className="value">{intToString(formatAmountNumber(payload[0].payload.value, 4))}</p>
+            <p className="value">{displayNumber(payload[0].payload.value.toString())}</p>
             <p
               className={`change ${
                 payload[0].payload.priceChange > 0 ? 'positive' : payload[0].payload.priceChange < 0 ? 'negative' : ''
@@ -355,12 +374,6 @@ const LineChart = ({
         <CartesianGrid vertical={false} stroke="rgba(255, 255, 255, 0.1)" strokeDasharray="3 3" />
         {/* <CartesianGrid strokeDasharray="4 1 2" /> */}
         <defs>
-          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor="#00FF00" stopOpacity={1} />
-            <stop offset="45%" stopColor="#FF000000" stopOpacity={0.5} />
-            <stop offset="55%" stopColor="#FF000000" stopOpacity={0.5} />
-            <stop offset="100%" stopColor="#FF0000" stopOpacity={0.5} />
-          </linearGradient>
           <linearGradient id="color" x1="0" y1="0" x2="1" y2="0">
             <stop offset="0%" stopColor="#9BF3CB" />
             <stop offset="30%" stopColor="#3EC0A6" />

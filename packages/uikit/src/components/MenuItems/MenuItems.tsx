@@ -11,6 +11,7 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
   items = [],
   activeItem,
   activeSubItem,
+  isLanding = false,
   ...props
 }) => {
   const [isHover, setIsHover] = useState(false);
@@ -27,8 +28,10 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
       {items.map(({ label, items: menuItems = [], href, icon, disabled }) => {
         const statusColor = menuItems?.find((menuItem) => menuItem.status !== undefined)?.status?.color;
         const isActive = activeItem === href;
+
         const linkProps = isTouchDevice() && menuItems && menuItems.length > 0 ? {} : { href };
         const Icon = icon;
+
         return (
           <DropdownMenu
             key={`${label}#${href}`}
@@ -38,6 +41,7 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
             isDisabled={disabled}
             handleMouseEnter={handleMouseEnter}
             handleMouseLeave={handleMouseLeave}
+            isLanding={isLanding}
           >
             <MenuItem
               {...linkProps}

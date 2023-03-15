@@ -4,19 +4,26 @@ import { SvgProps } from '@pancakeswap/uikit/src/components/Svg/types'
 
 const GoerliIcon: React.FC<React.PropsWithChildren<SvgProps>> = () => {
   return (
-    <svg width="23" height="36" viewBox="0 0 23 36" fill="none" xmlns="http://www.w3.org/2000/svg" className="icon">
-      <path
-        d="M11.0496 -0.00488281L10.8096 0.815345V24.622L11.0496 24.862L22.0996 18.3302L11.0496 -0.00488281Z"
-        fill="white"
-      />
-      <path d="M11.05 -0.00488281L0 18.3302L11.05 24.862V-0.00488281Z" fill="white" />
-      <path
-        d="M11.0502 26.9525L10.9102 27.1225V35.6049L11.0502 36.005L22.1002 20.4307L11.0502 26.9625V26.9525Z"
-        fill="white"
-      />
-      <path d="M11.05 35.9952V26.9527L0 20.4209L11.05 35.9952Z" fill="white" />
-      <path d="M11.0498 24.8618L22.0998 18.33L11.0498 13.3086V24.8618Z" fill="white" />
-      <path d="M0 18.33L11.05 24.8618V13.3086L0 18.33Z" fill="white" />
+    <svg width="56" height="56" viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg" className="icon">
+      <g clip-path="url(#clip0_11684_65240)">
+        <path
+          d="M28.0765 -0.0078125L27.7031 1.2681V38.3006L28.0765 38.674L45.2653 28.5134L28.0765 -0.0078125Z"
+          fill="white"
+        />
+        <path d="M28.0776 -0.0078125L10.8887 28.5134L28.0776 38.674V-0.0078125Z" fill="white" />
+        <path
+          d="M28.0781 41.9263L27.8604 42.1908V55.3856L28.0781 56.008L45.267 31.7812L28.0781 41.9418V41.9263Z"
+          fill="white"
+        />
+        <path d="M28.0776 55.9924V41.9262L10.8887 31.7656L28.0776 55.9924Z" fill="white" />
+        <path d="M28.0771 38.6738L45.266 28.5132L28.0771 20.7021V38.6738Z" fill="white" />
+        <path d="M10.8887 28.5132L28.0776 38.6738V20.7021L10.8887 28.5132Z" fill="white" />
+      </g>
+      <defs>
+        <clipPath id="clip0_11684_65240">
+          <rect width="56" height="56" fill="white" />
+        </clipPath>
+      </defs>
     </svg>
   )
 }

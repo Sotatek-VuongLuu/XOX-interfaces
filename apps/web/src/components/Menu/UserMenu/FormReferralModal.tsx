@@ -311,7 +311,7 @@ const FormReferralModal = (_, ref) => {
     else if (telegram !== userProfile?.telegram) dataSubmit.telegram = telegram
     if (avatar) dataSubmit.avatar = avataURL
     if (Object.keys(dataSubmit).length > 0) {
-      console.log(typeof JSON.stringify(dataSubmit), signer, 'signer')
+      // console.log(typeof JSON.stringify(dataSubmit), signer, 'signer')
       signer
         ?.signMessage(JSON.stringify(dataSubmit).toString())
         ?.then((res) => {

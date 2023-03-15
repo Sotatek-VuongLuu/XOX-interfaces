@@ -2,6 +2,8 @@
 import React, { useContext, useEffect, useState, useCallback, createElement } from "react";
 import { usePopper } from "react-popper";
 import { Tooltip } from "@mui/material";
+import styled from "styled-components";
+
 import { useOnClickOutside } from "../../hooks";
 import { MenuContext } from "../../widgets/Menu/context";
 import { Box, Flex } from "../Box";
@@ -9,6 +11,16 @@ import { LogoutIcon } from "../Svg";
 import UpIcon from "../Svg/Icons/UpIcon";
 import { DropdownMenuDivider, DropdownMenuItem, StyledDropdownMenu, LinkStatus, BoxDropdown } from "./styles";
 import { DropdownMenuItemType, DropdownMenuProps } from "./types";
+
+const StyledBoxContainer = styled(Box)`
+  :hover .hover_active {
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+  }
+`;
 
 const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   children,
@@ -22,6 +34,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   handleMouseEnter,
   handleMouseLeave,
   setIsHover,
+  isLanding = false,
   ...props
 }) => {
   const { linkComponent } = useContext(MenuContext);
@@ -70,7 +83,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   );
 
   return (
-    <Box ref={setTargetRef} {...props}>
+    <StyledBoxContainer ref={setTargetRef} {...props} style={{ position: "relative" }}>
       <BoxDropdown
         onPointerDown={() => {
           setIsOpen((s) => !s);
@@ -87,8 +100,10 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
           {...attributes.popper}
           $isBottomNav={isBottomNav}
           $isOpen={isMenuShow}
+          $isLanding={isLanding}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
+          className="dropdown-menu"
         >
           {items
             .filter((item) => !item.isMobileOnly)
@@ -189,7 +204,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
             )}
         </StyledDropdownMenu>
       )}
-    </Box>
+    </StyledBoxContainer>
   );
 };
 

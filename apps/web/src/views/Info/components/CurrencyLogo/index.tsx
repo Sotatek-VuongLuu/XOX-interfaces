@@ -1,9 +1,10 @@
 import { Token } from '@pancakeswap/sdk'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { multiChainId } from 'state/info/constant'
 import styled from 'styled-components'
 import getTokenLogoURL from '../../../../utils/getTokenLogoURL'
 import LogoLoader from './LogoLoader'
+import axios from 'axios'
 
 const StyledLogo = styled(LogoLoader)<{ size: string }>`
   width: ${({ size }) => size};
@@ -21,9 +22,38 @@ export const CurrencyLogo: React.FC<
     chainName?: 'ETH' | 'BSC'
   }>
 > = ({ address, size = '24px', chainName = 'BSC', ...rest }) => {
+  const [coinmarketcapId, setCoinmarketcapId] = useState<string>('')
+
+  useEffect(() => {
+    if (!address || !chainName) return
+    let coinmarketcapIds = {}
+    const coinmarketcapIdsJSON = localStorage.getItem('coinmarketcapIds')
+    if (coinmarketcapIdsJSON) {
+      coinmarketcapIds = JSON.parse(coinmarketcapIdsJSON)
+      const id = coinmarketcapIds?.[chainName === 'ETH' ? 1 : 56]?.[address.toUpperCase()]
+      if (id) {
+        setCoinmarketcapId(id)
+        return
+      }
+    }
+
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/info`, {
+        params: { address: address },
+      })
+      .then((response) => {
+        const tokenInfos = response.data.data
+        const tokenInfo = Object.values(tokenInfos)[0] as any
+        coinmarketcapIds[chainName === 'ETH' ? 1 : 56][address.toUpperCase()] = tokenInfo.id
+        setCoinmarketcapId(tokenInfo.id)
+        localStorage.setItem('coinmarketcapIds', JSON.stringify(coinmarketcapIds))
+      })
+      .catch((e) => console.warn(e))
+  }, [chainName, address])
+
   const src = useMemo(() => {
-    return getTokenLogoURL(new Token(multiChainId[chainName], address, 18, ''))
-  }, [address, chainName])
+    return getTokenLogoURL(new Token(multiChainId[chainName], address, 18, ''), coinmarketcapId)
+  }, [address, chainName, coinmarketcapId])
 
   return <StyledLogo size={size} src={src} alt="token logo" {...rest} />
 }

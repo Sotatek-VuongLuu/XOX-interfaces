@@ -972,6 +972,8 @@ const StyledTable = styled.div`
       padding: 16px 0 8px;
       margin-bottom: 8px;
       border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+      padding-right: 8px;
+
       p:first-child {
         width: 40%;
       }
@@ -990,6 +992,7 @@ const StyledTable = styled.div`
       width: 100%;
       max-height: 128px;
       overflow: scroll;
+      padding-right: 8px;
       ::-webkit-scrollbar-corner {
         display: none;
       }

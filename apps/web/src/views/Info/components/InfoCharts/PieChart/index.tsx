@@ -8,7 +8,6 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import React from 'react'
 import { Cell, Pie, PieChart, Tooltip } from 'recharts'
 import styled from 'styled-components'
-import { formatAmount } from 'utils/formatInfoNumbers'
 
 // const RADIAN = Math.PI / 180
 
@@ -110,7 +109,11 @@ const CustomTooltip = ({ active, payload }: any) => {
       case 'XOX':
         return <CurrencyLogo currency={new Token(chainId, XOX_ADDRESS[chainId], 18, 'XOX')} />
       default:
-        return <CurrencyLogo currency={new Token(chainId, USD_ADDRESS[chainId], 18, 'USD')} />
+        return (
+          <CurrencyLogo
+            currency={new Token(chainId, USD_ADDRESS[chainId === 1 || chainId === 5 ? 1 : 56], 18, 'USD')}
+          />
+        )
     }
   }
 
@@ -177,8 +180,8 @@ export default function InfoPieChart({ data, colors, total }) {
           <svg height="160" width="160" className="circle">
             <circle cx="80" cy="80" r="75" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
           </svg>
-          {chainId === ChainId.BSC_TESTNET && <BNBIcon />}
-          {chainId === ChainId.GOERLI && <GoerliIcon />}
+          {(chainId === ChainId.BSC_TESTNET || chainId === ChainId.BSC) && <BNBIcon />}
+          {(chainId === ChainId.GOERLI || chainId === ChainId.ETHEREUM) && <GoerliIcon />}
         </>
       ) : (
         'No data'

@@ -97,6 +97,10 @@ const LiquidityBody = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: #ffffff;
+    @media (max-width: 576px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
   }
 
   .text-right {
@@ -104,6 +108,10 @@ const LiquidityBody = styled.div`
     font-size: 18px;
     line-height: 22px;
     color: rgba(255, 255, 255);
+    @media (max-width: 576px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
   }
 
   .text-share {

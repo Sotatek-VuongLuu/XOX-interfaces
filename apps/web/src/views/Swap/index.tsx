@@ -80,7 +80,7 @@ const WapperHeight = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 820px;
+  min-height: 950px;
 `
 
 const SwapBackgroundWrapper = styled.div`

@@ -9,7 +9,7 @@ const mapping = {
   [ChainId.BSC_TESTNET]: 'bsc_testnet',
 }
 
-const getTokenLogoURL = (token?: Token) => {
+const getTokenLogoURL = (token?: Token, coinmarketcapId?: string) => {
   if (token && token.symbol.toLocaleUpperCase() === 'XOX') {
     return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`
   }
@@ -25,6 +25,7 @@ const getTokenLogoURL = (token?: Token) => {
   if (token && token.chainId === 5 && token.symbol.toLocaleUpperCase() === 'TUSDC') {
     return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg`
   }
+  if (coinmarketcapId !== '') return `https://s2.coinmarketcap.com/static/img/coins/64x64/${coinmarketcapId}.png`
   if (token && token.address && mapping[token.chainId]) {
     return `https://assets-cdn.trustwallet.com/blockchains/${mapping[token.chainId]}/assets/${getAddress(
       token.address,

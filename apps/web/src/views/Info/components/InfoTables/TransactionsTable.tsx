@@ -768,8 +768,6 @@ const TransactionsTable: React.FC = () => {
       : []
   }, [transactions, page, sortField, sortDirection, sortStable, txFilter, perPage])
 
-  console.log(currentTransactions)
-
   return (
     <Wrapper>
       <div className="corner1"></div>
@@ -1166,6 +1164,7 @@ const TransactionsTable: React.FC = () => {
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}
+              style={{ boxShadow: 'none' }}
               onKeyUp={(e) => {
                 if (e.key === 'Enter') {
                   const p = parseInt(tempPage) || 1
