@@ -1,3 +1,4 @@
+import { formatEther } from '@ethersproject/units'
 import { Box, Grid } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
 import React, { useEffect, useState } from 'react'
@@ -6,6 +7,7 @@ import { RoundInfo } from 'views/Vesting'
 
 interface IPropsWrapperItem {
   status?: boolean
+  percent?: number
 }
 
 const WrapperItem = styled(Box)<IPropsWrapperItem>`
@@ -21,7 +23,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     width: 50%;
     height: 50px;
     border-radius: 20px;
-    z-index: 1;
+    z-index: 10;
     border-bottom: 1px solid #ffffff30;
     border-left: 1px solid #ffffff30;
     border-bottom-right-radius: unset;
@@ -34,7 +36,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     position: absolute;
     bottom: 50px;
     left: 0;
-    z-index: 1;
+    z-index: 10;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
@@ -45,7 +47,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     width: 50%;
     height: 50px;
     border-radius: 20px;
-    z-index: 1;
+    z-index: 10;
     border-bottom: 1px solid #ffffff30;
     border-right: 1px solid #ffffff30;
     border-bottom-left-radius: unset;
@@ -58,20 +60,63 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     position: absolute;
     bottom: 50px;
     right: 0;
-    z-index: 1;
+    z-index: 10;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
   .sold {
+    position: relative;
+    overflow: hidden;
     text-align: center;
     padding-top: 17px;
     padding-bottom: 18px;
     font-weight: 700;
     font-size: 16px;
+    height: 54px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
-    border-top: 1px solid #ffffff30;
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     border-radius: 0px 0px 20px 20px;
+
+    &::before {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 1px;
+      top: 0;
+      left: 0;
+      z-index: 11;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .value {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 9;
+      background: transparent;
+      border-radius: 0px 0px 20px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .background {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      background: ${({ percent }) =>
+        percent !== 0
+          ? `linear-gradient(to right, transparent ${0}% ${percent}%, black ${percent + 4}%  ${104}%)`
+          : 'black'};
+      backdrop-filter: blur(10px);
+      border-radius: ${({ percent }) => (percent >= 100 ? '0px 0px 20px 20px' : '0px 0px 20px 20px')};
+    }
   }
 
   .status_name {
@@ -233,6 +278,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     .sold {
       font-size: 14px;
       line-height: 17px;
+      height: 43px;
     }
   }
 `
@@ -253,10 +299,13 @@ enum StatusSale {
   INCOMING = 'Incoming',
 }
 
-const Item = ({ item, isInTimeRangeSale }) => {
+const Item = ({ item }) => {
+  const percent = new BigNumber(
+    new BigNumber(formatEther(item?.xox_amount_bought || '0')).multipliedBy(100).dividedBy(item.xOXforSale),
+  ).toFixed(4, 1)
   return (
-    <WrapperItem status={item.status === StatusSale.LIVE && isInTimeRangeSale}>
-      {item.status === StatusSale.LIVE && isInTimeRangeSale && (
+    <WrapperItem status={item.status === StatusSale.LIVE} percent={parseFloat(percent)}>
+      {item.status === StatusSale.LIVE && (
         <>
           <div className="corner_active_1" />
           <div className="edge_active_1" />
@@ -312,7 +361,7 @@ const Item = ({ item, isInTimeRangeSale }) => {
         </div>
         <div>
           <p className="status_name">XOX for Sale</p>
-          <p className="status_value">{item.xOXforSale}</p>
+          <p className="status_value">{item.xOXforSale.toLocaleString()}</p>
         </div>
         <div>
           <p className="status_name">Investors</p>
@@ -322,12 +371,20 @@ const Item = ({ item, isInTimeRangeSale }) => {
           <p className="status_name">XOXS Rewarded</p>
           <p className="status_value">
             {item?.xox_amount_bought
-              ? new BigNumber(new BigNumber(item?.xox_amount_bought).div(10 ** 18).toString()).toFixed(2)
+              ? new BigNumber(new BigNumber(item?.xoxs_amount_reward).div(10 ** 6).toString()).toFixed(2, 1)
               : item.xOXSRewarded}
           </p>
         </div>
       </Grid>
-      <div className="sold">30% SOLD</div>
+      <div className="sold">
+        <div className="background" />
+        <div className="value">
+          <span>
+            {`${parseFloat(percent)}% `}
+            SOLD
+          </span>
+        </div>
+      </div>
     </WrapperItem>
   )
 }
@@ -340,34 +397,49 @@ interface IProps {
   infoRoundThree: RoundInfo
 }
 
-function SaleStatus({ isInTimeRangeSale, dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: IProps) {
+const now = new Date()
+const timeStampOfNow = now.getTime()
+
+function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: IProps) {
   const [dataFormat, setDataFormat] = useState<any[]>([])
 
   const arrStatus = [
     {
       name: 'Sale 1',
-      // status: infoRoundOne.startDate ?  : ,
+      status: infoRoundOne.startDate
+        ? infoRoundOne.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundOne.endDate
+          ? StatusSale.LIVE
+          : StatusSale.END
+        : StatusSale.INCOMING,
       currentRaise: '-',
       price: '$0.044',
-      xOXforSale: '2,700,000',
+      xOXforSale: 2700000,
       investors: '-',
       xOXSRewarded: '-',
     },
     {
       name: 'Sale 2',
-      status: null,
+      status: infoRoundTow.startDate
+        ? infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundTow.endDate
+          ? StatusSale.LIVE
+          : StatusSale.END
+        : StatusSale.INCOMING,
       currentRaise: '-',
       price: '$0.045',
-      xOXforSale: '3,600.000',
+      xOXforSale: 3600000,
       investors: '-',
       xOXSRewarded: '-',
     },
     {
       name: 'Sale 3',
-      status: null,
+      status: infoRoundThree.startDate
+        ? infoRoundThree.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundThree.endDate
+          ? StatusSale.LIVE
+          : StatusSale.END
+        : StatusSale.INCOMING,
       currentRaise: '-',
       price: '$0.046',
-      xOXforSale: '4,500,000',
+      xOXforSale: 4500000,
       investors: '-',
       xOXSRewarded: '-',
     },
@@ -402,7 +474,7 @@ function SaleStatus({ isInTimeRangeSale, dataStatus, infoRoundOne, infoRoundTow,
     <CustomGrid>
       {dataFormat.map((item, index) => {
         // eslint-disable-next-line react/no-array-index-key
-        return <Item key={index} item={item} isInTimeRangeSale={isInTimeRangeSale} />
+        return <Item key={index} item={item} />
       })}
     </CustomGrid>
   )

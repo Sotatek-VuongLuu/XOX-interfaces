@@ -8,8 +8,8 @@ import BigNumber from 'bignumber.js'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useXOXPreSaleContract } from 'hooks/useContract'
-import keccak256 from 'keccak256'
-import MerkleTree from 'merkletreejs'
+// import keccak256 from 'keccak256'
+// import MerkleTree from 'merkletreejs'
 import moment from 'moment'
 import axios from 'axios'
 import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react'
@@ -483,9 +483,10 @@ function VestingPage() {
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
 
   const getHexProof = async (whitelist: string[], owner: string) => {
-    const arrHash = await whitelist.map((acc) => keccak256(acc))
-    const merkele = await new MerkleTree(arrHash, keccak256, { sortLeaves: true, sortPairs: true })
-    return merkele.getHexProof(keccak256(owner))
+    // const arrHash = await whitelist.map((acc) => keccak256(acc))
+    // const merkele = await new MerkleTree(arrHash, keccak256, { sortLeaves: true, sortPairs: true })
+    // return merkele.getHexProof(keccak256(owner))
+    return []
   }
 
   const handeInvest = async () => {
