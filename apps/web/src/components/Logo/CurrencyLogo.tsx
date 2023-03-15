@@ -1,12 +1,12 @@
-import { ChainId, Currency } from '@pancakeswap/sdk'
+import { ChainId, Currency, Token } from '@pancakeswap/sdk'
 import { BinanceIcon } from '@pancakeswap/uikit'
-import { useMemo } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 import styled from 'styled-components'
 import { useHttpLocations } from '@pancakeswap/hooks'
 import getTokenLogoURL from '../../utils/getTokenLogoURL'
 import Logo from './Logo'
-import { useActiveChainId } from 'hooks/useActiveChainId'
+import axios from 'axios'
 
 const StyledLogo = styled(Logo)<{ size: string }>`
   width: ${({ size }) => size};
@@ -24,13 +24,37 @@ export default function CurrencyLogo({
   style?: React.CSSProperties
 }) {
   const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
-  const { chainId } = useActiveChainId()
+  const [coinmarketcapId, setCoinmarketcapId] = useState<string>('')
+
+  useEffect(() => {
+    if (currency?.isNative) return
+    const token = currency as Token
+    const coinmarketcapIds = localStorage.getItem('coinmarketcapIds')
+    if (coinmarketcapIds) {
+      const id = JSON.parse(coinmarketcapIds)?.[token.chainId]?.[token.address.toUpperCase()]
+      if (id) {
+        setCoinmarketcapId(id)
+        return
+      }
+    }
+
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/info`, {
+        params: { address: token.address },
+      })
+      .then((response) => {
+        const tokenInfos = response.data.data
+        const tokenInfo = Object.keys(tokenInfos).map((key) => tokenInfos[key])?.[0]
+        coinmarketcapIds[token.chainId][token.address.toUpperCase()] = tokenInfo.id
+      })
+      .catch((e) => console.warn(e))
+  }, [currency])
 
   const srcs: string[] = useMemo(() => {
     if (currency?.isNative) return []
 
     if (currency?.isToken) {
-      const tokenLogoURL = getTokenLogoURL(currency, chainId)
+      const tokenLogoURL = getTokenLogoURL(currency, coinmarketcapId)
       if (currency instanceof WrappedTokenInfo) {
         if (!tokenLogoURL) return [...uriLocations]
         return [tokenLogoURL, ...uriLocations]
@@ -39,7 +63,7 @@ export default function CurrencyLogo({
       return [tokenLogoURL]
     }
     return []
-  }, [currency, uriLocations])
+  }, [currency, uriLocations, coinmarketcapId])
 
   if (currency?.isNative) {
     if (currency.chainId === ChainId.BSC) {

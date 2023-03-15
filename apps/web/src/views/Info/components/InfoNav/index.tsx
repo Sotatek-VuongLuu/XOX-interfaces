@@ -247,21 +247,13 @@ const MainContent = styled.div`
   }
 `
 
-const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: boolean; titleBtn1?: string }> = ({
-  allTokens,
+const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBtn1?: string }> = ({
   textContentBanner,
   hasPadding = true,
   titleBtn1 = 'XOXS',
 }) => {
-  const router = useRouter()
-  const chainPath = useMultiChainPath()
   const { chainId } = useActiveChainId()
-  const native = useNativeCurrency()
   const { isMobile } = useMatchBreakpoints()
-
-  const baseToken = chainId === 1 || chainId === 5 ? 'USDC' : 'BUSD'
-
-  const inputCurrency = Object.values(allTokens).find((value: any) => value.symbol === baseToken)
 
   return (
     <NavWrapper hasPadding={hasPadding}>
@@ -270,7 +262,8 @@ const InfoNav: React.FC<{ allTokens: any; textContentBanner?: any; hasPadding?: 
         <div className="edge1" />
         <div className="corner2" />
         <div className="edge2" />
-        <img alt="" src={isMobile ? 'images/galaxy-mo.svg' : 'images/galaxy-dk.svg'} />
+        <img alt="" src="images/galaxy-dk.svg" />
+        {isMobile ? <img alt="" src="/images/galaxy-mo.svg" /> : <img alt="" src="/images/galaxy-dk.svg" />}
 
         <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
           Swap to get XOX & XOXS. Earn like a Pro

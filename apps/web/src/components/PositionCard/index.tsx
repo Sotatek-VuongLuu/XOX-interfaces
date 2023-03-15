@@ -357,9 +357,6 @@ const withLPValuesFactory =
       if (!finishTransaction) setFinishTransaction(token0Deposited?.toFixed())
       else if (finishTransaction !== token0Deposited?.toFixed()) {
         setFinishTransaction(token0Deposited?.toFixed())
-        if (transactionState === 'start' || transactionState === 'submited') {
-          console.log(transactionState)
-        }
       }
     }, [token0Deposited])
 

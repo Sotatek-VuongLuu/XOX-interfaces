@@ -274,7 +274,6 @@ export default function WithDrawLayout() {
       <ContainerBanner>
         <div className="banner">
           <InfoNav
-            allTokens={allTokens}
             textContentBanner="Earn USDT/USDC from your XOXS Indefinitely"
             hasPadding={false}
           />
