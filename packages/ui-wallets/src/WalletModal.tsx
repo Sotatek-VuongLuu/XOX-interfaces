@@ -219,34 +219,48 @@ function WalletSelect<T>({
             display="flex"
             alignItems="center"
             style={{
-              justifyContent: 'center',
-              letterSpacing: 'normal',
-              padding: '0',
+              padding: '1px',
               height: '142px',
-              background: '#1D1C1C',
               width: '150px',
               maxWidth: '45%',
               margin: '0 10px',
+              background:
+                wallet.id === selected?.id || (wallet.installed && !selected?.id)
+                  ? 'linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)'
+                  : '#1D1C1C',
             }}
             flexDirection="column"
             onClick={() => onClick(wallet)}
           >
-            <AtomBox
+            <div
               style={{
-                borderRadius: '50%',
-                width: '62px',
-                height: '62px',
+                width: '100%',
+                height: '100%',
+                justifyContent: 'center',
+                letterSpacing: 'normal',
                 display: 'flex',
                 alignItems: 'center',
-                justifyContent: 'center',
+                flexDirection: 'column',
+                background: '#1D1C1C',
+                borderRadius: '8px',
               }}
             >
-              {isImage ? (
-                <Image src={Icon as string} width={60} height={60} />
-              ) : (
-                <Icon width={24} height={24} color="textSubtle" />
-              )}
-              {(wallet.id === selected?.id || (wallet.installed && !selected?.id)) && (
+              <AtomBox
+                style={{
+                  borderRadius: '50%',
+                  width: '62px',
+                  height: '62px',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}
+              >
+                {isImage ? (
+                  <Image src={Icon as string} width={60} height={60} />
+                ) : (
+                  <Icon width={24} height={24} color="textSubtle" />
+                )}
+                {/* {(wallet.id === selected?.id || (wallet.installed && !selected?.id)) && (
                 <AtomBox
                   position="absolute"
                   inset="0"
@@ -256,19 +270,20 @@ function WalletSelect<T>({
                     border: '1px solid red',
                   }}
                 />
-              )}
-            </AtomBox>
-            <Text
-              fontSize="18px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="400"
-              lineHeight="22px"
-              color="rgba(255, 255, 255)"
-              mt="16px"
-            >
-              {wallet.title}
-            </Text>
+              )} */}
+              </AtomBox>
+              <Text
+                fontSize="18px"
+                fontFamily="Inter"
+                fontStyle="normal"
+                fontWeight="400"
+                lineHeight="22px"
+                color="rgba(255, 255, 255)"
+                mt="16px"
+              >
+                {wallet.title}
+              </Text>
+            </div>
           </Button>
         )
       })}
