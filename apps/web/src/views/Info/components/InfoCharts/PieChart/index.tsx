@@ -177,8 +177,8 @@ export default function InfoPieChart({ data, colors, total }) {
           <svg height="160" width="160" className="circle">
             <circle cx="80" cy="80" r="75" stroke="rgba(255,255,255,0.3)" strokeWidth="1" />
           </svg>
-          {chainId === ChainId.BSC_TESTNET && <BNBIcon />}
-          {chainId === ChainId.GOERLI && <GoerliIcon />}
+          {(chainId === ChainId.BSC_TESTNET || chainId === ChainId.BSC) && <BNBIcon />}
+          {(chainId === ChainId.GOERLI || chainId === ChainId.ETHEREUM) && <GoerliIcon />}
         </>
       ) : (
         'No data'
