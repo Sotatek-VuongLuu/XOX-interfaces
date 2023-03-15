@@ -1,7 +1,7 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { CopyButton, Flex, Input, Select, Text } from '@pancakeswap/uikit'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
@@ -14,6 +14,7 @@ import TabSaleHistory from './TabSaleHistory'
 interface IProps {
   dataInfo: any[]
   dataRefInfo: any[]
+  dataTransaction: any[]
 }
 
 const Wrapper = styled.div``
@@ -217,8 +218,8 @@ const Content = styled.div`
   }
 `
 
-function YourInfo({ dataInfo, dataRefInfo }: IProps) {
-  const [currentTransactions, setCurrentTransactions] = useState([])
+function YourInfo({ dataInfo, dataRefInfo, dataTransaction }: IProps) {
+  const [currentTransactions, setCurrentTransactions] = useState(dataTransaction)
   const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
@@ -246,6 +247,10 @@ function YourInfo({ dataInfo, dataRefInfo }: IProps) {
   const handleChangeTempPage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
   }, [])
+
+  useEffect(() => {
+    setCurrentTransactions(dataTransaction)
+  }, [dataTransaction])
 
   return (
     <Wrapper>
@@ -295,8 +300,8 @@ function YourInfo({ dataInfo, dataRefInfo }: IProps) {
           </Flex>
         </div>
 
-        {tab === 0 && <TabSaleHistory />}
-        {tab === 1 && <TabClaimHistory />}
+        {tab === 0 && <TabSaleHistory currentTransactions={currentTransactions} />}
+        {tab === 1 && <TabClaimHistory currentTransactions={currentTransactions} />}
 
         <Flex mb="16px" mt="24px" justifyContent="space-between">
           <Text

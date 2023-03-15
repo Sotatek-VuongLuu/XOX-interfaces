@@ -1,15 +1,105 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Flex, Input, Select, Text } from '@pancakeswap/uikit'
+import { Box, Flex, Input, Select, Text } from '@pancakeswap/uikit'
+import truncateHash from '@pancakeswap/utils/truncateHash'
+import BigNumber from 'bignumber.js'
+import TableLoader from 'components/TableLoader'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import React, { useCallback, useState } from 'react'
+import moment from 'moment'
+import React, { Fragment, useCallback, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
+import styled from 'styled-components'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
 import { ClickableColumnHeader, CustomTableWrapper, NoTransactionWrapper, PageButtons, Table } from './SaleHistory'
 
-function TabSaleHistory() {
-  const [currentTransactions, setCurrentTransactions] = useState([])
+const CustomTable = styled(Table)`
+  grid-template-columns: 0.15fr 1fr 1fr repeat(2, 0.7fr) 1fr;
+`
+
+const DataRow: React.FC<
+  React.PropsWithChildren<{
+    transaction: any
+    index: number
+    page: number
+    perPage: number
+  }>
+> = ({ transaction, index, page, perPage }) => {
+  return (
+    <>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-id`}
+      >
+        {index + 1 + (page - 1) * perPage}
+      </Text>
+
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
+      >
+        {moment.unix(transaction?.timestamp).format('DD MM YYYY, HH:MM:ss')}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
+      >
+        {new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toString()}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
+      >
+        {new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
+      >
+        {new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toString()}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
+      >
+        {truncateHash(transaction.id, 5, 6)}
+      </Text>
+    </>
+  )
+}
+
+function TabSaleHistory({ currentTransactions }) {
+  // const [currentTransactions, setCurrentTransactions] = useState([])
   const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
@@ -41,7 +131,7 @@ function TabSaleHistory() {
   return (
     <>
       <CustomTableWrapper>
-        <Table>
+        <CustomTable>
           <Text
             fontSize="16px"
             fontFamily="Inter"
@@ -108,12 +198,30 @@ function TabSaleHistory() {
           >
             Txh
           </Text>
-          {currentTransactions.length === 0 ? (
-            <NoTransactionWrapper justifyContent="center">
-              <Text textAlign="center">No Transactions</Text>
-            </NoTransactionWrapper>
-          ) : undefined}
-        </Table>
+          {currentTransactions ? (
+            <>
+              {currentTransactions.map((transaction, index) => {
+                return (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <Fragment key={index}>
+                    <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
+                  </Fragment>
+                )
+              })}
+              {currentTransactions.length === 0 ? (
+                <NoTransactionWrapper justifyContent="center">
+                  <Text textAlign="center">No Transactions</Text>
+                </NoTransactionWrapper>
+              ) : undefined}
+            </>
+          ) : (
+            <>
+              <TableLoader />
+              {/* spacer */}
+              <Box />
+            </>
+          )}
+        </CustomTable>
       </CustomTableWrapper>
       {currentTransactions && currentTransactions.length > 0 && (
         <PageButtons>

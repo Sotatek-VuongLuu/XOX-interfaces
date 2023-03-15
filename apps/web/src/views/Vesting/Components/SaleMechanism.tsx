@@ -16,6 +16,7 @@ interface IProps {
   initialTokenMetrics: any[]
   dataInfo: any[]
   dataRefInfo: any
+  dataTransaction: any[]
 }
 
 interface IPropsWrapper {
@@ -214,6 +215,7 @@ function SaleMechanism({
   initialTokenMetrics,
   dataInfo,
   dataRefInfo,
+  dataTransaction,
 }: IProps) {
   const { account } = useActiveWeb3React()
   const { width } = useWindowSize()
@@ -235,7 +237,7 @@ function SaleMechanism({
       case 'Vesting Schedule':
         return <VestingSchedule />
       case 'Your Information':
-        return <YourInfo dataInfo={dataInfo} dataRefInfo={dataRefInfo} />
+        return <YourInfo dataInfo={dataInfo} dataRefInfo={dataRefInfo} dataTransaction={dataTransaction} />
       default:
         return <PrivateSale />
     }

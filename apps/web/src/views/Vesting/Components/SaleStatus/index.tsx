@@ -251,10 +251,10 @@ enum StatusSale {
   INCOMING = 'Incoming',
 }
 
-const Item = ({ item }) => {
+const Item = ({ item, isInTimeRangeSale }) => {
   return (
-    <WrapperItem status={item.status === StatusSale.LIVE}>
-      {item.status === StatusSale.LIVE && (
+    <WrapperItem status={item.status === StatusSale.LIVE && isInTimeRangeSale}>
+      {item.status === StatusSale.LIVE && isInTimeRangeSale && (
         <>
           <div className="corner_active_1" />
           <div className="edge_active_1" />
@@ -322,41 +322,45 @@ const Item = ({ item }) => {
   )
 }
 
-function SaleStatus() {
+interface IProps {
+  isInTimeRangeSale?: boolean
+}
+
+function SaleStatus({ isInTimeRangeSale }: IProps) {
   const arrStatus = [
     {
       name: 'Sale 1',
-      status: StatusSale.LIVE,
+      status: StatusSale.END,
       currentRaise: '10.000',
       price: '1 XOX',
-      xOXforSale: '2.700.000',
+      xOXforSale: '2,700,000',
       investors: '50',
       xOXSRewarded: '7.3247',
     },
     {
       name: 'Sale 2',
-      status: StatusSale.END,
-      currentRaise: '10.000',
+      status: StatusSale.INCOMING,
+      currentRaise: '-',
       price: '1 XOX',
-      xOXforSale: '2.700.000',
-      investors: '50',
-      xOXSRewarded: '7.3247',
+      xOXforSale: '3,600.000',
+      investors: '-',
+      xOXSRewarded: '-',
     },
     {
       name: 'Sale 3',
       status: StatusSale.INCOMING,
-      currentRaise: '10.000',
+      currentRaise: '-',
       price: '1 XOX',
-      xOXforSale: '2.700.000',
-      investors: '50',
-      xOXSRewarded: '7.3247',
+      xOXforSale: '4,500,000',
+      investors: '-',
+      xOXSRewarded: '-',
     },
   ]
 
   return (
     <CustomGrid>
       {arrStatus.map((item) => {
-        return <Item item={item} />
+        return <Item item={item} isInTimeRangeSale={isInTimeRangeSale} />
       })}
     </CustomGrid>
   )

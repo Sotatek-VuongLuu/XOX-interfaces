@@ -17,6 +17,46 @@ export const getSaleStats = async (chainId = ChainId.GOERLI) => {
       }
     `,
   )
+  return response
+}
 
+export const getUserPreSaleInfo = async (chainId = ChainId.GOERLI) => {
+  const response = await request(
+    'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.7',
+    gql`
+      query getInfoUserPreSale {
+        userPreSaleDatas {
+          id
+          round
+          amountInvestUSD
+          amountBoughtXOX
+          amountBoughtXOXS
+          amountClaimXOX
+        }
+      }
+    `,
+  )
+  return response
+}
+
+export const getDataTransaction = async (chainId = ChainId.GOERLI) => {
+  const response = await request(
+    'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.7',
+    gql`
+      query getTransactionPreSales {
+        transactionPreSales(first: 100, orderBy: timestamp, orderDirection: desc) {
+          id
+          blockNumber
+          timestamp
+          round
+          sender
+          amountInvestUSD
+          amountBoughtXOX
+          amountBoughtXOXS
+          amountClaimedXOX
+        }
+      }
+    `,
+  )
   return response
 }

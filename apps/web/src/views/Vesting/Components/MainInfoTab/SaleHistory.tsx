@@ -1,8 +1,13 @@
-import { Flex, Input, Select, Text } from '@pancakeswap/uikit'
-import { useCallback, useState } from 'react'
+import { Box, Flex, Input, Select, Text } from '@pancakeswap/uikit'
+import { Fragment, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
+import { getDataTransaction } from 'services/presale'
+import TableLoader from 'components/TableLoader'
+import moment from 'moment'
+import BigNumber from 'bignumber.js'
+import truncateHash from '@pancakeswap/utils/truncateHash'
 
 const Wrapper = styled.div`
   position: relative;
@@ -112,7 +117,7 @@ export const Table = styled.div`
   grid-gap: 16px 35px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1fr repeat(3, 0.7fr) 1fr 0.4fr;
+  grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 1fr;
   .table-header {
     margin-bottom: 16px;
   }
@@ -221,10 +226,104 @@ export const NoTransactionWrapper = styled(Flex)`
     grid-column: 1 / span 7;
   }
 `
+const DataRow: React.FC<
+  React.PropsWithChildren<{
+    transaction: any
+    index: number
+    page: number
+    perPage: number
+  }>
+> = ({ transaction, index, page, perPage }) => {
+  return (
+    <>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-id`}
+      >
+        {index + 1 + (page - 1) * perPage}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-token1`}
+      >
+        {truncateHash(transaction.sender, 4, 5)}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
+      >
+        {moment.unix(transaction?.timestamp).format('DD MM YYYY, HH:MM:ss')}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
+      >
+        {new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toString()}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
+      >
+        {new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
+      >
+        {new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toString()}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+        key={`${transaction.hash}-stable-coin`}
+      >
+        {truncateHash(transaction.id, 5, 6)}
+      </Text>
+    </>
+  )
+}
 
-function SaleHistory() {
-  const [currentTransactions, setCurrentTransactions] = useState([])
-  const [perPage, setPerPage] = useState(10)
+interface IProps {
+  dataTransaction: any[]
+}
+
+function SaleHistory({ dataTransaction }: IProps) {
+  const [currentTransactions, setCurrentTransactions] = useState<any[]>(dataTransaction)
+  const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
@@ -247,6 +346,10 @@ function SaleHistory() {
   const handleChangeTempPage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
   }, [])
+
+  useEffect(() => {
+    setCurrentTransactions(dataTransaction)
+  }, [dataTransaction])
 
   return (
     <>
@@ -294,7 +397,7 @@ function SaleHistory() {
             >
               Wallet Address
             </Text>
-            <ClickableColumnHeader
+            <Text
               fontSize="16px"
               fontFamily="Inter"
               fontStyle="normal"
@@ -303,11 +406,9 @@ function SaleHistory() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              <Flex alignItems="center">
-                <span style={{ marginRight: '12px' }}>Time</span>{' '}
-              </Flex>
-            </ClickableColumnHeader>
-            <ClickableColumnHeader
+              Time
+            </Text>
+            <Text
               fontSize="16px"
               fontFamily="Inter"
               fontStyle="normal"
@@ -316,10 +417,8 @@ function SaleHistory() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              <Flex alignItems="center">
-                <span style={{ marginRight: '12px' }}>Total Value</span>{' '}
-              </Flex>
-            </ClickableColumnHeader>
+              Total Value
+            </Text>
             <Text
               fontSize="16px"
               fontFamily="Inter"
@@ -342,7 +441,7 @@ function SaleHistory() {
             >
               XOXS Received
             </Text>
-            <ClickableColumnHeader
+            <Text
               fontSize="16px"
               fontFamily="Inter"
               fontStyle="normal"
@@ -351,15 +450,31 @@ function SaleHistory() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              <Flex alignItems="center">
-                <span style={{ marginRight: '12px' }}>Txh</span>
-              </Flex>
-            </ClickableColumnHeader>
-            {currentTransactions.length === 0 ? (
-              <NoTransactionWrapper justifyContent="center">
-                <Text textAlign="center">No Transactions</Text>
-              </NoTransactionWrapper>
-            ) : undefined}
+              Txh
+            </Text>
+            {currentTransactions ? (
+              <>
+                {currentTransactions.map((transaction, index) => {
+                  return (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <Fragment key={index}>
+                      <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
+                    </Fragment>
+                  )
+                })}
+                {currentTransactions.length === 0 ? (
+                  <NoTransactionWrapper justifyContent="center">
+                    <Text textAlign="center">No Transactions</Text>
+                  </NoTransactionWrapper>
+                ) : undefined}
+              </>
+            ) : (
+              <>
+                <TableLoader />
+                {/* spacer */}
+                <Box />
+              </>
+            )}
           </Table>
         </CustomTableWrapper>
       </Wrapper>
@@ -477,6 +592,10 @@ function SaleHistory() {
           <div>
             <Select
               options={[
+                {
+                  value: 5,
+                  label: '5/Page',
+                },
                 {
                   value: 10,
                   label: '10/Page',
