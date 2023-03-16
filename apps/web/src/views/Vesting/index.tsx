@@ -489,6 +489,10 @@ function VestingPage() {
     return []
   }
 
+  const handleGetApiWhitelist = () => {
+    return null
+  }
+
   const handeInvest = async () => {
     const _merkleProof = await getHexProof(whiteList, account)
     const valueETH = typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseEther('0')
