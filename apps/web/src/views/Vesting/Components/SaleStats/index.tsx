@@ -87,6 +87,13 @@ const Wrapper = styled.div`
           color: rgba(255, 255, 255, 0.6);
           left: -13px;
         }
+
+        .icon.total_investor {
+          position: unset;
+          font-size: 36px;
+          line-height: 44px;
+          color: rgba(255, 255, 255, 0.87);
+        }
       }
 
       .item_content_title {
@@ -153,11 +160,13 @@ function SaleStats({ dataStat }: IProps) {
           return (
             <div className="item_content_container" key={`${item.title}`}>
               <p className="item_content_amount">
-                <span className="icon">{item?.icon}</span>
+                <span className={`icon ${item.field}`}>{item.amount ? item?.icon : null}</span>
                 <span>
-                  {item.decimal
-                    ? new BigNumber(item.amount).div(new BigNumber(10).pow(item.decimal)).toFixed(2)
-                    : item.amount}
+                  {item.amount
+                    ? item.decimal
+                      ? new BigNumber(item.amount).div(new BigNumber(10).pow(item.decimal)).toFixed(2)
+                      : item.amount
+                    : '-'}
                 </span>
               </p>
               <p className="item_content_title">{item.title}</p>

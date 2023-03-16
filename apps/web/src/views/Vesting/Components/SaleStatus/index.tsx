@@ -407,7 +407,9 @@ function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: 
     {
       name: 'Sale 1',
       status: infoRoundOne.startDate
-        ? infoRoundOne.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundOne.endDate
+        ? timeStampOfNow < infoRoundOne.startDate
+          ? StatusSale.INCOMING
+          : infoRoundOne.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundOne.endDate
           ? StatusSale.LIVE
           : StatusSale.END
         : StatusSale.INCOMING,
@@ -420,7 +422,9 @@ function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: 
     {
       name: 'Sale 2',
       status: infoRoundTow.startDate
-        ? infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundTow.endDate
+        ? timeStampOfNow < infoRoundTow.startDate
+          ? StatusSale.INCOMING
+          : infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundTow.endDate
           ? StatusSale.LIVE
           : StatusSale.END
         : StatusSale.INCOMING,
@@ -433,7 +437,9 @@ function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: 
     {
       name: 'Sale 3',
       status: infoRoundThree.startDate
-        ? infoRoundThree.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundThree.endDate
+        ? timeStampOfNow < infoRoundThree.startDate
+          ? StatusSale.INCOMING
+          : infoRoundThree.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundThree.endDate
           ? StatusSale.LIVE
           : StatusSale.END
         : StatusSale.INCOMING,

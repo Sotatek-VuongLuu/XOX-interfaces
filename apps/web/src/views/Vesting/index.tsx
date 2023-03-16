@@ -11,7 +11,7 @@ import { useXOXPreSaleContract } from 'hooks/useContract'
 // import keccak256 from 'keccak256'
 // import MerkleTree from 'merkletreejs'
 import moment from 'moment'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 import styled from 'styled-components'
 import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
@@ -265,7 +265,7 @@ const initStat: Start[] = [
   {
     id: 1,
     title: 'Total Current Raised',
-    amount: '10.000',
+    amount: '',
     icon: '$',
     field: 'total_raised_usd',
     decimal: 6,
@@ -273,44 +273,25 @@ const initStat: Start[] = [
   {
     id: 2,
     title: 'XOX amount bought',
-    amount: '5.000',
+    amount: '',
     field: 'xox_amount_bought',
     decimal: 18,
   },
   {
     id: 3,
     title: 'Number of Investors',
-    amount: '+500',
+    amount: '',
+    icon: '+',
     field: 'total_investor',
   },
   {
     id: 4,
     title: 'Total XOXS Amount Rewarded',
-    amount: '5.000',
+    amount: '',
     field: 'xoxs_amount_reward',
     decimal: 6,
   },
 ]
-
-function useSelectors(reducer, mapStateToSelectors) {
-  const [state] = reducer
-  const selectors = useMemo(() => mapStateToSelectors(state), [state])
-  return selectors
-}
-
-const reducer = (state = initialYourInfo, action) => {
-  switch (action.type) {
-    case 'COMPLETE':
-      return state.map((todo) => {
-        if (todo.id === action.id) {
-          return { ...todo, amount: action.payload }
-        }
-        return todo
-      })
-    default:
-      return state
-  }
-}
 
 export const tabSaleMechanism: string[] = [
   'Private Sale Mechanism',
@@ -340,21 +321,10 @@ export enum ROUND {
 const now = new Date()
 const timeStampOfNow = now.getTime()
 
-const WHITELIST = [
-  '0x92282af2a9cc5364b4cf091d08a552882dc612e6',
-  '0x3017c1bdcecd9394a2b5c8725016e224264a3c18',
-  '0x7a6837c121b5cc61da94765df04fc7ed1a5b560a',
-  '0xa7c99ea330ebcbeb0e2a960c9ab89370819faabc',
-  '0xd867ab64045267fe2b48dc49823a4df74d1fe366',
-  '0x400ee0c820144c8bb559ace1ad75e5c13e750334',
-  '0xf1bfe27f383f98bddeb444a78b08c121954b4f62',
-  '0x93ba7de27bcc9b4b81ae4ec8b0880ac0d649ca7e',
-  '0xd3782f8c8371766ea59bab1950785454b48a9d43',
-  '0x6c5532d1648d63624111459b9a5a0b01d3df6b43',
-  '0x9606aaf89ad0f330b846f08128ed44c1253d32ad',
-  '0x1043987a09d87c13d42c7a62a0b0f4546e60fc8f',
-  '0xf39c1e8f765f9ac265f743522d76e77debde5e4a',
-]
+interface IDataWhitelist {
+  address: string
+  proof: string[]
+}
 
 export const USDC_TESTNET = new ERC20Token(
   ChainId.GOERLI,
@@ -384,7 +354,7 @@ const defaultRoundInfo = {
 function VestingPage() {
   const [tabActiveMechansim, setTabActiveMechansim] = useState<string>('Private Sale Mechanism')
   const [referralError, setReferralError] = useState(null)
-  const counterReducer = useReducer(reducer, initialYourInfo)
+  const [dataWhitelist, setDataWhitelist] = useState<IDataWhitelist[]>([])
   const [dataForInfo, setDataForInfo] = useState<IYourInfo[]>(initialYourInfo)
   const { account, chainId } = useActiveWeb3React()
   const [typeBuyPrice, setTypeBuyPrice] = useState<number | null>(null)
@@ -401,7 +371,7 @@ function VestingPage() {
   const [totalXOXTokenInRound, setTotalXOXTokenInRound] = useState<number | string | null>(0)
   const { nodeId } = useContext(Context)
   const contractPreSale = useXOXPreSaleContract()
-  const [whiteList, setWhiteList] = useState<string[]>(WHITELIST)
+  const [whiteList, setWhiteList] = useState<string[]>([])
   const [isUserInWhiteList, setIsUserInWhiteList] = useState<boolean>(false)
   const [approvalState, approveCallback] = useApproveCallback(
     USDC_TEST && tryParseAmount('0.01', USDC_TESTNET),
@@ -411,22 +381,25 @@ function VestingPage() {
   const [arrSaleStats, setArrSaleStats] = useState<Start[]>(initStat)
   const [isInTimeRangeSale, setIsInTimeRangeSale] = useState<boolean>(false)
   const resSaleStats = useGetSaleStats()
+
   const [dataStatus, setDataStatus] = useState<any>([])
 
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
-    const dataUpdate = Array.from(arr).map((item: Start) => {
-      return {
-        ...item,
-        amount: dataSaleStatsParams[item.field],
-      }
-    })
-    setArrSaleStats(dataUpdate)
+    if (dataSaleStatsParams.length !== 0) {
+      const dataUpdate = Array.from(arr).map((item: Start) => {
+        return {
+          ...item,
+          amount: dataSaleStatsParams[0][item?.field],
+        }
+      })
+      setArrSaleStats(dataUpdate)
+    }
     return null
   }
 
   useEffect(() => {
     if (!resSaleStats) return
-    handleUpdateDataSale(initStat, resSaleStats?.dataSaleStats[0])
+    handleUpdateDataSale(initStat, resSaleStats?.dataSaleStats)
   }, [resSaleStats])
 
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
@@ -482,19 +455,28 @@ function VestingPage() {
 
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
 
-  const getHexProof = async (whitelist: string[], owner: string) => {
-    // const arrHash = await whitelist.map((acc) => keccak256(acc))
-    // const merkele = await new MerkleTree(arrHash, keccak256, { sortLeaves: true, sortPairs: true })
-    // return merkele.getHexProof(keccak256(owner))
-    return []
+  const getHexProof = (whitelistI: IDataWhitelist[], owner: string) => {
+    const merkele: IDataWhitelist = Array.from(whitelistI).find(
+      (item: IDataWhitelist) => item.address === owner.toLowerCase(),
+    )
+    return merkele.proof
   }
 
-  const handleGetApiWhitelist = () => {
-    return null
+  const handleGetApiWhitelist = async () => {
+    const result: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/whitelist`).catch((error) => {
+      console.warn(error)
+    })
+
+    if (result?.status === 200 && result?.data && result?.data?.length !== 0) {
+      const arr = Array.from(result?.data).map((item: any) => {
+        return item?.address
+      })
+      setWhiteList(arr)
+      setDataWhitelist(result?.data)
+    }
   }
 
   const handeInvest = async () => {
-    const _merkleProof = await getHexProof(whiteList, account)
     const valueETH = typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseEther('0')
     const addressTokenBuy = typeBuyPrice === TYPE_BY.BY_ETH ? NATIVE_TOKEN : USDC_TEST
     const refAddess = !codeRef ? ADDRESS_CODE : referralCode
@@ -508,6 +490,7 @@ function VestingPage() {
     ) {
       try {
         setIsOpenLoadingClaimModal(true)
+        const _merkleProof = getHexProof(dataWhitelist, account)
         const gasFee = await contractPreSale.estimateGas.whiteListedInvest(
           addressTokenBuy,
           amountParse,
@@ -716,6 +699,7 @@ function VestingPage() {
     if (!account || !chainId) return
     handleGetDataTransaction()
     handleGetRoundStatus()
+    handleGetApiWhitelist()
   }, [account, chainId])
 
   useEffect(() => {
@@ -755,7 +739,7 @@ function VestingPage() {
     } else {
       setIsUserInWhiteList(false)
     }
-  }, [whiteList, setWhiteList, account])
+  }, [whiteList, setWhiteList, account, dataWhitelist])
 
   useEffect(() => {
     if (!account || !chainId) return

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { pointDataDays, getRaiseDailies } from 'services/referral'
+import { getRaiseDailies } from 'services/presale'
 import styled from 'styled-components'
 import ChartColumnSale from './ChartColumnSale'
 

@@ -159,14 +159,3 @@ export const pointDataDays = (from: number, to: number, chainId: ChainId) => {
   }`
   return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
 }
-
-export const getRaiseDailies = (from: number, to: number, chainId: ChainId) => {
-  const requests = `{
-    raiseDailies(where: { date_gte: ${from}, date_lte: ${to} }, orderBy: date, orderDirection: desc) {
-      id,
-      volumeUSD,
-      date
-    }
-  }`
-  return new GraphQLClient('https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.7').request(requests)
-}

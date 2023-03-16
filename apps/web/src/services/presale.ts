@@ -1,10 +1,12 @@
-import { ENDPOINT_GRAPHQL_WITH_CHAIN } from 'config/constants/endpoints'
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { GraphQLClient, request, gql } from 'graphql-request'
 import { ChainId } from '@pancakeswap/sdk'
 
+export const endpointsSubGraphPreSale = 'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.8'
+
 export const getSaleStats = async (chainId = ChainId.GOERLI) => {
   const response = await request(
-    'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.7',
+    endpointsSubGraphPreSale,
     gql`
       query getStatsSale {
         saleStats {
@@ -20,9 +22,20 @@ export const getSaleStats = async (chainId = ChainId.GOERLI) => {
   return response
 }
 
+export const getRaiseDailies = (from: number, to: number, chainId: ChainId) => {
+  const requests = `{
+    raiseDailies(where: { date_gte: ${from}, date_lte: ${to} }, orderBy: date, orderDirection: desc) {
+      id,
+      volumeUSD,
+      date
+    }
+  }`
+  return new GraphQLClient(endpointsSubGraphPreSale).request(requests)
+}
+
 export const getUserPreSaleInfo = async (chainId = ChainId.GOERLI) => {
   const response = await request(
-    'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.7',
+    endpointsSubGraphPreSale,
     gql`
       query getInfoUserPreSale {
         userPreSaleDatas {
@@ -41,7 +54,7 @@ export const getUserPreSaleInfo = async (chainId = ChainId.GOERLI) => {
 
 export const getDataTransaction = async (chainId = ChainId.GOERLI) => {
   const response = await request(
-    'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.7',
+    endpointsSubGraphPreSale,
     gql`
       query getTransactionPreSales {
         transactionPreSales(first: 100, orderBy: timestamp, orderDirection: desc) {
@@ -63,7 +76,7 @@ export const getDataTransaction = async (chainId = ChainId.GOERLI) => {
 
 export const getDataRoundStats = async (chainId = ChainId.GOERLI) => {
   const response = await request(
-    'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.7',
+    endpointsSubGraphPreSale,
     gql`
       query getDataRoundStatsStatus {
         roundStats {
