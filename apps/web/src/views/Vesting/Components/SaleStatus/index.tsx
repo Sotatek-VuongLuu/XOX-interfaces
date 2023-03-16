@@ -468,7 +468,7 @@ function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: 
   useEffect(() => {
     handleFormatData(dataStatus)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataStatus])
+  }, [dataStatus, infoRoundOne, infoRoundTow, infoRoundThree])
 
   return (
     <CustomGrid>
