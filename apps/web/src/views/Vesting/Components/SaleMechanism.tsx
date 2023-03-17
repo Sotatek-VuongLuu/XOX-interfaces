@@ -1,8 +1,10 @@
+/* eslint-disable import/no-cycle */
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useWindowSize from 'hooks/useWindowSize'
 import { useState } from 'react'
 import styled, { keyframes } from 'styled-components'
+import { IVestingTime } from '..'
 import VestingSchedule from './MainInfoTab/VestingSchedule'
 import YourInfo from './MainInfoTab/YourInfo'
 import PrivateSale from './MechanismTab/PrivateSale'
@@ -17,6 +19,7 @@ interface IProps {
   dataInfo: any[]
   dataRefInfo: any
   dataTransaction: any[]
+  dataVesting: IVestingTime[]
 }
 
 interface IPropsWrapper {
@@ -216,26 +219,20 @@ function SaleMechanism({
   dataInfo,
   dataRefInfo,
   dataTransaction,
+  dataVesting,
 }: IProps) {
   const { account } = useActiveWeb3React()
   const { width } = useWindowSize()
   const [isMore, setIsMore] = useState(false)
 
   const renderBody = (tab: string) => {
-    if (!account) {
-      return (
-        <ConnectWalletButton scale="sm" style={{ whiteSpace: 'nowrap' }}>
-          <span>Connect Wallet</span>
-        </ConnectWalletButton>
-      )
-    }
     switch (tab) {
       case 'Sale Referral Program':
         return <ReferralProgram />
       case 'Token Metrics':
         return <TokenMetrics initialTokenMetrics={initialTokenMetrics} />
       case 'Vesting Schedule':
-        return <VestingSchedule />
+        return <VestingSchedule dataVesting={dataVesting} />
       case 'Your Information':
         return <YourInfo dataInfo={dataInfo} dataRefInfo={dataRefInfo} dataTransaction={dataTransaction} />
       default:

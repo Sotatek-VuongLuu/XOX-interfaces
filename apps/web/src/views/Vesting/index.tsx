@@ -5,23 +5,26 @@ import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 import { useModal, useToast } from '@pancakeswap/uikit'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import BigNumber from 'bignumber.js'
+import { BigNumber as BigNumberEthers } from '@ethersproject/bignumber'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useXOXPreSaleContract } from 'hooks/useContract'
-// import keccak256 from 'keccak256'
-// import MerkleTree from 'merkletreejs'
 import moment from 'moment'
 import axios, { AxiosResponse } from 'axios'
 import { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react'
 import styled from 'styled-components'
 import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
-import { getContractPreSaleAddress } from 'utils/addressHelpers'
+import { getContractPreSaleAddress, getXOXPoolAddress } from 'utils/addressHelpers'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { useTranslation } from '@pancakeswap/localization'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
 import { Content } from 'views/Pools/components/style'
 import { GridLoader } from 'react-spinners'
 import { getDataRoundStats, getDataTransaction, getUserPreSaleInfo } from 'services/presale'
+import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
+import { useNetwork, useProvider } from 'wagmi'
+import { getDefaultProvider } from '@ethersproject/providers'
+import { formatAmountNumber, formatBigNumber } from '@pancakeswap/utils/formatBalance'
 import BackedBy from './Components/BackedBy'
 import ChartSalePage from './Components/Chart'
 import CountDownBlock from './Components/CountDownBlock'
@@ -301,6 +304,16 @@ export const tabSaleMechanism: string[] = [
   'Your Information',
 ]
 
+export interface IVestingTime {
+  title: string
+  amountVested: number
+  remaining: number
+  yourCurrentXOX: number
+  startTime: number
+  statusClaim: boolean
+  round?: number
+}
+
 export enum TYPE_BY {
   BY_USDC,
   BY_ETH,
@@ -317,6 +330,35 @@ export enum ROUND {
   TWO,
   THREE,
 }
+export const vestingTiming: IVestingTime[] = [
+  {
+    title: 'Sale 1',
+    amountVested: 0,
+    remaining: 0,
+    yourCurrentXOX: 0,
+    startTime: 1679276974000,
+    statusClaim: false,
+    round: ROUND.ONE,
+  },
+  {
+    title: 'Sale 2',
+    amountVested: 0,
+    remaining: 0,
+    yourCurrentXOX: 0,
+    startTime: 1679276974000,
+    statusClaim: false,
+    round: ROUND.TWO,
+  },
+  {
+    title: 'Sale 3',
+    amountVested: 0,
+    remaining: 0,
+    yourCurrentXOX: 0,
+    startTime: 1679276974000,
+    statusClaim: false,
+    round: ROUND.THREE,
+  },
+]
 
 const now = new Date()
 const timeStampOfNow = now.getTime()
@@ -377,12 +419,16 @@ function VestingPage() {
     USDC_TEST && tryParseAmount('0.01', USDC_TESTNET),
     getContractPreSaleAddress(5),
   )
+
+  const [balanceLP, setBalanceLP] = useState<any>()
+  const [balanceNative, setBalanceNative] = useState<any>()
+  const provider = useProvider({ chainId })
   const [dataTransaction, setDataTransaction] = useState<any>([])
   const [arrSaleStats, setArrSaleStats] = useState<Start[]>(initStat)
   const [isInTimeRangeSale, setIsInTimeRangeSale] = useState<boolean>(false)
   const resSaleStats = useGetSaleStats()
-
   const [dataStatus, setDataStatus] = useState<any>([])
+  const [dataVestingSchedule, setDataVestingSchedule] = useState<IVestingTime[]>([])
 
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     if (dataSaleStatsParams.length !== 0) {
@@ -393,7 +439,9 @@ function VestingPage() {
         }
       })
       setArrSaleStats(dataUpdate)
+      return null
     }
+    setArrSaleStats(initStat)
     return null
   }
 
@@ -410,39 +458,42 @@ function VestingPage() {
   }, [approveCallback])
 
   const handleGetInfoRound = async () => {
-    const [dataROne, dataRTwo, dataRThree, currentR] = await Promise.all([
-      contractPreSale.saleRound(ROUND.ONE),
-      contractPreSale.saleRound(ROUND.TWO),
-      contractPreSale.saleRound(ROUND.THREE),
-      contractPreSale.currentRound(),
-    ])
+    try {
+      const [dataROne, dataRTwo, dataRThree, currentR] = await Promise.all([
+        contractPreSale.saleRound(ROUND.ONE),
+        contractPreSale.saleRound(ROUND.TWO),
+        contractPreSale.saleRound(ROUND.THREE),
+        contractPreSale.currentRound(),
+      ])
+      setInfoRoundOne({
+        ...infoRoundOne,
+        totalDistribution: 2700000,
+        startDate: new BigNumber(dataROne.startDate._hex).multipliedBy(1000).toNumber(),
+        endDate: new BigNumber(dataROne.endDate._hex).multipliedBy(1000).toNumber(),
+        bonusPercentage: new BigNumber(dataROne.bonusPercentage._hex).toNumber(),
+        exchangeRate: new BigNumber(dataROne.exchangeRate._hex).toNumber(),
+      })
 
-    setInfoRoundOne({
-      ...infoRoundOne,
-      totalDistribution: 2700000,
-      startDate: new BigNumber(dataROne.startDate._hex).multipliedBy(1000).toNumber(),
-      endDate: new BigNumber(dataROne.endDate._hex).multipliedBy(1000).toNumber(),
-      bonusPercentage: new BigNumber(dataROne.bonusPercentage._hex).toNumber(),
-      exchangeRate: new BigNumber(dataROne.exchangeRate._hex).toNumber(),
-    })
-
-    setInfoRoundTow({
-      ...infoRoundTow,
-      totalDistribution: 3600000,
-      startDate: new BigNumber(dataRTwo.startDate._hex).multipliedBy(1000).toNumber(),
-      endDate: new BigNumber(dataRTwo.endDate._hex).multipliedBy(1000).toNumber(),
-      bonusPercentage: new BigNumber(dataRTwo.bonusPercentage._hex).toNumber(),
-      exchangeRate: new BigNumber(dataRTwo.exchangeRate._hex).toNumber(),
-    })
-    setInfoRoundThree({
-      ...infoRoundThree,
-      totalDistribution: 4500000,
-      startDate: new BigNumber(dataRThree.startDate._hex).multipliedBy(1000).toNumber(),
-      endDate: new BigNumber(dataRThree.endDate._hex).multipliedBy(1000).toNumber(),
-      bonusPercentage: new BigNumber(dataRThree.bonusPercentage._hex).toNumber(),
-      exchangeRate: new BigNumber(dataRThree.exchangeRate._hex).toNumber(),
-    })
-    setCurrentRound(new BigNumber(currentR._hex).toNumber())
+      setInfoRoundTow({
+        ...infoRoundTow,
+        totalDistribution: 3600000,
+        startDate: new BigNumber(dataRTwo.startDate._hex).multipliedBy(1000).toNumber(),
+        endDate: new BigNumber(dataRTwo.endDate._hex).multipliedBy(1000).toNumber(),
+        bonusPercentage: new BigNumber(dataRTwo.bonusPercentage._hex).toNumber(),
+        exchangeRate: new BigNumber(dataRTwo.exchangeRate._hex).toNumber(),
+      })
+      setInfoRoundThree({
+        ...infoRoundThree,
+        totalDistribution: 4500000,
+        startDate: new BigNumber(dataRThree.startDate._hex).multipliedBy(1000).toNumber(),
+        endDate: new BigNumber(dataRThree.endDate._hex).multipliedBy(1000).toNumber(),
+        bonusPercentage: new BigNumber(dataRThree.bonusPercentage._hex).toNumber(),
+        exchangeRate: new BigNumber(dataRThree.exchangeRate._hex).toNumber(),
+      })
+      setCurrentRound(new BigNumber(currentR._hex).toNumber())
+    } catch (error) {
+      console.warn(error)
+    }
   }
 
   const handleGetOneHourBeforeSale = () => {
@@ -567,6 +618,24 @@ function VestingPage() {
     }
   }
 
+  const handleGetDataVesting = async () => {
+    const dataClone: IVestingTime[] = [...vestingTiming]
+    const round = [1, 2, 3]
+    round.forEach(async (item) => {
+      const [vested, currentXOX, userInvested] = await Promise.all([
+        contractPreSale.userClaimedAmount(account, BigNumberEthers.from(item)),
+        contractPreSale.pendingXOXInvest(account, BigNumberEthers.from(item)),
+        contractPreSale.userInvestedAmount(account, BigNumberEthers.from(item)),
+      ])
+      dataClone[item - 1].amountVested = new BigNumber(formatEther(vested).toString()).toNumber()
+      dataClone[item - 1].yourCurrentXOX = new BigNumber(formatEther(currentXOX).toString()).toNumber()
+      dataClone[item - 1].remaining = new BigNumber(formatEther(userInvested).toString())
+        .minus(formatEther(vested).toString())
+        .toNumber()
+    })
+    setDataVestingSchedule(dataClone)
+  }
+
   const handCheckInTimeRangeSale = () => {
     if (
       (infoRoundOne.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundOne.endDate) ||
@@ -647,6 +716,8 @@ function VestingPage() {
       amountXOXS={amountXOXS}
       setAmountXOX={setAmountXOX}
       setAmountXOXS={setAmountXOXS}
+      balanceLP={balanceLP}
+      balanceNative={balanceNative}
       isTimeAllowWhitelist={handleGetOneHourBeforeSale() <= timeStampOfNow && timeStampOfNow < infoRoundOne.startDate}
     />,
     true,
@@ -695,11 +766,43 @@ function VestingPage() {
     }
   }
 
+  const handleGetBalanceOfUser = () => {
+    const currentProvider = provider
+    currentProvider.getBalance(account).then((balance) => {
+      const nativeBalance = balance ? formatEther(balance._hex) : 0
+      setBalanceNative(nativeBalance)
+    })
+    getBalancesForEthereumAddress({
+      // erc20 tokens you want to query!
+      contractAddresses: [USDC_TEST],
+      // ethereum address of the user you want to get the balances for
+      ethereumAddress: account,
+      // your ethers provider
+      providerOptions: {
+        ethersProvider: currentProvider,
+      },
+    })
+      .then((balance) => {
+        setBalanceLP(balance.tokens[0].balance)
+      })
+      .catch((error) => {
+        console.warn(error)
+      })
+  }
+
+  useEffect(() => {
+    if (!account || !chainId) return
+    handleGetBalanceOfUser()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, chainId, provider, nodeId])
+
   useEffect(() => {
     if (!account || !chainId) return
     handleGetDataTransaction()
     handleGetRoundStatus()
     handleGetApiWhitelist()
+    handleGetDataVesting()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
   useEffect(() => {
@@ -790,6 +893,7 @@ function VestingPage() {
             dataInfo={dataForInfo}
             dataRefInfo={initialRefInfo}
             dataTransaction={dataTransaction}
+            dataVesting={dataVestingSchedule}
           />
           <SaleHistorySession dataTransaction={dataTransaction} />
           <BackedBy />

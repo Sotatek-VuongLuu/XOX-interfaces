@@ -1,6 +1,9 @@
 import { Button } from '@pancakeswap/uikit'
+import ConnectWalletButton from 'components/ConnectWalletButton'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { IVestingTime, vestingTiming } from 'views/Vesting'
 
 const Wrapper = styled.div`
   .total_vested {
@@ -9,6 +12,10 @@ const Wrapper = styled.div`
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
     margin-bottom: 16px;
+  }
+
+  .btn_connect_container {
+    width: 100%;
   }
 `
 
@@ -124,7 +131,7 @@ const Img = styled.img`
   margin-right: 16px;
 `
 
-const SaleItem = ({ item, index }) => {
+const SaleItem = ({ item, index }: { item: IVestingTime; index: number }) => {
   return (
     <div className={`sale_item sale_item_${index}`}>
       <div className="heading-sale">{item.title}</div>
@@ -152,7 +159,7 @@ const SaleItem = ({ item, index }) => {
             <Img src="/images/1/tokens/xox_new_style.svg" alt="icon" height={30} width={30} className="token_first" />
           </p>
           <div>
-            <p className="amount_vested">{item.remaining}</p>
+            <p className="amount_vested">{item.yourCurrentXOX}</p>
             <p className="title_vested">Your current XOX token</p>
           </div>
         </div>
@@ -169,33 +176,6 @@ const SaleItem = ({ item, index }) => {
     </div>
   )
 }
-
-const vestingTiming: any[] = [
-  {
-    title: 'Sale 1',
-    amountVested: 0,
-    remaining: 0,
-    yourCurrentXOX: 0,
-    startTime: 1679276974000,
-    statusClaim: false,
-  },
-  {
-    title: 'Sale 2',
-    amountVested: 0,
-    remaining: 0,
-    yourCurrentXOX: 0,
-    startTime: 1679276974000,
-    statusClaim: false,
-  },
-  {
-    title: 'Sale 3',
-    amountVested: 0,
-    remaining: 0,
-    yourCurrentXOX: 0,
-    startTime: 1679276974000,
-    statusClaim: false,
-  },
-]
 
 interface Props {
   startTime: any
@@ -361,17 +341,29 @@ const CountDown = ({ startTime }: Props) => {
   )
 }
 
-function VestingSchedule() {
+function VestingSchedule({ dataVesting }: { dataVesting: IVestingTime[] }) {
+  const { account } = useActiveWeb3React()
   return (
     <Wrapper>
-      <div className="total_vested">Total vested at this time: 2,000</div>
-      <Content>
-        <div className="over_flow">
-          {Array.from(vestingTiming).map((item, index) => {
-            return <SaleItem item={item} index={index} />
-          })}
+      {!account && (
+        <div className="btn_connect_container">
+          <ConnectWalletButton scale="sm" style={{ whiteSpace: 'nowrap' }}>
+            <span>Connect Wallet</span>
+          </ConnectWalletButton>
         </div>
-      </Content>
+      )}
+      {account && (
+        <>
+          <div className="total_vested">Total vested at this time: 2,000</div>
+          <Content>
+            <div className="over_flow">
+              {Array.from(dataVesting).map((item: IVestingTime, index) => {
+                return <SaleItem item={item} index={index} />
+              })}
+            </div>
+          </Content>
+        </>
+      )}
     </Wrapper>
   )
 }

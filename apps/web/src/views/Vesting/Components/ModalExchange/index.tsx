@@ -272,6 +272,8 @@ interface Props extends InjectedModalProps {
   amountXOXS: string | number
   setAmountXOX: (value: string | number) => void
   setAmountXOXS: (value: string | number) => void
+  balanceLP: any
+  balanceNative: any
 }
 
 function ModalSaleExchange({
@@ -293,6 +295,8 @@ function ModalSaleExchange({
   amountXOXS,
   setAmountXOX,
   setAmountXOXS,
+  balanceLP,
+  balanceNative,
 }: Props) {
   const { width } = useWindowSize()
 
@@ -345,7 +349,7 @@ function ModalSaleExchange({
         {width > 900 && (
           <>
             <p style={{ textAlign: 'right', paddingRight: '83px' }} className="balance">
-              Balance:
+              Balance: {typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative}
             </p>
             <Flex alignItems="center">
               <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="53px">
