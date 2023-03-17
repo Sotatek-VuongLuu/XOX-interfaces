@@ -783,7 +783,7 @@ function VestingPage() {
       },
     })
       .then((balance) => {
-        setBalanceLP(balance.tokens[0].balance)
+        setBalanceLP(balance ? balance.tokens[0].balance : 0)
       })
       .catch((error) => {
         console.warn(error)
