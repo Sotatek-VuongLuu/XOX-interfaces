@@ -1,11 +1,9 @@
-import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useXOXPreSaleContract } from 'hooks/useContract'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { IVestingTime, vestingTiming } from 'views/Vesting'
+import { IVestingTime } from 'views/Vesting'
 
 const Wrapper = styled.div`
   .total_vested {

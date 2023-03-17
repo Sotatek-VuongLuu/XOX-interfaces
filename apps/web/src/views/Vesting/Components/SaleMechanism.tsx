@@ -1,9 +1,7 @@
 /* eslint-disable import/no-cycle */
-import ConnectWalletButton from 'components/ConnectWalletButton'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useWindowSize from 'hooks/useWindowSize'
 import { useState } from 'react'
-import styled, { keyframes } from 'styled-components'
+import styled from 'styled-components'
 import { IVestingTime } from '..'
 import VestingSchedule from './MainInfoTab/VestingSchedule'
 import YourInfo from './MainInfoTab/YourInfo'

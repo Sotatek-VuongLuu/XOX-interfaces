@@ -4,7 +4,6 @@ import {
   Button,
   CircleLoader,
   Flex,
-  Heading,
   InjectedModalProps,
   ModalBody,
   ModalCloseButton,
@@ -17,10 +16,9 @@ import {
 import BigNumber from 'bignumber.js'
 import { ApprovalState } from 'hooks/useApproveCallback'
 import useWindowSize from 'hooks/useWindowSize'
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 import { TYPE_BY } from 'views/Vesting'
-import { getPriceUsdPerToken } from '../getPrice'
 
 const StyledModalContainer = styled(ModalContainer)`
   padding: 32px 24px;
