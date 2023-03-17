@@ -1,6 +1,7 @@
 import { Button, Flex, Text } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import useWindowSize from 'hooks/useWindowSize'
 import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { TYPE_BY } from 'views/Vesting'
@@ -166,7 +167,7 @@ const Content = styled.div`
 `
 
 export const CustomTableWrapper = styled(Flex)`
-  padding-top: 24px;
+  padding-top: 29px;
   flex-direction: column;
   /* gap: 16px; */
   overflow-x: auto;
@@ -273,7 +274,8 @@ const Table = styled.div`
   }
 
   @media screen and (max-width: 900px) {
-    padding: 0px;
+    padding: 0 14px;
+    grid-template-columns: 0.75fr 0.75fr 2fr repeat(2, 1fr);
 
     .table-header_col {
       font-size: 12px;
@@ -286,26 +288,45 @@ const Table = styled.div`
     }
 
     .active_text {
-      font-size: 12px;
-      line-height: 15px;
+      font-size: 12px !important;
+      line-height: 15px !important;
     }
   }
 `
 
 const CustomTable = styled(Table)`
-  padding: 16px 20px;
+  padding: 16px 24px;
   @media screen and (max-width: 900px) {
-    padding: 8px 10px;
+    grid-template-columns: 0.75fr 0.75fr 2fr repeat(2, 1fr);
+    padding: 8px 14px;
   }
 `
 
 const CustomButton = styled(Button)`
   height: 54px;
+  font-weight: 700;
 
   @media screen and (max-width: 900px) {
+    height: 43px;
+    font-weight: 700;
     font-size: 16px;
     line-height: 19px;
     padding: 12px 14px;
+    white-space: nowrap;
+  }
+`
+
+const ConnectWalletButtonCustom = styled(ConnectWalletButton)`
+  height: 54px !important;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+
+  @media screen and (max-width: 900px) {
+    height: 43px !important;
+    font-size: 16px;
+    line-height: 19px;
   }
 `
 
@@ -373,7 +394,7 @@ function PricingInfo({
 }: IProps) {
   const { account } = useActiveWeb3React()
   const [arrDataRound, setArrDataRound] = useState<dataRoundPricing[]>(dataPricing)
-
+  const { width } = useWindowSize()
   const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
 
   const handleCheckRound = (num: number) => {
@@ -405,7 +426,8 @@ function PricingInfo({
             <Text className="table-header_col">Round</Text>
             <Text className="table-header_col">XOX Coins</Text>
             <Text className="table-header_col">Price</Text>
-            <Text className="table-header_col">XOXS Bonus</Text>
+            {width > 900 && <Text className="table-header_col">XOXS Bonus</Text>}
+            {width <= 900 && <Text className="table-header_col"> Bonus</Text>}
           </Table>
 
           {Array.from(arrDataRound).map((item: dataRoundPricing, index: number) => {
@@ -440,7 +462,12 @@ function PricingInfo({
                   <Text className="table-header" />
                 )}
 
-                <Text className="table-header">Round {item.round}</Text>
+                {width > 900 && <Text className="table-header">Round {item.round}</Text>}
+                {width <= 900 && (
+                  <Text className="table-header" textAlign="center">
+                    R{item.round}
+                  </Text>
+                )}
                 <Text className="table-header">{Number(item.xOXCoin).toLocaleString()} XOX</Text>
                 <Text className="table-header">${item.price}</Text>
                 <Text className="table-header">{item.xOXBonus}%</Text>
@@ -448,7 +475,7 @@ function PricingInfo({
             )
           })}
         </CustomTableWrapper>
-        {!account && <ConnectWalletButton width="100%" />}
+        {!account && <ConnectWalletButtonCustom width="100%" />}
         {account && (
           <div className="btn_group">
             {isCanBuyWithWhitelistUser ? (

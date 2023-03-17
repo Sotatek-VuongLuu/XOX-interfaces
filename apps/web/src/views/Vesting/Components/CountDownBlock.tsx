@@ -7,6 +7,10 @@ import StartingSoon from './StartingSoon'
 const Wrapper = styled.div`
   margin-top: 36px;
   margin-bottom: 24px;
+  @media screen and (max-width: 900px) {
+    margin-top: 4px;
+    margin-bottom: 24px;
+  }
 `
 
 const Content = styled.div`

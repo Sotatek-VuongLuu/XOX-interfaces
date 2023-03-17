@@ -1,6 +1,6 @@
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
-import { RoundInfo, Start } from 'views/Vesting'
+import { Start } from 'views/Vesting'
 
 const Wrapper = styled.div`
   position: relative;

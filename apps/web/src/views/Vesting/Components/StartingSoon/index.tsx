@@ -39,9 +39,6 @@ const Wrapper = styled.div`
     text-align: center;
     margin-top: 27px;
     margin-bottom: 16px;
-  }
-
-  .percent_sale {
     font-weight: 700;
     font-size: 18px;
     line-height: 22px;
@@ -140,6 +137,11 @@ const Wrapper = styled.div`
       font-size: 14px;
       line-height: 17px;
       height: 6px;
+    }
+
+    .percent_sale {
+      font-size: 14px;
+      line-height: 17px;
     }
 
     .processing_child {

@@ -143,6 +143,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
       status ? ' linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)' : '#0d0d0d'};
     border-radius: 30px;
     left: 50%;
+    z-index: 100;
     transform: translate(-50%, -50%);
 
     .corner_name_1 {
@@ -186,7 +187,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     width: 40px;
     height: 100%;
     border-radius: 20px;
-    z-index: 1;
+    z-index: 99;
     border-bottom: 1px solid #b809b5;
     border-top: 1px solid #b809b5;
     border-left: 1px solid #b809b5;
@@ -198,6 +199,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     position: absolute;
     top: 0;
     left: 40px;
+    z-index: 99;
     height: 1px;
     width: calc(100% - 80px);
     background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
@@ -209,7 +211,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     width: 40px;
     height: 100%;
     border-radius: 20px;
-    z-index: 1;
+    z-index: 99;
     border-bottom: 1px solid #ffb000;
     border-top: 1px solid #ffb000;
     border-right: 1px solid #ffb000;
@@ -221,6 +223,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     position: absolute;
     bottom: 0;
     left: 40px;
+    z-index: 99;
     height: 1px;
     width: calc(100% - 80px);
     background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
