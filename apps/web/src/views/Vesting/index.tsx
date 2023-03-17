@@ -20,7 +20,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
 import { Content } from 'views/Pools/components/style'
 import { GridLoader } from 'react-spinners'
-import { getDataRoundStats, getDataTransaction, getUserPreSaleInfo } from 'services/presale'
+import { getDataReferralPresale, getDataRoundStats, getDataTransaction, getUserPreSaleInfo } from 'services/presale'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { useNetwork, useProvider } from 'wagmi'
 import { getDefaultProvider } from '@ethersproject/providers'
@@ -87,16 +87,24 @@ const initialYourInfo: IYourInfo[] = [
   },
 ]
 
-const initialRefInfo = [
+export interface IRefInfo {
+  id: number | string
+  title: string
+  amountInit: string
+  account?: string
+  rewardXOXS?: string
+  totalTransactionApplyReferral?: string
+}
+const initialRefInfo: IRefInfo[] = [
   {
     id: 1,
     title: 'XOXS amount received from Referral',
-    amount: '1000',
+    amountInit: '-',
   },
   {
     id: 2,
     title: 'Number of transactions applying your referral code',
-    amount: '100',
+    amountInit: '-',
   },
 ]
 
@@ -419,7 +427,7 @@ function VestingPage() {
     USDC_TEST && tryParseAmount('0.01', USDC_TESTNET),
     getContractPreSaleAddress(5),
   )
-
+  const [dataRef, setDataRef] = useState<IRefInfo[]>(initialRefInfo)
   const [balanceLP, setBalanceLP] = useState<any>()
   const [balanceNative, setBalanceNative] = useState<any>()
   const provider = useProvider({ chainId })
@@ -429,6 +437,7 @@ function VestingPage() {
   const resSaleStats = useGetSaleStats()
   const [dataStatus, setDataStatus] = useState<any>([])
   const [dataVestingSchedule, setDataVestingSchedule] = useState<IVestingTime[]>([])
+  const [messageConfirm, setMessageConfirm] = useState<string>('')
 
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     if (dataSaleStatsParams.length !== 0) {
@@ -533,6 +542,7 @@ function VestingPage() {
     const refAddess = !codeRef ? ADDRESS_CODE : referralCode
     const amountParse =
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), 6)
+    setMessageConfirm(`Buying ${amountXOX} XOX`)
 
     if (
       isUserInWhiteList &&
@@ -614,6 +624,36 @@ function VestingPage() {
         if (error?.code !== 4001) {
           toastError('Error', 'Transaction failed')
         }
+      }
+    }
+  }
+
+  const handleClaim = async (round: number, amoutXOXPending: number) => {
+    try {
+      setIsOpenLoadingClaimModal(true)
+      setMessageConfirm(`Claim ${amoutXOXPending} XOX`)
+      const gas = await contractPreSale.estimateGas.userClaimInvestedToken(BigNumberEthers.from(round))
+      const result = await contractPreSale.userClaimInvestedToken(BigNumberEthers.from(round), { gasLimit: gas })
+      const txHash = await result.wait(1)
+
+      if (txHash?.transactionHash) {
+        setIsOpenLoadingClaimModal(false)
+        toastSuccess(
+          `Claimed XOX`,
+          <ToastDescriptionWithTx txHash={txHash.transactionHash}>
+            {t('Your %symbol% invests have been sent to your wallet!', { symbol: 'XOX' })}
+          </ToastDescriptionWithTx>,
+        )
+      }
+    } catch (error: any) {
+      console.warn(error)
+      setIsOpenLoadingClaimModal(false)
+      if (error?.message?.includes('rejected')) {
+        toastError('Error', 'User rejected the request.')
+        return
+      }
+      if (error?.code !== 4001) {
+        toastError('Error', 'Transaction failed')
       }
     }
   }
@@ -790,6 +830,23 @@ function VestingPage() {
       })
   }
 
+  const handleGetRefPreSale = async (iRefInfo: IRefInfo[], acc: string) => {
+    try {
+      const data = await getDataReferralPresale(acc)
+      if (data && data?.analysisSaleReferrals && data?.analysisSaleReferrals.length !== 0) {
+        const newData = Array.from(iRefInfo).map((item: IRefInfo) => {
+          return {
+            ...item,
+            ...data?.analysisSaleReferrals[0],
+          }
+        })
+        setDataRef(newData)
+      }
+    } catch (error) {
+      console.warn(error)
+    }
+  }
+
   useEffect(() => {
     if (!account || !chainId) return
     handleGetBalanceOfUser()
@@ -802,6 +859,7 @@ function VestingPage() {
     handleGetRoundStatus()
     handleGetApiWhitelist()
     handleGetDataVesting()
+    handleGetRefPreSale(initialRefInfo, account)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
@@ -891,7 +949,8 @@ function VestingPage() {
             setTabActiveMechansim={setTabActiveMechansim}
             initialTokenMetrics={initialTokenMetrics}
             dataInfo={dataForInfo}
-            dataRefInfo={initialRefInfo}
+            dataRefInfo={dataRef}
+            handleClaim={handleClaim}
             dataTransaction={dataTransaction}
             dataVesting={dataVestingSchedule}
           />
@@ -910,7 +969,7 @@ function VestingPage() {
             <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
           </div>
           <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
-          <div className="noti_claim_pending_h3">Buying {amountXOX} XOX</div>
+          <div className="noti_claim_pending_h3">{messageConfirm}</div>
           <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
           <img
             src="/images/close-one.svg"

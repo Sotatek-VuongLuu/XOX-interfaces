@@ -20,6 +20,7 @@ interface IProps {
   dataRefInfo: any
   dataTransaction: any[]
   dataVesting: IVestingTime[]
+  handleClaim: (round: number, remainning: number) => void
 }
 
 interface IPropsWrapper {
@@ -220,8 +221,8 @@ function SaleMechanism({
   dataRefInfo,
   dataTransaction,
   dataVesting,
+  handleClaim,
 }: IProps) {
-  const { account } = useActiveWeb3React()
   const { width } = useWindowSize()
   const [isMore, setIsMore] = useState(false)
 
@@ -232,7 +233,7 @@ function SaleMechanism({
       case 'Token Metrics':
         return <TokenMetrics initialTokenMetrics={initialTokenMetrics} />
       case 'Vesting Schedule':
-        return <VestingSchedule dataVesting={dataVesting} />
+        return <VestingSchedule dataVesting={dataVesting} handleClaim={handleClaim} />
       case 'Your Information':
         return <YourInfo dataInfo={dataInfo} dataRefInfo={dataRefInfo} dataTransaction={dataTransaction} />
       default:

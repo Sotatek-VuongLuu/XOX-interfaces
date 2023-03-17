@@ -1,20 +1,18 @@
+import { formatUnits } from '@ethersproject/units'
 import { useTranslation } from '@pancakeswap/localization'
-import { CopyButton, Flex, Input, Select, Text } from '@pancakeswap/uikit'
+import { CopyButton, Flex, Text } from '@pancakeswap/uikit'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useCallback, useEffect, useState } from 'react'
-import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import styled from 'styled-components'
-import { Arrow } from 'views/Info/components/InfoTables/shared'
-import { IVestingTime } from 'views/Vesting'
-import { ClickableColumnHeader, CustomTableWrapper, NoTransactionWrapper, PageButtons, Table } from './SaleHistory'
+import { IRefInfo } from 'views/Vesting'
 import TabClaimHistory from './TabClaimHistory'
 import TabSaleHistory from './TabSaleHistory'
 
 interface IProps {
   dataInfo: any[]
-  dataRefInfo: any[]
+  dataRefInfo: IRefInfo[]
   dataTransaction: any[]
 }
 
@@ -320,14 +318,20 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction }: IProps) {
         </Flex>
 
         <div className="your_ref">
-          {Array.from(dataRefInfo).map((item) => {
+          {Array.from(dataRefInfo).map((item: IRefInfo) => {
             return (
               <div className="item_your-ref">
                 <div className="corner_1" />
                 <div className="edge_1" />
                 <div className="corner_2" />
                 <div className="edge_2" />
-                <p className="item_your-ref_amount">{item.amount}</p>
+                <p className="item_your-ref_amount">
+                  {item.totalTransactionApplyReferral
+                    ? item.title === 'XOXS amount received from Referral'
+                      ? formatUnits(item.rewardXOXS, 6)
+                      : item.totalTransactionApplyReferral
+                    : item.amountInit}
+                </p>
                 <p className="item_your-ref_title">{item.title}</p>
               </div>
             )

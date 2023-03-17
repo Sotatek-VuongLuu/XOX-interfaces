@@ -1,6 +1,8 @@
+import { BigNumber } from '@ethersproject/bignumber'
 import { Button } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import { useXOXPreSaleContract } from 'hooks/useContract'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { IVestingTime, vestingTiming } from 'views/Vesting'
@@ -131,7 +133,15 @@ const Img = styled.img`
   margin-right: 16px;
 `
 
-const SaleItem = ({ item, index }: { item: IVestingTime; index: number }) => {
+const SaleItem = ({
+  item,
+  index,
+  handleClaim,
+}: {
+  item: IVestingTime
+  index: number
+  handleClaim: (round: number, remainning: number) => void
+}) => {
   return (
     <div className={`sale_item sale_item_${index}`}>
       <div className="heading-sale">{item.title}</div>
@@ -170,7 +180,13 @@ const SaleItem = ({ item, index }: { item: IVestingTime; index: number }) => {
           </p>
         </div>
         <div className="sale-schedule-item">
-          <CustomButtom type="button">Claim</CustomButtom>
+          <CustomButtom
+            type="button"
+            onClick={() => handleClaim(item.round, item.yourCurrentXOX)}
+            disabled={item.yourCurrentXOX === 0}
+          >
+            Claim
+          </CustomButtom>
         </div>
       </div>
     </div>
@@ -341,7 +357,13 @@ const CountDown = ({ startTime }: Props) => {
   )
 }
 
-function VestingSchedule({ dataVesting }: { dataVesting: IVestingTime[] }) {
+function VestingSchedule({
+  dataVesting,
+  handleClaim,
+}: {
+  dataVesting: IVestingTime[]
+  handleClaim: (round: number, remainning: number) => void
+}) {
   const { account } = useActiveWeb3React()
   return (
     <Wrapper>
@@ -358,7 +380,7 @@ function VestingSchedule({ dataVesting }: { dataVesting: IVestingTime[] }) {
           <Content>
             <div className="over_flow">
               {Array.from(dataVesting).map((item: IVestingTime, index) => {
-                return <SaleItem item={item} index={index} />
+                return <SaleItem item={item} index={index} handleClaim={handleClaim} />
               })}
             </div>
           </Content>

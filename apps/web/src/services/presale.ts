@@ -91,3 +91,20 @@ export const getDataRoundStats = async (chainId = ChainId.GOERLI) => {
   )
   return response
 }
+
+export const getDataReferralPresale = async (account: string, chainId = ChainId.GOERLI) => {
+  const response = await request(
+    endpointsSubGraphPreSale,
+    gql`
+      query getRefPresale {
+        analysisSaleReferrals(where: { account: "${account.toLowerCase()}" }) {
+          id
+          account
+          rewardXOXS
+          totalTransactionApplyReferral
+        }
+      }
+    `,
+  )
+  return response
+}
