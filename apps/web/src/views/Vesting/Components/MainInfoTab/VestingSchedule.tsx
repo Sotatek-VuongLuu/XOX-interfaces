@@ -1,6 +1,7 @@
 import { Button } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import moment from 'moment'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { IVestingTime } from 'views/Vesting'
@@ -172,9 +173,9 @@ const SaleItem = ({
           </div>
         </div>
         <div className="sale-schedule-item flex-col">
-          <p className="next_day">Next unlocking date: 02/15/2023</p>
+          <p className="next_day">Next unlocking date: {moment.unix(item.startTime[0] / 1000).format('MM/DD/YYYY')}</p>
           <p>
-            <CountDown startTime={item.startTime} />
+            <CountDown startTime={item.startTime[0]} />
           </p>
         </div>
         <div className="sale-schedule-item">
@@ -363,6 +364,7 @@ function VestingSchedule({
   handleClaim: (round: number, remainning: number) => void
 }) {
   const { account } = useActiveWeb3React()
+
   return (
     <Wrapper>
       {!account && (

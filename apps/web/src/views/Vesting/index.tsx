@@ -315,7 +315,7 @@ export interface IVestingTime {
   amountVested: number
   remaining: number
   yourCurrentXOX: number
-  startTime: number
+  startTime: number[]
   statusClaim: boolean
   round?: number
 }
@@ -342,7 +342,7 @@ export const vestingTiming: IVestingTime[] = [
     amountVested: 0,
     remaining: 0,
     yourCurrentXOX: 0,
-    startTime: 1679276974000,
+    startTime: [1679276974000],
     statusClaim: false,
     round: ROUND.ONE,
   },
@@ -351,7 +351,7 @@ export const vestingTiming: IVestingTime[] = [
     amountVested: 0,
     remaining: 0,
     yourCurrentXOX: 0,
-    startTime: 1679276974000,
+    startTime: [1679276974000],
     statusClaim: false,
     round: ROUND.TWO,
   },
@@ -360,7 +360,7 @@ export const vestingTiming: IVestingTime[] = [
     amountVested: 0,
     remaining: 0,
     yourCurrentXOX: 0,
-    startTime: 1679276974000,
+    startTime: [1679276974000],
     statusClaim: false,
     round: ROUND.THREE,
   },
@@ -436,6 +436,7 @@ function VestingPage() {
   const [dataStatus, setDataStatus] = useState<any>([])
   const [dataVestingSchedule, setDataVestingSchedule] = useState<IVestingTime[]>([])
   const [messageConfirm, setMessageConfirm] = useState<string>('')
+  const [massageErrorAmount, setMassageErrorAmount] = useState<string>('')
 
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     if (dataSaleStatsParams.length !== 0) {
@@ -656,9 +657,27 @@ function VestingPage() {
     }
   }
 
+  const handleRenderTenMonths = (dateAgr: number) => {
+    const arrLockingTime = []
+    const timeInit = moment
+      .unix(dateAgr / 1000)
+      .add(1, 'month')
+      .unix()
+    arrLockingTime.push(timeInit * 1000)
+    for (let i = 0; i < 9; i++) {
+      const time = moment
+        .unix(arrLockingTime[i] / 1000)
+        .add(1, 'month')
+        .unix()
+      arrLockingTime.push(time * 1000)
+    }
+    return arrLockingTime
+  }
+
   const handleGetDataVesting = async () => {
     const dataClone: IVestingTime[] = [...vestingTiming]
     const round = [1, 2, 3]
+    const dataRoundDate = [infoRoundOne, infoRoundTow, infoRoundThree]
     round.forEach(async (item) => {
       const [vested, currentXOX, userInvested] = await Promise.all([
         contractPreSale.userClaimedAmount(account, BigNumberEthers.from(item)),
@@ -670,6 +689,9 @@ function VestingPage() {
       dataClone[item - 1].remaining = new BigNumber(formatEther(userInvested).toString())
         .minus(formatEther(vested).toString())
         .toNumber()
+      dataClone[item - 1].startTime = dataRoundDate[item - 1].endDate
+        ? handleRenderTenMonths(dataRoundDate[item - 1].endDate)
+        : []
     })
     setDataVestingSchedule(dataClone)
   }
@@ -750,6 +772,7 @@ function VestingPage() {
       handleChangeReferal={handleChangeReferal}
       setCodeRef={setCodeRef}
       referralError={referralError}
+      massageErrorAmount={massageErrorAmount}
       amountXOX={amountXOX}
       amountXOXS={amountXOXS}
       setAmountXOX={setAmountXOX}
@@ -845,6 +868,34 @@ function VestingPage() {
     }
   }
 
+  const validateAmount = (value: string, typeBuy: number) => {
+    let message = ''
+    const totalDolla = typeBuy === TYPE_BY.BY_ETH ? new BigNumber(value).multipliedBy(ethPerDolla).toNumber() : value
+    const balanceCompare = typeBuy === TYPE_BY.BY_ETH ? balanceNative : balanceLP
+    if (new BigNumber(value).isGreaterThan(balanceCompare)) {
+      message = 'Insufficient balance'
+      return message
+    }
+    if (totalDolla > 5000) {
+      message = 'Maximum investment: $5000'
+    } else if (totalDolla < 50) {
+      message = 'Maximum investment: $50'
+    } else {
+      message = ''
+    }
+    return message
+  }
+
+  useEffect(() => {
+    if (amount === '') {
+      setMassageErrorAmount('This is required')
+    } else {
+      const mess: string = validateAmount(amount, typeBuyPrice)
+      setMassageErrorAmount(mess)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [amount, typeBuyPrice])
+
   useEffect(() => {
     if (!account || !chainId) return
     handleGetBalanceOfUser()
@@ -856,14 +907,20 @@ function VestingPage() {
     handleGetDataTransaction()
     handleGetRoundStatus()
     handleGetApiWhitelist()
-    handleGetDataVesting()
     handleGetRefPreSale(initialRefInfo, account)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
   useEffect(() => {
+    if (!account || !chainId) return
+    handleGetDataVesting()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, chainId, infoRoundOne, infoRoundThree, infoRoundTow])
+
+  useEffect(() => {
     setReferralError(null)
     setAmount('')
+    // setMassageErrorAmount('')
   }, [nodeId])
 
   useEffect(() => {

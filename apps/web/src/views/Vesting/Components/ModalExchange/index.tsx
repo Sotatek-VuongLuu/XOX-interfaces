@@ -272,6 +272,7 @@ interface Props extends InjectedModalProps {
   setAmountXOXS: (value: string | number) => void
   balanceLP: any
   balanceNative: any
+  massageErrorAmount: string
 }
 
 function ModalSaleExchange({
@@ -291,13 +292,13 @@ function ModalSaleExchange({
   isTimeAllowWhitelist,
   amountXOX,
   amountXOXS,
+  massageErrorAmount,
   setAmountXOX,
   setAmountXOXS,
   balanceLP,
   balanceNative,
 }: Props) {
   const { width } = useWindowSize()
-
   const isSwap = approvalState !== ApprovalState.APPROVED && typeBuyPrice === TYPE_BY.BY_USDC
 
   const handleRenderXOXAmount = (typeBuy: number, round: number, amountToken: any) => {
@@ -353,15 +354,19 @@ function ModalSaleExchange({
               <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="53px">
                 Amount
               </Text>
-              <BoxCenter>
-                <NumericalInputStyled
-                  value={amount}
-                  amount={amount}
-                  onUserInput={(value) => setAmount(value)}
-                  placeholder="0.00"
-                />
-                <ButtonStyle>All</ButtonStyle>
-              </BoxCenter>
+              <Flex flexDirection="column">
+                <BoxCenter>
+                  <NumericalInputStyled
+                    value={amount}
+                    amount={amount}
+                    onUserInput={(value) => setAmount(value)}
+                    placeholder="0.00"
+                  />
+                  <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative)}>
+                    All
+                  </ButtonStyle>
+                </BoxCenter>
+              </Flex>
               <Text className="coin">
                 {typeBuyPrice === TYPE_BY.BY_USDC && (
                   <>
@@ -377,6 +382,7 @@ function ModalSaleExchange({
                 )}
               </Text>
             </Flex>
+            {massageErrorAmount && <ErrorReferral style={{ paddingLeft: 100 }}>{massageErrorAmount}</ErrorReferral>}
           </>
         )}
 
@@ -386,21 +392,37 @@ function ModalSaleExchange({
               <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} className="text_mb">
                 Amount
               </Text>
-              <p className="balance_mb">Balance:</p>
+              <p className="balance_mb">Balance: {typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative}</p>
               <Text className="coin">
-                <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
-                <span>USDT</span>
+                {typeBuyPrice === TYPE_BY.BY_USDC && (
+                  <>
+                    <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt="logo" />
+                    <span>USDC</span>
+                  </>
+                )}
+                {typeBuyPrice === TYPE_BY.BY_ETH && (
+                  <>
+                    <img src="/images/1/tokens/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2.svg" alt="logo" />
+                    <span>ETH</span>
+                  </>
+                )}
               </Text>
             </Flex>
-            <BoxCenter>
-              <NumericalInputStyled
-                value={amount}
-                amount={amount}
-                onUserInput={(value) => setAmount(value)}
-                placeholder="0.00"
-              />
-              <ButtonStyle>All</ButtonStyle>
-            </BoxCenter>
+
+            <Flex flexDirection="column">
+              <BoxCenter>
+                <NumericalInputStyled
+                  value={amount}
+                  amount={amount}
+                  onUserInput={(value) => setAmount(value)}
+                  placeholder="0.00"
+                />
+                <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative)}>
+                  All
+                </ButtonStyle>
+              </BoxCenter>
+              {massageErrorAmount && <ErrorReferral>{massageErrorAmount}</ErrorReferral>}
+            </Flex>
           </>
         )}
 
@@ -464,7 +486,7 @@ function ModalSaleExchange({
               )}
             </Button>
           ) : (
-            <Button className="buy_xox" onClick={handeInvest} disabled={referralError || !amount}>
+            <Button className="buy_xox" onClick={handeInvest} disabled={referralError || !amount || massageErrorAmount}>
               Buy XOX
             </Button>
           )}

@@ -473,7 +473,6 @@ function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: 
       setDataFormat(newDataFormat)
     }
   }
-
   useEffect(() => {
     handleFormatData(dataStatus)
     // eslint-disable-next-line react-hooks/exhaustive-deps
