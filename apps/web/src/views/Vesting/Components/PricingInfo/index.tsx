@@ -478,33 +478,33 @@ function PricingInfo({
         {!account && <ConnectWalletButtonCustom width="100%" />}
         {account && (
           <div className="btn_group">
-            {/* {isCanBuyWithWhitelistUser ? ( */}
-            <>
-              <CustomButton
-                onClick={() => {
-                  onModalExchangeSale()
-                  setTypeBuyPrice(TYPE_BY.BY_USDC)
-                }}
-              >
-                Buy with USDC
-              </CustomButton>
+            {isCanBuyWithWhitelistUser ? (
+              <>
+                <CustomButton
+                  onClick={() => {
+                    onModalExchangeSale()
+                    setTypeBuyPrice(TYPE_BY.BY_USDC)
+                  }}
+                >
+                  Buy with USDC
+                </CustomButton>
 
-              <ButtonETH
-                className="btn_get_eth"
-                onClick={() => {
-                  onModalExchangeSale()
-                  setTypeBuyPrice(TYPE_BY.BY_ETH)
-                }}
-                aria-hidden="true"
-              >
-                <div className="corner_btn_1" />
-                <div className="edge_btn_1" />
-                <div className="corner_btn_2" />
-                <div className="edge_btn_2" />
-                <span>Buy with ETH</span>
-              </ButtonETH>
-            </>
-            {/* ) : (
+                <ButtonETH
+                  className="btn_get_eth"
+                  onClick={() => {
+                    onModalExchangeSale()
+                    setTypeBuyPrice(TYPE_BY.BY_ETH)
+                  }}
+                  aria-hidden="true"
+                >
+                  <div className="corner_btn_1" />
+                  <div className="edge_btn_1" />
+                  <div className="corner_btn_2" />
+                  <div className="edge_btn_2" />
+                  <span>Buy with ETH</span>
+                </ButtonETH>
+              </>
+            ) : (
               <>
                 <CustomButton
                   onClick={() => {
@@ -535,7 +535,7 @@ function PricingInfo({
                   </ButtonETH>
                 )}
               </>
-            )} */}
+            )}
           </div>
         )}
       </Content>
