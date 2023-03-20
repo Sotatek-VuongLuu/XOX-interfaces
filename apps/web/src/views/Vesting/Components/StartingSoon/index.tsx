@@ -3,7 +3,7 @@ import { formatEther } from '@ethersproject/units'
 import BigNumber from 'bignumber.js'
 import { logger } from 'ethers'
 import moment from 'moment'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import IfoFoldableCard from 'views/Ifos/components/IfoFoldableCard'
 import { RoundInfo } from 'views/Vesting'
@@ -159,6 +159,8 @@ interface IProps {
   isInTimeRangeSale: boolean
   isUserInWhiteList: boolean
   isTimeAllowWhitelist: boolean
+  setReachZero: (isReach: boolean) => void
+  reacheZero: boolean
 }
 
 const now = new Date()
@@ -173,6 +175,8 @@ function StartingSoon({
   isInTimeRangeSale,
   isUserInWhiteList,
   isTimeAllowWhitelist,
+  setReachZero,
+  reacheZero,
 }: IProps) {
   const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
   const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
@@ -231,23 +235,26 @@ function StartingSoon({
     }
   }
 
-  const handleRenderCountdown = (timeStamp: any) => {
+  const handleCountdownArg = (startDate: number) => {
+    return <CountDown startTime={startDate} setReachZero={setReachZero} />
+  }
+
+  const handleRenderCountdown = (timeStamp: number) => {
     if (timeStamp < infoRoundOne.startDate) {
       return (
         <>
           <p className="notice">
             Sale 1 will start on {moment.unix(infoRoundOne.startDate / 1000).format('DD/MM/YYYY')}.
           </p>
-          <CountDown startTime={infoRoundOne.startDate} />
+          {handleCountdownArg(infoRoundOne.startDate)}
         </>
       )
     }
-
-    if (infoRoundOne.startDate <= timeStamp && timeStamp < infoRoundOne.endDate) {
+    if (infoRoundOne.startDate < timeStamp && timeStamp < infoRoundOne.endDate) {
       return (
         <>
           <p className="notice">Sale 1 will end on {moment.unix(infoRoundOne.endDate / 1000).format('DD/MM/YYYY')}.</p>
-          <CountDown startTime={infoRoundOne.endDate} />
+          {handleCountdownArg(infoRoundOne.endDate)}
         </>
       )
     }
@@ -259,7 +266,7 @@ function StartingSoon({
             <p className="notice">
               Sale 2 will start on {moment.unix(infoRoundTow.startDate / 1000).format('DD/MM/YYYY')}.
             </p>
-            <CountDown startTime={infoRoundTow.startDate} />
+            {handleCountdownArg(infoRoundTow.startDate)}
           </>
         )
       }
@@ -270,7 +277,7 @@ function StartingSoon({
             <p className="notice">
               Sale 2 will end on {moment.unix(infoRoundTow.endDate / 1000).format('DD/MM/YYYY')}.
             </p>
-            <CountDown startTime={infoRoundTow.endDate} />
+            {handleCountdownArg(infoRoundTow.endDate)}
           </>
         )
       }
@@ -282,7 +289,7 @@ function StartingSoon({
             <p className="notice">
               Sale 3 will start on {moment.unix(infoRoundThree.startDate / 1000).format('DD/MM/YYYY')}.
             </p>
-            <CountDown startTime={infoRoundThree.startDate} />
+            {handleCountdownArg(infoRoundThree.startDate)}
           </>
         )
       }
@@ -293,7 +300,7 @@ function StartingSoon({
             <p className="notice">
               Sale 3 will end on {moment.unix(infoRoundThree.endDate / 1000).format('DD/MM/YYYY')}.
             </p>
-            <CountDown startTime={infoRoundThree.endDate} />
+            {handleCountdownArg(infoRoundThree.endDate)}
           </>
         )
       }
@@ -314,6 +321,18 @@ function StartingSoon({
       </div>
     )
   }
+
+  useEffect(() => {
+    if (reacheZero) {
+      const ngu = now.getTime()
+      handleRenderCountdown(ngu)
+    }
+    const id = setTimeout(() => {
+      setReachZero(false)
+    }, 5000)
+    return () => clearTimeout(id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reacheZero])
 
   return (
     <Wrapper>

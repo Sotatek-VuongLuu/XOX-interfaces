@@ -1,4 +1,5 @@
 /* eslint-disable import/no-cycle */
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { RoundInfo } from '..'
 import PricingInfo from './PricingInfo'
@@ -49,6 +50,8 @@ function CountDownBlock({
   typeBuyPrice,
   totalXOXTokenInRound,
 }: IProps) {
+  const [reacheZero, setReachZero] = useState<boolean>(false)
+
   return (
     <Wrapper>
       <Content>
@@ -70,6 +73,8 @@ function CountDownBlock({
           isInTimeRangeSale={isInTimeRangeSale}
           isUserInWhiteList={isUserInWhiteList}
           isTimeAllowWhitelist={isTimeAllowWhitelist}
+          setReachZero={setReachZero}
+          reacheZero={reacheZero}
         />
       </Content>
     </Wrapper>
