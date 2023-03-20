@@ -77,6 +77,7 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
+  margin: 150px 0;
 `
 
 const LiquidityBody = styled.div`
@@ -206,7 +207,7 @@ const WapperHeight = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 1000px;
+  /* min-height: 1000px; */
 `
 
 const SwapBackgroundWrapper = styled.div`
@@ -747,7 +748,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
     <Page>
       {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <WapperHeight>
-        <Flex width={['328px', , '559px']} className="container_bridge">
+        <Flex width={['328px', , '559px']}>
           <Wrapper flex="column" position="relative">
             {isMobile ? (
               <>

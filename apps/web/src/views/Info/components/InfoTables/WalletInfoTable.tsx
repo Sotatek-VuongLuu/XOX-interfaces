@@ -310,9 +310,12 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       .catch((e) => console.warn(e))
   }
 
-  const getToken = useCallback((token: any) => {
-    return new ERC20Token(chainId, token.contractAddress, token.decimals, token.symbol)
-  }, [chainId])
+  const getToken = useCallback(
+    (token: any) => {
+      return new ERC20Token(chainId, token.contractAddress, token.decimals, token.symbol)
+    },
+    [chainId],
+  )
 
   useEffect(() => {
     getXOXPrice()
@@ -387,6 +390,14 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     total = nativeBalance + xoxBalance + result[2].value + sum
     setTotalAsset(total)
     setDataChart(
+      result.map((d) => {
+        return {
+          name: d.name,
+          value: Number(((d.value * 100) / total).toFixed(2)),
+        }
+      }),
+    )
+    console.log(
       result.map((d) => {
         return {
           name: d.name,

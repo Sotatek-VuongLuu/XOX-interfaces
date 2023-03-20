@@ -40,9 +40,10 @@ import LiquidityMainBackgroundBorderMobile from 'components/Svg/LiquidityMainBac
 const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
   width: 100%;
   height: 37px;
-
+  font-size: 16px;
   ${({ theme }) => theme.mediaQueries.md} {
     height: 43px;
+    font-size: 18px;
   }
 `
 
@@ -108,6 +109,7 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
+  margin: 150px 0;
 `
 
 const Body = styled.div`
@@ -119,6 +121,8 @@ const ButtonWrapper = styled(Button)`
   width: 100%;
   border-radius: 6px;
   font-size: 16px;
+  /* font-size: 18px; */
+
   ${({ theme }) => theme.mediaQueries.md} {
     height: 43px;
     font-size: 18px;
@@ -243,7 +247,7 @@ const WapperHeight = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 820px;
+  /* min-height: 820px; */
 `
 
 const ConfirmedIcon = styled(ColumnCenter)`
