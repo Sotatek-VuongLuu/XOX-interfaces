@@ -39,9 +39,6 @@ const Home: React.FC<React.PropsWithChildren> = () => {
   const { width: innerWidth, height: innerHeight } = useWindowSize()
   const { isDesktop } = useMatchBreakpoints()
   const widthResize = innerWidth > 1400 ? 1400 : innerWidth > 900 ? 1200 : '100%'
-
-  console.log(`innerHeight`, innerHeight)
-
   useEffect(() => {
     AOS.init({ duration: 2000 })
   }, [])

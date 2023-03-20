@@ -141,6 +141,19 @@ const SaleItem = ({
   index: number
   handleClaim: (round: number, remainning: number) => void
 }) => {
+  const [reacheZero, setReachZero] = useState<boolean>(false)
+  const [count, setCount] = useState<number>(0)
+
+  useEffect(() => {
+    if (reacheZero) {
+      // eslint-disable-next-line no-unused-expressions
+      count < item.startTime.length - 1 && setCount(count + 1)
+    }
+    const id = setTimeout(() => setReachZero(false), 5000)
+    return () => clearTimeout(id)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reacheZero])
+
   return (
     <div className={`sale_item sale_item_${index}`}>
       <div className="heading-sale">{item.title}</div>
@@ -173,9 +186,12 @@ const SaleItem = ({
           </div>
         </div>
         <div className="sale-schedule-item flex-col">
-          <p className="next_day">Next unlocking date: {moment.unix(item.startTime[0] / 1000).format('MM/DD/YYYY')}</p>
+          <p className="next_day">
+            Next unlocking date:{' '}
+            {item.startTime.length !== 0 ? moment.unix(item.startTime[count] / 1000).format('MM/DD/YYYY') : ' -/-/-'}
+          </p>
           <p>
-            <CountDown startTime={item.startTime[0]} />
+            <CountDown startTime={item.startTime[count]} setReachZero={setReachZero} />
           </p>
         </div>
         <div className="sale-schedule-item">
@@ -194,6 +210,7 @@ const SaleItem = ({
 
 interface Props {
   startTime: any
+  setReachZero?: (isReached: boolean) => void
 }
 
 const handleTime = (time: number) => {
@@ -297,7 +314,7 @@ const WrapperTime = styled.div`
   }
 `
 
-const CountDown = ({ startTime }: Props) => {
+const CountDown = ({ startTime, setReachZero }: Props) => {
   const [timeList, setTimeList] = useState({
     days: 0,
     hours: 0,
@@ -307,6 +324,7 @@ const CountDown = ({ startTime }: Props) => {
   const timeStart = Math.floor(new Date(startTime).getTime()) / 1000
 
   const NOW = Date.now() / 1000
+
   const periodTime = Math.floor(timeStart - NOW)
 
   const handleCountDown = () => {
@@ -319,11 +337,18 @@ const CountDown = ({ startTime }: Props) => {
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (Math.floor(periodTime) > 0) {
+    if (Math.floor(periodTime) >= 0) {
       const refreshInterval = setInterval(handleCountDown, 1000)
       return () => clearInterval(refreshInterval)
     }
-  }, [timeList, timeStart])
+    if (setReachZero) {
+      const ngu = Date.now()
+      if (ngu >= startTime) {
+        setReachZero(true)
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeList, timeStart, setReachZero])
 
   const renderTitleTime = (key: any) => {
     switch (key) {
