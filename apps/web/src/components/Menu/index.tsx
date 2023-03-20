@@ -193,6 +193,7 @@ const Menu = (props) => {
   const [activeNotifi, setActiveNotifi] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement>(null)
   const host = 'wss://api.xoxnet.sotatek.works'
+  const menuLandingPath = ['/', '/company']
   const menuItemsLanding = useMemo(() => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
   }, [t, isDark, currentLanguage.code, chainId])
@@ -279,8 +280,8 @@ const Menu = (props) => {
       <ModalV2Wrapper closeOnOverlayClick isOpen={openHeader} onDismiss={handleCloseHeaderMenu}>
         <CustomModalWrapper onDismiss={handleCloseHeaderMenu} style={{ overflow: 'visible', border: 'none' }}>
           <MenuItemsWrapper
-            items={route.pathname === '/' ? menuItemsLanding : menuItems}
-            activeItem={route.pathname === '/' ? activeMenuItemLanding?.href : activeMenuItem?.href}
+            items={menuLandingPath.includes(route.pathname) ? menuItemsLanding : menuItems}
+            activeItem={menuLandingPath.includes(route.pathname) ? activeMenuItemLanding?.href : activeMenuItem?.href}
             activeSubItem={activeSubMenuItem?.href}
           />
         </CustomModalWrapper>
@@ -290,7 +291,7 @@ const Menu = (props) => {
           return <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
         }}
         rightSide={
-          route.pathname === '/' ? (
+          menuLandingPath.includes(route.pathname) ? (
             <>
               <a href="/swap" style={{ marginRight: '11px' }} target="_blank">
                 <BTNLaunchApp>Launch App</BTNLaunchApp>
@@ -406,13 +407,13 @@ const Menu = (props) => {
         langs={languageList}
         setLang={setLanguage}
         cakePriceUsd={cakePriceUsd}
-        links={route.pathname === '/' ? menuItemsLanding : menuItems}
+        links={menuLandingPath.includes(route.pathname) ? menuItemsLanding : menuItems}
         subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : []}
         footerLinks={getFooterLinks}
-        activeItem={route.pathname === '/' ? activeMenuItemLanding?.href : activeMenuItem?.href}
+        activeItem={menuLandingPath.includes(route.pathname) ? activeMenuItemLanding?.href : activeMenuItem?.href}
         activeSubItem={activeSubMenuItem?.href}
         buyCakeLabel={t('Buy CAKE')}
-        isLanding={route.pathname === '/'}
+        isLanding={menuLandingPath.includes(route.pathname)}
         {...props}
       />
     </>

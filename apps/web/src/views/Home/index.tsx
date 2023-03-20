@@ -22,7 +22,7 @@ import SecuredBy from './components/Banners/SecuredBy'
 import BGPartner from './components/Banners/BackgroundPartner'
 import FeatureSquare from './components/Banners/FeatureSquare'
 
-const StyledSection = styled(PageSection)`
+export const StyledSection = styled(PageSection)`
   padding-top: 16px;
   padding: 0px 21px;
 

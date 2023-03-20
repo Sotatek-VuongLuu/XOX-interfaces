@@ -170,7 +170,7 @@ export const configLanding: (
       label: t('Company'),
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,
-      href: '#',
+      href: '/company',
       showItemsOnMobile: false,
       items: [],
     },

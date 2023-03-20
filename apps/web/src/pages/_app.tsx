@@ -169,7 +169,13 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <ProductionErrorBoundary>
       <MainBackground>
-        {isMobile ? <img src="/images/asset_page_bg.svg" /> : <SwapMainBackgroundDesktop />}
+        {['/company'].includes(route.pathname) ? (
+          <></>
+        ) : isMobile ? (
+          <img src="/images/asset_page_bg.svg" />
+        ) : (
+          <SwapMainBackgroundDesktop />
+        )}
       </MainBackground>
       <ShowMenu>
         <Layout>
