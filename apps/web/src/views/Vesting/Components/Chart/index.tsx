@@ -56,8 +56,9 @@ const Wrapper = styled.div`
   }
 
   @media screen and (max-width: 900px) {
-    padding: 15px 24px 24px;
+    padding: 15px 22px 24px;
     height: 270px;
+    margin-bottom: 20px;
     background-image: url('/images/char_bg_image.png');
     background-size: 100% 253px;
 

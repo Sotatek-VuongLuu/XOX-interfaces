@@ -189,6 +189,7 @@ const Content = styled.div`
       line-height: 17px;
       color: #ffffff;
       padding: 10px 20px;
+      margin-right: 8px;
       border-radius: 8px;
       white-space: nowrap;
       &:hover {

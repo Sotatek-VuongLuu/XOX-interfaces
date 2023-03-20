@@ -122,7 +122,7 @@ const Wrapper = styled.div`
 
     @media screen and (max-width: 900px) {
       grid-template-columns: 1fr;
-      gap: 24px;
+      gap: 31px;
     }
   }
 

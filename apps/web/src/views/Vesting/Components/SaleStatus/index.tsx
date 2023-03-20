@@ -292,7 +292,7 @@ const CustomGrid = styled(Grid)`
 
   @media screen and (max-width: 900px) {
     grid-template-columns: 1fr;
-    gap: 45px;
+    gap: 37px;
   }
 `
 
@@ -360,7 +360,7 @@ const Item = ({ item }) => {
         </div>
         <div>
           <p className="status_name">Price</p>
-          <p className="status_value">{item.price}</p>
+          <p className="status_value">1 XOX = {item.price}</p>
         </div>
         <div>
           <p className="status_name">XOX for Sale</p>

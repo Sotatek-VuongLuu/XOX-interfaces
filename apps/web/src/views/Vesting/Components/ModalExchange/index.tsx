@@ -72,6 +72,10 @@ const StyledModalContainer = styled(ModalContainer)`
     z-index: 1;
     background: linear-gradient(to top, rgba(16, 16, 16, 0.3) 15%, #ed1c51, #ffb000);
   }
+
+  @media screen and (max-width: 900px) {
+    padding: 18px;
+  }
 `
 
 const StyledModalHeader = styled(ModalHeader)`
@@ -128,6 +132,10 @@ const StyledModalBody = styled(ModalBody)`
     width: 400px;
     @media screen and (max-width: 900px) {
       width: 100%;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      height: 37px;
     }
   }
 
@@ -181,15 +189,24 @@ const BoxCenter = styled(Box)`
     color: rgba(255, 255, 255, 0.87);
     &::placeholder {
       color: rgba(255, 255, 255, 0.38);
+      @media screen and (max-width: 900px) {
+        width: 100%;
+        font-size: 14px;
+        line-height: 17px;
+      }
     }
     &:focus {
       outline: none;
+    }
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+      line-height: 17px;
     }
   }
 
   @media screen and (max-width: 900px) {
     width: 100%;
-    padding: 10px 14px;
+    padding: 7px 14px;
     margin-top: 8px;
   }
 `
@@ -223,8 +240,8 @@ const NumericalInputStyled = styled(NumericalInput)<INumericalInputStyledProps>`
   }
 
   @media screen and (max-width: 576px) {
-    font-size: 12px;
-    line-height: 15px;
+    font-size: 14px;
+    line-height: 17px;
   }
 `
 
@@ -249,6 +266,17 @@ const FlexCustom = styled(Flex)`
       line-height: 15px;
       color: rgba(255, 255, 255, 0.6);
     }
+
+    .full_width {
+      width: 100%;
+    }
+  }
+`
+
+const TextCustom = styled(Text)`
+  @media screen and (max-width: 900px) {
+    font-size: 18px;
+    line-height: 22px;
   }
 `
 
@@ -338,9 +366,9 @@ function ModalSaleExchange({
       <div className="edge2" />
       <StyledModalHeader>
         <ModalTitle>
-          <Text color="rgba(255, 255, 255, 0.87)" fontWeight={700} fontSize="24px" textAlign="center">
+          <TextCustom color="rgba(255, 255, 255, 0.87)" fontWeight={700} fontSize="24px" textAlign="center">
             EXCHANGE
-          </Text>
+          </TextCustom>
         </ModalTitle>
         <ModalCloseButton onDismiss={onDismiss} />
       </StyledModalHeader>
@@ -446,7 +474,7 @@ function ModalSaleExchange({
         <FlexCustom>
           <Text className="title_ref">Referral Code</Text>
 
-          <Flex flexDirection="column">
+          <Flex flexDirection="column" className="full_width">
             <BoxCenter>
               <input
                 placeholder="Optional"
