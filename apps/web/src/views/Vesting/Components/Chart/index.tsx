@@ -106,20 +106,24 @@ function ChartSalePage() {
       from: moment(startDate).unix(),
       to: moment(endDate).unix(),
     }
-    const result = await getRaiseDailies(time.from, time.to, chainId)
-    if (result && result.raiseDailies && result.raiseDailies.length > 0) {
-      const arr = Array.from(result.raiseDailies).map((item: any) => {
-        return {
-          ...item,
-          id: String(item?.id).split('-')[1],
-        }
-      })
-      const chartData = createArray(startDate, endDate, arr)
-      const data = chartData.map((item: any) => {
-        const amount = new BigNumber(item.amount).div(10 ** 6).toNumber()
-        return createDataChartDay(moment(item.date * 1000).format('DD MMM'), amount)
-      })
-      setDataChart(data)
+    try {
+      const result = await getRaiseDailies(time.from, time.to, chainId)
+      if (result && result.raiseDailies && result.raiseDailies.length > 0) {
+        const arr = Array.from(result.raiseDailies).map((item: any) => {
+          return {
+            ...item,
+            id: String(item?.id).split('-')[1],
+          }
+        })
+        const chartData = createArray(startDate, endDate, arr)
+        const data = chartData.map((item: any) => {
+          const amount = new BigNumber(item.amount).div(10 ** 6).toNumber()
+          return createDataChartDay(moment(item.date * 1000).format('DD MMM'), amount)
+        })
+        setDataChart(data)
+      }
+    } catch (error) {
+      console.warn(error)
     }
   }
 

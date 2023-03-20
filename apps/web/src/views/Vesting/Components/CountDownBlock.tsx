@@ -50,8 +50,6 @@ function CountDownBlock({
   typeBuyPrice,
   totalXOXTokenInRound,
 }: IProps) {
-  const [reacheZero, setReachZero] = useState<boolean>(false)
-
   return (
     <Wrapper>
       <Content>
@@ -73,8 +71,6 @@ function CountDownBlock({
           isInTimeRangeSale={isInTimeRangeSale}
           isUserInWhiteList={isUserInWhiteList}
           isTimeAllowWhitelist={isTimeAllowWhitelist}
-          setReachZero={setReachZero}
-          reacheZero={reacheZero}
         />
       </Content>
     </Wrapper>

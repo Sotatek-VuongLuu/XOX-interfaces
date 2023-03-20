@@ -62,25 +62,25 @@ const initialYourInfo: IYourInfo[] = [
   {
     id: 1,
     title: 'Amount invested',
-    amount: '1000',
+    amount: '-',
     field: 'amountInvestUSD',
   },
   {
     id: 2,
     title: 'XOX amount bought',
-    amount: '100',
+    amount: '-',
     field: 'amountBoughtXOX',
   },
   {
     id: 3,
     title: 'XOX amount received',
-    amount: '100',
+    amount: '-',
     field: 'amountClaimXOX',
   },
   {
     id: 4,
     title: 'XOXS amount received',
-    amount: '100',
+    amount: '-',
     field: 'amountBoughtXOXS',
   },
 ]
@@ -476,8 +476,8 @@ function VestingPage() {
       setInfoRoundOne({
         ...infoRoundOne,
         totalDistribution: 2700000,
-        startDate: 1679309154000,
-        endDate: 1679309454000,
+        startDate: 1679325451000,
+        endDate: 1679325511000,
         bonusPercentage: new BigNumber(dataROne.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataROne.exchangeRate._hex).toNumber(),
       })
@@ -787,43 +787,55 @@ function VestingPage() {
   )
 
   const handleGetPreSaleUserInfo = async (initUserInfo: IYourInfo[]) => {
-    const data = await getUserPreSaleInfo()
-    if (data && data.userPreSaleDatas && data.userPreSaleDatas?.length > 0) {
-      const result = {
-        amountInvestUSD: 0,
-        amountBoughtXOX: 0,
-        amountBoughtXOXS: 0,
-        amountClaimXOX: 0,
-      }
-      Array.from(data.userPreSaleDatas).forEach((item: any) => {
-        result.amountInvestUSD += new BigNumber(item?.amountInvestUSD).div(10 ** 6).toNumber()
-        result.amountBoughtXOX += new BigNumber(item?.amountBoughtXOX).div(10 ** 18).toNumber()
-        result.amountBoughtXOXS += new BigNumber(item?.amountBoughtXOXS).div(10 ** 6).toNumber()
-        result.amountClaimXOX += new BigNumber(item?.amountClaimXOX).toNumber()
-        return null
-      })
-
-      const arrUpdate: IYourInfo[] = Array.from(initUserInfo).map((item: IYourInfo) => {
-        return {
-          ...item,
-          amount: new BigNumber(result[item.field]).toFixed(2),
+    try {
+      const data = await getUserPreSaleInfo()
+      if (data && data.userPreSaleDatas && data.userPreSaleDatas?.length > 0) {
+        const result = {
+          amountInvestUSD: 0,
+          amountBoughtXOX: 0,
+          amountBoughtXOXS: 0,
+          amountClaimXOX: 0,
         }
-      })
-      setDataForInfo(arrUpdate)
+        Array.from(data.userPreSaleDatas).forEach((item: any) => {
+          result.amountInvestUSD += new BigNumber(item?.amountInvestUSD).div(10 ** 6).toNumber()
+          result.amountBoughtXOX += new BigNumber(item?.amountBoughtXOX).div(10 ** 18).toNumber()
+          result.amountBoughtXOXS += new BigNumber(item?.amountBoughtXOXS).div(10 ** 6).toNumber()
+          result.amountClaimXOX += new BigNumber(item?.amountClaimXOX).toNumber()
+          return null
+        })
+
+        const arrUpdate: IYourInfo[] = Array.from(initUserInfo).map((item: IYourInfo) => {
+          return {
+            ...item,
+            amount: new BigNumber(result[item.field]).toFixed(2),
+          }
+        })
+        setDataForInfo(arrUpdate)
+      }
+    } catch (error) {
+      console.warn(error)
     }
   }
 
   const handleGetRoundStatus = async () => {
-    const data = await getDataRoundStats()
-    if (data && data.roundStats) {
-      setDataStatus(data.roundStats)
+    try {
+      const data = await getDataRoundStats()
+      if (data && data.roundStats) {
+        setDataStatus(data.roundStats)
+      }
+    } catch (error) {
+      console.warn(error)
     }
   }
 
   const handleGetDataTransaction = async () => {
-    const result = await getDataTransaction()
-    if (result && result?.transactionPreSales) {
-      setDataTransaction(result?.transactionPreSales)
+    try {
+      const result = await getDataTransaction()
+      if (result && result?.transactionPreSales) {
+        setDataTransaction(result?.transactionPreSales)
+      }
+    } catch (error) {
+      console.warn(error)
     }
   }
 

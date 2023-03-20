@@ -1,11 +1,8 @@
 /* eslint-disable consistent-return */
-import { formatEther } from '@ethersproject/units'
 import BigNumber from 'bignumber.js'
-import { logger } from 'ethers'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import IfoFoldableCard from 'views/Ifos/components/IfoFoldableCard'
 import { RoundInfo } from 'views/Vesting'
 import CountDown from '../CountDown'
 import { TOKEN_IN_ROUND } from '../PricingInfo'
@@ -159,8 +156,8 @@ interface IProps {
   isInTimeRangeSale: boolean
   isUserInWhiteList: boolean
   isTimeAllowWhitelist: boolean
-  setReachZero: (isReach: boolean) => void
-  reacheZero: boolean
+  // setReachZero: (isReach: boolean) => void
+  // reacheZero: boolean
 }
 
 const now = new Date()
@@ -175,10 +172,11 @@ function StartingSoon({
   isInTimeRangeSale,
   isUserInWhiteList,
   isTimeAllowWhitelist,
-  setReachZero,
-  reacheZero,
 }: IProps) {
   const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
+  // const [count, setCount] = useState<number>(0)
+  const [timeNow, setTimeNow] = useState(timeStampOfNow)
+  const [reacheZero, setReachZero] = useState<boolean>(null)
   const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
 
   const handleReturnPercent = (round: any) => {
@@ -239,8 +237,8 @@ function StartingSoon({
     return <CountDown startTime={startDate} setReachZero={setReachZero} />
   }
 
-  const handleRenderCountdown = (timeStamp: number) => {
-    if (timeStamp < infoRoundOne.startDate) {
+  const handleRenderCountdown = (time: number) => {
+    if (time < infoRoundOne.startDate) {
       return (
         <>
           <p className="notice">
@@ -250,7 +248,7 @@ function StartingSoon({
         </>
       )
     }
-    if (infoRoundOne.startDate < timeStamp && timeStamp < infoRoundOne.endDate) {
+    if (infoRoundOne.startDate < time && time < infoRoundOne.endDate) {
       return (
         <>
           <p className="notice">Sale 1 will end on {moment.unix(infoRoundOne.endDate / 1000).format('DD/MM/YYYY')}.</p>
@@ -259,8 +257,8 @@ function StartingSoon({
       )
     }
 
-    if (infoRoundTow.startDate && timeStamp >= infoRoundOne.endDate && timeStamp < infoRoundTow.endDate) {
-      if (infoRoundOne.endDate <= timeStamp && timeStamp < infoRoundTow.startDate) {
+    if (infoRoundTow.startDate && time >= infoRoundOne.endDate && time < infoRoundTow.endDate) {
+      if (infoRoundOne.endDate <= timeStampOfNow && timeStampOfNow < infoRoundTow.startDate) {
         return (
           <>
             <p className="notice">
@@ -271,7 +269,7 @@ function StartingSoon({
         )
       }
 
-      if (infoRoundTow.startDate <= timeStamp && timeStamp < infoRoundTow.endDate) {
+      if (infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow < infoRoundTow.endDate) {
         return (
           <>
             <p className="notice">
@@ -282,8 +280,8 @@ function StartingSoon({
         )
       }
     }
-    if (infoRoundThree.startDate && timeStamp >= infoRoundTow.endDate && timeStamp <= infoRoundThree.endDate) {
-      if (infoRoundTow.endDate <= timeStamp && timeStamp < infoRoundThree.startDate) {
+    if (infoRoundThree.startDate && time >= infoRoundTow.endDate && time <= infoRoundThree.endDate) {
+      if (infoRoundTow.endDate <= time && time < infoRoundThree.startDate) {
         return (
           <>
             <p className="notice">
@@ -294,7 +292,7 @@ function StartingSoon({
         )
       }
 
-      if (infoRoundThree.startDate <= timeStamp && timeStamp < infoRoundThree.endDate) {
+      if (infoRoundThree.startDate <= time && time < infoRoundThree.endDate) {
         return (
           <>
             <p className="notice">
@@ -305,7 +303,7 @@ function StartingSoon({
         )
       }
 
-      if (infoRoundThree.endDate <= timeStamp) {
+      if (infoRoundThree.endDate <= time) {
         return (
           <>
             <p className="notice">Pre-Sale is end!.</p>
@@ -324,12 +322,11 @@ function StartingSoon({
 
   useEffect(() => {
     if (reacheZero) {
-      const ngu = now.getTime()
-      handleRenderCountdown(ngu)
+      // eslint-disable-next-line no-unused-expressions
+      const timeStampAtNow = Date.now()
+      setTimeNow(timeStampAtNow)
     }
-    const id = setTimeout(() => {
-      setReachZero(false)
-    }, 5000)
+    const id = setTimeout(() => setReachZero(false), 5000)
     return () => clearTimeout(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reacheZero])
@@ -346,7 +343,7 @@ function StartingSoon({
           <img src="/images/rocket_xox.png" alt="rocket_xox" />
         </div>
       ) : (
-        handleRenderCountdown(timeStampOfNow)
+        handleRenderCountdown(timeNow)
       )}
       {(isInTimeRangeSale || isCanBuyWithWhitelistUser) && handleReturnPercent(currentRound)}
     </Wrapper>

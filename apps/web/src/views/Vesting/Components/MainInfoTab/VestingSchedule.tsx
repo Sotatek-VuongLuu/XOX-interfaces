@@ -342,8 +342,8 @@ const CountDown = ({ startTime, setReachZero }: Props) => {
       return () => clearInterval(refreshInterval)
     }
     if (setReachZero) {
-      const ngu = Date.now()
-      if (ngu >= startTime) {
+      const timeStampAtNow = Date.now()
+      if (timeStampAtNow >= startTime) {
         setReachZero(true)
       }
     }
