@@ -101,8 +101,8 @@ export const bscTest: Chain = {
     symbol: 'tBNB',
   },
   rpcUrls: {
-    public: 'https://nd-725-482-373.p2pify.com/973ba2e9bd193ab8bc77aca52a003ab7',
-    default: 'https://nd-725-482-373.p2pify.com/973ba2e9bd193ab8bc77aca52a003ab7',
+    public: 'https://nd-787-970-977.p2pify.com/f2e11722375ecc6933d0bc6d7ceb69a1',
+    default: 'https://nd-787-970-977.p2pify.com/f2e11722375ecc6933d0bc6d7ceb69a1',
   },
   blockExplorers: {
     default: { name: 'BscScan', url: 'https://testnet.bscscan.com' },
