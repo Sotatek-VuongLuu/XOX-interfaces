@@ -108,6 +108,10 @@ const CustomTooltip = ({ active, payload }: any) => {
         return <></>
       case 'XOX':
         return <CurrencyLogo currency={new Token(chainId, XOX_ADDRESS[chainId], 18, 'XOX')} />
+      case 'tBNB':
+        return <CurrencyLogo currency={new Token(chainId, payload[0].name, 18, payload[0].name)} />
+      case 'GOR':
+        return <CurrencyLogo currency={new Token(chainId, payload[0].name, 18, payload[0].name)} />
       default:
         return (
           <CurrencyLogo
@@ -120,7 +124,7 @@ const CustomTooltip = ({ active, payload }: any) => {
   if (active && payload && payload.length) {
     return (
       <CustomTooltipStyle>
-        <div className="border"></div>
+        <div className="border" />
         <div className="content">
           <span className="image">{icon()}</span>
           <span className="symbol">{payload[0].name}</span>

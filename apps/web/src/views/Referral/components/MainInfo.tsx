@@ -1274,7 +1274,7 @@ const MainInfo = ({
                 <div className="corner2" />
                 <div className="edge2" />
                 <div className="total_point">
-                  <p className="title">Your current total points</p>
+                  <p className="title">Your Current Total Points</p>
                   <div className="total_point_bar">
                     <div className="current_point_bar">
                       {totalPoint ? (

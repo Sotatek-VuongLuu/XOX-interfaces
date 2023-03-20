@@ -83,7 +83,7 @@ const WapperHeight = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 820px;
+  /* min-height: 820px; */
 `
 
 const WapperBg = styled.div`
@@ -324,6 +324,7 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
+  margin: 150px 0;
 `
 
 const MainBackground = styled.div`
@@ -594,7 +595,7 @@ export default function BridgeToken() {
     <Page>
       <WapperHeight>
         {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
-        <Flex width={['328px', , '559px']} className="container_bridge">
+        <Flex width={['328px', , '559px']}>
           <Wrapper flex="column" position="relative">
             {isMobile ? (
               <>

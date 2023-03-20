@@ -59,6 +59,7 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
+  margin: 150px 0;
 `
 
 const MainBackground = styled.div`
@@ -80,7 +81,7 @@ const WapperHeight = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 950px;
+  /* min-height: 950px; */
 `
 
 const SwapBackgroundWrapper = styled.div`

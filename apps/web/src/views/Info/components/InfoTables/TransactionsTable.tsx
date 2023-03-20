@@ -701,6 +701,13 @@ const TransactionsTable: React.FC = () => {
     setCurrentTransactions([])
   }, [])
 
+  const handleSelectPerPage = useCallback(
+    (value: any) => {
+      setPerPage(value)
+    },
+    [perPage],
+  )
+
   // Update maxPage based on amount of items & applied filtering
   useEffect(() => {
     if (!transactions) return
@@ -1155,7 +1162,7 @@ const TransactionsTable: React.FC = () => {
                   label: '100/Page',
                 },
               ]}
-              onOptionChange={(option: any) => setPerPage(option.value)}
+              onOptionChange={(option: any) => handleSelectPerPage(option.value)}
               className="select-page"
             />
             <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
