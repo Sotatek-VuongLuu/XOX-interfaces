@@ -156,8 +156,8 @@ interface IProps {
   isInTimeRangeSale: boolean
   isUserInWhiteList: boolean
   isTimeAllowWhitelist: boolean
-  // setReachZero: (isReach: boolean) => void
-  // reacheZero: boolean
+  setReachZero: (isReach: boolean) => void
+  reacheZero: boolean
 }
 
 const now = new Date()
@@ -172,11 +172,12 @@ function StartingSoon({
   isInTimeRangeSale,
   isUserInWhiteList,
   isTimeAllowWhitelist,
+  reacheZero,
+  setReachZero,
 }: IProps) {
   const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
-  // const [count, setCount] = useState<number>(0)
   const [timeNow, setTimeNow] = useState(timeStampOfNow)
-  const [reacheZero, setReachZero] = useState<boolean>(null)
+
   const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
 
   const handleReturnPercent = (round: any) => {

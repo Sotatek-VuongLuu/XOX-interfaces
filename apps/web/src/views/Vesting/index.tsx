@@ -437,6 +437,7 @@ function VestingPage() {
   const [dataVestingSchedule, setDataVestingSchedule] = useState<IVestingTime[]>([])
   const [messageConfirm, setMessageConfirm] = useState<string>('')
   const [massageErrorAmount, setMassageErrorAmount] = useState<string>('')
+  const [reacheZero, setReachZero] = useState<boolean>(null)
 
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     if (dataSaleStatsParams.length !== 0) {
@@ -476,8 +477,8 @@ function VestingPage() {
       setInfoRoundOne({
         ...infoRoundOne,
         totalDistribution: 2700000,
-        startDate: 1679325451000,
-        endDate: 1679325511000,
+        startDate: new BigNumber(dataROne.startDate._hex).multipliedBy(1000).toNumber(),
+        endDate: new BigNumber(dataROne.endDate._hex).multipliedBy(1000).toNumber(),
         bonusPercentage: new BigNumber(dataROne.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataROne.exchangeRate._hex).toNumber(),
       })
@@ -498,6 +499,15 @@ function VestingPage() {
         bonusPercentage: new BigNumber(dataRThree.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataRThree.exchangeRate._hex).toNumber(),
       })
+      setCurrentRound(new BigNumber(currentR._hex).toNumber())
+    } catch (error) {
+      console.warn(error)
+    }
+  }
+
+  const handleGetCurrentRound = async () => {
+    try {
+      const [currentR] = await Promise.all([contractPreSale.currentRound()])
       setCurrentRound(new BigNumber(currentR._hex).toNumber())
     } catch (error) {
       console.warn(error)
@@ -696,11 +706,11 @@ function VestingPage() {
     setDataVestingSchedule(dataClone)
   }
 
-  const handCheckInTimeRangeSale = () => {
+  const handCheckInTimeRangeSale = (time: number) => {
     if (
-      (infoRoundOne.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundOne.endDate) ||
-      (infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundTow.endDate) ||
-      (infoRoundThree.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundThree.endDate)
+      (infoRoundOne.startDate <= time && time <= infoRoundOne.endDate) ||
+      (infoRoundTow.startDate <= time && time <= infoRoundTow.endDate) ||
+      (infoRoundThree.startDate <= time && time <= infoRoundThree.endDate)
     ) {
       setIsInTimeRangeSale(true)
     } else {
@@ -956,9 +966,18 @@ function VestingPage() {
 
   useEffect(() => {
     if (!account || !chainId) return
-    handCheckInTimeRangeSale()
+    handCheckInTimeRangeSale(timeStampOfNow)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoRoundOne, infoRoundTow, infoRoundThree, account, chainId])
+
+  useEffect(() => {
+    if (reacheZero) {
+      const timeStampAtNow = Date.now()
+      handCheckInTimeRangeSale(timeStampAtNow)
+      handleGetCurrentRound()
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [reacheZero])
 
   useEffect(() => {
     if (!account) return
@@ -1000,6 +1019,8 @@ function VestingPage() {
             setTypeBuyPrice={setTypeBuyPrice}
             typeBuyPrice={typeBuyPrice}
             totalXOXTokenInRound={totalXOXTokenInRound}
+            reacheZero={reacheZero}
+            setReachZero={setReachZero}
           />
           <SaleStats dataStat={arrSaleStats} />
           <ChartSalePage />

@@ -35,6 +35,8 @@ interface IProps {
   setTypeBuyPrice: (typeBuy: number) => void
   typeBuyPrice: number
   totalXOXTokenInRound: number | string
+  reacheZero: boolean
+  setReachZero: (isReach: boolean) => void
 }
 
 function CountDownBlock({
@@ -49,6 +51,8 @@ function CountDownBlock({
   setTypeBuyPrice,
   typeBuyPrice,
   totalXOXTokenInRound,
+  reacheZero,
+  setReachZero,
 }: IProps) {
   return (
     <Wrapper>
@@ -71,6 +75,8 @@ function CountDownBlock({
           isInTimeRangeSale={isInTimeRangeSale}
           isUserInWhiteList={isUserInWhiteList}
           isTimeAllowWhitelist={isTimeAllowWhitelist}
+          reacheZero={reacheZero}
+          setReachZero={setReachZero}
         />
       </Content>
     </Wrapper>
