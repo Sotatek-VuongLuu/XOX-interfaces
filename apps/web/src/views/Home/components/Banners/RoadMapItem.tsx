@@ -16,7 +16,7 @@ const ContainerItem = styled.div`
       display: inline-block;
       width: 15px;
       height: 3px;
-      background: #9072FF;
+      background: #8BEAC5;
       position: absolute;
       top: -1px;
       left: -27px;
@@ -33,7 +33,7 @@ const ContainerItem = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 160%;
-    color: #f2f2f2;
+    color: rgba(255, 255, 255, 0.6);
     overflow-wrap: break-word;
     width: 220px;
   }
@@ -55,7 +55,7 @@ const ContainerItem = styled.div`
   }
 
   .time {
-    color: #9072ff;
+    color: #8BEAC5;
   }
 
   .margin_top {
@@ -92,7 +92,7 @@ const LineDash = styled.div`
   height: 3px;
   left: 0;
   position: absolute;
-  background-image: linear-gradient(to left, #9072ff 50%, black 50%);
+  background-image: linear-gradient(to left, #8BEAC5 50%, black 50%);
   background-position: top;
   background-size: 30px 3px;
   background-repeat: repeat-x;

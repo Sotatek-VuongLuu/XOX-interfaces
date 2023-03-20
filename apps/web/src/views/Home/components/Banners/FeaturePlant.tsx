@@ -45,7 +45,7 @@ const LeftContent = styled.div`
     font-weight: 400;
     font-size: 18px;
     margin-left: 16px;
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(255, 255, 255, 0.6);
     line-height: 32px;
     @media screen and (max-width: 900px) {
       font-size: 16px;
@@ -71,7 +71,7 @@ const Title = styled.p`
 const Paragraph = styled.p`
   font-weight: 400;
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
   line-height: 32px;
 

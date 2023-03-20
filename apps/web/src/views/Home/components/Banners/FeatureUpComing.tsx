@@ -24,7 +24,7 @@ const Wrapper = styled.div`
     text-align: center;
     font-weight: 400;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
+    color: #FB8618;
     margin-bottom: 48px;
   }
 
@@ -46,8 +46,8 @@ const Wrapper = styled.div`
 const WrapperItem = styled.div<IPropsWI>`
   height: 100%;
   padding: 24px 22px;
-  background: rgba(255, 255, 255, 0.1);
-  backdrop-filter: blur(15px);
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
   border-radius: 20px;
   position: relative;
 
@@ -56,18 +56,18 @@ const WrapperItem = styled.div<IPropsWI>`
     width: fit-content;
     margin-top: 26px;
     border-radius: 8px;
-    background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
     cursor: pointer;
 
     .boxed-child {
       width: 100%;
       height: 100%;
-      background-color: #242424;
+      background: rgba(16, 16, 16, 1);
       padding: 10px 20px;
       border-radius: inherit;
       border-radius: 8px;
       span {
-        background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -106,14 +106,14 @@ const WrapperItem = styled.div<IPropsWI>`
     font-weight: 400;
     font-size: 14px;
     line-height: 24px;
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(255, 255, 255, 0.6);
 
     @media screen and (min-width: 900px) {
       margin-bottom: 55px;
     }
   }
   .expand {
-    color: #9072ff;
+    color: #FB8618;
     font-size: 14px;
     font-weight: 600;
   }

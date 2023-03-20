@@ -26,17 +26,18 @@ const Wrapper = styled.div`
 
     .item_container {
       padding: 24px 32px;
-      background: #242424;
-      border-radius: 20px;
       display: flex;
       /* justify-content: space-between; */
       align-items: center;
+      background: rgba(16, 16, 16, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
 
       .icon-container {
         width: 90px;
         height: 90px;
         border-radius: 50%;
-        background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
         padding: 1px;
         cursor: pointer;
       }
@@ -57,7 +58,7 @@ const Wrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        background: rgba(95, 53, 235, 0.1);
+        background: rgba(16, 16, 16, 1);
       }
 
       .name {
@@ -70,7 +71,7 @@ const Wrapper = styled.div`
       .des {
         font-weight: 400;
         font-size: 16px;
-        color: rgba(255, 255, 255, 0.87);
+        color: rgba(255, 255, 255, 0.6);
         line-height: 24px;
       }
     }
@@ -108,7 +109,7 @@ const Wrapper = styled.div`
     text-align: center;
     font-weight: 400;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
+    color: #FB8618;
     margin-bottom: 48px;
   }
 

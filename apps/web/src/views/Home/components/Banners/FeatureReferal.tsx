@@ -100,7 +100,7 @@ const Wrapper = styled(Box)`
   .title_list_item {
     font-weight: 400;
     font-size: 18px;
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(255, 255, 255, 0.6);
     @media screen and (max-width: 900px) {
       font-size: 16px;
     }
@@ -112,12 +112,12 @@ const Wrapper = styled(Box)`
     font-size: 18px;
     color: #ffffff;
     border: none;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-    border-radius: 8px;
+    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    border-radius: 12px;
     cursor: pointer;
 
     &:hover {
-      background: #5f35eb;
+      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
     }
 
     @media screen and (max-width: 900px) {
@@ -141,7 +141,7 @@ const Wrapper = styled(Box)`
 const Paragraph = styled.p`
   font-weight: 400;
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
   line-height: 32px;
   margin: 24px 0px;
@@ -179,8 +179,8 @@ const First = styled.div`
 
     .tab_item.active,
     .tab_item:hover {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-      border-radius: 4px;
+      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+      border-radius: 8px;
     }
 
     @media screen and (max-width: 900px) {
@@ -241,7 +241,7 @@ const FilterChainWrapper = styled.div`
   .tab_filter_chain_container {
     display: flex;
     padding: 3px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 30px;
     margin-bottom: 35px;
     .filter_chain {
@@ -254,7 +254,7 @@ const FilterChainWrapper = styled.div`
 
     .filter_chain.active,
     .filter_chain:hover {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
       border-radius: 30px;
     }
 

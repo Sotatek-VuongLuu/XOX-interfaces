@@ -56,19 +56,16 @@ const LeftContent = styled.div`
     gap: 19px;
     grid-template-columns: auto auto 1fr;
     .get_xox {
-      padding: 2px;
-      border-radius: 8px;
-      background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      border-radius: 12px;
       cursor: pointer;
 
       .boxed-child {
         width: 100%;
         height: 100%;
-        background-color: black;
-        padding: 16px 40px;
+        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+        padding: 17px 23.5px;
         border-radius: inherit;
         span {
-          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -77,7 +74,7 @@ const LeftContent = styled.div`
           font-size: 18px;
           width: 100%;
           height: 100%;
-          background-color: #191a28;
+          background-color: #FFFFFF;
           border-radius: inherit;
         }
       }
@@ -119,7 +116,11 @@ const Feature = styled.div`
   font-weight: 700;
   font-size: 24px;
   line-height: 44px;
-  color: #9072ff;
+  background: linear-gradient(89deg, rgba(155,243,203,1) 0%, rgba(62,192,166,1) 25%, rgba(244,66,52,1) 50%, rgba(159,58,131,1) 75%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-fill-color: transparent;
   margin: 24px 0;
 `
 
@@ -132,10 +133,10 @@ const Description = styled.div`
 `
 
 const Button = styled.button`
-  background: linear-gradient(100.7deg, #6034ff 0%, #a35aff 100%);
-  border-radius: 8px;
+  background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+  border-radius: 12px;
   border: none;
-  padding: 16px 40px;
+  padding: 16px 92.5px;
   font-weight: 700;
   height: 100%;
   font-size: 18px;
@@ -143,7 +144,7 @@ const Button = styled.button`
   cursor: pointer;
 
   &:hover {
-    background: #5f35eb;
+    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
   }
 
   @media screen and (max-width: 900px) {
@@ -183,7 +184,7 @@ const ImageWrapper = styled.div`
       transform: translate(-30%, -50%);
     }
   }
-
+  Add liquidity & Earn rewards
   @media screen and (max-width: 450px) {
     position: relative;
     #canvas3d_mobile {

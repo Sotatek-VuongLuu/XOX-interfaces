@@ -39,7 +39,7 @@ const Wrapper = styled.div`
     .timeline-item-2,
     .timeline-item-4 {
       .line {
-        background: linear-gradient(180deg, #000000 0%, #9072ff 100%);
+        background: linear-gradient(180deg, #000000 0%, #FB8618 100%);
         bottom: 0;
         opacity: 0.25;
       }
@@ -65,7 +65,7 @@ const Wrapper = styled.div`
     .timeline-item-5 {
       align-self: flex-end;
       .line {
-        background: linear-gradient(0deg, #000000 0%, #9072ff 100%);
+        background: linear-gradient(0deg, #000000 0%, #FB8618 100%);
         top: 0;
         opacity: 0.25;
       }
@@ -89,7 +89,7 @@ const Wrapper = styled.div`
 const Description = styled.p`
   font-weight: 400;
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.6);
+  color: #FB8618;
   text-align: center;
 
   @media screen and (max-width: 900px) {

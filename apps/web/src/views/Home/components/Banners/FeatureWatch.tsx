@@ -54,7 +54,7 @@ const RightContent = styled.div`
     font-weight: 400;
     font-size: 18px;
     margin-left: 16px;
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(255, 255, 255, 0.6);
     line-height: 32px;
     @media screen and (max-width: 900px) {
       margin-left: 0px;
@@ -80,7 +80,7 @@ const Paragraph = styled.p`
   font-weight: 400;
   font-size: 18px;
   line-height: 32px;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.6);
 
   @media screen and (max-width: 900px) {
     font-size: 16px;

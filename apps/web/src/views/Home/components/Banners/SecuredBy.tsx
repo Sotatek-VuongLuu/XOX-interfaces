@@ -20,7 +20,7 @@ const Wrapper = styled.div`
     font-size: 16px;
     line-height: 19px;
     text-align: center;
-    color: rgba(255, 255, 255, 0.6);
+    color: #FB8618;
     margin-top: 16px;
     margin-bottom: 40px;
 
@@ -32,6 +32,11 @@ const Wrapper = styled.div`
   .img {
     display: flex;
     justify-content: center;
+    flex-direction: row;
+    align-items: center;
+    padding: 0px;
+    gap: 70px;
+    margin-bottom: 100px;
 
     img {
       cursor: pointer;
@@ -54,15 +59,15 @@ const SecuredBy = () => {
       <p className="img">
         {width < 900 ? (
           <>
-            <img src="/images/s1_mobile.svg" alt="security" data-aos="fade-right" />
-            <img src="/images/s2_mobile.svg" alt="security" data-aos="fade-down" />
-            <img src="/images/s3_mobile.svg" alt="security" data-aos="fade-left" />
+            <img src="/images/airbnb.svg" alt="security" data-aos="fade-right" />
+            <img src="/images/hubspot.svg" alt="security" data-aos="fade-down" />
+            <img src="/images/google.svg" alt="security" data-aos="fade-left" />
           </>
         ) : (
           <>
-            <img src="/images/s1.svg" alt="security" style={{ cursor: 'pointer' }} data-aos="fade-right" />
-            <img src="/images/s2.svg" alt="security" data-aos="fade-down" />
-            <img src="/images/s3.svg" alt="security" data-aos="fade-left" />
+            <img src="/images/airbnb.svg" alt="security" style={{ cursor: 'pointer' }} data-aos="fade-right" />
+            <img src="/images/hubspot.svg" alt="security" data-aos="fade-down" />
+            <img src="/images/google.svg" alt="security" data-aos="fade-left" />
           </>
         )}
       </p>

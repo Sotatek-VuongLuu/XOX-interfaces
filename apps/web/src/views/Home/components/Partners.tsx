@@ -40,7 +40,8 @@ const Wrapper = styled.div`
     text-align: center;
     font-weight: 400;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
+    color: #FB8618;
+
     margin-bottom: 48px;
 
     @media screen and (max-width: 900px) {
@@ -178,12 +179,12 @@ const SliderWrapper = styled.div`
   
   @keyframes translateinfinitetl {
     100% {
-      transform: translateX(calc(-144px * 10));
+      transform: translateX(calc(-160px * 10));
     }
   }
   @keyframes translateinfinitetr {
     0% {
-      transform: translateX(calc(-144px * 10));
+      transform: translateX(calc(-160px * 10));
     }
     100% {
       transform: translateX(0);
@@ -205,7 +206,7 @@ const SliderWrapper = styled.div`
     box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3);
   }
   #infinite div.highway-barrier ul.highway-lane {
-    width: calc(144px * 20);
+    width: calc(160px * 20);
     &:hover li.highway-car{
       animation-play-state: paused !important;
     }
@@ -431,35 +432,35 @@ const Partners = () => {
 
 const listPartners = [
   {
-    icon: '/images/l1.svg',
+    icon: '/images/partners/airbnb_partner.svg',
   },
   {
-    icon: '/images/l2.svg',
+    icon: '/images/partners/microsoft_partner.svg',
   },
   {
-    icon: '/images/l3.svg',
+    icon: '/images/partners/walmart_partner.svg',
+  },
+  {
+    icon: '/images/partners/hubspot_partner.svg',
+  },
+  {
+    icon: '/images/partners/google_partner.svg',
   },
 
+  // {
+  //   icon: '/images/partners/fedEx_partner.svg',
+  // },
   {
-    icon: '/images/l4.svg',
+    icon: '/images/partners/airbnb_partner.svg',
   },
   {
-    icon: '/images/l5.svg',
+    icon: '/images/partners/google_partner.svg',
   },
   {
-    icon: '/images/l6.svg',
+    icon: '/images/partners/microsoft_partner.svg',
   },
   {
-    icon: '/images/l7.svg',
-  },
-  {
-    icon: '/images/l9.svg',
-  },
-  {
-    icon: '/images/l14.svg',
-  },
-  {
-    icon: '/images/l111.svg',
+    icon: '/images/partners/hubspot_partner.svg',
   },
 ]
 
