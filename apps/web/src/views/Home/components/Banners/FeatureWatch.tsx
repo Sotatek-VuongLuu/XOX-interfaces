@@ -2,35 +2,35 @@ import { Box, Grid } from '@mui/material'
 import { Application } from '@splinetool/runtime'
 import useWindowSize from 'hooks/useWindowSize'
 import { useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 const LeftContent = styled.div`
-  display: flex;
-  justify-content: center;
-  width: 100%;
-  position: relative;
-  height: 343px;
-  @media screen and (min-width: 900px) {
-    align-items: center;
-    height: 100%;
-  }
+  // display: flex;
+  // justify-content: center;
+  // width: 100%;
+  // position: relative;
+  // height: 343px;
+  // @media screen and (min-width: 900px) {
+  //   align-items: center;
+  //   height: 100%;
+  // }
 
-  #canvas3d_xoxs_logo_pc {
-    position: absolute;
-    transform: scale(1.3);
+  // #canvas3d_xoxs_logo_pc {
+  //   position: absolute;
+  //   transform: scale(1.3);
 
-    @media screen and (max-width: 900px) {
-      height: 100% !important;
-      width: 100% !important;
-      transform: scale(1);
-      left: 50%;
-      transform: translate(-53%, 0);
-    }
-  }
+  //   @media screen and (max-width: 900px) {
+  //     height: 100% !important;
+  //     width: 100% !important;
+  //     transform: scale(1);
+  //     left: 50%;
+  //     transform: translate(-53%, 0);
+  //   }
+  // }
 
-  @media screen and (max-width: 900px) {
-    overflow-x: hidden;
-  }
+  // @media screen and (max-width: 900px) {
+  //   overflow-x: hidden;
+  // }
 `
 
 const RightContent = styled.div`
@@ -122,6 +122,49 @@ const ImageWrapper = styled.video`
     }
   }
 `
+const floatingAnim = (x: string, y: string) => keyframes`
+  from {
+    transform: translate(0,  0px);
+  }
+  50% {
+    transform: translate(${x}, ${y});
+  }
+  to {
+    transform: translate(0, 0px);
+  }
+`
+const Watch = styled.div`
+  position: relative;
+
+  .x3 {
+    position: absolute;
+    right: 0;
+    top: 200px;
+    z-index: -1;
+    animation: ${floatingAnim('4px', '12px')} 3s ease-in-out infinite;
+    animation-delay: 0s;
+  }
+  .x2 {
+    position: absolute;
+    top: 90px;
+    left: 20%;
+    z-index: -2;
+    animation: ${floatingAnim('5px', '10px')} 3s ease-in-out infinite;
+    animation-delay: 0.33s;
+
+    @media screen and (max-width: 900px) {
+      left: 0;
+    }
+  }
+  .x1 {
+    position: absolute;
+    right: 10%;
+    top: -20px;
+    z-index: -3;
+    animation: ${floatingAnim('6px', '10px')} 3s ease-in-out infinite;
+    animation-delay: 0.66s;
+  }
+`
 
 const FeatureWatch = () => {
   const { width } = useWindowSize()
@@ -137,10 +180,26 @@ const FeatureWatch = () => {
   return (
     <Wrapper style={{ overflow: 'hidden' }}>
       <Main container spacing={2}>
-        <Grid item xs={12} md={4} style={{ minHeight: '400px', display: 'flex', alignItems: 'center', width: '100%' }}>
-          <LeftContent>{/* <canvas id="canvas3d_xoxs_logo_pc" /> */}</LeftContent>
+        <Grid item xs={12} md={5}>
+          <LeftContent data-aos="fade-right">
+            <Watch>
+                {width > 900 ? (
+                  <>
+                    <img src="/images/home/meet-xoxs/x3.svg" alt="x3" className="x3" />
+                    <img src="/images/home/meet-xoxs/x2.svg" alt="x2" className="x2" />
+                    <img src="/images/home/meet-xoxs/x1.svg" alt="x1" className="x1" />
+                  </>
+                ) : (
+                  <>
+                    <img src="/images/home/meet-xoxs/mobile_x2.svg" alt="x3" className="x3" />
+                    <img src="/images/home/meet-xoxs/mobile_x3.svg" alt="x2" className="x2" />
+                    <img src="/images/meet-xoxs/mobile_x1.svg" alt="x1" className="x1" />
+                  </>
+                )}
+              </Watch>
+          </LeftContent>
         </Grid>
-        <Grid item xs={12} md={8}>
+        <Grid item xs={12} md={7}>
           <RightContent data-aos="fade-left">
             <Title>Meet XOXS. Our Hybrid Multichain Stable Coin.</Title>
             <Paragraph style={{ margin: '24px 0' }}>

@@ -83,6 +83,18 @@ const Wrapper = styled.div`
         margin-left: 20px;
       }
     }
+
+    .timeline-item-3 .line_status {
+      background: linear-gradient(90deg, rgba(155,243,203,1) 0%, rgba(62,192,166,1) 100%);
+    }
+
+    .timeline-item-4 .line_status {
+      background: linear-gradient(90deg, rgba(62,192,166,1) 0%, rgba(244,66,52,1) 100%);
+    }
+
+    .timeline-item-5 .line_status {
+      background: linear-gradient(90deg, rgba(244,66,52,1) 0%, rgba(159,58,131,1) 75%);
+    }
   }
 `
 

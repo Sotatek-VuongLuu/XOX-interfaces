@@ -67,7 +67,7 @@ const WrapperI = styled.div`
     }
 
     .expand {
-      color: #9072ff;
+      color: #FB8618;
       font-size: 14px;
       font-weight: 600;
     }

@@ -38,6 +38,13 @@ const Wrapper = styled.div`
     margin-top: 50px;
   }
 
+  @media screen and (max-width: 400px) {
+    .btn_read_doc {
+      padding: 12px 18px;
+      font-size: 14px;
+    }
+  }
+
   #asset_3d {
     position: absolute;
   }
@@ -95,11 +102,28 @@ const LeftContent = styled.div`
     @media screen and (max-width: 530px) {
       .get_xox {
         .boxed-child {
-          padding: 12px;
+          padding: 13px;
           span {
             font-size: 15px;
           }
         }
+      }
+    }
+
+    @media screen and (max-width: 400px) {
+      .get_xox {
+        .boxed-child {
+          padding: 12px;
+          span {
+            font-size: 14px;
+          }
+        }
+      }
+    }
+
+    @media screen and (max-width: 375px) {
+      .btn_read_doc {
+        font-size: 13px;
       }
     }
   }
@@ -184,7 +208,7 @@ const ImageWrapper = styled.div`
       transform: translate(-30%, -50%);
     }
   }
-  Add liquidity & Earn rewards
+
   @media screen and (max-width: 450px) {
     position: relative;
     #canvas3d_mobile {

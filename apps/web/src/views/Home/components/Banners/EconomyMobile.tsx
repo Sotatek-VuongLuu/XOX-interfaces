@@ -26,7 +26,7 @@ const Wrapper = styled.div`
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: rgba(255, 255, 255, 0.87);
+      color: rgba(255, 255, 255, 0.6);
       margin-bottom: 40px;
       margin-top: 16px;
     }

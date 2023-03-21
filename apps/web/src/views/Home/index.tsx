@@ -21,6 +21,7 @@ import UpComing from './components/Banners/FeatureUpComing'
 import SecuredBy from './components/Banners/SecuredBy'
 import BGPartner from './components/Banners/BackgroundPartner'
 import FeatureSquare from './components/Banners/FeatureSquare'
+import Subscription from './components/Banners/Subscription'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
@@ -116,6 +117,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           <UpComing />
           <RoadMap />
           <Community />
+          <Subscription />
         </div>
       </StyledSection>
     </>

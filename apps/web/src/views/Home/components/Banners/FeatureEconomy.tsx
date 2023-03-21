@@ -31,7 +31,7 @@ const Wrapper = styled(Box)`
       font-weight: 400;
       font-size: 18px;
       line-height: 32px;
-      color: rgba(255, 255, 255, 0.87);
+      color: rgba(255, 255, 255, 0.6);
     }
   }
 

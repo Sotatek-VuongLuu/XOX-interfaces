@@ -15,6 +15,9 @@ const Wrapper = styled.div`
       display: flex;
       flex-direction: column;
       align-items: center;
+      img {
+        z-index: 1;
+      }
     }
     .title {
       font-weight: 700;
@@ -65,7 +68,7 @@ const Wrapper = styled.div`
       content: '';
       height: 2px;
       width: 36px;
-      background: linear-gradient(-120deg, #000000 0%, #290c46 38.1%, #9072ff 100%);
+      background: linear-gradient(0deg, #000000 0%, #FB8618 100%);
       position: absolute;
       left: 6%;
       top: 4%;
@@ -95,13 +98,32 @@ const Wrapper = styled.div`
       margin-left: 33px;
       margin-bottom: 40px;
     }
+
+    .line_status_mb {
+      border-left: unset;
+      border-width: 2.7px;
+      border-style: solid;
+      border-image: linear-gradient(to bottom, rgba(155,243,203,1) 0%, rgba(62,192,166,1) 100%) 1;
+    }
   }
 
   .child_4_th {
     margin-left: -9px;
+    .line_status_mb {
+      border-left: unset;
+      border-width: 2.7px;
+      border-style: solid;
+      border-image: linear-gradient(to bottom, rgba(62,192,166,1) 0%, rgba(244,66,52,1) 100%) 1;
+    }
   }
   .child_5_th {
     margin-left: -9px;
+    .line_status_mb {
+      border-left: unset;
+      border-width: 2.7px;
+      border-style: solid;
+      border-image: linear-gradient(to bottom, rgba(244,66,52,1) 0%, rgba(159,58,131,1) 100%) 1;
+    }
   }
 `
 
@@ -130,7 +152,7 @@ const RoadMapMobile = () => {
                   <img src="/images/not_done_mobile.svg" alt="milestone" />
                 )}
 
-                {item.status === 'done' ? <img src="/images/line_dash.svg" alt="milestone" /> : <LineNotDash />}
+                {item.status === 'done' ? <img src="/images/line_dash.svg" alt="milestone" /> : <LineNotDash className='line_status_mb'/>}
               </div>
 
               <div className="title_content">

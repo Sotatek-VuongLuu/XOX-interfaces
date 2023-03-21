@@ -83,7 +83,7 @@ const LineNotDone = styled.div`
   transform: translateY(50%);
   left: 0;
   position: absolute;
-  background: #5f35eb;
+  // background: #5f35eb;
 `
 
 const LineDash = styled.div`
