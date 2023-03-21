@@ -800,7 +800,7 @@ const ConnectBoxContainer = styled.div`
   margin-top: 20px;
   height: 100%;
   background: rgba(16, 16, 16, 0.3);
-
+  position: relative;
   backdrop-filter: blur(10px);
 
   .corner1 {
