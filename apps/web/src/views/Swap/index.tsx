@@ -59,7 +59,7 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
-  margin: 150px 0;
+  margin: 150px 0 100px;
 `
 
 const MainBackground = styled.div`
@@ -102,7 +102,11 @@ const BackgroundWrapper = styled.div`
   height: calc(100% - 200px);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(255, 255, 255);
+  opacity: 0.06;
+  @media (max-width: 576px) {
+    width: 98.5%;
+  }
   /* backdrop-filter: blur(10px); */
 `
 

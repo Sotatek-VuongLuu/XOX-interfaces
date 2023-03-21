@@ -634,7 +634,7 @@ const ReferralFriend = ({
 
   useEffect(() => {
     if (!swiperRef.current) return
-    swiperRef.current.swiper.slideTo(currentLevelReach - 1)
+    swiperRef.current.swiper?.slideTo(currentLevelReach ? currentLevelReach - 1 : 0)
   }, [currentLevelReach])
 
   const handleClaimAll = async () => {
