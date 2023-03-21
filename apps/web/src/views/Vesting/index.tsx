@@ -612,7 +612,7 @@ function VestingPage() {
           toastError('Error', 'User rejected the request.')
           return
         }
-        if (error?.message === 'PreSale: Exchange amount exceed limit!') {
+        if (error?.message?.includes('PreSale: Exchange amount exceed limit!')) {
           toastError('Error', 'Exchange amount exceed limit!')
           return
         }
@@ -649,7 +649,7 @@ function VestingPage() {
           toastError('Error', 'User rejected the request.')
           return
         }
-        if (error?.message === 'PreSale: Exchange amount exceed limit!') {
+        if (error?.message?.includes('PreSale: Exchange amount exceed limit!')) {
           toastError('Error', 'Exchange amount exceed limit!')
           return
         }
@@ -946,11 +946,15 @@ function VestingPage() {
 
   useEffect(() => {
     if (!account || !chainId) return
-    const myId = setInterval(() => handleGetDataTransactionOfUser(), 7000)
-    // eslint-disable-next-line consistent-return
-    return () => clearInterval(myId)
+    handleGetDataTransactionOfUser()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
+
+  useEffect(() => {
+    const myId = setInterval(() => handleGetDataTransactionOfUser(), 7000)
+    return () => clearInterval(myId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   useEffect(() => {
     if (amount === '') {

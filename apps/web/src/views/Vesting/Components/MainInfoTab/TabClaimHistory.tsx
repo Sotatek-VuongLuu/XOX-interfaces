@@ -46,7 +46,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {moment.unix(transaction?.timestamp).format('DD MM YYYY, HH:MM:ss')}
+        {moment.unix(transaction?.timestamp).format('DD/MM/YYYY HH:MM:ss')}
       </Text>
       <Text
         fontSize={['14px', , '16px']}
