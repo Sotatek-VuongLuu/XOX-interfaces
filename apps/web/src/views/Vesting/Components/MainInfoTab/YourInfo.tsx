@@ -65,6 +65,7 @@ const Content = styled.div`
     display: grid;
     grid-template-columns: 1fr 1fr 1fr;
     gap: 16px;
+    margin-top: 30px;
 
     .my_code {
       font-weight: 700;

@@ -444,6 +444,7 @@ function VestingPage() {
   const [messageConfirm, setMessageConfirm] = useState<string>('')
   const [massageErrorAmount, setMassageErrorAmount] = useState<string>('')
   const [reacheZero, setReachZero] = useState<boolean>(null)
+  const [isTimeAllowWhitelist, setIsTimeAllowWhitelist] = useState<boolean>(false)
 
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     if (dataSaleStatsParams.length !== 0) {
@@ -483,8 +484,8 @@ function VestingPage() {
       setInfoRoundOne({
         ...infoRoundOne,
         totalDistribution: 2700000,
-        startDate: new BigNumber(dataROne.startDate._hex).multipliedBy(1000).toNumber(),
-        endDate: new BigNumber(dataROne.endDate._hex).multipliedBy(1000).toNumber(),
+        startDate: 1679386533000,
+        endDate: 1679386833000,
         bonusPercentage: new BigNumber(dataROne.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataROne.exchangeRate._hex).toNumber(),
       })
@@ -603,6 +604,10 @@ function VestingPage() {
           toastError('Error', 'User rejected the request.')
           return
         }
+        if (error?.message === 'PreSale: Exchange amount exceed limit!') {
+          toastError('Error', 'Exchange amount exceed limit!')
+          return
+        }
         if (error?.code !== 4001) {
           toastError('Error', 'Transaction failed')
         }
@@ -634,6 +639,10 @@ function VestingPage() {
         setIsOpenLoadingClaimModal(false)
         if (error?.message?.includes('rejected')) {
           toastError('Error', 'User rejected the request.')
+          return
+        }
+        if (error?.message === 'PreSale: Exchange amount exceed limit!') {
+          toastError('Error', 'Exchange amount exceed limit!')
           return
         }
         if (error?.code !== 4001) {
@@ -724,6 +733,10 @@ function VestingPage() {
     }
   }
 
+  const handleIsTimeAllowWhitelist = (time: number) => {
+    setIsTimeAllowWhitelist(handleGetOneHourBeforeSale() <= time && time < infoRoundOne.startDate)
+  }
+
   const handleGetTotalTokenInvested = async (round: number) => {
     try {
       const data = await contractPreSale.totalRoundInvested(round)
@@ -795,7 +808,7 @@ function VestingPage() {
       setAmountXOXS={setAmountXOXS}
       balanceLP={balanceLP}
       balanceNative={balanceNative}
-      isTimeAllowWhitelist={handleGetOneHourBeforeSale() <= timeStampOfNow && timeStampOfNow < infoRoundOne.startDate}
+      isTimeAllowWhitelist={isTimeAllowWhitelist}
     />,
     true,
     true,
@@ -904,9 +917,7 @@ function VestingPage() {
       message = 'Insufficient balance'
       return message
     }
-    if (totalDolla > 5000) {
-      message = 'Maximum investment: $5000'
-    } else if (totalDolla < 50) {
+    if (totalDolla < 50) {
       message = 'Maximum investment: $50'
     } else {
       message = ''
@@ -973,6 +984,7 @@ function VestingPage() {
   useEffect(() => {
     if (!account || !chainId) return
     handCheckInTimeRangeSale(timeStampOfNow)
+    handleIsTimeAllowWhitelist(timeStampOfNow)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoRoundOne, infoRoundTow, infoRoundThree, account, chainId])
 
@@ -980,10 +992,11 @@ function VestingPage() {
     if (reacheZero) {
       const timeStampAtNow = Date.now()
       handCheckInTimeRangeSale(timeStampAtNow)
+      handleIsTimeAllowWhitelist(timeStampAtNow)
       handleGetCurrentRound()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reacheZero])
+  }, [reacheZero, infoRoundOne])
 
   useEffect(() => {
     if (!account) return
@@ -1019,9 +1032,7 @@ function VestingPage() {
             infoRoundThree={infoRoundThree}
             isInTimeRangeSale={isInTimeRangeSale}
             isUserInWhiteList={isUserInWhiteList}
-            isTimeAllowWhitelist={
-              handleGetOneHourBeforeSale() <= timeStampOfNow && timeStampOfNow < infoRoundOne.startDate
-            }
+            isTimeAllowWhitelist={isTimeAllowWhitelist}
             setTypeBuyPrice={setTypeBuyPrice}
             typeBuyPrice={typeBuyPrice}
             totalXOXTokenInRound={totalXOXTokenInRound}
