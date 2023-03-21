@@ -37,6 +37,8 @@ interface IProps {
   totalXOXTokenInRound: number | string
   reacheZero: boolean
   setReachZero: (isReach: boolean) => void
+  oneHourBeforeStart: number
+  setisReachWhitelist: (reach: boolean) => void
 }
 
 function CountDownBlock({
@@ -53,6 +55,8 @@ function CountDownBlock({
   totalXOXTokenInRound,
   reacheZero,
   setReachZero,
+  oneHourBeforeStart,
+  setisReachWhitelist,
 }: IProps) {
   return (
     <Wrapper>
@@ -77,6 +81,8 @@ function CountDownBlock({
           isTimeAllowWhitelist={isTimeAllowWhitelist}
           reacheZero={reacheZero}
           setReachZero={setReachZero}
+          oneHourBeforeStart={oneHourBeforeStart}
+          setisReachWhitelist={setisReachWhitelist}
         />
       </Content>
     </Wrapper>

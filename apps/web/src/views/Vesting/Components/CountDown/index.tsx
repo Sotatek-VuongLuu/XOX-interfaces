@@ -144,6 +144,8 @@ const CountDownWrapper = styled.div`
 interface Props {
   startTime: any
   setReachZero?: (isReach: boolean) => void
+  oneHourBeforeStart?: number
+  setisReachWhitelist?: (reach: boolean) => void
 }
 
 const handleTime = (time: number) => {
@@ -151,7 +153,7 @@ const handleTime = (time: number) => {
 }
 
 // const timeStart = 1665892723
-const CountDown = ({ startTime, setReachZero }: Props) => {
+const CountDown = ({ startTime, setReachZero, oneHourBeforeStart, setisReachWhitelist }: Props) => {
   const [timeList, setTimeList] = useState({
     days: 0,
     hours: 0,
@@ -178,14 +180,15 @@ const CountDown = ({ startTime, setReachZero }: Props) => {
       const refreshInterval = setInterval(handleCountDown, 1000)
       return () => clearInterval(refreshInterval)
     }
+    const timeStampAtNow = Date.now()
+
     if (setReachZero) {
-      const timeStampAtNow = Date.now()
       if (timeStampAtNow >= startTime) {
         setReachZero(true)
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeList, timeStart, setReachZero])
+  }, [timeList, timeStart, setReachZero, setisReachWhitelist])
 
   return (
     <CountDownWrapper>

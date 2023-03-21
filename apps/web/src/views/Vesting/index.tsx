@@ -20,7 +20,13 @@ import { useTranslation } from '@pancakeswap/localization'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
 import { Content } from 'views/Pools/components/style'
 import { GridLoader } from 'react-spinners'
-import { getDataReferralPresale, getDataRoundStats, getDataTransaction, getUserPreSaleInfo } from 'services/presale'
+import {
+  getDataReferralPresale,
+  getDataRoundStats,
+  getDataTransaction,
+  getDataTransactionOfUser,
+  getUserPreSaleInfo,
+} from 'services/presale'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { useProvider } from 'wagmi'
 import BackedBy from './Components/BackedBy'
@@ -436,6 +442,7 @@ function VestingPage() {
   const [balanceNative, setBalanceNative] = useState<any>()
   const provider = useProvider({ chainId })
   const [dataTransaction, setDataTransaction] = useState<any>([])
+  const [dataTransactionOfUser, setDataTransactionOfUser] = useState<any>([])
   const [arrSaleStats, setArrSaleStats] = useState<Start[]>(initStat)
   const [isInTimeRangeSale, setIsInTimeRangeSale] = useState<boolean>(false)
   const resSaleStats = useGetSaleStats()
@@ -445,6 +452,7 @@ function VestingPage() {
   const [massageErrorAmount, setMassageErrorAmount] = useState<string>('')
   const [reacheZero, setReachZero] = useState<boolean>(null)
   const [isTimeAllowWhitelist, setIsTimeAllowWhitelist] = useState<boolean>(false)
+  const [isReachWhitelist, setisReachWhitelist] = useState<boolean>(false)
 
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     if (dataSaleStatsParams.length !== 0) {
@@ -868,6 +876,17 @@ function VestingPage() {
     }
   }
 
+  const handleGetDataTransactionOfUser = async () => {
+    try {
+      const result = await getDataTransactionOfUser(account)
+      if (result && result?.transactionPreSales) {
+        setDataTransactionOfUser(result?.transactionPreSales)
+      }
+    } catch (error) {
+      console.warn(error)
+    }
+  }
+
   const handleGetBalanceOfUser = () => {
     const currentProvider = provider
     currentProvider.getBalance(account).then((balance) => {
@@ -924,6 +943,14 @@ function VestingPage() {
     }
     return message
   }
+
+  useEffect(() => {
+    if (!account || !chainId) return
+    const myId = setInterval(() => handleGetDataTransactionOfUser(), 7000)
+    // eslint-disable-next-line consistent-return
+    return () => clearInterval(myId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, chainId])
 
   useEffect(() => {
     if (amount === '') {
@@ -1038,6 +1065,8 @@ function VestingPage() {
             totalXOXTokenInRound={totalXOXTokenInRound}
             reacheZero={reacheZero}
             setReachZero={setReachZero}
+            oneHourBeforeStart={handleGetOneHourBeforeSale()}
+            setisReachWhitelist={setisReachWhitelist}
           />
           <SaleStats dataStat={arrSaleStats} />
           <ChartSalePage />
@@ -1056,7 +1085,7 @@ function VestingPage() {
             dataInfo={dataForInfo}
             dataRefInfo={dataRef}
             handleClaim={handleClaim}
-            dataTransaction={dataTransaction}
+            dataTransaction={dataTransactionOfUser}
             dataVesting={dataVestingSchedule}
           />
           <SaleHistorySession dataTransaction={dataTransaction} />

@@ -158,6 +158,8 @@ interface IProps {
   isTimeAllowWhitelist: boolean
   setReachZero: (isReach: boolean) => void
   reacheZero: boolean
+  oneHourBeforeStart: number
+  setisReachWhitelist: (reach: boolean) => void
 }
 
 const now = new Date()
@@ -174,6 +176,8 @@ function StartingSoon({
   isTimeAllowWhitelist,
   reacheZero,
   setReachZero,
+  oneHourBeforeStart,
+  setisReachWhitelist,
 }: IProps) {
   const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
   const [timeNow, setTimeNow] = useState(timeStampOfNow)
@@ -235,7 +239,14 @@ function StartingSoon({
   }
 
   const handleCountdownArg = (startDate: number) => {
-    return <CountDown startTime={startDate} setReachZero={setReachZero} />
+    return (
+      <CountDown
+        startTime={startDate}
+        setReachZero={setReachZero}
+        oneHourBeforeStart={oneHourBeforeStart}
+        setisReachWhitelist={setisReachWhitelist}
+      />
+    )
   }
 
   const handleRenderCountdown = (time: number) => {

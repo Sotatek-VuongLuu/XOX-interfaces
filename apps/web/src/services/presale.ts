@@ -75,6 +75,28 @@ export const getDataTransaction = async (chainId = ChainId.GOERLI) => {
   return response
 }
 
+export const getDataTransactionOfUser = async (account: string, chainId = ChainId.GOERLI) => {
+  const response = await request(
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
+    gql`
+      query getTransactionPreSalesOfUser {
+        transactionPreSales(where: {sender: "${account.toLowerCase()}"},first: 100, orderBy: timestamp, orderDirection: desc) {
+          id
+          blockNumber
+          timestamp
+          round
+          sender
+          amountInvestUSD
+          amountBoughtXOX
+          amountBoughtXOXS
+          amountClaimedXOX
+        }
+      }
+    `,
+  )
+  return response
+}
+
 export const getDataRoundStats = async (chainId = ChainId.GOERLI) => {
   const response = await request(
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
