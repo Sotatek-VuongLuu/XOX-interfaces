@@ -1,5 +1,6 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Box, Flex, Input, Select, Text } from '@pancakeswap/uikit'
+import { ChainId } from '@pancakeswap/sdk'
+import { Box, Flex, Input, LinkExternal, Select, Text } from '@pancakeswap/uikit'
 import truncateHash from '@pancakeswap/utils/truncateHash'
 import BigNumber from 'bignumber.js'
 import TableLoader from 'components/TableLoader'
@@ -10,6 +11,7 @@ import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import styled from 'styled-components'
+import { linkTransaction } from 'views/BridgeToken'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
 import { ClickableColumnHeader, CustomTableWrapper, NoTransactionWrapper, PageButtons, Table } from './SaleHistory'
 
@@ -85,16 +87,22 @@ const DataRow: React.FC<
       >
         {new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toString()}
       </Text>
-      <Text
-        fontSize={['14px', , '16px']}
-        fontFamily="Inter"
-        fontStyle="normal"
-        fontWeight="400"
-        lineHeight={['17px', , '19px']}
-        color="rgba(255, 255, 255, 0.87)"
+      <LinkExternal
+        href={`${linkTransaction(ChainId.GOERLI)}${transaction.id}`}
+        className="link_external"
+        target="_blank"
       >
-        {truncateHash(transaction.id, 5, 6)}
-      </Text>
+        <Text
+          fontSize={['14px', , '16px']}
+          fontFamily="Inter"
+          fontStyle="normal"
+          fontWeight="400"
+          lineHeight={['17px', , '19px']}
+          color="rgba(255, 255, 255, 0.87)"
+        >
+          {truncateHash(transaction.id, 5, 6)}
+        </Text>
+      </LinkExternal>
     </>
   )
 }

@@ -1,4 +1,4 @@
-import { Box, Flex, Input, Select, Text } from '@pancakeswap/uikit'
+import { Box, Flex, Input, LinkExternal, Select, Text } from '@pancakeswap/uikit'
 import { Fragment, useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
@@ -8,6 +8,8 @@ import TableLoader from 'components/TableLoader'
 import moment from 'moment'
 import BigNumber from 'bignumber.js'
 import truncateHash from '@pancakeswap/utils/truncateHash'
+import { linkTransaction } from 'views/BridgeToken'
+import { ChainId } from '@pancakeswap/sdk'
 
 const Wrapper = styled.div`
   position: relative;
@@ -79,6 +81,12 @@ const Wrapper = styled.div`
     right: 0;
     z-index: 1;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+  }
+
+  .link_external {
+    &:hover {
+      text-decoration: underline !important;
+    }
   }
 `
 
@@ -306,16 +314,23 @@ const DataRow: React.FC<
       >
         {new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toString()}
       </Text>
-      <Text
-        fontSize={['14px', , '16px']}
-        fontFamily="Inter"
-        fontStyle="normal"
-        fontWeight="400"
-        lineHeight={['17px', , '19px']}
-        color="rgba(255, 255, 255, 0.87)"
+
+      <LinkExternal
+        href={`${linkTransaction(ChainId.GOERLI)}${transaction.id}`}
+        className="link_external"
+        target="_blank"
       >
-        {truncateHash(transaction.id, 5, 6)}
-      </Text>
+        <Text
+          fontSize={['14px', , '16px']}
+          fontFamily="Inter"
+          fontStyle="normal"
+          fontWeight="400"
+          lineHeight={['17px', , '19px']}
+          color="rgba(255, 255, 255, 0.87)"
+        >
+          {truncateHash(transaction.id, 5, 6)}
+        </Text>
+      </LinkExternal>
     </>
   )
 }
