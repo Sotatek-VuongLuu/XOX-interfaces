@@ -336,6 +336,12 @@ export enum ROUND {
   TWO,
   THREE,
 }
+
+export enum SALE_ROUND {
+  ONE,
+  TWO,
+  THREE,
+}
 export const vestingTiming: IVestingTime[] = [
   {
     title: 'Sale 1',
@@ -469,9 +475,9 @@ function VestingPage() {
   const handleGetInfoRound = async () => {
     try {
       const [dataROne, dataRTwo, dataRThree, currentR] = await Promise.all([
-        contractPreSale.saleRound(ROUND.ONE),
-        contractPreSale.saleRound(ROUND.TWO),
-        contractPreSale.saleRound(ROUND.THREE),
+        contractPreSale.saleRound(SALE_ROUND.ONE),
+        contractPreSale.saleRound(SALE_ROUND.TWO),
+        contractPreSale.saleRound(SALE_ROUND.THREE),
         contractPreSale.currentRound(),
       ])
       setInfoRoundOne({
