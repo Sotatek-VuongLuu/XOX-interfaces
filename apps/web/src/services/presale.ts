@@ -1,12 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { GraphQLClient, request, gql } from 'graphql-request'
 import { ChainId } from '@pancakeswap/sdk'
+import { ENDPOINT_GRAPHQL_WITH_CHAIN } from 'config/constants/endpoints'
 
-export const endpointsSubGraphPreSale = 'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.10'
+// export const  ENDPOINT_GRAPHQL_WITH_CHAIN[chainId] = 'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.10'
 
 export const getSaleStats = async (chainId = ChainId.GOERLI) => {
   const response = await request(
-    endpointsSubGraphPreSale,
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getStatsSale {
         saleStats {
@@ -30,12 +31,12 @@ export const getRaiseDailies = (from: number, to: number, chainId: ChainId) => {
       date
     }
   }`
-  return new GraphQLClient(endpointsSubGraphPreSale).request(requests)
+  return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
 }
 
 export const getUserPreSaleInfo = async (chainId = ChainId.GOERLI) => {
   const response = await request(
-    endpointsSubGraphPreSale,
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getInfoUserPreSale {
         userPreSaleDatas {
@@ -54,7 +55,7 @@ export const getUserPreSaleInfo = async (chainId = ChainId.GOERLI) => {
 
 export const getDataTransaction = async (chainId = ChainId.GOERLI) => {
   const response = await request(
-    endpointsSubGraphPreSale,
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getTransactionPreSales {
         transactionPreSales(first: 100, orderBy: timestamp, orderDirection: desc) {
@@ -76,7 +77,7 @@ export const getDataTransaction = async (chainId = ChainId.GOERLI) => {
 
 export const getDataRoundStats = async (chainId = ChainId.GOERLI) => {
   const response = await request(
-    endpointsSubGraphPreSale,
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getDataRoundStatsStatus {
         roundStats {
@@ -94,7 +95,7 @@ export const getDataRoundStats = async (chainId = ChainId.GOERLI) => {
 
 export const getDataReferralPresale = async (account: string, chainId = ChainId.GOERLI) => {
   const response = await request(
-    endpointsSubGraphPreSale,
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getRefPresale {
         analysisSaleReferrals(where: { account: "${account.toLowerCase()}" }) {
