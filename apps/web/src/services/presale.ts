@@ -2,7 +2,7 @@
 import { GraphQLClient, request, gql } from 'graphql-request'
 import { ChainId } from '@pancakeswap/sdk'
 
-export const endpointsSubGraphPreSale = 'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.9'
+export const endpointsSubGraphPreSale = 'https://api.studio.thegraph.com/query/43777/dev-xox-lab-subgraph/v0.0.10'
 
 export const getSaleStats = async (chainId = ChainId.GOERLI) => {
   const response = await request(
