@@ -475,9 +475,9 @@ function VestingPage() {
   const handleGetInfoRound = async () => {
     try {
       const [dataROne, dataRTwo, dataRThree, currentR] = await Promise.all([
-        contractPreSale.saleRound(SALE_ROUND.ONE),
-        contractPreSale.saleRound(SALE_ROUND.TWO),
-        contractPreSale.saleRound(SALE_ROUND.THREE),
+        contractPreSale.saleRound(ROUND.ONE),
+        contractPreSale.saleRound(ROUND.TWO),
+        contractPreSale.saleRound(ROUND.THREE),
         contractPreSale.currentRound(),
       ])
       setInfoRoundOne({
