@@ -22,6 +22,11 @@ const Content = styled.div`
       height: 4px;
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
+
+    @media screen and (max-width: 900px) {
+      font-size: 16px;
+      line-height: 19px;
+    }
   }
   .description {
     font-weight: 400;
@@ -64,7 +69,7 @@ const Content = styled.div`
     }
     .description {
       font-size: 14px;
-      line-height: 20px;
+      line-height: 17px;
     }
   }
 `
@@ -82,7 +87,7 @@ const CustomTable = styled(Table)`
     display: block;
     width: 100%;
     height: 0px;
-    border: 1px solid #444444;
+    border: 1px solid transparent;
     position: absolute;
     top: -13px;
   }
@@ -128,6 +133,12 @@ const CustomTableRow = styled(CustomTable)`
       font-size: 14px;
       line-height: 17px;
     }
+  }
+`
+
+const CustomTableTotal = styled(CustomTable)`
+  &::before {
+    top: -8px;
   }
 `
 
@@ -209,14 +220,14 @@ function PrivateSale() {
             )
           })}
 
-          <CustomTable>
+          <CustomTableTotal>
             <Text className="table_header_total">TOTAL</Text>
             <Text className="table_header_total">6%</Text>
             <Text className="table_header_total">10,800,000</Text>
             <Text className="table_header_total">{null}</Text>
             <Text className="table_header_total">487,800</Text>
             <Text className="table_header_total">648,000</Text>
-          </CustomTable>
+          </CustomTableTotal>
         </CustomTableSale>
 
         <div>

@@ -15,6 +15,13 @@ import { ClickableColumnHeader, CustomTableWrapper, NoTransactionWrapper, PageBu
 
 const CustomTable = styled(Table)`
   grid-template-columns: 0.15fr 1fr 1fr repeat(2, 0.7fr) 1fr;
+
+  @media screen and (max-width: 900px) {
+    .table-header {
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
 `
 
 const DataRow: React.FC<

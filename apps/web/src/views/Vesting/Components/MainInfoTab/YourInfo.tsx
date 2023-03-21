@@ -162,6 +162,11 @@ const Content = styled.div`
     padding: 10px 16px;
     border-radius: 8px;
     cursor: pointer;
+
+    @media screen and (max-width: 900px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
 
   .heading_info_vesting_tab.vesting_info_active {

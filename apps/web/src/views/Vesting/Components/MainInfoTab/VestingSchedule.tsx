@@ -13,6 +13,10 @@ const Wrapper = styled.div`
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
     margin-bottom: 16px;
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
   }
 
   .btn_connect_container {

@@ -27,6 +27,10 @@ const Wrapper = styled.div`
       height: 4px;
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
+    @media screen and (max-width: 900px) {
+      font-size: 16px;
+      line-height: 19px;
+    }
   }
 
   .corner1 {
@@ -120,6 +124,8 @@ export const Table = styled.div`
   grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 1fr;
   .table-header {
     margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 17px;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -205,6 +211,10 @@ export const PageButtons = styled(Flex)`
     color: rgba(255, 255, 255, 0.87);
     min-width: 94px;
     padding: 0 10px;
+    @media screen and (max-width: 900px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
 
   & input {

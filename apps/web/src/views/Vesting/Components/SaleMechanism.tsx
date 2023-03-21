@@ -207,6 +207,10 @@ const Content = styled.div`
       &::-webkit-scrollbar {
         display: none;
       }
+      .item-tab-mechanism {
+        font-size: 12px;
+        line-height: 15px;
+      }
     }
   }
 `
