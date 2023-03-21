@@ -484,8 +484,8 @@ function VestingPage() {
       setInfoRoundOne({
         ...infoRoundOne,
         totalDistribution: 2700000,
-        startDate: 1679386533000,
-        endDate: 1679386833000,
+        startDate: new BigNumber(dataROne.startDate._hex).multipliedBy(1000).toNumber(),
+        endDate: new BigNumber(dataROne.endDate._hex).multipliedBy(1000).toNumber(),
         bonusPercentage: new BigNumber(dataROne.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataROne.exchangeRate._hex).toNumber(),
       })
