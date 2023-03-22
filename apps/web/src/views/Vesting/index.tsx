@@ -560,10 +560,9 @@ function VestingPage() {
     }
   }
 
-  const handeInvest = async () => {
+  const handeInvest = async (code) => {
     const valueETH = typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseEther('0')
     const addressTokenBuy = typeBuyPrice === TYPE_BY.BY_ETH ? NATIVE_TOKEN : USDC_TEST
-    const refAddess = !codeRef ? ADDRESS_CODE : referralCode
     const amountParse =
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), 6)
     setMessageConfirm(`Buying ${amountXOX} XOX`)
@@ -579,22 +578,16 @@ function VestingPage() {
         const gasFee = await contractPreSale.estimateGas.whiteListedInvest(
           addressTokenBuy,
           amountParse,
-          refAddess,
+          code,
           _merkleProof,
           {
             value: valueETH,
           },
         )
-        const txWhitelist = await contractPreSale.whiteListedInvest(
-          addressTokenBuy,
-          amountParse,
-          refAddess,
-          _merkleProof,
-          {
-            gasLimit: gasFee,
-            value: valueETH,
-          },
-        )
+        const txWhitelist = await contractPreSale.whiteListedInvest(addressTokenBuy, amountParse, code, _merkleProof, {
+          gasLimit: gasFee,
+          value: valueETH,
+        })
         const txHash = await txWhitelist.wait(1)
         if (txHash?.transactionHash) {
           setIsOpenLoadingClaimModal(false)
@@ -625,10 +618,10 @@ function VestingPage() {
     if (isInTimeRangeSale) {
       try {
         setIsOpenLoadingClaimModal(true)
-        const gasFee = await contractPreSale.estimateGas.invest(addressTokenBuy, amountParse, refAddess, {
+        const gasFee = await contractPreSale.estimateGas.invest(addressTokenBuy, amountParse, code, {
           value: valueETH,
         })
-        const txInvest = await contractPreSale.invest(addressTokenBuy, amountParse, refAddess, {
+        const txInvest = await contractPreSale.invest(addressTokenBuy, amountParse, code, {
           value: valueETH,
           gasLimit: gasFee,
         })
@@ -772,6 +765,7 @@ function VestingPage() {
   const handleChangeReferal = (value: string) => {
     if (!account) return
     if (value.length === 0) {
+      setReferralCode(ADDRESS_CODE)
       setReferralError(null)
       return
     }
@@ -789,6 +783,7 @@ function VestingPage() {
         }
       })
       .catch((error) => {
+        setReferralCode(ADDRESS_CODE)
         if (error.response?.data?.message) {
           setReferralError(error.response.data.message)
         }
@@ -803,6 +798,7 @@ function VestingPage() {
       approvalState={approvalState}
       approvalSubmitted={approvalSubmitted}
       handeInvest={handeInvest}
+      referralCode={referralCode}
       handleApprove={handleApprove}
       ethPerDolla={ethPerDolla}
       currentRound={currentRound}
@@ -825,7 +821,7 @@ function VestingPage() {
 
   const handleGetPreSaleUserInfo = async (initUserInfo: IYourInfo[]) => {
     try {
-      const data = await getUserPreSaleInfo()
+      const data = await getUserPreSaleInfo(account)
       if (data && data.userPreSaleDatas && data.userPreSaleDatas?.length > 0) {
         const result = {
           amountInvestUSD: 0,
@@ -951,7 +947,11 @@ function VestingPage() {
   }, [account, chainId])
 
   useEffect(() => {
-    const myId = setInterval(() => handleGetDataTransactionOfUser(), 7000)
+    const myId = setInterval(() => {
+      handleGetDataTransactionOfUser()
+      handleGetPreSaleUserInfo(initialYourInfo)
+      handleGetRefPreSale(initialRefInfo, account)
+    }, 15000)
     return () => clearInterval(myId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])

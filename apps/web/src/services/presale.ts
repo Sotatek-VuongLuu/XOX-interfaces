@@ -34,12 +34,12 @@ export const getRaiseDailies = (from: number, to: number, chainId: ChainId) => {
   return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
 }
 
-export const getUserPreSaleInfo = async (chainId = ChainId.GOERLI) => {
+export const getUserPreSaleInfo = async (account: string, chainId = ChainId.GOERLI) => {
   const response = await request(
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getInfoUserPreSale {
-        userPreSaleDatas {
+        userPreSaleDatas (where : {id :"${account.toLowerCase()}"}) {
           id
           round
           amountInvestUSD

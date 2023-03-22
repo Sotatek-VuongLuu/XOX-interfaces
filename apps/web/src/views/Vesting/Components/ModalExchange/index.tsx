@@ -285,7 +285,7 @@ interface Props extends InjectedModalProps {
   setAmount: (amount: string) => void
   typeBuyPrice: number
   approvalState: number
-  handeInvest: () => void
+  handeInvest: (code: any) => void
   approvalSubmitted: boolean
   handleApprove: () => void
   ethPerDolla: number
@@ -301,6 +301,7 @@ interface Props extends InjectedModalProps {
   balanceLP: any
   balanceNative: any
   massageErrorAmount: string
+  referralCode: any
 }
 
 function ModalSaleExchange({
@@ -325,6 +326,7 @@ function ModalSaleExchange({
   setAmountXOXS,
   balanceLP,
   balanceNative,
+  referralCode,
 }: Props) {
   const { width } = useWindowSize()
   const isSwap = approvalState !== ApprovalState.APPROVED && typeBuyPrice === TYPE_BY.BY_USDC
@@ -352,6 +354,7 @@ function ModalSaleExchange({
         break
     }
   }
+  console.log(`referralCode`, referralCode)
 
   useEffect(() => {
     handleRenderXOXAmount(typeBuyPrice, currentRound, amount)
@@ -514,7 +517,11 @@ function ModalSaleExchange({
               )}
             </Button>
           ) : (
-            <Button className="buy_xox" onClick={handeInvest} disabled={referralError || !amount || massageErrorAmount}>
+            <Button
+              className="buy_xox"
+              onClick={() => handeInvest(referralCode)}
+              disabled={referralError || !amount || massageErrorAmount}
+            >
               Buy XOX
             </Button>
           )}
