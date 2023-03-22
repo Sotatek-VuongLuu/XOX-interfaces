@@ -1392,7 +1392,7 @@ const MainInfo = ({
                                   />
                                 </div>
                                 <div className="row-item">
-                                  <p className="point">{formatAmountNumber2(row.point, 2)}</p>
+                                  <p className="point">{formatAmountNumber2(Number(row.point), 2)}</p>
                                 </div>
                               </div>
                             ))}

@@ -358,23 +358,19 @@ export default function Refferal() {
 
   const getUserVolumn = async () => {
     try {
-      const result = await userPoint(chainId)
-      if (result && result?.analysisDatas && result?.analysisDatas?.length > 0) {
-        const totalReward = new BigNumber(result?.analysisDatas[0]?.total_reward)
-          .div(10 ** USD_DECIMALS[chainId])
-          .toNumber()
-        // const isDevEnv = chainId === ChainId.BSC_TESTNET || chainId === ChainId.GOERLI
-        // const [resBSC, resETH] = await Promise.all([userAmount(isDevEnv ? 97 : 56), userAmount(isDevEnv ? 5 : 1)])
-        // if (resBSC || resETH) {
-        //   const volumnBSC = resBSC.analysisDatas[0]?.total_claimed_amount
-        //     ? formatUnits(resBSC.analysisDatas[0]?.total_claimed_amount, 18)
-        //     : 0
-        //   const volumnETH = resETH.analysisDatas[0]?.total_claimed_amount
-        //     ? formatUnits(resETH.analysisDatas[0]?.total_claimed_amount, 6)
-        //     : 0
+      const isDevEnv = chainId === ChainId.BSC_TESTNET || chainId === ChainId.GOERLI
+      const [resBSC, resETH] = await Promise.all([userAmount(isDevEnv ? 97 : 56), userAmount(isDevEnv ? 5 : 1)])
+      if (resBSC || resETH) {
+        const volumnBSC = resBSC.analysisDatas[0]?.total_reward
+          ? formatUnits(resBSC.analysisDatas[0]?.total_reward, 18)
+          : 0
+        const volumnETH = resETH.analysisDatas[0]?.total_reward
+          ? formatUnits(resETH.analysisDatas[0]?.total_reward, 6)
+          : 0
 
         // 99%
-        // const totalVolumn = new BigNumber(volumnBSC).plus(volumnETH).toString()
+
+        const totalVolumn = new BigNumber(volumnBSC).plus(volumnETH).toString()
 
         // 100%
         // const totalVolumnIn100Percent = new BigNumber(totalVolumn)
@@ -382,7 +378,7 @@ export default function Refferal() {
         //   .div(99)
         //   .toFixed(0, BigNumber.ROUND_DOWN)
 
-        setVolumnTotalEarn(totalReward.toString())
+        setVolumnTotalEarn(totalVolumn)
       }
     } catch (error) {
       console.log(`error >>>>`, error)
