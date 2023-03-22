@@ -1,3 +1,4 @@
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
@@ -123,7 +124,7 @@ const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
 
       <p className="amount">
         <span className="dollar">$</span>
-        <p className="value">{Number(volumnTotalEarn)}</p>
+        <p className="value">{formatAmountNumber2(Number(volumnTotalEarn))}</p>
       </p>
 
       <p className="guide">
