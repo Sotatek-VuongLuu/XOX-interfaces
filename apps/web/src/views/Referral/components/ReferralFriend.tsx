@@ -787,6 +787,8 @@ const ReferralFriend = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
 
+  console.log(listFriends)
+
   return (
     <>
       <Box sx={{ marginTop: '16px', zIndex: 9 }}>
@@ -847,7 +849,7 @@ const ReferralFriend = ({
                                 />
                               </div>
                               <div className="row-item">
-                                <p className="point">{formatAmountNumber(row.point, 2)}</p>
+                                <p className="point">{formatAmountNumber2(Number(row.point), 2)}</p>
                               </div>
                             </div>
                           ))}
