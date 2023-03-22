@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import {
   AutoRow,
   Box,
@@ -173,7 +174,7 @@ const ButtonStyle = styled.button`
 `
 
 const BoxCenter = styled(Box)`
-  padding: 12px 14px;
+  padding: 8px 14px;
   border: 1px solid #444444;
   border-radius: 6px;
   width: 400px;
@@ -460,7 +461,7 @@ function ModalSaleExchange({
             XOX Amount
           </Text>
           <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
-            {amountXOX} XOX
+            {amountXOX || '-'} XOX
           </Text>
         </Flex>
         <Flex alignItems="center" marginBottom="26px" className="xoxs_amount">
@@ -468,7 +469,7 @@ function ModalSaleExchange({
             XOXS Reward
           </Text>
           <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
-            {amountXOXS} XOXS
+            {amountXOXS || '-'} XOXS
           </Text>
         </Flex>
 

@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import BigNumber from 'bignumber.js'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { RoundInfo } from 'views/Vesting'
 import CountDown from '../CountDown'

@@ -10,7 +10,7 @@ const Content = styled.div`
     font-size: 20px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     position: relative;
 
     &::before {

@@ -21,6 +21,45 @@ const Wrapper = styled.div`
 
   .btn_connect_container {
     width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.87);
+      margin-top: 180px;
+      margin-bottom: 24px;
+    }
+
+    .btn_connect {
+      width: 181px;
+      height: 43px;
+      margin-bottom: 200px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+    }
+
+    @media screen and (max-width: 900px) {
+      p {
+        font-size: 12px;
+        line-height: 20px;
+        margin-top: 160px;
+      }
+
+      .btn_connect {
+        width: 146px;
+        height: 37px;
+        font-size: 14px;
+        line-height: 17px;
+      }
+    }
   }
 `
 
@@ -32,11 +71,20 @@ const Content = styled.div`
     .sale-schedule-item {
       display: flex;
       align-items: center;
+      padding-top: 40px;
+
+      .item_wrap {
+        display: flex;
+      }
     }
 
     .sale-schedule-item.flex-col {
       flex-direction: column;
       align-items: flex-start;
+      padding-top: 0px;
+    }
+    .sale-schedule-item.no-padding {
+      padding-top: 22px;
     }
   }
 
@@ -46,7 +94,7 @@ const Content = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: #fb8618;
-    margin-bottom: 21px;
+    top: 24px;
   }
 
   .sale_item {
@@ -71,6 +119,7 @@ const Content = styled.div`
     font-size: 14px;
     line-height: 17px;
     color: rgba(255, 255, 255, 0.6);
+    margin-top: 4px;
   }
 
   .next_day {
@@ -91,11 +140,13 @@ const Content = styled.div`
     .heading-sale {
       font-size: 14px;
       line-height: 17px;
+      top: 18px;
     }
 
     .title_vested {
       font-size: 12px;
       line-height: 15px;
+      margin-top: 8px;
     }
 
     .amount_vested {
@@ -143,7 +194,7 @@ const SaleItem = ({
 }: {
   item: IVestingTime
   index: number
-  handleClaim: (round: number, remainning: number) => void
+  handleClaim: (round: number, remainning: any) => void
 }) => {
   const [reacheZero, setReachZero] = useState<boolean>(false)
   const [count, setCount] = useState<number>(0)
@@ -163,30 +214,42 @@ const SaleItem = ({
       <div className="heading-sale">{item.title}</div>
       <div className="sale-container-bottom ">
         <div className="sale-schedule-item ">
-          <p>
-            <Img src="/images/1/tokens/xox_new_style.svg" alt="icon" height={30} width={30} className="token_first" />
-          </p>
-          <div>
-            <p className="amount_vested">{item.amountVested}</p>
-            <p className="title_vested">Vested</p>
+          <div className="item_wrap">
+            <p>
+              <Img
+                src="/images/1/tokens/xox_new_overlay.svg"
+                alt="icon"
+                height={30}
+                width={30}
+                className="token_first"
+              />
+            </p>
+            <div>
+              <p className="amount_vested">{Number(item.amountVested).toLocaleString()}</p>
+              <p className="title_vested">Unclaimed</p>
+            </div>
           </div>
         </div>
         <div className="sale-schedule-item">
-          <p>
-            <Img src="/images/1/tokens/xox_new_style.svg" alt="icon" height={30} width={30} className="token_first" />
-          </p>
-          <div>
-            <p className="amount_vested">{item.remaining}</p>
-            <p className="title_vested">Remaining</p>
+          <div className="item_wrap">
+            <p>
+              <Img src="/images/1/tokens/xox_new.svg" alt="icon" height={30} width={30} className="token_first" />
+            </p>
+            <div>
+              <p className="amount_vested">{Number(item.remaining).toLocaleString()}</p>
+              <p className="title_vested">Claimed</p>
+            </div>
           </div>
         </div>
         <div className="sale-schedule-item">
-          <p>
-            <Img src="/images/1/tokens/xox_new_style.svg" alt="icon" height={30} width={30} className="token_first" />
-          </p>
-          <div>
-            <p className="amount_vested">{item.yourCurrentXOX}</p>
-            <p className="title_vested">Your current XOX token</p>
+          <div className="item_wrap">
+            <p>
+              <Img src="/images/1/tokens/xox_new.svg" alt="icon" height={30} width={30} className="token_first" />
+            </p>
+            <div>
+              <p className="amount_vested">{Number(item.yourCurrentXOX).toLocaleString()}</p>
+              <p className="title_vested">Next Claim Amount</p>
+            </div>
           </div>
         </div>
         <div className="sale-schedule-item flex-col">
@@ -198,7 +261,7 @@ const SaleItem = ({
             <CountDown startTime={item.startTime[count]} setReachZero={setReachZero} />
           </p>
         </div>
-        <div className="sale-schedule-item">
+        <div className="sale-schedule-item no-padding">
           <CustomButtom
             type="button"
             onClick={() => handleClaim(item.round, item.yourCurrentXOX)}
@@ -300,7 +363,6 @@ const WrapperTime = styled.div`
     @media screen and (max-width: 900px) {
       width: 66px;
       height: 59px;
-      gap: 8px;
 
       .number_time {
         font-size: 20px;
@@ -399,7 +461,8 @@ function VestingSchedule({
     <Wrapper>
       {!account && (
         <div className="btn_connect_container">
-          <ConnectWalletButton scale="sm" style={{ whiteSpace: 'nowrap' }}>
+          <p>Connect to your wallet to view your vesting shedule.</p>
+          <ConnectWalletButton scale="sm" style={{ whiteSpace: 'nowrap' }} className="btn_connect">
             <span>Connect Wallet</span>
           </ConnectWalletButton>
         </div>

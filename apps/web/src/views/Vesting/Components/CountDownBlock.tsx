@@ -1,5 +1,4 @@
 /* eslint-disable import/no-cycle */
-import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { RoundInfo } from '..'
 import PricingInfo from './PricingInfo'

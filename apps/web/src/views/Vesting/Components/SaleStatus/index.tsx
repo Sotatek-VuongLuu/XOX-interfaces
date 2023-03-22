@@ -1,7 +1,7 @@
 import { formatEther } from '@ethersproject/units'
 import { Box, Grid } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { RoundInfo } from 'views/Vesting'
 
@@ -126,11 +126,29 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     color: rgba(255, 255, 255, 0.6);
   }
   .status_value {
+    position: relative;
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
     margin-top: 5px;
+    white-space: nowrap;
+
+    .dollar_sign {
+      position: absolute;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 15px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .raised_dollar {
+      margin-left: 8px;
+    }
+
+    .price_dollar {
+      margin-left: 8px;
+    }
   }
   .name {
     position: absolute;
@@ -353,14 +371,23 @@ const Item = ({ item }) => {
         <div>
           <p className="status_name">Current raise</p>
           <p className="status_value">
-            {item?.total_raised_usd
-              ? new BigNumber(item?.total_raised_usd).div(10 ** 6).toString()
-              : item?.currentRaise}
+            {item?.total_raised_usd && <span className="dollar_sign">$</span>}
+            <span className="raised_dollar">
+              {item?.total_raised_usd
+                ? new BigNumber(item?.total_raised_usd)
+                    .div(10 ** 6)
+                    .toNumber()
+                    .toLocaleString()
+                : item?.currentRaise}
+            </span>
           </p>
         </div>
         <div>
           <p className="status_name">Price</p>
-          <p className="status_value">1 XOX = {item.price}</p>
+          <p className="status_value">
+            <span>1 XOX =</span> <span className="dollar_sign">$</span>
+            <span className="price_dollar">{item.price}</span>
+          </p>
         </div>
         <div>
           <p className="status_name">XOX for Sale</p>
@@ -374,7 +401,9 @@ const Item = ({ item }) => {
           <p className="status_name">XOXS Rewarded</p>
           <p className="status_value">
             {item?.xox_amount_bought
-              ? new BigNumber(new BigNumber(item?.xoxs_amount_reward).div(10 ** 6).toString()).toFixed(2, 1)
+              ? Number(
+                  new BigNumber(new BigNumber(item?.xoxs_amount_reward).div(10 ** 6).toString()).toFixed(2, 1),
+                ).toLocaleString()
               : item.xOXSRewarded}
           </p>
         </div>
@@ -417,7 +446,7 @@ function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: 
           : StatusSale.END
         : StatusSale.INCOMING,
       currentRaise: '-',
-      price: '$0.044',
+      price: '0.044',
       xOXforSale: 2700000,
       investors: '-',
       xOXSRewarded: '-',
@@ -432,7 +461,7 @@ function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: 
           : StatusSale.END
         : StatusSale.INCOMING,
       currentRaise: '-',
-      price: '$0.045',
+      price: '0.045',
       xOXforSale: 3600000,
       investors: '-',
       xOXSRewarded: '-',
@@ -447,7 +476,7 @@ function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: 
           : StatusSale.END
         : StatusSale.INCOMING,
       currentRaise: '-',
-      price: '$0.046',
+      price: '0.046',
       xOXforSale: 4500000,
       investors: '-',
       xOXSRewarded: '-',

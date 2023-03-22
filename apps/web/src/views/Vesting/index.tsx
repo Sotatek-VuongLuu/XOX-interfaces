@@ -318,9 +318,9 @@ export const tabSaleMechanism: string[] = [
 
 export interface IVestingTime {
   title: string
-  amountVested: number
-  remaining: number
-  yourCurrentXOX: number
+  amountVested: number | string
+  remaining: number | string
+  yourCurrentXOX: number | string
   startTime: number[]
   statusClaim: boolean
   round?: number
@@ -652,7 +652,7 @@ function VestingPage() {
     }
   }
 
-  const handleClaim = async (round: number, amoutXOXPending: number) => {
+  const handleClaim = async (round: number, amoutXOXPending: any) => {
     try {
       setIsOpenLoadingClaimModal(true)
       setMessageConfirm(`Claim ${amoutXOXPending} XOX`)
@@ -709,11 +709,11 @@ function VestingPage() {
         contractPreSale.pendingXOXInvest(account, BigNumberEthers.from(item)),
         contractPreSale.userInvestedAmount(account, BigNumberEthers.from(item)),
       ])
-      dataClone[item - 1].amountVested = new BigNumber(formatEther(vested).toString()).toNumber()
-      dataClone[item - 1].yourCurrentXOX = new BigNumber(formatEther(currentXOX).toString()).toNumber()
+      dataClone[item - 1].amountVested = new BigNumber(formatEther(vested).toString()).toFixed(2)
+      dataClone[item - 1].yourCurrentXOX = new BigNumber(formatEther(currentXOX).toString()).toFixed(2)
       dataClone[item - 1].remaining = new BigNumber(formatEther(userInvested).toString())
         .minus(formatEther(vested).toString())
-        .toNumber()
+        .toFixed(2)
       dataClone[item - 1].startTime = dataRoundDate[item - 1].endDate
         ? handleRenderTenMonths(dataRoundDate[item - 1].endDate)
         : []
@@ -945,17 +945,17 @@ function VestingPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
-  useEffect(() => {
-    const myId = setInterval(() => {
-      handleGetDataTransactionOfUser()
-      handleGetPreSaleUserInfo(initialYourInfo)
-      handleGetRefPreSale(initialRefInfo, account)
-      handleGetRoundStatus()
-      handleGetDataTransaction()
-    }, 15000)
-    return () => clearInterval(myId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // useEffect(() => {
+  //   const myId = setInterval(() => {
+  //     handleGetDataTransactionOfUser()
+  //     handleGetPreSaleUserInfo(initialYourInfo)
+  //     handleGetRefPreSale(initialRefInfo, account)
+  //     handleGetRoundStatus()
+  //     handleGetDataTransaction()
+  //   }, 15000)
+  //   return () => clearInterval(myId)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [])
 
   useEffect(() => {
     if (amount === '') {

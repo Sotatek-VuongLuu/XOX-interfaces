@@ -1,6 +1,7 @@
 /* eslint-disable import/no-cycle */
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useWindowSize from 'hooks/useWindowSize'
-import { useState } from 'react'
+import { useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { IVestingTime } from '..'
 import VestingSchedule from './MainInfoTab/VestingSchedule'
@@ -227,6 +228,7 @@ function SaleMechanism({
   handleClaim,
 }: IProps) {
   const { width } = useWindowSize()
+  const { account } = useActiveWeb3React()
   const [isMore, setIsMore] = useState(false)
 
   const renderBody = (tab: string) => {
@@ -243,6 +245,32 @@ function SaleMechanism({
         return <PrivateSale />
     }
   }
+
+  const renderRemore = useMemo(() => {
+    return (
+      <>
+        {width <= 900 && isMore && (
+          <div className="container_learnless">
+            <div>
+              <img src="/images/fi_chevrons-down.png" alt="fi_chevrons-down" className="fi_chevrons-up" />
+              <button type="button" className="btn_learnless" onMouseDown={() => setIsMore(false)}>
+                Learn Less
+              </button>
+            </div>
+          </div>
+        )}
+
+        {width <= 900 && !isMore && (
+          <div className="overlay_learmore">
+            <button type="button" className="btn_learnmore" onClick={() => setIsMore(true)}>
+              Learn More
+            </button>
+            <img src="/images/fi_chevrons-down.svg" alt="fi_chevrons-down" className="fi_chevrons-down" />
+          </div>
+        )}
+      </>
+    )
+  }, [width, isMore])
 
   return (
     <Wrapper isMore={isMore}>
@@ -268,26 +296,9 @@ function SaleMechanism({
         </div>
         <div className="body">{renderBody(tabActiveMechansim)}</div>
       </Content>
-
-      {width <= 900 && isMore && (
-        <div className="container_learnless">
-          <div>
-            <img src="/images/fi_chevrons-down.png" alt="fi_chevrons-down" className="fi_chevrons-up" />
-            <button type="button" className="btn_learnless" onMouseDown={() => setIsMore(false)}>
-              Learn Less
-            </button>
-          </div>
-        </div>
-      )}
-
-      {width <= 900 && !isMore && (
-        <div className="overlay_learmore">
-          <button type="button" className="btn_learnmore" onClick={() => setIsMore(true)}>
-            Learn More
-          </button>
-          <img src="/images/fi_chevrons-down.svg" alt="fi_chevrons-down" className="fi_chevrons-down" />
-        </div>
-      )}
+      {!account && (tabActiveMechansim === 'Vesting Schedule' || tabActiveMechansim === 'Your Information')
+        ? null
+        : renderRemore}
     </Wrapper>
   )
 }

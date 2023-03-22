@@ -1,6 +1,7 @@
 import { formatUnits } from '@ethersproject/units'
 import { useTranslation } from '@pancakeswap/localization'
 import { CopyButton, Flex, Text } from '@pancakeswap/uikit'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
@@ -16,7 +17,50 @@ interface IProps {
   dataTransaction: any[]
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  .btn_connect_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.87);
+      margin-top: 180px;
+      margin-bottom: 24px;
+    }
+
+    .btn_connect {
+      width: 181px;
+      height: 43px;
+      margin-bottom: 200px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+    }
+
+    @media screen and (max-width: 900px) {
+      p {
+        font-size: 12px;
+        line-height: 20px;
+        margin-top: 160px;
+      }
+
+      .btn_connect {
+        width: 146px;
+        height: 37px;
+        font-size: 14px;
+        line-height: 17px;
+      }
+    }
+  }
+`
 
 const Content = styled.div`
   .your_amount {
@@ -225,33 +269,10 @@ const Content = styled.div`
 
 function YourInfo({ dataInfo, dataRefInfo, dataTransaction }: IProps) {
   const [currentTransactions, setCurrentTransactions] = useState(dataTransaction)
-  const [perPage, setPerPage] = useState(5)
-  const [tempPage, setTempPage] = useState('1')
-  const [page, setPage] = useState(1)
-  const [maxPage, setMaxPage] = useState(1)
   const { account } = useActiveWeb3React()
   const { t } = useTranslation()
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
   const [tab, setTab] = useState(0)
-
-  const setPagePagination = useCallback(
-    (p: number) => {
-      if (p < 1) {
-        setPage(1)
-        return
-      }
-      if (p > maxPage) {
-        setPage(maxPage)
-        return
-      }
-      setPage(p)
-    },
-    [maxPage],
-  )
-
-  const handleChangeTempPage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
-  }, [])
 
   useEffect(() => {
     setCurrentTransactions(dataTransaction)
@@ -259,111 +280,124 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction }: IProps) {
 
   return (
     <Wrapper>
-      <Content>
-        <div className="your_amount">
-          {Array.from(dataInfo).map((item) => {
-            return (
-              <div className="item">
-                <div className="corner_1" />
-                <div className="edge_1" />
-                <div className="corner_2" />
-                <div className="edge_2" />
-                <p className="item_amount">{item.amount}</p>
-                <p className="item_title">{item.title}</p>
-              </div>
-            )
-          })}
+      {!account && (
+        <div className="btn_connect_container">
+          <p>Connect to your wallet to view your vesting shedule.</p>
+          <ConnectWalletButton scale="sm" style={{ whiteSpace: 'nowrap' }} className="btn_connect">
+            <span>Connect Wallet</span>
+          </ConnectWalletButton>
         </div>
+      )}
+      {account && (
+        <Content>
+          <div className="your_amount">
+            {Array.from(dataInfo).map((item) => {
+              return (
+                <div className="item">
+                  <div className="corner_1" />
+                  <div className="edge_1" />
+                  <div className="corner_2" />
+                  <div className="edge_2" />
+                  <p className="item_amount">
+                    {item.title === 'Amount invested' && <span>$</span>}
+                    {Number(item.amount).toLocaleString()}
+                  </p>
+                  <p className="item_title">{item.title}</p>
+                </div>
+              )
+            })}
+          </div>
 
-        <div className="table_your_info">
-          <Flex mb="16px">
+          <div className="table_your_info">
+            <Flex mb="16px">
+              <Text
+                className={tab === 0 ? `heading_info_vesting_tab vesting_info_active` : `heading_info_vesting_tab`}
+                fontSize="14px"
+                fontFamily="Inter"
+                fontStyle="normal"
+                fontWeight="700"
+                lineHeight="24px"
+                color="rgba(255, 255, 255, 0.87)"
+                onClick={() => setTab(0)}
+              >
+                Sale History
+              </Text>
+
+              <Text
+                className={tab === 1 ? `heading_info_vesting_tab vesting_info_active` : `heading_info_vesting_tab`}
+                fontSize="14px"
+                fontFamily="Inter"
+                fontStyle="normal"
+                fontWeight="700"
+                lineHeight="24px"
+                color="rgba(255, 255, 255, 0.87)"
+                onClick={() => setTab(1)}
+              >
+                Claim History
+              </Text>
+            </Flex>
+          </div>
+
+          {tab === 0 && <TabSaleHistory currentTransactions={currentTransactions} />}
+          {tab === 1 && <TabClaimHistory currentTransactions={currentTransactions} />}
+
+          <Flex mb="16px" mt="24px" justifyContent="space-between">
             <Text
-              className={tab === 0 ? `heading_info_vesting_tab vesting_info_active` : `heading_info_vesting_tab`}
-              fontSize="14px"
+              className="heading_info_vesting"
+              fontSize="20px"
               fontFamily="Inter"
               fontStyle="normal"
               fontWeight="700"
               lineHeight="24px"
               color="rgba(255, 255, 255, 0.87)"
-              onClick={() => setTab(0)}
+              height="24px"
             >
-              Sale History
-            </Text>
-
-            <Text
-              className={tab === 1 ? `heading_info_vesting_tab vesting_info_active` : `heading_info_vesting_tab`}
-              fontSize="14px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="24px"
-              color="rgba(255, 255, 255, 0.87)"
-              onClick={() => setTab(1)}
-            >
-              Claim History
+              Referral
             </Text>
           </Flex>
-        </div>
 
-        {tab === 0 && <TabSaleHistory currentTransactions={currentTransactions} />}
-        {tab === 1 && <TabClaimHistory currentTransactions={currentTransactions} />}
-
-        <Flex mb="16px" mt="24px" justifyContent="space-between">
-          <Text
-            className="heading_info_vesting"
-            fontSize="20px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="24px"
-            color="rgba(255, 255, 255, 0.87)"
-            height="24px"
-          >
-            Referral
-          </Text>
-        </Flex>
-
-        <div className="your_ref">
-          {Array.from(dataRefInfo).map((item: IRefInfo) => {
-            return (
-              <div className="item_your-ref">
-                <div className="corner_1" />
-                <div className="edge_1" />
-                <div className="corner_2" />
-                <div className="edge_2" />
-                <p className="item_your-ref_amount">
-                  {item.totalTransactionApplyReferral
-                    ? item.title === 'XOXS amount received from Referral'
-                      ? formatUnits(item.rewardXOXS, 6)
-                      : item.totalTransactionApplyReferral
-                    : item.amountInit}
-                </p>
-                <p className="item_your-ref_title">{item.title}</p>
-              </div>
-            )
-          })}
-          <div>
-            <p className="my_code">My Referral Code</p>
-            <div className="code">
-              <div className="content_code_number">
-                {account && (
-                  <>
-                    <span className="code_number">{userProfile?.referralCode}</span>
-                    <span>
-                      <CopyButton
-                        width="24px"
-                        text={userProfile?.referralCode}
-                        tooltipMessage={t('Copied')}
-                        button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
-                      />
-                    </span>
-                  </>
-                )}
+          <div className="your_ref">
+            {Array.from(dataRefInfo).map((item: IRefInfo) => {
+              return (
+                <div className="item_your-ref">
+                  <div className="corner_1" />
+                  <div className="edge_1" />
+                  <div className="corner_2" />
+                  <div className="edge_2" />
+                  <p className="item_your-ref_amount">
+                    {item.totalTransactionApplyReferral
+                      ? item.title === 'XOXS amount received from Referral'
+                        ? formatUnits(item.rewardXOXS, 6)
+                        : item.totalTransactionApplyReferral
+                      : item.amountInit}
+                  </p>
+                  <p className="item_your-ref_title">{item.title}</p>
+                </div>
+              )
+            })}
+            <div>
+              <p className="my_code">My Referral Code</p>
+              <div className="code">
+                <div className="content_code_number">
+                  {account && (
+                    <>
+                      <span className="code_number">{userProfile?.referralCode}</span>
+                      <span>
+                        <CopyButton
+                          width="24px"
+                          text={userProfile?.referralCode}
+                          tooltipMessage={t('Copied')}
+                          button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
+                        />
+                      </span>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Content>
+        </Content>
+      )}
     </Wrapper>
   )
 }

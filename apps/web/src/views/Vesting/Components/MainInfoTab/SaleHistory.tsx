@@ -319,6 +319,7 @@ const DataRow: React.FC<
         href={`${linkTransaction(ChainId.GOERLI)}${transaction.id}`}
         className="link_external"
         target="_blank"
+        color="#fb8618"
       >
         <Text
           fontSize={['14px', , '16px']}
@@ -442,7 +443,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              Wallet Address
+              Username
             </Text>
             <Text
               fontSize="16px"
@@ -628,7 +629,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke={page === maxPage ? 'white' : '#9072FF'}
+                  stroke={page === maxPage ? 'white' : '#FB8618'}
                   strokeOpacity={page === maxPage ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
