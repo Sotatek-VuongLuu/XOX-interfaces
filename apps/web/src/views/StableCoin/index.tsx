@@ -19,6 +19,7 @@ import TransactionTable from './transactionTable'
 // eslint-disable-next-line import/no-cycle
 import Earned from './earned'
 import { useRouter } from 'next/router'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 const TYPE = {
   default: 'DEFAULT',
@@ -472,7 +473,7 @@ export default function StableCoin() {
                     <Flex justifyContent="space-between" alignItems="center" width="100%">
                       <WrapText>
                         <p>Your current XOXS</p>
-                        <p className="number">{currentXOX}</p>
+                        <p className="number">{formatAmountNumber2(Number(currentXOX))}</p>
                         <Link href="/stable-coin-history">
                           <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
                             View your history
@@ -501,7 +502,7 @@ export default function StableCoin() {
                     <Flex justifyContent="space-between" alignItems="center" width="100%">
                       <WrapText>
                         <p>Your current reward</p>
-                        <p className="number">{currentReward}</p>
+                        <p className="number">{formatAmountNumber2(Number(currentReward))}</p>
                         <Link href="/stable-coin-withdraw">
                           <Button height={37} style={{ fontSize: 14 }}>
                             Withdraw reward

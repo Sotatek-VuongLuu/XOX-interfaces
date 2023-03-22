@@ -24,7 +24,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import Trans from 'components/Trans'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useEffect, useMemo, useState } from 'react'
-import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 import styled, { keyframes } from 'styled-components'
 import useWindowSize from 'hooks/useWindowSize'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -1279,10 +1279,10 @@ const MainInfo = ({
                     <div className="current_point_bar">
                       {totalPoint ? (
                         <span>
-                          {formatAmountNumber(userCurrentPoint, 2)}/
+                          {formatAmountNumber2(userCurrentPoint, 2)}/
                           {currentLevelReach === 9
-                            ? listLever[currentLevelReach - 1]?.point
-                            : listLever[currentLevelReach]?.point}
+                            ? formatAmountNumber2(listLever[currentLevelReach - 1]?.point)
+                            : formatAmountNumber2(listLever[currentLevelReach]?.point)}
                         </span>
                       ) : (
                         <span />
@@ -1392,7 +1392,7 @@ const MainInfo = ({
                                   />
                                 </div>
                                 <div className="row-item">
-                                  <p className="point">{formatAmountNumber(row.point, 2)}</p>
+                                  <p className="point">{formatAmountNumber2(row.point, 2)}</p>
                                 </div>
                               </div>
                             ))}
