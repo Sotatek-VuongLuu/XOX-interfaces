@@ -192,7 +192,7 @@ const Menu = (props) => {
   const [openHeader, setOpenHeader] = useState<boolean>(false)
   const [activeNotifi, setActiveNotifi] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement>(null)
-  const host = 'wss://api.xoxnet.sotatek.works'
+  const host = process.env.NEXT_PUBLIC_APINEXT_PUBLIC_SOCKET_API
   const menuItemsLanding = useMemo(() => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
   }, [t, isDark, currentLanguage.code, chainId])
