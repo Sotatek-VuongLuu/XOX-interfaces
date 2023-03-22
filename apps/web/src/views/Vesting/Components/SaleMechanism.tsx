@@ -236,7 +236,7 @@ function SaleMechanism({
       case 'Token Metrics':
         return <TokenMetrics initialTokenMetrics={initialTokenMetrics} />
       case 'Vesting Schedule':
-        return <VestingSchedule dataVesting={dataVesting} handleClaim={handleClaim} />
+        return <VestingSchedule dataVesting={dataVesting} dataInfo={dataInfo} handleClaim={handleClaim} />
       case 'Your Information':
         return <YourInfo dataInfo={dataInfo} dataRefInfo={dataRefInfo} dataTransaction={dataTransaction} />
       default:

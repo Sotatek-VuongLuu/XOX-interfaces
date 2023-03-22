@@ -388,8 +388,10 @@ const CountDown = ({ startTime, setReachZero }: Props) => {
 function VestingSchedule({
   dataVesting,
   handleClaim,
+  dataInfo,
 }: {
   dataVesting: IVestingTime[]
+  dataInfo: any[]
   handleClaim: (round: number, remainning: number) => void
 }) {
   const { account } = useActiveWeb3React()
@@ -404,7 +406,7 @@ function VestingSchedule({
       )}
       {account && (
         <>
-          <div className="total_vested">Total vested at this time: 2,000</div>
+          <div className="total_vested">Total vested at this time: {dataInfo[2].amount}</div>
           <Content>
             <div className="over_flow">
               {Array.from(dataVesting).map((item: IVestingTime, index) => {

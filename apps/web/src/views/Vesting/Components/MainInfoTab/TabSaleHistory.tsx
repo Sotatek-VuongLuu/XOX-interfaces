@@ -6,7 +6,7 @@ import BigNumber from 'bignumber.js'
 import TableLoader from 'components/TableLoader'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
-import React, { Fragment, useCallback, useState } from 'react'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { isMobile } from 'react-device-detect'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
@@ -55,7 +55,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {moment.unix(transaction?.timestamp).format('DD/MM/YYYY HH:MM:ss')}
+        {moment.unix(transaction?.timestamp).format('DD/MM/YYYY HH:mm:ss')}
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -108,15 +108,10 @@ const DataRow: React.FC<
 }
 
 function TabSaleHistory({ currentTransactions }) {
-  // const [currentTransactions, setCurrentTransactions] = useState([])
   const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
-  const { account } = useActiveWeb3React()
-  const { t } = useTranslation()
-  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
-  const [tab, setTab] = useState(0)
 
   const setPagePagination = useCallback(
     (p: number) => {
@@ -136,6 +131,35 @@ function TabSaleHistory({ currentTransactions }) {
   const handleChangeTempPage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
   }, [])
+
+  const handleSelectPerPage = useCallback(
+    (value: any) => {
+      setPerPage(value)
+    },
+    [perPage],
+  )
+
+  const sortedTransactions = useMemo(() => {
+    if (!currentTransactions) return []
+    return currentTransactions ? currentTransactions.slice(perPage * (page - 1), page * perPage) : []
+  }, [currentTransactions, page, perPage])
+
+  useEffect(() => {
+    if (!currentTransactions) return
+    if (currentTransactions.length % perPage === 0) {
+      setMaxPage(Math.floor(currentTransactions.length / perPage))
+    } else {
+      setMaxPage(Math.floor(currentTransactions.length / perPage) + 1)
+    }
+  }, [currentTransactions, perPage])
+
+  useEffect(() => {
+    setTempPage(page.toString())
+  }, [page])
+
+  useEffect(() => {
+    setPage(1)
+  }, [perPage])
 
   return (
     <>
@@ -209,7 +233,7 @@ function TabSaleHistory({ currentTransactions }) {
           </Text>
           {currentTransactions ? (
             <>
-              {currentTransactions.map((transaction, index) => {
+              {sortedTransactions.map((transaction, index) => {
                 return (
                   // eslint-disable-next-line react/no-array-index-key
                   <Fragment key={index}>
@@ -217,7 +241,7 @@ function TabSaleHistory({ currentTransactions }) {
                   </Fragment>
                 )
               })}
-              {currentTransactions.length === 0 ? (
+              {sortedTransactions.length === 0 ? (
                 <NoTransactionWrapper justifyContent="center">
                   <Text textAlign="center">No Transactions</Text>
                 </NoTransactionWrapper>
@@ -366,7 +390,7 @@ function TabSaleHistory({ currentTransactions }) {
                   label: '100/Page',
                 },
               ]}
-              onOptionChange={(option: any) => setPerPage(option.value)}
+              onOptionChange={(option: any) => handleSelectPerPage(option.value)}
               className="select-page"
             />
             <Text className="go-page">Go to page</Text>

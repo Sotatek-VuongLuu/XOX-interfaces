@@ -424,7 +424,7 @@ function VestingPage() {
   const [infoRoundTow, setInfoRoundTow] = useState<RoundInfo>(defaultRoundInfo)
   const [infoRoundThree, setInfoRoundThree] = useState<RoundInfo>(defaultRoundInfo)
   const [ethPerDolla, setEthPerDolla] = useState<null | number>(null)
-  const [referralCode, setReferralCode] = useState(null)
+  const [referralCode, setReferralCode] = useState(ADDRESS_CODE)
   const [codeRef, setCodeRef] = useState('')
   const { t } = useTranslation()
   const { toastSuccess, toastError } = useToast()
@@ -453,6 +453,7 @@ function VestingPage() {
   const [reacheZero, setReachZero] = useState<boolean>(null)
   const [isTimeAllowWhitelist, setIsTimeAllowWhitelist] = useState<boolean>(false)
   const [_, setisReachWhitelist] = useState<boolean>(false)
+  const [loadOk, setLoadOk] = useState(false)
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     if (dataSaleStatsParams.length !== 0) {
       const dataUpdate = Array.from(arr).map((item: Start) => {
@@ -565,7 +566,6 @@ function VestingPage() {
     const amountParse =
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), 6)
     setMessageConfirm(`Buying ${amountXOX} XOX`)
-
     if (
       isUserInWhiteList &&
       handleGetOneHourBeforeSale() <= timeStampOfNow &&
@@ -932,7 +932,7 @@ function VestingPage() {
       return message
     }
     if (totalDolla < 50) {
-      message = 'Maximum investment: $50'
+      message = 'Minimum investment: $50'
     } else {
       message = ''
     }
@@ -1051,6 +1051,13 @@ function VestingPage() {
     handleGetOneHourBeforeSale()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoRoundOne])
+
+  useEffect(() => {
+    if (!account || !chainId) return
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, chainId])
 
   return (
     <>

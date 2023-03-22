@@ -23,15 +23,20 @@ export const getSaleStats = async (chainId = ChainId.GOERLI) => {
   return response
 }
 
-export const getRaiseDailies = (from: number, to: number, chainId: ChainId) => {
-  const requests = `{
-    raiseDailies(where: { date_gte: ${from}, date_lte: ${to} }, orderBy: date, orderDirection: desc) {
-      id,
-      volumeUSD,
-      date
-    }
-  }`
-  return new GraphQLClient(ENDPOINT_GRAPHQL_WITH_CHAIN[chainId]).request(requests)
+export const getRaiseDailies = async (from: number, to: number, chainId: ChainId) => {
+  const response = await request(
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
+    gql`
+      query getRaise {
+        raiseDailies(where: { date_gte: ${from}, date_lte: ${to} }, orderBy: date, orderDirection: desc) {
+          id,
+          volumeUSD,
+          date
+        }
+      }
+    `,
+  )
+  return response
 }
 
 export const getUserPreSaleInfo = async (account: string, chainId = ChainId.GOERLI) => {
@@ -39,7 +44,7 @@ export const getUserPreSaleInfo = async (account: string, chainId = ChainId.GOER
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getInfoUserPreSale {
-        userPreSaleDatas (where : {id :"${account.toLowerCase()}"}) {
+        userPreSaleDatas (where : {id :"${account?.toLowerCase()}"}) {
           id
           amountInvestUSD
           amountBoughtXOX
@@ -79,7 +84,7 @@ export const getDataTransactionOfUser = async (account: string, chainId = ChainI
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getTransactionPreSalesOfUser {
-        transactionPreSales(where: {sender: "${account.toLowerCase()}"},first: 100, orderBy: timestamp, orderDirection: desc) {
+        transactionPreSales(where: {sender: "${account?.toLowerCase()}"},first: 100, orderBy: timestamp, orderDirection: desc) {
           id
           blockNumber
           timestamp
@@ -119,7 +124,7 @@ export const getDataReferralPresale = async (account: string, chainId = ChainId.
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getRefPresale {
-        analysisSaleReferrals(where: { account: "${account.toLowerCase()}" }) {
+        analysisSaleReferrals(where: { account: "${account?.toLowerCase()}" }) {
           id
           account
           rewardXOXS

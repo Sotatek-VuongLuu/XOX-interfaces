@@ -1,5 +1,5 @@
 import { Box, Flex, Input, LinkExternal, Select, Text } from '@pancakeswap/uikit'
-import { Fragment, useCallback, useEffect, useState } from 'react'
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
@@ -282,7 +282,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {moment.unix(transaction?.timestamp).format('DD/MM/YYYY HH:MM:ss')}
+        {moment.unix(transaction?.timestamp).format('DD/MM/YYYY HH:mm:ss')}
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -364,6 +364,35 @@ function SaleHistory({ dataTransaction }: IProps) {
   const handleChangeTempPage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
   }, [])
+
+  const handleSelectPerPage = useCallback(
+    (value: any) => {
+      setPerPage(value)
+    },
+    [perPage],
+  )
+
+  const sortedTransactions = useMemo(() => {
+    if (!currentTransactions) return []
+    return currentTransactions ? currentTransactions.slice(perPage * (page - 1), page * perPage) : []
+  }, [currentTransactions, page, perPage])
+
+  useEffect(() => {
+    if (!currentTransactions) return
+    if (currentTransactions.length % perPage === 0) {
+      setMaxPage(Math.floor(currentTransactions.length / perPage))
+    } else {
+      setMaxPage(Math.floor(currentTransactions.length / perPage) + 1)
+    }
+  }, [currentTransactions, perPage])
+
+  useEffect(() => {
+    setTempPage(page.toString())
+  }, [page])
+
+  useEffect(() => {
+    setPage(1)
+  }, [perPage])
 
   useEffect(() => {
     setCurrentTransactions(dataTransaction)
@@ -472,7 +501,7 @@ function SaleHistory({ dataTransaction }: IProps) {
             </Text>
             {currentTransactions ? (
               <>
-                {currentTransactions.map((transaction, index) => {
+                {sortedTransactions.map((transaction, index) => {
                   return (
                     // eslint-disable-next-line react/no-array-index-key
                     <Fragment key={index}>
@@ -480,7 +509,7 @@ function SaleHistory({ dataTransaction }: IProps) {
                     </Fragment>
                   )
                 })}
-                {currentTransactions.length === 0 ? (
+                {sortedTransactions.length === 0 ? (
                   <NoTransactionWrapper justifyContent="center">
                     <Text textAlign="center">No Transactions</Text>
                   </NoTransactionWrapper>
@@ -632,7 +661,7 @@ function SaleHistory({ dataTransaction }: IProps) {
                   label: '100/Page',
                 },
               ]}
-              onOptionChange={(option: any) => setPerPage(option.value)}
+              onOptionChange={(option: any) => handleSelectPerPage(option.value)}
               className="select-page"
             />
             <Text className="go-page">Go to page</Text>
