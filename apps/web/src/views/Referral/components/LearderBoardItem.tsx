@@ -1,6 +1,6 @@
 /* eslint-disable import/no-cycle */
 import { Avatar, Box, Tooltip } from '@mui/material'
-import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 import useWindowSize from 'hooks/useWindowSize'
 import { useCallback } from 'react'
 import styled from 'styled-components'
@@ -170,8 +170,7 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
               </p>
             </Tooltip>
           </div>
-
-          <div className="point">{formatAmountNumber(item.point, 2)}</div>
+          <div className="point">{formatAmountNumber2(item.point, 2)}</div>
         </div>
       </div>
     </Wrapper>

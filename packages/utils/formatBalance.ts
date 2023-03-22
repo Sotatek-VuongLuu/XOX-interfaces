@@ -117,3 +117,11 @@ export const formatAmountString = (number: any, decimals = 2) => {
   }
   return result.toString()
 }
+
+export const formatAmountNumber2 = (number: number, decimals = 2) => {
+  if (number < 1) {
+    return number
+  }
+  const value = (parseInt((number * 10 ** decimals).toString()) / 10 ** decimals)?.toString()
+  return value?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+}

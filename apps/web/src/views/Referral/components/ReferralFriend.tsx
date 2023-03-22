@@ -25,7 +25,7 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { getUserFriend } from 'services/referral'
 import { USD_DECIMALS } from 'config/constants/exchange'
-import { formatAmountNumber, roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatAmountNumber2, roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
 import axios from 'axios'
 import { CopyButton, useToast } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
@@ -933,7 +933,7 @@ const ReferralFriend = ({
                     // <div className="unclaim_reward_container">
                     //   <div className="unclaim_reward">
                     <p className="total_un_claimed">
-                      ${Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)} Unclaimed Rewards
+                      ${Number(totalUnClaimed) <= 0 ? 0 : formatAmountNumber2(Number(totalUnClaimed))} Unclaimed Rewards
                     </p>
                     //   </div>
                     // </div>
