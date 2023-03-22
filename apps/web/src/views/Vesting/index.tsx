@@ -832,7 +832,7 @@ function VestingPage() {
           result.amountInvestUSD += new BigNumber(item?.amountInvestUSD).div(10 ** 6).toNumber()
           result.amountBoughtXOX += new BigNumber(item?.amountBoughtXOX).div(10 ** 18).toNumber()
           result.amountBoughtXOXS += new BigNumber(item?.amountBoughtXOXS).div(10 ** 6).toNumber()
-          result.amountClaimXOX += new BigNumber(item?.amountClaimXOX).toNumber()
+          result.amountClaimXOX += new BigNumber(item?.amountClaimXOX).div(10 ** 18).toNumber()
           return null
         })
 
