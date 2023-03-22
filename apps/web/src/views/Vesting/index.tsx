@@ -452,8 +452,7 @@ function VestingPage() {
   const [massageErrorAmount, setMassageErrorAmount] = useState<string>('')
   const [reacheZero, setReachZero] = useState<boolean>(null)
   const [isTimeAllowWhitelist, setIsTimeAllowWhitelist] = useState<boolean>(false)
-  const [isReachWhitelist, setisReachWhitelist] = useState<boolean>(false)
-
+  const [_, setisReachWhitelist] = useState<boolean>(false)
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     if (dataSaleStatsParams.length !== 0) {
       const dataUpdate = Array.from(arr).map((item: Start) => {
@@ -687,13 +686,13 @@ function VestingPage() {
     const arrLockingTime = []
     const timeInit = moment
       .unix(dateAgr / 1000)
-      .add(1, 'month')
+      .add(0.5, 'hour')
       .unix()
     arrLockingTime.push(timeInit * 1000)
     for (let i = 0; i < 9; i++) {
       const time = moment
         .unix(arrLockingTime[i] / 1000)
-        .add(1, 'month')
+        .add(0.5, 'hour')
         .unix()
       arrLockingTime.push(time * 1000)
     }
@@ -951,6 +950,8 @@ function VestingPage() {
       handleGetDataTransactionOfUser()
       handleGetPreSaleUserInfo(initialYourInfo)
       handleGetRefPreSale(initialRefInfo, account)
+      handleGetRoundStatus()
+      handleGetDataTransaction()
     }, 15000)
     return () => clearInterval(myId)
     // eslint-disable-next-line react-hooks/exhaustive-deps

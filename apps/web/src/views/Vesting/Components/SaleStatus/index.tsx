@@ -298,7 +298,7 @@ const CustomGrid = styled(Grid)`
 
 enum StatusSale {
   LIVE = 'Live',
-  END = 'End',
+  END = 'Ended',
   INCOMING = 'Incoming',
 }
 

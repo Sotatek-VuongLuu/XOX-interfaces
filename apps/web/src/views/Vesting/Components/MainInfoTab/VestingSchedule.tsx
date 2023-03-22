@@ -393,7 +393,6 @@ function VestingSchedule({
   handleClaim: (round: number, remainning: number) => void
 }) {
   const { account } = useActiveWeb3React()
-
   return (
     <Wrapper>
       {!account && (

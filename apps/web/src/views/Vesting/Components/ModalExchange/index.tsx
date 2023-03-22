@@ -354,8 +354,6 @@ function ModalSaleExchange({
         break
     }
   }
-  console.log(`referralCode`, referralCode)
-
   useEffect(() => {
     handleRenderXOXAmount(typeBuyPrice, currentRound, amount)
     // eslint-disable-next-line react-hooks/exhaustive-deps
