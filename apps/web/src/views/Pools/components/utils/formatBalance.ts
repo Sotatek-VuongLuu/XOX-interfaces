@@ -1,4 +1,4 @@
-export const formatToShowBalance = (balance: string) => {
+export const formatToShowBalance = (balance: string | number) => {
   const data = String(balance)
 
   if (Number(balance) <= 0.000001) {
