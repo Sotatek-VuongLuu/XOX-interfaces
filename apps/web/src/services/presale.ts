@@ -41,7 +41,6 @@ export const getUserPreSaleInfo = async (account: string, chainId = ChainId.GOER
       query getInfoUserPreSale {
         userPreSaleDatas (where : {id :"${account.toLowerCase()}"}) {
           id
-          round
           amountInvestUSD
           amountBoughtXOX
           amountBoughtXOXS
