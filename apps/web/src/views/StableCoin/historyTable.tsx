@@ -374,7 +374,7 @@ const DataRow: React.FC<
     // eslint-disable-next-line no-param-reassign
     e.target.src = 'images/default_avatar.jpg'
   }
-
+  console.log(abs0)
   return (
     <>
       <Text

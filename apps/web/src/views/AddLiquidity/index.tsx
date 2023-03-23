@@ -20,7 +20,7 @@ import { logError } from 'utils/sentry'
 import styled from 'styled-components'
 import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
 import { useTranslation } from '@pancakeswap/localization'
-import { formatAmountString } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber2, formatAmountString } from '@pancakeswap/utils/formatBalance'
 import { useZapContract } from 'hooks/useContract'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getZapAddress } from 'utils/addressHelpers'
@@ -501,15 +501,15 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   const pendingText = preferZapInstead
     ? t('Zapping %amountA% %symbolA% and %amountB% %symbolB%', {
-        amountA: parsedAmounts[Field.CURRENCY_A]?.toSignificant(6) ?? '0',
+        amountA: formatAmountNumber2(Number(parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)), 4) ?? '0',
         symbolA: currencies[Field.CURRENCY_A]?.symbol ?? '',
-        amountB: parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) ?? '0',
+        amountB: formatAmountNumber2(Number(parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)), 4) ?? '0',
         symbolB: currencies[Field.CURRENCY_B]?.symbol ?? '',
       })
     : t('Adding %amountA% %symbolA% and %amountB% %symbolB%', {
-        amountA: parsedAmounts[Field.CURRENCY_A]?.toSignificant(6) ?? '',
+        amountA: formatAmountNumber2(Number(parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)), 4) ?? '',
         symbolA: currencies[Field.CURRENCY_A]?.symbol ?? '',
-        amountB: parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) ?? '',
+        amountB: formatAmountNumber2(Number(parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)), 4) ?? '',
         symbolB: currencies[Field.CURRENCY_B]?.symbol ?? '',
       })
 
