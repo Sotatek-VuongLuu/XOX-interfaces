@@ -251,13 +251,54 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
+
+    .ring-container {
+      position: relative;
+      flex: 1;
+    }
+
+    .circle {
+      width: 7px;
+      height: 7px;
+      background-color: #64c66d;
+      border-radius: 50%;
+      position: absolute;
+      left: 10px;
+      top: 8px;
+    }
+
+    .ringring {
+      border: 3px solid #64c66d;
+      border-radius: 30px;
+      height: 17px;
+      width: 17px;
+      position: absolute;
+      left: 5px;
+      top: 3px;
+      animation: pulsate 1s ease-out;
+      animation-iteration-count: infinite;
+      opacity: 0;
+    }
+    @keyframes pulsate {
+      0% {
+        -webkit-transform: scale(0.1, 0.1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: scale(1.2, 1.2);
+        opacity: 0;
+      }
+    }
   }
 
   .live {
     color: #64c66d;
   }
 
-  .end {
+  .ended {
     color: #ff5353;
   }
 
@@ -267,6 +308,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
 
   .dot_contain {
     position: relative;
+    display: flex;
   }
 
   .dot {
@@ -361,7 +403,11 @@ const Item = ({ item }) => {
           <p className={`status_value ${String(item.status).toLocaleLowerCase()} status`}>
             {item.status === StatusSale.LIVE ? (
               <span className="dot_contain">
-                <span>{item.status}</span> <span className="dot">.</span>
+                <div>{item.status}</div>
+                <div className="ring-container">
+                  <div className="ringring" />
+                  <div className="circle" />
+                </div>
               </span>
             ) : (
               `${item.status}`

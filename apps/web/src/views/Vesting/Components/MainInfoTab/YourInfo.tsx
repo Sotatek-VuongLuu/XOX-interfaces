@@ -207,7 +207,11 @@ const Content = styled.div`
   .heading_info_vesting_tab {
     padding: 10px 16px;
     border-radius: 8px;
+    margin-right: 8px;
     cursor: pointer;
+    &:hover {
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    }
 
     @media screen and (max-width: 900px) {
       font-size: 12px;
@@ -317,7 +321,6 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
                 fontFamily="Inter"
                 fontStyle="normal"
                 fontWeight="700"
-                lineHeight="24px"
                 color="rgba(255, 255, 255, 0.87)"
                 onClick={() => setTab(0)}
               >
@@ -330,7 +333,6 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
                 fontFamily="Inter"
                 fontStyle="normal"
                 fontWeight="700"
-                lineHeight="24px"
                 color="rgba(255, 255, 255, 0.87)"
                 onClick={() => setTab(1)}
               >

@@ -200,7 +200,7 @@ export const CustomTableWrapper = styled(Flex)`
 `
 
 const Table = styled.div`
-  padding: 0px 20px;
+  padding: 0px 24px;
   display: grid;
   gap: 10px;
   align-items: center;
@@ -271,6 +271,47 @@ const Table = styled.div`
     font-size: 18px;
     line-height: 22px;
     color: #64c66d;
+    display: flex;
+    .ring-container {
+      position: relative;
+      flex: 1;
+    }
+
+    .circle {
+      width: 7px;
+      height: 7px;
+      background-color: #64c66d;
+      border-radius: 50%;
+      position: absolute;
+      left: 10px;
+      top: 8px;
+    }
+
+    .ringring {
+      border: 3px solid #64c66d;
+      border-radius: 30px;
+      height: 17px;
+      width: 17px;
+      position: absolute;
+      left: 5px;
+      top: 3px;
+      animation: pulsate 1s ease-out;
+      animation-iteration-count: infinite;
+      opacity: 0;
+    }
+    @keyframes pulsate {
+      0% {
+        -webkit-transform: scale(0.1, 0.1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: scale(1.2, 1.2);
+        opacity: 0;
+      }
+    }
   }
 
   @media screen and (max-width: 900px) {
@@ -290,6 +331,21 @@ const Table = styled.div`
     .active_text {
       font-size: 12px !important;
       line-height: 15px !important;
+
+      .circle {
+        width: 6px;
+        height: 6px;
+        left: 6px;
+        top: 5px;
+      }
+
+      .ringring {
+        height: 16px;
+        width: 16px;
+        position: absolute;
+        left: 1px;
+        top: 0px;
+      }
     }
   }
 `
@@ -457,7 +513,13 @@ function PricingInfo({
                     color="#64C66D"
                     className={!!item.status && `active_text`}
                   >
-                    Live
+                    <>
+                      <div>Live</div>
+                      <div className="ring-container">
+                        <div className="ringring" />
+                        <div className="circle" />
+                      </div>
+                    </>
                   </Text>
                 ) : (
                   <Text className="table-header" />

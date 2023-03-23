@@ -664,6 +664,7 @@ function VestingPage() {
 
       if (txHash?.transactionHash) {
         setIsOpenLoadingClaimModal(false)
+        handleGetDataVesting()
         toastSuccess(
           `Claimed XOX`,
           <ToastDescriptionWithTx txHash={txHash.transactionHash}>
@@ -1114,6 +1115,7 @@ function VestingPage() {
             dataTransaction={dataTransactionOfUser}
             dataTransactionClaimOfUser={dataTransactionClaimOfUser}
             dataVesting={dataVestingSchedule}
+            handleGetDataVesting={handleGetDataVesting}
           />
           <SaleHistorySession dataTransaction={dataTransaction} />
           <BackedBy />

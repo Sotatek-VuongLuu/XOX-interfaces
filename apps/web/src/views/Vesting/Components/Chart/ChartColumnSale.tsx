@@ -50,7 +50,7 @@ function ChartColumnSale(props: PropsColumnChart) {
             <stop offset="100%" style={{ stopColor: 'rgba(167, 59, 124, 1)', stopOpacity: 1 }} />
           </linearGradient>
         </defs>
-        <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} />
+        <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} wrapperStyle={{ outline: 'none' }} />
         <XAxis dataKey="name" tick={{ fontSize: 10, fontWeight: 400, fill: 'rgba(255, 255, 255, 0.6)' }} />
         <Bar dataKey="uv" fill="url(#colorUv)" radius={[20, 20, 20, 20]} style={{ cursor: 'pointer' }} />
       </BarChart>

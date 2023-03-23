@@ -1,4 +1,5 @@
 import { Button } from '@pancakeswap/uikit'
+import BigNumber from 'bignumber.js'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
@@ -170,12 +171,16 @@ const CustomButtom = styled(Button)`
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
+  width: 105px;
+  height: 43px;
   padding: 12px 30px;
 
   @media screen and (max-width: 900px) {
     padding: 12px 20px;
     font-size: 14px;
     line-height: 17px;
+    width: 80px;
+    height: 37px;
   }
 `
 
@@ -191,10 +196,12 @@ const SaleItem = ({
   item,
   index,
   handleClaim,
+  handleGetDataVesting,
 }: {
   item: IVestingTime
   index: number
   handleClaim: (round: number, remainning: any) => void
+  handleGetDataVesting: () => void
 }) => {
   const [reacheZero, setReachZero] = useState<boolean>(false)
   const [count, setCount] = useState<number>(0)
@@ -204,7 +211,10 @@ const SaleItem = ({
       // eslint-disable-next-line no-unused-expressions
       count < item.startTime.length - 1 && setCount(count + 1)
     }
-    const id = setTimeout(() => setReachZero(false), 5000)
+    const id = setTimeout(() => {
+      setReachZero(false)
+      // handleGetDataVesting()
+    }, 7000)
     return () => clearTimeout(id)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [reacheZero])
@@ -225,7 +235,7 @@ const SaleItem = ({
               />
             </p>
             <div>
-              <p className="amount_vested">{Number(item.amountVested).toLocaleString()}</p>
+              <p className="amount_vested">{Number(item.remaining).toLocaleString()}</p>
               <p className="title_vested">Unclaimed</p>
             </div>
           </div>
@@ -236,7 +246,7 @@ const SaleItem = ({
               <Img src="/images/1/tokens/xox_new.svg" alt="icon" height={30} width={30} className="token_first" />
             </p>
             <div>
-              <p className="amount_vested">{Number(item.remaining).toLocaleString()}</p>
+              <p className="amount_vested">{Number(item.amountVested).toLocaleString()}</p>
               <p className="title_vested">Claimed</p>
             </div>
           </div>
@@ -451,10 +461,12 @@ function VestingSchedule({
   dataVesting,
   handleClaim,
   dataInfo,
+  handleGetDataVesting,
 }: {
   dataVesting: IVestingTime[]
   dataInfo: any[]
   handleClaim: (round: number, remainning: number) => void
+  handleGetDataVesting: () => void
 }) {
   const { account } = useActiveWeb3React()
   return (
@@ -469,11 +481,26 @@ function VestingSchedule({
       )}
       {account && (
         <>
-          <div className="total_vested">Total vested at this time: {dataInfo[2].amount}</div>
+          <div className="total_vested">
+            Total vested at this time:{' '}
+            {Number(
+              new BigNumber(dataVesting[0].remaining)
+                .plus(dataVesting[1].remaining)
+                .plus(dataVesting[2].remaining)
+                .toFixed(2),
+            ).toLocaleString()}
+          </div>
           <Content>
             <div className="over_flow">
               {Array.from(dataVesting).map((item: IVestingTime, index) => {
-                return <SaleItem item={item} index={index} handleClaim={handleClaim} />
+                return (
+                  <SaleItem
+                    item={item}
+                    index={index}
+                    handleClaim={handleClaim}
+                    handleGetDataVesting={handleGetDataVesting}
+                  />
+                )
               })}
             </div>
           </Content>

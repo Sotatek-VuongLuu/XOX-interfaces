@@ -486,7 +486,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              XOXS Received
+              XOXS Reward
             </Text>
             <Text
               fontSize="16px"
