@@ -484,9 +484,9 @@ function VestingSchedule({
           <div className="total_vested">
             Total vested at this time:{' '}
             {Number(
-              new BigNumber(dataVesting[0].remaining)
-                .plus(dataVesting[1].remaining)
-                .plus(dataVesting[2].remaining)
+              new BigNumber(dataVesting[0].amountVested)
+                .plus(dataVesting[1].amountVested)
+                .plus(dataVesting[2].amountVested)
                 .toFixed(2),
             ).toLocaleString()}
           </div>
