@@ -105,7 +105,7 @@ const Wrapper = styled.div`
       height: 100%;
       width: 117px;
       left: -1px;
-      background: linear-gradient(90deg, black 0%, black 20%, rgba(18, 18, 18, 0) 100%);
+      background: linear-gradient(90deg, #0A0A0A 0%, rgba(10, 10, 10, 0) 100%);
       z-index: 99;
     }
 
@@ -116,7 +116,8 @@ const Wrapper = styled.div`
       right: -1px;
       top: 0;
       width: 117px;
-      background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 80%, black 100%);
+      background: linear-gradient(90deg, #0A0A0A 0%, rgba(10, 10, 10, 0) 70.83%);
+      transform: matrix(-1, 0, 0, 1, 0, 0);
       z-index: 99;
     }
   }
@@ -421,7 +422,7 @@ const Partners = () => {
         ) : null}
       </div>
 
-      <div className="btn_see_all" data-aos="fade-up">
+      <div className="btn_see_all" data-aos="fade-up" style={{ display: 'none' }}>
         <div className="get_xox" onClick={handleChangeShowMore}>
           <div className="boxed-child">{isShowMore ? <span>See Less</span> : <span>See All</span>}</div>
         </div>

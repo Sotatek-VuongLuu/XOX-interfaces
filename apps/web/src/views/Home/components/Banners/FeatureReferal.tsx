@@ -155,7 +155,8 @@ const Paragraph = styled.p`
 const First = styled.div`
   width: 100%;
   height: 100%;
-  background: linear-gradient(100.7deg, rgba(96, 52, 255, 0.1) 0%, rgba(163, 90, 255, 0.1) 100%);
+  // background: linear-gradient(100.7deg, rgba(96, 52, 255, 0.1) 0%, rgba(163, 90, 255, 0.1) 100%);
+  background: rgba(10, 10, 10, 0.9);
   backdrop-filter: blur(10px);
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
@@ -208,12 +209,27 @@ const First = styled.div`
       border-radius: 50%;
     }
   }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(0deg, rgba(184, 9, 181, 0) 0%, rgba(237, 28, 81, 1) 80%, rgba(255, 176, 0, 1) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
 `
 
 const WrapperLeft = styled.div``
 
 const Container = styled(Box)`
-  background: linear-gradient(#6034ff, #a35aff, #111111);
+  // background: linear-gradient(#6034ff, #a35aff, #111111);
   padding: 1px;
   border-radius: 20px;
 `

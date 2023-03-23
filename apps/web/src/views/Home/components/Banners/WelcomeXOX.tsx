@@ -11,6 +11,32 @@ import { Application } from '@splinetool/runtime'
 
 const Wrapper = styled.div`
   width: 100%;
+  
+  .video-container {
+    position: relative;
+    border-radius: 5px;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(249, 124, 29, 0.5) 0%, rgba(246, 99, 42, 0.5) 0.01%, rgba(249, 124, 29, 0) 100%);
+  }
+
+  .video-container video {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 35vw;
+    height: 50vh
+  }
+  
+  .video-container .overlay {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(249, 124, 29, 0.5) 0%, rgba(246, 99, 42, 0.5) 0.01%, rgba(249, 124, 29, 0) 100%);
+    // opacity: 0.5;
+  }
 
   @media screen and (max-width: 900px) {
     .title {
@@ -32,6 +58,11 @@ const Wrapper = styled.div`
     }
 
     width: 100%;
+
+    .video-container video {
+      width: 100%;
+      height: auto;
+    }
   }
 
   @media screen and (max-width: 530px) {
@@ -264,13 +295,20 @@ const WelcomeXOX = (): JSX.Element => {
             </LeftContent>
           </GridLeft>
           <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
-            {(isMobile || isTablet) && (
+            {/* {(isMobile || isTablet) && (
               <ImageWrapper>
                 <canvas id="canvas3d_mobile" />
               </ImageWrapper>
-            )}
+            )} */}
 
-            {isDesktop && <canvas id="canvas3d_pc" />}
+            {/* {isDesktop && <canvas id="canvas3d_pc" />} */}
+
+            <div className="video-container">
+              <div className="overlay"></div>
+              <video autoPlay loop muted>
+                <source src="/videos/home/laptop_project.mp4" type="video/mp4"></source>
+              </video>
+            </div>
           </Grid>
         </Grid>
       </Box>

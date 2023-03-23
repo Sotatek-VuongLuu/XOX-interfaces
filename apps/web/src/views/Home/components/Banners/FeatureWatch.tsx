@@ -97,10 +97,29 @@ const Wrapper = styled(Box)`
 `
 
 const Main = styled(Grid)`
+  .first-box {
+    height: 300px;
+  }
+
   @media screen and (max-width: 900px) {
-    flex-direction: column-reverse !important;
+    flex-direction: column-reverse important;
     justify-content: center;
     align-items: center;
+  }
+
+  @media screen and (max-width: 576px) {
+    .first-box {
+      order: 1;
+      height: 500px;
+    }
+
+    .second-box {
+      order: 0;
+    }
+
+    .img-container, .title_list_item {
+      order: unset;
+    }
   }
 `
 
@@ -153,7 +172,7 @@ const Watch = styled.div`
     animation-delay: 0.33s;
 
     @media screen and (max-width: 900px) {
-      left: 0;
+      // left: 0;
     }
   }
   .x1 {
@@ -178,9 +197,9 @@ const FeatureWatch = () => {
   // }, [])
 
   return (
-    <Wrapper style={{ overflow: 'hidden' }}>
-      <Main container spacing={2}>
-        <Grid item xs={12} md={5}>
+    <Wrapper sx={{ display: 'flex' }}>
+      <Main container spacing={2} style={{ overflow: 'hidden' }} sx={{ display: 'flex' }}>
+        <Grid item xs={12} md={5} className="first-box">
           <LeftContent data-aos="fade-right">
             <Watch>
                 {width > 900 ? (
@@ -193,13 +212,13 @@ const FeatureWatch = () => {
                   <>
                     <img src="/images/home/meet-xoxs/mobile_x2.svg" alt="x3" className="x3" />
                     <img src="/images/home/meet-xoxs/mobile_x3.svg" alt="x2" className="x2" />
-                    <img src="/images/meet-xoxs/mobile_x1.svg" alt="x1" className="x1" />
+                    <img src="/images/home/meet-xoxs/mobile_x1.svg" alt="x1" className="x1" />
                   </>
                 )}
               </Watch>
           </LeftContent>
         </Grid>
-        <Grid item xs={12} md={7}>
+        <Grid item xs={12} md={7} className="second-box">
           <RightContent data-aos="fade-left">
             <Title>Meet XOXS. Our Hybrid Multichain Stable Coin.</Title>
             <Paragraph style={{ margin: '24px 0' }}>

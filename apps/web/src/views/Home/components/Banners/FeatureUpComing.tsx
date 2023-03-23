@@ -50,6 +50,9 @@ const WrapperItem = styled.div<IPropsWI>`
   backdrop-filter: blur(10px);
   border-radius: 20px;
   position: relative;
+  // border-bottom: 1px solid #404040;
+  // border-left: 1px solid #2e2e2e;
+  // border-right: 1px solid #2e2e2e;
 
   .get_xox {
     padding: 1px;
@@ -116,6 +119,23 @@ const WrapperItem = styled.div<IPropsWI>`
     color: #FB8618;
     font-size: 14px;
     font-weight: 600;
+  }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    padding: 1px;
+    z-index: -1;
+    background: linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.2) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    -webkit-mask-composite: exclude;
+    mask-composite: exclude;
   }
 
   @media screen and (max-width: 900px) {
@@ -215,6 +235,11 @@ const linkWhitepaper = '#'
 
 const listItem = [
   {
+    title: 'XOX Dex V2',
+    describe: `Why trade in a single Dex when you can Trade in all DEXs at Once. XOX Dex V2 finds you the best prices across 60+ Chains & 150+ DEXs and combines them into a single trade, all while giving you many other trade options to choose from, Ranking them by lowest fees, best rates and higher liquidity.`,
+    link: linkWhitepaper,
+  },
+  {
     title: 'XOX Mobile App/Wallet',
     describe: `After the recent downfall of Centralized Exchanges, crypto investors have finally realized that "Not your Keys not your Crypto", and Decentralized wallets like Trust Wallet & Metamask now more important than ever. The XOX Decentralized Wallet bring innovative Multi-chain features for users to enjoy while being sure that their funds are safe.`,
     link: linkWhitepaper,
@@ -229,13 +254,7 @@ const listItem = [
     describe:
       'Multiple Studies have shown that at least 80% of crypto holders check CoinMarketCap once a day. The problem is that there is no accurate ranking system dedicated to a specific community. So we will create our own one, fully dedicated and targeted towards the needs of the XOX Community. No more searching around multiple platforms.',
     link: linkWhitepaper,
-  },
-  {
-    title: 'XOX Super Dex 2.0',
-    describe:
-      'Swap, Stake, Cross-chain Bridge, stake, borrow, lend, earn crypto through the most advance gamified referral system in the space, earn stable coins and passive income out of the stable coin holdings, add liquidity and earn lp tokens, yield farming, enjoy of a wide range of tools for crypto traders (charting, portfolio checker, buy limit-sell limit...) and get access to a wide range of other Defi services.',
-    link: linkWhitepaper,
-  },
+  }
 ]
 
 export default UpComing

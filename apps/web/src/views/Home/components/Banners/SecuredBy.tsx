@@ -12,6 +12,7 @@ const Wrapper = styled.div`
 
     @media screen and (max-width: 900px) {
       font-size: 20px;
+      margin-top: 36px;
     }
   }
 
@@ -40,6 +41,14 @@ const Wrapper = styled.div`
 
     img {
       cursor: pointer;
+      @media screen and (max-width: 900px) {
+        max-height: 27px;
+        width: auto;
+      }
+    }
+
+    @media screen and (max-width: 900px) {
+      gap: 16px;
     }
   }
 `
@@ -48,7 +57,7 @@ const SecuredBy = () => {
   const { width } = useWindowSize()
 
   return (
-    <Wrapper style={{ overflow: 'hidden' }}>
+    <Wrapper>
       <p className="title" data-aos="fade-up">
         Secured By
       </p>

@@ -71,6 +71,21 @@ const WrapperI = styled.div`
       font-size: 14px;
       font-weight: 600;
     }
+
+    &:before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+    }
   }
 `
 

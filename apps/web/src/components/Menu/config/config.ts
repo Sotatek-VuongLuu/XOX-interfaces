@@ -175,6 +175,14 @@ export const configLanding: (
       items: [],
     },
     {
+      label: t('XOX Dex V2'),
+      href: '#',
+      icon: WhitepaperIcon,
+      fillIcon: SwapFillIcon,
+      showItemsOnMobile: false,
+      items: [],
+    },
+    {
       label: t('Products'),
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,

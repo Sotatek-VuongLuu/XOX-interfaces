@@ -14,7 +14,7 @@ import FeaturePlant from './components/Banners/FeaturePlant'
 import RoadMap from './components/Banners/RoadMap'
 import Partners from './components/Partners'
 import Community from './components/Banners/Community'
-import FeatureEconomy from './components/Banners/FeatureEconomy'
+// import FeatureEconomy from './components/Banners/FeatureEconomy'
 import BackgroudWatch from './components/Banners/BackgroundWatch'
 import FeatureReferal from './components/Banners/FeatureReferal'
 import UpComing from './components/Banners/FeatureUpComing'
@@ -22,6 +22,7 @@ import SecuredBy from './components/Banners/SecuredBy'
 import BGPartner from './components/Banners/BackgroundPartner'
 import FeatureSquare from './components/Banners/FeatureSquare'
 import Subscription from './components/Banners/Subscription'
+import SupportedBlockchains from './components/Banners/SupportedBlockchains'
 
 const StyledSection = styled(PageSection)`
   padding-top: 16px;
@@ -52,7 +53,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx global>{`
         #home .page-bg {
-          background: black;
+          background: #0A0A0A;
         }
       `}</style>
       <StyledSection
@@ -77,7 +78,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
-        <BallPurple src="/images/bg-pur.svg" />
+        {/* <BallPurple src="/images/bg-pur.svg" /> */}
         <div>
           <WelcomeXOX />
         </div>
@@ -91,10 +92,11 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={1}
         hasCurvedDivider={false}
       >
-        <BackgroudWatch />
+        {/* <BackgroudWatch /> */}
 
         <div style={{ width: widthResize }}>
-          <FeatureEconomy />
+          {/* <FeatureEconomy /> */}
+          <SupportedBlockchains />
           <FeatureSquare />
           <FeatureWatch />
           <FeaturePlant />
