@@ -265,7 +265,7 @@ const SaleItem = ({
           <CustomButtom
             type="button"
             onClick={() => handleClaim(item.round, item.yourCurrentXOX)}
-            disabled={item.yourCurrentXOX === 0}
+            disabled={Number(item.yourCurrentXOX) === 0}
           >
             Claim
           </CustomButtom>

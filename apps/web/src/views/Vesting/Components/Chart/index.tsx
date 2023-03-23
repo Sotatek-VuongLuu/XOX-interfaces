@@ -149,14 +149,6 @@ function ChartSalePage() {
   }
 
   useEffect(() => {
-    const myId = setInterval(() => {
-      getPointDataDays()
-    }, 15000)
-    return () => clearInterval(myId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
-
-  useEffect(() => {
     if (!chainId || !account) return
     getPointDataDays()
   }, [chainId, account])

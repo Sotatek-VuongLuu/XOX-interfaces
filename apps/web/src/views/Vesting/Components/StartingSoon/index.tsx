@@ -270,7 +270,7 @@ function StartingSoon({
     }
 
     if (infoRoundTow.startDate && time >= infoRoundOne.endDate && time < infoRoundTow.endDate) {
-      if (infoRoundOne.endDate <= timeStampOfNow && timeStampOfNow < infoRoundTow.startDate) {
+      if (infoRoundOne.endDate <= time && time < infoRoundTow.startDate) {
         return (
           <>
             <p className="notice">
@@ -281,7 +281,7 @@ function StartingSoon({
         )
       }
 
-      if (infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow < infoRoundTow.endDate) {
+      if (infoRoundTow.startDate <= time && time < infoRoundTow.endDate) {
         return (
           <>
             <p className="notice">

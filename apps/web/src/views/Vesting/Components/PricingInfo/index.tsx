@@ -305,10 +305,11 @@ const CustomTable = styled(Table)`
 const CustomButton = styled(Button)`
   height: 54px;
   font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
 
   @media screen and (max-width: 900px) {
     height: 43px;
-    font-weight: 700;
     font-size: 16px;
     line-height: 19px;
     padding: 12px 14px;
