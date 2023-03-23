@@ -5,6 +5,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { AutoColumn, ColumnCenter } from 'components/Layout/Column'
 import { Trade, Currency, TradeType } from '@pancakeswap/sdk'
 import { StableTrade } from '../StableSwap/hooks/useStableTradeExactIn'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -19,9 +20,9 @@ function ConfirmationPendingContent({ trade }: { trade: Trade<Currency, Currency
 
   // text to show while loading
   const pendingText = t('Swapping %amountA% %symbolA% for %amountB% %symbolB%', {
-    amountA: trade?.inputAmount?.toSignificant(6) ?? '',
+    amountA: formatAmountNumber2(Number(trade?.inputAmount?.toSignificant(6)), 4) ?? '',
     symbolA: trade?.inputAmount?.currency?.symbol ?? '',
-    amountB: trade?.outputAmount?.toSignificant(6) ?? '',
+    amountB: formatAmountNumber2(Number(trade?.outputAmount?.toSignificant(6)), 4) ?? '',
     symbolB: trade?.outputAmount?.currency?.symbol ?? '',
   })
 

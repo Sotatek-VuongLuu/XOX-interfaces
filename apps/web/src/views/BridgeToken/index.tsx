@@ -51,6 +51,7 @@ import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundB
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import { ToastDescriptionWithTx } from 'components/Toast'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 const SwapButton = styled(PancakeButton)`
   background: ${({ disabled }) =>
@@ -807,8 +808,9 @@ export default function BridgeToken() {
                 </div>
                 <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
                 <div className="noti_claim_pending_h3">
-                  Bridging {amountInput} XOX <span>(</span> {NETWORK_LABEL[chainId]} <span>)</span> to {amountTo} XOX{' '}
-                  <span>(</span> {NETWORK_LABEL[getChainIdToByChainId(chainId)]} <span>)</span>
+                  Bridging {formatAmountNumber2(Number(amountInput), 6)} XOX <span>(</span> {NETWORK_LABEL[chainId]}{' '}
+                  <span>)</span> to {formatAmountNumber2(Number(amountTo), 6)} XOX <span>(</span>{' '}
+                  {NETWORK_LABEL[getChainIdToByChainId(chainId)]} <span>)</span>
                 </div>
                 <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
                 <img

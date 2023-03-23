@@ -11,6 +11,7 @@ import { AutoRow, RowBetween, RowFixed } from 'components/Layout/Row'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import { SwapCallbackError } from './styleds'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 const BottomText = styled(Text)`
   word-break: break-word;
@@ -100,7 +101,7 @@ export default function SwapModalFooter({
           <RowFixed>
             <BottomText fontSize="16px">
               {trade.tradeType === TradeType.EXACT_INPUT
-                ? slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4) ?? '-'
+                ? formatAmountNumber2(Number(slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)), 4) ?? '-'
                 : slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4) ?? '-'}
             </BottomText>
             <BottomText fontSize="16px" marginLeft="4px">
@@ -141,7 +142,11 @@ export default function SwapModalFooter({
             />
           </RowFixed>
           <BottomText fontSize="16px">
-            {realizedLPFee ? `${realizedLPFee?.toSignificant(6)} ${trade.inputAmount.currency.symbol}` : '-'}
+            {realizedLPFee
+              ? `${formatAmountNumber2(Number(realizedLPFee?.toSignificant(6)), 4)} ${
+                  trade.inputAmount.currency.symbol
+                }`
+              : '-'}
           </BottomText>
         </RowBetween>
       </SwapModalFooterContainer>

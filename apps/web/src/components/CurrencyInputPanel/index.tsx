@@ -17,7 +17,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { WrappedTokenInfo } from '@pancakeswap/token-lists'
 
 import { useBUSDCurrencyAmount } from 'hooks/useBUSDPrice'
-import { formatAmountNumber, formatNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatAmountNumber2, formatNumber } from '@pancakeswap/utils/formatBalance'
 import { StablePair } from 'views/AddLiquidity/AddStableLiquidity/hooks/useStableLPDerivedMintInfo'
 
 import { useAccount } from 'wagmi'
@@ -343,7 +343,7 @@ export default function CurrencyInputPanel({
                 {!hideBalance && !!currency
                   ? t('Balance: %balance%', {
                       balance:
-                        formatAmountNumber(parseFloat(selectedCurrencyBalance?.toFixed()) || 0, 6) ?? t('Loading'),
+                        formatAmountNumber2(parseFloat(selectedCurrencyBalance?.toFixed()) || 0, 6) ?? t('Loading'),
                     })
                   : ' -'}
               </TextBalance>

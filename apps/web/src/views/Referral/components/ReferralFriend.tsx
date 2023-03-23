@@ -787,8 +787,6 @@ const ReferralFriend = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
 
-  console.log(listFriends)
-
   return (
     <>
       <Box sx={{ marginTop: '16px', zIndex: 9 }}>
