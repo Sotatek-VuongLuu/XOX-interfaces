@@ -65,7 +65,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toString()}
+        {Number(new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toFixed(2)).toLocaleString()}
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -75,7 +75,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)}
+        {Number(new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)).toLocaleString()}
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -85,7 +85,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toString()}
+        {Number(new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toFixed(2)).toLocaleString()}
       </Text>
       <LinkExternal
         href={`${linkTransaction(ChainId.GOERLI)}${transaction.id}`}
@@ -268,7 +268,7 @@ function TabSaleHistory({ currentTransactions }) {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
-                  stroke={page === 1 ? 'white' : '#9072FF'}
+                  stroke={page === 1 ? 'white' : '#FB8618'}
                   strokeOpacity={page === 1 ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"

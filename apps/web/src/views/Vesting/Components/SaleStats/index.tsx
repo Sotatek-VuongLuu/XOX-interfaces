@@ -167,7 +167,7 @@ function SaleStats({ dataStat }: IProps) {
                       ? Number(
                           new BigNumber(item.amount).div(new BigNumber(10).pow(item.decimal)).toFixed(2),
                         ).toLocaleString()
-                      : item.amount
+                      : Number(item.amount).toLocaleString()
                     : '-'}
                 </span>
               </p>

@@ -1,22 +1,18 @@
-import { useTranslation } from '@pancakeswap/localization'
 import { ChainId } from '@pancakeswap/sdk'
 import { Box, Flex, Input, LinkExternal, Select, Text } from '@pancakeswap/uikit'
 import truncateHash from '@pancakeswap/utils/truncateHash'
 import BigNumber from 'bignumber.js'
 import TableLoader from 'components/TableLoader'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import { useSelector } from 'react-redux'
-import { AppState } from 'state'
 import styled from 'styled-components'
 import { linkTransaction } from 'views/BridgeToken'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
-import { ClickableColumnHeader, CustomTableWrapper, NoTransactionWrapper, PageButtons, Table } from './SaleHistory'
+import { CustomTableWrapper, NoTransactionWrapper, PageButtons, Table } from './SaleHistory'
 
 const CustomTable = styled(Table)`
-  grid-template-columns: 0.15fr 1fr 1fr repeat(2, 0.7fr) 1fr;
+  grid-template-columns: 0.15fr 1fr repeat(2, 0.7fr) 1fr;
 `
 
 const DataRow: React.FC<
@@ -58,17 +54,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {new BigNumber(transaction.amountClaimedXOX).div(10 ** 18).toString()}
-      </Text>
-      <Text
-        fontSize={['14px', , '16px']}
-        fontFamily="Inter"
-        fontStyle="normal"
-        fontWeight="400"
-        lineHeight={['17px', , '19px']}
-        color="rgba(255, 255, 255, 0.87)"
-      >
-        {new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)}
+        {Number(new BigNumber(transaction.amountClaimedXOX).div(10 ** 18).toFixed(2)).toLocaleString()}
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -130,6 +116,7 @@ function TabClaimHistory({ currentTransactions }) {
     (value: any) => {
       setPerPage(value)
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [perPage],
   )
 
@@ -201,17 +188,6 @@ function TabClaimHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            XOX Bought
-          </Text>
-          <Text
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
             Sale
           </Text>
           <Text
@@ -261,7 +237,7 @@ function TabClaimHistory({ currentTransactions }) {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
-                  stroke={page === 1 ? 'white' : '#9072FF'}
+                  stroke={page === 1 ? 'white' : '#FB8618'}
                   strokeOpacity={page === 1 ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"

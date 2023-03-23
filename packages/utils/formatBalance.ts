@@ -95,7 +95,7 @@ export const formatLpBalance = (balance: BigNumber, decimals: number) => {
   return stakedBalanceBigNumber.toFixed(5, BigNumber.ROUND_DOWN)
 }
 
-export const formatAmountNumber = (number: number, decimals = 2) => {
+export const formatAmountNumber = (number: number, decimals = 3) => {
   return parseInt((number * 10 ** decimals).toString()) / 10 ** decimals
 }
 

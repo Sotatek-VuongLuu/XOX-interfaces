@@ -18,6 +18,7 @@ interface IProps {
   dataInfo: any[]
   dataRefInfo: any
   dataTransaction: any[]
+  dataTransactionClaimOfUser: any[]
   dataVesting: IVestingTime[]
   handleClaim: (round: number, remainning: number) => void
 }
@@ -226,6 +227,7 @@ function SaleMechanism({
   dataTransaction,
   dataVesting,
   handleClaim,
+  dataTransactionClaimOfUser,
 }: IProps) {
   const { width } = useWindowSize()
   const { account } = useActiveWeb3React()
@@ -240,7 +242,14 @@ function SaleMechanism({
       case 'Vesting Schedule':
         return <VestingSchedule dataVesting={dataVesting} dataInfo={dataInfo} handleClaim={handleClaim} />
       case 'Your Information':
-        return <YourInfo dataInfo={dataInfo} dataRefInfo={dataRefInfo} dataTransaction={dataTransaction} />
+        return (
+          <YourInfo
+            dataInfo={dataInfo}
+            dataRefInfo={dataRefInfo}
+            dataTransaction={dataTransaction}
+            dataTransactionClaimOfUser={dataTransactionClaimOfUser}
+          />
+        )
       default:
         return <PrivateSale />
     }

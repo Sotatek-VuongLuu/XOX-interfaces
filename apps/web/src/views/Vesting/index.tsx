@@ -24,6 +24,7 @@ import {
   getDataReferralPresale,
   getDataRoundStats,
   getDataTransaction,
+  getDataTransactionClaimOfUser,
   getDataTransactionOfUser,
   getUserPreSaleInfo,
 } from 'services/presale'
@@ -443,6 +444,7 @@ function VestingPage() {
   const provider = useProvider({ chainId })
   const [dataTransaction, setDataTransaction] = useState<any>([])
   const [dataTransactionOfUser, setDataTransactionOfUser] = useState<any>([])
+  const [dataTransactionClaimOfUser, setDataTransactionClaimOfUser] = useState<any>([])
   const [arrSaleStats, setArrSaleStats] = useState<Start[]>(initStat)
   const [isInTimeRangeSale, setIsInTimeRangeSale] = useState<boolean>(false)
   const resSaleStats = useGetSaleStats()
@@ -882,6 +884,17 @@ function VestingPage() {
     }
   }
 
+  const handleGetDataTransactionClaimOfUser = async () => {
+    try {
+      const result = await getDataTransactionClaimOfUser(account)
+      if (result && result?.transactionPreSales) {
+        setDataTransactionClaimOfUser(result?.transactionPreSales)
+      }
+    } catch (error) {
+      console.warn(error)
+    }
+  }
+
   const handleGetBalanceOfUser = () => {
     const currentProvider = provider
     currentProvider.getBalance(account).then((balance) => {
@@ -942,6 +955,7 @@ function VestingPage() {
   useEffect(() => {
     if (!account || !chainId) return
     handleGetDataTransactionOfUser()
+    handleGetDataTransactionClaimOfUser()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
@@ -1098,6 +1112,7 @@ function VestingPage() {
             dataRefInfo={dataRef}
             handleClaim={handleClaim}
             dataTransaction={dataTransactionOfUser}
+            dataTransactionClaimOfUser={dataTransactionClaimOfUser}
             dataVesting={dataVestingSchedule}
           />
           <SaleHistorySession dataTransaction={dataTransaction} />

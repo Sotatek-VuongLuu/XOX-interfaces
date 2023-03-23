@@ -62,12 +62,13 @@ export const getDataTransaction = async (chainId = ChainId.GOERLI) => {
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getTransactionPreSales {
-        transactionPreSales(first: 100, orderBy: timestamp, orderDirection: desc) {
+        transactionPreSales(where: { isInvest: true }, first: 100, orderBy: timestamp, orderDirection: desc) {
           id
           blockNumber
           timestamp
           round
           sender
+          isInvest
           amountInvestUSD
           amountBoughtXOX
           amountBoughtXOXS
@@ -84,15 +85,36 @@ export const getDataTransactionOfUser = async (account: string, chainId = ChainI
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
       query getTransactionPreSalesOfUser {
-        transactionPreSales(where: {sender: "${account?.toLowerCase()}"},first: 100, orderBy: timestamp, orderDirection: desc) {
+        transactionPreSales(where: {sender: "${account?.toLowerCase()}", isInvest: true},first: 100, orderBy: timestamp, orderDirection: desc) {
           id
           blockNumber
           timestamp
           round
           sender
+          isInvest
           amountInvestUSD
           amountBoughtXOX
           amountBoughtXOXS
+          amountClaimedXOX
+        }
+      }
+    `,
+  )
+  return response
+}
+
+export const getDataTransactionClaimOfUser = async (account: string, chainId = ChainId.GOERLI) => {
+  const response = await request(
+    ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
+    gql`
+      query getTransactionPreSalesOfUser {
+        transactionPreSales(where: {sender: "${account?.toLowerCase()}", isInvest: false},first: 100, orderBy: timestamp, orderDirection: desc) {
+          id
+          blockNumber
+          timestamp
+          round
+          sender
+          isInvest
           amountClaimedXOX
         }
       }

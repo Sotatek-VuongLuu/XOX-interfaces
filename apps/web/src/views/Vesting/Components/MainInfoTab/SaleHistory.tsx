@@ -3,7 +3,6 @@ import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
-import { getDataTransaction } from 'services/presale'
 import TableLoader from 'components/TableLoader'
 import moment from 'moment'
 import BigNumber from 'bignumber.js'
@@ -292,7 +291,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toString()}
+        {Number(new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toFixed(2)).toLocaleString()}
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -302,7 +301,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)}
+        {Number(new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)).toLocaleString()}
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -312,7 +311,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toString()}
+        {Number(new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toFixed(2)).toLocaleString()}
       </Text>
 
       <LinkExternal
@@ -346,7 +345,6 @@ function SaleHistory({ dataTransaction }: IProps) {
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
-
   const setPagePagination = useCallback(
     (p: number) => {
       if (p < 1) {
@@ -370,6 +368,7 @@ function SaleHistory({ dataTransaction }: IProps) {
     (value: any) => {
       setPerPage(value)
     },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [perPage],
   )
 
@@ -538,7 +537,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
-                  stroke={page === 1 ? 'white' : '#9072FF'}
+                  stroke={page === 1 ? 'white' : '#FB8618'}
                   strokeOpacity={page === 1 ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"

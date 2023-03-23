@@ -15,6 +15,7 @@ interface IProps {
   dataInfo: any[]
   dataRefInfo: IRefInfo[]
   dataTransaction: any[]
+  dataTransactionClaimOfUser: any[]
 }
 
 const Wrapper = styled.div`
@@ -267,7 +268,7 @@ const Content = styled.div`
   }
 `
 
-function YourInfo({ dataInfo, dataRefInfo, dataTransaction }: IProps) {
+function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaimOfUser }: IProps) {
   const [currentTransactions, setCurrentTransactions] = useState(dataTransaction)
   const { account } = useActiveWeb3React()
   const { t } = useTranslation()
@@ -339,7 +340,7 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction }: IProps) {
           </div>
 
           {tab === 0 && <TabSaleHistory currentTransactions={currentTransactions} />}
-          {tab === 1 && <TabClaimHistory currentTransactions={currentTransactions} />}
+          {tab === 1 && <TabClaimHistory currentTransactions={dataTransactionClaimOfUser} />}
 
           <Flex mb="16px" mt="24px" justifyContent="space-between">
             <Text
@@ -367,8 +368,8 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction }: IProps) {
                   <p className="item_your-ref_amount">
                     {item.totalTransactionApplyReferral
                       ? item.title === 'XOXS amount received from Referral'
-                        ? formatUnits(item.rewardXOXS, 6)
-                        : item.totalTransactionApplyReferral
+                        ? Number(formatUnits(item.rewardXOXS, 6)).toLocaleString()
+                        : Number(item.totalTransactionApplyReferral).toLocaleString()
                       : item.amountInit}
                   </p>
                   <p className="item_your-ref_title">{item.title}</p>
