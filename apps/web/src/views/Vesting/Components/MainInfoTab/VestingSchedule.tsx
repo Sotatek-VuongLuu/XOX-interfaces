@@ -206,7 +206,10 @@ const SaleItem = ({
   const [count, setCount] = useState<number>(0)
 
   useEffect(() => {
-    handleGetDataVesting()
+    const id = setTimeout(() => {
+      handleGetDataVesting()
+    }, 5000)
+    return () => clearTimeout(id)
   }, [count])
 
   const handleCheckCount = () => {
