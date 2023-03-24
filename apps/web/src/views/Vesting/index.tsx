@@ -434,7 +434,7 @@ function VestingPage() {
   const { nodeId } = useContext(Context)
   const contractPreSale = !account
     ? process.env.NODE_ENV === 'production'
-      ? useXOXPreSaleContract(ChainId.ETHEREUM)
+      ? useXOXPreSaleContract(ChainId.GOERLI)
       : useXOXPreSaleContract(ChainId.GOERLI)
     : useXOXPreSaleContract(chainId)
 
