@@ -33,6 +33,9 @@ const getTokenLogoURL = (token?: Token, coinmarketcapId?: string) => {
   }
   if (coinmarketcapId !== '') return `https://s2.coinmarketcap.com/static/img/coins/64x64/${coinmarketcapId}.png`
   if (token && token.address && mapping[token.chainId]) {
+    console.log('token getLogonURL: ', token)
+    if (token.chainId == 56 && token.address == 'BNB')
+      return 'https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png'
     return `https://assets-cdn.trustwallet.com/blockchains/${mapping[token.chainId]}/assets/${getAddress(
       token.address,
     )}/logo.png`
