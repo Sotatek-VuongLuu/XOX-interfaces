@@ -64,7 +64,7 @@ const RightContent = styled.div`
     z-index: 1;
     top: 0;
     left: 0;
-    width: 35vw;
+    width: 50vw;
     height: 50vh;
   }
   .video-container .overlay {

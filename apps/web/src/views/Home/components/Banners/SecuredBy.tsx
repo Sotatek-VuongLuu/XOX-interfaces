@@ -3,6 +3,7 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div`
   margin-bottom: 24px;
+  margin-top: 32px;
   .title {
     font-weight: 700;
     font-size: 36px;

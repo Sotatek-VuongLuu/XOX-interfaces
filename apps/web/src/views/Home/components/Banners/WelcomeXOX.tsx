@@ -2,12 +2,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
 import styled from 'styled-components'
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Popover, Typography } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
 import { useEffect } from 'react'
 import { Application } from '@splinetool/runtime'
+import React from 'react'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -22,8 +23,8 @@ const Wrapper = styled.div`
     position: absolute;
     z-index: 1;
     top: 0;
-    left: 0;
-    width: 35vw;
+    left: -90;
+    width: 50vw;
     height: 50vh
   }
   
@@ -62,6 +63,7 @@ const Wrapper = styled.div`
     .video-container video {
       width: 100%;
       height: auto;
+      left: unset;
     }
   }
 
@@ -158,6 +160,142 @@ const LeftContent = styled.div`
       }
     }
   }
+
+  .grid-button {
+    display: grid;
+    grid-template-columns: 0.5fr 0.25fr;
+    grid-template-rows: repeat(3, 0.25fr);
+    grid-column-gap: 26px;
+    grid-row-gap: 0px;
+
+    .get_xox {
+      border-radius: 12px;
+      cursor: pointer;
+
+      .boxed-child {
+        width: 100%;
+        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+        padding: 17px 0px;
+        border-radius: inherit;
+        text-align: center;
+
+        span {
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+          text-fill-color: transparent;
+          font-weight: 700;
+          font-size: 18px;
+          width: 100%;
+          background-color: #FFFFFF;
+          border-radius: inherit;
+        }
+      }
+    }
+
+    .icon-box {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-around;
+      padding: 10.5px 0px;
+      margin-top: 22px;
+    }
+
+    .chart {
+      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      padding: 15.5px 0px;
+      border-radius: 12px;
+      position: relative;
+      text-align: center;
+      margin-top:22px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        -webkit-mask-composite: exclude;
+        mask-composite: exclude;
+      }
+
+      p {
+        font-weight: 700;
+        font-size: 18px;
+        line-height: 22px;
+      }
+    }
+
+    @media screen and (max-width: 576px) {
+      grid-template-columns: 0.75fr 0.25fr;
+    }
+
+    .more-btn {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+
+      .bg-btn {
+        padding: 12px 0px;
+        border-radius: 12px;
+        position: relative;
+        text-align: center;
+        margin-top: 22px;
+        display: flex;
+        position: relative;
+        width: 100%;
+        justify-content: space-evenly;
+        border: 1px solid rgba(255,255,255,0.2);
+        color: rgba(255, 255, 255, 0.87);
+        font-size: 14px;
+        line-height: 17px;
+        font-weight: 700;
+      }
+    }
+
+    .eth-box {
+      width: 100%;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 6px;
+      position: relative;
+      display: flex;
+      padding: 9px 6px;
+      margin-top: 24px;
+      justify-content: space-around;
+
+      span {
+        color: rgba(255, 255, 255, 0.87);
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+      }
+
+      input {
+        background: transparent;
+        -webkit-flex: 1;
+        -ms-flex: 1;
+        flex: 1;
+        border: 0;
+        outline: none;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        color: rgba(255, 255, 255, 0.87);
+        font-weight: 400;
+        max-width: 150px;
+      }
+    }
+  }
 `
 
 const Title = styled.p`
@@ -188,18 +326,20 @@ const Description = styled.div`
 `
 
 const Button = styled.button`
-  background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+  background: #FFFFFF;
   border-radius: 12px;
   border: none;
-  padding: 16px 92.5px;
+  // padding: 16px 92.5px;
   font-weight: 700;
-  height: 100%;
+  // height: 100%;
   font-size: 18px;
-  color: #ffffff;
+  color: #000000;
   cursor: pointer;
+  padding: 16px 0px;
+  width: 100%;
 
   &:hover {
-    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    background: #FFFFFF;
   }
 
   @media screen and (max-width: 900px) {
@@ -254,6 +394,19 @@ const ImageWrapper = styled.div`
 const WelcomeXOX = (): JSX.Element => {
   const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
 
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? 'simple-popover' : undefined;
+
   useEffect(() => {
     const canvasPC = document.getElementById('canvas3d_pc')
     const canvas = document.getElementById('canvas3d_mobile')
@@ -280,17 +433,70 @@ const WelcomeXOX = (): JSX.Element => {
                 <br />
                 leading Decentralized Blockchain Ecosystem.
               </Description>
-              <div className="btn_group">
-                <Button className="btn_read_doc" onClick={() => window.open('')}>
-                  Read Documentation
-                </Button>
-                <a href="/swap" target="_blank">
-                  <div className="get_xox">
-                    <div className="boxed-child">
-                      <span>Get XOX</span>
+              <div className="grid-button">
+                <div>
+                  <Button className="btn_read_doc" onClick={() => window.open('')}>
+                    Read Documentation
+                  </Button>
+                </div>
+                <div>
+                  <a href="/swap" target="_blank">
+                    <div className="get_xox">
+                      <div className="boxed-child">
+                        <span>Get XOX</span>
+                      </div>
                     </div>
+                  </a>
+                </div>
+                <div className="icon-box">
+                  <div className="single-icon">
+                    <img src="/images/home/hero/twitter.svg"></img>
                   </div>
-                </a>
+                  <div className="single-icon">
+                    <img src="/images/home/hero/speaker.svg"></img>
+                  </div>
+                  <div className="single-icon">
+                    <img src="/images/home/hero/telegram.svg"></img>
+                  </div>
+                  <div className="single-icon">
+                    <img src="/images/home/hero/discord.svg"></img>
+                  </div>
+                  <div className="single-icon">
+                    <img src="/images/home/hero/youtube.svg"></img>
+                  </div>
+                </div>
+
+                <div>
+                  <a href="/chart" target="_blank">
+                    <div className="chart">
+                      <div className='bg-button'>
+                        <p>Chart</p>
+                      </div>
+                    </div>
+                  </a>
+                </div>
+
+                <div className="">
+                  <div className="eth-box">
+                    <img src="/images/home/hero/eth.svg" alt="email" className="email-icon" />
+                    {(isMobile || isTablet) && (
+                      <span>ETH:</span>
+                    )}
+
+                    {isDesktop && <span>Ethereum:</span>}
+                    <input type="text" id="email" name="email" placeholder="" value="0xA...C6bf853a0a8ad7f" required />
+                    <img src="/images/home/hero/copy.svg" alt="copy" />
+                    <img src="/images/home/hero/shield.svg" alt="shield" />
+                    <img src="/images/home/hero/wolf.svg" alt="wolf" />
+                  </div>
+                </div>
+                <div className="more-btn">
+                  <div className="bg-btn">
+                    <img src="/images/home/hero/checklist.svg" alt="checklist" />
+                    <p>More</p>
+                    <img src="/images/home/hero/down.svg" alt="down" />
+                  </div>
+                </div>
               </div>
             </LeftContent>
           </GridLeft>

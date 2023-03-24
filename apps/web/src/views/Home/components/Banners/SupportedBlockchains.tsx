@@ -162,6 +162,16 @@ const Icon = styled.div`
   justify-content: center;
   align-items: center;
   margin-bottom: 34px;
+
+  @media screen and (min-width: 500px) and (max-width: 576px) {
+    width: 48px;
+    height: 48px;
+  }
+
+  @media screen and (max-width: 499px) {
+    width: 32px;
+    height: 32px;
+  }
 `
 
 const DataItemDisplay = ({ item }: DataItemProps) => {
@@ -195,6 +205,7 @@ const CoinItemDisplay = ({ item }: ItemProps) => {
 
 const Wrapper = styled.div`
   margin-bottom: 100px;
+  margin-top: 48px;
   .title {
     display: flex;
     justify-content: center;
@@ -215,8 +226,8 @@ const Wrapper = styled.div`
   }
 
   @media screen and (max-width: 900px) {
-    margin-bottom: 70px;
-    // margin-top: 32px;
+    margin-bottom: unset;
+    margin-top: 90px;
     .title {
       flex-direction: column;
       justify-content: center;
@@ -229,6 +240,49 @@ const Wrapper = styled.div`
         font-size: 14px;
         line-height: 24px;
         width: unset;
+      }
+    }
+  }
+
+  @media screen and (max-width: 576px) {
+    margin-bottom: unset;
+  }
+
+  .coin-block {
+    display: flex;
+    justify-content: center;
+
+    .coin-box {
+      display: grid;
+      grid-template-columns: repeat(14, 1fr);
+      grid-template-rows: repeat(5, 0.4fr);
+      grid-column-gap: 16px;
+      grid-row-gap: 0px;
+      align-items: center;
+      width: 95%;
+
+      @media screen and (min-width: 500px) and (max-width: 576px) {
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: repeat(14, 0.4fr);
+        width: 100%;
+
+        img {
+          width: 26px;
+          height: auto;
+          object-fit: contain;
+        }
+      }
+
+      @media screen and (max-width: 499px) {
+        grid-template-columns: repeat(7, 1fr);
+        grid-template-rows: repeat(14, 0.4fr);
+        width: 105%;
+
+        img {
+          width: 16px;
+          height: auto;
+          object-fit: contain;
+        }
       }
     }
   }
@@ -255,7 +309,7 @@ const SupportedBlockchains = () => {
         </p>
       </div>
 
-      <Box sx={{ flexGrow: 1, display: 'flex' }}>
+      {/* <Box sx={{ flexGrow: 1, display: 'flex' }}>
         <Grid container spacing={{ xs: 1, md: 2 }}>
           {listCoin.map((item: CoinItem, index) => {
             return (
@@ -265,6 +319,20 @@ const SupportedBlockchains = () => {
             )
           })}
         </Grid>
+      </Box> */}
+
+      <Box>
+        <div className="coin-block">
+          <div className="coin-box">
+            {listCoin.map((item: CoinItem, index) => {
+              return (
+                <Grid item xs={1.71428571429} md={0.85714285714} key={index+1} data-aos="fade-up" className="coin-item">
+                  <CoinItemDisplay item={item} />
+                </Grid>
+              )
+            })}
+          </div>
+        </div>
       </Box>
     </Wrapper>
   )
