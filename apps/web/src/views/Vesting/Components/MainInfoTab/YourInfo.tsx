@@ -108,7 +108,7 @@ const Content = styled.div`
 
   .your_ref {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 0.8fr 1fr 1fr;
     gap: 16px;
     margin-top: 30px;
 
@@ -188,6 +188,13 @@ const Content = styled.div`
           line-height: 17px;
         }
       }
+    }
+  }
+
+  .ngumy_code {
+    padding-left: 49px;
+    @media screen and (max-width: 900px) {
+      padding-left: 0px;
     }
   }
 
@@ -378,7 +385,7 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
                 </div>
               )
             })}
-            <div>
+            <div className="ngumy_code">
               <p className="my_code">My Referral Code</p>
               <div className="code">
                 <div className="content_code_number">
