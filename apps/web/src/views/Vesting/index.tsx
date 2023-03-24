@@ -462,6 +462,7 @@ function VestingPage() {
   const [isTimeAllowWhitelist, setIsTimeAllowWhitelist] = useState<boolean>(false)
   const [_, setisReachWhitelist] = useState<boolean>(false)
   const [loadOk, setLoadOk] = useState(false)
+  const [timeRecall, setTimeRecall] = useState(7)
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     if (dataSaleStatsParams.length !== 0) {
       const dataUpdate = Array.from(arr).map((item: Start) => {
@@ -827,13 +828,10 @@ function VestingPage() {
     'exchange-sale',
   )
 
-  const handleGetPreSaleUserInfo = async (acc: string) => {
-    console.log(`acc`, acc)
-
+  const handleGetPreSaleUserInfo = async () => {
     if (!account) return
     try {
-      const data = await getUserPreSaleInfo(acc)
-
+      const data = await getUserPreSaleInfo(account)
       if (data && data.userPreSaleDatas && data.userPreSaleDatas?.length > 0) {
         const result = {
           amountInvestUSD: 0,
@@ -974,28 +972,35 @@ function VestingPage() {
   }, [account, chainId])
 
   useEffect(() => {
-    const myId = setInterval(
-      (acc) => {
-        handleGetDataTransactionOfUser()
-        handleGetDataTransactionClaimOfUser()
-        handleGetPreSaleUserInfo(acc)
-        handleGetRefPreSale()
-        handleGetRoundStatus()
-        handleGetDataTransaction()
-      },
-      1000,
-      [account],
-    )
-    return () => clearInterval(myId)
+    handleGetRoundStatus()
+    handleGetInfoRound()
+    handCheckInTimeRangeSale(timeStampOfNow)
+    handleGetDataTransactionOfUser()
+    handleGetDataTransactionClaimOfUser()
+    handleGetPreSaleUserInfo()
+    handleGetRefPreSale()
+    handleGetRoundStatus()
+    handleGetDataTransaction()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
   useEffect(() => {
-    handleGetRoundStatus()
-    handleGetInfoRound()
-    handCheckInTimeRangeSale(timeStampOfNow)
+    const myId = setTimeout(() => {
+      if (timeRecall > 0) {
+        setTimeRecall(timeRecall - 1)
+        return
+      }
+      handleGetDataTransactionOfUser()
+      handleGetDataTransactionClaimOfUser()
+      handleGetPreSaleUserInfo()
+      handleGetRefPreSale()
+      handleGetRoundStatus()
+      handleGetDataTransaction()
+      setTimeRecall(7)
+    }, 1000)
+    return () => clearTimeout(myId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  }, [timeRecall])
 
   useEffect(() => {
     if (approvalState === ApprovalState.PENDING) {
@@ -1023,7 +1028,7 @@ function VestingPage() {
     if (!account || !chainId) return
     handleGetBalanceOfUser()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, chainId, provider, nodeId])
+  }, [account, chainId])
 
   useEffect(() => {
     if (!account || !chainId) return
@@ -1031,7 +1036,7 @@ function VestingPage() {
     handleGetApiWhitelist()
     handleGetRefPreSale()
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, chainId])
+  }, [account, chainId, provider, nodeId])
 
   useEffect(() => {
     if (!account || !chainId) return

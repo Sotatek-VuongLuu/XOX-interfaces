@@ -281,7 +281,6 @@ const Content = styled.div`
 
 function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaimOfUser }: IProps) {
   const [currentTransactions, setCurrentTransactions] = useState(dataTransaction)
-  const [dataInfoData, setDataInfoData] = useState(dataInfo)
   const { account } = useActiveWeb3React()
   const { t } = useTranslation()
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
@@ -290,10 +289,6 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
   useEffect(() => {
     setCurrentTransactions(dataTransaction)
   }, [dataTransaction])
-
-  useEffect(() => {
-    setDataInfoData(dataInfoData)
-  }, [dataInfoData])
 
   return (
     <Wrapper>
@@ -308,7 +303,7 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
       {account && (
         <Content>
           <div className="your_amount">
-            {Array.from(dataInfoData).map((item) => {
+            {Array.from(dataInfo).map((item) => {
               return (
                 <div className="item">
                   <div className="corner_1" />
