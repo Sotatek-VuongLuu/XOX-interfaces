@@ -727,6 +727,7 @@ function VestingPage() {
       dataClone[item - 1].startTime = dataRoundDate[item - 1].endDate
         ? handleRenderTenMonths(dataRoundDate[item - 1].endDate)
         : []
+      console.log(`dataClone`, dataClone)
     })
     setDataVestingSchedule(dataClone)
   }

@@ -474,6 +474,12 @@ function VestingSchedule({
   handleGetDataVesting: () => void
 }) {
   const { account } = useActiveWeb3React()
+  const [newVesting, setNewVesting] = useState(dataVesting)
+
+  useEffect(() => {
+    setNewVesting(dataVesting)
+  }, [dataVesting])
+
   return (
     <Wrapper>
       {!account && (
@@ -497,7 +503,7 @@ function VestingSchedule({
           </div>
           <Content>
             <div className="over_flow">
-              {Array.from(dataVesting).map((item: IVestingTime, index) => {
+              {Array.from(newVesting).map((item: IVestingTime, index) => {
                 return (
                   <SaleItem
                     item={item}
