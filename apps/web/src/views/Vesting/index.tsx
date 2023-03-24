@@ -827,10 +827,13 @@ function VestingPage() {
     'exchange-sale',
   )
 
-  const handleGetPreSaleUserInfo = async () => {
+  const handleGetPreSaleUserInfo = async (acc: string) => {
+    console.log(`acc`, acc)
+
     if (!account) return
     try {
-      const data = await getUserPreSaleInfo(account)
+      const data = await getUserPreSaleInfo(acc)
+
       if (data && data.userPreSaleDatas && data.userPreSaleDatas?.length > 0) {
         const result = {
           amountInvestUSD: 0,
@@ -971,14 +974,18 @@ function VestingPage() {
   }, [account, chainId])
 
   useEffect(() => {
-    const myId = setInterval(() => {
-      handleGetDataTransactionOfUser()
-      handleGetDataTransactionClaimOfUser()
-      handleGetPreSaleUserInfo()
-      handleGetRefPreSale()
-      handleGetRoundStatus()
-      handleGetDataTransaction()
-    }, 15000)
+    const myId = setInterval(
+      (acc) => {
+        handleGetDataTransactionOfUser()
+        handleGetDataTransactionClaimOfUser()
+        handleGetPreSaleUserInfo(acc)
+        handleGetRefPreSale()
+        handleGetRoundStatus()
+        handleGetDataTransaction()
+      },
+      1000,
+      [account],
+    )
     return () => clearInterval(myId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
@@ -1073,7 +1080,7 @@ function VestingPage() {
   useEffect(() => {
     if (!account || !chainId) return
     handleGetPrice()
-    handleGetPreSaleUserInfo()
+    // handleGetPreSaleUserInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
