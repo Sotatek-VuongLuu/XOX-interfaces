@@ -245,7 +245,6 @@ function SaleMechanism({
         return (
           <VestingSchedule
             dataVesting={dataVesting}
-            dataInfo={dataInfo}
             handleClaim={handleClaim}
             handleGetDataVesting={handleGetDataVesting}
           />

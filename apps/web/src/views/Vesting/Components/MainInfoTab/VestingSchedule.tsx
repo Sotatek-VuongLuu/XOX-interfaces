@@ -203,21 +203,25 @@ const SaleItem = ({
   handleClaim: (round: number, remainning: any) => void
   handleGetDataVesting: () => void
 }) => {
-  const [reacheZero, setReachZero] = useState<boolean>(false)
   const [count, setCount] = useState<number>(0)
 
   useEffect(() => {
-    if (reacheZero) {
-      // eslint-disable-next-line no-unused-expressions
-      count < item.startTime.length - 1 && setCount(count + 1)
+    handleGetDataVesting()
+  }, [count])
+
+  const handleCheckCount = () => {
+    const NOW = Date.now()
+    const i = Array.from(item.startTime).findIndex((value) => value > NOW)
+    if (i === -1) {
+      setCount(9)
+    } else {
+      setCount(i)
     }
-    const id = setTimeout(() => {
-      setReachZero(false)
-      // handleGetDataVesting()
-    }, 7000)
-    return () => clearTimeout(id)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reacheZero])
+  }
+
+  useEffect(() => {
+    handleCheckCount()
+  }, [])
 
   return (
     <div className={`sale_item sale_item_${index}`}>
@@ -268,7 +272,7 @@ const SaleItem = ({
             {item.startTime.length !== 0 ? moment.unix(item.startTime[count] / 1000).format('MM/DD/YYYY') : ' -/-/-'}
           </p>
           <p>
-            <CountDown startTime={item.startTime[count]} setReachZero={setReachZero} />
+            <CountDown startTime={item.startTime[count]} setCount={setCount} count={count} />
           </p>
         </div>
         <div className="sale-schedule-item no-padding">
@@ -287,7 +291,8 @@ const SaleItem = ({
 
 interface Props {
   startTime: any
-  setReachZero?: (isReached: boolean) => void
+  setCount?: (count: number) => void
+  count: number
 }
 
 const handleTime = (time: number) => {
@@ -390,7 +395,7 @@ const WrapperTime = styled.div`
   }
 `
 
-const CountDown = ({ startTime, setReachZero }: Props) => {
+const CountDown = ({ startTime, setCount, count }: Props) => {
   const [timeList, setTimeList] = useState({
     days: 0,
     hours: 0,
@@ -409,6 +414,11 @@ const CountDown = ({ startTime, setReachZero }: Props) => {
     const minutes = Math.floor((periodTime % 3600) / 60)
     const seconds = periodTime - days * 3600 * 24 - hours * 3600 - minutes * 60
     setTimeList({ ...timeList, days, hours, minutes, seconds })
+    const timeStampAtNow = Date.now()
+    if (timeStampAtNow >= startTime) {
+      // eslint-disable-next-line no-unused-expressions
+      count < 9 && setCount(count + 1)
+    }
   }
 
   // eslint-disable-next-line consistent-return
@@ -417,14 +427,8 @@ const CountDown = ({ startTime, setReachZero }: Props) => {
       const refreshInterval = setInterval(handleCountDown, 1000)
       return () => clearInterval(refreshInterval)
     }
-    if (setReachZero) {
-      const timeStampAtNow = Date.now()
-      if (timeStampAtNow >= startTime) {
-        setReachZero(true)
-      }
-    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeList, timeStart, setReachZero])
+  }, [timeList, timeStart])
 
   const renderTitleTime = (key: any) => {
     switch (key) {
@@ -460,11 +464,9 @@ const CountDown = ({ startTime, setReachZero }: Props) => {
 function VestingSchedule({
   dataVesting,
   handleClaim,
-  dataInfo,
   handleGetDataVesting,
 }: {
   dataVesting: IVestingTime[]
-  dataInfo: any[]
   handleClaim: (round: number, remainning: number) => void
   handleGetDataVesting: () => void
 }) {
