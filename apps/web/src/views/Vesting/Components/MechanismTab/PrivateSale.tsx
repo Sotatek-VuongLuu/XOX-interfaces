@@ -31,7 +31,7 @@ const Content = styled.div`
   .description {
     font-weight: 400;
     font-size: 16px;
-    line-height: 19px;
+    line-height: 25px;
     color: rgba(255, 255, 255, 0.87);
 
     p:nth-last-child(2) {
@@ -45,7 +45,7 @@ const Content = styled.div`
   .normal {
     font-weight: 400;
     font-size: 16px;
-    line-height: 22px;
+    line-height: 25px;
     color: rgba(255, 255, 255, 0.87);
     margin-top: 24px;
   }
