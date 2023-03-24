@@ -148,7 +148,7 @@ export const Table = styled.div`
     display: block;
     width: 100%;
     height: 0px;
-    border: 1px solid #444444;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     position: absolute;
     top: 35px;
   }

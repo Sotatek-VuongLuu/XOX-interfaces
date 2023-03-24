@@ -3,7 +3,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { CopyButton, Flex, Text } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useCallback, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import styled from 'styled-components'
@@ -304,8 +304,8 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
                   <div className="corner_2" />
                   <div className="edge_2" />
                   <p className="item_amount">
-                    {item.title === 'Amount invested' && <span>$</span>}
-                    {Number(item.amount).toLocaleString()}
+                    {item.title === 'Amount invested' && item.amount !== '-' && <span>$</span>}
+                    {item.amount !== '-' ? Number(item.amount).toLocaleString() : item.amount}
                   </p>
                   <p className="item_title">{item.title}</p>
                 </div>

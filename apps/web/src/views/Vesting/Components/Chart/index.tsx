@@ -5,6 +5,7 @@ import moment from 'moment'
 import React, { useEffect, useState } from 'react'
 import { getRaiseDailies } from 'services/presale'
 import styled from 'styled-components'
+import { useGetDataChartPreSale } from 'views/Vesting/hooks'
 import ChartColumnSale from './ChartColumnSale'
 
 const Wrapper = styled.div`
@@ -90,25 +91,19 @@ interface IDataChart {
 
 function ChartSalePage() {
   const [dataChart, setDataChart] = useState([])
-  const { account, chainId } = useWeb3React()
-
+  const dataChartPreSale = useGetDataChartPreSale()
   const startDate = new Date()
   startDate.setDate(startDate.getDate() - 14)
   startDate.setHours(0, 0, 0, 0)
   const endDate = new Date()
   endDate.setHours(23, 59, 59, 999)
-  const time = {
-    from: moment(startDate).unix(),
-    to: moment(endDate).unix(),
-  }
 
   function createDataChartDay(name: string, uv: number) {
     return { name, uv }
   }
 
-  const getPointDataDays = async () => {
+  const getPointDataDays = (result: any) => {
     try {
-      const result = await getRaiseDailies(time.from, time.to, chainId)
       if (result && result.raiseDailies && result.raiseDailies.length > 0) {
         const arr = Array.from(result.raiseDailies).map((item: any) => {
           return {
@@ -149,14 +144,14 @@ function ChartSalePage() {
   }
 
   useEffect(() => {
-    if (!chainId || !account) return
-    getPointDataDays()
-  }, [chainId, account])
+    getPointDataDays(dataChartPreSale)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataChartPreSale])
 
   return (
     <Wrapper>
       <div className="fake_blur" />
-      <p className="title">Daily Raise (USDC)</p>
+      <p className="title">Daily Raise</p>
       <ChartColumnSale data={dataChart} />
     </Wrapper>
   )

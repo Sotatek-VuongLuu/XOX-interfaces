@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable import/no-named-as-default */
 /* eslint-disable import/no-cycle */
 import { formatEther, parseEther, parseUnits } from '@ethersproject/units'
@@ -431,7 +432,12 @@ function VestingPage() {
   const { toastSuccess, toastError } = useToast()
   const [totalXOXTokenInRound, setTotalXOXTokenInRound] = useState<number | string | null>(0)
   const { nodeId } = useContext(Context)
-  const contractPreSale = useXOXPreSaleContract()
+  const contractPreSale = !account
+    ? process.env.NODE_ENV === 'production'
+      ? useXOXPreSaleContract(ChainId.ETHEREUM)
+      : useXOXPreSaleContract(ChainId.GOERLI)
+    : useXOXPreSaleContract(chainId)
+
   const [whiteList, setWhiteList] = useState<string[]>([])
   const [isUserInWhiteList, setIsUserInWhiteList] = useState<boolean>(false)
   const [approvalState, approveCallback] = useApproveCallback(
@@ -821,7 +827,8 @@ function VestingPage() {
     'exchange-sale',
   )
 
-  const handleGetPreSaleUserInfo = async (initUserInfo: IYourInfo[]) => {
+  const handleGetPreSaleUserInfo = async () => {
+    if (!account) return
     try {
       const data = await getUserPreSaleInfo(account)
       if (data && data.userPreSaleDatas && data.userPreSaleDatas?.length > 0) {
@@ -839,7 +846,7 @@ function VestingPage() {
           return null
         })
 
-        const arrUpdate: IYourInfo[] = Array.from(initUserInfo).map((item: IYourInfo) => {
+        const arrUpdate: IYourInfo[] = Array.from(initialYourInfo).map((item: IYourInfo) => {
           return {
             ...item,
             amount: new BigNumber(result[item.field]).toFixed(2),
@@ -875,6 +882,7 @@ function VestingPage() {
   }
 
   const handleGetDataTransactionOfUser = async () => {
+    if (!account) return
     try {
       const result = await getDataTransactionOfUser(account)
       if (result && result?.transactionPreSales) {
@@ -886,6 +894,7 @@ function VestingPage() {
   }
 
   const handleGetDataTransactionClaimOfUser = async () => {
+    if (!account) return
     try {
       const result = await getDataTransactionClaimOfUser(account)
       if (result && result?.transactionPreSales) {
@@ -920,11 +929,12 @@ function VestingPage() {
       })
   }
 
-  const handleGetRefPreSale = async (iRefInfo: IRefInfo[], acc: string) => {
+  const handleGetRefPreSale = async () => {
+    if (!account) return
     try {
-      const data = await getDataReferralPresale(acc)
+      const data = await getDataReferralPresale(account)
       if (data && data?.analysisSaleReferrals && data?.analysisSaleReferrals.length !== 0) {
-        const newData = Array.from(iRefInfo).map((item: IRefInfo) => {
+        const newData = Array.from(initialRefInfo).map((item: IRefInfo) => {
           return {
             ...item,
             ...data?.analysisSaleReferrals[0],
@@ -960,17 +970,37 @@ function VestingPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
-  // useEffect(() => {
-  //   const myId = setInterval(() => {
-  //     handleGetDataTransactionOfUser()
-  //     handleGetPreSaleUserInfo(initialYourInfo)
-  //     handleGetRefPreSale(initialRefInfo, account)
-  //     handleGetRoundStatus()
-  //     handleGetDataTransaction()
-  //   }, 15000)
-  //   return () => clearInterval(myId)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [])
+  useEffect(() => {
+    const myId = setInterval(() => {
+      handleGetDataTransactionOfUser()
+      handleGetDataTransactionClaimOfUser()
+      handleGetPreSaleUserInfo()
+      handleGetRefPreSale()
+      handleGetRoundStatus()
+      handleGetDataTransaction()
+    }, 15000)
+    return () => clearInterval(myId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    handleGetRoundStatus()
+    handleGetInfoRound()
+    handCheckInTimeRangeSale(timeStampOfNow)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    if (approvalState === ApprovalState.PENDING) {
+      setApprovalSubmitted(true)
+    }
+  }, [approvalState, approvalSubmitted])
+
+  useEffect(() => {
+    handleGetTotalTokenInvested(currentRound)
+    handCheckInTimeRangeSale(timeStampOfNow)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentRound])
 
   useEffect(() => {
     if (amount === '') {
@@ -991,9 +1021,8 @@ function VestingPage() {
   useEffect(() => {
     if (!account || !chainId) return
     handleGetDataTransaction()
-    handleGetRoundStatus()
     handleGetApiWhitelist()
-    handleGetRefPreSale(initialRefInfo, account)
+    handleGetRefPreSale()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
@@ -1017,20 +1046,7 @@ function VestingPage() {
   }, [account])
 
   useEffect(() => {
-    if (approvalState === ApprovalState.PENDING) {
-      setApprovalSubmitted(true)
-    }
-  }, [approvalState, approvalSubmitted])
-
-  useEffect(() => {
     if (!account || !chainId) return
-    handleGetTotalTokenInvested(currentRound)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [currentRound, account, chainId])
-
-  useEffect(() => {
-    if (!account || !chainId) return
-    handCheckInTimeRangeSale(timeStampOfNow)
     handleIsTimeAllowWhitelist(timeStampOfNow)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoRoundOne, infoRoundTow, infoRoundThree, account, chainId])
@@ -1056,9 +1072,8 @@ function VestingPage() {
 
   useEffect(() => {
     if (!account || !chainId) return
-    handleGetInfoRound()
     handleGetPrice()
-    handleGetPreSaleUserInfo(initialYourInfo)
+    handleGetPreSaleUserInfo()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
@@ -1067,12 +1082,12 @@ function VestingPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoRoundOne])
 
-  useEffect(() => {
-    if (!account || !chainId) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, chainId])
+  // useEffect(() => {
+  //   if (!account || !chainId) return
+  //   if (loadOk) window.location.reload()
+  //   setLoadOk(true)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [account, chainId])
 
   return (
     <>

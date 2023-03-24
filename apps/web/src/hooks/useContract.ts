@@ -457,8 +457,7 @@ export function useBridgeTokenContract(chainId: ChainId, withSignerIfPossible?: 
   return useContract(getBridgeTokenAddress(chainId), BRIDGE_TOKEN_ABI, withSignerIfPossible)
 }
 
-export const useXOXPreSaleContract = (withSignerIfPossible = true) => {
-  const { chainId } = useActiveChainId()
+export const useXOXPreSaleContract = (chainId: ChainId, withSignerIfPossible = true) => {
   const providerOrSigner = useProviderOrSigner(withSignerIfPossible)
   return useMemo(() => getContractPreSale(providerOrSigner as any, chainId), [providerOrSigner, chainId])
 }

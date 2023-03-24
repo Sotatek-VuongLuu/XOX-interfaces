@@ -198,7 +198,7 @@ export default {
     56: '',
   },
   preSaleContactAddress: {
-    5: '0xD8E9C874F989bc18d221cE6ddC9039781e32c6F2',
+    5: '0xd2D75A171b2779493cA1fBeA12226e3E8DA98137',
     1: '', // TODO: change address
   },
 }
