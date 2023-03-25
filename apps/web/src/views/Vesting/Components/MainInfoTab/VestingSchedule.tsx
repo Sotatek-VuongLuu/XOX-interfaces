@@ -491,12 +491,10 @@ function VestingSchedule({
   dataVesting,
   handleClaim,
   handleGetDataVesting,
-  isLoading,
 }: {
   dataVesting: IVestingTime[]
   handleClaim: (round: number, remainning: number) => void
   handleGetDataVesting: () => void
-  isLoading: boolean
 }) {
   const { account } = useActiveWeb3React()
   const [newVesting, setNewVesting] = useState<IVestingTime[]>(dataVesting)
