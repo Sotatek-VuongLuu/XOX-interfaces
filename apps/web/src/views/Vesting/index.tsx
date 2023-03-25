@@ -727,7 +727,6 @@ function VestingPage() {
       dataClone[item - 1].startTime = dataRoundDate[item - 1].endDate
         ? handleRenderTenMonths(dataRoundDate[item - 1].endDate)
         : []
-      console.log(`dataClone`, dataClone)
     })
     setDataVestingSchedule(dataClone)
   }
@@ -876,7 +875,23 @@ function VestingPage() {
     try {
       const result = await getDataTransaction()
       if (result && result?.transactionPreSales) {
-        setDataTransaction(result?.transactionPreSales)
+        const listAddress = result?.transactionPreSales.map((item: any) => item?.sender)
+        const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
+          wallets: listAddress,
+        })
+
+        const dataMapping = result?.transactionPreSales.map((item: any) => {
+          const dataUserInfos = response.data
+          const userInfo = dataUserInfos?.find((user) => item.sender === user.address)
+
+          return {
+            ...item,
+            username: userInfo?.username ?? null,
+            avatar: userInfo?.avatar ?? null,
+          }
+        })
+
+        setDataTransaction(dataMapping)
       }
     } catch (error) {
       console.warn(error)
@@ -1001,7 +1016,7 @@ function VestingPage() {
     }, 1000)
     return () => clearTimeout(myId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeRecall])
+  }, [timeRecall, account])
 
   useEffect(() => {
     if (approvalState === ApprovalState.PENDING) {

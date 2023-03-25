@@ -54,7 +54,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {Number(new BigNumber(transaction.amountClaimedXOX).div(10 ** 18).toFixed(2)).toLocaleString()}
+        {Number(new BigNumber(transaction.amountClaimedXOX).div(10 ** 18).toFixed(2)).toLocaleString()} XOX
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -64,7 +64,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {transaction?.round}
+        Sale {transaction?.round}
       </Text>
       <LinkExternal
         href={`${linkTransaction(ChainId.GOERLI)}${transaction.id}`}

@@ -3,7 +3,7 @@ import BigNumber from 'bignumber.js'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { IVestingTime } from 'views/Vesting'
 
@@ -203,7 +203,8 @@ const SaleItem = ({
   handleClaim: (round: number, remainning: any) => void
   handleGetDataVesting: () => void
 }) => {
-  const [count, setCount] = useState<number>(0)
+  const [count, setCount] = useState<number>(null)
+  const [itemVesting, setItem] = useState(item)
 
   useEffect(() => {
     const id = setTimeout(() => {
@@ -212,9 +213,11 @@ const SaleItem = ({
     return () => clearTimeout(id)
   }, [count])
 
-  const handleCheckCount = () => {
+  const handleCheckCount = (it: any) => {
+    if (it.startTime.length === 0) return
     const NOW = Date.now()
-    const i = Array.from(item.startTime).findIndex((value) => value > NOW)
+    const i = Array.from(it.startTime).findIndex((value) => value > NOW)
+
     if (i === -1) {
       setCount(9)
     } else {
@@ -223,12 +226,13 @@ const SaleItem = ({
   }
 
   useEffect(() => {
-    handleCheckCount()
-  }, [])
+    setItem(item)
+    handleCheckCount(item)
+  }, [item])
 
   return (
     <div className={`sale_item sale_item_${index}`}>
-      <div className="heading-sale">{item.title}</div>
+      <div className="heading-sale">{itemVesting.title}</div>
       <div className="sale-container-bottom ">
         <div className="sale-schedule-item ">
           <div className="item_wrap">
@@ -242,7 +246,7 @@ const SaleItem = ({
               />
             </p>
             <div>
-              <p className="amount_vested">{Number(item.remaining).toLocaleString()}</p>
+              <p className="amount_vested">{Number(itemVesting.remaining).toLocaleString()}</p>
               <p className="title_vested">Unclaimed</p>
             </div>
           </div>
@@ -253,7 +257,7 @@ const SaleItem = ({
               <Img src="/images/1/tokens/xox_new.svg" alt="icon" height={30} width={30} className="token_first" />
             </p>
             <div>
-              <p className="amount_vested">{Number(item.amountVested).toLocaleString()}</p>
+              <p className="amount_vested">{Number(itemVesting.amountVested).toLocaleString()}</p>
               <p className="title_vested">Claimed</p>
             </div>
           </div>
@@ -264,7 +268,7 @@ const SaleItem = ({
               <Img src="/images/1/tokens/xox_new.svg" alt="icon" height={30} width={30} className="token_first" />
             </p>
             <div>
-              <p className="amount_vested">{Number(item.yourCurrentXOX).toLocaleString()}</p>
+              <p className="amount_vested">{Number(itemVesting.yourCurrentXOX).toLocaleString()}</p>
               <p className="title_vested">Next Claim Amount</p>
             </div>
           </div>
@@ -272,17 +276,19 @@ const SaleItem = ({
         <div className="sale-schedule-item flex-col">
           <p className="next_day">
             Next unlocking date:{' '}
-            {item.startTime.length !== 0 ? moment.unix(item.startTime[count] / 1000).format('MM/DD/YYYY') : ' -/-/-'}
+            {itemVesting.startTime.length !== 0
+              ? moment.unix(itemVesting.startTime[count] / 1000).format('MM/DD/YYYY')
+              : ' -/-/-'}
           </p>
           <p>
-            <CountDown startTime={item.startTime[count]} setCount={setCount} count={count} />
+            <CountDown startTime={itemVesting.startTime[count]} setCount={setCount} count={count} />
           </p>
         </div>
         <div className="sale-schedule-item no-padding">
           <CustomButtom
             type="button"
-            onClick={() => handleClaim(item.round, item.yourCurrentXOX)}
-            disabled={Number(item.yourCurrentXOX) === 0}
+            onClick={() => handleClaim(itemVesting.round, itemVesting.yourCurrentXOX)}
+            disabled={Number(itemVesting.yourCurrentXOX) === 0}
           >
             Claim
           </CustomButtom>
@@ -474,11 +480,23 @@ function VestingSchedule({
   handleGetDataVesting: () => void
 }) {
   const { account } = useActiveWeb3React()
-  const [newVesting, setNewVesting] = useState(dataVesting)
+  const [newVesting, setNewVesting] = useState<IVestingTime[]>(dataVesting)
 
   useEffect(() => {
     setNewVesting(dataVesting)
   }, [dataVesting])
+
+  const renderVestingSale = useMemo(() => {
+    return (
+      <>
+        {Array.from(newVesting).map((item: IVestingTime, index) => {
+          return (
+            <SaleItem item={item} index={index} handleClaim={handleClaim} handleGetDataVesting={handleGetDataVesting} />
+          )
+        })}
+      </>
+    )
+  }, [handleClaim, handleGetDataVesting, newVesting])
 
   return (
     <Wrapper>
@@ -495,25 +513,14 @@ function VestingSchedule({
           <div className="total_vested">
             Total vested at this time:{' '}
             {Number(
-              new BigNumber(dataVesting[0].amountVested)
-                .plus(dataVesting[1].amountVested)
-                .plus(dataVesting[2].amountVested)
+              new BigNumber(dataVesting[0]?.amountVested)
+                .plus(dataVesting[1]?.amountVested)
+                .plus(dataVesting[2]?.amountVested)
                 .toFixed(2),
             ).toLocaleString()}
           </div>
           <Content>
-            <div className="over_flow">
-              {Array.from(newVesting).map((item: IVestingTime, index) => {
-                return (
-                  <SaleItem
-                    item={item}
-                    index={index}
-                    handleClaim={handleClaim}
-                    handleGetDataVesting={handleGetDataVesting}
-                  />
-                )
-              })}
-            </div>
+            <div className="over_flow">{newVesting[2]?.startTime?.length !== 0 ? renderVestingSale : null}</div>
           </Content>
         </>
       )}

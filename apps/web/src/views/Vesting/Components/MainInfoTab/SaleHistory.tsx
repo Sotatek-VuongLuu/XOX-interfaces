@@ -9,6 +9,7 @@ import BigNumber from 'bignumber.js'
 import truncateHash from '@pancakeswap/utils/truncateHash'
 import { linkTransaction } from 'views/BridgeToken'
 import { ChainId } from '@pancakeswap/sdk'
+import { Avatar } from '@mui/material'
 
 const Wrapper = styled.div`
   position: relative;
@@ -271,7 +272,10 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {truncateHash(transaction.sender, 4, 5)}
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar alt="Remy Sharp" src={transaction?.avatar} sx={{ height: 24, width: 24, marginRight: '5px' }} />
+          <div>{transaction?.username}</div>
+        </div>
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -291,7 +295,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {Number(new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toFixed(2)).toLocaleString()}
+        ${Number(new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toFixed(2)).toLocaleString()}
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -301,7 +305,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {Number(new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)).toLocaleString()}
+        {Number(new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)).toLocaleString()} XOX
       </Text>
       <Text
         fontSize={['14px', , '16px']}
@@ -311,7 +315,7 @@ const DataRow: React.FC<
         lineHeight={['17px', , '19px']}
         color="rgba(255, 255, 255, 0.87)"
       >
-        {Number(new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toFixed(2)).toLocaleString()}
+        {Number(new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toFixed(2)).toLocaleString()} XOXS
       </Text>
 
       <LinkExternal

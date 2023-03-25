@@ -20,7 +20,7 @@ const Content = styled.div`
   .nomal {
     font-weight: 400;
     font-size: 16px;
-    line-height: 25px;
+    line-height: 32px;
     color: rgba(255, 255, 255, 0.87);
     margin-bottom: 16px;
   }

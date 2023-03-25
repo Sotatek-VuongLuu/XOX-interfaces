@@ -13,6 +13,7 @@ const CustomTable = styled(Table)`
 
   &::before {
     top: 32px;
+    border: 1px solid transparent;
   }
 
   .table-header {
@@ -20,6 +21,8 @@ const CustomTable = styled(Table)`
     font-size: 14px;
     line-height: 17px;
     color: rgba(255, 255, 255, 0.6);
+    padding-bottom: 16px;
+    margin-bottom: 0px;
 
     @media screen and (max-width: 900px) {
       margin-bottom: 0px;
@@ -68,11 +71,16 @@ const CustomTableSale = styled(CustomTableWrapper)`
     min-width: 1300px;
   }
   padding-top: 20px;
+  gap: 0px;
 `
 
 const Row = styled(CustomTable)`
+  border-top: 1px solid rgba(68, 68, 68, 1);
+  padding-top: 16px;
+  padding-bottom: 8px;
+
   &::before {
-    top: 25px;
+    border: 1px solid transparent;
   }
 
   &.item_15::before {
