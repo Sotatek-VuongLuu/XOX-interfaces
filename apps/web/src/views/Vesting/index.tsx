@@ -218,7 +218,7 @@ const initialTokenMetrics = [
   {
     id: 11,
     title: 'Public Sale (40% realease at TGE then 10% Monthly)',
-    tokenAllocationPercent: '10%',
+    tokenAllocationPercent: '10',
     tokenAllocation: '18000000',
     tge: '4',
     tokenAllocationatTge: '7200000',
@@ -462,6 +462,7 @@ function VestingPage() {
   const [isTimeAllowWhitelist, setIsTimeAllowWhitelist] = useState<boolean>(false)
   const [_, setisReachWhitelist] = useState<boolean>(false)
   const [loadOk, setLoadOk] = useState(false)
+  const [isLoading, setIsLoading] = useState(false)
   const [timeRecall, setTimeRecall] = useState(7)
   const handleUpdateDataSale = (arr: Start[], dataSaleStatsParams: any) => {
     if (dataSaleStatsParams.length !== 0) {
@@ -831,6 +832,7 @@ function VestingPage() {
   const handleGetPreSaleUserInfo = async () => {
     if (!account) return
     try {
+      setIsLoading(true)
       const data = await getUserPreSaleInfo(account)
       if (data && data.userPreSaleDatas && data.userPreSaleDatas?.length > 0) {
         const result = {
@@ -854,9 +856,13 @@ function VestingPage() {
           }
         })
         setDataForInfo(arrUpdate)
+        setIsLoading(false)
+        return
       }
+      setIsLoading(false)
     } catch (error) {
       console.warn(error)
+      setIsLoading(false)
     }
   }
 
@@ -1159,6 +1165,7 @@ function VestingPage() {
             dataTransactionClaimOfUser={dataTransactionClaimOfUser}
             dataVesting={dataVestingSchedule}
             handleGetDataVesting={handleGetDataVesting}
+            isLoading={isLoading}
           />
           <SaleHistorySession dataTransaction={dataTransaction} />
           <BackedBy />

@@ -22,6 +22,7 @@ interface IProps {
   dataVesting: IVestingTime[]
   handleClaim: (round: number, remainning: number) => void
   handleGetDataVesting: () => void
+  isLoading: boolean
 }
 
 interface IPropsWrapper {
@@ -230,6 +231,7 @@ function SaleMechanism({
   handleClaim,
   dataTransactionClaimOfUser,
   handleGetDataVesting,
+  isLoading,
 }: IProps) {
   const { width } = useWindowSize()
   const { account } = useActiveWeb3React()
@@ -247,6 +249,7 @@ function SaleMechanism({
             dataVesting={dataVesting}
             handleClaim={handleClaim}
             handleGetDataVesting={handleGetDataVesting}
+            isLoading={isLoading}
           />
         )
       case 'Your Information':

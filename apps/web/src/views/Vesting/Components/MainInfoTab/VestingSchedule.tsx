@@ -1,9 +1,11 @@
 import { Button } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import { ColumnCenter } from 'components/Layout/Column'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import moment from 'moment'
 import { useEffect, useMemo, useState } from 'react'
+import { GridLoader } from 'react-spinners'
 import styled from 'styled-components'
 import { IVestingTime } from 'views/Vesting'
 
@@ -404,6 +406,21 @@ const WrapperTime = styled.div`
   }
 `
 
+const NoDataWraper = styled.div`
+  width: 100%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.6);
+`
+
+const ConfirmedIcon = styled(ColumnCenter)`
+  padding: 14px 0 34px 0;
+`
+
 const CountDown = ({ startTime, setCount, count }: Props) => {
   const [timeList, setTimeList] = useState({
     days: 0,
@@ -474,10 +491,12 @@ function VestingSchedule({
   dataVesting,
   handleClaim,
   handleGetDataVesting,
+  isLoading,
 }: {
   dataVesting: IVestingTime[]
   handleClaim: (round: number, remainning: number) => void
   handleGetDataVesting: () => void
+  isLoading: boolean
 }) {
   const { account } = useActiveWeb3React()
   const [newVesting, setNewVesting] = useState<IVestingTime[]>(dataVesting)
@@ -510,17 +529,29 @@ function VestingSchedule({
       )}
       {account && (
         <>
-          <div className="total_vested">
-            Total vested at this time:{' '}
-            {Number(
-              new BigNumber(dataVesting[0]?.amountVested)
-                .plus(dataVesting[1]?.amountVested)
-                .plus(dataVesting[2]?.amountVested)
-                .toFixed(2),
-            ).toLocaleString()}
-          </div>
+          {dataVesting[2]?.startTime.length !== 0 && (
+            <div className="total_vested">
+              Total vested at this time:{' '}
+              {Number(
+                new BigNumber(dataVesting[0]?.amountVested)
+                  .plus(dataVesting[1]?.amountVested)
+                  .plus(dataVesting[2]?.amountVested)
+                  .toFixed(2),
+              ).toLocaleString()}
+            </div>
+          )}
           <Content>
-            <div className="over_flow">{newVesting[2]?.startTime?.length !== 0 ? renderVestingSale : null}</div>
+            <div className="over_flow">
+              {dataVesting[2]?.startTime.length === 0 ? (
+                <NoDataWraper>
+                  <ConfirmedIcon>
+                    <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
+                  </ConfirmedIcon>
+                </NoDataWraper>
+              ) : (
+                renderVestingSale
+              )}
+            </div>
           </Content>
         </>
       )}

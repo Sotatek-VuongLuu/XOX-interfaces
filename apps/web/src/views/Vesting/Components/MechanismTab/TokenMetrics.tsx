@@ -70,6 +70,13 @@ const CustomTableSale = styled(CustomTableWrapper)`
   & > div {
     min-width: 1300px;
   }
+
+  & > div:last-child {
+    margin-bottom: 1px;
+  }
+  .item_15 {
+    padding-bottom: 0px !important;
+  }
   padding-top: 20px;
   gap: 0px;
 `
