@@ -497,6 +497,23 @@ function VestingSchedule({
   handleGetDataVesting: () => void
 }) {
   const { account } = useActiveWeb3React()
+  const [newVesting, setNewVesting] = useState<IVestingTime[]>(dataVesting)
+
+  useEffect(() => {
+    setNewVesting(dataVesting)
+  }, [dataVesting])
+
+  const renderVestingSale = useMemo(() => {
+    return (
+      <>
+        {Array.from(newVesting).map((item: IVestingTime, index) => {
+          return (
+            <SaleItem item={item} index={index} handleClaim={handleClaim} handleGetDataVesting={handleGetDataVesting} />
+          )
+        })}
+      </>
+    )
+  }, [handleClaim, handleGetDataVesting, newVesting])
 
   return (
     <Wrapper>
@@ -510,36 +527,27 @@ function VestingSchedule({
       )}
       {account && (
         <>
-          {dataVesting[2]?.startTime.length !== 0 && (
+          {newVesting[2]?.startTime.length !== 0 && (
             <div className="total_vested">
               Total vested at this time:{' '}
               {Number(
-                new BigNumber(dataVesting[0]?.amountVested)
-                  .plus(dataVesting[1]?.amountVested)
-                  .plus(dataVesting[2]?.amountVested)
+                new BigNumber(newVesting[0]?.amountVested)
+                  .plus(newVesting[1]?.amountVested)
+                  .plus(newVesting[2]?.amountVested)
                   .toFixed(2),
               ).toLocaleString()}
             </div>
           )}
           <Content>
             <div className="over_flow">
-              {dataVesting[2]?.startTime.length === 0 ? (
+              {newVesting[2]?.startTime.length === 0 ? (
                 <NoDataWraper>
                   <ConfirmedIcon>
                     <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
                   </ConfirmedIcon>
                 </NoDataWraper>
               ) : (
-                Array.from(dataVesting).map((item: IVestingTime, index) => {
-                  return (
-                    <SaleItem
-                      item={item}
-                      index={index}
-                      handleClaim={handleClaim}
-                      handleGetDataVesting={handleGetDataVesting}
-                    />
-                  )
-                })
+                renderVestingSale
               )}
             </div>
           </Content>
