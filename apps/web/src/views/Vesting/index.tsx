@@ -716,8 +716,6 @@ function VestingPage() {
   }
 
   const handleGetDataVesting = async () => {
-    console.log(`das`, account, chainId, infoRoundOne, infoRoundThree, infoRoundTow)
-
     const dataClone: IVestingTime[] = [...vestingTiming]
     const round = [1, 2, 3]
     const dataRoundDate = [infoRoundOne, infoRoundTow, infoRoundThree]

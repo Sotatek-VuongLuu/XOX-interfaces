@@ -9,6 +9,7 @@ import { SUPPORT_ONLY_BSC, SUPPORT_ONLY_ETH } from 'config/constants/supportChai
 import { UnsupportedNetworkModal } from './UnsupportedNetworkModal'
 import { WrongNetworkModal } from './WrongNetworkModal'
 import { PageNetworkSupportModal } from './PageNetworkSupportModal'
+import { useRouter } from 'next/router'
 
 export const hideWrongNetworkModalAtom = atom(false)
 
@@ -16,6 +17,8 @@ export const NetworkModal = ({ pageSupportedChains = SUPPORT_ONLY_ETH }: { pageS
   const { chainId, chain, isWrongNetwork } = useActiveWeb3React()
   const { chains } = useNetwork()
   const [dismissWrongNetwork, setDismissWrongNetwork] = useAtom(hideWrongNetworkModalAtom)
+
+  const router = useRouter()
 
   // const isBNBOnlyPage = useMemo(() => {
   //   return pageSupportedChains?.length === 1 && pageSupportedChains[0] === ChainId.BSC
@@ -26,7 +29,7 @@ export const NetworkModal = ({ pageSupportedChains = SUPPORT_ONLY_ETH }: { pageS
     [chainId, pageSupportedChains],
   )
 
-  if (isPageNotSupported) {
+  if (isPageNotSupported && router.pathname === '/vesting') {
     return (
       <ModalV2 isOpen closeOnOverlayClick={false}>
         <PageNetworkSupportModal />
