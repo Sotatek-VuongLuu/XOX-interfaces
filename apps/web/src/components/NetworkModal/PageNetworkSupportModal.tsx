@@ -12,6 +12,12 @@ import { useMenuItems } from 'components/Menu/hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from 'components/Menu/utils'
 import { useRouter } from 'next/router'
 import useAuth from 'hooks/useAuth'
+import styled from 'styled-components'
+
+const BoxContainer = styled(Box)`
+  display: flex;
+  justify-content: center;
+`
 
 export function PageNetworkSupportModal() {
   const { t } = useTranslation()
@@ -40,13 +46,15 @@ export function PageNetworkSupportModal() {
 
   return (
     <Modal title={title || t('Check your network')} hideCloseButton headerBackground="gradientCardHeader">
-      <Grid style={{ gap: '16px' }} maxWidth="360px">
-        <Text bold>{t('It’s a Ethereum only feature')}</Text>
+      <Grid style={{ gap: '16px' }} maxWidth="360px" marginBottom="26px">
+        <Text bold color="white">
+          {t('It’s a Ethereum only feature')}
+        </Text>
 
         {image && (
-          <Box mx="auto" my="8px" position="relative" width="100%" minHeight="250px">
-            <Image src={image} alt="feature" fill style={{ objectFit: 'contain' }} unoptimized />
-          </Box>
+          <BoxContainer mx="auto" my="8px" width="100%" minHeight="250px">
+            <img src="/images/ref_xox_mb.svg" alt="ref_xox" className="ref_xox" />
+          </BoxContainer>
         )}
         {canSwitch ? (
           <Button

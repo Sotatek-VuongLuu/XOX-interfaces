@@ -442,7 +442,7 @@ function VestingPage() {
       : useXOXPreSaleContract(ChainId.GOERLI)
     : notSupport.includes(chainId)
     ? useXOXPreSaleContract(ChainId.GOERLI)
-    : useXOXPreSaleContract(chainId)
+    : useXOXPreSaleContract(ChainId.GOERLI)
 
   const [whiteList, setWhiteList] = useState<string[]>([])
   const [isUserInWhiteList, setIsUserInWhiteList] = useState<boolean>(false)
@@ -716,6 +716,8 @@ function VestingPage() {
   }
 
   const handleGetDataVesting = async () => {
+    console.log(`das`, account, chainId, infoRoundOne, infoRoundThree, infoRoundTow)
+
     const dataClone: IVestingTime[] = [...vestingTiming]
     const round = [1, 2, 3]
     const dataRoundDate = [infoRoundOne, infoRoundTow, infoRoundThree]
@@ -1064,7 +1066,7 @@ function VestingPage() {
   }, [account, chainId, provider, nodeId])
 
   useEffect(() => {
-    if (!account || !chainId) return
+    if (!account || !chainId || !infoRoundOne.startDate || !infoRoundOne.startDate || !infoRoundTow.startDate) return
     handleGetDataVesting()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId, infoRoundOne, infoRoundThree, infoRoundTow])

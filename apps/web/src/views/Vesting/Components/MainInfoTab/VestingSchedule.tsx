@@ -497,23 +497,6 @@ function VestingSchedule({
   handleGetDataVesting: () => void
 }) {
   const { account } = useActiveWeb3React()
-  // const [newVesting, setNewVesting] = useState<IVestingTime[]>(dataVesting)
-
-  // useEffect(() => {
-  //   setNewVesting(dataVesting)
-  // }, [dataVesting])
-
-  const renderVestingSale = useMemo(() => {
-    return (
-      <>
-        {Array.from(dataVesting).map((item: IVestingTime, index) => {
-          return (
-            <SaleItem item={item} index={index} handleClaim={handleClaim} handleGetDataVesting={handleGetDataVesting} />
-          )
-        })}
-      </>
-    )
-  }, [handleClaim, handleGetDataVesting, dataVesting])
 
   return (
     <Wrapper>
@@ -547,7 +530,16 @@ function VestingSchedule({
                   </ConfirmedIcon>
                 </NoDataWraper>
               ) : (
-                renderVestingSale
+                Array.from(dataVesting).map((item: IVestingTime, index) => {
+                  return (
+                    <SaleItem
+                      item={item}
+                      index={index}
+                      handleClaim={handleClaim}
+                      handleGetDataVesting={handleGetDataVesting}
+                    />
+                  )
+                })
               )}
             </div>
           </Content>
