@@ -498,6 +498,7 @@ function VestingPage() {
 
   const handleGetInfoRound = async () => {
     try {
+      if (chainId === 97 || chainId === 56) return
       const [dataROne, dataRTwo, dataRThree, currentR] = await Promise.all([
         contractPreSale.saleRound(ROUND.ONE),
         contractPreSale.saleRound(ROUND.TWO),
@@ -537,6 +538,7 @@ function VestingPage() {
 
   const handleGetCurrentRound = async () => {
     try {
+      if (chainId === 97 || chainId === 56) return
       const [currentR] = await Promise.all([contractPreSale.currentRound()])
       setCurrentRound(new BigNumber(currentR._hex).toNumber())
     } catch (error) {
@@ -716,6 +718,7 @@ function VestingPage() {
   }
 
   const handleGetDataVesting = async () => {
+    if (chainId === 97 || chainId === 56) return
     const dataClone: IVestingTime[] = [...vestingTiming]
     const round = [1, 2, 3]
     const dataRoundDate = [infoRoundOne, infoRoundTow, infoRoundThree]
@@ -755,6 +758,7 @@ function VestingPage() {
   }
 
   const handleGetTotalTokenInvested = async (round: number) => {
+    if (chainId === 97 || chainId === 56) return
     try {
       const data = await contractPreSale.totalRoundInvested(round)
       if (data) {

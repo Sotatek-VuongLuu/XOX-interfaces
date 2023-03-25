@@ -459,8 +459,5 @@ export function useBridgeTokenContract(chainId: ChainId, withSignerIfPossible?: 
 
 export const useXOXPreSaleContract = (chainId: ChainId, withSignerIfPossible = true) => {
   const providerOrSigner = useProviderOrSignerPresale(withSignerIfPossible, chainId)
-
-  console.log(`providerOrSigner`, providerOrSigner)
-
   return useMemo(() => getContractPreSale(providerOrSigner as any, chainId), [providerOrSigner, chainId])
 }

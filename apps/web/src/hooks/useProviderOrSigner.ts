@@ -1,6 +1,8 @@
 import { useMemo } from 'react'
 import { ChainId } from '@pancakeswap/sdk'
 import { useAccount, useProvider, useSigner } from 'wagmi'
+import { ethers } from 'ethers'
+import { goerli } from '@pancakeswap/wagmi/chains'
 import { useActiveChainId } from './useActiveChainId'
 
 export const useProviderOrSigner = (withSignerIfPossible = true, forceBSC?: boolean) => {
@@ -22,6 +24,6 @@ export const useProviderOrSignerPresale = (withSignerIfPossible = true, chainId:
   const isSupport = [ChainId.ETHEREUM, ChainId.GOERLI].includes(chainId)
   return useMemo(
     () => (withSignerIfPossible && address && isConnected && signer && isSupport ? signer : provider),
-    [address, isConnected, provider, signer, withSignerIfPossible, isSupport],
+    [address, isConnected, signer, withSignerIfPossible, isSupport, provider],
   )
 }
