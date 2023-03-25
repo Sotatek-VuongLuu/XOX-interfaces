@@ -235,8 +235,8 @@ function SaleMechanism({
   const { account } = useActiveWeb3React()
   const [isMore, setIsMore] = useState(false)
 
-  const renderBody = (tab: string) => {
-    switch (tab) {
+  const renderBody = useMemo(() => {
+    switch (tabActiveMechansim) {
       case 'Sale Referral Program':
         return <ReferralProgram />
       case 'Token Metrics':
@@ -261,7 +261,17 @@ function SaleMechanism({
       default:
         return <PrivateSale />
     }
-  }
+  }, [
+    dataInfo,
+    dataRefInfo,
+    dataTransaction,
+    dataTransactionClaimOfUser,
+    dataVesting,
+    handleClaim,
+    handleGetDataVesting,
+    initialTokenMetrics,
+    tabActiveMechansim,
+  ])
 
   const renderRemore = useMemo(() => {
     return (
@@ -311,7 +321,7 @@ function SaleMechanism({
             )
           })}
         </div>
-        <div className="body">{renderBody(tabActiveMechansim)}</div>
+        <div className="body">{renderBody}</div>
       </Content>
       {!account && (tabActiveMechansim === 'Vesting Schedule' || tabActiveMechansim === 'Your Information')
         ? null

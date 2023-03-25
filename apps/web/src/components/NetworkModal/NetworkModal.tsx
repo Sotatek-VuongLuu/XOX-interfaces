@@ -21,18 +21,18 @@ export const NetworkModal = ({ pageSupportedChains = SUPPORT_ONLY_ETH }: { pageS
   //   return pageSupportedChains?.length === 1 && pageSupportedChains[0] === ChainId.BSC
   // }, [pageSupportedChains])
 
-  // const isPageNotSupported = useMemo(
-  //   () => Boolean(pageSupportedChains.length) && !pageSupportedChains.includes(chainId),
-  //   [chainId, pageSupportedChains],
-  // )
+  const isPageNotSupported = useMemo(
+    () => Boolean(pageSupportedChains.length) && !pageSupportedChains.includes(chainId),
+    [chainId, pageSupportedChains],
+  )
 
-  // if (isPageNotSupported) {
-  //   return (
-  //     <ModalV2 isOpen closeOnOverlayClick={false}>
-  //       <PageNetworkSupportModal />
-  //     </ModalV2>
-  //   )
-  // }
+  if (isPageNotSupported) {
+    return (
+      <ModalV2 isOpen closeOnOverlayClick={false}>
+        <PageNetworkSupportModal />
+      </ModalV2>
+    )
+  }
 
   // if ((chain?.unsupported ?? false) || isPageNotSupported) {
   //   return (

@@ -52,7 +52,7 @@ export function PageNetworkSupportModal() {
           <Button
             variant={foundChain && lastValidPath ? 'secondary' : 'primary'}
             isLoading={isLoading}
-            onClick={() => (isWrongNetwork ? switchNetworkLocal(ChainId.GOERLI) : switchNetworkAsync(ChainId.GOERLI))}
+            onClick={() => switchNetworkAsync(ChainId.GOERLI)}
           >
             {t('Switch to %chain%', { chain: 'Ethereum' })}
           </Button>
@@ -61,23 +61,6 @@ export function PageNetworkSupportModal() {
             <MessageText>{t('Unable to switch network. Please try it on your wallet')}</MessageText>
           </Message>
         )}
-        {/* {isConnected && (
-          <Button
-            variant="secondary"
-            onClick={() =>
-              logout().then(() => {
-                push('/')
-              })
-            }
-          >
-            {t('Disconnect Wallet')}
-          </Button>
-        )}
-        {foundChain && lastValidPath && (
-          <NextLink href={lastValidPath} passHref>
-            <Button as="a">{t('Stay on %chain%', { chain: foundChain.name })}</Button>
-          </NextLink>
-        )} */}
       </Grid>
     </Modal>
   )
