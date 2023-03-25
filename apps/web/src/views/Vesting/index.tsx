@@ -12,7 +12,7 @@ import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useXOXPreSaleContract } from 'hooks/useContract'
 import moment from 'moment'
 import axios from 'axios'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { Children, useCallback, useContext, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
 import { getContractPreSaleAddress } from 'utils/addressHelpers'
@@ -414,6 +414,7 @@ const defaultRoundInfo = {
 }
 
 function VestingPage() {
+  const notSupport = [ChainId.BSC_TESTNET, ChainId.BSC]
   const [tabActiveMechansim, setTabActiveMechansim] = useState<string>('Private Sale Mechanism')
   const [referralError, setReferralError] = useState(null)
   const [dataWhitelist, setDataWhitelist] = useState<IDataWhitelist[]>([])
@@ -432,10 +433,15 @@ function VestingPage() {
   const { toastSuccess, toastError } = useToast()
   const [totalXOXTokenInRound, setTotalXOXTokenInRound] = useState<number | string | null>(0)
   const { nodeId } = useContext(Context)
+
   const contractPreSale = !account
     ? process.env.NODE_ENV === 'production'
-      ? useXOXPreSaleContract(ChainId.GOERLI)
+      ? notSupport.includes(chainId)
+        ? useXOXPreSaleContract(ChainId.GOERLI)
+        : useXOXPreSaleContract(ChainId.GOERLI) /// OR ETH ON MAINNET
       : useXOXPreSaleContract(ChainId.GOERLI)
+    : notSupport.includes(chainId)
+    ? useXOXPreSaleContract(ChainId.GOERLI)
     : useXOXPreSaleContract(chainId)
 
   const [whiteList, setWhiteList] = useState<string[]>([])
@@ -713,6 +719,7 @@ function VestingPage() {
     const dataClone: IVestingTime[] = [...vestingTiming]
     const round = [1, 2, 3]
     const dataRoundDate = [infoRoundOne, infoRoundTow, infoRoundThree]
+
     round.forEach(async (item) => {
       const [vested, currentXOX, userInvested] = await Promise.all([
         contractPreSale.userClaimedAmount(account, BigNumberEthers.from(item)),
@@ -1112,12 +1119,12 @@ function VestingPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoRoundOne])
 
-  useEffect(() => {
-    if (!account || !chainId) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, chainId])
+  // useEffect(() => {
+  //   if (!account || !chainId) return
+  //   if (loadOk) window.location.reload()
+  //   setLoadOk(true)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [account, chainId])
 
   return (
     <>
