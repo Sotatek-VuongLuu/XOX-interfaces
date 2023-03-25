@@ -419,7 +419,7 @@ function VestingPage() {
   const [referralError, setReferralError] = useState(null)
   const [dataWhitelist, setDataWhitelist] = useState<IDataWhitelist[]>([])
   const [dataForInfo, setDataForInfo] = useState<IYourInfo[]>(initialYourInfo)
-  const { account, chainId } = useActiveWeb3React()
+  const { account, chainId, isConnected } = useActiveWeb3React()
   const [typeBuyPrice, setTypeBuyPrice] = useState<number | null>(null)
   const [amount, setAmount] = useState<string>('')
   const [currentRound, setCurrentRound] = useState<number | null>(0)
@@ -450,6 +450,7 @@ function VestingPage() {
     USDC_TEST && tryParseAmount('0.01', USDC_TESTNET),
     getContractPreSaleAddress(5),
   )
+
   const [dataRef, setDataRef] = useState<IRefInfo[]>(initialRefInfo)
   const [balanceLP, setBalanceLP] = useState<any>()
   const [balanceNative, setBalanceNative] = useState<any>()
@@ -1029,7 +1030,7 @@ function VestingPage() {
     }, 1000)
     return () => clearTimeout(myId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeRecall, account])
+  }, [timeRecall, account, chainId])
 
   useEffect(() => {
     if (approvalState === ApprovalState.PENDING) {
@@ -1055,21 +1056,20 @@ function VestingPage() {
 
   useEffect(() => {
     if (!account || !chainId) return
-    handleGetBalanceOfUser()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, chainId])
-
-  useEffect(() => {
-    if (!account || !chainId) return
     handleGetDataTransaction()
     handleGetApiWhitelist()
     handleGetRefPreSale()
+    handleGetBalanceOfUser()
+    handleGetInfoRound()
+    handleGetPrice()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId, provider, nodeId])
 
   useEffect(() => {
     if (!account || !chainId || !infoRoundOne.startDate || !infoRoundOne.startDate || !infoRoundTow.startDate) return
     handleGetDataVesting()
+    handCheckInTimeRangeSale(timeStampOfNow)
+    handleIsTimeAllowWhitelist(timeStampOfNow)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId, infoRoundOne, infoRoundThree, infoRoundTow])
 
@@ -1085,12 +1085,6 @@ function VestingPage() {
     handleChangeReferal(codeRef)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account])
-
-  useEffect(() => {
-    if (!account || !chainId) return
-    handleIsTimeAllowWhitelist(timeStampOfNow)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [infoRoundOne, infoRoundTow, infoRoundThree, account, chainId])
 
   useEffect(() => {
     if (reacheZero) {
@@ -1110,13 +1104,6 @@ function VestingPage() {
       setIsUserInWhiteList(false)
     }
   }, [whiteList, setWhiteList, account, dataWhitelist])
-
-  useEffect(() => {
-    if (!account || !chainId) return
-    handleGetPrice()
-    // handleGetPreSaleUserInfo()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, chainId])
 
   useEffect(() => {
     handleGetOneHourBeforeSale()
