@@ -397,8 +397,9 @@ const LineChart = ({
           fontWeight="17px"
           color="rgba(255, 255, 255, 0.6)"
           tickMargin={10}
-          allowDataOverflow={true}
+          allowDataOverflow
           padding={{ left: 0, right: 10 }}
+          interval={typeXAxis === 'ALL' && data?.length < 100 ? 0 : 'preserveStartEnd'}
         />
         {hoverableChart && typeXAxis === '3M' && (
           <XAxis
@@ -422,7 +423,7 @@ const LineChart = ({
           domain={[minYAxis, maxYAxis]}
           tickFormatter={(val) => `$${intToString(formatAmountNumber(val, 4))}`}
           orientation="left"
-          allowDataOverflow={true}
+          allowDataOverflow
           tick={{ dx: 0, fill: 'rgba(255, 255, 255, 0.6)' }}
           fontSize="14px"
           fontWeight="400"

@@ -115,5 +115,46 @@ export const formatAmountString = (number: any, decimals = 2) => {
   } catch (error) {
     result = parseInt((parseFloat(number.toFixed()) * 10 ** decimals).toString()) / 10 ** decimals
   }
-  return result.toString()
+  const value = result?.toString()?.split('.')
+  const firstNumber = value[0]?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  const lastNumber = value[1]
+
+  if (!lastNumber) {
+    return firstNumber
+  }
+  return `${firstNumber}.${lastNumber}`
+}
+
+export const formatAmountNumber2 = (number: number, decimals = 2) => {
+  if (number < 1) {
+    return number
+  }
+  const balance = (parseInt((number * 10 ** decimals).toString()) / 10 ** decimals)?.toString()
+  const value = balance?.split('.')
+  const firstNumber = value[0]?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  const lastNumber = value[1]
+
+  if (!lastNumber) {
+    return firstNumber
+  }
+  return `${firstNumber}.${lastNumber}`
+}
+
+export const formatBalanceComma = (balance: string) => {
+  if (Number(balance) <= 0.000001) {
+    return `0.000000...`
+  }
+  const value = balance?.split('.')
+  const firstNumber = value[0]?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  const lastNumber = value[1]
+  let data
+  if (!lastNumber) {
+    data = firstNumber
+  }
+  data = `${firstNumber}.${lastNumber}`
+
+  if (data.length <= 10) {
+    return data
+  }
+  return `${data.slice(0, 10)}...`
 }

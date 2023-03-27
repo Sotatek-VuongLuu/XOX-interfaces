@@ -25,15 +25,18 @@ const ModalStyle = styled.div`
 const FormWrapper = styled.div`
   width: calc(100vw - 48px);
   max-width: 464px;
-  background: #1d1c1c;
-  border-radius: 20px;
   padding: 32px 24px;
   display: flex;
   flex-direction: column;
   flex-grow: 1;
   position: relative;
+
+  background: #101010;
+
   border: 1px solid rgba(255, 255, 255, 0.1);
+
   box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 20px;
   & > button {
     position: absolute;
     top: 10px;
@@ -101,6 +104,14 @@ const FormWrapper = styled.div`
       }
     }
   }
+
+  .btns {
+    button {
+      @media (max-width: 576px) {
+        font-size: 14px;
+      }
+    }
+  }
 `
 
 const FormLabel = styled.label`
@@ -116,6 +127,10 @@ const FormLabel = styled.label`
 
   & > span {
     color: #ff7070;
+  }
+
+  @media (max-width: 576px) {
+    font-size: 12px;
   }
 `
 
@@ -142,6 +157,9 @@ const FormInput = styled.input`
   &:focus {
     border-color: #c20da3;
     caret-color: #c20da3;
+  }
+  @media (max-width: 576px) {
+    font-size: 14px;
   }
 `
 
@@ -516,7 +534,7 @@ const FormReferralModal = (_, ref) => {
               Profile
             </Text>
             <Text
-              fontSize="16px"
+              fontSize={['14px', , '16px']}
               fontFamily="Inter"
               fontStyle="normal"
               fontWeight="400"

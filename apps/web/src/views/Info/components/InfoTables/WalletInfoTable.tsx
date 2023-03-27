@@ -14,7 +14,7 @@ import { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 // import { getBlockExploreLink } from 'utils'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import { formatAmountNumber, formatBigNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatAmountNumber2, formatBigNumber } from '@pancakeswap/utils/formatBalance'
 // import { formatAmountNumber } from 'utils/formatInfoNumbers'
 // import { defaultTokens } from './config'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
@@ -310,9 +310,12 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       .catch((e) => console.warn(e))
   }
 
-  const getToken = useCallback((token: any) => {
-    return new ERC20Token(chainId, token.contractAddress, token.decimals, token.symbol)
-  }, [chainId])
+  const getToken = useCallback(
+    (token: any) => {
+      return new ERC20Token(chainId, token.contractAddress, token.decimals, token.symbol)
+    },
+    [chainId],
+  )
 
   useEffect(() => {
     getXOXPrice()
@@ -387,6 +390,14 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     total = nativeBalance + xoxBalance + result[2].value + sum
     setTotalAsset(total)
     setDataChart(
+      result.map((d) => {
+        return {
+          name: d.name,
+          value: Number(((d.value * 100) / total).toFixed(2)),
+        }
+      }),
+    )
+    console.log(
       result.map((d) => {
         return {
           name: d.name,
@@ -519,11 +530,11 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                   >
                     ~$
                     {balanceNative
-                      ? formatAmountNumber(parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol))
+                      ? formatAmountNumber2(parseFloat(formatBigNumber(balanceNative)) * tokenRateUSD(native.symbol))
                       : 0}{' '}
                     | ~
                     {balanceNative
-                      ? formatAmountNumber(parseFloat(formatBigNumber(balanceNative)) * tokenRateXOX(native.symbol))
+                      ? formatAmountNumber2(parseFloat(formatBigNumber(balanceNative)) * tokenRateXOX(native.symbol))
                       : 0}{' '}
                     XOX
                   </Text>
@@ -550,7 +561,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                           color="rgba(255, 255, 255, 0.87)"
                           marginRight="5px"
                         >
-                          {formatAmountNumber(balance?.balance, 6)}
+                          {formatAmountNumber2(balance?.balance, 6)}
                         </Text>
                         <Text
                           fontSize="14px"
@@ -579,11 +590,11 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                             : '' */}
                         {balance?.symbol !== 'XOX' ? (
                           <>
-                            ~${formatAmountNumber(balance?.balance * tokenRateUSD(balance.symbol))} | ~
-                            {formatAmountNumber(balance?.balance * tokenRateXOX(balance.symbol))} XOX
+                            ~${formatAmountNumber2(balance?.balance * tokenRateUSD(balance.symbol))} | ~
+                            {formatAmountNumber2(balance?.balance * tokenRateXOX(balance.symbol))} XOX
                           </>
                         ) : (
-                          <>~${formatAmountNumber(balance?.balance / rateXOX)}</>
+                          <>~${formatAmountNumber2(balance?.balance / rateXOX)}</>
                         )}
                       </Text>
                     </Flex>

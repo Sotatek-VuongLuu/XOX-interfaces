@@ -19,7 +19,7 @@ const GlobalStyle = createGlobalStyle`
 
 
   body {
-    background-color: black;
+    background-color: #000;
     width: 100vw;
     overflow-x: hidden !important; overflow-y: visible !important;
 

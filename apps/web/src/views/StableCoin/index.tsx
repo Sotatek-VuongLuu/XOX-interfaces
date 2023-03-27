@@ -19,6 +19,7 @@ import TransactionTable from './transactionTable'
 // eslint-disable-next-line import/no-cycle
 import Earned from './earned'
 import { useRouter } from 'next/router'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 const TYPE = {
   default: 'DEFAULT',
@@ -275,6 +276,7 @@ const WrapText = styled.div`
 const TextConnectWallet = styled.div`
   text-align: center;
   line-height: 1.3;
+  font-size: 14px;
   br {
     display: none;
   }
@@ -302,6 +304,7 @@ const ConnectWalletButtonWraper = styled(ConnectWalletButton)`
   max-width: 146px;
   margin-top: 16px;
   height: 37px;
+  font-size: 14px;
 `
 const BoxWrapper = styled(Box)`
   font-weight: 700;
@@ -454,10 +457,7 @@ export default function StableCoin() {
       <FullWrapper>
         <ContainerBanner>
           <div className="banner">
-            <InfoNav
-              textContentBanner="Earn USDT/USDC from your XOXS Indefinitely"
-              hasPadding={false}
-            />
+            <InfoNav textContentBanner="Earn USDT/USDC from your XOXS Indefinitely" hasPadding={false} />
           </div>
         </ContainerBanner>
         <Container style={{ marginBottom: 59 }} key={`container-stablecoin${chainId}`}>
@@ -473,7 +473,7 @@ export default function StableCoin() {
                     <Flex justifyContent="space-between" alignItems="center" width="100%">
                       <WrapText>
                         <p>Your current XOXS</p>
-                        <p className="number">{currentXOX}</p>
+                        <p className="number">{formatAmountNumber2(Number(currentXOX))}</p>
                         <Link href="/stable-coin-history">
                           <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
                             View your history
@@ -502,7 +502,7 @@ export default function StableCoin() {
                     <Flex justifyContent="space-between" alignItems="center" width="100%">
                       <WrapText>
                         <p>Your current reward</p>
-                        <p className="number">{currentReward}</p>
+                        <p className="number">{formatAmountNumber2(Number(currentReward))}</p>
                         <Link href="/stable-coin-withdraw">
                           <Button height={37} style={{ fontSize: 14 }}>
                             Withdraw reward

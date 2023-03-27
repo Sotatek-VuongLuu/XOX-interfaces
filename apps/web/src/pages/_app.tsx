@@ -23,6 +23,7 @@ import FormReferralModal from 'components/Menu/UserMenu/FormReferralModal'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
+import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 import { Blocklist, Updaters } from '..'
 import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
@@ -96,6 +97,8 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
         />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="🥞 XOX - A next evolution DeFi exchange on BNB Smart Chain (BSC)" />
+        <meta name="theme-color" content="#000" />
+
         <title>XOX Labs</title>
         {/* {(Component as NextPageWithLayout).mp && (
           // eslint-disable-next-line @next/next/no-sync-scripts
@@ -149,7 +152,7 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const ProductionErrorBoundary = process.env.NODE_ENV === 'production' ? SentryErrorBoundary : Fragment
+const ProductionErrorBoundary = Fragment
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const modal = useRef(null)
@@ -172,7 +175,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         {['/company', '/tokenomics'].includes(route.pathname) ? (
           <></>
         ) : isMobile ? (
-          <img src="/images/asset_page_bg.svg" alt="" />
+          <SwapMainBackgroundMobile />
         ) : (
           <SwapMainBackgroundDesktop />
         )}

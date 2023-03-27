@@ -93,9 +93,9 @@ const HoverableChart = ({
     if (selectedCurrency.symbol.toUpperCase() === 'XOX') {
       data = dataChartXOX
       if (filter === '1D') {
-        const oldValue = data[0]
-        const currentValue = data[data.length - 1]
-        setPriceChangeXOX(formatAmountNumber(Math.round(currentValue.priceUSD / oldValue.priceUSD)))
+        const oldValue = data?.[0]
+        const currentValue = data?.[data?.length - 1]
+        setPriceChangeXOX(formatAmountNumber(Math.round(currentValue?.priceUSD / oldValue?.priceUSD)))
       }
     }
     if (data) {
@@ -148,7 +148,7 @@ const HoverableChart = ({
       if (chainId === 1 || chainId === 5) setCoinmarketcapId(_tokenList[ChainId.ETHEREUM]?.ETH)
       else setCoinmarketcapId(_tokenList[ChainId.BSC]?.BNB)
     } else {
-      setCoinmarketcapId(_tokenList[chainId][(selectedCurrency as any).address.toUpperCase()])
+      setCoinmarketcapId(_tokenList[chainId][(selectedCurrency as any)?.address?.toUpperCase()])
     }
   }, [selectedCurrency, fetchingTokenId])
 

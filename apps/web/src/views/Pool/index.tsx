@@ -40,9 +40,10 @@ import LiquidityMainBackgroundBorderMobile from 'components/Svg/LiquidityMainBac
 const ConnectWalletButtonWrapper = styled(ConnectWalletButton)`
   width: 100%;
   height: 37px;
-
+  font-size: 16px;
   ${({ theme }) => theme.mediaQueries.md} {
     height: 43px;
+    font-size: 18px;
   }
 `
 
@@ -57,15 +58,20 @@ const SwapbackgroundWrapper = styled.div`
 `
 const BackgroundWrapper = styled.div`
   position: absolute;
-  top: 200px;
+  top: 35px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: calc(100% - 200px);
+  height: calc(100% - 35px);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   background: rgba(255, 255, 255, 0.03);
-  /* backdrop-filter: blur(10px); */
+  backdrop-filter: blur(10px);
+  @media (max-width: 576px) {
+    width: 98.5%;
+    height: calc(100% - 25px);
+    top: 25px;
+  }
 `
 const SwapBackgroundWrapper = styled.div`
   position: absolute;
@@ -108,6 +114,7 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
+  margin: 150px 0 100px;
 `
 
 const Body = styled.div`
@@ -119,6 +126,8 @@ const ButtonWrapper = styled(Button)`
   width: 100%;
   border-radius: 6px;
   font-size: 16px;
+  /* font-size: 18px; */
+
   ${({ theme }) => theme.mediaQueries.md} {
     height: 43px;
     font-size: 18px;
@@ -243,7 +252,7 @@ const WapperHeight = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 820px;
+  /* min-height: 820px; */
 `
 
 const ConfirmedIcon = styled(ColumnCenter)`

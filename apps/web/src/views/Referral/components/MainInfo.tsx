@@ -24,7 +24,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import Trans from 'components/Trans'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { useEffect, useMemo, useState } from 'react'
-import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 import styled, { keyframes } from 'styled-components'
 import useWindowSize from 'hooks/useWindowSize'
 import { Swiper, SwiperSlide } from 'swiper/react'
@@ -800,7 +800,7 @@ const ConnectBoxContainer = styled.div`
   margin-top: 20px;
   height: 100%;
   background: rgba(16, 16, 16, 0.3);
-
+  position: relative;
   backdrop-filter: blur(10px);
 
   .corner1 {
@@ -1274,15 +1274,15 @@ const MainInfo = ({
                 <div className="corner2" />
                 <div className="edge2" />
                 <div className="total_point">
-                  <p className="title">Your current total points</p>
+                  <p className="title">Your Current Total Points</p>
                   <div className="total_point_bar">
                     <div className="current_point_bar">
                       {totalPoint ? (
                         <span>
-                          {formatAmountNumber(userCurrentPoint, 2)}/
+                          {formatAmountNumber2(userCurrentPoint, 2)}/
                           {currentLevelReach === 9
-                            ? listLever[currentLevelReach - 1]?.point
-                            : listLever[currentLevelReach]?.point}
+                            ? formatAmountNumber2(listLever[currentLevelReach - 1]?.point)
+                            : formatAmountNumber2(listLever[currentLevelReach]?.point)}
                         </span>
                       ) : (
                         <span />
@@ -1392,7 +1392,7 @@ const MainInfo = ({
                                   />
                                 </div>
                                 <div className="row-item">
-                                  <p className="point">{formatAmountNumber(row.point, 2)}</p>
+                                  <p className="point">{formatAmountNumber2(Number(row.point), 2)}</p>
                                 </div>
                               </div>
                             ))}
