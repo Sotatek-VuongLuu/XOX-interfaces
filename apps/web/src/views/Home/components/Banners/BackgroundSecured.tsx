@@ -8,6 +8,13 @@ const BGLeft = styled.img`
   top: 15%;
   opacity: 0.3;
 `
+const BGMobileLeft = styled.img`
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 0.5%;
+  opacity: 0.8;
+`
 
 const BGSecured = () => {
   const { width } = useWindowSize()
@@ -19,7 +26,7 @@ const BGSecured = () => {
         </>
       ) : (
         <>
-          {/* <BGMobile src="/images/bg_mobile.svg" alt="bg_mobile" /> */}
+          <BGMobileLeft src="/images/home/bg-cubes/secured_mobile_left.svg" />
         </>
       )}
     </>

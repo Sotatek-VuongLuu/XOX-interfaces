@@ -14,6 +14,19 @@ const BGRight = styled.img`
   right: 0;
   top: 3%;
 `
+const BGMobileLeft = styled.img`
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  top: 26%;
+`
+
+const BGMobileRight = styled.img`
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  top: 14%;
+`
 
 const BGBlockchain = () => {
   const { width } = useWindowSize()
@@ -26,7 +39,8 @@ const BGBlockchain = () => {
         </>
       ) : (
         <>
-          {/* <BGMobile src="/images/bg_mobile.svg" alt="bg_mobile" /> */}
+          <BGMobileLeft src="/images/home/bg-cubes/xoxdapp_mobile_left.svg" />
+          <BGMobileRight src="/images/home/bg-cubes/xoxdapp_mobile_right.svg" />
         </>
       )}
     </>

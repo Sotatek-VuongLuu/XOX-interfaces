@@ -31,6 +31,20 @@ const BGCubeRight = styled.img`
   opacity: 0.3;
 `
 
+const BGMobileRight = styled.img`
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  top: 53%;
+`
+
+const BGMobileCubeRight = styled.img`
+  position: absolute;
+  z-index: -1;
+  right: 0;
+  top: 54%;
+`
+
 const BGXOXDapp = () => {
   const { width } = useWindowSize()
   return (
@@ -44,7 +58,8 @@ const BGXOXDapp = () => {
         </>
       ) : (
         <>
-          {/* <BGMobile src="/images/bg_mobile.svg" alt="bg_mobile" /> */}
+          <BGMobileRight src="/images/home/bg-cubes/xoxdapp_mobile_right_cube.svg" />
+          <BGMobileCubeRight src="/images/home/bg-cubes/xoxdapp_mobile_cube_right.svg" />
         </>
       )}
     </>

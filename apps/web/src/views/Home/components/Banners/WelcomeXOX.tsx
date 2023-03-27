@@ -23,7 +23,7 @@ const Wrapper = styled.div`
     position: absolute;
     z-index: 1;
     top: 0;
-    left: -90;
+    left: -90px;
     width: 50vw;
     height: 50vh
   }
@@ -190,6 +190,14 @@ const LeftContent = styled.div`
           background-color: #FFFFFF;
           border-radius: inherit;
         }
+
+        @media screen and (max-width: 400px) {
+          padding: 13px 0px;
+
+          span {
+            font-size: 16px;
+          }
+        }
       }
     }
 
@@ -233,11 +241,25 @@ const LeftContent = styled.div`
         font-weight: 700;
         font-size: 18px;
         line-height: 22px;
+
+        @media screen and (max-width: 400px) {
+          font-size: 16px;
+          line-height: 19px;
+        }
+      }
+
+      @media screen and (max-width: 400px) {
+        padding: 11.5px 0px;
       }
     }
 
     @media screen and (max-width: 576px) {
-      grid-template-columns: 0.75fr 0.25fr;
+      grid-template-columns: 0.75fr 0.4fr;
+    }
+
+    @media screen and (max-width: 400px) {
+      grid-template-columns: 0.9fr 0.4fr;
+      grid-column-gap: 12px;
     }
 
     .more-btn {
@@ -293,6 +315,21 @@ const LeftContent = styled.div`
         color: rgba(255, 255, 255, 0.87);
         font-weight: 400;
         max-width: 150px;
+      }
+
+      @media screen and (max-width: 576px) {
+        span {
+          color: rgba(255, 255, 255, 0.87);
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 21px;
+        }
+
+        input {
+          max-width: 70px;
+          font-size: 14px;
+          line-height: 17px;
+        }
       }
     }
   }
@@ -480,11 +517,10 @@ const WelcomeXOX = (): JSX.Element => {
                   <div className="eth-box">
                     <img src="/images/home/hero/eth.svg" alt="email" className="email-icon" />
                     {(isMobile || isTablet) && (
-                      <span>ETH:</span>
+                      <><span>ETH:</span><input type="text" id="email" name="email" placeholder="" value="0xA...d7f" required /></>
                     )}
 
-                    {isDesktop && <span>Ethereum:</span>}
-                    <input type="text" id="email" name="email" placeholder="" value="0xA...C6bf853a0a8ad7f" required />
+                    {isDesktop && <><span>ETH:</span><input type="text" id="email" name="email" placeholder="" value="0xA...C6bf853a0a8ad7f" required /></>}
                     <img src="/images/home/hero/copy.svg" alt="copy" />
                     <img src="/images/home/hero/shield.svg" alt="shield" />
                     <img src="/images/home/hero/wolf.svg" alt="wolf" />

@@ -134,7 +134,7 @@ const Wrapper = styled(Box)`
   }
 
   @media screen and (max-width: 900px) {
-    margin-top: 64px;
+    margin-top: 16px;
   }
 `
 
