@@ -33,13 +33,13 @@ const BTNLaunchApp = styled.button`
   font-size: 16px;
   color: #ffffff;
   padding: 12px 30px;
-  background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-  border-radius: 6px;
+  background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+  border-radius: 10px;
   border: none;
   cursor: pointer;
 
   &:hover {
-    background: #5f35eb;
+    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
   }
 `
 

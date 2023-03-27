@@ -26,19 +26,44 @@ const Wrapper = styled.div`
 
     .item_container {
       padding: 24px 32px;
-      background: #242424;
-      border-radius: 20px;
       display: flex;
       /* justify-content: space-between; */
       align-items: center;
+      background: rgba(16, 16, 16, 0.3);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: 20px;
+        padding: 1px;
+        z-index: -1;
+        background: linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.2) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        -webkit-mask-composite: exclude;
+        -webkit-mask-composite: exclude;
+        mask-composite: exclude;
+    }
+      }
 
       .icon-container {
         width: 90px;
         height: 90px;
         border-radius: 50%;
-        background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
         padding: 1px;
         cursor: pointer;
+
+        @media screen and (max-width: 576px) {
+          border: 1px solid #FFFFFF;
+          background: unset;
+        }
       }
       .icon {
         width: 100%;
@@ -57,7 +82,7 @@ const Wrapper = styled.div`
         display: flex;
         justify-content: center;
         align-items: center;
-        background: rgba(95, 53, 235, 0.1);
+        background: rgba(16, 16, 16, 1);
       }
 
       .name {
@@ -70,7 +95,7 @@ const Wrapper = styled.div`
       .des {
         font-weight: 400;
         font-size: 16px;
-        color: rgba(255, 255, 255, 0.87);
+        color: rgba(255, 255, 255, 0.6);
         line-height: 24px;
       }
     }
@@ -108,8 +133,23 @@ const Wrapper = styled.div`
     text-align: center;
     font-weight: 400;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
+    color: #FB8618;
     margin-bottom: 48px;
+  }
+
+  .privacy-link {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.87);
+    span {
+      up-icon {
+        &:hover {
+          -webkit-transition: 0.5s ease;
+          transition: 0.5s ease;
+          left: 6px;
+          bottom: 5px;
+        }
+      }
+    }
   }
 
   @media screen and (max-width: 900px) {
@@ -164,7 +204,7 @@ const CommunityItem = ({ item }: Iprops) => {
   )
 }
 
-const Community = () => {
+const SupportedBlockchains = () => {
   return (
     <Wrapper>
       <div className="title" data-aos="fade-up">
@@ -223,4 +263,4 @@ const listCommunity = [
   },
 ]
 
-export default Community
+export default SupportedBlockchains

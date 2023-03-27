@@ -45,7 +45,7 @@ const LeftContent = styled.div`
     font-weight: 400;
     font-size: 18px;
     margin-left: 16px;
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(255, 255, 255, 0.6);
     line-height: 32px;
     @media screen and (max-width: 900px) {
       font-size: 16px;
@@ -54,7 +54,30 @@ const LeftContent = styled.div`
   }
 `
 
-const RightContent = styled.div``
+const RightContent = styled.div`
+  .video-container {
+    position: relative;
+    border-radius: 5px;
+  }
+  .video-container video {
+    position: absolute;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    width: 50vw;
+    height: 50vh;
+  }
+  .video-container .overlay {
+    // height: 100%;
+    // width: 100%;
+    // position: absolute;
+    // top: 0px;
+    // left: 0px;
+    // z-index: 2;
+    // background: #0A0A0A;
+    // opacity: 0.5;
+  }
+`
 
 const Title = styled.p`
   font-weight: 700;
@@ -71,7 +94,7 @@ const Title = styled.p`
 const Paragraph = styled.p`
   font-weight: 400;
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
   line-height: 32px;
 
@@ -141,7 +164,7 @@ const FeaturePlant = () => {
             </div>
           </LeftContent>
         </Grid>
-        <Grid item xs={12} md={5} style={{ height: 300 }}>
+        {/* <Grid item xs={12} md={5} style={{ height: 300 }}>
           <RightContent data-aos="fade-left">
             <Watch>
               {width > 900 ? (
@@ -158,6 +181,16 @@ const FeaturePlant = () => {
                 </>
               )}
             </Watch>
+          </RightContent>
+        </Grid> */}
+        <Grid item xs={12} md={5}>
+          <RightContent data-aos="fade-left">
+            <div className="video-container">
+              <div className="overlay"></div>
+              <video autoPlay loop muted width="613" height="345">
+                <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
+              </video>
+            </div>
           </RightContent>
         </Grid>
       </Grid>
@@ -183,6 +216,9 @@ const listTag = [
   },
   {
     title: 'Bridge',
+  },
+  {
+    title: 'Lottery',
   },
 ]
 

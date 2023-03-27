@@ -25,9 +25,10 @@ export interface ISquareItem {
 
 const WrapperI = styled.div`
   height: 100%;
-  background: #242424;
-  border-radius: 10px;
   padding: 24px 22px 32px;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
 
   .main_container {
     display: flex;
@@ -40,17 +41,17 @@ const WrapperI = styled.div`
       width: fit-content;
       margin-top: 40px;
       border-radius: 8px;
-      background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
       cursor: pointer;
 
       .boxed-child {
         width: 100%;
         height: 100%;
-        background-color: #242424;
+        background: rgba(16, 16, 16, 1);
         padding: 10px 20px;
         border-radius: inherit;
         span {
-          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+          background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -66,9 +67,24 @@ const WrapperI = styled.div`
     }
 
     .expand {
-      color: #9072ff;
+      color: #FB8618;
       font-size: 14px;
       font-weight: 600;
+    }
+
+    &:before{
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: 20px;
+      padding: 1px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
     }
   }
 `
@@ -89,13 +105,13 @@ const Title = styled.p`
 const Description = styled.p`
   font-weight: 400;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.6);
   margin: 16px 0 0;
   line-height: 24px;
 `
 
 const Icon = styled.div`
-  background: linear-gradient(100.7deg, #6034ff 0%, #a35aff 100%);
+  background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
   width: 48px;
   height: 48px;
   display: flex;
@@ -156,7 +172,7 @@ const Wrapper = styled.div`
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: rgba(255, 255, 255, 0.6);
+      color: #FB8618;
       width: 409px;
     }
   }

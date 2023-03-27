@@ -100,7 +100,7 @@ const Wrapper = styled(Box)`
   .title_list_item {
     font-weight: 400;
     font-size: 18px;
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(255, 255, 255, 0.6);
     @media screen and (max-width: 900px) {
       font-size: 16px;
     }
@@ -112,12 +112,12 @@ const Wrapper = styled(Box)`
     font-size: 18px;
     color: #ffffff;
     border: none;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-    border-radius: 8px;
+    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    border-radius: 12px;
     cursor: pointer;
 
     &:hover {
-      background: #5f35eb;
+      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
     }
 
     @media screen and (max-width: 900px) {
@@ -141,7 +141,7 @@ const Wrapper = styled(Box)`
 const Paragraph = styled.p`
   font-weight: 400;
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
   line-height: 32px;
   margin: 24px 0px;
@@ -155,7 +155,8 @@ const Paragraph = styled.p`
 const First = styled.div`
   width: 100%;
   height: 100%;
-  background: linear-gradient(100.7deg, rgba(96, 52, 255, 0.1) 0%, rgba(163, 90, 255, 0.1) 100%);
+  // background: linear-gradient(100.7deg, rgba(96, 52, 255, 0.1) 0%, rgba(163, 90, 255, 0.1) 100%);
+  background: rgba(10, 10, 10, 0.9);
   backdrop-filter: blur(10px);
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
@@ -179,8 +180,8 @@ const First = styled.div`
 
     .tab_item.active,
     .tab_item:hover {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-      border-radius: 4px;
+      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+      border-radius: 8px;
     }
 
     @media screen and (max-width: 900px) {
@@ -208,12 +209,27 @@ const First = styled.div`
       border-radius: 50%;
     }
   }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(0deg, rgba(184, 9, 181, 0) 0%, rgba(237, 28, 81, 1) 80%, rgba(255, 176, 0, 1) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
 `
 
 const WrapperLeft = styled.div``
 
 const Container = styled(Box)`
-  background: linear-gradient(#6034ff, #a35aff, #111111);
+  // background: linear-gradient(#6034ff, #a35aff, #111111);
   padding: 1px;
   border-radius: 20px;
 `
@@ -241,7 +257,7 @@ const FilterChainWrapper = styled.div`
   .tab_filter_chain_container {
     display: flex;
     padding: 3px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 30px;
     margin-bottom: 35px;
     .filter_chain {
@@ -254,7 +270,7 @@ const FilterChainWrapper = styled.div`
 
     .filter_chain.active,
     .filter_chain:hover {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
       border-radius: 30px;
     }
 
