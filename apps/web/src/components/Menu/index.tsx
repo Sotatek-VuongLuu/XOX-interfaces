@@ -193,7 +193,7 @@ const Menu = (props) => {
   const [activeNotifi, setActiveNotifi] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement>(null)
   const host = 'wss://api.xoxnet.sotatek.works'
-  const menuLandingPath = ['/', '/company']
+  const menuLandingPath = ['/', '/company', '/tokenomics']
   const menuItemsLanding = useMemo(() => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
   }, [t, isDark, currentLanguage.code, chainId])

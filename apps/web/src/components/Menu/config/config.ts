@@ -152,7 +152,7 @@ export const configLanding: (
   [
     {
       label: t('Tokenomics'),
-      href: '/',
+      href: '/tokenomics',
       icon: Tokenomics,
       fillIcon: TokenomicsFill,
       image: '/images/decorations/pe2.png',

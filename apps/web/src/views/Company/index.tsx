@@ -2,7 +2,7 @@ import { Container } from '@mui/material'
 import { Box } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 
-const StyledS = styled('div')`
+export const StyledS = styled('div')`
   margin: 48px auto 100px auto;
   padding: 0 24px;
 
@@ -465,6 +465,19 @@ function CardSocial({ social, ...props }: { social: ISocial }) {
   )
 }
 
+export function BTNLearnMore() {
+  return (
+    <StyledLearnMore>
+      <h1>Learn More about the XOX labs Multi-chain Ecosystem.</h1>
+
+      {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
+      <a href="#" target="_blank" rel="noreferrer">
+        Learn More
+      </a>
+    </StyledLearnMore>
+  )
+}
+
 export default function CompanyPage() {
   const MEMBERS: Array<IMember> = [
     { avatar: '/images/company/Livan G.M.png', name: 'Livan G.M', position: 'Chief Operating Officer' },
@@ -552,14 +565,7 @@ export default function CompanyPage() {
         ))}
       </StyledSocial>
 
-      <StyledLearnMore>
-        <h1>Learn More about the XOX labs Multi-chain Ecosystem.</h1>
-
-        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-        <a href="#" target="_blank" rel="noreferrer">
-          Learn More
-        </a>
-      </StyledLearnMore>
+      <BTNLearnMore />
     </StyledS>
   )
 }

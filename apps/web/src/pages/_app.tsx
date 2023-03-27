@@ -21,13 +21,13 @@ import { usePollBlockNumber } from 'state/block/hooks'
 import TransactionsDetailModal from 'components/TransactionDetailModal'
 import FormReferralModal from 'components/Menu/UserMenu/FormReferralModal'
 import { useRouter } from 'next/router'
+import styled from 'styled-components'
+import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import { Blocklist, Updaters } from '..'
 import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
-import styled from 'styled-components'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 
 const MainBackground = styled.div`
   position: fixed;
@@ -169,10 +169,10 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <ProductionErrorBoundary>
       <MainBackground>
-        {['/company'].includes(route.pathname) ? (
+        {['/company', '/tokenomics'].includes(route.pathname) ? (
           <></>
         ) : isMobile ? (
-          <img src="/images/asset_page_bg.svg" />
+          <img src="/images/asset_page_bg.svg" alt="" />
         ) : (
           <SwapMainBackgroundDesktop />
         )}
