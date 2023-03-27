@@ -325,6 +325,8 @@ function SaleMechanism({
       </Content>
       {!account && (tabActiveMechansim === 'Vesting Schedule' || tabActiveMechansim === 'Your Information')
         ? null
+        : tabActiveMechansim === 'Vesting Schedule' && dataVesting.length === 0
+        ? null
         : renderRemore}
     </Wrapper>
   )

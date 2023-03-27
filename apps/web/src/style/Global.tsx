@@ -29,6 +29,14 @@ const GlobalStyle = createGlobalStyle`
     }
   }
 
+
+
+  div  {
+    -webkit-tap-highlight-color: transparent;
+  }
+
+
+
   #canvas3d_pc {
     position: absolute;
     left: 50%;

@@ -49,6 +49,10 @@ const Wrapper = styled.div`
       color: #ffffff;
     }
 
+    .nodata {
+      margin-bottom: 200px;
+    }
+
     @media screen and (max-width: 900px) {
       p {
         font-size: 12px;
@@ -527,7 +531,7 @@ function VestingSchedule({
       )}
       {account && (
         <>
-          {newVesting[2]?.startTime.length !== 0 && (
+          {newVesting.length > 0 && newVesting[2]?.startTime.length !== 0 ? (
             <div className="total_vested">
               Total vested at this time:{' '}
               {Number(
@@ -536,6 +540,10 @@ function VestingSchedule({
                   .plus(newVesting[2]?.amountVested)
                   .toFixed(2),
               ).toLocaleString()}
+            </div>
+          ) : (
+            <div className="btn_connect_container">
+              <p className="nodata">No Data</p>
             </div>
           )}
           <Content>

@@ -150,6 +150,7 @@ export const formatBalanceComma = (balance: string) => {
   let data
   if (!lastNumber) {
     data = firstNumber
+    return data
   }
   data = `${firstNumber}.${lastNumber}`
 
