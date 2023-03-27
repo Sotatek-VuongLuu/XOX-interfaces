@@ -447,10 +447,9 @@ const listPartners = [
   {
     icon: '/images/partners/google_partner.svg',
   },
-
-  // {
-  //   icon: '/images/partners/fedEx_partner.svg',
-  // },
+  {
+    icon: '/images/partners/fedex_partner.svg',
+  },
   {
     icon: '/images/partners/airbnb_partner.svg',
   },

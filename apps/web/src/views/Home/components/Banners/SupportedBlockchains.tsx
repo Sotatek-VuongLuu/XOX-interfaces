@@ -227,7 +227,7 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 900px) {
     margin-bottom: unset;
-    margin-top: 90px;
+    margin-top: 150px;
     .title {
       flex-direction: column;
       justify-content: center;

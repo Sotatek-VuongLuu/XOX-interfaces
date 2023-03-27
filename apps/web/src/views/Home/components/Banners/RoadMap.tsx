@@ -65,7 +65,7 @@ const Wrapper = styled.div`
     .timeline-item-5 {
       align-self: flex-end;
       .line {
-        background: linear-gradient(0deg, #000000 0%, #FB8618 100%);
+        background: linear-gradient(0deg, #FB8618 0%, #FB8618 100%);
         top: 0;
         opacity: 0.25;
       }

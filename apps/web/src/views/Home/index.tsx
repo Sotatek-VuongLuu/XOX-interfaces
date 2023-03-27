@@ -20,6 +20,9 @@ import FeatureReferal from './components/Banners/FeatureReferal'
 import UpComing from './components/Banners/FeatureUpComing'
 import SecuredBy from './components/Banners/SecuredBy'
 import BGPartner from './components/Banners/BackgroundPartner'
+import BGSecured from './components/Banners/BackgroundSecured'
+import BGXOXDapp from './components/Banners/BackgroundXOXDapp'
+import BGBlockchain from './components/Banners/BackgroundBlockchain'
 import FeatureSquare from './components/Banners/FeatureSquare'
 import Subscription from './components/Banners/Subscription'
 import SupportedBlockchains from './components/Banners/SupportedBlockchains'
@@ -93,7 +96,8 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         hasCurvedDivider={false}
       >
         {/* <BackgroudWatch /> */}
-
+        <BGBlockchain />
+        <BGXOXDapp />
         <div style={{ width: widthResize }}>
           {/* <FeatureEconomy /> */}
           <SupportedBlockchains />
@@ -112,6 +116,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
+        <BGSecured />
         <BGPartner />
         <div style={{ width: widthResize }}>
           <Partners />

@@ -217,6 +217,9 @@ const listTag = [
   {
     title: 'Bridge',
   },
+  {
+    title: 'Lottery',
+  },
 ]
 
 export default FeaturePlant

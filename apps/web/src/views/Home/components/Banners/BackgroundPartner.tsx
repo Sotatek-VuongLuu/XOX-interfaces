@@ -5,7 +5,7 @@ const BGLeft = styled.img`
   position: absolute;
   z-index: -1;
   left: 0;
-  top: 42%;
+  bottom: 23%;
 `
 
 const BGRight = styled.img`
@@ -13,15 +13,15 @@ const BGRight = styled.img`
   z-index: -1;
   right: 0;
   top: 600px;
-  background: radial-gradient(50% 50% at 50% 50%, rgba(143, 0, 255, 0.3) 0%, rgba(82, 0, 255, 0) 100%);
+  background: radial-gradient(50% 50% at 50% 50%, rgba(249, 124, 29, 0.2) 0.01%, rgba(249, 124, 29, 0) 100%)
 `
 
 const BGXOX = styled.img`
   position: absolute;
   z-index: -1;
   right: 0;
-  top: 30%;
-  mix-blend-mode: multiply;
+  top: 34.5%;
+  // mix-blend-mode: multiply;
 `
 
 const BGXOXMobile = styled.img`
@@ -48,6 +48,14 @@ const BGMobileTow = styled.img`
   background: radial-gradient(50% 50% at 50% 50%, rgba(143, 0, 255, 0.3) 0%, rgba(82, 0, 255, 0) 100%);
 `
 
+const DevelopmentMapBG = styled.img`
+  position: absolute;
+  z-index: -1;
+  left: 0;
+  bottom: 30%;
+  // mix-blend-mode: multiply;
+`
+
 const BGPartner = () => {
   const { width } = useWindowSize()
   return (
@@ -55,6 +63,7 @@ const BGPartner = () => {
       {width > 900 ? (
         <>
           <BGLeft src="/images/pl.svg" />
+          <DevelopmentMapBG src="/images/home/bg-cubes/development_map_left.svg" />
           <BGRight src="/images/pr.svg" />
           <BGXOX src="/images/xoxs_secured.svg" />
         </>
