@@ -2,6 +2,7 @@ import ReactECharts from 'echarts-for-react'
 import { Ref, useEffect, useRef, useState } from 'react'
 import { BTNLearnMore } from 'views/Company'
 import { EChartsOption, SeriesOption } from 'echarts'
+import BigNumber from 'bignumber.js'
 import { StyledAAD, StyledItemAAD, StyledTitle } from './styled'
 
 interface IAAD {
@@ -22,8 +23,8 @@ function AADItem({
 }: {
   data: IAAD
   className?: string
-  onMouseEnter: () => void
-  onMouseLeave: () => void
+  onMouseEnter?: () => void
+  onMouseLeave?: () => void
   active?: boolean
 }) {
   const { highLight, content, title, color } = data
@@ -31,8 +32,8 @@ function AADItem({
     <StyledItemAAD
       {...props}
       id="AADItem"
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={onMouseEnter && onMouseEnter}
+      onMouseLeave={onMouseLeave && onMouseLeave}
       className={`${className || ''} ${highLight ? 'highLight' : ''} ${active ? 'active' : ''}`}
       style={{ ...(props as any).style, '--color': color }}
     >
@@ -48,71 +49,97 @@ export default function ADDComponent() {
   const AADChart = useRef<ReactECharts>()
 
   const AAD_DATA_L: Array<IAAD> = [
-    { title: 'XOX Token Metrics', content: ['TGE (19%) - 34.200.000 Tokens'], highLight: true },
-    { title: 'Liquidity Pool', content: ['14,400,000 Tokens', '100% lock 5 years'], color: '#D8D8D8' },
     {
-      title: 'Public Sale',
-      content: ['18,000,000 Tokens', '40% realease at TGE, 10% release Monthly'],
+      title: 'Team allocation',
+      content: [`${new BigNumber(12600000).toFormat()} Tokens`, '0% at TGE & 5 years vesting 20% Yearly'],
+      color: '#D8D8D8',
+      value: 12600000,
+    },
+    {
+      title: 'Company Reserve',
+      content: [`${new BigNumber(27000000).toFormat()} Tokens`, '0% at TGE & 4 years vesting 25% Yearly'],
       color: '#969696',
+      value: 27000000,
     },
     {
-      title: 'Private Sale',
-      content: ['10,800,000 Tokens', '10% release at TGE, 10% release Monthly'],
+      title: 'Strategic Partnership',
+      content: [`${new BigNumber(9000000).toFormat()} Tokens`, '0% at TGE & 5 years vesting 20% Yearly'],
       color: '#BAFFBF',
+      value: 9000000,
     },
     {
-      title: 'CEX Listing',
-      content: ['18,000,000 Tokens', '20% at Launch then 10% unlocked Yearly'],
+      title: 'Ecosystem Growth',
+      content: [`${new BigNumber(36000000).toFormat()} Tokens`, '0% at TGE & 4 years vesting 25% Yearly'],
       color: '#86B6FF',
+      value: 36000000,
     },
     {
-      title: 'CEX Listing',
-      content: ['18,000,000 Tokens', '20% at Launch then 10% unlocked Yearly'],
+      title: 'Community Rewards',
+      content: [`${new BigNumber(1800000).toFormat()} Tokens`, '0% at TGE & 5 years vesting 20% Yearly'],
       color: '#50817C',
+      value: 1800000,
     },
     {
-      title: 'CEX Listing',
-      content: ['18,000,000 Tokens', '20% at Launch then 10% unlocked Yearly'],
+      title: 'XOX labs Foundation',
+      content: [`${new BigNumber(5400000).toFormat()} Tokens`, '0% at TGE & 5 years vesting 20% Yearly'],
       color: '#64C6BA',
+      value: 5400000,
     },
   ]
   const AAD_DATA_R: Array<IAAD> = [
     {
-      title: 'CEX Listing',
-      content: ['18,000,000 Tokens', '20% at Launch then 10% unlocked Yearly'],
+      title: 'LP Farming',
+      content: [`${new BigNumber(18000000).toFormat()} Tokens`, '20% at Launch then 10% unlock Each year for 8 years'],
       color: '#FFB547',
+      value: 18000000,
     },
     {
-      title: 'CEX Listing',
-      content: ['18,000,000 Tokens', 'TGE = 40% then 10% Monthly Release'],
+      title: 'Seed Sale',
+      content: [`${new BigNumber(3600000).toFormat()} Tokens`, '10% release at TGE then 10% Unlock Weekly'],
       color: '#FB8618',
+      value: 3600000,
     },
     {
-      title: 'CEX Listing',
-      content: ['18,000,000 Tokens', 'TGE = 40% then 10% Monthly Release'],
+      title: 'Partners Sale',
+      content: [`${new BigNumber(5400000).toFormat()} Tokens`, '10% release at TGE then 5% release Monthly'],
       color: '#FF5353',
+      value: 5400000,
     },
     {
-      title: 'CEX Listing',
-      content: ['18,000,000 Tokens', 'TGE = 40% then 10% Monthly Release'],
+      title: 'Private Sale',
+      content: [`${new BigNumber(10800000).toFormat()} Tokens`, '10% release at TGE then 10% release Monthly'],
       color: '#C20DA3',
+      value: 10800000,
     },
     {
-      title: 'CEX Listing',
-      content: ['18,000,000 Tokens', 'TGE = 40% then 10% Monthly Release'],
+      title: 'Public Sale',
+      content: [`${new BigNumber(18000000).toFormat()} Tokens`, '40% realease at TGE then 10% Monthly'],
       color: '#A964C9',
+      value: 18000000,
+    },
+    {
+      title: 'Liquidity Pools DEX',
+      content: [`${new BigNumber(14400000).toFormat()} Tokens`, '100% lock 5 years'],
+      color: '#3D8AFF',
+      value: 14400000,
     },
     {
       title: 'CEX Listing',
-      content: ['18,000,000 Tokens', 'TGE = 40% then 10% Monthly Release'],
+      content: [`${new BigNumber(18000000).toFormat()} Tokens`, 'TGE = 40% then 10% Monthly Release'],
       color: '#3D8AFF',
-    },
-    {
-      title: 'CEX Listing',
-      content: ['18,000,000 Tokens', 'TGE = 40% then 10% Monthly Release'],
-      color: '#3D8AFF',
+      value: 18000000,
     },
   ]
+  const AAD_TOTAL = [...AAD_DATA_L, ...AAD_DATA_R].map((aad) => aad.value).reduce((a, b) => a + b, 0)
+  const AAD_DATA_TOTAL: IAAD = {
+    title: 'XOX Token Metrics',
+    content: [`TGE (100%) - ${new BigNumber(AAD_TOTAL).toFormat()} Tokens`],
+    highLight: true,
+    value: AAD_TOTAL,
+  }
+  const AADIndex: Array<string> = []
+  AAD_DATA_L.forEach((aad, i) => AADIndex.push(`${i}`))
+  AAD_DATA_R.forEach((aad, i) => AADIndex.push(`${i + AAD_DATA_L.length}`))
 
   const AAD_CHART_OPTION: EChartsOption = {
     tooltip: { show: false },
@@ -126,7 +153,7 @@ export default function ADDComponent() {
         label: { formatter: (param) => `${param.percent}%`, color: '#ffffff', fontSize: 14 },
         data: [...AAD_DATA_L, ...AAD_DATA_R].map((item) => ({
           name: item.title,
-          value: Math.floor(Math.random() * 100000) + 100,
+          value: item.value,
           itemStyle: {
             color: item.color
               ? item.color
@@ -151,16 +178,16 @@ export default function ADDComponent() {
     ],
   }
 
-  function itemHandleChart(id: string, highLight: boolean) {
+  function itemHandleChart(id: string | Array<string>, highLight: boolean) {
     const a = AADChart.current.getEchartsInstance()
     a.dispatchAction({ type: highLight ? 'highlight' : 'downplay', dataIndex: id })
   }
   function chartHandleItem(params: any, highLight: boolean) {
     const items = document.querySelectorAll('#AADItem')
     if (highLight) {
-      items[params.dataIndex].classList.add('active')
+      items[params.dataIndex + 1].classList.add('active')
     } else {
-      items[params.dataIndex].classList.remove('active')
+      items[params.dataIndex + 1].classList.remove('active')
     }
   }
 
@@ -170,6 +197,12 @@ export default function ADDComponent() {
 
       <StyledAAD>
         <div className="l">
+          <AADItem
+            data={AAD_DATA_TOTAL}
+            onMouseEnter={() => itemHandleChart(AADIndex, true)}
+            onMouseLeave={() => itemHandleChart(AADIndex, false)}
+          />
+
           {AAD_DATA_L.map((item, i) => (
             <AADItem
               data={item}
@@ -193,7 +226,7 @@ export default function ADDComponent() {
             <div>
               <h1>Total Supply</h1>
               <p>
-                180.000.000
+                {new BigNumber(AAD_DATA_TOTAL.value).toFormat()}
                 <br />
                 Tokens
               </p>
