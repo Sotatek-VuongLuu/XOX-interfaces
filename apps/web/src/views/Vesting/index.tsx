@@ -1067,7 +1067,7 @@ function VestingPage() {
   }, [account, chainId, provider, nodeId])
 
   useEffect(() => {
-    if (!account || !chainId || !infoRoundOne.startDate || !infoRoundOne.startDate || !infoRoundTow.startDate) return
+    if (!account || !chainId || !infoRoundOne.startDate) return
     handleGetDataVesting()
     handCheckInTimeRangeSale(timeStampOfNow)
     handleIsTimeAllowWhitelist(timeStampOfNow)
