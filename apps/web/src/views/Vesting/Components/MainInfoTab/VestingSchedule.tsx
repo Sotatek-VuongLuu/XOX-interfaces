@@ -548,15 +548,7 @@ function VestingSchedule({
           )}
           <Content>
             <div className="over_flow">
-              {newVesting[0]?.startTime.length === 0 ? (
-                <NoDataWraper>
-                  <ConfirmedIcon>
-                    <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
-                  </ConfirmedIcon>
-                </NoDataWraper>
-              ) : (
-                renderVestingSale
-              )}
+              {newVesting.length > 0 && newVesting[0]?.startTime.length !== 0 ? renderVestingSale : null}
             </div>
           </Content>
         </>
