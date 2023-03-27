@@ -12,6 +12,7 @@ import BigNumber from 'bignumber.js'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import FormattedPriceImpact from './FormattedPriceImpact'
 import SwapRoute from './SwapRoute'
+import { formatAmountNumber2, formatBalanceComma } from '@pancakeswap/utils/formatBalance'
 
 const BottomText = styled(Text)`
   word-break: break-word;
@@ -60,9 +61,12 @@ function TradeSummary({
         <RowFixed>
           <BottomText fontSize="16px" color="while87">
             {isExactIn
-              ? `${slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)} ${trade.outputAmount.currency.symbol}` ??
-                '-'
-              : `${slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4)} ${trade.inputAmount.currency.symbol}` ?? '-'}
+              ? `${formatAmountNumber2(Number(slippageAdjustedAmounts[Field.OUTPUT]?.toSignificant(4)), 4)} ${
+                  trade.outputAmount.currency.symbol
+                }` ?? '-'
+              : `${formatAmountNumber2(Number(slippageAdjustedAmounts[Field.INPUT]?.toSignificant(4)), 4)} ${
+                  trade.inputAmount.currency.symbol
+                }` ?? '-'}
           </BottomText>
         </RowFixed>
       </RowBetweenStyle>
@@ -99,7 +103,9 @@ function TradeSummary({
           />
         </RowFixed>
         <BottomText fontSize="16px" color="while87">
-          {realizedLPFee ? `${realizedLPFee.toSignificant(4)} ${trade.inputAmount.currency.symbol}` : '-'}
+          {realizedLPFee
+            ? `${formatAmountNumber2(Number(realizedLPFee.toSignificant(4)), 4)} ${trade.inputAmount.currency.symbol}`
+            : '-'}
         </BottomText>
       </RowBetweenStyle>
     </AutoColumn>
@@ -149,7 +155,7 @@ export function AdvancedSwapDetails({ trade, showXOXSreceived, value }: Advanced
                     XOXS received
                   </Text>
                   <Text fontSize="16px" color="rgba(255,255,255,0.87)">
-                    {numberXOXSreceived}
+                    {formatBalanceComma(numberXOXSreceived.toString())}
                   </Text>
                 </RowBetweenStyle>
               )}
