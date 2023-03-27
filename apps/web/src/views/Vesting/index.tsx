@@ -31,6 +31,7 @@ import {
 } from 'services/presale'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { useProvider } from 'wagmi'
+import { USD_ADDRESS } from 'config/constants/exchange'
 import BackedBy from './Components/BackedBy'
 import ChartSalePage from './Components/Chart'
 import CountDownBlock from './Components/CountDownBlock'
@@ -419,7 +420,7 @@ function VestingPage() {
   const [referralError, setReferralError] = useState(null)
   const [dataWhitelist, setDataWhitelist] = useState<IDataWhitelist[]>([])
   const [dataForInfo, setDataForInfo] = useState<IYourInfo[]>(initialYourInfo)
-  const { account, chainId, isConnected } = useActiveWeb3React()
+  const { account, chainId } = useActiveWeb3React()
   const [typeBuyPrice, setTypeBuyPrice] = useState<number | null>(null)
   const [amount, setAmount] = useState<string>('')
   const [currentRound, setCurrentRound] = useState<number | null>(0)
@@ -447,7 +448,7 @@ function VestingPage() {
   const [whiteList, setWhiteList] = useState<string[]>([])
   const [isUserInWhiteList, setIsUserInWhiteList] = useState<boolean>(false)
   const [approvalState, approveCallback] = useApproveCallback(
-    USDC_TEST && tryParseAmount('0.01', USDC_TESTNET),
+    USD_ADDRESS[ChainId.GOERLI] && tryParseAmount('0.01', USDC_TESTNET),
     getContractPreSaleAddress(5),
   )
 
