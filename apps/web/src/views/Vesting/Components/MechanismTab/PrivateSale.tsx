@@ -157,11 +157,11 @@ function PrivateSale() {
       amountToken: '2,700,000',
       price: '0.044',
       totalMoneyRaise: '118,800',
-      launchPrice: '162,000 ',
+      launchPrice: '162,000',
     },
     {
       title: 'Private-Sale (ROUND 2)',
-      total: '1.5%',
+      total: '2%',
       amountToken: '3,600,000',
       price: '0.045',
       totalMoneyRaise: '162,000',
@@ -169,7 +169,7 @@ function PrivateSale() {
     },
     {
       title: 'Private-Sale (ROUND 3)',
-      total: '1.5%',
+      total: '2.5%',
       amountToken: '4,500,000',
       price: '0.046',
       totalMoneyRaise: '207,000',

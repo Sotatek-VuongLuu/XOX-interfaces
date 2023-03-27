@@ -531,7 +531,7 @@ function VestingSchedule({
       )}
       {account && (
         <>
-          {newVesting.length > 0 && newVesting[2]?.startTime.length !== 0 ? (
+          {newVesting.length > 0 && newVesting[0]?.startTime.length !== 0 ? (
             <div className="total_vested">
               Total vested at this time:{' '}
               {Number(
@@ -548,15 +548,7 @@ function VestingSchedule({
           )}
           <Content>
             <div className="over_flow">
-              {newVesting[2]?.startTime.length === 0 ? (
-                <NoDataWraper>
-                  <ConfirmedIcon>
-                    <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
-                  </ConfirmedIcon>
-                </NoDataWraper>
-              ) : (
-                renderVestingSale
-              )}
+              {newVesting.length > 0 && newVesting[0]?.startTime.length !== 0 ? renderVestingSale : null}
             </div>
           </Content>
         </>
