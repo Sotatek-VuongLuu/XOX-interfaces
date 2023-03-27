@@ -8,11 +8,12 @@ interface IProps {
 }
 
 const CustomTable = styled(Table)`
-  grid-template-columns: 5fr 2fr 2fr 1fr repeat(3, 1.5fr);
+  grid-template-columns: 5fr 1.6fr 1.3fr 0.7fr 1.8fr 1.4fr 1.5fr;
   gap: 20px;
 
   &::before {
-    top: 52px;
+    top: 32px;
+    border: 1px solid transparent;
   }
 
   .table-header {
@@ -20,6 +21,12 @@ const CustomTable = styled(Table)`
     font-size: 14px;
     line-height: 17px;
     color: rgba(255, 255, 255, 0.6);
+    padding-bottom: 16px;
+    margin-bottom: 0px;
+
+    @media screen and (max-width: 900px) {
+      margin-bottom: 0px;
+    }
   }
 `
 
@@ -50,17 +57,37 @@ const Wrapper = styled.div`
       font-weight: 700 !important;
     }
   }
+
+  @media screen and (max-width: 900px) {
+    .heading_info_vesting {
+      font-size: 16px;
+      line-height: 19px;
+    }
+  }
 `
 
 const CustomTableSale = styled(CustomTableWrapper)`
   & > div {
-    min-width: 1600px;
+    min-width: 1300px;
   }
+
+  & > div:last-child {
+    margin-bottom: 1px;
+  }
+  .item_15 {
+    padding-bottom: 0px !important;
+  }
+  padding-top: 20px;
+  gap: 0px;
 `
 
 const Row = styled(CustomTable)`
+  border-top: 1px solid rgba(68, 68, 68, 1);
+  padding-top: 16px;
+  padding-bottom: 8px;
+
   &::before {
-    top: 25px;
+    border: 1px solid transparent;
   }
 
   &.item_15::before {

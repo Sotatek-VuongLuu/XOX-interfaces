@@ -1,23 +1,97 @@
-import { useTranslation } from '@pancakeswap/localization'
-import { Flex, Input, Select, Text } from '@pancakeswap/uikit'
-import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import React, { useCallback, useState } from 'react'
+import { ChainId } from '@pancakeswap/sdk'
+import { Box, Flex, Input, LinkExternal, Select, Text } from '@pancakeswap/uikit'
+import truncateHash from '@pancakeswap/utils/truncateHash'
+import BigNumber from 'bignumber.js'
+import TableLoader from 'components/TableLoader'
+import moment from 'moment'
+import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import { isMobile } from 'react-device-detect'
-import { useSelector } from 'react-redux'
-import { AppState } from 'state'
+import styled from 'styled-components'
+import { linkTransaction } from 'views/BridgeToken'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
-import { ClickableColumnHeader, CustomTableWrapper, NoTransactionWrapper, PageButtons, Table } from './SaleHistory'
+import { CustomTableWrapper, NoTransactionWrapper, PageButtons, Table } from './SaleHistory'
 
-function TabClaimHistory() {
-  const [currentTransactions, setCurrentTransactions] = useState([])
+const CustomTable = styled(Table)`
+  grid-template-columns: 0.15fr 1fr repeat(2, 0.7fr) 1fr;
+`
+
+const DataRow: React.FC<
+  React.PropsWithChildren<{
+    transaction: any
+    index: number
+    page: number
+    perPage: number
+  }>
+> = ({ transaction, index, page, perPage }) => {
+  return (
+    <>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        {index + 1 + (page - 1) * perPage}
+      </Text>
+
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        {moment.unix(transaction?.timestamp).format('DD/MM/YYYY HH:mm:ss')}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        {Number(new BigNumber(transaction.amountClaimedXOX).div(10 ** 18).toFixed(2)).toLocaleString()} XOX
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        Sale {transaction?.round}
+      </Text>
+      <LinkExternal
+        href={`${linkTransaction(ChainId.GOERLI)}${transaction.id}`}
+        className="link_external"
+        target="_blank"
+        color="#fb8618"
+      >
+        <Text
+          fontSize={['14px', , '16px']}
+          fontFamily="Inter"
+          fontStyle="normal"
+          fontWeight="400"
+          lineHeight={['17px', , '19px']}
+          color="rgba(255, 255, 255, 0.87)"
+        >
+          {truncateHash(transaction.id, 5, 6)}
+        </Text>
+      </LinkExternal>
+    </>
+  )
+}
+
+function TabClaimHistory({ currentTransactions }) {
   const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
-  const { account } = useActiveWeb3React()
-  const { t } = useTranslation()
-  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
-  const [tab, setTab] = useState(0)
 
   const setPagePagination = useCallback(
     (p: number) => {
@@ -38,10 +112,40 @@ function TabClaimHistory() {
     if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
   }, [])
 
+  const handleSelectPerPage = useCallback(
+    (value: any) => {
+      setPerPage(value)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [perPage],
+  )
+
+  const sortedTransactions = useMemo(() => {
+    if (!currentTransactions) return []
+    return currentTransactions ? currentTransactions.slice(perPage * (page - 1), page * perPage) : []
+  }, [currentTransactions, page, perPage])
+
+  useEffect(() => {
+    if (!currentTransactions) return
+    if (currentTransactions.length % perPage === 0) {
+      setMaxPage(Math.floor(currentTransactions.length / perPage))
+    } else {
+      setMaxPage(Math.floor(currentTransactions.length / perPage) + 1)
+    }
+  }, [currentTransactions, perPage])
+
+  useEffect(() => {
+    setTempPage(page.toString())
+  }, [page])
+
+  useEffect(() => {
+    setPage(1)
+  }, [perPage])
+
   return (
     <>
       <CustomTableWrapper>
-        <Table>
+        <CustomTable>
           <Text
             fontSize="16px"
             fontFamily="Inter"
@@ -84,18 +188,7 @@ function TabClaimHistory() {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            XOX Bought
-          </Text>
-          <Text
-            fontSize="16px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="19px"
-            color="rgba(255, 255, 255, 0.6)"
-            className="table-header"
-          >
-            sale
+            Sale
           </Text>
           <Text
             fontSize="16px"
@@ -108,12 +201,30 @@ function TabClaimHistory() {
           >
             Txh
           </Text>
-          {currentTransactions.length === 0 ? (
-            <NoTransactionWrapper justifyContent="center">
-              <Text textAlign="center">No Transactions</Text>
-            </NoTransactionWrapper>
-          ) : undefined}
-        </Table>
+          {currentTransactions ? (
+            <>
+              {sortedTransactions.map((transaction, index) => {
+                return (
+                  // eslint-disable-next-line react/no-array-index-key
+                  <Fragment key={index}>
+                    <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
+                  </Fragment>
+                )
+              })}
+              {sortedTransactions.length === 0 ? (
+                <NoTransactionWrapper justifyContent="center">
+                  <Text textAlign="center">No Transactions</Text>
+                </NoTransactionWrapper>
+              ) : undefined}
+            </>
+          ) : (
+            <>
+              <TableLoader />
+              {/* spacer */}
+              <Box />
+            </>
+          )}
+        </CustomTable>
       </CustomTableWrapper>
       {currentTransactions && currentTransactions.length > 0 && (
         <PageButtons>
@@ -126,7 +237,7 @@ function TabClaimHistory() {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
-                  stroke={page === 1 ? 'white' : '#9072FF'}
+                  stroke={page === 1 ? 'white' : '#FB8618'}
                   strokeOpacity={page === 1 ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
@@ -216,7 +327,7 @@ function TabClaimHistory() {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke={page === maxPage ? 'white' : '#9072FF'}
+                  stroke={page === maxPage ? 'white' : '#FB8618'}
                   strokeOpacity={page === maxPage ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
@@ -249,7 +360,7 @@ function TabClaimHistory() {
                   label: '100/Page',
                 },
               ]}
-              onOptionChange={(option: any) => setPerPage(option.value)}
+              onOptionChange={(option: any) => handleSelectPerPage(option.value)}
               className="select-page"
             />
             <Text className="go-page">Go to page</Text>

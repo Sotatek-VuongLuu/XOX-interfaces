@@ -12,6 +12,12 @@ import { useMenuItems } from 'components/Menu/hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from 'components/Menu/utils'
 import { useRouter } from 'next/router'
 import useAuth from 'hooks/useAuth'
+import styled from 'styled-components'
+
+const BoxContainer = styled(Box)`
+  display: flex;
+  justify-content: center;
+`
 
 export function PageNetworkSupportModal() {
   const { t } = useTranslation()
@@ -40,48 +46,28 @@ export function PageNetworkSupportModal() {
 
   return (
     <Modal title={title || t('Check your network')} hideCloseButton headerBackground="gradientCardHeader">
-      <Grid style={{ gap: '16px' }} maxWidth="360px">
-        <Text bold>{t('It’s a BNB Smart Chain only feature')}</Text>
+      <Grid style={{ gap: '16px' }} maxWidth="360px" marginBottom="26px">
+        <Text bold color="white">
+          {t('It’s a Ethereum only feature')}
+        </Text>
 
         {image && (
-          <Box mx="auto" my="8px" position="relative" width="100%" minHeight="250px">
-            <Image src={image} alt="feature" fill style={{ objectFit: 'contain' }} unoptimized />
-          </Box>
+          <BoxContainer mx="auto" my="8px" width="100%" minHeight="250px">
+            <img src="/images/ref_xox_mb.svg" alt="ref_xox" className="ref_xox" />
+          </BoxContainer>
         )}
-        <Text small>
-          {t(
-            'Our Pools, Limit, Trading Competition, Prediction, Lottery and NFTs features are currently available only on BNB Chain! Come over and join the community in the fun!',
-          )}
-        </Text>
         {canSwitch ? (
           <Button
             variant={foundChain && lastValidPath ? 'secondary' : 'primary'}
             isLoading={isLoading}
-            onClick={() => (isWrongNetwork ? switchNetworkLocal(ChainId.BSC) : switchNetworkAsync(ChainId.BSC))}
+            onClick={() => switchNetworkAsync(ChainId.GOERLI)}
           >
-            {t('Switch to %chain%', { chain: 'BNB Smart Chain' })}
+            {t('Switch to %chain%', { chain: 'Ethereum' })}
           </Button>
         ) : (
           <Message variant="danger">
             <MessageText>{t('Unable to switch network. Please try it on your wallet')}</MessageText>
           </Message>
-        )}
-        {isConnected && (
-          <Button
-            variant="secondary"
-            onClick={() =>
-              logout().then(() => {
-                push('/')
-              })
-            }
-          >
-            {t('Disconnect Wallet')}
-          </Button>
-        )}
-        {foundChain && lastValidPath && (
-          <NextLink href={lastValidPath} passHref>
-            <Button as="a">{t('Stay on %chain%', { chain: foundChain.name })}</Button>
-          </NextLink>
         )}
       </Grid>
     </Modal>

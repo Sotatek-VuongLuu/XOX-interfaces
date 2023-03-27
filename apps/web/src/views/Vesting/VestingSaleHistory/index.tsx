@@ -1,10 +1,13 @@
-import React from 'react'
 import SaleHistory from '../Components/MainInfoTab/SaleHistory'
 
-function SaleHistorySession() {
+interface IProps {
+  dataTransaction: any[]
+}
+
+function SaleHistorySession({ dataTransaction }: IProps) {
   return (
     <>
-      <SaleHistory />
+      <SaleHistory dataTransaction={dataTransaction} />
     </>
   )
 }

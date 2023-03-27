@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-expressions */
 import {
+  AutoRow,
   Box,
   Button,
+  CircleLoader,
   Flex,
-  Heading,
   InjectedModalProps,
   ModalBody,
   ModalCloseButton,
@@ -12,9 +14,12 @@ import {
   NumericalInput,
   Text,
 } from '@pancakeswap/uikit'
+import BigNumber from 'bignumber.js'
+import { ApprovalState } from 'hooks/useApproveCallback'
 import useWindowSize from 'hooks/useWindowSize'
-import React from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { TYPE_BY } from 'views/Vesting'
 
 const StyledModalContainer = styled(ModalContainer)`
   padding: 32px 24px;
@@ -67,6 +72,10 @@ const StyledModalContainer = styled(ModalContainer)`
     right: 0;
     z-index: 1;
     background: linear-gradient(to top, rgba(16, 16, 16, 0.3) 15%, #ed1c51, #ffb000);
+  }
+
+  @media screen and (max-width: 900px) {
+    padding: 18px;
   }
 `
 
@@ -124,6 +133,10 @@ const StyledModalBody = styled(ModalBody)`
     width: 400px;
     @media screen and (max-width: 900px) {
       width: 100%;
+      font-weight: 700;
+      font-size: 14px;
+      line-height: 17px;
+      height: 37px;
     }
   }
 
@@ -161,7 +174,7 @@ const ButtonStyle = styled.button`
 `
 
 const BoxCenter = styled(Box)`
-  padding: 12px 14px;
+  padding: 8px 14px;
   border: 1px solid #444444;
   border-radius: 6px;
   width: 400px;
@@ -177,17 +190,33 @@ const BoxCenter = styled(Box)`
     color: rgba(255, 255, 255, 0.87);
     &::placeholder {
       color: rgba(255, 255, 255, 0.38);
+      @media screen and (max-width: 900px) {
+        width: 100%;
+        font-size: 14px;
+        line-height: 17px;
+      }
     }
     &:focus {
       outline: none;
+    }
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+      line-height: 17px;
     }
   }
 
   @media screen and (max-width: 900px) {
     width: 100%;
-    padding: 10px 14px;
+    padding: 7px 14px;
     margin-top: 8px;
   }
+`
+
+const ErrorReferral = styled.div`
+  font-size: 12px;
+  color: #f44336;
+  width: 100%;
+  margin-top: 8px;
 `
 interface INumericalInputStyledProps {
   amount?: string
@@ -212,8 +241,8 @@ const NumericalInputStyled = styled(NumericalInput)<INumericalInputStyledProps>`
   }
 
   @media screen and (max-width: 576px) {
-    font-size: 12px;
-    line-height: 15px;
+    font-size: 14px;
+    line-height: 17px;
   }
 `
 
@@ -238,16 +267,99 @@ const FlexCustom = styled(Flex)`
       line-height: 15px;
       color: rgba(255, 255, 255, 0.6);
     }
+
+    .full_width {
+      width: 100%;
+    }
+  }
+`
+
+const TextCustom = styled(Text)`
+  @media screen and (max-width: 900px) {
+    font-size: 18px;
+    line-height: 22px;
   }
 `
 
 interface Props extends InjectedModalProps {
-  amount: any
-  setAmount: any
+  amount: string
+  setAmount: (amount: string) => void
+  typeBuyPrice: number
+  approvalState: number
+  handeInvest: (code: any) => void
+  approvalSubmitted: boolean
+  handleApprove: () => void
+  ethPerDolla: number
+  currentRound: number
+  handleChangeReferal: (value: string) => void
+  setCodeRef: (value: any) => void
+  referralError: any
+  isTimeAllowWhitelist: boolean
+  amountXOX: string | number
+  amountXOXS: string | number
+  setAmountXOX: (value: string | number) => void
+  setAmountXOXS: (value: string | number) => void
+  balanceLP: any
+  balanceNative: any
+  massageErrorAmount: string
+  referralCode: any
 }
 
-function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
+function ModalSaleExchange({
+  onDismiss,
+  amount,
+  setAmount,
+  typeBuyPrice,
+  approvalState,
+  handeInvest,
+  approvalSubmitted,
+  handleApprove,
+  ethPerDolla,
+  currentRound,
+  handleChangeReferal,
+  setCodeRef,
+  referralError,
+  isTimeAllowWhitelist,
+  amountXOX,
+  amountXOXS,
+  massageErrorAmount,
+  setAmountXOX,
+  setAmountXOXS,
+  balanceLP,
+  balanceNative,
+  referralCode,
+}: Props) {
   const { width } = useWindowSize()
+  const isSwap = approvalState !== ApprovalState.APPROVED && typeBuyPrice === TYPE_BY.BY_USDC
+
+  const handleRenderXOXAmount = (typeBuy: number, round: number, amountToken: any) => {
+    const roundCheckWithWhitelist = isTimeAllowWhitelist ? 1 : round
+    const totalDolla =
+      typeBuy === TYPE_BY.BY_ETH
+        ? new BigNumber(amountToken || 0).multipliedBy(ethPerDolla).toNumber()
+        : amountToken || 0
+    switch (roundCheckWithWhitelist) {
+      case 1:
+        setAmountXOX(new BigNumber(totalDolla).div(0.044).toNumber())
+        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.08).toNumber())
+        break
+      case 2:
+        setAmountXOX(new BigNumber(totalDolla).div(0.045).toNumber())
+        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.06).toNumber())
+        break
+      case 3:
+        setAmountXOX(new BigNumber(totalDolla).div(0.046).toNumber())
+        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.04).toNumber())
+        break
+      default:
+        break
+    }
+  }
+  useEffect(() => {
+    handleRenderXOXAmount(typeBuyPrice, currentRound, amount)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [typeBuyPrice, currentRound, amount])
+
   return (
     <StyledModalContainer>
       <div className="corner1" />
@@ -256,9 +368,9 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
       <div className="edge2" />
       <StyledModalHeader>
         <ModalTitle>
-          <Text color="rgba(255, 255, 255, 0.87)" fontWeight={700} fontSize="24px" textAlign="center">
+          <TextCustom color="rgba(255, 255, 255, 0.87)" fontWeight={700} fontSize="24px" textAlign="center">
             EXCHANGE
-          </Text>
+          </TextCustom>
         </ModalTitle>
         <ModalCloseButton onDismiss={onDismiss} />
       </StyledModalHeader>
@@ -266,26 +378,41 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
         {width > 900 && (
           <>
             <p style={{ textAlign: 'right', paddingRight: '83px' }} className="balance">
-              Balance:
+              Balance: {typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative}
             </p>
             <Flex alignItems="center">
               <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="53px">
                 Amount
               </Text>
-              <BoxCenter>
-                <NumericalInputStyled
-                  value={amount}
-                  amount={amount}
-                  onUserInput={(value) => setAmount(value)}
-                  placeholder="0.00"
-                />
-                <ButtonStyle>All</ButtonStyle>
-              </BoxCenter>
+              <Flex flexDirection="column">
+                <BoxCenter>
+                  <NumericalInputStyled
+                    value={amount}
+                    amount={amount}
+                    onUserInput={(value) => setAmount(value)}
+                    placeholder="0.00"
+                  />
+                  <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative)}>
+                    All
+                  </ButtonStyle>
+                </BoxCenter>
+              </Flex>
               <Text className="coin">
-                <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
-                <span>USDT</span>
+                {typeBuyPrice === TYPE_BY.BY_USDC && (
+                  <>
+                    <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt="logo" />
+                    <span>USDC</span>
+                  </>
+                )}
+                {typeBuyPrice === TYPE_BY.BY_ETH && (
+                  <>
+                    <img src="/images/1/tokens/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2.svg" alt="logo" />
+                    <span>ETH</span>
+                  </>
+                )}
               </Text>
             </Flex>
+            {massageErrorAmount && <ErrorReferral style={{ paddingLeft: 100 }}>{massageErrorAmount}</ErrorReferral>}
           </>
         )}
 
@@ -295,21 +422,37 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
               <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} className="text_mb">
                 Amount
               </Text>
-              <p className="balance_mb">Balance:</p>
+              <p className="balance_mb">Balance: {typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative}</p>
               <Text className="coin">
-                <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
-                <span>USDT</span>
+                {typeBuyPrice === TYPE_BY.BY_USDC && (
+                  <>
+                    <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt="logo" />
+                    <span>USDC</span>
+                  </>
+                )}
+                {typeBuyPrice === TYPE_BY.BY_ETH && (
+                  <>
+                    <img src="/images/1/tokens/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2.svg" alt="logo" />
+                    <span>ETH</span>
+                  </>
+                )}
               </Text>
             </Flex>
-            <BoxCenter>
-              <NumericalInputStyled
-                value={amount}
-                amount={amount}
-                onUserInput={(value) => setAmount(value)}
-                placeholder="0.00"
-              />
-              <ButtonStyle>All</ButtonStyle>
-            </BoxCenter>
+
+            <Flex flexDirection="column">
+              <BoxCenter>
+                <NumericalInputStyled
+                  value={amount}
+                  amount={amount}
+                  onUserInput={(value) => setAmount(value)}
+                  placeholder="0.00"
+                />
+                <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative)}>
+                  All
+                </ButtonStyle>
+              </BoxCenter>
+              {massageErrorAmount && <ErrorReferral>{massageErrorAmount}</ErrorReferral>}
+            </Flex>
           </>
         )}
 
@@ -318,7 +461,7 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
             XOX Amount
           </Text>
           <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
-            - XOX
+            {amountXOX || '-'} XOX
           </Text>
         </Flex>
         <Flex alignItems="center" marginBottom="26px" className="xoxs_amount">
@@ -326,15 +469,27 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
             XOXS Reward
           </Text>
           <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
-            - XOXS
+            {amountXOXS || '-'} XOXS
           </Text>
         </Flex>
 
         <FlexCustom>
           <Text className="title_ref">Referral Code</Text>
-          <BoxCenter>
-            <input placeholder="Optional" className="ref_code" />
-          </BoxCenter>
+
+          <Flex flexDirection="column" className="full_width">
+            <BoxCenter>
+              <input
+                placeholder="Optional"
+                className="ref_code"
+                onChange={(e) => {
+                  handleChangeReferal(e.target.value)
+                  setCodeRef(e.target.value)
+                }}
+                maxLength={8}
+              />
+            </BoxCenter>
+            {referralError && <ErrorReferral>{referralError}</ErrorReferral>}
+          </Flex>
         </FlexCustom>
 
         <Flex
@@ -343,7 +498,32 @@ function ModalSaleExchange({ onDismiss, amount, setAmount }: Props) {
           paddingLeft={width <= 900 ? 0 : 19}
           marginTop={width <= 900 ? 16 : 48}
         >
-          <Button className="buy_xox">Buy XOX</Button>
+          {isSwap ? (
+            <Button
+              className="buy_xox"
+              onClick={handleApprove}
+              disabled={approvalState !== ApprovalState.NOT_APPROVED || approvalSubmitted}
+            >
+              {approvalState === ApprovalState.PENDING || approvalSubmitted ? (
+                <AutoRow justifyContent="center" gap="8px">
+                  Approving
+                  <CircleLoader stroke="white" />
+                </AutoRow>
+              ) : approvalState === ApprovalState.APPROVED ? (
+                'Approved'
+              ) : (
+                'Approve USDC'
+              )}
+            </Button>
+          ) : (
+            <Button
+              className="buy_xox"
+              onClick={() => handeInvest(referralCode)}
+              disabled={referralError || !amount || massageErrorAmount}
+            >
+              Buy XOX
+            </Button>
+          )}
         </Flex>
       </StyledModalBody>
     </StyledModalContainer>

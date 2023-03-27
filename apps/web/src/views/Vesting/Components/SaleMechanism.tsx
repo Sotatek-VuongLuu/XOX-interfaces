@@ -1,8 +1,9 @@
-import ConnectWalletButton from 'components/ConnectWalletButton'
+/* eslint-disable import/no-cycle */
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useWindowSize from 'hooks/useWindowSize'
-import { useState } from 'react'
-import styled, { keyframes } from 'styled-components'
+import { useMemo, useState } from 'react'
+import styled from 'styled-components'
+import { IVestingTime } from '..'
 import VestingSchedule from './MainInfoTab/VestingSchedule'
 import YourInfo from './MainInfoTab/YourInfo'
 import PrivateSale from './MechanismTab/PrivateSale'
@@ -16,6 +17,11 @@ interface IProps {
   initialTokenMetrics: any[]
   dataInfo: any[]
   dataRefInfo: any
+  dataTransaction: any[]
+  dataTransactionClaimOfUser: any[]
+  dataVesting: IVestingTime[]
+  handleClaim: (round: number, remainning: number) => void
+  handleGetDataVesting: () => void
 }
 
 interface IPropsWrapper {
@@ -186,6 +192,7 @@ const Content = styled.div`
       line-height: 17px;
       color: #ffffff;
       padding: 10px 20px;
+      margin-right: 8px;
       border-radius: 8px;
       white-space: nowrap;
       &:hover {
@@ -203,6 +210,10 @@ const Content = styled.div`
       &::-webkit-scrollbar {
         display: none;
       }
+      .item-tab-mechanism {
+        font-size: 12px;
+        line-height: 15px;
+      }
     }
   }
 `
@@ -214,32 +225,79 @@ function SaleMechanism({
   initialTokenMetrics,
   dataInfo,
   dataRefInfo,
+  dataTransaction,
+  dataVesting,
+  handleClaim,
+  dataTransactionClaimOfUser,
+  handleGetDataVesting,
 }: IProps) {
-  const { account } = useActiveWeb3React()
   const { width } = useWindowSize()
+  const { account } = useActiveWeb3React()
   const [isMore, setIsMore] = useState(false)
 
-  const renderBody = (tab: string) => {
-    if (!account) {
-      return (
-        <ConnectWalletButton scale="sm" style={{ whiteSpace: 'nowrap' }}>
-          <span>Connect Wallet</span>
-        </ConnectWalletButton>
-      )
-    }
-    switch (tab) {
+  const renderBody = useMemo(() => {
+    switch (tabActiveMechansim) {
       case 'Sale Referral Program':
         return <ReferralProgram />
       case 'Token Metrics':
         return <TokenMetrics initialTokenMetrics={initialTokenMetrics} />
       case 'Vesting Schedule':
-        return <VestingSchedule />
+        return (
+          <VestingSchedule
+            dataVesting={dataVesting}
+            handleClaim={handleClaim}
+            handleGetDataVesting={handleGetDataVesting}
+          />
+        )
       case 'Your Information':
-        return <YourInfo dataInfo={dataInfo} dataRefInfo={dataRefInfo} />
+        return (
+          <YourInfo
+            dataInfo={dataInfo}
+            dataRefInfo={dataRefInfo}
+            dataTransaction={dataTransaction}
+            dataTransactionClaimOfUser={dataTransactionClaimOfUser}
+          />
+        )
       default:
         return <PrivateSale />
     }
-  }
+  }, [
+    dataInfo,
+    dataRefInfo,
+    dataTransaction,
+    dataTransactionClaimOfUser,
+    dataVesting,
+    handleClaim,
+    handleGetDataVesting,
+    initialTokenMetrics,
+    tabActiveMechansim,
+  ])
+
+  const renderRemore = useMemo(() => {
+    return (
+      <>
+        {width <= 900 && isMore && (
+          <div className="container_learnless">
+            <div>
+              <img src="/images/fi_chevrons-down.png" alt="fi_chevrons-down" className="fi_chevrons-up" />
+              <button type="button" className="btn_learnless" onMouseDown={() => setIsMore(false)}>
+                Learn Less
+              </button>
+            </div>
+          </div>
+        )}
+
+        {width <= 900 && !isMore && (
+          <div className="overlay_learmore">
+            <button type="button" className="btn_learnmore" onClick={() => setIsMore(true)}>
+              Learn More
+            </button>
+            <img src="/images/fi_chevrons-down.svg" alt="fi_chevrons-down" className="fi_chevrons-down" />
+          </div>
+        )}
+      </>
+    )
+  }, [width, isMore])
 
   return (
     <Wrapper isMore={isMore}>
@@ -249,9 +307,11 @@ function SaleMechanism({
       <div className="edge2" />
       <Content>
         <div className="tab-mechanism">
-          {Array.from(tabSaleMechanism).map((item) => {
+          {Array.from(tabSaleMechanism).map((item, index) => {
             return (
               <div
+                // eslint-disable-next-line react/no-array-index-key
+                key={index}
                 className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
                 onClick={() => setTabActiveMechansim(item)}
                 aria-hidden="true"
@@ -261,28 +321,13 @@ function SaleMechanism({
             )
           })}
         </div>
-        <div className="body">{renderBody(tabActiveMechansim)}</div>
+        <div className="body">{renderBody}</div>
       </Content>
-
-      {width <= 900 && isMore && (
-        <div className="container_learnless">
-          <div>
-            <img src="/images/fi_chevrons-down.png" alt="fi_chevrons-down" className="fi_chevrons-up" />
-            <button type="button" className="btn_learnless" onMouseDown={() => setIsMore(false)}>
-              Learn Less
-            </button>
-          </div>
-        </div>
-      )}
-
-      {width <= 900 && !isMore && (
-        <div className="overlay_learmore">
-          <button type="button" className="btn_learnmore" onClick={() => setIsMore(true)}>
-            Learn More
-          </button>
-          <img src="/images/fi_chevrons-down.svg" alt="fi_chevrons-down" className="fi_chevrons-down" />
-        </div>
-      )}
+      {!account && (tabActiveMechansim === 'Vesting Schedule' || tabActiveMechansim === 'Your Information')
+        ? null
+        : tabActiveMechansim === 'Vesting Schedule' && dataVesting.length === 0
+        ? null
+        : renderRemore}
     </Wrapper>
   )
 }

@@ -28,11 +28,7 @@ const CustomTooltip = ({ active, payload, label }: any) => {
   if (active && payload && payload.length) {
     return (
       <CustomTooltipStyle>
-        <p className="label">
-          {formatAmountNumber(payload[0].payload.uv, 2) > 1
-            ? `$${formatAmountNumber(payload[0].payload.uv, 2)}`
-            : `$${formatAmountNumber(payload[0].payload.uv, 2)}`}
-        </p>
+        <p className="label">{`$${Number(formatAmountNumber(payload[0].payload.uv, 2)).toLocaleString()}`}</p>
       </CustomTooltipStyle>
     )
   }
@@ -44,7 +40,7 @@ function ChartColumnSale(props: PropsColumnChart) {
   const { data } = props
   const { width } = useWindowSize()
   return (
-    <ResponsiveContainer width="100%" height={121}>
+    <ResponsiveContainer width="100%" height={width <= 900 ? 142 : 121}>
       <BarChart data={data} barSize={width <= 900 ? 8 : 10}>
         <defs>
           <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="100%" spreadMethod="reflect">
@@ -54,7 +50,7 @@ function ChartColumnSale(props: PropsColumnChart) {
             <stop offset="100%" style={{ stopColor: 'rgba(167, 59, 124, 1)', stopOpacity: 1 }} />
           </linearGradient>
         </defs>
-        <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} />
+        <Tooltip cursor={{ fill: 'transparent' }} content={<CustomTooltip />} wrapperStyle={{ outline: 'none' }} />
         <XAxis dataKey="name" tick={{ fontSize: 10, fontWeight: 400, fill: 'rgba(255, 255, 255, 0.6)' }} />
         <Bar dataKey="uv" fill="url(#colorUv)" radius={[20, 20, 20, 20]} style={{ cursor: 'pointer' }} />
       </BarChart>

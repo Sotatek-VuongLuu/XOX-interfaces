@@ -10,7 +10,7 @@ const Content = styled.div`
     font-size: 20px;
     line-height: 24px;
     color: rgba(255, 255, 255, 0.87);
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     position: relative;
 
     &::before {
@@ -22,11 +22,16 @@ const Content = styled.div`
       height: 4px;
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
+
+    @media screen and (max-width: 900px) {
+      font-size: 16px;
+      line-height: 19px;
+    }
   }
   .description {
     font-weight: 400;
     font-size: 16px;
-    line-height: 19px;
+    line-height: 25px;
     color: rgba(255, 255, 255, 0.87);
 
     p:nth-last-child(2) {
@@ -40,7 +45,7 @@ const Content = styled.div`
   .normal {
     font-weight: 400;
     font-size: 16px;
-    line-height: 22px;
+    line-height: 25px;
     color: rgba(255, 255, 255, 0.87);
     margin-top: 24px;
   }
@@ -64,7 +69,7 @@ const Content = styled.div`
     }
     .description {
       font-size: 14px;
-      line-height: 20px;
+      line-height: 17px;
     }
   }
 `
@@ -75,6 +80,7 @@ const CustomTable = styled(Table)`
 
   &::before {
     top: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   &::after {
@@ -82,7 +88,7 @@ const CustomTable = styled(Table)`
     display: block;
     width: 100%;
     height: 0px;
-    border: 1px solid #444444;
+    border: 1px solid transparent;
     position: absolute;
     top: -13px;
   }
@@ -131,6 +137,12 @@ const CustomTableRow = styled(CustomTable)`
   }
 `
 
+const CustomTableTotal = styled(CustomTable)`
+  &::before {
+    top: -8px;
+  }
+`
+
 const CustomTableSale = styled(CustomTableWrapper)`
   & > div {
     min-width: 1300px;
@@ -174,7 +186,7 @@ function PrivateSale() {
             on the leading Decentralized Blockchain Ecosystem.
           </p>
           <p>
-            Initially Launching with Cross-chain liquidity on 6 of the most popular blockchains (ETH, BSC, Polygon,
+            - Initially Launching with Cross-chain liquidity on 6 of the most popular blockchains (ETH, BSC, Polygon,
             Solana, Arbitrum, Optimism) XOX Labs is already a miles ahead of 90% of its competitors when it comes to
             accessibility and multi-chain capabilities. But thats just the start, XOX Labs will soon launch the most
             capable Cross-Chain DEX Aggregator on Defi (XOX Dex V2), natively integrating 100+ DEXes and 60+
@@ -195,9 +207,10 @@ function PrivateSale() {
             <Text className="table-header">Launch price 0.06$ ($)</Text>
           </CustomTable>
 
-          {Array.from(arrToken).map((item) => {
+          {Array.from(arrToken).map((item, index) => {
             return (
-              <CustomTableRow>
+              // eslint-disable-next-line react/no-array-index-key
+              <CustomTableRow key={index}>
                 <Text className="value">{item.title}</Text>
                 <Text className="value">{item.total}</Text>
                 <Text className="value">{item.amountToken}</Text>
@@ -208,14 +221,14 @@ function PrivateSale() {
             )
           })}
 
-          <CustomTable>
+          <CustomTableTotal>
             <Text className="table_header_total">TOTAL</Text>
             <Text className="table_header_total">6%</Text>
             <Text className="table_header_total">10,800,000</Text>
             <Text className="table_header_total">{null}</Text>
             <Text className="table_header_total">487,800</Text>
             <Text className="table_header_total">648,000</Text>
-          </CustomTable>
+          </CustomTableTotal>
         </CustomTableSale>
 
         <div>

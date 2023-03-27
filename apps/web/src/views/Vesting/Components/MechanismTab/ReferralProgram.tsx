@@ -25,6 +25,10 @@ const Content = styled.div`
     margin-bottom: 16px;
   }
 
+  .nomal.no-margin-bottom {
+    margin-bottom: 0px;
+  }
+
   .table_ref {
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
@@ -77,6 +81,7 @@ const CusTable = styled(Table)`
 
   &::before {
     top: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
   .table-header {
@@ -180,7 +185,7 @@ function ReferralProgram() {
 
         <p className="high_light">4 Steps to Earn</p>
 
-        <div className="nomal">
+        <div className="nomal no-margin-bottom">
           1. Connect Wallet <br />
           2. Copy Your Unique Referral Code <br />
           3. Share it with friends <br />

@@ -3,8 +3,9 @@ import BigNumber from 'bignumber.js'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import moment from 'moment'
 import React, { useEffect, useState } from 'react'
-import { pointDataDays } from 'services/referral'
+import { getRaiseDailies } from 'services/presale'
 import styled from 'styled-components'
+import { useGetDataChartPreSale } from 'views/Vesting/hooks'
 import ChartColumnSale from './ChartColumnSale'
 
 const Wrapper = styled.div`
@@ -56,8 +57,9 @@ const Wrapper = styled.div`
   }
 
   @media screen and (max-width: 900px) {
-    padding: 15px 24px 24px;
+    padding: 15px 22px 24px;
     height: 270px;
+    margin-bottom: 20px;
     background-image: url('/images/char_bg_image.png');
     background-size: 100% 253px;
 
@@ -81,33 +83,43 @@ interface IListPoint {
   point: number
 }
 
+interface IDataChart {
+  id: string
+  volumeUSD: string
+  data: number
+}
+
 function ChartSalePage() {
   const [dataChart, setDataChart] = useState([])
-  const { account, chainId } = useWeb3React()
+  const dataChartPreSale = useGetDataChartPreSale()
+  const startDate = new Date()
+  startDate.setDate(startDate.getDate() - 14)
+  startDate.setHours(0, 0, 0, 0)
+  const endDate = new Date()
+  endDate.setHours(23, 59, 59, 999)
 
   function createDataChartDay(name: string, uv: number) {
     return { name, uv }
   }
 
-  const getPointDataDays = async () => {
-    const startDate = new Date()
-    startDate.setDate(startDate.getDate() - 14)
-    startDate.setHours(0, 0, 0, 0)
-    const endDate = new Date()
-    endDate.setHours(23, 59, 59, 999)
-    const time = {
-      from: moment(startDate).unix(),
-      to: moment(endDate).unix(),
-    }
-    const result = await pointDataDays(time.from, time.to, chainId)
-    if (result && result.pointDataDays && result.pointDataDays.length > 0) {
-      const arr = result.pointDataDays
-      const chartData = createArray(startDate, endDate, arr)
-      const data = chartData.map((item: any) => {
-        const amount = new BigNumber(item.amount).div(10 ** USD_DECIMALS[chainId]).toNumber()
-        return createDataChartDay(moment(item.date * 1000).format('DD MMM'), amount)
-      })
-      setDataChart(data)
+  const getPointDataDays = (result: any) => {
+    try {
+      if (result && result.raiseDailies && result.raiseDailies.length > 0) {
+        const arr = Array.from(result.raiseDailies).map((item: any) => {
+          return {
+            ...item,
+            id: String(item?.id).split('-')[1],
+          }
+        })
+        const chartData = createArray(startDate, endDate, arr)
+        const data = chartData.map((item: any) => {
+          const amount = new BigNumber(item.amount).div(10 ** 6).toNumber()
+          return createDataChartDay(moment(item.date * 1000).format('DD MMM'), amount)
+        })
+        setDataChart(data)
+      }
+    } catch (error) {
+      console.warn(error)
     }
   }
 
@@ -122,25 +134,24 @@ function ChartSalePage() {
       loopDay.setSeconds(59)
       const dataByDay = { date: moment(loopDay).unix(), amount: 0 }
       const dateInterger = Math.trunc(moment(loopDay).unix() / 86400)
-
       const findData = subGraphData.find((x) => {
         return x.id === dateInterger.toString()
       })
-      dataByDay.amount = findData ? findData.amount : 0
+      dataByDay.amount = findData ? findData.volumeUSD : 0
       chartData.push(dataByDay)
     }
     return chartData
   }
 
   useEffect(() => {
-    if (!chainId || !account) return
-    getPointDataDays()
-  }, [chainId, account])
+    getPointDataDays(dataChartPreSale)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataChartPreSale])
 
   return (
     <Wrapper>
       <div className="fake_blur" />
-      <p className="title">Daily Raise (USDT)</p>
+      <p className="title">Daily Raise</p>
       <ChartColumnSale data={dataChart} />
     </Wrapper>
   )

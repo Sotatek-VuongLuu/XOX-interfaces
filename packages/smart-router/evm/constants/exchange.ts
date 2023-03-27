@@ -6,9 +6,9 @@ import { ChainMap, ChainTokenList } from '../types'
 export const ROUTER_ADDRESS: ChainMap<string> = {
   [ChainId.ETHEREUM]: '0x3BC722f252C7bAE2f55647e49aDcB9d33Ff6eBcC',
   [ChainId.RINKEBY]: '0x3BC722f252C7bAE2f55647e49aDcB9d33Ff6eBcC',
-  [ChainId.GOERLI]: '0x3cd627b7E619a63C70DAAc344d131d874a01049e',
+  [ChainId.GOERLI]: '0xB904c5a434bBdbB52A91bBf4D48b9B0c546a7DeD',
   [ChainId.BSC]: '0x10ED43C718714eb63d5aA57B78B54704E256024E',
-  [ChainId.BSC_TESTNET]: '0x3cd627b7E619a63C70DAAc344d131d874a01049e',
+  [ChainId.BSC_TESTNET]: '0xfcdD04b6a25E533d8F16210Cb552020D6d880749',
 }
 
 // used to construct intermediary pairs for trading

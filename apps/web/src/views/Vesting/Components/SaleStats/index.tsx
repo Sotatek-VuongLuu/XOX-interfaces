@@ -1,4 +1,6 @@
+import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
+import { Start } from 'views/Vesting'
 
 const Wrapper = styled.div`
   position: relative;
@@ -85,6 +87,13 @@ const Wrapper = styled.div`
           color: rgba(255, 255, 255, 0.6);
           left: -13px;
         }
+
+        .icon.total_investor {
+          position: unset;
+          font-size: 36px;
+          line-height: 44px;
+          color: rgba(255, 255, 255, 0.87);
+        }
       }
 
       .item_content_title {
@@ -113,7 +122,7 @@ const Wrapper = styled.div`
 
     @media screen and (max-width: 900px) {
       grid-template-columns: 1fr;
-      gap: 24px;
+      gap: 31px;
     }
   }
 
@@ -138,7 +147,7 @@ const Wrapper = styled.div`
 `
 
 interface IProps {
-  dataStat: any
+  dataStat: Start[]
 }
 
 function SaleStats({ dataStat }: IProps) {
@@ -147,12 +156,20 @@ function SaleStats({ dataStat }: IProps) {
       <div className="fake_blur" />
       <p className="title">Sale Stats</p>
       <div className="content_stat">
-        {Array.from(dataStat).map((item: any, index: number) => {
+        {Array.from(dataStat).map((item: Start, index: number) => {
           return (
-            <div className="item_content_container">
+            <div className="item_content_container" key={`${item.title}`}>
               <p className="item_content_amount">
-                <span className="icon">{item?.icon}</span>
-                <span>{item.amount}</span>
+                <span className={`icon ${item.field}`}>{item.amount ? item?.icon : null}</span>
+                <span>
+                  {item.amount
+                    ? item.decimal
+                      ? Number(
+                          new BigNumber(item.amount).div(new BigNumber(10).pow(item.decimal)).toFixed(2),
+                        ).toLocaleString()
+                      : Number(item.amount).toLocaleString()
+                    : '-'}
+                </span>
               </p>
               <p className="item_content_title">{item.title}</p>
               <div className={`divide divide_${index}`} />

@@ -1,9 +1,13 @@
+import { formatEther } from '@ethersproject/units'
 import { Box, Grid } from '@pancakeswap/uikit'
-import React from 'react'
+import BigNumber from 'bignumber.js'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { RoundInfo } from 'views/Vesting'
 
 interface IPropsWrapperItem {
   status?: boolean
+  percent?: number
 }
 
 const WrapperItem = styled(Box)<IPropsWrapperItem>`
@@ -19,7 +23,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     width: 50%;
     height: 50px;
     border-radius: 20px;
-    z-index: 1;
+    z-index: 10;
     border-bottom: 1px solid #ffffff30;
     border-left: 1px solid #ffffff30;
     border-bottom-right-radius: unset;
@@ -32,7 +36,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     position: absolute;
     bottom: 50px;
     left: 0;
-    z-index: 1;
+    z-index: 10;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
@@ -43,7 +47,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     width: 50%;
     height: 50px;
     border-radius: 20px;
-    z-index: 1;
+    z-index: 10;
     border-bottom: 1px solid #ffffff30;
     border-right: 1px solid #ffffff30;
     border-bottom-left-radius: unset;
@@ -56,20 +60,63 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     position: absolute;
     bottom: 50px;
     right: 0;
-    z-index: 1;
+    z-index: 10;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
   .sold {
+    position: relative;
+    overflow: hidden;
     text-align: center;
     padding-top: 17px;
     padding-bottom: 18px;
     font-weight: 700;
     font-size: 16px;
+    height: 54px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
-    border-top: 1px solid #ffffff30;
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     border-radius: 0px 0px 20px 20px;
+
+    &::before {
+      position: absolute;
+      content: '';
+      width: 100%;
+      height: 1px;
+      top: 0;
+      left: 0;
+      z-index: 11;
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .value {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 100%;
+      width: 100%;
+      z-index: 9;
+      background: transparent;
+      border-radius: 0px 0px 20px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .background {
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 5;
+      background: ${({ percent }) =>
+        percent !== 0
+          ? `linear-gradient(to right, transparent ${0}% ${percent}%, black ${percent + 4}%  ${104}%)`
+          : 'black'};
+      backdrop-filter: blur(10px);
+      border-radius: ${({ percent }) => (percent >= 100 ? '0px 0px 20px 20px' : '0px 0px 20px 20px')};
+    }
   }
 
   .status_name {
@@ -79,11 +126,29 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     color: rgba(255, 255, 255, 0.6);
   }
   .status_value {
+    position: relative;
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
     margin-top: 5px;
+    white-space: nowrap;
+
+    .dollar_sign {
+      position: absolute;
+      font-weight: 700;
+      font-size: 12px;
+      line-height: 15px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .raised_dollar {
+      margin-left: 8px;
+    }
+
+    .price_dollar {
+      margin-left: 8px;
+    }
   }
   .name {
     position: absolute;
@@ -96,6 +161,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
       status ? ' linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)' : '#0d0d0d'};
     border-radius: 30px;
     left: 50%;
+    z-index: 100;
     transform: translate(-50%, -50%);
 
     .corner_name_1 {
@@ -139,7 +205,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     width: 40px;
     height: 100%;
     border-radius: 20px;
-    z-index: 1;
+    z-index: 99;
     border-bottom: 1px solid #b809b5;
     border-top: 1px solid #b809b5;
     border-left: 1px solid #b809b5;
@@ -151,6 +217,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     position: absolute;
     top: 0;
     left: 40px;
+    z-index: 99;
     height: 1px;
     width: calc(100% - 80px);
     background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
@@ -162,7 +229,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     width: 40px;
     height: 100%;
     border-radius: 20px;
-    z-index: 1;
+    z-index: 99;
     border-bottom: 1px solid #ffb000;
     border-top: 1px solid #ffb000;
     border-right: 1px solid #ffb000;
@@ -174,6 +241,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     position: absolute;
     bottom: 0;
     left: 40px;
+    z-index: 99;
     height: 1px;
     width: calc(100% - 80px);
     background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
@@ -183,13 +251,54 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     font-weight: 700;
     font-size: 16px;
     line-height: 19px;
+
+    .ring-container {
+      position: relative;
+      flex: 1;
+    }
+
+    .circle {
+      width: 7px;
+      height: 7px;
+      background-color: #64c66d;
+      border-radius: 50%;
+      position: absolute;
+      left: 10px;
+      top: 8px;
+    }
+
+    .ringring {
+      border: 3px solid #64c66d;
+      border-radius: 30px;
+      height: 17px;
+      width: 17px;
+      position: absolute;
+      left: 5px;
+      top: 3px;
+      animation: pulsate 1s ease-out;
+      animation-iteration-count: infinite;
+      opacity: 0;
+    }
+    @keyframes pulsate {
+      0% {
+        -webkit-transform: scale(0.1, 0.1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: scale(1.2, 1.2);
+        opacity: 0;
+      }
+    }
   }
 
   .live {
     color: #64c66d;
   }
 
-  .end {
+  .ended {
     color: #ff5353;
   }
 
@@ -199,6 +308,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
 
   .dot_contain {
     position: relative;
+    display: flex;
   }
 
   .dot {
@@ -231,6 +341,7 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     .sold {
       font-size: 14px;
       line-height: 17px;
+      height: 43px;
     }
   }
 `
@@ -241,19 +352,22 @@ const CustomGrid = styled(Grid)`
 
   @media screen and (max-width: 900px) {
     grid-template-columns: 1fr;
-    gap: 45px;
+    gap: 37px;
   }
 `
 
 enum StatusSale {
   LIVE = 'Live',
-  END = 'End',
+  END = 'Ended',
   INCOMING = 'Incoming',
 }
 
 const Item = ({ item }) => {
+  const percent = new BigNumber(
+    new BigNumber(formatEther(item?.xox_amount_bought || '0')).multipliedBy(100).dividedBy(item.xOXforSale),
+  ).toFixed(4, 1)
   return (
-    <WrapperItem status={item.status === StatusSale.LIVE}>
+    <WrapperItem status={item.status === StatusSale.LIVE} percent={parseFloat(percent)}>
       {item.status === StatusSale.LIVE && (
         <>
           <div className="corner_active_1" />
@@ -289,7 +403,11 @@ const Item = ({ item }) => {
           <p className={`status_value ${String(item.status).toLocaleLowerCase()} status`}>
             {item.status === StatusSale.LIVE ? (
               <span className="dot_contain">
-                <span>{item.status}</span> <span className="dot">.</span>
+                <div>{item.status}</div>
+                <div className="ring-container">
+                  <div className="ringring" />
+                  <div className="circle" />
+                </div>
               </span>
             ) : (
               `${item.status}`
@@ -298,65 +416,148 @@ const Item = ({ item }) => {
         </div>
         <div>
           <p className="status_name">Current raise</p>
-          <p className="status_value">{item.currentRaise}</p>
+          <p className="status_value">
+            {item?.total_raised_usd && <span className="dollar_sign">$</span>}
+            <span className="raised_dollar">
+              {item?.total_raised_usd
+                ? new BigNumber(item?.total_raised_usd)
+                    .div(10 ** 6)
+                    .toNumber()
+                    .toLocaleString()
+                : item?.currentRaise}
+            </span>
+          </p>
         </div>
         <div>
           <p className="status_name">Price</p>
-          <p className="status_value">{item.price}</p>
+          <p className="status_value">
+            <span>1 XOX =</span> <span className="dollar_sign">$</span>
+            <span className="price_dollar">{item.price}</span>
+          </p>
         </div>
         <div>
           <p className="status_name">XOX for Sale</p>
-          <p className="status_value">{item.xOXforSale}</p>
+          <p className="status_value">{item.xOXforSale.toLocaleString()}</p>
         </div>
         <div>
           <p className="status_name">Investors</p>
-          <p className="status_value">{item.investors}</p>
+          <p className="status_value">{item?.total_investor ? item?.total_investor : item.investors}</p>
         </div>
         <div>
           <p className="status_name">XOXS Rewarded</p>
-          <p className="status_value">{item.xOXSRewarded}</p>
+          <p className="status_value">
+            {item?.xox_amount_bought
+              ? Number(
+                  new BigNumber(new BigNumber(item?.xoxs_amount_reward).div(10 ** 6).toString()).toFixed(2, 1),
+                ).toLocaleString()
+              : item.xOXSRewarded}
+          </p>
         </div>
       </Grid>
-      <div className="sold">30% SOLD</div>
+      <div className="sold">
+        <div className="background" />
+        <div className="value">
+          <span>
+            {`${parseFloat(percent)}% `}
+            SOLD
+          </span>
+        </div>
+      </div>
     </WrapperItem>
   )
 }
 
-function SaleStatus() {
+interface IProps {
+  isInTimeRangeSale?: boolean
+  dataStatus: any[]
+  infoRoundOne: RoundInfo
+  infoRoundTow: RoundInfo
+  infoRoundThree: RoundInfo
+}
+
+const now = new Date()
+const timeStampOfNow = now.getTime()
+
+function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: IProps) {
+  const [dataFormat, setDataFormat] = useState<any[]>([])
+
   const arrStatus = [
     {
       name: 'Sale 1',
-      status: StatusSale.LIVE,
-      currentRaise: '10.000',
-      price: '1 XOX',
-      xOXforSale: '2.700.000',
-      investors: '50',
-      xOXSRewarded: '7.3247',
+      status: infoRoundOne.startDate
+        ? timeStampOfNow < infoRoundOne.startDate
+          ? StatusSale.INCOMING
+          : infoRoundOne.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundOne.endDate
+          ? StatusSale.LIVE
+          : StatusSale.END
+        : StatusSale.INCOMING,
+      currentRaise: '-',
+      price: '0.044',
+      xOXforSale: 2700000,
+      investors: '-',
+      xOXSRewarded: '-',
     },
     {
       name: 'Sale 2',
-      status: StatusSale.END,
-      currentRaise: '10.000',
-      price: '1 XOX',
-      xOXforSale: '2.700.000',
-      investors: '50',
-      xOXSRewarded: '7.3247',
+      status: infoRoundTow.startDate
+        ? timeStampOfNow < infoRoundTow.startDate
+          ? StatusSale.INCOMING
+          : infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundTow.endDate
+          ? StatusSale.LIVE
+          : StatusSale.END
+        : StatusSale.INCOMING,
+      currentRaise: '-',
+      price: '0.045',
+      xOXforSale: 3600000,
+      investors: '-',
+      xOXSRewarded: '-',
     },
     {
       name: 'Sale 3',
-      status: StatusSale.INCOMING,
-      currentRaise: '10.000',
-      price: '1 XOX',
-      xOXforSale: '2.700.000',
-      investors: '50',
-      xOXSRewarded: '7.3247',
+      status: infoRoundThree.startDate
+        ? timeStampOfNow < infoRoundThree.startDate
+          ? StatusSale.INCOMING
+          : infoRoundThree.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundThree.endDate
+          ? StatusSale.LIVE
+          : StatusSale.END
+        : StatusSale.INCOMING,
+      currentRaise: '-',
+      price: '0.046',
+      xOXforSale: 4500000,
+      investors: '-',
+      xOXSRewarded: '-',
     },
   ]
 
+  const handleFormatData = (roundArr: any[]) => {
+    const newDataFormat = []
+    let temp: any
+    if (roundArr.length === 0) {
+      setDataFormat(arrStatus)
+    }
+    for (let i = 0; i < 3; i++) {
+      if (roundArr[i]) {
+        temp = { ...roundArr[i], ...arrStatus[i] }
+        newDataFormat.push(temp)
+      } else {
+        temp = arrStatus[i]
+        newDataFormat.push(temp)
+      }
+    }
+    if (newDataFormat) {
+      setDataFormat(newDataFormat)
+    }
+  }
+  useEffect(() => {
+    handleFormatData(dataStatus)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dataStatus, infoRoundOne, infoRoundTow, infoRoundThree])
+
   return (
     <CustomGrid>
-      {arrStatus.map((item) => {
-        return <Item item={item} />
+      {dataFormat.map((item, index) => {
+        // eslint-disable-next-line react/no-array-index-key
+        return <Item key={index} item={item} />
       })}
     </CustomGrid>
   )

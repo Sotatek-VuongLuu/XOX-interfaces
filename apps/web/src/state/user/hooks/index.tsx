@@ -437,7 +437,6 @@ export function useGasPrice(chainIdOverride?: number): string {
     return GAS_PRICE_GWEI.testnet
   }
   if (chain?.testnet) {
-    // console.log(new BigNumber(data?.formatted?.gasPrice).multipliedBy(1.3).toFixed(0), 'new BigNumber(data?.formatted?.gasPrice).multipliedBy(1.3).toFixed(0)')
     return new BigNumber(data?.formatted?.gasPrice || '0').multipliedBy(1.3).toFixed(0)
   }
   return data?.formatted?.gasPrice

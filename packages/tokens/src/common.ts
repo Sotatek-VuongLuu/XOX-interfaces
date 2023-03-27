@@ -2,7 +2,7 @@ import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 
 export const XOX_BSC_MAINNET = new ERC20Token(
   ChainId.BSC,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
+  '0x92e72A02719122aB0E5A0323Db6b3579586db8AD',
   18,
   'XOX',
   'XOX',
@@ -11,7 +11,7 @@ export const XOX_BSC_MAINNET = new ERC20Token(
 
 export const XOX_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
+  '0x92e72A02719122aB0E5A0323Db6b3579586db8AD',
   18,
   'XOX',
   'XOX',
@@ -20,7 +20,7 @@ export const XOX_BSC_TESTNET = new ERC20Token(
 
 export const XOX_MAINNET = new ERC20Token(
   ChainId.ETHEREUM,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
+  '0xe0852E63518beF3dAEB01194bf7B279d28F713E0',
   18,
   'XOX',
   'XOX',
@@ -29,7 +29,7 @@ export const XOX_MAINNET = new ERC20Token(
 
 export const XOX_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
+  '0xe0852E63518beF3dAEB01194bf7B279d28F713E0',
   18,
   'XOX',
   'XOX',
@@ -38,7 +38,7 @@ export const XOX_GOERLI = new ERC20Token(
 
 export const XOX_BUSD_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0xc4c888f2e78a296580c9d95ed42e9a570823c989',
+  '0x04892F0E0CFa0309b2c01321d81e33ca64Bcd16B',
   18,
   'XOX-BUSD',
   'XOX-BUSD',
@@ -47,7 +47,7 @@ export const XOX_BUSD_TESTNET = new ERC20Token(
 
 export const XOX_USDC_TESTNET = new ERC20Token(
   ChainId.GOERLI,
-  '0x89858dB27b761820f47f382A0da30B46c7D2C8db',
+  '0x9E2F87E1D7BaEdB76c870dBF65adB70fFeD851a5',
   18,
   'XOX-USDC',
   'XOX-USDC',
@@ -124,7 +124,7 @@ export const USDC_RINKEBY = new ERC20Token(
 
 export const USDC_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
+  '0xfcdD04b6a25E533d8F16210Cb552020D6d880749',
   6,
   'tUSDC',
   'test USD Coin',
@@ -168,7 +168,7 @@ export const BUSD_TESTNET = new ERC20Token(
 
 export const USDT_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
+  '0x7A35Ab80fe9621146DA7CCbC2BCAddda843A69A5',
   18,
   'USDT',
   'Tether USD',
@@ -259,7 +259,7 @@ export const ETH_BSC_TESTNET = new ERC20Token(
 )
 export const USDT_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
+  '0x7A35Ab80fe9621146DA7CCbC2BCAddda843A69A5',
   18,
   'USDT',
 )

@@ -1,8 +1,10 @@
 import { Button, Flex, Text } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import React from 'react'
+import useWindowSize from 'hooks/useWindowSize'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { TYPE_BY } from 'views/Vesting'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -165,7 +167,7 @@ const Content = styled.div`
 `
 
 export const CustomTableWrapper = styled(Flex)`
-  padding-top: 24px;
+  padding-top: 29px;
   flex-direction: column;
   /* gap: 16px; */
   overflow-x: auto;
@@ -198,12 +200,12 @@ export const CustomTableWrapper = styled(Flex)`
 `
 
 const Table = styled.div`
-  padding: 0px 20px;
+  padding: 0px 24px;
   display: grid;
   gap: 10px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.75fr 1fr 1.2fr repeat(2, 1fr);
+  grid-template-columns: 0.75fr 0.75fr 1.45fr repeat(2, 1fr);
 
   .corner_active1 {
     position: absolute;
@@ -269,10 +271,52 @@ const Table = styled.div`
     font-size: 18px;
     line-height: 22px;
     color: #64c66d;
+    display: flex;
+    .ring-container {
+      position: relative;
+      flex: 1;
+    }
+
+    .circle {
+      width: 7px;
+      height: 7px;
+      background-color: #64c66d;
+      border-radius: 50%;
+      position: absolute;
+      left: 10px;
+      top: 8px;
+    }
+
+    .ringring {
+      border: 3px solid #64c66d;
+      border-radius: 30px;
+      height: 17px;
+      width: 17px;
+      position: absolute;
+      left: 5px;
+      top: 3px;
+      animation: pulsate 1s ease-out;
+      animation-iteration-count: infinite;
+      opacity: 0;
+    }
+    @keyframes pulsate {
+      0% {
+        -webkit-transform: scale(0.1, 0.1);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        -webkit-transform: scale(1.2, 1.2);
+        opacity: 0;
+      }
+    }
   }
 
   @media screen and (max-width: 900px) {
-    padding: 0px;
+    padding: 0 14px;
+    grid-template-columns: 0.75fr 0.75fr 2fr repeat(2, 1fr);
 
     .table-header_col {
       font-size: 12px;
@@ -285,55 +329,146 @@ const Table = styled.div`
     }
 
     .active_text {
-      font-size: 12px;
-      line-height: 15px;
+      font-size: 12px !important;
+      line-height: 15px !important;
+
+      .circle {
+        width: 6px;
+        height: 6px;
+        left: 6px;
+        top: 5px;
+      }
+
+      .ringring {
+        height: 16px;
+        width: 16px;
+        position: absolute;
+        left: 1px;
+        top: 0px;
+      }
     }
   }
 `
 
 const CustomTable = styled(Table)`
-  padding: 16px 20px;
+  padding: 16px 24px;
   @media screen and (max-width: 900px) {
-    padding: 8px 10px;
+    grid-template-columns: 0.75fr 0.75fr 2fr repeat(2, 1fr);
+    padding: 8px 14px;
   }
 `
 
 const CustomButton = styled(Button)`
   height: 54px;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
 
   @media screen and (max-width: 900px) {
+    height: 43px;
     font-size: 16px;
     line-height: 19px;
     padding: 12px 14px;
+    white-space: nowrap;
   }
 `
 
-function PricingInfo({ onModalExchangeSale }) {
-  const { account } = useActiveWeb3React()
+const ConnectWalletButtonCustom = styled(ConnectWalletButton)`
+  height: 54px !important;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
 
-  const dataPricing = [
-    {
-      status: 'Live',
-      round: 'Round 1',
-      xOXCoin: '100',
-      price: '0.06',
-      xOXBonus: '10',
-    },
-    {
-      status: null,
-      round: 'Round 2',
-      xOXCoin: '100',
-      price: '0.06',
-      xOXBonus: '10',
-    },
-    {
-      status: null,
-      round: 'Round 3',
-      xOXCoin: '100',
-      price: '0.06',
-      xOXBonus: '10',
-    },
-  ]
+  @media screen and (max-width: 900px) {
+    height: 43px !important;
+    font-size: 16px;
+    line-height: 19px;
+  }
+`
+
+interface IPropsButtonETH {
+  isInTimeRangeSale?: boolean
+}
+
+const ButtonETH = styled.div<IPropsButtonETH>``
+
+interface dataRoundPricing {
+  status: string | boolean | null
+  round: string | number
+  xOXCoin: string | number
+  price: string
+  xOXBonus: string
+}
+
+export enum TOKEN_IN_ROUND {
+  ROUND_ONE = 2700000,
+  ROUND_TOW = 3600000,
+  ROUND_THREE = 4500000,
+}
+
+const dataPricing: dataRoundPricing[] = [
+  {
+    status: 'Live',
+    round: 1,
+    xOXCoin: TOKEN_IN_ROUND.ROUND_ONE,
+    price: '0.044',
+    xOXBonus: '8',
+  },
+  {
+    status: null,
+    round: 2,
+    xOXCoin: TOKEN_IN_ROUND.ROUND_TOW,
+    price: '0.045',
+    xOXBonus: '6',
+  },
+  {
+    status: null,
+    round: 3,
+    xOXCoin: TOKEN_IN_ROUND.ROUND_THREE,
+    price: '0.046',
+    xOXBonus: '4',
+  },
+]
+
+interface IProps {
+  onModalExchangeSale: () => void
+  currentRound: number
+  isInTimeRangeSale: boolean
+  isUserInWhiteList: boolean
+  isTimeAllowWhitelist: boolean
+  setTypeBuyPrice: (typeBuy: number) => void
+  typeBuyPrice: number
+}
+
+function PricingInfo({
+  onModalExchangeSale,
+  currentRound,
+  isInTimeRangeSale,
+  isUserInWhiteList,
+  isTimeAllowWhitelist,
+  setTypeBuyPrice,
+}: IProps) {
+  const { account } = useActiveWeb3React()
+  const [arrDataRound, setArrDataRound] = useState<dataRoundPricing[]>(dataPricing)
+  const { width } = useWindowSize()
+  const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
+
+  const handleCheckRound = (num: number) => {
+    const dataUpdate = Array.from(dataPricing).map((item: dataRoundPricing) => {
+      return {
+        ...item,
+        status: isInTimeRangeSale && item.round === num,
+      }
+    })
+    setArrDataRound(dataUpdate)
+  }
+
+  useEffect(() => {
+    handleCheckRound(currentRound)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentRound, isInTimeRangeSale])
+
   return (
     <Wrapper>
       <div className="corner1" />
@@ -348,13 +483,18 @@ function PricingInfo({ onModalExchangeSale }) {
             <Text className="table-header_col">Round</Text>
             <Text className="table-header_col">XOX Coins</Text>
             <Text className="table-header_col">Price</Text>
-            <Text className="table-header_col">XOXS Bonus</Text>
+            {width > 900 && <Text className="table-header_col">XOXS Bonus</Text>}
+            {width <= 900 && <Text className="table-header_col"> Bonus</Text>}
           </Table>
 
-          {Array.from(dataPricing).map((item, index) => {
+          {Array.from(arrDataRound).map((item: dataRoundPricing, index: number) => {
             return (
-              <CustomTable className={item.status ? `active item_pricing_${index}` : `item_pricing_${index}`}>
-                {!!item.status && (
+              <CustomTable
+                // eslint-disable-next-line react/no-array-index-key
+                key={`active item_pricing_${index}`}
+                className={item.status ? `active item_pricing_${index}` : `item_pricing_${index}`}
+              >
+                {item.status && (
                   <>
                     <div className="corner_active1" />
                     <div className="edge_active1" />
@@ -373,31 +513,92 @@ function PricingInfo({ onModalExchangeSale }) {
                     color="#64C66D"
                     className={!!item.status && `active_text`}
                   >
-                    Live
+                    <>
+                      <div>Live</div>
+                      <div className="ring-container">
+                        <div className="ringring" />
+                        <div className="circle" />
+                      </div>
+                    </>
                   </Text>
                 ) : (
                   <Text className="table-header" />
                 )}
 
-                <Text className="table-header">Round 1</Text>
-                <Text className="table-header">15.000 XOX</Text>
-                <Text className="table-header">$0.06</Text>
-                <Text className="table-header">10%</Text>
+                {width > 900 && <Text className="table-header">Round {item.round}</Text>}
+                {width <= 900 && (
+                  <Text className="table-header" textAlign="center">
+                    R{item.round}
+                  </Text>
+                )}
+                <Text className="table-header">{Number(item.xOXCoin).toLocaleString()} XOX</Text>
+                <Text className="table-header">${item.price}</Text>
+                <Text className="table-header">{item.xOXBonus}%</Text>
               </CustomTable>
             )
           })}
         </CustomTableWrapper>
-        {!account && <ConnectWalletButton width="100%" />}
+        {!account && <ConnectWalletButtonCustom width="100%" />}
         {account && (
           <div className="btn_group">
-            <CustomButton onClick={onModalExchangeSale}>Buy with USDT</CustomButton>
-            <div className="btn_get_eth">
-              <div className="corner_btn_1" />
-              <div className="edge_btn_1" />
-              <div className="corner_btn_2" />
-              <div className="edge_btn_2" />
-              <span>Buy with USDC</span>
-            </div>
+            {isCanBuyWithWhitelistUser ? (
+              <>
+                <CustomButton
+                  onClick={() => {
+                    onModalExchangeSale()
+                    setTypeBuyPrice(TYPE_BY.BY_USDC)
+                  }}
+                >
+                  Buy with USDC
+                </CustomButton>
+
+                <ButtonETH
+                  className="btn_get_eth"
+                  onClick={() => {
+                    onModalExchangeSale()
+                    setTypeBuyPrice(TYPE_BY.BY_ETH)
+                  }}
+                  aria-hidden="true"
+                >
+                  <div className="corner_btn_1" />
+                  <div className="edge_btn_1" />
+                  <div className="corner_btn_2" />
+                  <div className="edge_btn_2" />
+                  <span>Buy with ETH</span>
+                </ButtonETH>
+              </>
+            ) : (
+              <>
+                <CustomButton
+                  onClick={() => {
+                    onModalExchangeSale()
+                    setTypeBuyPrice(TYPE_BY.BY_USDC)
+                  }}
+                  disabled={!isInTimeRangeSale}
+                >
+                  Buy with USDC
+                </CustomButton>
+
+                {!isInTimeRangeSale ? (
+                  <CustomButton disabled={!isInTimeRangeSale}>Buy with ETH</CustomButton>
+                ) : (
+                  <ButtonETH
+                    className="btn_get_eth"
+                    onClick={() => {
+                      onModalExchangeSale()
+                      setTypeBuyPrice(TYPE_BY.BY_ETH)
+                    }}
+                    aria-hidden="true"
+                  >
+                    <div className="corner_btn_1" />
+                    <div className="edge_btn_1" />
+                    <div className="corner_btn_2" />
+                    <div className="edge_btn_2" />
+                    <span>Buy with ETH</span>
+                  </ButtonETH>
+                )}
+              </>
+            )}
           </div>
         )}
       </Content>

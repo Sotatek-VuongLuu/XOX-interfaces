@@ -1,8 +1,15 @@
-import { Flex, Input, Select, Text } from '@pancakeswap/uikit'
-import { useCallback, useState } from 'react'
+import { Box, Flex, Input, LinkExternal, Select, Text } from '@pancakeswap/uikit'
+import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
+import TableLoader from 'components/TableLoader'
+import moment from 'moment'
+import BigNumber from 'bignumber.js'
+import truncateHash from '@pancakeswap/utils/truncateHash'
+import { linkTransaction } from 'views/BridgeToken'
+import { ChainId } from '@pancakeswap/sdk'
+import { Avatar } from '@mui/material'
 
 const Wrapper = styled.div`
   position: relative;
@@ -21,6 +28,10 @@ const Wrapper = styled.div`
       width: 40px;
       height: 4px;
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    }
+    @media screen and (max-width: 900px) {
+      font-size: 16px;
+      line-height: 19px;
     }
   }
 
@@ -71,6 +82,12 @@ const Wrapper = styled.div`
     z-index: 1;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
+
+  .link_external {
+    &:hover {
+      text-decoration: underline !important;
+    }
+  }
 `
 
 export const CustomTableWrapper = styled(Flex)`
@@ -112,9 +129,11 @@ export const Table = styled.div`
   grid-gap: 16px 35px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1fr repeat(3, 0.7fr) 1fr 0.4fr;
+  grid-template-columns: 0.15fr 1fr 1fr repeat(3, 0.7fr) 1fr;
   .table-header {
     margin-bottom: 16px;
+    font-size: 14px;
+    line-height: 17px;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -130,7 +149,7 @@ export const Table = styled.div`
     display: block;
     width: 100%;
     height: 0px;
-    border: 1px solid #444444;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     position: absolute;
     top: 35px;
   }
@@ -200,6 +219,10 @@ export const PageButtons = styled(Flex)`
     color: rgba(255, 255, 255, 0.87);
     min-width: 94px;
     padding: 0 10px;
+    @media screen and (max-width: 900px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
 
   & input {
@@ -221,14 +244,111 @@ export const NoTransactionWrapper = styled(Flex)`
     grid-column: 1 / span 7;
   }
 `
+const DataRow: React.FC<
+  React.PropsWithChildren<{
+    transaction: any
+    index: number
+    page: number
+    perPage: number
+  }>
+> = ({ transaction, index, page, perPage }) => {
+  return (
+    <>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        {index + 1 + (page - 1) * perPage}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Avatar alt="Remy Sharp" src={transaction?.avatar} sx={{ height: 24, width: 24, marginRight: '5px' }} />
+          <div>{transaction?.username}</div>
+        </div>
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        {moment.unix(transaction?.timestamp).format('DD/MM/YYYY HH:mm:ss')}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        ${Number(new BigNumber(transaction.amountInvestUSD).div(10 ** 6).toFixed(2)).toLocaleString()}
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        {Number(new BigNumber(transaction.amountBoughtXOX).div(10 ** 18).toFixed(2)).toLocaleString()} XOX
+      </Text>
+      <Text
+        fontSize={['14px', , '16px']}
+        fontFamily="Inter"
+        fontStyle="normal"
+        fontWeight="400"
+        lineHeight={['17px', , '19px']}
+        color="rgba(255, 255, 255, 0.87)"
+      >
+        {Number(new BigNumber(transaction.amountBoughtXOXS).div(10 ** 6).toFixed(2)).toLocaleString()} XOXS
+      </Text>
 
-function SaleHistory() {
-  const [currentTransactions, setCurrentTransactions] = useState([])
-  const [perPage, setPerPage] = useState(10)
+      <LinkExternal
+        href={`${linkTransaction(ChainId.GOERLI)}${transaction.id}`}
+        className="link_external"
+        target="_blank"
+        color="#fb8618"
+      >
+        <Text
+          fontSize={['14px', , '16px']}
+          fontFamily="Inter"
+          fontStyle="normal"
+          fontWeight="400"
+          lineHeight={['17px', , '19px']}
+          color="rgba(255, 255, 255, 0.87)"
+        >
+          {truncateHash(transaction.id, 5, 6)}
+        </Text>
+      </LinkExternal>
+    </>
+  )
+}
+
+interface IProps {
+  dataTransaction: any[]
+}
+
+function SaleHistory({ dataTransaction }: IProps) {
+  const [currentTransactions, setCurrentTransactions] = useState<any[]>(dataTransaction)
+  const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
-
   const setPagePagination = useCallback(
     (p: number) => {
       if (p < 1) {
@@ -247,6 +367,40 @@ function SaleHistory() {
   const handleChangeTempPage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
     if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
   }, [])
+
+  const handleSelectPerPage = useCallback(
+    (value: any) => {
+      setPerPage(value)
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [perPage],
+  )
+
+  const sortedTransactions = useMemo(() => {
+    if (!currentTransactions) return []
+    return currentTransactions ? currentTransactions.slice(perPage * (page - 1), page * perPage) : []
+  }, [currentTransactions, page, perPage])
+
+  useEffect(() => {
+    if (!currentTransactions) return
+    if (currentTransactions.length % perPage === 0) {
+      setMaxPage(Math.floor(currentTransactions.length / perPage))
+    } else {
+      setMaxPage(Math.floor(currentTransactions.length / perPage) + 1)
+    }
+  }, [currentTransactions, perPage])
+
+  useEffect(() => {
+    setTempPage(page.toString())
+  }, [page])
+
+  useEffect(() => {
+    setPage(1)
+  }, [perPage])
+
+  useEffect(() => {
+    setCurrentTransactions(dataTransaction)
+  }, [dataTransaction])
 
   return (
     <>
@@ -292,9 +446,9 @@ function SaleHistory() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              Wallet Address
+              Username
             </Text>
-            <ClickableColumnHeader
+            <Text
               fontSize="16px"
               fontFamily="Inter"
               fontStyle="normal"
@@ -303,11 +457,9 @@ function SaleHistory() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              <Flex alignItems="center">
-                <span style={{ marginRight: '12px' }}>Time</span>{' '}
-              </Flex>
-            </ClickableColumnHeader>
-            <ClickableColumnHeader
+              Time
+            </Text>
+            <Text
               fontSize="16px"
               fontFamily="Inter"
               fontStyle="normal"
@@ -316,10 +468,8 @@ function SaleHistory() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              <Flex alignItems="center">
-                <span style={{ marginRight: '12px' }}>Total Value</span>{' '}
-              </Flex>
-            </ClickableColumnHeader>
+              Total Value
+            </Text>
             <Text
               fontSize="16px"
               fontFamily="Inter"
@@ -340,9 +490,9 @@ function SaleHistory() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              XOXS Received
+              XOXS Reward
             </Text>
-            <ClickableColumnHeader
+            <Text
               fontSize="16px"
               fontFamily="Inter"
               fontStyle="normal"
@@ -351,15 +501,31 @@ function SaleHistory() {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              <Flex alignItems="center">
-                <span style={{ marginRight: '12px' }}>Txh</span>
-              </Flex>
-            </ClickableColumnHeader>
-            {currentTransactions.length === 0 ? (
-              <NoTransactionWrapper justifyContent="center">
-                <Text textAlign="center">No Transactions</Text>
-              </NoTransactionWrapper>
-            ) : undefined}
+              Txh
+            </Text>
+            {currentTransactions ? (
+              <>
+                {sortedTransactions.map((transaction, index) => {
+                  return (
+                    // eslint-disable-next-line react/no-array-index-key
+                    <Fragment key={index}>
+                      <DataRow transaction={transaction} index={index} page={page} perPage={perPage} />
+                    </Fragment>
+                  )
+                })}
+                {sortedTransactions.length === 0 ? (
+                  <NoTransactionWrapper justifyContent="center">
+                    <Text textAlign="center">No Transactions</Text>
+                  </NoTransactionWrapper>
+                ) : undefined}
+              </>
+            ) : (
+              <>
+                <TableLoader />
+                {/* spacer */}
+                <Box />
+              </>
+            )}
           </Table>
         </CustomTableWrapper>
       </Wrapper>
@@ -375,7 +541,7 @@ function SaleHistory() {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M5.97949 1.25L1.72949 5.5L5.97949 9.75"
-                  stroke={page === 1 ? 'white' : '#9072FF'}
+                  stroke={page === 1 ? 'white' : '#FB8618'}
                   strokeOpacity={page === 1 ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
@@ -389,7 +555,8 @@ function SaleHistory() {
                 [...Array(maxPage)].map((_, i) => (
                   <button
                     type="button"
-                    key={_}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={i}
                     onClick={() => setPagePagination(i + 1)}
                     className={`page ${page === i + 1 ? 'current' : ''}`}
                   >
@@ -465,7 +632,7 @@ function SaleHistory() {
               <svg xmlns="http://www.w3.org/2000/svg" width="7" height="11" viewBox="0 0 7 11" fill="none">
                 <path
                   d="M1.72949 1.25L5.97949 5.5L1.72949 9.75"
-                  stroke={page === maxPage ? 'white' : '#9072FF'}
+                  stroke={page === maxPage ? 'white' : '#FB8618'}
                   strokeOpacity={page === maxPage ? '0.38' : '1'}
                   strokeWidth="2"
                   strokeLinecap="round"
@@ -477,6 +644,10 @@ function SaleHistory() {
           <div>
             <Select
               options={[
+                {
+                  value: 5,
+                  label: '5/Page',
+                },
                 {
                   value: 10,
                   label: '10/Page',
@@ -494,7 +665,7 @@ function SaleHistory() {
                   label: '100/Page',
                 },
               ]}
-              onOptionChange={(option: any) => setPerPage(option.value)}
+              onOptionChange={(option: any) => handleSelectPerPage(option.value)}
               className="select-page"
             />
             <Text className="go-page">Go to page</Text>

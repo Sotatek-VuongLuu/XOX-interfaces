@@ -1,6 +1,13 @@
 import { Button } from '@pancakeswap/uikit'
-import { useEffect, useState } from 'react'
+import BigNumber from 'bignumber.js'
+import ConnectWalletButton from 'components/ConnectWalletButton'
+import { ColumnCenter } from 'components/Layout/Column'
+import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import moment from 'moment'
+import { useEffect, useMemo, useState } from 'react'
+import { GridLoader } from 'react-spinners'
 import styled from 'styled-components'
+import { IVestingTime } from 'views/Vesting'
 
 const Wrapper = styled.div`
   .total_vested {
@@ -9,6 +16,57 @@ const Wrapper = styled.div`
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
     margin-bottom: 16px;
+    @media screen and (max-width: 900px) {
+      font-size: 14px;
+      line-height: 17px;
+    }
+  }
+
+  .btn_connect_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.87);
+      margin-top: 180px;
+      margin-bottom: 24px;
+    }
+
+    .btn_connect {
+      width: 181px;
+      height: 43px;
+      margin-bottom: 200px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+    }
+
+    .nodata {
+      margin-bottom: 200px;
+    }
+
+    @media screen and (max-width: 900px) {
+      p {
+        font-size: 12px;
+        line-height: 20px;
+        margin-top: 160px;
+      }
+
+      .btn_connect {
+        width: 146px;
+        height: 37px;
+        font-size: 14px;
+        line-height: 17px;
+      }
+    }
   }
 `
 
@@ -20,11 +78,20 @@ const Content = styled.div`
     .sale-schedule-item {
       display: flex;
       align-items: center;
+      padding-top: 40px;
+
+      .item_wrap {
+        display: flex;
+      }
     }
 
     .sale-schedule-item.flex-col {
       flex-direction: column;
       align-items: flex-start;
+      padding-top: 0px;
+    }
+    .sale-schedule-item.no-padding {
+      padding-top: 22px;
     }
   }
 
@@ -34,7 +101,7 @@ const Content = styled.div`
     font-size: 16px;
     line-height: 19px;
     color: #fb8618;
-    margin-bottom: 21px;
+    top: 24px;
   }
 
   .sale_item {
@@ -59,6 +126,7 @@ const Content = styled.div`
     font-size: 14px;
     line-height: 17px;
     color: rgba(255, 255, 255, 0.6);
+    margin-top: 4px;
   }
 
   .next_day {
@@ -79,11 +147,13 @@ const Content = styled.div`
     .heading-sale {
       font-size: 14px;
       line-height: 17px;
+      top: 18px;
     }
 
     .title_vested {
       font-size: 12px;
       line-height: 15px;
+      margin-top: 8px;
     }
 
     .amount_vested {
@@ -107,12 +177,16 @@ const CustomButtom = styled(Button)`
   font-size: 16px;
   line-height: 19px;
   color: #ffffff;
+  width: 105px;
+  height: 43px;
   padding: 12px 30px;
 
   @media screen and (max-width: 900px) {
     padding: 12px 20px;
     font-size: 14px;
     line-height: 17px;
+    width: 80px;
+    height: 37px;
   }
 `
 
@@ -124,81 +198,116 @@ const Img = styled.img`
   margin-right: 16px;
 `
 
-const SaleItem = ({ item, index }) => {
+const SaleItem = ({
+  item,
+  index,
+  handleClaim,
+  handleGetDataVesting,
+}: {
+  item: IVestingTime
+  index: number
+  handleClaim: (round: number, remainning: any) => void
+  handleGetDataVesting: () => void
+}) => {
+  const [count, setCount] = useState<number>(null)
+  const [itemVesting, setItem] = useState(item)
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      handleGetDataVesting()
+    }, 5000)
+    return () => clearTimeout(id)
+  }, [count])
+
+  const handleCheckCount = (it: any) => {
+    if (it.startTime.length === 0) return
+    const NOW = Date.now()
+    const i = Array.from(it.startTime).findIndex((value) => value > NOW)
+
+    if (i === -1) {
+      setCount(9)
+    } else {
+      setCount(i)
+    }
+  }
+
+  useEffect(() => {
+    setItem(item)
+    handleCheckCount(item)
+  }, [item])
+
   return (
     <div className={`sale_item sale_item_${index}`}>
-      <div className="heading-sale">{item.title}</div>
+      <div className="heading-sale">{itemVesting.title}</div>
       <div className="sale-container-bottom ">
         <div className="sale-schedule-item ">
-          <p>
-            <Img src="/images/1/tokens/xox_new_style.svg" alt="icon" height={30} width={30} className="token_first" />
-          </p>
-          <div>
-            <p className="amount_vested">{item.amountVested}</p>
-            <p className="title_vested">Vested</p>
+          <div className="item_wrap">
+            <p>
+              <Img
+                src="/images/1/tokens/xox_new_overlay.svg"
+                alt="icon"
+                height={30}
+                width={30}
+                className="token_first"
+              />
+            </p>
+            <div>
+              <p className="amount_vested">{Number(itemVesting.remaining).toLocaleString()}</p>
+              <p className="title_vested">Unclaimed</p>
+            </div>
           </div>
         </div>
         <div className="sale-schedule-item">
-          <p>
-            <Img src="/images/1/tokens/xox_new_style.svg" alt="icon" height={30} width={30} className="token_first" />
-          </p>
-          <div>
-            <p className="amount_vested">{item.remaining}</p>
-            <p className="title_vested">Remaining</p>
+          <div className="item_wrap">
+            <p>
+              <Img src="/images/1/tokens/xox_new.svg" alt="icon" height={30} width={30} className="token_first" />
+            </p>
+            <div>
+              <p className="amount_vested">{Number(itemVesting.amountVested).toLocaleString()}</p>
+              <p className="title_vested">Claimed</p>
+            </div>
           </div>
         </div>
         <div className="sale-schedule-item">
-          <p>
-            <Img src="/images/1/tokens/xox_new_style.svg" alt="icon" height={30} width={30} className="token_first" />
-          </p>
-          <div>
-            <p className="amount_vested">{item.remaining}</p>
-            <p className="title_vested">Your current XOX token</p>
+          <div className="item_wrap">
+            <p>
+              <Img src="/images/1/tokens/xox_new.svg" alt="icon" height={30} width={30} className="token_first" />
+            </p>
+            <div>
+              <p className="amount_vested">{Number(itemVesting.yourCurrentXOX).toLocaleString()}</p>
+              <p className="title_vested">Next Claim Amount</p>
+            </div>
           </div>
         </div>
         <div className="sale-schedule-item flex-col">
-          <p className="next_day">Next unlocking date: 02/15/2023</p>
+          <p className="next_day">
+            Next unlocking date:{' '}
+            {itemVesting.startTime.length !== 0
+              ? moment.unix(itemVesting.startTime[count] / 1000).format('MM/DD/YYYY')
+              : ' -/-/-'}
+          </p>
           <p>
-            <CountDown startTime={item.startTime} />
+            <CountDown startTime={itemVesting.startTime[count]} setCount={setCount} count={count} />
           </p>
         </div>
-        <div className="sale-schedule-item">
-          <CustomButtom type="button">Claim</CustomButtom>
+        <div className="sale-schedule-item no-padding">
+          <CustomButtom
+            type="button"
+            onClick={() => handleClaim(itemVesting.round, itemVesting.yourCurrentXOX)}
+            disabled={Number(itemVesting.yourCurrentXOX) === 0}
+          >
+            Claim
+          </CustomButtom>
         </div>
       </div>
     </div>
   )
 }
 
-const vestingTiming: any[] = [
-  {
-    title: 'Sale 1',
-    amountVested: 0,
-    remaining: 0,
-    yourCurrentXOX: 0,
-    startTime: 1679276974000,
-    statusClaim: false,
-  },
-  {
-    title: 'Sale 2',
-    amountVested: 0,
-    remaining: 0,
-    yourCurrentXOX: 0,
-    startTime: 1679276974000,
-    statusClaim: false,
-  },
-  {
-    title: 'Sale 3',
-    amountVested: 0,
-    remaining: 0,
-    yourCurrentXOX: 0,
-    startTime: 1679276974000,
-    statusClaim: false,
-  },
-]
-
 interface Props {
   startTime: any
+  setCount?: (count: number) => void
+  count: number
 }
 
 const handleTime = (time: number) => {
@@ -284,7 +393,6 @@ const WrapperTime = styled.div`
     @media screen and (max-width: 900px) {
       width: 66px;
       height: 59px;
-      gap: 8px;
 
       .number_time {
         font-size: 20px;
@@ -302,7 +410,22 @@ const WrapperTime = styled.div`
   }
 `
 
-const CountDown = ({ startTime }: Props) => {
+const NoDataWraper = styled.div`
+  width: 100%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 18px;
+  color: rgba(255, 255, 255, 0.6);
+`
+
+const ConfirmedIcon = styled(ColumnCenter)`
+  padding: 14px 0 34px 0;
+`
+
+const CountDown = ({ startTime, setCount, count }: Props) => {
   const [timeList, setTimeList] = useState({
     days: 0,
     hours: 0,
@@ -312,6 +435,7 @@ const CountDown = ({ startTime }: Props) => {
   const timeStart = Math.floor(new Date(startTime).getTime()) / 1000
 
   const NOW = Date.now() / 1000
+
   const periodTime = Math.floor(timeStart - NOW)
 
   const handleCountDown = () => {
@@ -320,14 +444,20 @@ const CountDown = ({ startTime }: Props) => {
     const minutes = Math.floor((periodTime % 3600) / 60)
     const seconds = periodTime - days * 3600 * 24 - hours * 3600 - minutes * 60
     setTimeList({ ...timeList, days, hours, minutes, seconds })
+    const timeStampAtNow = Date.now()
+    if (timeStampAtNow >= startTime) {
+      // eslint-disable-next-line no-unused-expressions
+      count < 9 && setCount(count + 1)
+    }
   }
 
   // eslint-disable-next-line consistent-return
   useEffect(() => {
-    if (Math.floor(periodTime) > 0) {
+    if (Math.floor(periodTime) >= 0) {
       const refreshInterval = setInterval(handleCountDown, 1000)
       return () => clearInterval(refreshInterval)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeList, timeStart])
 
   const renderTitleTime = (key: any) => {
@@ -361,17 +491,76 @@ const CountDown = ({ startTime }: Props) => {
   )
 }
 
-function VestingSchedule() {
+function VestingSchedule({
+  dataVesting,
+  handleClaim,
+  handleGetDataVesting,
+}: {
+  dataVesting: IVestingTime[]
+  handleClaim: (round: number, remainning: number) => void
+  handleGetDataVesting: () => void
+}) {
+  const { account } = useActiveWeb3React()
+  const [newVesting, setNewVesting] = useState<IVestingTime[]>(dataVesting)
+
+  useEffect(() => {
+    setNewVesting(dataVesting)
+  }, [dataVesting])
+
+  const renderVestingSale = useMemo(() => {
+    return (
+      <>
+        {Array.from(newVesting).map((item: IVestingTime, index) => {
+          return (
+            <SaleItem item={item} index={index} handleClaim={handleClaim} handleGetDataVesting={handleGetDataVesting} />
+          )
+        })}
+      </>
+    )
+  }, [handleClaim, handleGetDataVesting, newVesting])
+
   return (
     <Wrapper>
-      <div className="total_vested">Total vested at this time: 2,000</div>
-      <Content>
-        <div className="over_flow">
-          {Array.from(vestingTiming).map((item, index) => {
-            return <SaleItem item={item} index={index} />
-          })}
+      {!account && (
+        <div className="btn_connect_container">
+          <p>Connect to your wallet to view your vesting shedule.</p>
+          <ConnectWalletButton scale="sm" style={{ whiteSpace: 'nowrap' }} className="btn_connect">
+            <span>Connect Wallet</span>
+          </ConnectWalletButton>
         </div>
-      </Content>
+      )}
+      {account && (
+        <>
+          {newVesting.length > 0 && newVesting[2]?.startTime.length !== 0 ? (
+            <div className="total_vested">
+              Total vested at this time:{' '}
+              {Number(
+                new BigNumber(newVesting[0]?.amountVested)
+                  .plus(newVesting[1]?.amountVested)
+                  .plus(newVesting[2]?.amountVested)
+                  .toFixed(2),
+              ).toLocaleString()}
+            </div>
+          ) : (
+            <div className="btn_connect_container">
+              <p className="nodata">No Data</p>
+            </div>
+          )}
+          <Content>
+            <div className="over_flow">
+              {newVesting[2]?.startTime.length === 0 ? (
+                <NoDataWraper>
+                  <ConfirmedIcon>
+                    <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
+                  </ConfirmedIcon>
+                </NoDataWraper>
+              ) : (
+                renderVestingSale
+              )}
+            </div>
+          </Content>
+        </>
+      )}
     </Wrapper>
   )
 }

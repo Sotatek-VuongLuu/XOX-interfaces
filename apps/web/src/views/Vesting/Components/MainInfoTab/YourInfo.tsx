@@ -1,22 +1,67 @@
+import { formatUnits } from '@ethersproject/units'
 import { useTranslation } from '@pancakeswap/localization'
-import { CopyButton, Flex, Input, Select, Text } from '@pancakeswap/uikit'
+import { CopyButton, Flex, Text } from '@pancakeswap/uikit'
+import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
-import { useCallback, useState } from 'react'
-import { isMobile } from 'react-device-detect'
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import styled from 'styled-components'
-import { Arrow } from 'views/Info/components/InfoTables/shared'
-import { ClickableColumnHeader, CustomTableWrapper, NoTransactionWrapper, PageButtons, Table } from './SaleHistory'
+import { IRefInfo } from 'views/Vesting'
 import TabClaimHistory from './TabClaimHistory'
 import TabSaleHistory from './TabSaleHistory'
 
 interface IProps {
   dataInfo: any[]
-  dataRefInfo: any[]
+  dataRefInfo: IRefInfo[]
+  dataTransaction: any[]
+  dataTransactionClaimOfUser: any[]
 }
 
-const Wrapper = styled.div``
+const Wrapper = styled.div`
+  .btn_connect_container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+
+    p {
+      font-weight: 400;
+      font-size: 16px;
+      line-height: 19px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.87);
+      margin-top: 180px;
+      margin-bottom: 24px;
+    }
+
+    .btn_connect {
+      width: 181px;
+      height: 43px;
+      margin-bottom: 200px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #ffffff;
+    }
+
+    @media screen and (max-width: 900px) {
+      p {
+        font-size: 12px;
+        line-height: 20px;
+        margin-top: 160px;
+      }
+
+      .btn_connect {
+        width: 146px;
+        height: 37px;
+        font-size: 14px;
+        line-height: 17px;
+      }
+    }
+  }
+`
 
 const Content = styled.div`
   .your_amount {
@@ -63,8 +108,9 @@ const Content = styled.div`
 
   .your_ref {
     display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
+    grid-template-columns: 0.8fr 1fr 1fr;
     gap: 16px;
+    margin-top: 30px;
 
     .my_code {
       font-weight: 700;
@@ -145,6 +191,13 @@ const Content = styled.div`
     }
   }
 
+  .ngumy_code {
+    padding-left: 49px;
+    @media screen and (max-width: 900px) {
+      padding-left: 0px;
+    }
+  }
+
   .heading_info_vesting {
     position: relative;
     &::after {
@@ -161,7 +214,16 @@ const Content = styled.div`
   .heading_info_vesting_tab {
     padding: 10px 16px;
     border-radius: 8px;
+    margin-right: 8px;
     cursor: pointer;
+    &:hover {
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    }
+
+    @media screen and (max-width: 900px) {
+      font-size: 12px;
+      line-height: 15px;
+    }
   }
 
   .heading_info_vesting_tab.vesting_info_active {
@@ -217,137 +279,135 @@ const Content = styled.div`
   }
 `
 
-function YourInfo({ dataInfo, dataRefInfo }: IProps) {
-  const [currentTransactions, setCurrentTransactions] = useState([])
-  const [perPage, setPerPage] = useState(5)
-  const [tempPage, setTempPage] = useState('1')
-  const [page, setPage] = useState(1)
-  const [maxPage, setMaxPage] = useState(1)
+function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaimOfUser }: IProps) {
+  const [currentTransactions, setCurrentTransactions] = useState(dataTransaction)
   const { account } = useActiveWeb3React()
   const { t } = useTranslation()
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
   const [tab, setTab] = useState(0)
 
-  const setPagePagination = useCallback(
-    (p: number) => {
-      if (p < 1) {
-        setPage(1)
-        return
-      }
-      if (p > maxPage) {
-        setPage(maxPage)
-        return
-      }
-      setPage(p)
-    },
-    [maxPage],
-  )
-
-  const handleChangeTempPage = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
-    if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
-  }, [])
+  useEffect(() => {
+    setCurrentTransactions(dataTransaction)
+  }, [dataTransaction])
 
   return (
     <Wrapper>
-      <Content>
-        <div className="your_amount">
-          {Array.from(dataInfo).map((item) => {
-            return (
-              <div className="item">
-                <div className="corner_1" />
-                <div className="edge_1" />
-                <div className="corner_2" />
-                <div className="edge_2" />
-                <p className="item_amount">{item.amount}</p>
-                <p className="item_title">{item.title}</p>
-              </div>
-            )
-          })}
+      {!account && (
+        <div className="btn_connect_container">
+          <p>Connect to your wallet to view your vesting shedule.</p>
+          <ConnectWalletButton scale="sm" style={{ whiteSpace: 'nowrap' }} className="btn_connect">
+            <span>Connect Wallet</span>
+          </ConnectWalletButton>
         </div>
+      )}
+      {account && (
+        <Content>
+          <div className="your_amount">
+            {Array.from(dataInfo).map((item) => {
+              return (
+                <div className="item">
+                  <div className="corner_1" />
+                  <div className="edge_1" />
+                  <div className="corner_2" />
+                  <div className="edge_2" />
+                  <p className="item_amount">
+                    {item.title === 'Amount invested' && item.amount !== '-' && <span>$</span>}
+                    {item.amount !== '-' ? Number(item.amount).toLocaleString() : item.amount}
+                  </p>
+                  <p className="item_title">{item.title}</p>
+                </div>
+              )
+            })}
+          </div>
 
-        <div className="table_your_info">
-          <Flex mb="16px">
+          <div className="table_your_info">
+            <Flex mb="16px">
+              <Text
+                className={tab === 0 ? `heading_info_vesting_tab vesting_info_active` : `heading_info_vesting_tab`}
+                fontSize="14px"
+                fontFamily="Inter"
+                fontStyle="normal"
+                fontWeight="700"
+                color="rgba(255, 255, 255, 0.87)"
+                onClick={() => setTab(0)}
+              >
+                Sale History
+              </Text>
+
+              <Text
+                className={tab === 1 ? `heading_info_vesting_tab vesting_info_active` : `heading_info_vesting_tab`}
+                fontSize="14px"
+                fontFamily="Inter"
+                fontStyle="normal"
+                fontWeight="700"
+                color="rgba(255, 255, 255, 0.87)"
+                onClick={() => setTab(1)}
+              >
+                Claim History
+              </Text>
+            </Flex>
+          </div>
+
+          {tab === 0 && <TabSaleHistory currentTransactions={currentTransactions} />}
+          {tab === 1 && <TabClaimHistory currentTransactions={dataTransactionClaimOfUser} />}
+
+          <Flex mb="16px" mt="24px" justifyContent="space-between">
             <Text
-              className={tab === 0 ? `heading_info_vesting_tab vesting_info_active` : `heading_info_vesting_tab`}
-              fontSize="14px"
+              className="heading_info_vesting"
+              fontSize="20px"
               fontFamily="Inter"
               fontStyle="normal"
               fontWeight="700"
               lineHeight="24px"
               color="rgba(255, 255, 255, 0.87)"
-              onClick={() => setTab(0)}
+              height="24px"
             >
-              Sale History
-            </Text>
-
-            <Text
-              className={tab === 1 ? `heading_info_vesting_tab vesting_info_active` : `heading_info_vesting_tab`}
-              fontSize="14px"
-              fontFamily="Inter"
-              fontStyle="normal"
-              fontWeight="700"
-              lineHeight="24px"
-              color="rgba(255, 255, 255, 0.87)"
-              onClick={() => setTab(1)}
-            >
-              Claim History
+              Referral
             </Text>
           </Flex>
-        </div>
 
-        {tab === 0 && <TabSaleHistory />}
-        {tab === 1 && <TabClaimHistory />}
-
-        <Flex mb="16px" mt="24px" justifyContent="space-between">
-          <Text
-            className="heading_info_vesting"
-            fontSize="20px"
-            fontFamily="Inter"
-            fontStyle="normal"
-            fontWeight="700"
-            lineHeight="24px"
-            color="rgba(255, 255, 255, 0.87)"
-            height="24px"
-          >
-            Referral
-          </Text>
-        </Flex>
-
-        <div className="your_ref">
-          {Array.from(dataRefInfo).map((item) => {
-            return (
-              <div className="item_your-ref">
-                <div className="corner_1" />
-                <div className="edge_1" />
-                <div className="corner_2" />
-                <div className="edge_2" />
-                <p className="item_your-ref_amount">{item.amount}</p>
-                <p className="item_your-ref_title">{item.title}</p>
-              </div>
-            )
-          })}
-          <div>
-            <p className="my_code">My Referral Code</p>
-            <div className="code">
-              <div className="content_code_number">
-                {account && (
-                  <>
-                    <span className="code_number">{userProfile?.referralCode}</span>
-                    <span>
-                      <CopyButton
-                        width="24px"
-                        text={userProfile?.referralCode}
-                        tooltipMessage={t('Copied')}
-                        button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
-                      />
-                    </span>
-                  </>
-                )}
+          <div className="your_ref">
+            {Array.from(dataRefInfo).map((item: IRefInfo) => {
+              return (
+                <div className="item_your-ref">
+                  <div className="corner_1" />
+                  <div className="edge_1" />
+                  <div className="corner_2" />
+                  <div className="edge_2" />
+                  <p className="item_your-ref_amount">
+                    {item.totalTransactionApplyReferral
+                      ? item.title === 'XOXS amount received from Referral'
+                        ? Number(formatUnits(item.rewardXOXS, 6)).toLocaleString()
+                        : Number(item.totalTransactionApplyReferral).toLocaleString()
+                      : item.amountInit}
+                  </p>
+                  <p className="item_your-ref_title">{item.title}</p>
+                </div>
+              )
+            })}
+            <div className="ngumy_code">
+              <p className="my_code">My Referral Code</p>
+              <div className="code">
+                <div className="content_code_number">
+                  {account && (
+                    <>
+                      <span className="code_number">{userProfile?.referralCode}</span>
+                      <span>
+                        <CopyButton
+                          width="24px"
+                          text={userProfile?.referralCode}
+                          tooltipMessage={t('Copied')}
+                          button={<img src="/images/CopySimple.svg" alt="CopySimple" />}
+                        />
+                      </span>
+                    </>
+                  )}
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </Content>
+        </Content>
+      )}
     </Wrapper>
   )
 }

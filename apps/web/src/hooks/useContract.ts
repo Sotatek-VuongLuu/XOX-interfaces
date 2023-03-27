@@ -10,7 +10,7 @@ import {
   Zap,
 } from 'config/abi/types'
 import zapAbi from 'config/abi/zap.json'
-import { useProviderOrSigner } from 'hooks/useProviderOrSigner'
+import { useProviderOrSigner, useProviderOrSignerPresale } from 'hooks/useProviderOrSigner'
 import { useMemo } from 'react'
 import {
   getMulticallAddress,
@@ -69,6 +69,7 @@ import {
   getContractXOXPool,
   getContractXOXTokenBridge,
   getContractFarmingLP,
+  getContractPreSale,
 } from 'utils/contractHelpers'
 
 import { useAccount, useProvider, useSigner } from 'wagmi'
@@ -454,4 +455,9 @@ export const useContractFarmingLP = (withSignerIfPossible = true) => {
 
 export function useBridgeTokenContract(chainId: ChainId, withSignerIfPossible?: boolean): Contract | null {
   return useContract(getBridgeTokenAddress(chainId), BRIDGE_TOKEN_ABI, withSignerIfPossible)
+}
+
+export const useXOXPreSaleContract = (chainId: ChainId, withSignerIfPossible = true) => {
+  const providerOrSigner = useProviderOrSignerPresale(withSignerIfPossible, chainId)
+  return useMemo(() => getContractPreSale(providerOrSigner as any, chainId), [providerOrSigner, chainId])
 }

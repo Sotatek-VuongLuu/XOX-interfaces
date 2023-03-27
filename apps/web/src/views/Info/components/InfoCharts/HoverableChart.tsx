@@ -106,8 +106,8 @@ const HoverableChart = ({
           value: minValue === maxValue && index === 0 ? day[valueProperty] - 0.000001 : day[valueProperty],
           vol:
             index === data.length - 1 && selectedCurrency.symbol.toUpperCase() === 'XOX'
-              ? data[data.length - 2].VolUSD
-              : day.VolUSD,
+              ? data[data.length - 2]?.VolUSD
+              : day?.VolUSD,
           priceChange: formatAmountNumber(day.priceChange || (day?.priceUSD - prev) / prev),
           month: fromUnixTime(day.date).getMonth(),
         }
