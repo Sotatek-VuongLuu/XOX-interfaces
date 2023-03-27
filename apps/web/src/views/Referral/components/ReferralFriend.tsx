@@ -12,7 +12,7 @@ import {
   TableRow,
   Tooltip,
 } from '@mui/material'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useState, useRef } from 'react'
 import styled, { keyframes } from 'styled-components'
 import { Swiper, SwiperSlide } from 'swiper/react'
 import { Navigation, Pagination, A11y } from 'swiper'
@@ -25,7 +25,7 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { getUserFriend } from 'services/referral'
 import { USD_DECIMALS } from 'config/constants/exchange'
-import { formatAmountNumber, roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatAmountNumber2, roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
 import axios from 'axios'
 import { CopyButton, useToast } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
@@ -630,6 +630,13 @@ const ReferralFriend = ({
   const { toastError, toastSuccess, toastWarning } = useToast()
   const [cacheAmountUnClaimOfUser, setCacheAmountUnClaimOfUser] = useState<null | number>(null)
 
+  const swiperRef = useRef(null)
+
+  useEffect(() => {
+    if (!swiperRef.current) return
+    swiperRef.current.swiper?.slideTo(currentLevelReach ? currentLevelReach - 1 : 0)
+  }, [currentLevelReach])
+
   const handleClaimAll = async () => {
     try {
       setIsShowModalConfirmClaimAll(false)
@@ -840,7 +847,7 @@ const ReferralFriend = ({
                                 />
                               </div>
                               <div className="row-item">
-                                <p className="point">{formatAmountNumber(row.point, 2)}</p>
+                                <p className="point">{formatAmountNumber2(Number(row.point), 2)}</p>
                               </div>
                             </div>
                           ))}
@@ -863,6 +870,7 @@ const ReferralFriend = ({
                   modules={[Navigation, Pagination, A11y]}
                   navigation
                   scrollbar={{ draggable: true }}
+                  ref={swiperRef}
                 >
                   {listLevelMustReach.map((item: IItemLevel) => {
                     return (
@@ -874,19 +882,18 @@ const ReferralFriend = ({
                           <div className="main-img">
                             <img
                               className="first-img"
-                              src={item.lever === currentLevelReach ? '/images/current_item.svg' : 'images/item.svg'}
+                              src={item.isReach ? '/images/current_item.svg' : 'images/item.svg'}
                               alt="images"
                             />
                             <img className="sec-img" src="/images/current_item.svg" alt="images" />
                           </div>
                           <div className="inner-text">
                             <img src={item.icon} alt="icons" className="jewellery" />
-
                             <div
                               className="shadow"
                               style={{
                                 background: `${
-                                  item.lever === currentLevelReach
+                                  item.isReach
                                     ? 'radial-gradient(50% 50% at 50% 50%, #f97d1d 0%, rgba(64, 25, 21, 0) 100%)'
                                     : 'radial-gradient(50% 50% at 50% 50%, #000000 0%, rgba(48, 48, 48, 0) 100%)'
                                 }`,
@@ -926,7 +933,7 @@ const ReferralFriend = ({
                     // <div className="unclaim_reward_container">
                     //   <div className="unclaim_reward">
                     <p className="total_un_claimed">
-                      ${Number(totalUnClaimed) <= 0 ? 0 : Number(totalUnClaimed)} Unclaimed Rewards
+                      ${Number(totalUnClaimed) <= 0 ? 0 : formatAmountNumber2(Number(totalUnClaimed))} Unclaimed Rewards
                     </p>
                     //   </div>
                     // </div>

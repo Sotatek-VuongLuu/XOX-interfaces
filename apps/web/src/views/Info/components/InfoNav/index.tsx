@@ -102,8 +102,11 @@ const MainContent = styled.div`
     transform: translateX(-50%);
     left: 50%;
     top: 0;
-    width: 397px;
-    max-width: unset;
+    /* width: 397px;
+    max-width: unset; */
+    width: auto;
+    height: auto;
+    object-fit: cover;
   }
 
   .get-xox {
@@ -174,7 +177,10 @@ const MainContent = styled.div`
       top: 50%;
       left: unset;
       right: 0;
-      width: auto;
+
+      width: 740px;
+      height: 200px;
+      object-fit: cover;
     }
 
     .corner1 {
@@ -262,8 +268,7 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
         <div className="edge1" />
         <div className="corner2" />
         <div className="edge2" />
-        <img alt="" src="images/galaxy-dk.svg" />
-        {isMobile ? <img alt="" src="/images/galaxy-mo.svg" /> : <img alt="" src="/images/galaxy-dk.svg" />}
+        {isMobile ? <img alt="" src="/images/galaxy-mb.png" /> : <img alt="" src="/images/galaxy-pc.png" />}
 
         <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
           Swap to get XOX & XOXS. Earn like a Pro
@@ -340,7 +345,7 @@ export const NetworkSwitcher: React.FC<{ activeIndex: number }> = ({ activeIndex
     <UserMenu
       alignItems="top"
       ml="8px"
-      avatarSrc={`/images/chains/${multiChainId[chainName]}.png`}
+      avatarSrc={`/images/chains/${multiChainId[chainName]}.svg`}
       text={
         foundChain ? (
           <>

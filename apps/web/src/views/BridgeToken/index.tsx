@@ -51,6 +51,7 @@ import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundB
 import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import { ToastDescriptionWithTx } from 'components/Toast'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 const SwapButton = styled(PancakeButton)`
   background: ${({ disabled }) =>
@@ -83,7 +84,7 @@ const WapperHeight = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 820px;
+  /* min-height: 820px; */
 `
 
 const WapperBg = styled.div`
@@ -307,15 +308,20 @@ const SwapBackgroundWrapper = styled.div`
 
 const BackgroundWrapper = styled.div`
   position: absolute;
-  top: 200px;
+  top: 35px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: calc(100% - 200px);
+  height: calc(100% - 35px);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   background: rgba(255, 255, 255, 0.03);
-  /* backdrop-filter: blur(10px); */
+  backdrop-filter: blur(10px);
+  @media (max-width: 576px) {
+    width: 98.5%;
+    height: calc(100% - 25px);
+    top: 25px;
+  }
 `
 
 const Wrapper = styled(Flex)`
@@ -324,6 +330,7 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
+  margin: 150px 0 100px;
 `
 
 const MainBackground = styled.div`
@@ -594,7 +601,7 @@ export default function BridgeToken() {
     <Page>
       <WapperHeight>
         {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
-        <Flex width={['328px', , '559px']} className="container_bridge">
+        <Flex width={['328px', , '559px']}>
           <Wrapper flex="column" position="relative">
             {isMobile ? (
               <>
@@ -801,8 +808,9 @@ export default function BridgeToken() {
                 </div>
                 <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
                 <div className="noti_claim_pending_h3">
-                  Bridging {amountInput} XOX <span>(</span> {NETWORK_LABEL[chainId]} <span>)</span> to {amountTo} XOX{' '}
-                  <span>(</span> {NETWORK_LABEL[getChainIdToByChainId(chainId)]} <span>)</span>
+                  Bridging {formatAmountNumber2(Number(amountInput), 6)} XOX <span>(</span> {NETWORK_LABEL[chainId]}{' '}
+                  <span>)</span> to {formatAmountNumber2(Number(amountTo), 6)} XOX <span>(</span>{' '}
+                  {NETWORK_LABEL[getChainIdToByChainId(chainId)]} <span>)</span>
                 </div>
                 <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
                 <img

@@ -8,6 +8,7 @@ import { CurrencyLogo } from 'components/Logo'
 import { RowBetween, RowFixed } from 'components/Layout/Row'
 import truncateHash from '@pancakeswap/utils/truncateHash'
 import { TruncatedText, SwapShowAcceptChanges } from '../../components/styleds'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 export default function StableSwapModalHeader({
   trade,
@@ -63,7 +64,7 @@ export default function StableSwapModalHeader({
         <RowFixed gap="4px">
           <CurrencyLogo currency={trade.inputAmount.currency} size="24px" style={{ marginRight: '12px' }} />
           <TruncatedText fontSize="24px" color={inputTextColor}>
-            {trade.inputAmount.toSignificant(6)}
+            {formatAmountNumber2(Number(trade.inputAmount.toSignificant(6)), 4)}
           </TruncatedText>
         </RowFixed>
         <RowFixed gap="0px">
@@ -82,7 +83,7 @@ export default function StableSwapModalHeader({
             fontSize="24px"
             color={showAcceptChanges && trade.tradeType === TradeType.EXACT_INPUT ? 'primary' : 'text'}
           >
-            {trade.outputAmount.toSignificant(6)}
+            {formatAmountNumber2(Number(trade.outputAmount.toSignificant(6)), 4)}
           </TruncatedText>
         </RowFixed>
         <RowFixed>

@@ -20,13 +20,22 @@ const getTokenLogoURL = (token?: Token, coinmarketcapId?: string) => {
     return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xoxs-icon.svg`
   }
   if (token && token.chainId === 97 && token.symbol.toLocaleUpperCase() === 'USDT') {
-    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg`
+    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png`
   }
   if (token && token.chainId === 5 && token.symbol.toLocaleUpperCase() === 'TUSDC') {
     return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg`
   }
+  if (token && token.symbol.toLocaleUpperCase() === 'TBNB') {
+    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/tbnb.png`
+  }
+  if (token && token.symbol.toLocaleUpperCase() === 'GOR') {
+    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/gor.png`
+  }
   if (coinmarketcapId !== '') return `https://s2.coinmarketcap.com/static/img/coins/64x64/${coinmarketcapId}.png`
   if (token && token.address && mapping[token.chainId]) {
+    console.log('token getLogonURL: ', token)
+    if (token.chainId == 56 && token.address == 'BNB')
+      return 'https://s2.coinmarketcap.com/static/img/coins/64x64/1839.png'
     return `https://assets-cdn.trustwallet.com/blockchains/${mapping[token.chainId]}/assets/${getAddress(
       token.address,
     )}/logo.png`

@@ -1,5 +1,6 @@
 import { Price, Currency } from "@pancakeswap/swap-sdk-core";
 import { Text } from "@pancakeswap/uikit";
+import { formatAmountNumber2 } from "@pancakeswap/utils/formatBalance";
 import { useState } from "react";
 import styled from "styled-components";
 import CircleRefresh from "../../../../../apps/web/src/components/Svg/CircleRefresh";
@@ -14,7 +15,7 @@ const PerLabel = styled.div`
   }
 `;
 const CircleBox = styled.div`
-  cursor:pointer;  
+  cursor: pointer;
 `;
 interface TradePriceProps {
   price?: Price<Currency, Currency>;
@@ -35,7 +36,7 @@ export function TradePrice({ price }: TradePriceProps) {
         {show ? (
           <>
             <span style={{ fontWeight: "700", fontSize: "18px", color: "#FFFFFF", wordBreak: "break-word" }}>
-              {formattedPrice ?? "-"}
+              {formatAmountNumber2(Number(formattedPrice), 4) ?? "-"}
             </span>
             <CircleBox onClick={() => setShowInverted(!showInverted)}>
               <CircleRefresh />

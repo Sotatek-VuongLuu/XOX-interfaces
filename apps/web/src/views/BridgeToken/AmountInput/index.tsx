@@ -8,7 +8,7 @@ import SelectNetworkButton from './SelectNetworkButton'
 import SelectTokenButton from './SelectTokenButton'
 import { NETWORK_LABEL } from '../networks'
 import { getChainIdToByChainId } from '..'
-import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 const Wrapper = styled.div`
   border-radius: 10px;
@@ -185,7 +185,7 @@ const AmountInput: React.FC<Props> = ({
           >
             Balance
             {isMobile ? '' : ':'}
-            <span className="balance">&nbsp;{formatAmountNumber(balance, 6)}</span>
+            <span className="balance">&nbsp;{formatAmountNumber2(balance, 6)}</span>
           </span>
         )}
 
@@ -193,7 +193,7 @@ const AmountInput: React.FC<Props> = ({
           <span aria-hidden="true" className="balance_pool_container">
             {NETWORK_LABEL[getChainIdToByChainId(chainId)]} Pool balance
             {isMobile ? '' : ':'}
-            <span className="balance_pool">&nbsp;{formatAmountNumber(balance, 6)}</span>
+            <span className="balance_pool">&nbsp;{formatAmountNumber2(balance, 6)}</span>
           </span>
         )}
       </TextRow>

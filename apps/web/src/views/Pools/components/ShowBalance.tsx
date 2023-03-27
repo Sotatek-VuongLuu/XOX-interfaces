@@ -1,4 +1,5 @@
 import { Tooltip } from '@mui/material'
+import { formatBalanceComma } from '@pancakeswap/utils/formatBalance'
 import { formatToShowBalance } from './utils/formatBalance'
 
 interface IProps {
@@ -34,7 +35,7 @@ export const ShowBalance = ({ balance, unit = '', name = 'default', notSpace = f
         <>
           <p style={{ display: 'flex' }}>
             <span className="value">
-              {Number(balance) ? formatToShowBalance(String(balance)) : `${name === 'liquidity' ? '$0' : '0'}`}
+              {Number(balance) ? formatBalanceComma(String(balance)) : `${name === 'liquidity' ? '$0' : '0'}`}
             </span>
             {!notSpace && <span>&nbsp;</span>}
             <span className="value">{unit}</span>
@@ -42,7 +43,7 @@ export const ShowBalance = ({ balance, unit = '', name = 'default', notSpace = f
         </>
       ) : name === 'liquidity' ? (
         <Tooltip title={Number(balance) ? `$${data}` : null} placement="top-start">
-          <span className="liquidity value">${Number(balance) ? formatToShowBalance(String(balance)) : '0'}</span>
+          <span className="liquidity value">${Number(balance) ? formatBalanceComma(String(balance)) : '0'}</span>
         </Tooltip>
       ) : (
         <Tooltip
@@ -50,7 +51,7 @@ export const ShowBalance = ({ balance, unit = '', name = 'default', notSpace = f
           placement="top-start"
         >
           <p style={{ display: 'flex' }}>
-            <span className="value">{Number(balance) ? formatToShowBalance(String(balance)) : '0'}</span>
+            <span className="value">{Number(balance) ? formatBalanceComma(String(balance)) : '0'}</span>
             {!notSpace && <span>&nbsp;</span>}
             <span className="value">{unit}</span>
           </p>

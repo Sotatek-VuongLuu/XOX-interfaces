@@ -21,6 +21,7 @@ import { USD_DECIMALS } from 'config/constants/exchange'
 import styled from 'styled-components'
 import ColumnChartRef from './components/ColumnChartRef'
 import { userClaimedHistories } from '../../../../services/referral'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 interface IVolumnDataItem {
   volumn: string
@@ -309,7 +310,6 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
     if (!chainId) return
     getUserClaimedHistories()
   }, [chainId])
-
   return (
     <Wrapper sx={{}}>
       <div className="first">
@@ -320,7 +320,7 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                 <div>
                   <img src={item.svg} alt="item" />
                 </div>
-                <div className="volumn">{item.volumn}</div>
+                <div className="volumn">{formatAmountNumber2(Number(item.volumn))}</div>
                 <div className="title">{item.title}</div>
               </div>
             )
@@ -432,11 +432,14 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
                   </div>
 
                   <div className="row-item" style={{ width: '20%' }}>
-                    <p className="point">{row.point} points</p>
+                    <p className="point">{formatAmountNumber2(Number(row.point))} points</p>
                   </div>
                   <div className="row-item" style={{ width: '20%' }}>
                     <p className="point">
-                      ${new BigNumber(row.claim).multipliedBy(100).div(99).toFixed(0, BigNumber.ROUND_DOWN)}
+                      $
+                      {formatAmountNumber2(
+                        Number(new BigNumber(row.claim).multipliedBy(100).div(99).toFixed(0, BigNumber.ROUND_DOWN)),
+                      )}
                     </p>
                   </div>
                 </div>

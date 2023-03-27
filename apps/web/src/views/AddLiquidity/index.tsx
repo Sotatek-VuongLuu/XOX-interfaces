@@ -20,7 +20,7 @@ import { logError } from 'utils/sentry'
 import styled from 'styled-components'
 import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
 import { useTranslation } from '@pancakeswap/localization'
-import { formatAmountString } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber2, formatAmountString } from '@pancakeswap/utils/formatBalance'
 import { useZapContract } from 'hooks/useContract'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { getZapAddress } from 'utils/addressHelpers'
@@ -77,6 +77,7 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
+  margin: 150px 0 100px;
 `
 
 const LiquidityBody = styled.div`
@@ -206,7 +207,7 @@ const WapperHeight = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 1000px;
+  /* min-height: 1000px; */
 `
 
 const SwapBackgroundWrapper = styled.div`
@@ -220,15 +221,20 @@ const SwapBackgroundWrapper = styled.div`
 
 const BackgroundWrapper = styled.div`
   position: absolute;
-  top: 200px;
+  top: 35px;
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
-  height: calc(100% - 200px);
+  height: calc(100% - 35px);
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
   background: rgba(255, 255, 255, 0.03);
-  /* backdrop-filter: blur(10px); */
+  backdrop-filter: blur(10px);
+  @media (max-width: 576px) {
+    width: 98.5%;
+    height: calc(100% - 25px);
+    top: 25px;
+  }
 `
 
 enum Steps {
@@ -495,15 +501,15 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   const pendingText = preferZapInstead
     ? t('Zapping %amountA% %symbolA% and %amountB% %symbolB%', {
-        amountA: parsedAmounts[Field.CURRENCY_A]?.toSignificant(6) ?? '0',
+        amountA: formatAmountNumber2(Number(parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)), 4) ?? '0',
         symbolA: currencies[Field.CURRENCY_A]?.symbol ?? '',
-        amountB: parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) ?? '0',
+        amountB: formatAmountNumber2(Number(parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)), 4) ?? '0',
         symbolB: currencies[Field.CURRENCY_B]?.symbol ?? '',
       })
     : t('Adding %amountA% %symbolA% and %amountB% %symbolB%', {
-        amountA: parsedAmounts[Field.CURRENCY_A]?.toSignificant(6) ?? '',
+        amountA: formatAmountNumber2(Number(parsedAmounts[Field.CURRENCY_A]?.toSignificant(6)), 4) ?? '',
         symbolA: currencies[Field.CURRENCY_A]?.symbol ?? '',
-        amountB: parsedAmounts[Field.CURRENCY_B]?.toSignificant(6) ?? '',
+        amountB: formatAmountNumber2(Number(parsedAmounts[Field.CURRENCY_B]?.toSignificant(6)), 4) ?? '',
         symbolB: currencies[Field.CURRENCY_B]?.symbol ?? '',
       })
 
@@ -747,7 +753,7 @@ export default function AddLiquidity({ currencyA, currencyB }) {
     <Page>
       {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <WapperHeight>
-        <Flex width={['328px', , '559px']} className="container_bridge">
+        <Flex width={['328px', , '559px']}>
           <Wrapper flex="column" position="relative">
             {isMobile ? (
               <>
