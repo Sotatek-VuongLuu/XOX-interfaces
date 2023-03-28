@@ -66,6 +66,10 @@ const WrapperI = styled.div`
           border-radius: inherit;
         }
       }
+
+      @media screen and (max-width: 576px) {
+        margin-top: 16px;
+      }
     }
 
     .expand {
