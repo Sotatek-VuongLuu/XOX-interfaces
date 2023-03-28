@@ -1,6 +1,7 @@
 import { BTNLearnMore } from 'views/Company'
 import ReactECharts from 'echarts-for-react'
 import { EChartsOption, SeriesOption } from 'echarts'
+import moment from 'moment'
 import {
   StyledBG,
   StyledCard1,
@@ -25,7 +26,6 @@ interface IAddress {
   address?: string
   logo: string
 }
-
 
 function BG() {
   return (
@@ -74,8 +74,56 @@ function Address({ addr, ...props }: { addr: IAddress }) {
   )
 }
 
+interface IDataOBJReturn {
+  id: number
+  title: string
+}
 
 export default function TokenomicsPage() {
+  const LAUNCH_APP_TIME = 1679850000 /// (seconds) can change
+
+  const handleRenderXAxis = (): IDataOBJReturn[] => {
+    const startDate = new Date()
+    startDate.setDate(startDate.getDate() - 14)
+    startDate.setHours(0, 0, 0, 0)
+    const endDate = new Date()
+    endDate.setHours(23, 59, 59, 999)
+    const arrDay = []
+
+    for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
+      const loopDay = new Date(d)
+      loopDay.setHours(23)
+      loopDay.setMinutes(59)
+      loopDay.setSeconds(59)
+      const byDay = moment(loopDay).format('DD MMM')
+      const dateId = Math.trunc(moment(loopDay).unix() / 86400)
+      arrDay.push({
+        id: dateId,
+        title: byDay,
+      })
+    }
+    return arrDay
+  }
+
+  /// 0% at TGE and yearly
+  const getDataYearly = (totalAmount: number, percentPerYear: number, inYear: number) => {
+    const data = []
+    for (let i = 1; i <= inYear; i++) {
+      const time = moment.unix(LAUNCH_APP_TIME).add(i, 'day').unix()
+      const idDay = Math.trunc(time / 86400)
+      const amountPerYear = (totalAmount * 100) / percentPerYear
+      data.push({
+        time,
+        idDay,
+        amountPerYear,
+      })
+    }
+
+    console.log(`data`, data)
+  }
+
+  getDataYearly(12600000, 20, 5)
+
   const ADDRESS: Array<IAddress> = [
     {
       asset: 'ETH',
@@ -152,7 +200,7 @@ export default function TokenomicsPage() {
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+      data: handleRenderXAxis().map((item) => item.title),
     },
     yAxis: { type: 'value', show: false },
     series: [
