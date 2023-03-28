@@ -21,7 +21,7 @@ const GlobalStyle = createGlobalStyle`
   body {
     background-color: #000;
     width: 100vw;
-    overflow-x: hidden !important; overflow-y: visible !important;
+    // overflow-x: hidden !important; overflow-y: visible !important;
 
     img {
       height: auto;

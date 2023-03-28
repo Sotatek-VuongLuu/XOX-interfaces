@@ -205,7 +205,6 @@ const CoinItemDisplay = ({ item }: ItemProps) => {
 
 const Wrapper = styled.div`
   margin-bottom: 100px;
-  margin-top: 48px;
   .title {
     display: flex;
     justify-content: center;

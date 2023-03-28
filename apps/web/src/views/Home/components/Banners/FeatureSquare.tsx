@@ -50,6 +50,8 @@ const WrapperI = styled.div`
         background: rgba(16, 16, 16, 1);
         padding: 10px 20px;
         border-radius: inherit;
+        cursor: pointer;
+
         span {
           background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
           -webkit-background-clip: text;
@@ -85,6 +87,7 @@ const WrapperI = styled.div`
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
+      z-index: -1;
     }
   }
 `
