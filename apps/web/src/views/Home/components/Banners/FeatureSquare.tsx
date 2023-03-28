@@ -200,7 +200,7 @@ const FeatureSquare = () => {
     <Wrapper>
       <div className="title" style={{ overflow: 'hidden' }}>
         <p className="heart" data-aos="fade-right">
-          The Heart of the XOX Ecosystem
+          The Heart of the XOX Ecosystem<span style={{ color: '#FB8618' }}>.</span>
         </p>
         <p className="describe" data-aos="fade-left">
           Wide range of apps, utilities and solutions powering the protocol creating a True One-Stop Ecosystem for all
