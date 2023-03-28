@@ -65,7 +65,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             alignItems: 'center',
             justifyContent: innerWidth > 900 ? 'space-around' : 'unset',
             width: widthResize,
-            height: '80vh',
+            height: '100vh',
           },
         }}
         containerProps={{

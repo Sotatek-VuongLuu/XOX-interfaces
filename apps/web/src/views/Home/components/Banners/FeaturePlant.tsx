@@ -68,14 +68,24 @@ const RightContent = styled.div`
     height: 50vh;
   }
   .video-container .overlay {
-    // height: 100%;
-    // width: 100%;
-    // position: absolute;
-    // top: 0px;
-    // left: 0px;
-    // z-index: 2;
-    // background: #0A0A0A;
-    // opacity: 0.5;
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    z-index: 2;
+    background: #0A0A0A;
+    opacity: 0.5;
+  }
+
+  @media screen and (max-width: 900px) {
+    width: 100%;
+
+    .video-container video {
+      width: 100%;
+      height: auto;
+      left: unset;
+    }
   }
 `
 
@@ -183,11 +193,11 @@ const FeaturePlant = () => {
             </Watch>
           </RightContent>
         </Grid> */}
-        <Grid item xs={12} md={5}>
+        <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
           <RightContent data-aos="fade-left">
             <div className="video-container">
               <div className="overlay"></div>
-              <video autoPlay loop muted width="613" height="345">
+              <video autoPlay loop muted>
                 <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
               </video>
             </div>
