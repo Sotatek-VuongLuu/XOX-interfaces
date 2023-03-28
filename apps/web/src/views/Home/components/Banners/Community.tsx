@@ -208,7 +208,7 @@ const SupportedBlockchains = () => {
   return (
     <Wrapper>
       <div className="title" data-aos="fade-up">
-        Meet the worldwide community.
+        Meet the worldwide community<span style={{ color: '#FB8618' }}>.</span>
       </div>
       <p className="decoration" data-aos="fade-up" data-aos-duration="2300">
         We are supported by many people. Why don’t you join them?

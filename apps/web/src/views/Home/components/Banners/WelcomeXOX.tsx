@@ -463,7 +463,7 @@ const WelcomeXOX = (): JSX.Element => {
         <Grid container spacing={2} className="grid_welcome_container">
           <GridLeft item xs={12} md={6}>
             <LeftContent>
-              <Title className="title">XOX: The Next Gen Multichain DeFi Dapps & Web3 Solutions Provider</Title>
+              <Title className="title">XOX<span style={{ color: '#FB8618' }}>:</span> The Next Gen Multichain DeFi Dapps & Web3 Solutions Provider</Title>
               <Feature className="feature">Revolutionary - Scalable - Sustainable</Feature>
               <Description className="description">
                 Swap, stake, store, bridge, refer, invest and earn with ease on the

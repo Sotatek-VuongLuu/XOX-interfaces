@@ -153,7 +153,7 @@ const FeaturePlant = () => {
       <Grid container spacing={2} style={{ overflow: 'hidden' }}>
         <Grid item xs={12} md={6}>
           <LeftContent data-aos="fade-right">
-            <Title>XOX Dapp - An All-IN-One Solution.</Title>
+            <Title>XOX Dapp - An All-IN-One Solution<span style={{ color: '#FB8618' }}>.</span></Title>
             <Paragraph style={{ margin: '24px 0' }}>
               Primarily design to provide simple solutions to its users and XOX Holders, the XOX Dapp already provides
               and will keep implementing more robuts functionalities which will eventually make it a truly One Stop

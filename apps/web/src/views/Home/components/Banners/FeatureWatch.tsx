@@ -220,7 +220,7 @@ const FeatureWatch = () => {
         </Grid>
         <Grid item xs={12} md={7} className="second-box">
           <RightContent data-aos="fade-left">
-            <Title>Meet XOXS. Our Hybrid Multichain Stable Coin.</Title>
+            <Title>Meet XOXS<span style={{ color: '#FB8618' }}>.</span> Our Hybrid Multichain Stable Coin<span style={{ color: '#FB8618' }}>.</span></Title>
             <Paragraph style={{ margin: '24px 0' }}>
               Designed to be the staking substitute to our governance token XOX, preventing Supply Inflation & Selling
               Pressure XOXS is the result of months studding how staking works, chart behavior to high APYs followed by
