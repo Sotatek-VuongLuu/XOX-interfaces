@@ -48,14 +48,17 @@ const Page = styled.div`
   width: 100%;
   display: flex;
   justify-content: center;
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     padding: 24px;
   }
 `
 
 const ContentContainer = styled.div`
   width: 1400px;
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1399px) {
+    width: 1200px;
+  }
+  @media screen and (max-width: 1200px) {
     width: 100%;
   }
 `
@@ -299,7 +302,7 @@ const initStat: Start[] = [
     id: 3,
     title: 'Number of Investors',
     amount: '',
-    icon: '+',
+    icon: '',
     field: 'total_investor',
   },
   {
@@ -312,11 +315,11 @@ const initStat: Start[] = [
 ]
 
 export const tabSaleMechanism: string[] = [
+  'Your Information',
   'Private Sale Mechanism',
   'Sale Referral Program',
   'Token Metrics',
   'Vesting Schedule',
-  'Your Information',
 ]
 
 export interface IVestingTime {
@@ -330,7 +333,7 @@ export interface IVestingTime {
 }
 
 export enum TYPE_BY {
-  BY_USDC,
+  BY_ERC20,
   BY_ETH,
 }
 
@@ -416,7 +419,7 @@ const defaultRoundInfo = {
 
 function VestingPage() {
   const notSupport = [ChainId.BSC_TESTNET, ChainId.BSC]
-  const [tabActiveMechansim, setTabActiveMechansim] = useState<string>('Private Sale Mechanism')
+  const [tabActiveMechansim, setTabActiveMechansim] = useState<string>('Your Information')
   const [referralError, setReferralError] = useState(null)
   const [dataWhitelist, setDataWhitelist] = useState<IDataWhitelist[]>([])
   const [dataForInfo, setDataForInfo] = useState<IYourInfo[]>(initialYourInfo)
@@ -584,7 +587,7 @@ function VestingPage() {
     const addressTokenBuy = typeBuyPrice === TYPE_BY.BY_ETH ? NATIVE_TOKEN : USDC_TEST
     const amountParse =
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), 6)
-    setMessageConfirm(`Buying ${amountXOX} XOX`)
+    setMessageConfirm(`Buying ${Number(amountXOX).toLocaleString()} XOX`)
     if (
       isUserInWhiteList &&
       handleGetOneHourBeforeSale() <= timeStampOfNow &&
@@ -613,7 +616,7 @@ function VestingPage() {
           toastSuccess(
             `Bought XOX`,
             <ToastDescriptionWithTx txHash={txHash.transactionHash}>
-              {t('Your %symbol% invests have been sent to your wallet!', { symbol: 'XOX' })}
+              {t('Your %symbol% investment has been confirmed!', { symbol: 'XOX' })}
             </ToastDescriptionWithTx>,
           )
         }
@@ -674,7 +677,7 @@ function VestingPage() {
   const handleClaim = async (round: number, amoutXOXPending: any) => {
     try {
       setIsOpenLoadingClaimModal(true)
-      setMessageConfirm(`Claim ${amoutXOXPending} XOX`)
+      setMessageConfirm(`Claim ${Number(amoutXOXPending).toLocaleString()} XOX`)
       const gas = await contractPreSale.estimateGas.userClaimInvestedToken(BigNumberEthers.from(round))
       const result = await contractPreSale.userClaimInvestedToken(BigNumberEthers.from(round), { gasLimit: gas })
       const txHash = await result.wait(1)

@@ -319,12 +319,12 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     font-size: 36px;
     line-height: 19px;
     color: #64c66d;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       top: -8px !important;
     }
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     .mbpadding {
       padding: 35px 24px !important;
     }
@@ -350,7 +350,7 @@ const CustomGrid = styled(Grid)`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 24px;
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr;
     gap: 37px;
   }

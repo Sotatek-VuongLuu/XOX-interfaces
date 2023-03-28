@@ -23,7 +23,7 @@ const Content = styled.div`
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       font-size: 16px;
       line-height: 19px;
     }
@@ -56,13 +56,13 @@ const Content = styled.div`
     line-height: 19px;
     color: #fb8618;
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       font-size: 14px;
       line-height: 17px;
     }
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     .normal {
       font-size: 14px;
       line-height: 20px;
@@ -98,7 +98,7 @@ const CustomTable = styled(Table)`
     font-size: 16px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.6);
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       font-size: 14px;
       line-height: 17px;
     }
@@ -109,7 +109,7 @@ const CustomTable = styled(Table)`
     font-size: 16px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       font-size: 14px;
       line-height: 17px;
     }
@@ -130,7 +130,7 @@ const CustomTableRow = styled(CustomTable)`
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       font-size: 14px;
       line-height: 17px;
     }

@@ -194,9 +194,9 @@ function StartingSoon({
           .toNumber()
         return (
           <>
-            <p className="percent_sale">{`${percent}%`} SOLD</p>
+            <p className="percent_sale">{`${Number(percent).toFixed(2)}%`} SOLD</p>
             <div className="processing">
-              <div className="processing_child" style={{ width: `${percent}%` }} />
+              <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
             </div>
           </>
         )
@@ -209,9 +209,9 @@ function StartingSoon({
           .toNumber()
         return (
           <>
-            <p className="percent_sale">{`${percent}%`} SOLD</p>
+            <p className="percent_sale">{`${Number(percent).toFixed(2)}%`} SOLD</p>
             <div className="processing">
-              <div className="processing_child" style={{ width: `${percent}%` }} />
+              <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
             </div>
           </>
         )
@@ -225,10 +225,10 @@ function StartingSoon({
         return (
           <>
             <p className="percent_sale">
-              <p className="percent_sale">{`${percent}%`} SOLD</p>
+              <p className="percent_sale">{`${Number(percent).toFixed(2)}%`} SOLD</p>
             </p>
             <div className="processing">
-              <div className="processing_child" style={{ width: `${percent}%` }} />
+              <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
             </div>
           </>
         )

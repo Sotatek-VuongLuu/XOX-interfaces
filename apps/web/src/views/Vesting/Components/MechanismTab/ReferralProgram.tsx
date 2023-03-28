@@ -43,7 +43,7 @@ const Content = styled.div`
     overflow-x: auto;
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     .nomal {
       font-size: 14px;
       line-height: 24px;
@@ -98,7 +98,7 @@ const CusTable = styled(Table)`
     color: rgba(255, 255, 255, 0.87);
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     .table-header {
       font-size: 14px;
       line-height: 17px;
@@ -153,7 +153,7 @@ function ReferralProgram() {
               <CusTable>
                 <Text className="table-header">Token Sale</Text>
                 <Text className="table-header">Referral bonus XOXS ( referrer )</Text>
-                <Text className="table-header">Referral bonus XOXS ( Referee )</Text>
+                <Text className="table-header">Referral bonus XOXS ( referee )</Text>
               </CusTable>
 
               {Array.from(data).map((item) => {

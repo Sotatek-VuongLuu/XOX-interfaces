@@ -204,8 +204,7 @@ const Content = styled.div`
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
 
-    @media screen and (max-width: 900px) {
-      justify-content: flex-start;
+    @media screen and (max-width: 1200px) {
       overflow-x: auto;
       &::-webkit-scrollbar {
         display: none;
@@ -214,6 +213,10 @@ const Content = styled.div`
         font-size: 12px;
         line-height: 15px;
       }
+    }
+
+    @media screen and (max-width: 900px) {
+      justify-content: flex-start;
     }
   }
 `

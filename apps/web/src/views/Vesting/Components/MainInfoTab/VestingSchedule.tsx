@@ -16,7 +16,7 @@ const Wrapper = styled.div`
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
     margin-bottom: 16px;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       font-size: 14px;
       line-height: 17px;
     }
@@ -53,7 +53,7 @@ const Wrapper = styled.div`
       margin-bottom: 200px;
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       p {
         font-size: 12px;
         line-height: 20px;
@@ -143,7 +143,7 @@ const Content = styled.div`
 
   overflow-x: scroll;
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     .heading-sale {
       font-size: 14px;
       line-height: 17px;
@@ -181,7 +181,7 @@ const CustomButtom = styled(Button)`
   height: 43px;
   padding: 12px 30px;
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     padding: 12px 20px;
     font-size: 14px;
     line-height: 17px;
@@ -275,7 +275,7 @@ const SaleItem = ({
             </p>
             <div>
               <p className="amount_vested">{Number(itemVesting.yourCurrentXOX).toLocaleString()}</p>
-              <p className="title_vested">Next Claim Amount</p>
+              <p className="title_vested">Available To Claim</p>
             </div>
           </div>
         </div>
@@ -390,7 +390,7 @@ const WrapperTime = styled.div`
       background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       width: 66px;
       height: 59px;
 
@@ -405,7 +405,7 @@ const WrapperTime = styled.div`
       }
     }
   }
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     gap: 8px;
   }
 `
@@ -519,6 +519,8 @@ function VestingSchedule({
     )
   }, [handleClaim, handleGetDataVesting, newVesting])
 
+  console.log(`newVesting`, newVesting)
+
   return (
     <Wrapper>
       {!account && (
@@ -533,7 +535,7 @@ function VestingSchedule({
         <>
           {newVesting.length > 0 && newVesting[0]?.startTime.length !== 0 ? (
             <div className="total_vested">
-              Total vested at this time:{' '}
+              Current XOX Tokens Vested:{' '}
               {Number(
                 new BigNumber(newVesting[0]?.amountVested)
                   .plus(newVesting[1]?.amountVested)

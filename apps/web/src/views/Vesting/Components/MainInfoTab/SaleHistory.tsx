@@ -29,7 +29,7 @@ const Wrapper = styled.div`
       height: 4px;
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       font-size: 16px;
       line-height: 19px;
     }
@@ -219,7 +219,7 @@ export const PageButtons = styled(Flex)`
     color: rgba(255, 255, 255, 0.87);
     min-width: 94px;
     padding: 0 10px;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       font-size: 12px;
       line-height: 15px;
     }

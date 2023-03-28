@@ -104,7 +104,7 @@ const Wrapper = styled.div`
         margin-top: 12px;
       }
 
-      @media screen and (max-width: 900px) {
+      @media screen and (max-width: 1200px) {
         & {
           margin-bottom: 0px;
         }
@@ -120,13 +120,13 @@ const Wrapper = styled.div`
       }
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       grid-template-columns: 1fr;
       gap: 31px;
     }
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     height: 470px;
     background-image: url('/images/dadsad.png');
     background-size: 100% 470px;

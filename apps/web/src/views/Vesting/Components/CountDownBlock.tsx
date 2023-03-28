@@ -18,7 +18,7 @@ const Content = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 24px;
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr;
   }
 `

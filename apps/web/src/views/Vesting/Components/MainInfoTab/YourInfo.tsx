@@ -46,7 +46,7 @@ const Wrapper = styled.div`
       color: #ffffff;
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       p {
         font-size: 12px;
         line-height: 20px;
@@ -90,7 +90,7 @@ const Content = styled.div`
       }
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       grid-template-columns: 1fr;
 
       .item {
@@ -159,7 +159,7 @@ const Content = styled.div`
       }
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       grid-template-columns: 1fr;
 
       .my_code {
@@ -193,7 +193,7 @@ const Content = styled.div`
 
   .ngumy_code {
     padding-left: 49px;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       padding-left: 0px;
     }
   }
@@ -220,7 +220,7 @@ const Content = styled.div`
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       font-size: 12px;
       line-height: 15px;
     }

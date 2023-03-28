@@ -24,7 +24,7 @@ const CustomTable = styled(Table)`
     padding-bottom: 16px;
     margin-bottom: 0px;
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       margin-bottom: 0px;
     }
   }
@@ -58,7 +58,7 @@ const Wrapper = styled.div`
     }
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     .heading_info_vesting {
       font-size: 16px;
       line-height: 19px;

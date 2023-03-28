@@ -330,7 +330,7 @@ function ModalSaleExchange({
   referralCode,
 }: Props) {
   const { width } = useWindowSize()
-  const isSwap = approvalState !== ApprovalState.APPROVED && typeBuyPrice === TYPE_BY.BY_USDC
+  const isSwap = approvalState !== ApprovalState.APPROVED && typeBuyPrice === TYPE_BY.BY_ERC20
 
   const handleRenderXOXAmount = (typeBuy: number, round: number, amountToken: any) => {
     const roundCheckWithWhitelist = isTimeAllowWhitelist ? 1 : round
@@ -340,16 +340,16 @@ function ModalSaleExchange({
         : amountToken || 0
     switch (roundCheckWithWhitelist) {
       case 1:
-        setAmountXOX(new BigNumber(totalDolla).div(0.044).toNumber())
-        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.08).toNumber())
+        setAmountXOX(new BigNumber(totalDolla).div(0.044).toNumber().toFixed(2))
+        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.08).toNumber().toFixed(2))
         break
       case 2:
-        setAmountXOX(new BigNumber(totalDolla).div(0.045).toNumber())
-        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.06).toNumber())
+        setAmountXOX(new BigNumber(totalDolla).div(0.045).toNumber().toFixed(2))
+        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.06).toNumber().toFixed(2))
         break
       case 3:
-        setAmountXOX(new BigNumber(totalDolla).div(0.046).toNumber())
-        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.04).toNumber())
+        setAmountXOX(new BigNumber(totalDolla).div(0.046).toNumber().toFixed(2))
+        setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.04).toNumber().toFixed(2))
         break
       default:
         break
@@ -378,7 +378,7 @@ function ModalSaleExchange({
         {width > 900 && (
           <>
             <p style={{ textAlign: 'right', paddingRight: '83px' }} className="balance">
-              Balance: {typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative}
+              Balance: {typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative}
             </p>
             <Flex alignItems="center">
               <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="53px">
@@ -392,16 +392,16 @@ function ModalSaleExchange({
                     onUserInput={(value) => setAmount(value)}
                     placeholder="0.00"
                   />
-                  <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative)}>
+                  <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative)}>
                     All
                   </ButtonStyle>
                 </BoxCenter>
               </Flex>
               <Text className="coin">
-                {typeBuyPrice === TYPE_BY.BY_USDC && (
+                {typeBuyPrice === TYPE_BY.BY_ERC20 && (
                   <>
-                    <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt="logo" />
-                    <span>USDC</span>
+                    <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
+                    <span>USDT</span>
                   </>
                 )}
                 {typeBuyPrice === TYPE_BY.BY_ETH && (
@@ -422,12 +422,12 @@ function ModalSaleExchange({
               <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} className="text_mb">
                 Amount
               </Text>
-              <p className="balance_mb">Balance: {typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative}</p>
+              <p className="balance_mb">Balance: {typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative}</p>
               <Text className="coin">
-                {typeBuyPrice === TYPE_BY.BY_USDC && (
+                {typeBuyPrice === TYPE_BY.BY_ERC20 && (
                   <>
-                    <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt="logo" />
-                    <span>USDC</span>
+                    <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
+                    <span>USDT</span>
                   </>
                 )}
                 {typeBuyPrice === TYPE_BY.BY_ETH && (
@@ -447,7 +447,7 @@ function ModalSaleExchange({
                   onUserInput={(value) => setAmount(value)}
                   placeholder="0.00"
                 />
-                <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_USDC ? balanceLP : balanceNative)}>
+                <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative)}>
                   All
                 </ButtonStyle>
               </BoxCenter>
@@ -461,7 +461,7 @@ function ModalSaleExchange({
             XOX Amount
           </Text>
           <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
-            {amountXOX || '-'} XOX
+            {Number(amountXOX) !== 0 ? Number(amountXOX).toLocaleString() : '-'} XOX
           </Text>
         </Flex>
         <Flex alignItems="center" marginBottom="26px" className="xoxs_amount">
@@ -469,7 +469,7 @@ function ModalSaleExchange({
             XOXS Reward
           </Text>
           <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
-            {amountXOXS || '-'} XOXS
+            {Number(amountXOXS) !== 0 ? Number(amountXOXS).toLocaleString() : '-'} XOXS
           </Text>
         </Flex>
 
