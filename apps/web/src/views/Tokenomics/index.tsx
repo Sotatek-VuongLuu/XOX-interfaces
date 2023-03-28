@@ -75,54 +75,70 @@ function Address({ addr, ...props }: { addr: IAddress }) {
 }
 
 interface IDataOBJReturn {
-  id: number
+  time: number
   title: string
+  amountPerYear: number
+  id?: number
 }
 
 export default function TokenomicsPage() {
   const LAUNCH_APP_TIME = 1679850000 /// (seconds) can change
 
   const handleRenderXAxis = (): IDataOBJReturn[] => {
-    const startDate = new Date()
-    startDate.setDate(startDate.getDate() - 14)
-    startDate.setHours(0, 0, 0, 0)
-    const endDate = new Date()
-    endDate.setHours(23, 59, 59, 999)
-    const arrDay = []
-
-    for (let d = startDate; d <= endDate; d.setDate(d.getDate() + 1)) {
-      const loopDay = new Date(d)
-      loopDay.setHours(23)
-      loopDay.setMinutes(59)
-      loopDay.setSeconds(59)
-      const byDay = moment(loopDay).format('DD MMM')
-      const dateId = Math.trunc(moment(loopDay).unix() / 86400)
-      arrDay.push({
-        id: dateId,
-        title: byDay,
-      })
+    const data = []
+    for (let i = 0; i < 16; i++) {
+      const time = moment
+        .unix(LAUNCH_APP_TIME)
+        .add(6 * i, 'months')
+        .unix()
+      const title = moment.unix(time).format('MMM DD YY')
+      data.push({ time, title, amountPerYear: 0 })
     }
-    return arrDay
+    return data
   }
 
   /// 0% at TGE and yearly
   const getDataYearly = (totalAmount: number, percentPerYear: number, inYear: number) => {
-    const data = []
+    const mileStone: IDataOBJReturn[] = handleRenderXAxis()
+    const dataAmount = []
+    const period = (totalAmount * percentPerYear) / 100
     for (let i = 1; i <= inYear; i++) {
-      const time = moment.unix(LAUNCH_APP_TIME).add(i, 'day').unix()
-      const idDay = Math.trunc(time / 86400)
-      const amountPerYear = (totalAmount * 100) / percentPerYear
-      data.push({
+      const time = moment.unix(LAUNCH_APP_TIME).add(i, 'year').unix()
+      const amountPerYear = period * i
+      dataAmount.push({
         time,
-        idDay,
+        title: moment.unix(time).format('MMM DD YY'),
         amountPerYear,
       })
     }
-
-    console.log(`data`, data)
+    for (let i = 0; i < mileStone.length; i++) {
+      const itemTime = mileStone[i].time
+      for (let index = 0; index < dataAmount.length; index++) {
+        if (itemTime === dataAmount[index].time) {
+          mileStone[i] = dataAmount[index]
+        }
+      }
+    }
+    const indexOfHasAmountField = []
+    mileStone.forEach((item, index) => {
+      if (item.amountPerYear > 0) {
+        indexOfHasAmountField.push({ id: index, ...item })
+      }
+    })
+    const finalData = handleformatData(mileStone, indexOfHasAmountField)
+    return finalData
   }
 
-  getDataYearly(12600000, 20, 5)
+  const handleformatData = (mileStone: IDataOBJReturn[], indexOfHasAmountField: IDataOBJReturn[]) => {
+    const cloneData = [...mileStone]
+    for (let index = 0; index < indexOfHasAmountField.length; index++) {
+      const { id, amountPerYear: amountPerYearReal } = indexOfHasAmountField[index]
+      for (let i = id; i < cloneData.length; i++) {
+        cloneData[i].amountPerYear = amountPerYearReal
+      }
+    }
+    return cloneData
+  }
 
   const ADDRESS: Array<IAddress> = [
     {
@@ -207,57 +223,57 @@ export default function TokenomicsPage() {
       {
         ...defaultOptionTVS,
         name: 'Seed Round',
-        data: [140, 232, 101, 264, 90, 340, 250],
+        data: getDataYearly(12600000, 20, 5).map((item) => item.amountPerYear),
         areaStyle: { color: '#BAFFBF' },
       },
       {
         ...defaultOptionTVS,
         name: 'Round 1 Sale',
-        data: [120, 282, 111, 234, 220, 340, 310],
+        data: getDataYearly(27000000, 25, 4).map((item) => item.amountPerYear),
         areaStyle: { color: '#86B6FF' },
       },
       {
         ...defaultOptionTVS,
         name: 'Round 2 Sale',
-        data: [320, 132, 201, 334, 190, 130, 220],
+        data: getDataYearly(9000000, 20, 5).map((item) => item.amountPerYear),
         areaStyle: { color: '#64C6BA' },
       },
       {
         ...defaultOptionTVS,
         name: 'Team Fund',
-        data: [220, 402, 231, 134, 190, 230, 120],
+        data: getDataYearly(36000000, 25, 4).map((item) => item.amountPerYear),
         areaStyle: { color: '#3D8AFF' },
       },
       {
         ...defaultOptionTVS,
         name: 'Marketing Fund',
-        data: [220, 302, 181, 234, 210, 290, 150],
+        data: getDataYearly(1800000, 20, 5).map((item) => item.amountPerYear),
         areaStyle: { color: '#A964C9' },
       },
       {
         ...defaultOptionTVS,
         name: 'Reserve Fund',
-        data: [220, 302, 181, 234, 210, 290, 150],
+        data: getDataYearly(5400000, 20, 5).map((item) => item.amountPerYear),
         areaStyle: { color: '#C20DA3' },
       },
-      {
-        ...defaultOptionTVS,
-        name: 'Staking Rewards',
-        data: [220, 302, 181, 234, 210, 290, 150],
-        areaStyle: { color: '#FF5353' },
-      },
-      {
-        ...defaultOptionTVS,
-        name: 'Ecosystem',
-        data: [220, 302, 181, 234, 210, 290, 150],
-        areaStyle: { color: '#FB8618' },
-      },
-      {
-        ...defaultOptionTVS,
-        name: 'Liquidity Allocation',
-        data: [220, 302, 181, 234, 210, 290, 150],
-        areaStyle: { color: '#FFB547' },
-      },
+      // {
+      //   ...defaultOptionTVS,
+      //   name: 'Staking Rewards',
+      //   data: [220, 302, 181, 234, 210, 290, 150],
+      //   areaStyle: { color: '#FF5353' },
+      // },
+      // {
+      //   ...defaultOptionTVS,
+      //   name: 'Ecosystem',
+      //   data: [220, 302, 181, 234, 210, 290, 150],
+      //   areaStyle: { color: '#FB8618' },
+      // },
+      // {
+      //   ...defaultOptionTVS,
+      //   name: 'Liquidity Allocation',
+      //   data: [220, 302, 181, 234, 210, 290, 150],
+      //   areaStyle: { color: '#FFB547' },
+      // },
     ],
   }
 
