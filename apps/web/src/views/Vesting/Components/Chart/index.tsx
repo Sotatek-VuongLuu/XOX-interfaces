@@ -6,7 +6,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { getRaiseDailies } from 'services/presale'
 import styled from 'styled-components'
 import { timeStampOfNow } from 'views/Vesting'
-import { useGetDataChartPreSale } from 'views/Vesting/hooks'
+import { useGetDataChartPreSale, useGetDataChartPreSaleAfter } from 'views/Vesting/hooks'
 import ChartColumnSale from './ChartColumnSale'
 
 const Wrapper = styled.div`
@@ -79,28 +79,23 @@ const Wrapper = styled.div`
   }
 `
 
-interface IListPoint {
-  reward: number
-  point: number
-}
-
-interface IDataChart {
-  id: string
-  volumeUSD: string
-  data: number
-}
-
 interface IProps {
   infoRoundOne: any
+}
+
+const startDate = new Date()
+startDate.setDate(startDate.getDate() - 14)
+startDate.setHours(0, 0, 0, 0)
+const endDate = new Date()
+endDate.setHours(23, 59, 59, 999)
+const time = {
+  from: moment(startDate).unix(),
+  to: moment(endDate).unix(),
 }
 
 function ChartSalePage({ infoRoundOne }: IProps) {
   const [dataChart, setDataChart] = useState([])
   const [dataChartFifteenDay, setDataChartFifteenDay] = useState([])
-  const [timeFifteenDayAfterSaleOne, setTimeFifteenDayAfterSaleOne] = useState({
-    from: null,
-    to: null,
-  })
 
   const isAfterFifteenDayAfterSaleOne = useMemo(() => {
     if (!infoRoundOne.startDate) return null
@@ -113,19 +108,7 @@ function ChartSalePage({ infoRoundOne }: IProps) {
     return new Date(infoRoundOne.startDate)
   }, [infoRoundOne])
 
-  const startDate = new Date()
-  startDate.setDate(startDate.getDate() - 14)
-  startDate.setHours(0, 0, 0, 0)
-  const endDate = new Date()
-  endDate.setHours(23, 59, 59, 999)
-  const time = {
-    from: moment(startDate).unix(),
-    to: moment(endDate).unix(),
-  }
-
   const dataChartPreSale = useGetDataChartPreSale(time)
-  const dataChartPreSaleAfterSaleOne = useGetDataChartPreSale(timeFifteenDayAfterSaleOne)
-
   function createDataChartDay(name: string, uv: number) {
     return { name, uv }
   }
@@ -174,23 +157,19 @@ function ChartSalePage({ infoRoundOne }: IProps) {
   useEffect(() => {
     getPointDataDays(dataChartPreSale, setDataChart, startDate, endDate)
     if (!dateOfStartSaleOne) return
-    const startDateFifteenDayAfterSaleOne = new Date(infoRoundOne.startDate)
+    const startDateFifteenDayAfterSaleOne = new Date(dateOfStartSaleOne)
     startDateFifteenDayAfterSaleOne.setHours(0, 0, 0, 0)
-    const endDateFifteenDayAfterSaleOne = new Date(dateOfStartSaleOne.setDate(dateOfStartSaleOne.getDate() + 14))
+    const end = new Date(dateOfStartSaleOne)
+    const endDateFifteenDayAfterSaleOne = new Date(end.setDate(end.getDate() + 14))
     endDateFifteenDayAfterSaleOne.setHours(23, 59, 59, 999)
-    const t = {
-      from: moment(startDateFifteenDayAfterSaleOne).unix(),
-      to: moment(endDateFifteenDayAfterSaleOne).unix(),
-    }
-    setTimeFifteenDayAfterSaleOne(t)
     getPointDataDays(
-      dataChartPreSaleAfterSaleOne,
+      dataChartPreSale,
       setDataChartFifteenDay,
       startDateFifteenDayAfterSaleOne,
       endDateFifteenDayAfterSaleOne,
     )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataChartPreSaleAfterSaleOne, dataChartPreSale, dateOfStartSaleOne])
+  }, [dataChartPreSale, dateOfStartSaleOne])
 
   return (
     <Wrapper>

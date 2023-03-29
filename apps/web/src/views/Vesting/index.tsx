@@ -509,24 +509,25 @@ function VestingPage() {
       setInfoRoundOne({
         ...infoRoundOne,
         totalDistribution: 2700000,
-        startDate: 0,
-        endDate: 0,
+        startDate: new BigNumber(dataROne.startDate._hex).multipliedBy(1000).toNumber(),
+        endDate: new BigNumber(dataROne.endDate._hex).multipliedBy(1000).toNumber(),
         bonusPercentage: new BigNumber(dataROne.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataROne.exchangeRate._hex).toNumber(),
       })
+
       setInfoRoundTow({
         ...infoRoundTow,
         totalDistribution: 3600000,
-        startDate: 0,
-        endDate: 0,
+        startDate: new BigNumber(dataRTwo.startDate._hex).multipliedBy(1000).toNumber(),
+        endDate: new BigNumber(dataRTwo.endDate._hex).multipliedBy(1000).toNumber(),
         bonusPercentage: new BigNumber(dataRTwo.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataRTwo.exchangeRate._hex).toNumber(),
       })
       setInfoRoundThree({
         ...infoRoundThree,
         totalDistribution: 4500000,
-        startDate: 0,
-        endDate: 0,
+        startDate: new BigNumber(dataRThree.startDate._hex).multipliedBy(1000).toNumber(),
+        endDate: new BigNumber(dataRThree.endDate._hex).multipliedBy(1000).toNumber(),
         bonusPercentage: new BigNumber(dataRThree.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataRThree.exchangeRate._hex).toNumber(),
       })
@@ -539,17 +540,14 @@ function VestingPage() {
     try {
       if (chainId === 97 || chainId === 56) return
 
-      if (infoRoundOne.startDate && infoRoundOne.startDate <= time && infoRoundOne.endDate >= time) {
+      if (infoRoundOne.startDate && infoRoundOne.startDate <= time) {
         setCurrentRound(1)
-        return
       }
-      if (infoRoundTow.startDate && infoRoundTow.startDate <= time && infoRoundTow.endDate >= time) {
+      if (infoRoundTow.startDate && infoRoundTow.startDate <= time) {
         setCurrentRound(2)
-        return
       }
-      if (infoRoundThree.startDate && infoRoundThree.startDate <= time && infoRoundThree.endDate >= time) {
+      if (infoRoundThree.startDate && infoRoundThree.startDate <= time) {
         setCurrentRound(3)
-        return
       }
     } catch (error) {
       console.warn(error)
@@ -1127,12 +1125,12 @@ function VestingPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [infoRoundOne])
 
-  useEffect(() => {
-    if (!account || !chainId) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, chainId])
+  // useEffect(() => {
+  //   if (!account || !chainId) return
+  //   if (loadOk) window.location.reload()
+  //   setLoadOk(true)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [account, chainId])
 
   return (
     <>
@@ -1158,6 +1156,7 @@ function VestingPage() {
           <SaleStats dataStat={arrSaleStats} />
           <ChartSalePage infoRoundOne={infoRoundOne} />
           <SaleStatus
+            currentRound={currentRound}
             isInTimeRangeSale={isInTimeRangeSale}
             totalXOXTokenInRound={totalXOXTokenInRound}
             dataStatus={dataStatus}

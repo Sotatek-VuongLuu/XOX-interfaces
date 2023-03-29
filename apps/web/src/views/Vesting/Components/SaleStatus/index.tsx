@@ -1,7 +1,7 @@
 import { formatEther } from '@ethersproject/units'
 import { Box, Grid } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { RoundInfo } from 'views/Vesting'
 
@@ -475,61 +475,72 @@ interface IProps {
   infoRoundTow: RoundInfo
   infoRoundThree: RoundInfo
   totalXOXTokenInRound: any
+  currentRound: number
 }
 
-const now = new Date()
-const timeStampOfNow = now.getTime()
-
-function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: IProps) {
+function SaleStatus({
+  isInTimeRangeSale,
+  currentRound,
+  dataStatus,
+  infoRoundOne,
+  infoRoundTow,
+  infoRoundThree,
+}: IProps) {
   const [dataFormat, setDataFormat] = useState<any[]>([])
 
-  const arrStatus = [
-    {
-      name: 'Sale 1',
-      status: infoRoundOne.startDate
-        ? timeStampOfNow < infoRoundOne.startDate
-          ? StatusSale.INCOMING
-          : infoRoundOne.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundOne.endDate
-          ? StatusSale.LIVE
-          : StatusSale.END
-        : StatusSale.INCOMING,
-      currentRaise: '-',
-      price: '0.044',
-      xOXforSale: 2700000,
-      investors: '-',
-      xOXSRewarded: '-',
-    },
-    {
-      name: 'Sale 2',
-      status: infoRoundTow.startDate
-        ? timeStampOfNow < infoRoundTow.startDate
-          ? StatusSale.INCOMING
-          : infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundTow.endDate
-          ? StatusSale.LIVE
-          : StatusSale.END
-        : StatusSale.INCOMING,
-      currentRaise: '-',
-      price: '0.045',
-      xOXforSale: 3600000,
-      investors: '-',
-      xOXSRewarded: '-',
-    },
-    {
-      name: 'Sale 3',
-      status: infoRoundThree.startDate
-        ? timeStampOfNow < infoRoundThree.startDate
-          ? StatusSale.INCOMING
-          : infoRoundThree.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundThree.endDate
-          ? StatusSale.LIVE
-          : StatusSale.END
-        : StatusSale.INCOMING,
-      currentRaise: '-',
-      price: '0.046',
-      xOXforSale: 4500000,
-      investors: '-',
-      xOXSRewarded: '-',
-    },
-  ]
+  const arrStatus = useMemo(() => {
+    const now = new Date()
+    const timeStampOfNow = now.getTime()
+    return [
+      {
+        name: 'Sale 1',
+        status: infoRoundOne.startDate
+          ? timeStampOfNow < infoRoundOne.startDate
+            ? StatusSale.INCOMING
+            : infoRoundOne.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundOne.endDate && isInTimeRangeSale
+            ? StatusSale.LIVE
+            : StatusSale.END
+          : StatusSale.INCOMING,
+        currentRaise: '-',
+        price: '0.044',
+        xOXforSale: 2700000,
+        investors: '-',
+        xOXSRewarded: '-',
+      },
+      {
+        name: 'Sale 2',
+        status: infoRoundTow.startDate
+          ? timeStampOfNow < infoRoundTow.startDate
+            ? StatusSale.INCOMING
+            : infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundTow.endDate && isInTimeRangeSale
+            ? StatusSale.LIVE
+            : StatusSale.END
+          : StatusSale.INCOMING,
+        currentRaise: '-',
+        price: '0.045',
+        xOXforSale: 3600000,
+        investors: '-',
+        xOXSRewarded: '-',
+      },
+      {
+        name: 'Sale 3',
+        status: infoRoundThree.startDate
+          ? timeStampOfNow < infoRoundThree.startDate
+            ? StatusSale.INCOMING
+            : infoRoundThree.startDate <= timeStampOfNow &&
+              timeStampOfNow <= infoRoundThree.endDate &&
+              isInTimeRangeSale
+            ? StatusSale.LIVE
+            : StatusSale.END
+          : StatusSale.INCOMING,
+        currentRaise: '-',
+        price: '0.046',
+        xOXforSale: 4500000,
+        investors: '-',
+        xOXSRewarded: '-',
+      },
+    ]
+  }, [infoRoundOne, infoRoundThree, infoRoundTow, isInTimeRangeSale])
 
   const handleFormatData = (roundArr: any[]) => {
     const newDataFormat = []
@@ -553,7 +564,7 @@ function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: 
   useEffect(() => {
     handleFormatData(dataStatus)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataStatus, infoRoundOne, infoRoundTow, infoRoundThree])
+  }, [dataStatus, infoRoundOne, infoRoundTow, infoRoundThree, arrStatus])
 
   return (
     <CustomGrid>

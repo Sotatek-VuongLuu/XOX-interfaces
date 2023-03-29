@@ -28,6 +28,16 @@ export const useGetDataChartPreSale = (time) => {
   return dataChart
 }
 
+export const useGetDataChartPreSaleAfter = (time) => {
+  const type = 'pre-sale'
+  const { data: dataChart } = useSWRImmutable(
+    [`info/protocol/getDataChartPreSaleAfter/${type}`],
+    () => fetchDataChart(time),
+    SWR_SETTINGS,
+  )
+  return dataChart
+}
+
 export const useGetDataSaleStatus = () => {
   const chainName = useGetChainName()
   const { chainId } = useActiveChainId()
