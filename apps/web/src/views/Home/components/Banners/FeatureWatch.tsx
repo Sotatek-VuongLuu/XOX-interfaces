@@ -157,7 +157,7 @@ const Watch = styled.div`
 
   .x3 {
     position: absolute;
-    right: 0;
+    right: 5px;
     top: 200px;
     z-index: -1;
     animation: ${floatingAnim('4px', '12px')} 3s ease-in-out infinite;
@@ -172,7 +172,7 @@ const Watch = styled.div`
     animation-delay: 0.33s;
 
     @media screen and (max-width: 900px) {
-      // left: 0;
+      left: 0;
     }
   }
   .x1 {

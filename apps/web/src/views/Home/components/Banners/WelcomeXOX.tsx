@@ -26,6 +26,19 @@ const Wrapper = styled.div`
     left: -90px;
     width: 50vw;
     height: 50vh
+
+    @media screen and (max-width: 900px) {
+      width: 100%;
+      height: auto;
+      left: unset;
+    }
+
+    @media screen and (max-width: 576px) {
+      left: unset;
+      width: 100%;
+      height: 280px;
+      transform:scale(1.5);
+    }
   }
   
   .video-container .overlay {
@@ -59,12 +72,6 @@ const Wrapper = styled.div`
     }
 
     width: 100%;
-
-    .video-container video {
-      width: 100%;
-      height: auto;
-      left: unset;
-    }
   }
 
   @media screen and (max-width: 530px) {

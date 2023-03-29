@@ -59,6 +59,7 @@ const RightContent = styled.div`
     position: relative;
     border-radius: 5px;
   }
+  
   .video-container video {
     position: absolute;
     z-index: 1;
@@ -66,6 +67,17 @@ const RightContent = styled.div`
     left: 0;
     width: 50vw;
     height: 50vh;
+
+    @media screen and (max-width: 900px) {
+      width: 100%;
+      height: auto;
+      left: unset;
+    }
+
+    @media screen and (max-width: 576px) {
+      height: 280px;
+      transform:scale(1.5);
+    }
   }
   .video-container .overlay {
     height: 100%;
@@ -76,16 +88,6 @@ const RightContent = styled.div`
     z-index: 2;
     background: #0A0A0A;
     opacity: 0.5;
-  }
-
-  @media screen and (max-width: 900px) {
-    width: 100%;
-
-    .video-container video {
-      width: 100%;
-      height: auto;
-      left: unset;
-    }
   }
 `
 
