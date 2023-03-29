@@ -146,8 +146,9 @@ function TokenMetrics({ initialTokenMetrics }: IProps) {
           <Text className="table-header">Initial Marketcap</Text>
           <Text className="table-header">Fully Dilited MC ($)</Text>
         </CustomTable>
-        {Array.from(initialTokenMetrics).map((item) => {
-          return <DataRow item={item} />
+        {Array.from(initialTokenMetrics).map((item, index) => {
+          // eslint-disable-next-line react/no-array-index-key
+          return <DataRow item={item} key={index} />
         })}
       </CustomTableSale>
     </Wrapper>

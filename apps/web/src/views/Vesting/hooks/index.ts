@@ -18,11 +18,11 @@ export const useGetSaleStats = () => {
   return saleStats
 }
 
-export const useGetDataChartPreSale = () => {
+export const useGetDataChartPreSale = (time) => {
   const type = 'pre-sale'
   const { data: dataChart } = useSWRImmutable(
     [`info/protocol/fetchDataChart/${type}`],
-    () => fetchDataChart(),
+    () => fetchDataChart(time),
     SWR_SETTINGS,
   )
   return dataChart

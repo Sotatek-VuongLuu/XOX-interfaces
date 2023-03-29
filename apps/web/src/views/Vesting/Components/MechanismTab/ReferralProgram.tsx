@@ -156,9 +156,10 @@ function ReferralProgram() {
                 <Text className="table-header">Referral bonus XOXS ( referee )</Text>
               </CusTable>
 
-              {Array.from(data).map((item) => {
+              {Array.from(data).map((item, index) => {
                 return (
-                  <CusTableRow>
+                  // eslint-disable-next-line react/no-array-index-key
+                  <CusTableRow key={index}>
                     <Text className="value_round">{item.round}</Text>
                     <Text className="value_round">{item.referrer}</Text>
                     <Text className="value_round">{item.referee}</Text>

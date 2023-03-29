@@ -287,7 +287,9 @@ const SaleItem = ({
               : ' -/-/-'}
           </p>
           <p>
-            <CountDown startTime={itemVesting.startTime[count]} setCount={setCount} count={count} />
+            <span>
+              <CountDown startTime={itemVesting.startTime[count]} setCount={setCount} count={count} />
+            </span>
           </p>
         </div>
         <div className="sale-schedule-item no-padding">
@@ -393,12 +395,10 @@ const WrapperTime = styled.div`
     @media screen and (max-width: 1200px) {
       width: 66px;
       height: 59px;
-
       .number_time {
         font-size: 20px;
         line-height: 24px;
       }
-
       .name_time {
         font-size: 12px;
         line-height: 15px;
@@ -408,21 +408,6 @@ const WrapperTime = styled.div`
   @media screen and (max-width: 1200px) {
     gap: 8px;
   }
-`
-
-const NoDataWraper = styled.div`
-  width: 100%;
-  height: 300px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: 700;
-  font-size: 18px;
-  color: rgba(255, 255, 255, 0.6);
-`
-
-const ConfirmedIcon = styled(ColumnCenter)`
-  padding: 14px 0 34px 0;
 `
 
 const CountDown = ({ startTime, setCount, count }: Props) => {
@@ -477,7 +462,8 @@ const CountDown = ({ startTime, setCount, count }: Props) => {
     <WrapperTime>
       {Array.from(Object.values(timeList)).map((item, index) => {
         return (
-          <div className="item_time">
+          // eslint-disable-next-line react/no-array-index-key
+          <div className="item_time" key={index}>
             <div className="corner1" />
             <div className="edge1" />
             <div className="corner2" />
@@ -512,14 +498,19 @@ function VestingSchedule({
       <>
         {Array.from(newVesting).map((item: IVestingTime, index) => {
           return (
-            <SaleItem item={item} index={index} handleClaim={handleClaim} handleGetDataVesting={handleGetDataVesting} />
+            <SaleItem
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
+              item={item}
+              index={index}
+              handleClaim={handleClaim}
+              handleGetDataVesting={handleGetDataVesting}
+            />
           )
         })}
       </>
     )
   }, [handleClaim, handleGetDataVesting, newVesting])
-
-  console.log(`newVesting`, newVesting)
 
   return (
     <Wrapper>
@@ -537,9 +528,9 @@ function VestingSchedule({
             <div className="total_vested">
               Current XOX Tokens Vested:{' '}
               {Number(
-                new BigNumber(newVesting[0]?.amountVested)
-                  .plus(newVesting[1]?.amountVested)
-                  .plus(newVesting[2]?.amountVested)
+                new BigNumber(newVesting[0]?.remaining)
+                  .plus(newVesting[1]?.remaining)
+                  .plus(newVesting[2]?.remaining)
                   .toFixed(2),
               ).toLocaleString()}
             </div>

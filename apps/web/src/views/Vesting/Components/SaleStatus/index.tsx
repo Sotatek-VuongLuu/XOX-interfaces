@@ -365,7 +365,8 @@ enum StatusSale {
 const Item = ({ item }) => {
   const percent = new BigNumber(
     new BigNumber(formatEther(item?.xox_amount_bought || '0')).multipliedBy(100).dividedBy(item.xOXforSale),
-  ).toFixed(4, 1)
+  ).toFixed(2)
+
   return (
     <WrapperItem status={item.status === StatusSale.LIVE} percent={parseFloat(percent)}>
       {item.status === StatusSale.LIVE && (
@@ -400,7 +401,7 @@ const Item = ({ item }) => {
       <Grid gridTemplateColumns="1.25fr 0.75fr" padding="35px 34px" gridGap="22px" className="mbpadding">
         <div>
           <p className="status_name">Status</p>
-          <p className={`status_value ${String(item.status).toLocaleLowerCase()} status`}>
+          <div className={`status_value ${String(item.status).toLocaleLowerCase()} status`}>
             {item.status === StatusSale.LIVE ? (
               <span className="dot_contain">
                 <div>{item.status}</div>
@@ -412,7 +413,7 @@ const Item = ({ item }) => {
             ) : (
               `${item.status}`
             )}
-          </p>
+          </div>
         </div>
         <div>
           <p className="status_name">Current raise</p>
@@ -473,6 +474,7 @@ interface IProps {
   infoRoundOne: RoundInfo
   infoRoundTow: RoundInfo
   infoRoundThree: RoundInfo
+  totalXOXTokenInRound: any
 }
 
 const now = new Date()

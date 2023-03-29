@@ -512,7 +512,7 @@ function ModalSaleExchange({
               ) : approvalState === ApprovalState.APPROVED ? (
                 'Approved'
               ) : (
-                'Approve USDC'
+                'Approve USDT'
               )}
             </Button>
           ) : (

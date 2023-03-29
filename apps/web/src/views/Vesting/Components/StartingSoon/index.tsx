@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import BigNumber from 'bignumber.js'
 import moment from 'moment'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { RoundInfo } from 'views/Vesting'
 import CountDown from '../CountDown'
@@ -184,8 +184,8 @@ function StartingSoon({
 
   const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
 
-  const handleReturnPercent = (round: any) => {
-    const roundCheckWithWhitelist = isTimeAllowWhitelist ? 1 : round
+  const handleReturnPercent = useMemo(() => {
+    const roundCheckWithWhitelist = isTimeAllowWhitelist ? 1 : currentRound
     switch (roundCheckWithWhitelist) {
       case 1: {
         const percent = new BigNumber(totalXOXTokenInRound)
@@ -220,13 +220,13 @@ function StartingSoon({
       case 3: {
         const percent = new BigNumber(totalXOXTokenInRound)
           .multipliedBy(100)
-          .dividedBy(TOKEN_IN_ROUND.ROUND_ONE)
+          .dividedBy(TOKEN_IN_ROUND.ROUND_THREE)
           .toNumber()
         return (
           <>
-            <p className="percent_sale">
+            <div className="percent_sale">
               <p className="percent_sale">{`${Number(percent).toFixed(2)}%`} SOLD</p>
-            </p>
+            </div>
             <div className="processing">
               <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
             </div>
@@ -236,7 +236,7 @@ function StartingSoon({
       default:
         break
     }
-  }
+  }, [totalXOXTokenInRound, currentRound, isTimeAllowWhitelist])
 
   const handleCountdownArg = (startDate: number) => {
     return (
@@ -357,7 +357,7 @@ function StartingSoon({
       ) : (
         handleRenderCountdown(timeNow)
       )}
-      {(isInTimeRangeSale || isCanBuyWithWhitelistUser) && handleReturnPercent(currentRound)}
+      {(isInTimeRangeSale || isCanBuyWithWhitelistUser) && handleReturnPercent}
     </Wrapper>
   )
 }
