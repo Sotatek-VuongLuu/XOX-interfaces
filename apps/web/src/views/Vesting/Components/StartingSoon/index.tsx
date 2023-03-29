@@ -32,6 +32,15 @@ const Wrapper = styled.div`
     margin-bottom: 47px;
   }
 
+  .notice_after {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    margin-top: 12px;
+  }
+
   .percent_sale {
     text-align: center;
     margin-top: 27px;
@@ -111,7 +120,7 @@ const Wrapper = styled.div`
       max-width: 100% !important;
       height: auto;
       display: block;
-      margin-top: 30px;
+      margin-top: 20px;
     }
   }
 
@@ -128,6 +137,12 @@ const Wrapper = styled.div`
       line-height: 17px;
       margin-top: 10px;
       margin-bottom: 24px;
+    }
+
+    .notice_after {
+      font-size: 14px;
+      line-height: 17px;
+      margin-top: 10px;
     }
 
     .processing {
@@ -253,6 +268,7 @@ function StartingSoon({
     if (time < infoRoundOne.startDate) {
       return (
         <>
+          <p className="title">New sale will start soon</p>
           <p className="notice">
             Sale 1 will start on {moment.unix(infoRoundOne.startDate / 1000).format('DD/MM/YYYY')}.
           </p>
@@ -273,6 +289,7 @@ function StartingSoon({
       if (infoRoundOne.endDate <= time && time < infoRoundTow.startDate) {
         return (
           <>
+            <p className="title">New sale will start soon</p>
             <p className="notice">
               Sale 2 will start on {moment.unix(infoRoundTow.startDate / 1000).format('DD/MM/YYYY')}.
             </p>
@@ -296,6 +313,7 @@ function StartingSoon({
       if (infoRoundTow.endDate <= time && time < infoRoundThree.startDate) {
         return (
           <>
+            <p className="title">New sale will start soon</p>
             <p className="notice">
               Sale 3 will start on {moment.unix(infoRoundThree.startDate / 1000).format('DD/MM/YYYY')}.
             </p>
@@ -334,23 +352,23 @@ function StartingSoon({
 
   const handleRenderTitle = useMemo(() => {
     if (!infoRoundOne.startDate && !infoRoundTow.startDate && !infoRoundThree.startDate) {
-      return 'Pre-sale is coming soon'
+      return <p className="title">Pre-sale is coming soon</p>
     }
 
-    if (infoRoundOne.endDate < timeNow && !infoRoundTow.startDate) {
+    if (infoRoundOne.endDate && infoRoundOne.endDate < timeNow && !infoRoundTow.startDate) {
       return (
         <>
           <p className="title"> Round 1 Has Successfully Ended</p>
-          <p className="notice">Round 2 Starting Soon</p>
+          <p className="notice_after">Round 2 Starting Soon</p>
         </>
       )
     }
 
-    if (infoRoundTow.endDate < timeNow && !infoRoundThree.startDate) {
+    if (infoRoundTow.endDate && infoRoundTow.endDate < timeNow && !infoRoundThree.startDate) {
       return (
         <>
           <p className="title"> Round 2 Has Successfully Ended</p>
-          <p className="notice">Round 3 Starting Soon</p>
+          <p className="notice_after">Round 3 Starting Soon</p>
         </>
       )
     }
