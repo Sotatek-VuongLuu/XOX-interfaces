@@ -98,8 +98,8 @@ function ChartSalePage({ infoRoundOne }: IProps) {
   const [dataChart, setDataChart] = useState([])
   const [dataChartFifteenDay, setDataChartFifteenDay] = useState([])
   const [timeFifteenDayAfterSaleOne, setTimeFifteenDayAfterSaleOne] = useState({
-    from: 0,
-    to: 0,
+    from: null,
+    to: null,
   })
 
   const isAfterFifteenDayAfterSaleOne = useMemo(() => {

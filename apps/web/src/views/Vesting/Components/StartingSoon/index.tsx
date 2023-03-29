@@ -332,6 +332,30 @@ function StartingSoon({
     )
   }
 
+  const handleRenderTitle = useMemo(() => {
+    if (!infoRoundOne.startDate && !infoRoundTow.startDate && !infoRoundThree.startDate) {
+      return 'Pre-sale is coming soon'
+    }
+
+    if (infoRoundOne.endDate < timeNow && !infoRoundTow.startDate) {
+      return (
+        <>
+          <p className="title"> Round 1 Has Successfully Ended</p>
+          <p className="notice">Round 2 Starting Soon</p>
+        </>
+      )
+    }
+
+    if (infoRoundTow.endDate < timeNow && !infoRoundThree.startDate) {
+      return (
+        <>
+          <p className="title"> Round 2 Has Successfully Ended</p>
+          <p className="notice">Round 3 Starting Soon</p>
+        </>
+      )
+    }
+  }, [infoRoundOne, infoRoundTow, infoRoundThree, timeNow])
+
   useEffect(() => {
     if (reacheZero) {
       // eslint-disable-next-line no-unused-expressions
@@ -349,7 +373,7 @@ function StartingSoon({
       <div className="edge1" />
       <div className="corner2" />
       <div className="edge2" />
-      <p className="title">{isInTimeRangeSale ? 'XOX Token is on sale' : 'New Sale Will Start Soon'}</p>
+      {isInTimeRangeSale ? <p className="title">XOX Token is on sale</p> : handleRenderTitle}
       {isNotSetDataForAll ? (
         <div className="rocket_container">
           <img src="/images/rocket_xox.png" alt="rocket_xox" />
