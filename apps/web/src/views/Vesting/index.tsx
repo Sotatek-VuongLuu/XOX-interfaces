@@ -1057,7 +1057,6 @@ function VestingPage() {
 
   useEffect(() => {
     handleGetTotalTokenInvested(currentRound)
-    handCheckInTimeRangeSale(timeStampOfNow)
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [currentRound])
 
