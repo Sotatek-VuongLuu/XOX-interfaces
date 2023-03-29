@@ -396,7 +396,7 @@ function StartingSoon({
       <div className="edge1" />
       <div className="corner2" />
       <div className="edge2" />
-      {isInTimeRangeSale ? null : handleRenderTitle}
+      {handleRenderTitle}
       {isNotSetDataForAll ? (
         <div className="rocket_container">
           <img src="/images/rocket_xox.png" alt="rocket_xox" />

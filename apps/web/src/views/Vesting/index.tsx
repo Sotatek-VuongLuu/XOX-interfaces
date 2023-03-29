@@ -509,16 +509,16 @@ function VestingPage() {
       setInfoRoundOne({
         ...infoRoundOne,
         totalDistribution: 2700000,
-        startDate: 1680084534000,
-        endDate: 1680084834000,
+        startDate: 0,
+        endDate: 0,
         bonusPercentage: new BigNumber(dataROne.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataROne.exchangeRate._hex).toNumber(),
       })
       setInfoRoundTow({
         ...infoRoundTow,
         totalDistribution: 3600000,
-        startDate: 1680085074000,
-        endDate: 1680085254000,
+        startDate: 0,
+        endDate: 0,
         bonusPercentage: new BigNumber(dataRTwo.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataRTwo.exchangeRate._hex).toNumber(),
       })

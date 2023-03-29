@@ -103,11 +103,9 @@ function ChartSalePage({ infoRoundOne }: IProps) {
   })
 
   const isAfterFifteenDayAfterSaleOne = useMemo(() => {
-    if (infoRoundOne.startDate) {
-      const timeInit = moment.unix(infoRoundOne.startDate).add(14, 'days').unix()
-      return timeStampOfNow < timeInit * 1000
-    }
-    return null
+    if (!infoRoundOne.startDate) return null
+    const timeInit = moment.unix(infoRoundOne.startDate).add(14, 'days').unix()
+    return timeStampOfNow < timeInit * 1000
   }, [infoRoundOne])
 
   const dateOfStartSaleOne = useMemo(() => {
