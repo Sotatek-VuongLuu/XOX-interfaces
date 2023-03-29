@@ -26,6 +26,19 @@ const Wrapper = styled.div`
     left: -90px;
     width: 50vw;
     height: 50vh
+
+    @media screen and (max-width: 900px) {
+      width: 100%;
+      height: auto;
+      left: unset;
+    }
+
+    @media screen and (max-width: 576px) {
+      left: unset;
+      width: 100%;
+      height: 280px;
+      transform:scale(1.5);
+    }
   }
   
   .video-container .overlay {
@@ -59,12 +72,6 @@ const Wrapper = styled.div`
     }
 
     width: 100%;
-
-    .video-container video {
-      width: 100%;
-      height: auto;
-      left: unset;
-    }
   }
 
   @media screen and (max-width: 530px) {
@@ -220,6 +227,7 @@ const LeftContent = styled.div`
       position: relative;
       text-align: center;
       margin-top:22px;
+      cursor: pointer;
 
       &:before {
         content: '';
@@ -282,6 +290,11 @@ const LeftContent = styled.div`
         font-size: 14px;
         line-height: 17px;
         font-weight: 700;
+        cursor: pointer;
+      }
+
+      button {
+        background: transparent;
       }
     }
 
@@ -337,14 +350,14 @@ const LeftContent = styled.div`
 
 const Title = styled.p`
   font-weight: 700;
-  font-size: 48px;
+  font-size: 40px;
   line-height: 72px;
   color: rgba(255, 255, 255, 0.87);
 `
 
 const Feature = styled.div`
   font-weight: 700;
-  font-size: 24px;
+  font-size: 28px;
   line-height: 44px;
   background: linear-gradient(89deg, rgba(155,243,203,1) 0%, rgba(62,192,166,1) 25%, rgba(244,66,52,1) 50%, rgba(159,58,131,1) 75%);
   -webkit-background-clip: text;
@@ -428,6 +441,60 @@ const ImageWrapper = styled.div`
   }
 `
 
+const CustomPopover = styled(Popover)`
+  .MuiPopover-paper {
+    background: #1D1C1C;
+    border-radius: 10px;
+    min-width: 250px;
+    margin-top: 2px;
+
+    .popover-coin {
+      display: flex;
+      background: #1D1C1C;
+      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+      flex-direction: row;
+      justify-content: space-between;
+
+      .coin-info {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 8px 12px 8px 12px;
+        gap: 8px;
+
+        .coin-data {
+          justify-content: center;
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+  
+          .title {
+            font-size: 16px;
+            line-height: 19px;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.87);
+          }
+    
+          .description {
+            font-weight: 400;
+            font-size: 12px;
+            line-height: 15px;
+            color: rgba(255, 255, 255, 0.87);
+          }
+        }
+      }
+
+      .coin-buttons {
+        justify-content: center;
+        display: flex;
+        flex-direction: row;
+        padding: 8px 12px 8px 12px;
+        gap: 8px;
+      }
+    }
+  }
+`
+
 const WelcomeXOX = (): JSX.Element => {
   const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
 
@@ -444,18 +511,18 @@ const WelcomeXOX = (): JSX.Element => {
   const open = Boolean(anchorEl);
   const id = open ? 'simple-popover' : undefined;
 
-  useEffect(() => {
-    const canvasPC = document.getElementById('canvas3d_pc')
-    const canvas = document.getElementById('canvas3d_mobile')
-    if (canvasPC) {
-      const app = new Application(canvasPC as any)
-      app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode').catch((error) => console.log(error))
-    }
-    if (canvas) {
-      const app = new Application(canvas as any)
-      app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode').catch((error) => console.log(error))
-    }
-  }, [])
+  // useEffect(() => {
+  //   const canvasPC = document.getElementById('canvas3d_pc')
+  //   const canvas = document.getElementById('canvas3d_mobile')
+  //   if (canvasPC) {
+  //     const app = new Application(canvasPC as any)
+  //     app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode').catch((error) => console.log(error))
+  //   }
+  //   if (canvas) {
+  //     const app = new Application(canvas as any)
+  //     app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode').catch((error) => console.log(error))
+  //   }
+  // }, [])
 
   return (
     <Wrapper>
@@ -463,7 +530,7 @@ const WelcomeXOX = (): JSX.Element => {
         <Grid container spacing={2} className="grid_welcome_container">
           <GridLeft item xs={12} md={6}>
             <LeftContent>
-              <Title className="title">XOX: The Next Gen Multichain DeFi Dapps & Web3 Solutions Provider</Title>
+              <Title className="title">XOX<span style={{ color: '#FB8618' }}>:</span> The Next Gen Multichain DeFi Dapps & Web3 Solutions Provider</Title>
               <Feature className="feature">Revolutionary - Scalable - Sustainable</Feature>
               <Description className="description">
                 Swap, stake, store, bridge, refer, invest and earn with ease on the
@@ -526,13 +593,45 @@ const WelcomeXOX = (): JSX.Element => {
                     <img src="/images/home/hero/wolf.svg" alt="wolf" />
                   </div>
                 </div>
-                <div className="more-btn">
-                  <div className="bg-btn">
+                {/* <div className="more-btn">
+                  <div className="bg-btn" aria-describedby={id} variant='contained' onClick={handleClick}>
                     <img src="/images/home/hero/checklist.svg" alt="checklist" />
                     <p>More</p>
                     <img src="/images/home/hero/down.svg" alt="down" />
                   </div>
+                </div> */}
+                <div className="more-btn">
+                  <Button aria-describedby={id} onClick={handleClick} className="bg-btn">
+                    <img src="/images/home/hero/checklist.svg" alt="checklist" />
+                      More
+                    <img src="/images/home/hero/down.svg" alt="down" />
+                  </Button> 
                 </div>
+                <CustomPopover
+                    id={id}
+                    open={open}
+                    anchorEl={anchorEl}
+                    onClose={handleClose}
+                    anchorOrigin={{
+                      vertical: 'bottom',
+                      horizontal: 'left',
+                    }}
+                  >
+                  <div className="popover-coin">
+                    <div className="coin-info">
+                      <img src="/images/home/hero/xox.svg" alt="xox" />
+                      <div className="coin-data">
+                        <p className="title">HECO</p>
+                        <p className="description">0x64ff...428a2fd</p>
+                      </div>
+                    </div>
+                    <div className="coin-buttons">
+                      <img src="/images/home/hero/copy.svg" alt="copy" />
+                      <img src="/images/home/hero/shield.svg" alt="shield" />
+                      <img src="/images/home/hero/wolf.svg" alt="wolf" />
+                    </div>
+                  </div>
+                  </CustomPopover>
               </div>
             </LeftContent>
           </GridLeft>

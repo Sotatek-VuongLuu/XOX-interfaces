@@ -50,6 +50,8 @@ const WrapperI = styled.div`
         background: rgba(16, 16, 16, 1);
         padding: 10px 20px;
         border-radius: inherit;
+        cursor: pointer;
+
         span {
           background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
           -webkit-background-clip: text;
@@ -63,6 +65,10 @@ const WrapperI = styled.div`
           background-color: #191a28;
           border-radius: inherit;
         }
+      }
+
+      @media screen and (max-width: 576px) {
+        margin-top: 16px;
       }
     }
 
@@ -85,6 +91,7 @@ const WrapperI = styled.div`
       -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
+      z-index: -1;
     }
   }
 `
@@ -185,11 +192,19 @@ const Wrapper = styled.div`
       .heart {
         font-size: 20px;
         line-height: 32px;
+        text-align: center;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 19px;
+        line-height: 32px;
       }
       .describe {
+        font-style: normal;
+        font-weight: 400;
         font-size: 14px;
         line-height: 24px;
         width: unset;
+        text-align: center;
       }
     }
   }
@@ -200,7 +215,7 @@ const FeatureSquare = () => {
     <Wrapper>
       <div className="title" style={{ overflow: 'hidden' }}>
         <p className="heart" data-aos="fade-right">
-          The Heart of the XOX Ecosystem
+          The Heart of the XOX Ecosystem<span style={{ color: '#FB8618' }}>.</span>
         </p>
         <p className="describe" data-aos="fade-left">
           Wide range of apps, utilities and solutions powering the protocol creating a True One-Stop Ecosystem for all

@@ -157,7 +157,7 @@ const Watch = styled.div`
 
   .x3 {
     position: absolute;
-    right: 0;
+    right: 5px;
     top: 200px;
     z-index: -1;
     animation: ${floatingAnim('4px', '12px')} 3s ease-in-out infinite;
@@ -172,7 +172,7 @@ const Watch = styled.div`
     animation-delay: 0.33s;
 
     @media screen and (max-width: 900px) {
-      // left: 0;
+      left: 0;
     }
   }
   .x1 {
@@ -220,7 +220,7 @@ const FeatureWatch = () => {
         </Grid>
         <Grid item xs={12} md={7} className="second-box">
           <RightContent data-aos="fade-left">
-            <Title>Meet XOXS. Our Hybrid Multichain Stable Coin.</Title>
+            <Title>Meet XOXS<span style={{ color: '#FB8618' }}>.</span> Our Hybrid Multichain Stable Coin<span style={{ color: '#FB8618' }}>.</span></Title>
             <Paragraph style={{ margin: '24px 0' }}>
               Designed to be the staking substitute to our governance token XOX, preventing Supply Inflation & Selling
               Pressure XOXS is the result of months studding how staking works, chart behavior to high APYs followed by

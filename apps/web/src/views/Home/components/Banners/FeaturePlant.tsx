@@ -59,6 +59,7 @@ const RightContent = styled.div`
     position: relative;
     border-radius: 5px;
   }
+  
   .video-container video {
     position: absolute;
     z-index: 1;
@@ -66,6 +67,17 @@ const RightContent = styled.div`
     left: 0;
     width: 50vw;
     height: 50vh;
+
+    @media screen and (max-width: 900px) {
+      width: 100%;
+      height: auto;
+      left: unset;
+    }
+
+    @media screen and (max-width: 576px) {
+      height: 280px;
+      transform:scale(1.5);
+    }
   }
   .video-container .overlay {
     height: 100%;
@@ -76,16 +88,6 @@ const RightContent = styled.div`
     z-index: 2;
     background: #0A0A0A;
     opacity: 0.5;
-  }
-
-  @media screen and (max-width: 900px) {
-    width: 100%;
-
-    .video-container video {
-      width: 100%;
-      height: auto;
-      left: unset;
-    }
   }
 `
 
@@ -153,7 +155,7 @@ const FeaturePlant = () => {
       <Grid container spacing={2} style={{ overflow: 'hidden' }}>
         <Grid item xs={12} md={6}>
           <LeftContent data-aos="fade-right">
-            <Title>XOX Dapp - An All-IN-One Solution.</Title>
+            <Title>XOX Dapp - An All-IN-One Solution<span style={{ color: '#FB8618' }}>.</span></Title>
             <Paragraph style={{ margin: '24px 0' }}>
               Primarily design to provide simple solutions to its users and XOX Holders, the XOX Dapp already provides
               and will keep implementing more robuts functionalities which will eventually make it a truly One Stop

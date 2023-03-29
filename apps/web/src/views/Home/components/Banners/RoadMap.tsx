@@ -106,6 +106,7 @@ const Description = styled.p`
 
   @media screen and (max-width: 900px) {
     font-size: 14px;
+    line-height: 24px;
   }
 `
 

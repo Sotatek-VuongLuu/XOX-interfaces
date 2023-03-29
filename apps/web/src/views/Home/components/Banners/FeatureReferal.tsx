@@ -223,6 +223,7 @@ const First = styled.div`
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     mask-composite: exclude;
+    z-index: -1;
   }
 `
 
@@ -552,7 +553,7 @@ const FeatureReferal = () => {
         <Grid item xs={12} md={1} />
         <Grid item xs={12} md={6}>
           <div className="ref_container" data-aos="fade-left">
-            <p className="title_ref">Gamified Referral Program</p>
+            <p className="title_ref">Gamified Referral Program<span style={{ color: '#FB8618' }}>.</span></p>
             <Paragraph className="description">
               Built to give back, the XOX Gamified Referral Program rewards both "The Referee" & "The Referrer" Earn
               Points that's are redeemable for USDT/USDC after reaching different levels & milestones.

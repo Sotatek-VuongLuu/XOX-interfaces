@@ -205,7 +205,6 @@ const CoinItemDisplay = ({ item }: ItemProps) => {
 
 const Wrapper = styled.div`
   margin-bottom: 100px;
-  margin-top: 48px;
   .title {
     display: flex;
     justify-content: center;
@@ -227,7 +226,7 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 900px) {
     margin-bottom: unset;
-    margin-top: 64px;
+    margin-top: 200px;
     .title {
       flex-direction: column;
       justify-content: center;
