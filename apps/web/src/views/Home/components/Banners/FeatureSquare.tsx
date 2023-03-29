@@ -192,11 +192,19 @@ const Wrapper = styled.div`
       .heart {
         font-size: 20px;
         line-height: 32px;
+        text-align: center;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 19px;
+        line-height: 32px;
       }
       .describe {
+        font-style: normal;
+        font-weight: 400;
         font-size: 14px;
         line-height: 24px;
         width: unset;
+        text-align: center;
       }
     }
   }

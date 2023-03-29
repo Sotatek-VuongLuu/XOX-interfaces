@@ -158,7 +158,9 @@ const Wrapper = styled.div`
     }
 
     .decoration {
+      font-weight: 400;
       font-size: 14px;
+      line-height: 24px;
     }
 
     .wrapper_mobile {
