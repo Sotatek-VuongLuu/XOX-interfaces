@@ -76,7 +76,7 @@ const Wrapper = styled.div`
       box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
       border-radius: 10px;
       width: 450px;
-      height: 235px;
+      height: 230px;
 
       .popup-info {
         padding: 16px;
