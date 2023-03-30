@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import { ChainId } from '@pancakeswap/sdk'
 import { Box, Flex, Input, LinkExternal, Select, Text } from '@pancakeswap/uikit'
 import truncateHash from '@pancakeswap/utils/truncateHash'
@@ -92,6 +93,7 @@ function TabClaimHistory({ currentTransactions }) {
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
+  const { t } = useTranslation()
 
   const setPagePagination = useCallback(
     (p: number) => {

@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable consistent-return */
 /* eslint-disable no-console */
 /* eslint-disable react-hooks/exhaustive-deps */
@@ -24,10 +25,10 @@ import {
   userPoint,
 } from 'services/referral'
 import styled from 'styled-components'
+import { ChainId } from '@pancakeswap/sdk'
 import Banner from './components/Banner'
 import MainInfo from './components/MainInfo'
 import ReferralFriend from './components/ReferralFriend'
-import { ChainId } from '@pancakeswap/sdk'
 
 export interface IItemLevel {
   icon: string

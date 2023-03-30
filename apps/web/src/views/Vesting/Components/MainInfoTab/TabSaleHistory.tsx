@@ -113,6 +113,7 @@ function TabSaleHistory({ currentTransactions }) {
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
+  const { t } = useTranslation()
 
   const setPagePagination = useCallback(
     (p: number) => {

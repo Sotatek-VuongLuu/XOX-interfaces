@@ -1,5 +1,11 @@
+/* eslint-disable no-useless-escape */
+/* eslint-disable no-script-url */
+/* eslint-disable jsx-a11y/anchor-is-valid */
+/* eslint-disable prefer-template */
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
+import { useState } from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -26,42 +32,95 @@ const Wrapper = styled.div`
     display: flex;
     justify-content: center;
 
-    .subscription-form {
+    .subscription-box {
       width: 100%;
       max-width: 680px;
-      background: #1d1c1c;
-      display: flex;
-      align-items: center;
-      border-radius: 12px;
-      padding: 6px;
-      justify-content: center;
 
-      input {
-        background: transparent;
-        flex: 1;
-        border: 0;
-        outline: none;
-        padding: 12px 16px 12px 8px;
-        font-size: 18px;
-        line-height: 22px;
-        color: rgba(255, 255, 255, 0.38);
-      }
-
-      button {
-        border: 0;
-        width: 60px;
-        height: 60px;
-        cursor: pointer;
-        background: #1d1c1c;
-
-        img {
-          width: 30px;
+      .subscription-form {
+        background: #1D1C1C;
+        display: flex;
+        align-items: center;
+        border-radius: 12px;
+        padding: 6px;
+        justify-content: center;
+        border: unset;
+        margin-bottom: 8px;
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+            -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+            -webkit-transition-delay: 9999s;
+        }
+  
+        input {
+          background: transparent;
+          flex: 1;
+          border: 0;
+          outline: none;
+          padding: 12px 16px 12px 8px;
+          font-size: 18px;
+          line-height: 22px;
+          color: rgba(255, 255, 255, 0.38);
+          width: 100%;
+    
+          &:hover {
+            .subscription-form {
+              border: 1px solid #FB8618;
+            }
+          }
+        }
+  
+        button {
+          border: 0;
+          width: 60px;
+          height: 60px;
+          cursor: pointer;
+          background: #1D1C1C;
+    
+          img {
+            width: 30px;
+          }
+        }
+    
+        .email-icon {
+          width: 25px;
+          margin-left: 16px;
         }
       }
 
-      .email-icon {
-        width: 25px;
-        margin-left: 16px;
+      .hover-form {
+        border: 2px solid #FB8618;
+      }
+  
+      .error {
+        border: 2px solid #FF5353;
+  
+        .text-error {
+          p {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 17px;
+            color: #F44336;
+          }
+        }
+      }
+
+      .hidden-text {
+        display: none;
+      }
+
+      .text-error {
+        display: block;
+
+        p {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 17px;
+          color: #F44336;
+        }
       }
     }
   }
@@ -98,26 +157,28 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 576px) {
     .subscription-form-container {
-      .subscription-form {
-        padding: 6px;
-
-        input {
-          padding: 7.5px 0px 7.5px 8px;
-          font-size: 16px;
-          line-height: 22px;
-        }
-
-        button {
-          width: 32px;
-          height: 32px;
-          img {
-            width: 28px;
+      .subscription-box 
+        .subscription-form {
+          padding: 6px;
+      
+          input {
+            padding: 7.5px 0px 7.5px 8px;
+            font-size: 16px;
+            line-height: 22px;
           }
-        }
-
-        .email-icon {
-          width: 19px;
-          margin-left: 6px;
+      
+          button {
+            width: 32px;
+            height: 32px;
+            img {
+              width: 28px;
+            }
+          }
+      
+          .email-icon {
+            width: 19px;
+            margin-left: 6px;
+          }
         }
       }
     }
@@ -127,28 +188,30 @@ const Wrapper = styled.div`
     .subscription-form-container {
       display: flex;
       justify-content: center;
-
-      .subscription-form {
-        input {
-          padding: 7.5px 0px 7.5px 8px;
-          font-size: 14px;
-        }
-
-        button {
-          border: 0;
-          width: 32px;
-          height: 32px;
-          cursor: pointer;
-          background: #1d1c1c;
-
-          img {
-            width: 32px;
+  
+      .subscription-box {
+        .subscription-form {
+          input {
+            padding: 7.5px 0px 7.5px 8px;
+            font-size: 16px;
           }
-        }
-
-        .email-icon {
-          width: 16px;
-          margin-left: 4px;
+      
+          button {
+            border: 0;
+            width: 32px;
+            height: 32px;
+            cursor: pointer;
+            background: #1D1C1C;
+      
+            img {
+              width: 32px;
+            }
+          }
+      
+          .email-icon {
+            width: 16px;
+            margin-left: 4px;
+          }
         }
       }
     }
@@ -161,6 +224,45 @@ const Wrapper = styled.div`
 
 const Subscription = () => {
   const { t } = useTranslation()
+  const [inputValue, setInputValue] = useState<any>(null)
+  const [emailValid, setEmailValid] = useState(true)
+  const [emailBorderClass, setEmailBorderClass] = useState<string>('')
+  const [btnHoverClass, setBtnHoverClass] = useState<string>('')
+  const [emailErrorClass, setEmailErrorClass] = useState<string>('')
+  const [textErrorClass, setTextErrorClass] = useState<string>('')
+
+  const handleChange = (event) => {
+    const email = event.target.value
+    const isValid = validateEmail(email)
+    setInputValue(email)
+    setEmailValid(isValid)
+
+    if (!isValid) {
+      setEmailErrorClass(' error')
+      setTextErrorClass(' text-error')
+      setEmailBorderClass('')
+    } else {
+      setTextErrorClass('')
+      setEmailErrorClass('')
+      setEmailBorderClass(' hover-form')
+    }
+  }
+
+  const validateEmail = (email) => {
+    const reg =
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return reg.test(email)
+  }
+
+  const handleMouseOut = (event) => {
+    setEmailBorderClass('')
+    setBtnHoverClass('')
+  }
+
+  const handleMouseOver = (event) => {
+    setEmailBorderClass(' hover-form')
+    setBtnHoverClass(' hover-button')
+  }
 
   return (
     <Wrapper>
@@ -180,13 +282,43 @@ const Subscription = () => {
         </a>
       </p>
       <div className="subscription-form-container">
-        <form action="/api/form" method="post" className="subscription-form">
-          <img src="/images/home/subscription/email.svg" alt="email" className="email-icon" />
-          <input type="text" id="email" name="email" placeholder={t('Your email')} required />
-          <button type="submit">
-            <img src="/images/home/subscription/forward_arrow.svg" alt="forward_arrow" />
-          </button>
-        </form>
+        <div className="subscription-box">
+          <form action="#" method="post" className={'subscription-form ' + emailBorderClass + emailErrorClass}>
+            <img src="/images/home/subscription/email.svg" alt="email" className="email-icon" />
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder="Your email"
+              required
+              value={inputValue}
+              onChange={handleChange}
+              onMouseOut={handleMouseOut}
+              onMouseOver={handleMouseOver}
+            />
+            <button type="submit" className={'btn-submit ' + btnHoverClass}>
+              <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6.75 15.3066H24.25"
+                  stroke="#515151"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M15.5 6.55664L24.25 15.3066L15.5 24.0566"
+                  stroke="#515151"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </form>
+          <span className={'hidden-text' + textErrorClass}>
+            <p>Invalid email address</p>
+          </span>
+        </div>
       </div>
     </Wrapper>
   )

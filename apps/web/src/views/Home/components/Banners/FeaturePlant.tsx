@@ -154,7 +154,7 @@ const FeaturePlant = () => {
 
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
-      <Grid container spacing={2} style={{ overflow: 'hidden' }}>
+      <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <LeftContent data-aos="fade-right">
             <Title>

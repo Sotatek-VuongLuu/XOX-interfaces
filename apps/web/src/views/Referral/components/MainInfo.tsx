@@ -1,3 +1,4 @@
+/* eslint-disable import/no-cycle */
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-console */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -1208,7 +1209,6 @@ const MainInfo = ({
                         key={item}
                         className={tabChainLeaderBoard === item ? 'filter_chain active' : 'filter_chain'}
                         onClick={() => handleOnChangeChainTab(item)}
-                        role="button"
                       >
                         {t(item)}
                       </div>

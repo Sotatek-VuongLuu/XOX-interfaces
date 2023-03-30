@@ -1,3 +1,6 @@
+/* eslint-disable react/no-unknown-property */
+/* eslint-disable react/self-closing-comp */
+/* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 import React, { useState } from 'react'
@@ -78,12 +81,11 @@ const Wrapper = styled.div`
       background: #1d1c1c;
       box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
       border-radius: 10px;
-      width: 428px;
-      height: 223px;
+      width: 450px;
+      height: 230px;
 
       .popup-info {
         padding: 16px;
-        gap: 12px;
 
         .top {
           display: flex;
@@ -176,8 +178,8 @@ const Wrapper = styled.div`
 
         .bottom {
           display: grid;
-          grid-template-columns: 1.4fr 0.6fr;
-          grid-template-rows: 1fr;
+          grid-template-columns: 1fr 0.6fr;
+          grid-template-rows: 0.33fr;
           grid-column-gap: 12px;
           grid-row-gap: 0px;
 
@@ -195,6 +197,108 @@ const Wrapper = styled.div`
               line-height: 17px;
               text-align: left;
               color: rgba(255, 255, 255, 0.87);
+            }
+
+            .trust-score-box {
+              display: grid;
+              grid-template-columns: 1fr 0.8fr;
+              grid-template-rows: 1fr;
+              grid-column-gap: 0px;
+              grid-row-gap: 0px;
+
+              .trust-score-description {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+
+                .trust-score-description-top {
+                  font-style: normal;
+                  font-weight: 400;
+                  font-size: 12px;
+                  line-height: 15px;
+                  color: rgba(255, 255, 255, 0.87);
+                }
+
+                .trust-score-description-bottom {
+                  font-style: normal;
+                  font-weight: 400;
+                  font-size: 12px;
+                  line-height: 15px;
+                  color: rgba(255, 255, 255, 0.87);
+
+                  .up-arrow {
+                    &:before {
+                      content: '▲ ';
+                      color: #c20da3;
+                      font-size: 14px;
+                    }
+                  }
+
+                  .down-arrow {
+                    &:before {
+                      content: '▼ ';
+                      color: #c20da3;
+                      font-size: 14px;
+                    }
+                  }
+                }
+              }
+
+              .flex-wrapper {
+                display: flex;
+                flex-flow: row nowrap;
+              }
+
+              .single-chart {
+                width: 80%;
+                justify-content: space-around;
+              }
+
+              .circular-chart {
+                display: block;
+                margin: 10px auto;
+                max-width: 80%;
+                max-height: 250px;
+              }
+
+              .circle-bg {
+                fill: none;
+                stroke: #eee;
+                stroke-width: 3.8;
+              }
+
+              .circle {
+                fill: none;
+                stroke-width: 2.8;
+                stroke-linecap: round;
+                animation: progress 1s ease-out forwards;
+              }
+
+              @keyframes progress {
+                0% {
+                  stroke-dasharray: 0 100;
+                }
+              }
+
+              .circular-chart.orange .circle {
+                stroke: #ff9f00;
+              }
+
+              .circular-chart.green .circle {
+                stroke: #4cc790;
+              }
+
+              .circular-chart.blue .circle {
+                stroke: #3c9ee5;
+              }
+
+              .percentage {
+                fill: rgba(255, 255, 255, 0.87);
+                font-weight: 700;
+                font-size: 12px;
+                line-height: 15px;
+                text-anchor: middle;
+              }
             }
           }
 
@@ -329,6 +433,36 @@ const HoverTextAirBnb = () => {
           </div>
           <div className="trust-score">
             <p className="trust-score-title">Trust Score</p>
+            <div className="trust-score-box">
+              <div className="flex-wrapper">
+                <div className="single-chart">
+                  <svg viewBox="0 0 36 36" className="circular-chart orange">
+                    <path
+                      className="circle-bg"
+                      d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path
+                      className="circle"
+                      stroke-dasharray="30, 100"
+                      d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <text x="18" y="20.35" className="percentage">
+                      60
+                    </text>
+                  </svg>
+                </div>
+              </div>
+              <div className="trust-score-description">
+                <p className="trust-score-description-top">Last 24h</p>
+                <p className="trust-score-description-bottom">
+                  <span className="up-arrow"></span>0.00%
+                </p>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -382,6 +516,31 @@ const HoverTextHubspot = () => {
           </div>
           <div className="trust-score">
             <p className="trust-score-title">Trust Score</p>
+            <div>
+              <div className="flex-wrapper">
+                <div className="single-chart">
+                  <svg viewBox="0 0 36 36" className="circular-chart orange">
+                    <path
+                      className="circle-bg"
+                      d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <path
+                      className="circle"
+                      // eslint-disable-next-line react/no-unknown-property
+                      stroke-dasharray="30, 100"
+                      d="M18 2.0845
+                        a 15.9155 15.9155 0 0 1 0 31.831
+                        a 15.9155 15.9155 0 0 1 0 -31.831"
+                    />
+                    <text x="18" y="22.35" className="percentage">
+                      60
+                    </text>
+                  </svg>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -444,7 +603,8 @@ const HoverTextGoogle = () => {
 
 const SecuredBy = () => {
   const { t } = useTranslation()
-  const [isHoveringAirBnb, setIsHoveringAirBnb] = useState(false)
+  const { width } = useWindowSize()
+  const [isHoveringAirBnb, setIsHoveringAirBnb] = useState(true)
   const [isHoveringHubspot, setIsHoveringHubspot] = useState(false)
   const [isHoveringGoogle, setIsHoveringGoogle] = useState(false)
 
@@ -504,10 +664,9 @@ const SecuredBy = () => {
             <img src="/images/google.svg" alt="google" data-aos="fade-left" onMouseOver={handleMouseOverGoogle} onMouseOut={handleMouseOutGoogle}/>
           </>
         )} */}
-        <div>
+        <div className="airbnb-box">
           <img
             src="/images/airbnb.svg"
-            className="airbnb-box"
             alt="airbnb"
             data-aos="fade-right"
             onMouseOver={handleMouseOverAirBnb}
@@ -515,10 +674,9 @@ const SecuredBy = () => {
           />
           {isHoveringAirBnb && <HoverTextAirBnb />}
         </div>
-        <div>
+        <div className="hubspot-box">
           <img
             src="/images/hubspot.svg"
-            className="hubspot-box"
             alt="hubspot"
             data-aos="fade-down"
             onMouseOver={handleMouseOverHubspot}
@@ -526,10 +684,9 @@ const SecuredBy = () => {
           />
           {isHoveringHubspot && <HoverTextAirBnb />}
         </div>
-        <div>
+        <div className="google-box">
           <img
             src="/images/google.svg"
-            className="google-box"
             alt="google"
             data-aos="fade-left"
             onMouseOver={handleMouseOverGoogle}
