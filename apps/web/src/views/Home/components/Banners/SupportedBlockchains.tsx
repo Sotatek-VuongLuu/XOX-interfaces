@@ -108,7 +108,7 @@ const WrapperI = styled.div`
           background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
           -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
           -webkit-mask-composite: xor;
-          mask-composite: exclude;
+          z-index: -1;
         }
       }
     }
@@ -246,12 +246,23 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 576px) {
     margin-bottom: unset;
-    margin-top: 110px;
+    margin-top: 280px;
+  }
+
+  @media screen and (max-width: 415px) {
+    margin-bottom: unset;
+    margin-top: 190px;
+  }
+
+  @media screen and (max-width: 400px) {
+    margin-bottom: unset;
+    margin-top: 230px;
   }
 
   .coin-block {
     display: flex;
     justify-content: center;
+    position: relative;
 
     .coin-box {
       display: grid;
