@@ -296,7 +296,7 @@ export const ADA_BSC_TESTNET = new ERC20Token(
 
 export const USDT_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xfcdD04b6a25E533d8F16210Cb552020D6d880749',
+  '0x27B0A8Adf7d7BdB2933E6CE1846B93cf5fD02524',
   6,
   'tUSDT',
   'test USD Tether',
@@ -327,7 +327,7 @@ export const USDC = {
 export const USDT = {
   [ChainId.BSC]: USDT_BSC,
   [ChainId.ETHEREUM]: USDT_ETH,
-  [ChainId.GOERLI]: '0xfcdD04b6a25E533d8F16210Cb552020D6d880749',
+  [ChainId.GOERLI]: '0x27B0A8Adf7d7BdB2933E6CE1846B93cf5fD02524',
   [ChainId.BSC_TESTNET]: '0x7A35Ab80fe9621146DA7CCbC2BCAddda843A69A5',
 }
 

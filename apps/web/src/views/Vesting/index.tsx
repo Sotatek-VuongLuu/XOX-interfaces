@@ -1012,6 +1012,10 @@ function VestingPage() {
     if (!account || !chainId) return
     handleGetDataTransactionOfUser()
     handleGetDataTransactionClaimOfUser()
+    handleGetInfoRound()
+    handleGetDataTransaction()
+    handleGetRefPreSale()
+    handleGetApiWhitelist()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId])
 
@@ -1026,6 +1030,7 @@ function VestingPage() {
     handleGetRoundStatus()
     handleGetDataTransaction()
     handleGetCurrentRound(timeStampOfNow)
+    handleGetApiWhitelist()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
@@ -1070,11 +1075,7 @@ function VestingPage() {
 
   useEffect(() => {
     if (!account || !chainId) return
-    handleGetDataTransaction()
-    handleGetApiWhitelist()
-    handleGetRefPreSale()
     handleGetBalanceOfUser()
-    handleGetInfoRound()
     handleGetPrice()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId, provider, nodeId])
