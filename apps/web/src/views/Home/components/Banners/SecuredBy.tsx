@@ -585,20 +585,22 @@ const HoverTextGoogle = () => {
 
 const SecuredBy = () => {
   const { width } = useWindowSize()
-  const [isHoveringAirBnb, setIsHoveringAirBnb] = useState(true)
+  const [isHoveringAirBnb, setIsHoveringAirBnb] = useState(false)
   const [isHoveringHubspot, setIsHoveringHubspot] = useState(false)
   const [isHoveringGoogle, setIsHoveringGoogle] = useState(false)
 
   const handleMouseOverAirBnb = () => {
-    setIsHoveringAirBnb(true);
+    if (width > 900)
+      setIsHoveringAirBnb(true);
   }
 
   const handleMouseOutAirBnb = () => {
-    setIsHoveringAirBnb(true);
+    setIsHoveringAirBnb(false);
   }
 
   const handleMouseOverHubspot = () => {
-    setIsHoveringHubspot(true);
+    if (width > 900)  
+      setIsHoveringHubspot(true);
   }
 
   const handleMouseOutHubspot = () => {
@@ -606,7 +608,8 @@ const SecuredBy = () => {
   }
 
   const handleMouseOverGoogle = () => {
-    setIsHoveringGoogle(true);
+    if (width > 900)
+      setIsHoveringGoogle(true);
   }
 
   const handleMouseOutGoogle= () => {
