@@ -9,6 +9,7 @@ import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css' // optional
 import { Box, Grid } from '@mui/material'
 import { useRouter } from 'next/router'
+import { useTranslation } from '@pancakeswap/localization'
 
 // eslint-disable-next-line import/no-cycle
 
@@ -41,7 +42,7 @@ const WrapperI = styled.div`
       width: fit-content;
       margin-top: 40px;
       border-radius: 8px;
-      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       cursor: pointer;
 
       .boxed-child {
@@ -53,7 +54,7 @@ const WrapperI = styled.div`
         cursor: pointer;
 
         span {
-          background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+          background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -73,12 +74,12 @@ const WrapperI = styled.div`
     }
 
     .expand {
-      color: #FB8618;
+      color: #fb8618;
       font-size: 14px;
       font-weight: 600;
     }
 
-    &:before{
+    &:before {
       content: '';
       position: absolute;
       top: 0;
@@ -118,7 +119,7 @@ const Description = styled.p`
 `
 
 const Icon = styled.div`
-  background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+  background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   width: 48px;
   height: 48px;
   display: flex;
@@ -129,8 +130,9 @@ const Icon = styled.div`
 `
 
 const SquareItem = ({ item }: Iprops) => {
+  const { t } = useTranslation()
   const [isShowReadMore, setIsShow] = useState(item.description.length > 330)
-  const route = useRouter()
+
   return (
     <WrapperI className="item">
       <div className="main_container">
@@ -138,13 +140,17 @@ const SquareItem = ({ item }: Iprops) => {
           <Icon>
             <img src={item.icon} alt="icon" />
           </Icon>
-          <Title>{item.title}</Title>
+          <Title>{t(item.title)}</Title>
           <Description>
             {/* {item.description} */}
-            {isShowReadMore ? `${item.description.slice(0, 330)}...` : item.description}{' '}
-            {item.description.length > 330 ? (
+            {isShowReadMore ? `${t(item.description).slice(0, 330)}...` : t(item.description)}{' '}
+            {t(item.description).length > 330 ? (
               <span onClick={() => setIsShow(!isShowReadMore)} style={{ cursor: 'pointer' }}>
-                {isShowReadMore ? <span className="expand">Read more</span> : <span className="expand">Read less</span>}
+                {isShowReadMore ? (
+                  <span className="expand">{t('Read more')}</span>
+                ) : (
+                  <span className="expand">{t('Read less')}</span>
+                )}
               </span>
             ) : null}
           </Description>
@@ -152,7 +158,7 @@ const SquareItem = ({ item }: Iprops) => {
         <a href={item.link} target="_blank" rel="noreferrer">
           <div className="get_xox">
             <div className="boxed-child">
-              <span>Discover More</span>
+              <span>{t('Discover More')}</span>
             </div>
           </div>
         </a>
@@ -179,7 +185,7 @@ const Wrapper = styled.div`
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: #FB8618;
+      color: #fb8618;
       width: 409px;
     }
   }
@@ -211,15 +217,19 @@ const Wrapper = styled.div`
 `
 
 const FeatureSquare = () => {
+  const { t } = useTranslation()
+
   return (
     <Wrapper>
       <div className="title" style={{ overflow: 'hidden' }}>
         <p className="heart" data-aos="fade-right">
-          The Heart of the XOX Ecosystem<span style={{ color: '#FB8618' }}>.</span>
+          {t('The Heart of the XOX Ecosystem')}
+          <span style={{ color: '#FB8618' }}>.</span>
         </p>
         <p className="describe" data-aos="fade-left">
-          Wide range of apps, utilities and solutions powering the protocol creating a True One-Stop Ecosystem for all
-          your DeFi needs.
+          {t(
+            'Wide range of apps, utilities and solutions powering the protocol creating a True One-Stop Ecosystem for all your DeFi needs.',
+          )}
         </p>
       </div>
 

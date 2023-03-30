@@ -793,7 +793,7 @@ const TransactionsTable: React.FC = () => {
           height="24px"
           mb={28}
         >
-          Transactions History
+          {t('Transactions History')}
         </Text>
         <Flex flexDirection="column" alignItems={['flex-start', , 'flex-end']}>
           <Flex className="btn-filter" mb="8px">
@@ -826,25 +826,25 @@ const TransactionsTable: React.FC = () => {
                 onClick={() => handleFilter(undefined)}
                 className={undefined === txFilter ? 'active' : 'inactive'}
               >
-                All
+                {t('All')}
               </Button>
               <Button
                 onClick={() => handleFilter(TransactionType.SWAP)}
                 className={TransactionType.SWAP === txFilter ? 'active' : 'inactive'}
               >
-                Swaps
+                {t('Swaps')}
               </Button>
               <Button
                 onClick={() => handleFilter(TransactionType.MINT)}
                 className={TransactionType.MINT === txFilter ? 'active' : 'inactive'}
               >
-                Adds
+                {t('Adds')}
               </Button>
               <Button
                 onClick={() => handleFilter(TransactionType.BURN)}
                 className={TransactionType.BURN === txFilter ? 'active' : 'inactive'}
               >
-                Removes
+                {t('Removes')}
               </Button>
             </Flex>
           )}
@@ -856,8 +856,9 @@ const TransactionsTable: React.FC = () => {
             lineHeight="17px"
             color="rgba(255, 255, 255, 0.6)"
           >
-            Total: {currentTransactions ? (currentTransactions.length > 300 ? 300 : currentTransactions.length) : 0}{' '}
-            transactions
+            {t('Total: %number% transactions', {
+              number: currentTransactions ? (currentTransactions.length > 300 ? 300 : currentTransactions.length) : 0,
+            })}
           </Text>
         </Flex>
       </Flex>
@@ -872,7 +873,7 @@ const TransactionsTable: React.FC = () => {
             color="rgba(255, 255, 255, 0.87)"
             className="table-header"
           >
-            No
+            {t('No')}
           </Text>
           <Text
             fontSize={['14px', , '16px']}
@@ -883,7 +884,7 @@ const TransactionsTable: React.FC = () => {
             color="rgba(255, 255, 255, 0.87)"
             className="table-header"
           >
-            Action
+            {t('Action')}
           </Text>
           <ClickableColumnHeader
             fontSize={['14px', , '16px']}
@@ -896,7 +897,7 @@ const TransactionsTable: React.FC = () => {
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Excution Time</span>{' '}
+              <span style={{ marginRight: '12px' }}>{t('Excution Time')}</span>{' '}
               {iconSortDirection === null ? IconSort : iconSortDirection ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
@@ -911,7 +912,7 @@ const TransactionsTable: React.FC = () => {
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Total Value</span>{' '}
+              <span style={{ marginRight: '12px' }}>{t('Total Value')}</span>{' '}
               {iconSortField === null ? IconSort : iconSortField ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
@@ -924,7 +925,7 @@ const TransactionsTable: React.FC = () => {
             color="rgba(255, 255, 255, 0.87)"
             className="table-header"
           >
-            Token Amount
+            {t('Token Amount')}
           </Text>
           <Text
             fontSize={['14px', , '16px']}
@@ -935,7 +936,7 @@ const TransactionsTable: React.FC = () => {
             color="rgba(255, 255, 255, 0.87)"
             className="table-header"
           >
-            Token Amount
+            {t('Token Amount')}
           </Text>
           <ClickableColumnHeader
             fontSize={['14px', , '16px']}
@@ -948,7 +949,7 @@ const TransactionsTable: React.FC = () => {
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Stable Coin Staked</span>
+              <span style={{ marginRight: '12px' }}>{t('Stable Coin Staked')}</span>
               {iconSortStable === null ? IconSort : iconSortStable ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
@@ -962,7 +963,7 @@ const TransactionsTable: React.FC = () => {
             style={{ justifySelf: 'right' }}
             className="table-header"
           >
-            Maker
+            {t('Maker')}
           </Text>
           {/* <Break /> */}
 
@@ -1143,30 +1144,30 @@ const TransactionsTable: React.FC = () => {
               options={[
                 {
                   value: 5,
-                  label: '5/Page',
+                  label: t('%number%/Page', { number: 5 }),
                 },
                 {
                   value: 10,
-                  label: '10/Page',
+                  label: t('%number%/Page', { number: 10 }),
                 },
                 {
                   value: 20,
-                  label: '20/Page',
+                  label: t('%number%/Page', { number: 20 }),
                 },
                 {
                   value: 50,
-                  label: '50/Page',
+                  label: t('%number%/Page', { number: 50 }),
                 },
                 {
                   value: 100,
-                  label: '100/Page',
+                  label: t('%number%/Page', { number: 100 }),
                 },
               ]}
               onOptionChange={(option: any) => handleSelectPerPage(option.value)}
               className="select-page"
             />
             <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
-              Go to page
+              {t('Go to page')}
             </Text>
             <Input
               value={tempPage}

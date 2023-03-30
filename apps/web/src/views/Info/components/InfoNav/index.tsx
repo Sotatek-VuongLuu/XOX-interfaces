@@ -242,7 +242,6 @@ const MainContent = styled.div`
       font-size: 16px;
       line-height: 19px;
       color: #ffffff;
-      width: 149px;
       height: 43px;
       border: 1px solid #ffffff;
       border-radius: 10px;
@@ -258,6 +257,7 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
   hasPadding = true,
   titleBtn1 = 'XOXS',
 }) => {
+  const { t } = useTranslation()
   const { chainId } = useActiveChainId()
   const { isMobile } = useMatchBreakpoints()
 
@@ -271,10 +271,10 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
         {isMobile ? <img alt="" src="/images/galaxy-mb.png" /> : <img alt="" src="/images/galaxy-pc.png" />}
 
         <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
-          Swap to get XOX & XOXS. Earn like a Pro
+          {t('Swap to get XOX & XOXS. Earn like a Pro')}
         </Text>
         <Text className="subtitle" mb={['16px', , '24px']}>
-          {textContentBanner || 'Stake XOXS automatically to earn more'}
+          {textContentBanner || t('Stake XOXS automatically to earn more')}
         </Text>
         <Flex>
           <a
@@ -287,7 +287,7 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
               <div className="top-right"></div>
               <div className="bottom-left"></div>
               <div className="bottom-right"></div> */}
-              Get {titleBtn1}
+              {t('Get %symbol%', { symbol: titleBtn1 })}
             </Button>
           </a>
           <a href="/whitepaper" target="_blank" rel="noreferrer">
@@ -296,7 +296,7 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
               <div className="top-right"></div>
               <div className="bottom-left"></div>
               <div className="bottom-right"></div> */}
-              Learn More
+              {t("Learn More")}
             </Button>
           </a>
         </Flex>

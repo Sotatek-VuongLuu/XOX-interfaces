@@ -1,31 +1,19 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState, useEffect, useMemo } from 'react'
-import { Flex, Button, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
+import { useState, useEffect } from 'react'
+import { Flex, Text } from '@pancakeswap/uikit'
 import { ChainId } from '@pancakeswap/sdk'
 import BigNumber from 'bignumber.js'
 
-import { useAllTokens } from 'hooks/Tokens'
 import styled from 'styled-components'
 import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import { useMultiChainId } from 'state/info/hooks'
-import Trans from 'components/Trans'
 import Link from 'next/link'
-import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import InfoNav from '../Info/components/InfoNav'
-import HistoryTable, { TYPE_HISTORY } from '../StableCoin/historyTable'
-import TransactionTable from '../StableCoin/transactionTable'
 import WidthdrawForm from '../StableCoin/widthdrawForm'
-import Earned from '../StableCoin/earned'
-
-const TYPE = {
-  default: 'DEFAULT',
-  history: 'HISTORY',
-  withdraw: 'WITHDRAW',
-}
+import { useTranslation } from '@pancakeswap/localization'
 
 const Row = styled.div`
   display: flex;
@@ -189,19 +177,6 @@ const TextStyle = styled(Text)`
     color: #fb8618;
   }
 `
-const MainBackground = styled.div`
-  position: absolute;
-  z-index: -1;
-  top: -50px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  svg {
-    width: 100vw;
-    height: auto;
-    object-fit: cover;
-  }
-`
 
 const FullWrapper = styled.div`
   display: flex;
@@ -213,17 +188,13 @@ const FullWrapper = styled.div`
 `
 
 export default function WithDrawLayout() {
+  const { t } = useTranslation()
   const { account, chainId } = useWeb3React()
-  const [widthDraw, setWidthDraw] = useState(TYPE.default)
-  const allTokens = useAllTokens()
   const contractTreasuryXOX = useTreasuryXOX()
-  const [currentXOX, setCurrentXOX] = useState<number | string>(0)
   const [currentReward, setCurrentReward] = useState<number | string>(0)
   const chainIdLocal: any = useMultiChainId() || chainId
-  const [keyContainer, setKeyContainer] = useState(Math.random())
   const isUSDT = chainId === ChainId.BSC || chainId === ChainId.BSC_TESTNET
   const decimalCompare = isUSDT ? 18 : 6
-  const { isMobile } = useMatchBreakpoints()
   const [loadOk, setLoadOk] = useState(false)
   // eslint-disable-next-line consistent-return
   const handleCheckPendingRewardAll = async (accountId: any) => {
@@ -246,13 +217,11 @@ export default function WithDrawLayout() {
           .toFixed(decimalCompare)
         setCurrentReward(numberReward || 0)
         const totalCurrentXOXS = new BigNumber(amountPoint).plus(numberReward).toNumber()
-        setCurrentXOX(totalCurrentXOXS || 0)
       }
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
       setCurrentReward(0)
-      setCurrentXOX(0)
     }
   }
 
@@ -273,16 +242,13 @@ export default function WithDrawLayout() {
       {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <ContainerBanner>
         <div className="banner">
-          <InfoNav
-            textContentBanner="Earn USDT/USDC from your XOXS Indefinitely"
-            hasPadding={false}
-          />
+          <InfoNav textContentBanner={t('Earn USDT/USDC from your XOXS Indefinitely')} hasPadding={false} />
         </div>
       </ContainerBanner>
       <Container style={{ marginBottom: 100 }} key={`container-stablecoin${chainId}`}>
         <div className="content">
           <Flex alignItems="center" style={{ gap: 10 }}>
-            <Flex onClick={() => setWidthDraw(TYPE.default)} style={{ cursor: 'pointer', gap: 5 }} alignItems="center">
+            <Flex style={{ cursor: 'pointer', gap: 5 }} alignItems="center">
               <Link href="/stable-coin">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -302,11 +268,11 @@ export default function WithDrawLayout() {
                 </svg>
               </Link>
               <Link href="/stable-coin">
-                <TextStyle>Stable coin</TextStyle>
+                <TextStyle>{t('Stable coin')}</TextStyle>
               </Link>
             </Flex>
             <TextStyle style={{ transform: 'translateY(1px)' }}>|</TextStyle>
-            <TextStyle className="primary">Withdraw reward</TextStyle>
+            <TextStyle className="primary">{t('Withdraw reward')}</TextStyle>
           </Flex>
           <Row style={{ marginTop: 25 }}>
             <WrapperBorder>

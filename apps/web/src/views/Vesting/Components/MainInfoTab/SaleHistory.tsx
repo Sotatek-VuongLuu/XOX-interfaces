@@ -10,6 +10,7 @@ import truncateHash from '@pancakeswap/utils/truncateHash'
 import { linkTransaction } from 'views/BridgeToken'
 import { ChainId } from '@pancakeswap/sdk'
 import { Avatar } from '@mui/material'
+import { useTranslation } from '@pancakeswap/localization'
 
 const Wrapper = styled.div`
   position: relative;
@@ -349,6 +350,8 @@ function SaleHistory({ dataTransaction }: IProps) {
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
+  const { t } = useTranslation()
+
   const setPagePagination = useCallback(
     (p: number) => {
       if (p < 1) {
@@ -490,7 +493,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              XOXS Reward
+              {t('XOXS Reward')}
             </Text>
             <Text
               fontSize="16px"

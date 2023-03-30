@@ -9,6 +9,7 @@ import SwiperCore, { Autoplay } from 'swiper'
 import { useState } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import { useTranslation } from '@pancakeswap/localization'
 
 SwiperCore.use([Autoplay])
 
@@ -238,6 +239,7 @@ const SliderWrapper = styled.div`
 `
 
 const Partners = () => {
+  const {t} = useTranslation()
   const [isShowMore, setIsShowMore] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
 
@@ -258,10 +260,10 @@ const Partners = () => {
   return (
     <Wrapper>
       <div className="title" data-aos="fade-up">
-        Strategic Partners
+        {t('Strategic Partners')}
       </div>
       <p className="decoration" data-aos="fade-up" data-aos-duration="2300">
-        Backed by the Best to Deliver the Best.
+        {t('Backed by the Best to Deliver the Best.')}
       </p>
 
       <div className="slide_container">

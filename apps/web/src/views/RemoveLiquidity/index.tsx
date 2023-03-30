@@ -25,22 +25,13 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { callWithEstimateGas } from 'utils/calls'
 import { getLPSymbol } from 'utils/getLpSymbol'
 import useNativeCurrency from 'hooks/useNativeCurrency'
-import { getZapAddress } from 'utils/addressHelpers'
 import { CommitButton } from 'components/CommitButton'
 import { useTranslation } from '@pancakeswap/localization'
 import { ROUTER_ADDRESS, ROUTER_XOX } from 'config/constants/exchange'
 import { useLPApr } from 'state/swap/useLPApr'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
-import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
-import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
-import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
-import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
-import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
-
 import { AutoColumn, ColumnCenter } from '../../components/Layout/Column'
 import CurrencyInputPanel from '../../components/CurrencyInputPanel'
 import { MinimalPositionCard } from '../../components/PositionCard'
-import { AppHeader } from '../../components/App'
 import { RowBetween } from '../../components/Layout/Row'
 import ConnectWalletButton from '../../components/ConnectWalletButton'
 import { LightGreyCard } from '../../components/Card'
@@ -747,7 +738,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
               logError(err)
             }
             if ((err && err.code === 'ACTION_REJECTED') || err?.message.includes('rejected')) {
-              toastWarning('Confirm remove liquidity', t('Transaction rejected.'))
+              toastWarning(t('Confirm remove liquidity'), t('Transaction rejected.'))
             }
             onDismissRemoveLiquidity()
             throw new Error(err?.message)

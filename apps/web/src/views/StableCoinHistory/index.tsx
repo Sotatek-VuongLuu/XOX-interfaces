@@ -1,29 +1,12 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState, useEffect, useMemo } from 'react'
-import { Flex, Button, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
-import { useAllTokens } from 'hooks/Tokens'
+import { useState, useEffect } from 'react'
+import { Flex, Text } from '@pancakeswap/uikit'
 import styled from 'styled-components'
-import { useTreasuryXOX } from 'hooks/useContract'
-import { formatUnits } from '@ethersproject/units'
-import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { useStableCoinSWR, useMultiChainId } from 'state/info/hooks'
-import ConnectWalletButton from 'components/ConnectWalletButton'
-import Trans from 'components/Trans'
 import Link from 'next/link'
-import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import InfoNav from '../Info/components/InfoNav'
 import HistoryTable, { TYPE_HISTORY } from '../StableCoin/historyTable'
-import TransactionTable from '../StableCoin/transactionTable'
-import WidthdrawForm from '../StableCoin/widthdrawForm'
-import Earned from '../StableCoin/earned'
-
-const TYPE = {
-  default: 'DEFAULT',
-  history: 'HISTORY',
-  withdraw: 'WITHDRAW',
-}
+import { useTranslation } from '@pancakeswap/localization'
 
 const Row = styled.div`
   display: flex;
@@ -199,43 +182,6 @@ const ContainerBanner = styled.div`
   }
 `
 
-const WrapText = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  p {
-    margin-bottom: 0;
-    font-size: 18px;
-    color: rgba(255, 255, 255, 0.87);
-    &.number {
-      color: ${({ theme }) => theme.colors.violet};
-      font-size: 36px;
-      font-weight: 700;
-    }
-  }
-  @media (max-width: 576px) {
-    p {
-      font-size: 16px;
-      &.number {
-        font-size: 24px;
-      }
-    }
-  }
-`
-
-const TextConnectWallet = styled.div`
-  text-align: center;
-  line-height: 1.3;
-  br {
-    display: none;
-  }
-  @media (max-width: 576px) {
-    br {
-      display: block;
-    }
-  }
-`
-
 const TextStyle = styled(Text)`
   font-size: 14px;
   font-weight: 700;
@@ -247,39 +193,9 @@ const TextStyle = styled(Text)`
   }
 `
 
-const MainBackground = styled.div`
-  position: absolute;
-  z-index: -1;
-  top: -50px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  svg {
-    width: 100vw;
-    height: auto;
-    object-fit: cover;
-  }
-`
-
-const FullWrapper = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-  width: 100%;
-`
-
 export default function LayoutHistory() {
+  const { t } = useTranslation()
   const { account, chainId } = useWeb3React()
-  const [widthDraw, setWidthDraw] = useState(TYPE.default)
-  const allTokens = useAllTokens()
-  const contractTreasuryXOX = useTreasuryXOX()
-  const [currentXOX, setCurrentXOX] = useState<number | string>(0)
-  const [currentReward, setCurrentReward] = useState<number | string>(0)
-  const chainIdLocal: any = useMultiChainId() || chainId
-  const [keyContainer, setKeyContainer] = useState(Math.random())
-  const { isMobile } = useMatchBreakpoints()
 
   const [loadOk, setLoadOk] = useState(false)
   useEffect(() => {
@@ -293,16 +209,13 @@ export default function LayoutHistory() {
       {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <ContainerBanner>
         <div className="banner">
-          <InfoNav
-            textContentBanner="Earn USDT/USDC from your XOXS Indefinitely"
-            hasPadding={false}
-          />
+          <InfoNav textContentBanner={t('Earn USDT/USDC from your XOXS Indefinitely')} hasPadding={false} />
         </div>
       </ContainerBanner>
       <Container style={{ marginBottom: 100 }} key={`container-stablecoin${chainId}`}>
         <div className="content">
           <Flex alignItems="center" style={{ gap: 10, outline: 'none' }}>
-            <Flex onClick={() => setWidthDraw(TYPE.default)} style={{ cursor: 'pointer', gap: 5 }} alignItems="center">
+            <Flex style={{ cursor: 'pointer', gap: 5 }} alignItems="center">
               <Link href="/stable-coin">
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                   <path
@@ -322,11 +235,11 @@ export default function LayoutHistory() {
                 </svg>
               </Link>
               <Link href="/stable-coin">
-                <TextStyle>Stable coin</TextStyle>
+                <TextStyle>{t("Stable coin")}</TextStyle>
               </Link>
             </Flex>
             <TextStyle>|</TextStyle>
-            <TextStyle className="primary">History</TextStyle>
+            <TextStyle className="primary">{t("History")}</TextStyle>
           </Flex>
           <Row style={{ marginTop: 20, alignItems: 'flex-start' }}>
             <WrapperBorder className="flex-50">

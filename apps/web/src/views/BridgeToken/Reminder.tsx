@@ -5,6 +5,7 @@ import { formatUnits, parseEther, parseUnits } from 'ethers/lib/utils'
 import debounce from 'lodash/debounce'
 import { fetchBridgeTokenFee } from '../../context/globalData'
 import BigNumber from 'bignumber.js'
+import { useTranslation } from '@pancakeswap/localization'
 
 const Wrapper = styled.div`
   border-radius: 10px;
@@ -72,6 +73,7 @@ const Reminder: React.FC<Props> = ({
   tokenInput,
   tokenOutput,
 }) => {
+  const { t } = useTranslation()
   const [bridgeTokenFee, setBridgeTokenFee] = useState<BridgeTokenFee>(initialBridgeTokenFee)
   const addressTokenOutput = tokenOutput?.address
 
@@ -149,20 +151,23 @@ const Reminder: React.FC<Props> = ({
 
   return (
     <Wrapper>
-      <Heading>Reminder:</Heading>
+      <Heading>{t('Reminder:')}</Heading>
       <ReminderList>
         <li>
-          Gas Fee is{' '}
-          {parseFloat(formatNumberStr(bridgeTokenFee?.gasFee)) >= 0.01
-            ? formatNumberStr(bridgeTokenFee?.gasFee)
-            : '<0.01'}{' '}
+          {t('Gas Fee is <%number%', {
+            number:
+              parseFloat(formatNumberStr(bridgeTokenFee?.gasFee)) >= 0.01
+                ? formatNumberStr(bridgeTokenFee?.gasFee)
+                : '0.01',
+          })}{' '}
           {tokenInput?.symbol}
         </li>
         <li>
-          Minimum Crosschain Amount is {formatNumberStr(bridgeTokenFee?.minAmount)} {tokenInput?.symbol}
+          {t('Minimum Crosschain Amount is %number%', { number: formatNumberStr(bridgeTokenFee?.minAmount) })}{' '}
+          {tokenInput?.symbol}
         </li>
         {/* <li>Maximum Crosschain Amount is {formatNumberStr(bridgeTokenFee?.maxAmount)} STAND</li> */}
-        <li>Estimated Time of Crosschain Arrival is 0.5-3 mins</li>
+        <li>{t('Estimated Time of Crosschain Arrival is 0.5-3 mins')}</li>
         {/* <li>
           Crosschain amount larger than {bridgeTokenFee?.maxAmount}{" "}
           {tokenInput?.symbol} could take up to 24 hours

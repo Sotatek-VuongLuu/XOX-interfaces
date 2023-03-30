@@ -2,6 +2,7 @@
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { Box, Grid } from '@mui/material'
+import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
 import { useState } from 'react'
 import styled from 'styled-components'
@@ -24,7 +25,7 @@ const Wrapper = styled.div`
     text-align: center;
     font-weight: 400;
     font-size: 16px;
-    color: #FB8618;
+    color: #fb8618;
     margin-bottom: 48px;
   }
 
@@ -59,7 +60,7 @@ const WrapperItem = styled.div<IPropsWI>`
     width: fit-content;
     margin-top: 26px;
     border-radius: 8px;
-    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     cursor: pointer;
 
     .boxed-child {
@@ -70,7 +71,7 @@ const WrapperItem = styled.div<IPropsWI>`
       border-radius: inherit;
       border-radius: 8px;
       span {
-        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -116,7 +117,7 @@ const WrapperItem = styled.div<IPropsWI>`
     }
   }
   .expand {
-    color: #FB8618;
+    color: #fb8618;
     font-size: 14px;
     font-weight: 600;
   }
@@ -131,8 +132,8 @@ const WrapperItem = styled.div<IPropsWI>`
     border-radius: 20px;
     padding: 1px;
     z-index: -1;
-    background: linear-gradient(180deg,rgba(255,255,255,0) 0%,rgba(255,255,255,0.2) 100%);
-    -webkit-mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
     -webkit-mask-composite: exclude;
     mask-composite: exclude;
@@ -147,6 +148,7 @@ const WrapperItem = styled.div<IPropsWI>`
 `
 
 const UpComingItem = ({ title, describe, link }) => {
+  const { t } = useTranslation()
   const [isShowReadMore, setIsShow] = useState(false)
   const [readMore, setIsShowReadMore] = useState(describe.length > 260)
   const { width } = useWindowSize()
@@ -154,7 +156,7 @@ const UpComingItem = ({ title, describe, link }) => {
   return (
     <WrapperItem isShowReadMore={isShowReadMore}>
       <div className="container_title">
-        <div className="title_item">{title}</div>
+        <div className="title_item">{t(title)}</div>
         {width <= 900 ? (
           isShowReadMore ? (
             <img
@@ -172,11 +174,11 @@ const UpComingItem = ({ title, describe, link }) => {
       {width <= 900 ? (
         isShowReadMore ? (
           <>
-            <p className="describe">{describe}</p>
+            <p className="describe">{t(describe)}</p>
             <a href={link} target="_blank" rel="noreferrer">
               <div className="get_xox">
                 <div className="boxed-child">
-                  <span>Discover More</span>
+                  <span>{t('Discover More')}</span>
                 </div>
               </div>
             </a>
@@ -185,17 +187,21 @@ const UpComingItem = ({ title, describe, link }) => {
       ) : (
         <>
           <p className="describe" style={{ marginTop: 16 }}>
-            {readMore ? `${describe.slice(0, 260)}...` : describe}{' '}
-            {describe.length > 260 ? (
+            {readMore ? `${t(describe).slice(0, 260)}...` : t(describe)}{' '}
+            {t(describe).length > 260 ? (
               <span onClick={() => setIsShowReadMore(!readMore)} style={{ cursor: 'pointer' }}>
-                {readMore ? <span className="expand">Read more</span> : <span className="expand">Read less</span>}
+                {readMore ? (
+                  <span className="expand">{t('Read more')}</span>
+                ) : (
+                  <span className="expand">{t('Read less')}</span>
+                )}
               </span>
             ) : null}
           </p>
           <div className="get_xox box_absolute">
             <a href={link} target="_blank" rel="noreferrer">
               <div className="boxed-child">
-                <span>Discover More</span>
+                <span>{t('Discover More')}</span>
               </div>
             </a>
           </div>
@@ -206,14 +212,17 @@ const UpComingItem = ({ title, describe, link }) => {
 }
 
 const UpComing = () => {
+  const { t } = useTranslation()
+
   return (
     <Wrapper>
       <div className="title" data-aos="fade-up">
-        Upcoming Developments
+        {t('Upcoming Developments')}
       </div>
       <p className="decoration" data-aos="fade-up" data-aos-duration="2300">
-        Every utility is current under development and they are gonna be gradually implemented once ready. Adding
-        massive value to the Ecosystem overtime.
+        {t(
+          'Every utility is current under development and they are gonna be gradually implemented once ready. Adding massive value to the Ecosystem overtime.',
+        )}
       </p>
 
       <Box sx={{ flexGrow: 1, display: 'flex' }} data-aos="fade-up">
@@ -236,17 +245,17 @@ const linkWhitepaper = '#'
 const listItem = [
   {
     title: 'XOX Dex V2',
-    describe: `Why trade in a single Dex when you can Trade in all DEXs at Once. XOX Dex V2 finds you the best prices across 60+ Chains & 150+ DEXs and combines them into a single trade, all while giving you many other trade options to choose from, Ranking them by lowest fees, best rates and higher liquidity.`,
+    describe: 'Why trade in a single Dex when you can Trade in all DEXs at Once. XOX Dex V2 finds you the best prices across 60+ Chains & 150+ DEXs and combines them into a single trade, all while giving you many other trade options to choose from, Ranking them by lowest fees, best rates and higher liquidity.',
     link: linkWhitepaper,
   },
   {
     title: 'XOX Mobile App/Wallet',
-    describe: `After the recent downfall of Centralized Exchanges, crypto investors have finally realized that "Not your Keys not your Crypto", and Decentralized wallets like Trust Wallet & Metamask now more important than ever. The XOX Decentralized Wallet bring innovative Multi-chain features for users to enjoy while being sure that their funds are safe.`,
+    describe: 'After the recent downfall of Centralized Exchanges, crypto investors have finally realized that "Not your Keys not your Crypto", and Decentralized wallets like Trust Wallet & Metamask now more important than ever. The XOX Decentralized Wallet bring innovative Multi-chain features for users to enjoy while being sure that their funds are safe.',
     link: linkWhitepaper,
   },
   {
     title: 'XOX Multi-chain Launchpad',
-    describe: `Investing in ICOs, Fair Launches and Pre-sales could be very profitable if you find the right projects. We have set the task to Develop The Best Web3 Multi-Chain Launchpad on the Space and after studying over 50 Launchpads we have a pretty good idea of what works and what does not.`,
+    describe: 'Investing in ICOs, Fair Launches and Pre-sales could be very profitable if you find the right projects. We have set the task to Develop The Best Web3 Multi-Chain Launchpad on the Space and after studying over 50 Launchpads we have a pretty good idea of what works and what does not.',
     link: linkWhitepaper,
   },
   {
@@ -254,7 +263,7 @@ const listItem = [
     describe:
       'Multiple Studies have shown that at least 80% of crypto holders check CoinMarketCap once a day. The problem is that there is no accurate ranking system dedicated to a specific community. So we will create our own one, fully dedicated and targeted towards the needs of the XOX Community. No more searching around multiple platforms.',
     link: linkWhitepaper,
-  }
+  },
 ]
 
 export default UpComing

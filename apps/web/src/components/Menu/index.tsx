@@ -27,6 +27,7 @@ import { useMenuItems } from './hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { configLanding } from './config/config'
+import LangSelector from '@pancakeswap/uikit/src/components/LangSelector/LangSelector'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;
@@ -358,10 +359,18 @@ const Menu = (props) => {
                       <p>Your referral code has been applied in a "Buy XOX” transaction</p>
                     </NotificationMenu>
                   )}
-                </NotificationField>
+                </NotificationField> 
               ) : (
                 <></>
               )}
+              <LangSelector
+                currentLang={currentLanguage.code}
+                langs={languageList}
+                setLang={setLanguage}
+                buttonScale="xs"
+                color="textSubtle"
+                hideLanguage
+              />
               <NetworkSwitcher />
               <UserMenu />
               {openHeader ? (

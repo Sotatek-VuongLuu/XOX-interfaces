@@ -13,6 +13,7 @@ import { ResponsiveContainer } from 'recharts'
 import BarChart from './BarChart'
 import LineChart from './LineChart'
 import { ChartContent, TitleChart } from './style'
+import { useTranslation } from '@pancakeswap/localization'
 
 interface HoverableChartProps {
   chartData: any[]
@@ -49,6 +50,7 @@ const HoverableChart = ({
   unsupported,
   setFetchingTokenId,
 }: HoverableChartProps) => {
+  const { t } = useTranslation()
   const [hover, setHover] = useState<number | undefined>()
   const [selectedCurrency, setSelectedCurrency] = useState<Currency>(defaultToken)
   const [dateHover, setDateHover] = useState<string | undefined>()
@@ -188,7 +190,7 @@ const HoverableChart = ({
     <Box p={['16px', '16px', '24px']}>
       <TitleChart>
         <div className="title_chart_container">
-          <p className="title_chart">Token Price</p>
+          <p className="title_chart">{t('Token Price')}</p>
           <div className="line" />
         </div>
         <div className="btns">
@@ -201,11 +203,11 @@ const HoverableChart = ({
             rel="noreferrer"
           >
             <div className="boxed-child">
-              <span>Get {selectedCurrency?.symbol}</span>
+              <span>{t('Get %symbol%', { symbol: selectedCurrency?.symbol })}</span>
             </div>
           </a>
           <button className="btn_select_token" onClick={onPresentCurrencyModal}>
-            Select Token
+            {t('Select Token')}
           </button>
         </div>
       </TitleChart>
@@ -219,7 +221,7 @@ const HoverableChart = ({
           <>
             <div className="price-info">
               <div className="group">
-                Current price
+                {t('Current price')}
                 <div>
                   <span className="icon">$</span>
                   {selectedCurrency.symbol === 'XOX' ? (
@@ -230,7 +232,7 @@ const HoverableChart = ({
                 </div>
               </div>
               <div className="group right">
-                Market cap
+                {t('Market cap')}
                 <div>
                   <span className="icon">$</span>
                   {currencyData ? (
@@ -241,7 +243,7 @@ const HoverableChart = ({
                 </div>
               </div>
               <div className="group">
-                Price change (in last 24h)
+                {t('Price change (in last 24h)')}
                 {priceChange && priceChange > 0 ? (
                   <div>
                     <svg xmlns="http://www.w3.org/2000/svg" width="19" height="19" viewBox="0 0 19 19" fill="none">
@@ -252,7 +254,7 @@ const HoverableChart = ({
                         fill="#64C66D"
                       />
                     </svg>
-                    <span className="val">{priceChange ? priceChange : '--'}</span>
+                    <span className="val">{priceChange ? `${priceChange}%` : '--'}</span>
                   </div>
                 ) : priceChange && priceChange < 0 ? (
                   <div>
@@ -280,7 +282,7 @@ const HoverableChart = ({
                 )}
               </div>
               <div className="group right">
-                Volume 24h
+                {t('Volume 24H')}
                 <div>
                   <span className="icon">$</span>
                   {selectedCurrency.symbol === 'XOX' ? (
@@ -314,7 +316,7 @@ const HoverableChart = ({
               1Y
             </button>
             <button type="button" onClick={() => handleFilter('ALL')} className={filter === 'ALL' ? 'active' : ''}>
-              All
+              {t('All')}
             </button>
           </div>
         </div>

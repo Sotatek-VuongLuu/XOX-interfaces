@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 // eslint-disable-next-line import/no-cycle
@@ -124,12 +125,14 @@ const Title = styled.div`
 `
 
 const RoadMap = () => {
+  const {t} = useTranslation()
   const { width } = useWindowSize()
+
   return (
     <Wrapper>
-      <Title data-aos="fade-up">Development map</Title>
+      <Title data-aos="fade-up">{t('Development map')}</Title>
       <Description data-aos="fade-up" data-aos-duration="2300">
-        Building The Road For Web3 & Blockchain Mass Adoption
+        {t('Building The Road For Web3 & Blockchain Mass Adoption')}
       </Description>
 
       {width < 970 ? (

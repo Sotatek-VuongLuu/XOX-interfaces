@@ -48,8 +48,6 @@ import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDeskto
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
 import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
 import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
-import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
@@ -392,7 +390,7 @@ export default function BridgeToken() {
   const [chainIdSupport, setChainIdSupport] = useState(chainId)
   const [addressTo, setAddressTo] = useState(account)
   const [pendingApprove, setPendingApprove] = useState(false)
-  const [messageButton, setMessageButton] = useState('Enter an amount')
+  const [messageButton, setMessageButton] = useState(t('Enter an amount'))
   const [messageTx, setMessageTx] = useState('')
   const [loading, setLoading] = useState(false)
   const [approvalState, approveCallback] = useApproveCallback(
@@ -430,22 +428,22 @@ export default function BridgeToken() {
 
   useEffect(() => {
     if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
-      setMessageButton(`Approve ${addressTokenInput.symbol}`)
+      setMessageButton(t('Approve %symbol%', { symbol: addressTokenInput.symbol }))
       if (pendingApprove) {
-        setMessageButton('Bridge')
+        setMessageButton(t('Bridge'))
       } else {
-        setMessageButton(`Approve ${addressTokenInput.symbol}`)
+        setMessageButton(t('Approve %symbol%', { symbol: addressTokenInput.symbol }))
       }
     } else if (approvalState === ApprovalState.PENDING) {
-      setMessageButton('Approving...')
+      setMessageButton(t('Approving...'))
     } else if (amountTo === '0') {
-      setMessageButton('Input Amount Not Allowed')
-    } else setMessageButton('Bridge')
+      setMessageButton(t('Input Amount Not Allowed'))
+    } else setMessageButton(t('Bridge'))
   }, [approvalState, amountTo])
 
   useEffect(() => {
     if (amountInput === '' || Number(amountInput) === 0 || amountInput === '.') {
-      setMessageButton('Enter an amount')
+      setMessageButton(t('Enter an amount'))
     } else if (
       account &&
       balanceInput &&
@@ -454,14 +452,14 @@ export default function BridgeToken() {
         parseUnits(balanceInput?.toExact(), addressTokenInput.decimals),
       )
     ) {
-      setMessageButton(`Insufficient Your ${addressTokenInput.symbol} Balance`)
+      setMessageButton(t('Insufficient Your %symbol% Balance', { symbol: addressTokenInput.symbol }))
     } else if (
       balancePool !== '-' &&
       balancePool &&
       amountTo &&
       parseEther(Number(amountTo).toFixed(18)).gt(parseEther(balancePool))
     ) {
-      setMessageButton('Insufficient Pool Balance')
+      setMessageButton(t('Insufficient Pool Balance'))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amountInput, balanceInput, amountTo, balancePool])
@@ -496,7 +494,7 @@ export default function BridgeToken() {
     setAddressTo(value)
     const validAdress = isAddress(value)
     if (!validAdress) {
-      setMessageAddress('Please enter a valid address.')
+      setMessageAddress(t('Please enter a valid address.'))
     } else setMessageAddress('')
   }
 
@@ -538,14 +536,14 @@ export default function BridgeToken() {
         gasLimit: gasFee,
       })
       const tx = await deposit.wait(1)
-      setMessageTx(`Swap ${amountInput} ${addressTokenInput.symbol}`)
+      setMessageTx(t('Swap %amount% %symbol%', { amount: amountInput, symbol: addressTokenInput.symbol }))
       if (tx?.transactionHash) {
         setIsOpenSuccessModal(true)
         setIsOpenLoadingClaimModal(false)
         setTxHash(tx?.transactionHash)
         setLoading(false)
         setAmountInput('')
-        toastSuccess('Transaction Receipt', <ToastDescriptionWithTx txHash={tx.transactionHash} />)
+        toastSuccess(t('Transaction receipt'), <ToastDescriptionWithTx txHash={tx.transactionHash} />)
       }
       setLoading(false)
     } catch (error: any) {
@@ -553,9 +551,9 @@ export default function BridgeToken() {
       setIsOpenLoadingClaimModal(false)
       if (error?.message.includes('rejected')) {
         // setModalReject(true)
-        toastWarning('Confirm Bridge', 'Transaction rejected.')
+        toastWarning(t('Confirm Bridge'), t('Transaction rejected.'))
       } else {
-        toastError('Confirm Bridge', 'Transaction failed!.')
+        toastError(t('Confirm Bridge'), t('Transaction failed!.'))
       }
     }
   }
@@ -713,11 +711,12 @@ export default function BridgeToken() {
                   <AddressInput address={addressTo} handleAddressTo={handleAddressTo} messageAddress={messageAddress} />
                 )}
                 {!account ? (
-                  <WapperConnectBtn onClick={handleClick}>Connect Wallet</WapperConnectBtn>
+                  <WapperConnectBtn onClick={handleClick}>{t('Connect Wallet')}</WapperConnectBtn>
                 ) : (
                   <SwapButton
                     disabled={
-                      (messageButton !== 'Bridge' && messageButton !== `Approve ${addressTokenInput.symbol}`) ||
+                      (messageButton !== t('Bridge') &&
+                        messageButton !== t('Approve %symbol%', { symbol: addressTokenInput.symbol })) ||
                       messageAddress !== '' ||
                       amountTo === '' ||
                       loading ||
@@ -746,13 +745,13 @@ export default function BridgeToken() {
             <ModalBase
               open={isOpenSuccessModal}
               handleClose={() => setIsOpenSuccessModal(false)}
-              title="Confirm Bridge"
+              title={t('Confirm Bridge')}
             >
               <Content>
                 <div className="noti_claim_success">
                   <img src="/images/success_claim.png" alt="success_claim" />
                 </div>
-                <div className="submitted">Transaction Submitted</div>
+                <div className="submitted">{t('Transaction Submitted')}</div>
                 <LinkExternal
                   href={`${linkTransaction(chainId)}${txHash}`}
                   target="_blank"
@@ -762,10 +761,10 @@ export default function BridgeToken() {
                   hiddenIcon
                   style={{ margin: '0 auto 24px' }}
                 >
-                  View on {chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}
+                  {t('View on %site%', { site: chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan' })}
                 </LinkExternal>
                 <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)}>
-                  Close
+                  {t('Close')}
                 </div>
               </Content>
             </ModalBase>
@@ -777,15 +776,15 @@ export default function BridgeToken() {
               login={login}
               onDismiss={() => setOpen(false)}
             />
-            <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Confirm Bridge">
+            <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title={t('Confirm Bridge')}>
               <Content>
                 <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
                   <img src="/images/reject_xox.png" alt="reject_xox" />
                 </div>
-                <div className="noti_claim_pending_h4">Transaction rejected.</div>
+                <div className="noti_claim_pending_h4">{t('Transaction rejected.')}</div>
                 <div className="btn_dismiss_container">
                   <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
-                    Dismiss
+                    {t('Dismiss')}
                   </button>
                 </div>
                 <img
@@ -800,19 +799,20 @@ export default function BridgeToken() {
             <ModalBase
               open={isOpenLoadingClaimModal}
               handleClose={() => setIsOpenLoadingClaimModal(false)}
-              title="Confirm Bridge"
+              title={t('Confirm Bridge')}
             >
               <Content>
                 <div className="xox_loading" style={{ margin: '24px 0px' }}>
                   <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
                 </div>
-                <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
+                <div className="noti_claim_pending_h1">{t('Waiting For Confirmation')}</div>
                 <div className="noti_claim_pending_h3">
-                  Bridging {formatAmountNumber2(Number(amountInput), 6)} XOX <span>(</span> {NETWORK_LABEL[chainId]}{' '}
-                  <span>)</span> to {formatAmountNumber2(Number(amountTo), 6)} XOX <span>(</span>{' '}
-                  {NETWORK_LABEL[getChainIdToByChainId(chainId)]} <span>)</span>
+                  {t('Bridging %number% XOX ', { number: formatAmountNumber2(Number(amountInput), 6) })}
+                  <span>(</span> {NETWORK_LABEL[chainId]} <span>)</span>{' '}
+                  {t('to %number% XOX ', { number: formatAmountNumber2(Number(amountTo), 6) })}
+                  <span>(</span> {NETWORK_LABEL[getChainIdToByChainId(chainId)]} <span>)</span>
                 </div>
-                <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
+                <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
                 <img
                   src="/images/close-one.svg"
                   alt="close-one"

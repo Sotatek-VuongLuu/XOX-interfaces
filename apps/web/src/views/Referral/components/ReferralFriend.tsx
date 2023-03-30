@@ -657,10 +657,10 @@ const ReferralFriend = ({
         setIsOpenLoadingClaimModal(false)
         // setIsOpenSuccessModal(true)
         toastSuccess(
-          'Success',
-          `You have received $${(
-            Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])) * 0.99
-          ).toLocaleString()}`,
+          t('Success'),
+          t('You have received %amount%', {
+            amount: (Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])) * 0.99).toLocaleString(),
+          }),
         )
       }
     } catch (error: any) {
@@ -668,10 +668,10 @@ const ReferralFriend = ({
       console.log(`error>>>>>`, error)
       setIsOpenLoadingClaimModal(false)
       if (error && error?.code === 'ACTION_REJECTED') {
-        toastWarning('Confirm Claim', 'Transaction rejected.')
+        toastWarning(t('Confirm Claim'), t('Transaction rejected.'))
       }
       if (error?.code !== 'ACTION_REJECTED') {
-        toastError('Confirm Claim', 'Transaction failed')
+        toastError(t('Confirm Claim'), t('Transaction failed'))
       }
     }
   }
@@ -693,7 +693,10 @@ const ReferralFriend = ({
         handleCheckPendingRewardAll(account)
         setIsOpenLoadingClaimModal(false)
         // setIsOpenSuccessModal(true)
-        toastSuccess('Success.', `You have received $${(dataClaim.dollar * 0.99).toLocaleString()}`)
+        toastSuccess(
+          t('Success'),
+          t('You have received %amount%', { amount: (dataClaim.dollar * 0.99).toLocaleString() }),
+        )
       }
     } catch (error: any) {
       // eslint-disable-next-line no-console
@@ -701,11 +704,11 @@ const ReferralFriend = ({
       setIsOpenLoadingClaimModal(false)
       if (error && error?.code === 'ACTION_REJECTED') {
         // setModalReject(true)
-        toastWarning('Confirm Claim', 'Transaction rejected.')
+        toastWarning(t('Confirm Claim'), t('Transaction rejected.'))
       }
 
       if (error?.code !== 'ACTION_REJECTED') {
-        toastError('Confirm Claim', 'Transaction failed')
+        toastError(t('Confirm Claim'), t('Transaction failed'))
       }
     }
   }
@@ -799,14 +802,14 @@ const ReferralFriend = ({
                   <div className="edge1" />
                   <div className="corner2" />
                   <div className="edge2" />
-                  <p className="title">Referral friends</p>
+                  <p className="title">{t('Referral friends')}</p>
                   {listFriends.length !== 0 ? (
                     <StyledTable>
                       <div className="table">
                         <div className="table-head">
-                          <p>Username</p>
-                          <p>Referral Code</p>
-                          <p>Total Points</p>
+                          <p>{t('Username')}</p>
+                          <p>{t('Referral Code')}</p>
+                          <p>{t('Total Points')}</p>
                         </div>
                         <div className="table-row">
                           {[...listFriends].map((row) => (
@@ -855,7 +858,7 @@ const ReferralFriend = ({
                       </div>
                     </StyledTable>
                   ) : (
-                    <div className="no-data">No Data</div>
+                    <div className="no-data">{t('No Data')}</div>
                   )}
                 </WrapperLeft>
               )}
@@ -900,7 +903,7 @@ const ReferralFriend = ({
                               }}
                             />
 
-                            <p className="title">{item.point.toLocaleString()} points</p>
+                            <p className="title">{t('%num% points', { num: item.point.toLocaleString() })}</p>
                             <p className="title">~ ${item.dollar.toLocaleString()}</p>
                             {account && (
                               <button
@@ -915,10 +918,10 @@ const ReferralFriend = ({
                               >
                                 {item?.isClaimed ? (
                                   <span className={`${item.lever === currentLevelReach ? 'claimed' : ''}`}>
-                                    Claimed
+                                    {t('Claimed')}
                                   </span>
                                 ) : (
-                                  <span className={`${item.isReach ? 'claim' : ''} `}>Claim</span>
+                                  <span className={`${item.isReach ? 'claim' : ''} `}>{t('Claim')}</span>
                                 )}
                               </button>
                             )}
@@ -933,7 +936,9 @@ const ReferralFriend = ({
                     // <div className="unclaim_reward_container">
                     //   <div className="unclaim_reward">
                     <p className="total_un_claimed">
-                      ${Number(totalUnClaimed) <= 0 ? 0 : formatAmountNumber2(Number(totalUnClaimed))} Unclaimed Rewards
+                      {t('$%amount% Unclaimed Rewards', {
+                        amount: Number(totalUnClaimed) <= 0 ? 0 : formatAmountNumber2(Number(totalUnClaimed)),
+                      })}
                     </p>
                     //   </div>
                     // </div>
@@ -943,7 +948,7 @@ const ReferralFriend = ({
                     onClick={() => setIsShowModalConfirmClaimAll(true)}
                     disabled={!account || isClaimAll}
                   >
-                    <span>Claim All</span>
+                    <span>{t('Claim All')}</span>
                   </button>
                 </div>
               </WrapperRight>
@@ -955,22 +960,22 @@ const ReferralFriend = ({
       <ModalConfirmClaim
         open={isShowModalConfirmClaimByLevel}
         handleClose={() => setIsShowModalConfirmClaimByLevel(false)}
-        title="Claim"
+        title={t('Claim')}
       >
         <Content>
           <div className="discription">
             <p className="value">
-              Withdraw Amount <span>${roundingAmountNumber(Number(dataClaim.dollar))}</span>
+              {t('Withdraw Amount')} <span>${roundingAmountNumber(Number(dataClaim.dollar))}</span>
             </p>
             <p className="value">
-              You will receive:{' '}
+              {t('You will receive:')}{' '}
               <span>
                 ${roundingAmountNumber(Number(dataClaim.dollar) * 0.99)} $
                 {chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'}
               </span>
             </p>
             <p className="value">
-              Platform Fee:{' '}
+              {t('Platform Fee:')}{' '}
               <span>
                 ${roundingAmountNumber(Number(dataClaim.dollar) - Number(dataClaim.dollar) * 0.99)} $
                 {chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'}
@@ -979,7 +984,7 @@ const ReferralFriend = ({
           </div>
           <div className="btn-group">
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>
-              Cancel
+              {t('Cancel')}
             </button>
             <button
               className="confirm"
@@ -988,7 +993,7 @@ const ReferralFriend = ({
                 handleClaimLevel(level)
               }}
             >
-              Confirm
+              {t('Confirm')}
             </button>
           </div>
         </Content>
@@ -1004,10 +1009,10 @@ const ReferralFriend = ({
           <div className="discription">
             <p className="value">
               {' '}
-              Withdraw Amount <span>${Number(totalUnClaimed)?.toLocaleString()}</span>{' '}
+              {t('Withdraw Amount')} <span>${Number(totalUnClaimed)?.toLocaleString()}</span>{' '}
             </p>
             <p className="value">
-              You will receive:{' '}
+              {t('You will receive:')}{' '}
               <span>
                 {`${roundingAmountNumber(Number(totalUnClaimed) * 0.99)} ${
                   chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
@@ -1015,7 +1020,7 @@ const ReferralFriend = ({
               </span>
             </p>
             <p className="value">
-              Platform Fee:{' '}
+              {t('Platform Fee:')}{' '}
               <span>
                 {`${roundingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)} ${
                   chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
@@ -1025,7 +1030,7 @@ const ReferralFriend = ({
           </div>
           <div className="btn-group">
             <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimAll(false)}>
-              Cancel
+              {t('Cancel')}
             </button>
             <button
               className="confirm"
@@ -1034,7 +1039,7 @@ const ReferralFriend = ({
                 handleClaimAll()
               }}
             >
-              Confirm
+              {t('Confirm')}
             </button>
           </div>
         </Content>
@@ -1043,7 +1048,7 @@ const ReferralFriend = ({
       <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Success">
         <Content>
           <div className="noti">
-            You have got{' '}
+            {t('You have got')}{' '}
             <span>
               {typeOfClaim === TYPE_OF_CLAIM.CLAIM_BY_LEVEL
                 ? (dataClaim.dollar * 0.99).toLocaleString()
@@ -1067,14 +1072,14 @@ const ReferralFriend = ({
       <ModalBase
         open={isOpenLoadingClaimModal}
         handleClose={() => setIsOpenLoadingClaimModal(false)}
-        title="Confirm Claim"
+        title={t('Confirm Claim')}
       >
         <Content>
           <div className="xox_loading" style={{ margin: '24px 0px' }}>
             <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
           </div>
-          <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
-          <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
+          <div className="noti_claim_pending_h1">{t('Waiting For Confirmation')}</div>
+          <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
           <img
             src="/images/close-one.svg"
             alt="close-one"
@@ -1089,10 +1094,10 @@ const ReferralFriend = ({
           <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
             <img src="/images/reject_xox.png" alt="reject_xox" />
           </div>
-          <div className="noti_claim_pending_h2">Transaction rejected.</div>
+          <div className="noti_claim_pending_h2">{t('Transaction rejected.')}</div>
           <div className="btn_dismiss_container">
             <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
-              Dismiss
+              {t('Dismiss')}
             </button>
           </div>
           <img
