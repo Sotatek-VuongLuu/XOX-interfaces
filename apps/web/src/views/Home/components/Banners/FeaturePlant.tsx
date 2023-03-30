@@ -1,5 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { Box, Grid } from '@mui/material'
+import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
 import styled, { keyframes } from 'styled-components'
 
@@ -59,7 +60,7 @@ const RightContent = styled.div`
     position: relative;
     border-radius: 5px;
   }
-  
+
   .video-container video {
     position: absolute;
     z-index: 1;
@@ -76,7 +77,7 @@ const RightContent = styled.div`
 
     @media screen and (max-width: 576px) {
       height: 280px;
-      transform:scale(1.5);
+      transform: scale(1.5);
     }
   }
   .video-container .overlay {
@@ -86,7 +87,7 @@ const RightContent = styled.div`
     top: 0px;
     left: 0px;
     z-index: 2;
-    background: #0A0A0A;
+    background: #0a0a0a;
     opacity: 0.5;
   }
 `
@@ -149,17 +150,21 @@ const Watch = styled.div`
 `
 
 const FeaturePlant = () => {
-  const { width } = useWindowSize()
+  const { t } = useTranslation()
+
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2} style={{ overflow: 'hidden' }}>
         <Grid item xs={12} md={6}>
           <LeftContent data-aos="fade-right">
-            <Title>XOX Dapp - An All-IN-One Solution<span style={{ color: '#FB8618' }}>.</span></Title>
+            <Title>
+              {t('XOX Dapp - An All-IN-One Solution')}
+              <span style={{ color: '#FB8618' }}>.</span>
+            </Title>
             <Paragraph style={{ margin: '24px 0' }}>
-              Primarily design to provide simple solutions to its users and XOX Holders, the XOX Dapp already provides
-              and will keep implementing more robuts functionalities which will eventually make it a truly One Stop
-              Solution for Crypto Traders. What's ready:
+              {t(
+                "Primarily design to provide simple solutions to its users and XOX Holders, the XOX Dapp already provides and will keep implementing more robuts functionalities which will eventually make it a truly One Stop Solution for Crypto Traders. What's ready:",
+              )}
             </Paragraph>
 
             <div className="list">
@@ -169,7 +174,7 @@ const FeaturePlant = () => {
                     <span>
                       <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
                     </span>
-                    <span className="title_list_item">{title}</span>
+                    <span className="title_list_item">{t(title)}</span>
                   </p>
                 )
               })}

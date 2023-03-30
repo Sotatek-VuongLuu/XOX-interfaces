@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
@@ -17,7 +18,7 @@ const Wrapper = styled.div`
     text-align: center;
     font-weight: 400;
     font-size: 16px;
-    color: #FB8618;
+    color: #fb8618;
     margin-bottom: 48px;
   }
 
@@ -28,13 +29,13 @@ const Wrapper = styled.div`
     .subscription-form {
       width: 100%;
       max-width: 680px;
-      background: #1D1C1C;
+      background: #1d1c1c;
       display: flex;
       align-items: center;
       border-radius: 12px;
       padding: 6px;
       justify-content: center;
-  
+
       input {
         background: transparent;
         flex: 1;
@@ -44,21 +45,20 @@ const Wrapper = styled.div`
         font-size: 18px;
         line-height: 22px;
         color: rgba(255, 255, 255, 0.38);
-  
       }
-  
+
       button {
         border: 0;
         width: 60px;
         height: 60px;
         cursor: pointer;
-        background: #1D1C1C;
-  
+        background: #1d1c1c;
+
         img {
           width: 30px;
         }
       }
-  
+
       .email-icon {
         width: 25px;
         margin-left: 16px;
@@ -100,13 +100,13 @@ const Wrapper = styled.div`
     .subscription-form-container {
       .subscription-form {
         padding: 6px;
-    
+
         input {
           padding: 7.5px 0px 7.5px 8px;
           font-size: 16px;
           line-height: 22px;
         }
-    
+
         button {
           width: 32px;
           height: 32px;
@@ -114,7 +114,7 @@ const Wrapper = styled.div`
             width: 28px;
           }
         }
-    
+
         .email-icon {
           width: 19px;
           margin-left: 6px;
@@ -127,25 +127,25 @@ const Wrapper = styled.div`
     .subscription-form-container {
       display: flex;
       justify-content: center;
-  
+
       .subscription-form {
         input {
           padding: 7.5px 0px 7.5px 8px;
           font-size: 14px;
         }
-    
+
         button {
           border: 0;
           width: 32px;
           height: 32px;
           cursor: pointer;
-          background: #1D1C1C;
-    
+          background: #1d1c1c;
+
           img {
             width: 32px;
           }
         }
-    
+
         .email-icon {
           width: 16px;
           margin-left: 4px;
@@ -160,40 +160,34 @@ const Wrapper = styled.div`
 `
 
 const Subscription = () => {
+  const { t } = useTranslation()
+
   return (
     <Wrapper>
       <div className="title" data-aos="fade-up">
-        Subscribe to the XOX Labs Newsletter
+        {t('Subscribe to the XOX Labs Newsletter')}
       </div>
       <p className="subtitle" data-aos="fade-up" data-aos-duration="2300">
-        Unsubscribe at any time. <a className="privacy-link" href="javascript:void(0)">Privacy policy 
-                                  <span className="up-icon" style={{ marginLeft: 6}}>
-                                    <svg
-                                      width="10"
-                                      height="11"
-                                      viewBox="0 0 10 11"
-                                      fill="none"
-                                      xmlns="http://www.w3.org/2000/svg"
-                                    >
-                                      <path d="M2.5 8L7.5 3" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
-                                      <path
-                                        d="M3.4375 3H7.5V7.0625"
-                                        stroke="white"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                      />
-                                    </svg>
-                                    </span>
-                                  </a>
+        {t('Unsubscribe at any time.')}{' '}
+        <a className="privacy-link" href="javascript:void(0)">
+          {t('Privacy policy')}
+          <span className="up-icon" style={{ marginLeft: 6 }}>
+            <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 8L7.5 3" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M3.4375 3H7.5V7.0625" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </a>
       </p>
       <div className="subscription-form-container">
         <form action="/api/form" method="post" className="subscription-form">
           <img src="/images/home/subscription/email.svg" alt="email" className="email-icon" />
-          <input type="text" id="email" name="email" placeholder="Your email" required />
-          <button type="submit"><img src="/images/home/subscription/forward_arrow.svg" alt="forward_arrow" /></button>
+          <input type="text" id="email" name="email" placeholder={t('Your email')} required />
+          <button type="submit">
+            <img src="/images/home/subscription/forward_arrow.svg" alt="forward_arrow" />
+          </button>
         </form>
       </div>
-    
     </Wrapper>
   )
 }

@@ -11,6 +11,7 @@ import { LogoutIcon } from "../Svg";
 import UpIcon from "../Svg/Icons/UpIcon";
 import { DropdownMenuDivider, DropdownMenuItem, StyledDropdownMenu, LinkStatus, BoxDropdown } from "./styles";
 import { DropdownMenuItemType, DropdownMenuProps } from "./types";
+import { useTranslation } from "@pancakeswap/localization";
 
 const StyledBoxContainer = styled(Box)`
   :hover .hover_active {
@@ -37,12 +38,13 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   isLanding = false,
   ...props
 }) => {
+  const { t } = useTranslation();
   const { linkComponent } = useContext(MenuContext);
   const [isOpen, setIsOpen] = useState(false);
   const [targetRef, setTargetRef] = useState<HTMLDivElement | null>(null);
   const [tooltipRef, setTooltipRef] = useState<HTMLDivElement | null>(null);
   const hasItems = items.length > 0;
-  const { styles, attributes } = usePopper(targetRef, tooltipRef, {
+  const { attributes } = usePopper(targetRef, tooltipRef, {
     strategy: isBottomNav ? "absolute" : "fixed",
     placement: isBottomNav ? "top" : "bottom-start",
     modifiers: [{ name: "offset", options: { offset: [0, isBottomNav ? 6 : 0] } }],
@@ -124,7 +126,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                 const MenuItemContent = (
                   <>
                     {icon && createElement(icon as any)}
-                    {label}
+                    {t(label)}
                     {status && (
                       <LinkStatus textTransform="uppercase" color={status.color} fontSize="14px">
                         {status.text}

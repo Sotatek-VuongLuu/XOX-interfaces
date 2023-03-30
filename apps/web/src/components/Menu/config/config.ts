@@ -241,14 +241,14 @@ export const configLanding: (
           showTooltip: true,
         },
         {
-          label: 'XOX Mobile App/Wallet ',
+          label: 'XOX Mobile App/Wallet',
           icon: '',
           fillIcon: '',
           href: '/stable-coin',
           showTooltip: true,
         },
         {
-          label: 'XOX Multi-chain Launchpad',
+          label: 'XOX Multi-Chain Launchpad',
           icon: '',
           fillIcon: 'StableCoinIcon',
           href: '/stable-coin',

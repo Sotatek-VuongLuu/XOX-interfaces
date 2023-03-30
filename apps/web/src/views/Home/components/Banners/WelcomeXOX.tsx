@@ -9,14 +9,20 @@ import useWindowSize from 'hooks/useWindowSize'
 import { useEffect } from 'react'
 import { Application } from '@splinetool/runtime'
 import React from 'react'
+import { useTranslation } from '@pancakeswap/localization'
 
 const Wrapper = styled.div`
   width: 100%;
-  
+
   .video-container {
     position: relative;
     border-radius: 5px;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(249, 124, 29, 0.5) 0%, rgba(246, 99, 42, 0.5) 0.01%, rgba(249, 124, 29, 0) 100%);
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(249, 124, 29, 0.5) 0%,
+      rgba(246, 99, 42, 0.5) 0.01%,
+      rgba(249, 124, 29, 0) 100%
+    );
   }
 
   .video-container video {
@@ -25,9 +31,7 @@ const Wrapper = styled.div`
     top: 0;
     left: -90px;
     width: 50vw;
-    height: 50vh
-
-    @media screen and (max-width: 900px) {
+    height: 50vh @media screen and (max-width: 900px) {
       width: 100%;
       height: auto;
       left: unset;
@@ -37,10 +41,10 @@ const Wrapper = styled.div`
       left: unset;
       width: 100%;
       height: 280px;
-      transform:scale(1.5);
+      transform: scale(1.5);
     }
   }
-  
+
   .video-container .overlay {
     height: 100%;
     width: 100%;
@@ -48,7 +52,12 @@ const Wrapper = styled.div`
     top: 0px;
     left: 0px;
     z-index: 2;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(249, 124, 29, 0.5) 0%, rgba(246, 99, 42, 0.5) 0.01%, rgba(249, 124, 29, 0) 100%);
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(249, 124, 29, 0.5) 0%,
+      rgba(246, 99, 42, 0.5) 0.01%,
+      rgba(249, 124, 29, 0) 100%
+    );
     // opacity: 0.5;
   }
 
@@ -109,7 +118,7 @@ const LeftContent = styled.div`
       .boxed-child {
         width: 100%;
         height: 100%;
-        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
         padding: 17px 23.5px;
         border-radius: inherit;
         span {
@@ -121,7 +130,7 @@ const LeftContent = styled.div`
           font-size: 18px;
           width: 100%;
           height: 100%;
-          background-color: #FFFFFF;
+          background-color: #ffffff;
           border-radius: inherit;
         }
       }
@@ -181,7 +190,7 @@ const LeftContent = styled.div`
 
       .boxed-child {
         width: 100%;
-        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
         padding: 17px 0px;
         border-radius: inherit;
         text-align: center;
@@ -194,7 +203,7 @@ const LeftContent = styled.div`
           font-weight: 700;
           font-size: 18px;
           width: 100%;
-          background-color: #FFFFFF;
+          background-color: #ffffff;
           border-radius: inherit;
         }
 
@@ -217,7 +226,7 @@ const LeftContent = styled.div`
     }
 
     .chart {
-      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
@@ -226,7 +235,7 @@ const LeftContent = styled.div`
       border-radius: 12px;
       position: relative;
       text-align: center;
-      margin-top:22px;
+      margin-top: 22px;
       cursor: pointer;
 
       &:before {
@@ -238,8 +247,8 @@ const LeftContent = styled.div`
         bottom: 0;
         border-radius: inherit;
         padding: 1px;
-        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
-        -webkit-mask: linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
         -webkit-mask-composite: xor;
         -webkit-mask-composite: exclude;
         mask-composite: exclude;
@@ -285,7 +294,7 @@ const LeftContent = styled.div`
         position: relative;
         width: 100%;
         justify-content: space-evenly;
-        border: 1px solid rgba(255,255,255,0.2);
+        border: 1px solid rgba(255, 255, 255, 0.2);
         color: rgba(255, 255, 255, 0.87);
         font-size: 14px;
         line-height: 17px;
@@ -359,7 +368,13 @@ const Feature = styled.div`
   font-weight: 700;
   font-size: 28px;
   line-height: 44px;
-  background: linear-gradient(89deg, rgba(155,243,203,1) 0%, rgba(62,192,166,1) 25%, rgba(244,66,52,1) 50%, rgba(159,58,131,1) 75%);
+  background: linear-gradient(
+    89deg,
+    rgba(155, 243, 203, 1) 0%,
+    rgba(62, 192, 166, 1) 25%,
+    rgba(244, 66, 52, 1) 50%,
+    rgba(159, 58, 131, 1) 75%
+  );
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -376,7 +391,7 @@ const Description = styled.div`
 `
 
 const Button = styled.button`
-  background: #FFFFFF;
+  background: #ffffff;
   border-radius: 12px;
   border: none;
   // padding: 16px 92.5px;
@@ -389,7 +404,7 @@ const Button = styled.button`
   width: 100%;
 
   &:hover {
-    background: #FFFFFF;
+    background: #ffffff;
   }
 
   @media screen and (max-width: 900px) {
@@ -443,14 +458,14 @@ const ImageWrapper = styled.div`
 
 const CustomPopover = styled(Popover)`
   .MuiPopover-paper {
-    background: #1D1C1C;
+    background: #1d1c1c;
     border-radius: 10px;
     min-width: 250px;
     margin-top: 2px;
 
     .popover-coin {
       display: flex;
-      background: #1D1C1C;
+      background: #1d1c1c;
       box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
       flex-direction: row;
       justify-content: space-between;
@@ -467,14 +482,14 @@ const CustomPopover = styled(Popover)`
           display: flex;
           flex-direction: column;
           align-items: flex-start;
-  
+
           .title {
             font-size: 16px;
             line-height: 19px;
             text-align: center;
             color: rgba(255, 255, 255, 0.87);
           }
-    
+
           .description {
             font-weight: 400;
             font-size: 12px;
@@ -496,20 +511,21 @@ const CustomPopover = styled(Popover)`
 `
 
 const WelcomeXOX = (): JSX.Element => {
+  const { t } = useTranslation()
   const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
 
-  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget);
-  };
+    setAnchorEl(event.currentTarget)
+  }
 
   const handleClose = () => {
-    setAnchorEl(null);
-  };
+    setAnchorEl(null)
+  }
 
-  const open = Boolean(anchorEl);
-  const id = open ? 'simple-popover' : undefined;
+  const open = Boolean(anchorEl)
+  const id = open ? 'simple-popover' : undefined
 
   // useEffect(() => {
   //   const canvasPC = document.getElementById('canvas3d_pc')
@@ -530,24 +546,27 @@ const WelcomeXOX = (): JSX.Element => {
         <Grid container spacing={2} className="grid_welcome_container">
           <GridLeft item xs={12} md={6}>
             <LeftContent>
-              <Title className="title">XOX<span style={{ color: '#FB8618' }}>:</span> The Next Gen Multichain DeFi Dapps & Web3 Solutions Provider</Title>
-              <Feature className="feature">Revolutionary - Scalable - Sustainable</Feature>
+              <Title className="title">
+                XOX<span style={{ color: '#FB8618' }}>: </span>
+                {t('The Next Gen Multichain DeFi Dapps & Web3 Solutions Provider')}
+              </Title>
+              <Feature className="feature">{t('Revolutionary - Scalable - Sustainable')}</Feature>
               <Description className="description">
-                Swap, stake, store, bridge, refer, invest and earn with ease on the
+                {t('Swap, stake, store, bridge, refer, invest and earn with ease on the')}
                 <br />
-                leading Decentralized Blockchain Ecosystem.
+                {t('leading Decentralized Blockchain Ecosystem.')}
               </Description>
               <div className="grid-button">
                 <div>
                   <Button className="btn_read_doc" onClick={() => window.open('')}>
-                    Read Documentation
+                    {t('Read Documentation')}
                   </Button>
                 </div>
                 <div>
                   <a href="/swap" target="_blank">
                     <div className="get_xox">
                       <div className="boxed-child">
-                        <span>Get XOX</span>
+                        <span>{t('Get %symbol%', { symbol: 'XOX' })}</span>
                       </div>
                     </div>
                   </a>
@@ -573,8 +592,8 @@ const WelcomeXOX = (): JSX.Element => {
                 <div>
                   <a href="/chart" target="_blank">
                     <div className="chart">
-                      <div className='bg-button'>
-                        <p>Chart</p>
+                      <div className="bg-button">
+                        <p>{t('Chart')}</p>
                       </div>
                     </div>
                   </a>
@@ -584,10 +603,25 @@ const WelcomeXOX = (): JSX.Element => {
                   <div className="eth-box">
                     <img src="/images/home/hero/eth.svg" alt="email" className="email-icon" />
                     {(isMobile || isTablet) && (
-                      <><span>ETH:</span><input type="text" id="email" name="email" placeholder="" value="0xA...d7f" required /></>
+                      <>
+                        <span>ETH:</span>
+                        <input type="text" id="email" name="email" placeholder="" value="0xA...d7f" required />
+                      </>
                     )}
 
-                    {isDesktop && <><span>ETH:</span><input type="text" id="email" name="email" placeholder="" value="0xA...C6bf853a0a8ad7f" required /></>}
+                    {isDesktop && (
+                      <>
+                        <span>ETH:</span>
+                        <input
+                          type="text"
+                          id="email"
+                          name="email"
+                          placeholder=""
+                          value="0xA...C6bf853a0a8ad7f"
+                          required
+                        />
+                      </>
+                    )}
                     <img src="/images/home/hero/copy.svg" alt="copy" />
                     <img src="/images/home/hero/shield.svg" alt="shield" />
                     <img src="/images/home/hero/wolf.svg" alt="wolf" />
@@ -603,20 +637,20 @@ const WelcomeXOX = (): JSX.Element => {
                 <div className="more-btn">
                   <Button aria-describedby={id} onClick={handleClick} className="bg-btn">
                     <img src="/images/home/hero/checklist.svg" alt="checklist" />
-                      More
+                    {t('More')}
                     <img src="/images/home/hero/down.svg" alt="down" />
-                  </Button> 
+                  </Button>
                 </div>
                 <CustomPopover
-                    id={id}
-                    open={open}
-                    anchorEl={anchorEl}
-                    onClose={handleClose}
-                    anchorOrigin={{
-                      vertical: 'bottom',
-                      horizontal: 'left',
-                    }}
-                  >
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'left',
+                  }}
+                >
                   <div className="popover-coin">
                     <div className="coin-info">
                       <img src="/images/home/hero/xox.svg" alt="xox" />
@@ -631,7 +665,7 @@ const WelcomeXOX = (): JSX.Element => {
                       <img src="/images/home/hero/wolf.svg" alt="wolf" />
                     </div>
                   </div>
-                  </CustomPopover>
+                </CustomPopover>
               </div>
             </LeftContent>
           </GridLeft>

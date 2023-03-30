@@ -1,7 +1,8 @@
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
-import React, { useState } from "react"
+import React, { useState } from 'react'
 import { Button, Popover } from '@mui/material'
+import { useTranslation } from '@pancakeswap/localization'
 
 interface SecureProps {
   item: SecureItem
@@ -9,7 +10,7 @@ interface SecureProps {
 
 export interface SecureItem {
   imagePathDesktop: string
-  imagePathMobile :string
+  imagePathMobile: string
   name: string
 }
 
@@ -34,7 +35,7 @@ const Wrapper = styled.div`
     font-size: 16px;
     line-height: 19px;
     text-align: center;
-    color: #FB8618;
+    color: #fb8618;
     margin-top: 16px;
     margin-bottom: 40px;
 
@@ -65,14 +66,16 @@ const Wrapper = styled.div`
     }
   }
 
-  .airbnb-box, .hubspot-box, .google-box {
+  .airbnb-box,
+  .hubspot-box,
+  .google-box {
     position: relative;
 
     .airbnb-info {
       left: 0;
       position: absolute;
       z-index: 1;
-      background: #1D1C1C;
+      background: #1d1c1c;
       box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
       border-radius: 10px;
       width: 428px;
@@ -117,8 +120,8 @@ const Wrapper = styled.div`
               color: rgba(255, 255, 255, 0.87);
 
               &:before {
-                content: "• ";
-                color: #C20DA3;
+                content: '• ';
+                color: #c20da3;
                 font-size: 18px;
               }
             }
@@ -143,7 +146,8 @@ const Wrapper = styled.div`
             background: rgba(255, 255, 255, 0.1);
             opacity: 0.38;
 
-            .title, .description {
+            .title,
+            .description {
               text-align: left;
             }
           }
@@ -211,7 +215,7 @@ const Wrapper = styled.div`
                 line-height: 17px;
                 color: rgba(255, 255, 255, 0.87);
               }
-  
+
               .report-last-report {
                 padding: 6px 10px;
                 background: rgba(255, 255, 255, 0.1);
@@ -240,12 +244,12 @@ const Wrapper = styled.div`
                   line-height: 15px;
                   color: rgba(255, 255, 255, 0.87);
                 }
-      
+
                 p:not(:first-child) {
                   font-style: normal;
                   font-weight: 400;
                   font-size: 12px;
-                  line-height: 15px; 
+                  line-height: 15px;
                   color: rgba(255, 255, 255, 0.87);
                   margin-top: 6px;
                 }
@@ -261,12 +265,12 @@ const Wrapper = styled.div`
                   line-height: 15px;
                   color: rgba(255, 255, 255, 0.87);
                 }
-      
+
                 p:not(:first-child) {
                   font-style: normal;
                   font-weight: 400;
                   font-size: 12px;
-                  line-height: 15px; 
+                  line-height: 15px;
                   color: rgba(255, 255, 255, 0.87);
                   margin-top: 6px;
                 }
@@ -329,8 +333,8 @@ const HoverTextAirBnb = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const HoverTextHubspot = () => {
   return (
@@ -382,8 +386,8 @@ const HoverTextHubspot = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const HoverTextGoogle = () => {
   return (
@@ -435,46 +439,46 @@ const HoverTextGoogle = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
 const SecuredBy = () => {
-  const { width } = useWindowSize()
+  const { t } = useTranslation()
   const [isHoveringAirBnb, setIsHoveringAirBnb] = useState(false)
   const [isHoveringHubspot, setIsHoveringHubspot] = useState(false)
   const [isHoveringGoogle, setIsHoveringGoogle] = useState(false)
 
   const handleMouseOverAirBnb = () => {
-    setIsHoveringAirBnb(true);
+    setIsHoveringAirBnb(true)
   }
 
   const handleMouseOutAirBnb = () => {
-    setIsHoveringAirBnb(false);
+    setIsHoveringAirBnb(false)
   }
 
   const handleMouseOverHubspot = () => {
-    setIsHoveringHubspot(true);
+    setIsHoveringHubspot(true)
   }
 
   const handleMouseOutHubspot = () => {
-    setIsHoveringHubspot(false);
+    setIsHoveringHubspot(false)
   }
 
   const handleMouseOverGoogle = () => {
-    setIsHoveringGoogle(true);
+    setIsHoveringGoogle(true)
   }
 
-  const handleMouseOutGoogle= () => {
-    setIsHoveringGoogle(false);
+  const handleMouseOutGoogle = () => {
+    setIsHoveringGoogle(false)
   }
 
   return (
     <Wrapper>
       <p className="title" data-aos="fade-up">
-        Secured By
+        {t('Secured By')}
       </p>
       <p className="description" data-aos="fade-up" data-aos-duration="2300">
-        XOX has Industry Leading Security. Protected By The Best.
+        {t('XOX has Industry Leading Security. Protected By The Best.')}
       </p>
 
       <p className="img">
@@ -501,38 +505,41 @@ const SecuredBy = () => {
           </>
         )} */}
         <div>
-          <img src="/images/airbnb.svg" className="airbnb-box" alt="airbnb" data-aos="fade-right" onMouseOver={handleMouseOverAirBnb} onMouseOut={handleMouseOutAirBnb}/>
+          <img
+            src="/images/airbnb.svg"
+            className="airbnb-box"
+            alt="airbnb"
+            data-aos="fade-right"
+            onMouseOver={handleMouseOverAirBnb}
+            onMouseOut={handleMouseOutAirBnb}
+          />
           {isHoveringAirBnb && <HoverTextAirBnb />}
         </div>
         <div>
-          <img src="/images/hubspot.svg" className="hubspot-box" alt="hubspot" data-aos="fade-down" onMouseOver={handleMouseOverHubspot} onMouseOut={handleMouseOutHubspot}/>
+          <img
+            src="/images/hubspot.svg"
+            className="hubspot-box"
+            alt="hubspot"
+            data-aos="fade-down"
+            onMouseOver={handleMouseOverHubspot}
+            onMouseOut={handleMouseOutHubspot}
+          />
           {isHoveringHubspot && <HoverTextAirBnb />}
         </div>
         <div>
-          <img src="/images/google.svg" className="google-box" alt="google" data-aos="fade-left" onMouseOver={handleMouseOverGoogle} onMouseOut={handleMouseOutGoogle}/>
+          <img
+            src="/images/google.svg"
+            className="google-box"
+            alt="google"
+            data-aos="fade-left"
+            onMouseOver={handleMouseOverGoogle}
+            onMouseOut={handleMouseOutGoogle}
+          />
           {isHoveringGoogle && <HoverTextAirBnb />}
         </div>
       </p>
     </Wrapper>
   )
 }
-
-const listSecured = [
-  {
-    imagePathDesktop: '/images/airbnb.svg',
-    imagePathMobile: '/images/airbnb_mobile.svg',
-    name: 'airbnb'
-  },
-  {
-    imagePathDesktop: '/images/hubspot.svg',
-    imagePathMobile: '/images/hubspot.svg',
-    name: 'hubspot'
-  },
-  {
-    imagePathDesktop: '/images/google.svg',
-    imagePathMobile: '/images/google.svg',
-    name: 'google'
-  }
-]
 
 export default SecuredBy

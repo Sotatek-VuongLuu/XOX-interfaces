@@ -113,12 +113,12 @@ const Wrapper = styled(Box)`
     font-size: 18px;
     color: #ffffff;
     border: none;
-    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     border-radius: 12px;
     cursor: pointer;
 
     &:hover {
-      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
 
     @media screen and (max-width: 900px) {
@@ -181,7 +181,7 @@ const First = styled.div`
 
     .tab_item.active,
     .tab_item:hover {
-      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       border-radius: 8px;
     }
 
@@ -272,7 +272,7 @@ const FilterChainWrapper = styled.div`
 
     .filter_chain.active,
     .filter_chain:hover {
-      background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       border-radius: 30px;
     }
 
@@ -555,10 +555,14 @@ const FeatureReferal = () => {
         <Grid item xs={12} md={1} />
         <Grid item xs={12} md={6}>
           <div className="ref_container" data-aos="fade-left">
-            <p className="title_ref">Gamified Referral Program<span style={{ color: '#FB8618' }}>.</span></p>
+            <p className="title_ref">
+              {t('Gamified Referral Program')}
+              <span style={{ color: '#FB8618' }}>.</span>
+            </p>
             <Paragraph className="description">
-              Built to give back, the XOX Gamified Referral Program rewards both "The Referee" & "The Referrer" Earn
-              Points that's are redeemable for USDT/USDC after reaching different levels & milestones.
+              {t(
+                'Built to give back, the XOX Gamified Referral Program rewards both "The Referee" & "The Referrer" Earn Points that\'s are redeemable for USDT/USDC after reaching different levels & milestones.',
+              )}
             </Paragraph>
             <div className="list">
               {listTag.map(({ title }) => {
@@ -567,14 +571,14 @@ const FeatureReferal = () => {
                     <span>
                       <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
                     </span>
-                    <span className="title_list_item">{title}</span>
+                    <span className="title_list_item">{t(title)}</span>
                   </p>
                 )
               })}
             </div>
 
             <a href="/referral" target="_blank">
-              <button className="btn_join">Join Now</button>
+              <button className="btn_join">{t('Join Now')}</button>
             </a>
           </div>
         </Grid>
@@ -601,39 +605,6 @@ const listTag = [
   },
   {
     title: 'Get USDT/USDC',
-  },
-]
-
-const listLeader = [
-  {
-    name: 'Ha Anh Tuan',
-    point: '10293',
-    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-    rank: 1,
-  },
-  {
-    name: 'My Tam',
-    point: '10200',
-    avatar: 'https://danviet.mediacdn.vn/296231569849192448/2022/12/13/hen-uoc-tu-hu-vo-16709038452871766603715.jpg',
-    rank: 2,
-  },
-  {
-    name: 'Wade Warren',
-    point: '10110',
-    avatar: 'https://newsmd2fr.keeng.net/tiin/archive/images/296/202104/20210408/tinngan_115312_856826867_0.jpg',
-    rank: 3,
-  },
-  {
-    name: 'Wade Warren',
-    point: '9000',
-    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-    rank: 4,
-  },
-  {
-    name: 'Wade Warren',
-    point: '900',
-    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-    rank: 5,
   },
 ]
 
