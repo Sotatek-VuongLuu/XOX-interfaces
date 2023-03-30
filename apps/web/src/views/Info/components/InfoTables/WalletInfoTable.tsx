@@ -241,14 +241,6 @@ const TableWrapper = styled(Flex)`
   }
 `
 
-const SORT_FIELD = {
-  amountUSD: 'amountUSD',
-  timestamp: 'timestamp',
-  sender: 'sender',
-  amountToken0: 'amountToken0',
-  amountToken1: 'amountToken1',
-}
-
 const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyDatas, native, allTokens, className }) => {
   const [tokensBalance, setTokensBalance] = useState<any>([])
   const { t } = useTranslation()
@@ -339,22 +331,30 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       .catch((error) => {
         console.warn(error)
       })
-    getBalancesForEthereumAddress({
-      // erc20 tokens you want to query!
-      contractAddresses: Object.keys(allTokens),
-      // ethereum address of the user you want to get the balances for
-      ethereumAddress: account,
-      // your ethers provider
-      providerOptions: {
-        ethersProvider: currentProvider,
-      },
-    })
-      .then((balance) => {
-        setTokensBalance(balance.tokens)
-      })
-      .catch((error) => {
-        console.warn(error)
-      })
+
+    const getBalances = async () => {
+      const currentProvider = chain.id === 1 || chain.id === 5 ? getDefaultProvider(chain.network) : provider
+      let fetchedBalances
+
+      while (!fetchedBalances) {
+        fetchedBalances = await getBalancesForEthereumAddress({
+          // erc20 tokens you want to query!
+          contractAddresses: Object.keys(allTokens),
+          // ethereum address of the user you want to get the balances for
+          ethereumAddress: account,
+          // your ethers provider
+          providerOptions: {
+            ethersProvider: currentProvider,
+          },
+        }).catch((error) => {
+          console.warn(error)
+          return undefined
+        })
+        if (fetchedBalances) setTokensBalance(fetchedBalances.tokens)
+      }
+    }
+
+    getBalances()
   }, [account, chain, allTokens])
 
   useEffect(() => {
@@ -399,14 +399,6 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
         }
       }),
     )
-    console.log(
-      result.map((d) => {
-        return {
-          name: d.name,
-          value: Number(((d.value * 100) / total).toFixed(2)),
-        }
-      }),
-    )
   }, [balanceNative, tokensBalance, chainId, currencyDatas, rateXOX])
 
   return (
@@ -441,7 +433,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                 <CopyButton
                   width="24px"
                   text={account}
-                  tooltipMessage={t("Copied")}
+                  tooltipMessage={t('Copied')}
                   button={
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18" fill="none">
                       <path
