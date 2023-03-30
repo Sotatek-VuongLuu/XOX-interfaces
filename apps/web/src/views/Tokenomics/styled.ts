@@ -356,6 +356,13 @@ export const StyledCard2 = styled(StyledCard)`
     margin: 14px 0;
   }
 
+  .divide {
+    width: 100%;
+    height: 1px;
+    background: #fb8618;
+    margin: 14px 0;
+  }
+
   ${({ theme }) => theme.mediaQueries.xxl} {
     > h1 {
       font-size: 20px;

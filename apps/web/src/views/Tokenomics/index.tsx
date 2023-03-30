@@ -336,7 +336,7 @@ export default function TokenomicsPage() {
             <h1>Buy Tax</h1>
             <h2>0% Buy Tax</h2>
             <p className="center">On any DEX or CEX (Decentralized or Centralized Exchanges)</p>
-            <hr />
+            <div className="divide" />
             <h2>10% Buy Tax</h2>
             <p className="center">
               In the XOX Dex V1. Only applicable for <span className="hl">XOX-USDT</span> and{' '}
@@ -353,7 +353,7 @@ export default function TokenomicsPage() {
             <h1>Sell Tax</h1>
             <h2>10% Sell Tax On Every DEX</h2>
             <p className="center">The 10% sell tax is allocated as follows:</p>
-            <hr />
+            <div className="divide" />
             <p>
               <Dot /> <span className="white">4%</span> - Stable Coin (XOXS) Staking Rewards
               <br />
