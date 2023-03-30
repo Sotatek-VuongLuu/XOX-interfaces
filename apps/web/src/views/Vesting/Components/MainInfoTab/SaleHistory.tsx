@@ -3,7 +3,6 @@ import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
-<<<<<<< HEAD
 import TableLoader from 'components/TableLoader'
 import moment from 'moment'
 import BigNumber from 'bignumber.js'
@@ -12,9 +11,6 @@ import { linkTransaction } from 'views/BridgeToken'
 import { ChainId } from '@pancakeswap/sdk'
 import { Avatar } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
-=======
-import { useTranslation } from '@pancakeswap/localization'
->>>>>>> dfd393cc (feat: multi language dapp)
 
 const Wrapper = styled.div`
   position: relative;
