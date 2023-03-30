@@ -482,7 +482,7 @@ const FeatureReferal = () => {
       return (
         <NoDataWraper>
           <ConfirmedIcon>
-            <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+            <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
           </ConfirmedIcon>
         </NoDataWraper>
       )
