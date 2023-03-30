@@ -25,6 +25,7 @@ import ConnectWalletButton from 'components/ConnectWalletButton'
 import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useERC20 } from 'hooks/useContract'
 import InfoPieChart from '../InfoCharts/PieChart'
+import { useTranslation } from '@pancakeswap/localization'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -250,6 +251,7 @@ const SORT_FIELD = {
 
 const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyDatas, native, allTokens, className }) => {
   const [tokensBalance, setTokensBalance] = useState<any>([])
+  const { t } = useTranslation()
 
   const { address: account } = useAccount()
   const { chainId } = useActiveChainId()
@@ -384,7 +386,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       { start: '#B02E79', end: '#C043BB' },
     ])
     result.push({
-      name: 'Others',
+      name: t('Others'),
       value: sum,
     })
     total = nativeBalance + xoxBalance + result[2].value + sum
@@ -424,7 +426,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
             color="rgba(255, 255, 255, 0.87)"
             className="heading"
           >
-            Token Asset
+            {t('Token Asset')}
           </Text>
           {account && (
             <Flex>
@@ -439,7 +441,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
                 <CopyButton
                   width="24px"
                   text={account}
-                  tooltipMessage="Copied"
+                  tooltipMessage={t("Copied")}
                   button={
                     <svg xmlns="http://www.w3.org/2000/svg" width="17" height="18" viewBox="0 0 17 18" fill="none">
                       <path

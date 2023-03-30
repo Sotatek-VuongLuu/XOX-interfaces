@@ -374,7 +374,7 @@ const DataRow: React.FC<
     // eslint-disable-next-line no-param-reassign
     e.target.src = 'images/default_avatar.jpg'
   }
-  console.log(abs0)
+
   return (
     <>
       <Text
@@ -404,7 +404,7 @@ const DataRow: React.FC<
             lineHeight="19px"
             color="rgba(255, 255, 255, 0.87)"
           >
-            WithDraw
+            {t('Withdraw')}
           </Text>
         </LinkExternal>
       )}
@@ -503,15 +503,10 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
   const [sortField, setSortField] = useState(SORT_FIELD.timestamp)
   const [sortDirection, setSortDirection] = useState<boolean>(true)
   const { account } = useActiveWeb3React()
-  const [sortStable, setSortStable] = useState<boolean>(false)
   const [iconSortField, setIconSortField] = useState<any>(null)
   const [iconSortDirection, setIconSortDirection] = useState<any>(null)
-  const [iconSortStable, setIconSortStable] = useState<any>(null)
   const [perPage, setPerPage] = useState(5)
   const [tempPage, setTempPage] = useState('1')
-  const { chainId } = useActiveChainId()
-  const [transactionFrom, setTransactionFrom] = useState<TransactionFrom>(TransactionFrom.XOX)
-  const transactions = useProtocolTransactionsSWR()
   const dataTable =
     typePage === TYPE_HISTORY.stake
       ? useStakeStableCoinSWR(account)
@@ -555,7 +550,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
           })
           .slice(perPage * (page - 1), page * perPage)
       : []
-  }, [currentTransactions, page, sortField, sortDirection, sortStable, txFilter, perPage])
+  }, [currentTransactions, page, sortField, sortDirection, txFilter, perPage])
 
   // Update maxPage based on amount of items & applied filtering
   useEffect(() => {
@@ -735,8 +730,8 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
           color="rgba(255, 255, 255, 0.87)"
           height="24px"
         >
-          {typePage === TYPE_HISTORY.stake && 'Stake History'}
-          {(typePage === TYPE_HISTORY.widthDraw || typePage === TYPE_HISTORY.myWidthDraw) && 'Withdraw History'}
+          {typePage === TYPE_HISTORY.stake && t('Stake History')}
+          {(typePage === TYPE_HISTORY.widthDraw || typePage === TYPE_HISTORY.myWidthDraw) && t("Withdraw History")}
         </Text>
       </Flex>
       <CustomTableWrapper className="history-table">
@@ -750,7 +745,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            No
+            {t('No')}
           </Text>
           {typePage === TYPE_HISTORY.myWidthDraw && (
             <Text
@@ -762,7 +757,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              Action
+              {t('Action')}
             </Text>
           )}
           {typePage === TYPE_HISTORY.widthDraw && (
@@ -775,7 +770,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              Username
+              {t('Username')}
             </Text>
           )}
           <Text
@@ -787,7 +782,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Time
+            {t("Time")}
           </Text>
           <ClickableColumnHeader
             fontSize="16px"
@@ -800,7 +795,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Amount</span>{' '}
+              <span style={{ marginRight: '12px' }}>{t('Amount')}</span>{' '}
               {iconSortField === null ? IconSort : iconSortField ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
@@ -814,7 +809,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              APY
+              {t('APY')}
             </Text>
           )}
 
@@ -960,30 +955,30 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
               options={[
                 {
                   value: 5,
-                  label: '5/Page',
+                  label: t('%number%/Page', { number: 5 }),
                 },
                 {
                   value: 10,
-                  label: '10/Page',
+                  label: t('%number%/Page', { number: 10 }),
                 },
                 {
                   value: 20,
-                  label: '20/Page',
+                  label: t('%number%/Page', { number: 20 }),
                 },
                 {
                   value: 50,
-                  label: '50/Page',
+                  label: t('%number%/Page', { number: 50 }),
                 },
                 {
                   value: 100,
-                  label: '100/Page',
+                  label: t('%number%/Page', { number: 100 }),
                 },
               ]}
               onOptionChange={(option: any) => setPerPage(option.value)}
               className="select-page"
             />
             <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
-              Go to page
+              {t("Go to page")}
             </Text>
             <Input
               className="footer_input"

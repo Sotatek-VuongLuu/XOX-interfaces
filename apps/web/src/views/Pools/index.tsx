@@ -314,7 +314,6 @@ const Banner = styled.div`
       font-size: 16px;
       line-height: 19px;
       color: #ffffff;
-      width: 149px;
       height: 43px;
       border: 1px solid #ffffff;
       border-radius: 10px;
@@ -892,7 +891,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleWithdraw = async () => {
     try {
-      setNotiMess(`Withdraw ${pendingRewardOfUser} XOX`)
+      setNotiMess(t('Withdraw %amount% XOX', { amount: pendingRewardOfUser }))
       setIsOpenLoadingClaimModal(true)
       const gasFee = await contractFarmingLP.estimateGas.withdraw(0)
       const txWithdraw = await contractFarmingLP.withdraw(0, {
@@ -905,7 +904,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setIsOpenLoadingClaimModal(false)
         setIsOpenSuccessModal(true)
         setTxHash(tx?.transactionHash)
-        toastSuccess('Transaction Receipt', <ToastDescriptionWithTx txHash={tx?.transactionHash} />)
+        toastSuccess(t('Transaction receipt'), <ToastDescriptionWithTx txHash={tx?.transactionHash} />)
 
         handleCallbackAfterSuccess()
       }
@@ -916,14 +915,14 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       setNotiMess('')
       if (error?.error?.message === 'execution reverted: ERC20: transfer amount exceeds balance') {
         // setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
-        toastError('Confirm Farming', 'Transfer amount exceeds balance.')
+        toastError(t('Confirm Farming'), t('Transfer amount exceeds balance.'))
       }
       if (error?.message.includes('rejected')) {
         // setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
-        toastWarning('Confirm Farming', 'Transaction rejected.')
+        toastWarning(t('Confirm Farming'), t('Transaction rejected.'))
       }
       if (error?.code !== 'ACTION_REJECTED') {
-        toastError('Confirm Farming', 'Transaction failed')
+        toastError(t('Confirm Farming'), t('Transaction failed'))
       }
     }
   }
@@ -966,7 +965,12 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const handleConfirmWithdraw = async () => {
     try {
       setIsOpenLoadingClaimModal(true)
-      setNotiMess(`Unstake ${amountUnStake} ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP`)
+      setNotiMess(
+        t('Unstake %amount% %symbol%', {
+          amount: amountUnStake,
+          symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+        }),
+      )
       const gasFee = await contractFarmingLP.estimateGas.withdraw(parseEther(amountUnStake.toString()))
       const txWithdraw = await contractFarmingLP.withdraw(parseEther(amountUnStake.toString()), {
         gasLimit: gasFee,
@@ -980,7 +984,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setTxHash(tx?.transactionHash)
         onDismissStake()
         setIsOpenSuccessModal(true)
-        toastSuccess('Transaction Receipt', <ToastDescriptionWithTx txHash={tx?.transactionHash} />)
+        toastSuccess(t('Transaction receipt'), <ToastDescriptionWithTx txHash={tx?.transactionHash} />)
 
         handleCallbackAfterSuccess()
       }
@@ -990,23 +994,28 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       setNotiMess('')
       setIsOpenLoadingClaimModal(false)
       if (error?.error?.message === 'execution reverted: ERC20: transfer amount exceeds balance') {
-        toastError('Confirm Farming', 'Transfer amount exceeds balance.')
+        toastError(t('Confirm Farming'), t('Transfer amount exceeds balance.'))
 
         // setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
       }
       if (error?.message.includes('rejected')) {
         // setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
-        toastWarning('Confirm Farming', 'Transaction rejected.')
+        toastWarning(t('Confirm Farming'), t('Transaction rejected.'))
       }
       if (error?.code !== 'ACTION_REJECTED') {
-        toastError('Error', 'Transaction failed')
+        toastError('Error', t('Transaction failed'))
       }
     }
   }
 
   const handleConfirmDeposit = async () => {
     try {
-      setNotiMess(`Stake ${amount} ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP`)
+      setNotiMess(
+        t('Stake %amount% %symbol%', {
+          amount: amount,
+          symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+        }),
+      )
       setIsOpenLoadingClaimModal(true)
       const gasFee = await contractFarmingLP.estimateGas.deposit(parseEther(amount.toString()))
       const txDeposit = await contractFarmingLP.deposit(parseEther(amount.toString()), {
@@ -1021,7 +1030,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         setAmount('')
         onDismissUnStake()
         setIsOpenSuccessModal(true)
-        toastSuccess('Transaction Receipt', <ToastDescriptionWithTx txHash={tx?.transactionHash} />)
+        toastSuccess(t('Transaction receipt'), <ToastDescriptionWithTx txHash={tx?.transactionHash} />)
 
         handleCallbackAfterSuccess()
       }
@@ -1032,14 +1041,14 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       setIsOpenLoadingClaimModal(false)
       if (error?.error?.message === 'execution reverted: ERC20: transfer amount exceeds balance') {
         // setModalReject({ ...modalReject, isShow: true, message: 'Transfer amount exceeds balance' })
-        toastError('Confirm Farming', 'Transfer amount exceeds balance.')
+        toastError(t('Confirm Farming'), t('Transfer amount exceeds balance.'))
       }
       if (error?.message.includes('rejected')) {
         // setModalReject({ ...modalReject, isShow: true, message: 'Transaction rejected.' })
-        toastWarning('Confirm Farming', 'Transaction rejected.')
+        toastWarning(t('Confirm Farming'), t('Transaction rejected.'))
       }
       if (error?.code !== 'ACTION_REJECTED') {
-        toastError('Confirm Farming', 'Transaction failed')
+        toastError(t('Confirm Farming'), t('Transaction failed'))
       }
     }
   }
@@ -1131,10 +1140,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               <div className="corner2" />
               <div className="edge2" />
               <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
-                Add Liquidity. Earn Trading Fees
+                {t('Add Liquidity. Earn Trading Fees')}
               </Text>
               <Text className="subtitle" marginBottom="24px">
-                Level Up your DeFi Game
+                {t('Level Up your DeFi Game')}
               </Text>
               <Flex>
                 <a
@@ -1147,7 +1156,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     <div className="top-right"></div>
                     <div className="bottom-left"></div>
                     <div className="bottom-right"></div> */}
-                    Get LP Token
+                    {t('Get %symbol%', { symbol: 'LP Token' })}
                   </Button>
                 </a>
                 <a href="/whitepaper" target="_blank" rel="noreferrer">
@@ -1156,7 +1165,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     <div className="top-right"></div>
                     <div className="bottom-left"></div>
                     <div className="bottom-right"></div> */}
-                    Learn More
+                    {t('Learn More')}
                   </Button>
                 </a>
               </Flex>
@@ -1193,17 +1202,17 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           )}
                         </div>
                         <div className="flex flex_direction">
-                          <span className="name">Earned:</span>
+                          <span className="name">{t('Earned:')}</span>
                           {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
                         </div>
                         <div className="flex flex_direction">
-                          <span className="name">Liquidity</span>
+                          <span className="name">{t('Liquidity')}</span>
                           <span className="value _flex">
                             {account ? (
                               <>
                                 <ShowBalance balance={liquidity} name="liquidity" />
                                 <Tooltip
-                                  title="Total value of the funds in this farm’s liquidity pair"
+                                  title={t('Total value of the funds in this farm’s liquidity pair')}
                                   placement="top"
                                   id="u_question_farming"
                                   PopperProps={{
@@ -1241,11 +1250,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           )}
                         </p>
                         <p className="flex space_between earned_mb">
-                          <span className="name">Earned:</span>
+                          <span className="name">{t('Earned:')}</span>
                           {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
                         </p>
                         <p className="flex space_between liquidity_mb">
-                          <span className="name">Liquidity:</span>
+                          <span className="name">{t('Liquidity')}:</span>
                           <span className="_flex">
                             {account ? (
                               <>
@@ -1291,7 +1300,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           rel="noreferrer"
                         >
                           <p className="_flex" style={{ marginBottom: '8px' }}>
-                            <span>Get {chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP</span>
+                            <span>
+                              {t('Get %symbol%', {
+                                symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+                              })}{' '}
+                            </span>
                             <span style={{ marginLeft: 8 }}>
                               <img src="/images/external-icon.svg" alt="external-icon" />
                             </span>
@@ -1303,7 +1316,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           rel="noreferrer"
                         >
                           <p className="_flex">
-                            <span>View Contract</span>
+                            <span>{t('View Contract')}</span>
                             <span style={{ marginLeft: 8 }}>
                               <img src="/images/external-icon.svg" alt="external-icon" />
                             </span>
@@ -1315,7 +1328,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div>
                     <div className="rectangle _flex">
                       <div>
-                        <p className="current_XOX_reward">Current XOX reward</p>
+                        <p className="current_XOX_reward">{t('Current %symbol% reward', { symbol: 'XOX' })}</p>
                         {account ? (
                           <div style={{ width: '100%', marginTop: 16 }}>
                             <ShowBalance balance={pendingRewardOfUser} unit="" />
@@ -1331,7 +1344,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                         disabled={!Number(pendingRewardOfUser) || approvalState !== ApprovalState.APPROVED}
                         mt={16}
                       >
-                        Withdraw
+                        {t('Withdraw')}
                       </CustomButton>
                     </div>
                   </div>
@@ -1340,9 +1353,13 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                       <p className="current_XOX_reward">
                         {enable
                           ? userStaked
-                            ? `${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP Staked`
-                            : `Stake ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP`
-                          : 'Enable Farm'}
+                            ? t('%asset% Staked', {
+                                asset: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+                              })
+                            : t('Stake %symbol%', {
+                                symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+                              })
+                          : t('Enable Farm')}
                       </p>
                       {enable && userStaked && (
                         <div style={{ width: '100%', marginTop: 16 }}>
@@ -1357,11 +1374,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             onClick={handleApprove}
                             disabled={pendingApprove}
                           >
-                            {isLoadingApproval ? <Dots>Enabling</Dots> : 'Enable'}
+                            {isLoadingApproval ? <Dots>{t('Enabling')}</Dots> : t('Enable')}
                           </CustomButton>
                         ) : (
                           <CustomButton type="button" className="nable mt" onClick={handleClick}>
-                            Connect Wallet
+                            {t('Connect Wallet')}
                           </CustomButton>
                         )
                       ) : enable && userStaked ? (
@@ -1375,7 +1392,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                               disabled={!reserve || !totalSupplyLP}
                             >
                               <div className="inner_container">
-                                <span>Unstake</span>
+                                <span>{t('Unstake')}</span>
                               </div>
                             </ButtonUnStake>
                           )}
@@ -1388,7 +1405,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             }}
                             disabled={!reserve || !totalSupplyLP}
                           >
-                            Stake
+                            {t('Stake')}
                           </CustomButton>
                         </div>
                       ) : (
@@ -1401,7 +1418,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           }}
                           disabled={!reserve || !totalSupplyLP}
                         >
-                          Stake
+                          {t('Stake')}
                         </CustomButton>
                       )}
                     </div>
@@ -1416,7 +1433,11 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             rel="noreferrer"
                           >
                             <p className="_flex lp_mb">
-                              <span>Get {chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP</span>
+                              <span>
+                                {t('Get %symbol%', {
+                                  symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+                                })}
+                              </span>
                               <span style={{ marginLeft: 8 }}>
                                 <img src="/images/external-icon.svg" alt="external-icon" />
                               </span>
@@ -1428,7 +1449,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             rel="noreferrer"
                           >
                             <p className="_flex">
-                              <span>View Contract</span>
+                              <span>{t('View Contract')}</span>
                               <span style={{ marginLeft: 8 }}>
                                 <img src="/images/external-icon.svg" alt="external-icon" />
                               </span>
@@ -1447,7 +1468,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       <ModalBase
         open={modalReject.isShow}
         handleClose={() => setModalReject({ ...modalReject, isShow: false })}
-        title="Confirm Farming"
+        title={t('Confirm Farming')}
       >
         <Content>
           <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
@@ -1460,7 +1481,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               type="button"
               onClick={() => setModalReject({ ...modalReject, isShow: false })}
             >
-              Dismiss
+              {t('Dismiss')}
             </button>
           </div>
           <img
@@ -1475,15 +1496,15 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       <ModalBase
         open={isOpenLoadingClaimModal}
         handleClose={() => setIsOpenLoadingClaimModal(false)}
-        title="Confirm Farming"
+        title={t('Confirm Farming')}
       >
         <Content>
           <div className="xox_loading" style={{ margin: '24px 0px' }}>
             <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
           </div>
-          <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
+          <div className="noti_claim_pending_h1">{t("Waiting For Confirmation")}</div>
           <div className="noti_claim_pending_h3"> {notiMess}</div>
-          <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
+          <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
           <img
             src="/images/close-one.svg"
             alt="close-one"
@@ -1493,12 +1514,16 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           />
         </Content>
       </ModalBase>
-      <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Confirm Farming">
+      <ModalBase
+        open={isOpenSuccessModal}
+        handleClose={() => setIsOpenSuccessModal(false)}
+        title={t('Confirm Farming')}
+      >
         <Content>
           <div className="noti_claim_success">
             <img src="/images/success_claim.png" alt="success_claim" />
           </div>
-          <div className="submitted">Transaction Submitted</div>
+          <div className="submitted">{t('Transaction Submitted')}</div>
           <p style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>
             <LinkExternal
               href={`${linkTransaction(chainId)}${txHash}`}
@@ -1507,12 +1532,12 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               color="#FB8618"
               hiddenIcon
             >
-              <div className="view_on">View on {NETWORK_LABEL[chainId]}scan</div>
+              <div className="view_on">{t('View on %site%', { site: `${NETWORK_LABEL[chainId]}scan` })}</div>
             </LinkExternal>
           </p>
           <div className="btn_dismiss_container">
             <button className="btn_dismiss bg" type="button" onClick={() => setIsOpenSuccessModal(false)}>
-              Close
+              {t('Close')}
             </button>
           </div>
         </Content>

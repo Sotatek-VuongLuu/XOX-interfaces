@@ -151,7 +151,7 @@ export function TransactionSubmittedContent({
               style={{ fontWeight: 400, marginBottom: '16px' }}
               hiddenIcon
             >
-              {t(`View on ${chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan'}`)}
+              {t('View on %site%', { site: chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan' })}
             </LinkExternal>
           )}
           <ButtonFooters style={{ width: isMobile ? 'auto' : '400px', maxWidth: '100%' }}>

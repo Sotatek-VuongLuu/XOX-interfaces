@@ -17,6 +17,7 @@ import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobi
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import { useDataChartXOXSWR } from 'state/info/hooks'
 import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { useTranslation } from '@pancakeswap/localization'
 
 export const ChartCardsContainer = styled(Flex)`
   justify-content: space-between;
@@ -171,6 +172,7 @@ const PageOverViewStyled = styled(Page)`
 `
 
 const Overview: React.FC<React.PropsWithChildren> = () => {
+  const { t } = useTranslation()
   const native = useNativeCurrency()
   const [coinmarketcapIds, setCoinmarketcapIds] = useState<any>()
   const [coinmarketcapId, setCoinmarketcapId] = useState<number | undefined>()
@@ -327,7 +329,12 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       <FullContentInside>
         <div className="content">
           <InfoNav
-            textContentBanner={<>One Dapp. {isMobile ? <br /> : ''}Unlimited possibilities</>}
+            textContentBanner={
+              <>
+                {t('One Dapp.')} {isMobile && <br />}
+                {t('Unlimited possibilities')}
+              </>
+            }
             hasPadding={false}
             titleBtn1="XOX"
           />

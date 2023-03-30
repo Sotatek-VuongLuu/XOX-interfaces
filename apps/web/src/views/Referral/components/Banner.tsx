@@ -205,9 +205,9 @@ const Banner = () => {
             <div className="edge1" />
             <div className="corner2" />
             <div className="edge2" />
-            <p className="title">Invite Your Friends. Earn Together</p>
+            <p className="title">{t('Invite Your Friends. Earn Together')}</p>
             <p className="description">
-              Start Earning passive/active income with the XOX Multi-Chain Gamified Referral Program.
+              {t('Start Earning passive/active income with the XOX Multi-Chain Gamified Referral Program.')}
             </p>
           </WrapperLeft>
         </Grid>
@@ -218,7 +218,7 @@ const Banner = () => {
             <div className="edge_active_1" />
             <div className="corner_active_2" />
             <div className="edge_active_2" />
-            <p className="my_code">My Referral Code</p>
+            <p className="my_code">{t('My Referral Code')}</p>
             <div className="code">
               <div className="content_code_number">
                 {account && (

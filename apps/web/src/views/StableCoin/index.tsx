@@ -20,6 +20,7 @@ import TransactionTable from './transactionTable'
 import Earned from './earned'
 import { useRouter } from 'next/router'
 import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
+import { useTranslation } from '@pancakeswap/localization'
 
 const TYPE = {
   default: 'DEFAULT',
@@ -391,6 +392,7 @@ export const formatNumberDecimal = (n: any, decimal?: number) => {
 }
 
 export default function StableCoin() {
+  const { t } = useTranslation()
   const { account, chainId } = useWeb3React()
   const [widthDraw, setWidthDraw] = useState(TYPE.default)
   const allTokens = useAllTokens()
@@ -457,7 +459,7 @@ export default function StableCoin() {
       <FullWrapper>
         <ContainerBanner>
           <div className="banner">
-            <InfoNav textContentBanner="Earn USDT/USDC from your XOXS Indefinitely" hasPadding={false} />
+            <InfoNav textContentBanner={t('Earn USDT/USDC from your XOXS Indefinitely')} hasPadding={false} />
           </div>
         </ContainerBanner>
         <Container style={{ marginBottom: 59 }} key={`container-stablecoin${chainId}`}>
@@ -472,11 +474,11 @@ export default function StableCoin() {
                     <div className="edge2" />
                     <Flex justifyContent="space-between" alignItems="center" width="100%">
                       <WrapText>
-                        <p>Your current XOXS</p>
+                        <p>{t("Your current XOXS")}</p>
                         <p className="number">{formatAmountNumber2(Number(currentXOX))}</p>
                         <Link href="/stable-coin-history">
                           <Button height={37} style={{ fontSize: 14 }} onClick={() => setWidthDraw(TYPE.history)}>
-                            View your history
+                            {t("View your history")}
                           </Button>
                         </Link>
                       </WrapText>
@@ -501,11 +503,11 @@ export default function StableCoin() {
                     <div className="edge_active_2" />
                     <Flex justifyContent="space-between" alignItems="center" width="100%">
                       <WrapText>
-                        <p>Your current reward</p>
+                        <p>{t("Your current reward")}</p>
                         <p className="number">{formatAmountNumber2(Number(currentReward))}</p>
                         <Link href="/stable-coin-withdraw">
                           <Button height={37} style={{ fontSize: 14 }}>
-                            Withdraw reward
+                            {t("Withdraw reward")}
                           </Button>
                         </Link>
                       </WrapText>
@@ -530,11 +532,11 @@ export default function StableCoin() {
                       style={{ width: '100%', padding: '10px 0' }}
                     >
                       <TextConnectWallet style={{ color: 'rgba(255, 255, 255, 0.87)' }}>
-                        Please connect wallet to <br />
-                        view your information
+                        {t("Please connect wallet to")} <br />
+                        {t("view your information")}
                       </TextConnectWallet>
                       <ConnectWalletButtonWraper scale="sm" style={{ whiteSpace: 'nowrap' }}>
-                        <Trans>Connect Wallet</Trans>
+                        <Trans>{t("Connect Wallet")}</Trans>
                       </ConnectWalletButtonWraper>
                     </Flex>
                   </Box>

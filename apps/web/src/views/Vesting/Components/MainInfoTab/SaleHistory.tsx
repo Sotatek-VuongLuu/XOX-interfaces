@@ -3,6 +3,7 @@ import { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
 import { Arrow } from 'views/Info/components/InfoTables/shared'
+<<<<<<< HEAD
 import TableLoader from 'components/TableLoader'
 import moment from 'moment'
 import BigNumber from 'bignumber.js'
@@ -10,6 +11,10 @@ import truncateHash from '@pancakeswap/utils/truncateHash'
 import { linkTransaction } from 'views/BridgeToken'
 import { ChainId } from '@pancakeswap/sdk'
 import { Avatar } from '@mui/material'
+import { useTranslation } from '@pancakeswap/localization'
+=======
+import { useTranslation } from '@pancakeswap/localization'
+>>>>>>> dfd393cc (feat: multi language dapp)
 
 const Wrapper = styled.div`
   position: relative;
@@ -349,6 +354,8 @@ function SaleHistory({ dataTransaction }: IProps) {
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
+  const { t } = useTranslation()
+
   const setPagePagination = useCallback(
     (p: number) => {
       if (p < 1) {
@@ -490,7 +497,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              XOXS Reward
+              {t('XOXS Reward')}
             </Text>
             <Text
               fontSize="16px"

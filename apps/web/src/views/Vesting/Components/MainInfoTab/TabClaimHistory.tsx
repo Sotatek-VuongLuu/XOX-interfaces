@@ -341,23 +341,23 @@ function TabClaimHistory({ currentTransactions }) {
               options={[
                 {
                   value: 5,
-                  label: '5/Page',
+                  label: t('%number%/Page', { number: 5 }),
                 },
                 {
                   value: 10,
-                  label: '10/Page',
+                  label: t('%number%/Page', { number: 10 }),
                 },
                 {
                   value: 20,
-                  label: '20/Page',
+                  label: t('%number%/Page', { number: 20 }),
                 },
                 {
                   value: 50,
-                  label: '50/Page',
+                  label: t('%number%/Page', { number: 50 }),
                 },
                 {
                   value: 100,
-                  label: '100/Page',
+                  label: t('%number%/Page', { number: 100 }),
                 },
               ]}
               onOptionChange={(option: any) => handleSelectPerPage(option.value)}

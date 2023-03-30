@@ -73,11 +73,12 @@ export function ChoosePair({
     <>
       <AppHeader
         title={t('Add Liquidity')}
-        subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
+        subtitle={t('Receive LP tokens and earn %number%% trading fees', {
+          number: chainId === 5 || chainId === 1 ? 0.3 : 0.25,
+        })}
         helper={t(
-          `Liquidity providers earn a ${
-            chainId === 5 || chainId === 1 ? 0.3 : 0.25
-          }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+          `Liquidity providers earn a %number%% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+          { number: chainId === 5 || chainId === 1 ? 0.3 : 0.25 },
         )}
         backTo="/liquidity"
       />

@@ -4,6 +4,7 @@ import { isMobile } from 'react-device-detect'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { ModalContainer, ModalHeader, ModalCloseButton } from '@pancakeswap/uikit'
 import { NETWORK_ICON, NETWORK_LABEL } from './networks'
+import { useTranslation } from '@pancakeswap/localization'
 
 const StyledModalContainer = styled(ModalContainer)`
   width: 448px;
@@ -115,6 +116,7 @@ const ListNetWork = styled.div`
 `
 
 export default function SwitchNetworkModal(props: any): JSX.Element {
+  const { t } = useTranslation()
   const { switchNetwork, currentChainId, onDismiss } = props
   const { chainId } = useActiveChainId()
   if (!chainId) return null
@@ -128,7 +130,7 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
   return (
     <StyledModalContainer>
       <StyledModalHeader style={{ justifyContent: 'center' }}>
-        <h2>Select a network</h2>
+        <h2>{t('Select a Network')}</h2>
         <ModalCloseButton onDismiss={onDismiss} />
       </StyledModalHeader>
       <ListNetWork

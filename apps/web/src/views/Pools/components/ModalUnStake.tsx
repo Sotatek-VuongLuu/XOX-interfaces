@@ -11,6 +11,7 @@ import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { Tooltip } from '@mui/material'
 import BigNumber from 'bignumber.js'
 import { formatToShowBalance } from './utils/formatBalance'
+import { useTranslation } from '@pancakeswap/localization'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -279,24 +280,26 @@ const CustomButton = styled(Button)`
 `
 
 export const ShowBalance = ({ balance }) => {
+  const { t } = useTranslation()
+
   return (
     <>
       {Number(balance) <= 0.000001 ? (
         <Tooltip title={Number(balance) !== 0 ? `${balance}` : null} placement="top-start">
           <span aria-hidden="true" className="balance_container">
-            Balance:&nbsp;
+            {t('Balance')}:&nbsp;
             <span className="balanceLP">{Number(balance) !== 0 ? '0.000000...' : 0}</span>
           </span>
         </Tooltip>
       ) : String(balance).length <= 10 ? (
         <span aria-hidden="true" className="balance_container">
-          Balance:&nbsp;
+          {t('Balance')}:&nbsp;
           <span className="balanceLP">{formatToShowBalance(String(balance))}</span>
         </span>
       ) : (
         <Tooltip title={balance} placement="top">
           <span aria-hidden="true" className="balance_container">
-            Balance:&nbsp;
+            {t('Balance')}:&nbsp;
             <span className="balanceLP">{formatToShowBalance(String(balance))}</span>
           </span>
         </Tooltip>
@@ -324,6 +327,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   amount,
   setAmount,
 }) => {
+  const { t } = useTranslation()
   const chainIdSupport = [97, 56]
   const { chainId } = useActiveChainId()
   const listTimesPercents = ['25%', '50%', '75%', 'Max']
@@ -377,7 +381,11 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
           balanceLP &&
           parseEther(Number(amount).toFixed(18)).gt(parseEther(Number(balanceLP).toFixed(18)))
         ) {
-          setMessageError(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} Balance`)
+          setMessageError(
+            t('Insuficient Your %symbol% Balance', {
+              symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC',
+            }),
+          )
         } else {
           setMessageError('')
         }
@@ -385,7 +393,11 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
         setMessageError('')
       }
     } else {
-      setMessageError(`No tokens to stake: Get ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP`)
+      setMessageError(
+        t('No tokens to stake: Get %symbol%', {
+          symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+        }),
+      )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount, balanceLP])
@@ -403,11 +415,11 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   return (
     <>
       <StyledModalContainer>
-        <StyledModalHeader>Unstake LP Tokens</StyledModalHeader>
+        <StyledModalHeader>{t('Unstake LP tokens')}</StyledModalHeader>
         <ContentContainer>
           <ContentUnStake>
             <div className="flex stake">
-              <p>Untake</p>
+              <p>{t('Unstake')}</p>
               <ShowBalance balance={balanceLP} />
             </div>
             <div className="flex token_lp">
@@ -446,7 +458,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
                     }}
                     disabled={!Number(balanceLP)}
                   >
-                    {item}
+                    {t(item)}
                   </button>
                 )
               })}
@@ -455,7 +467,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
           {messageError && <p className="mes_error">{messageError}</p>}
           <ButtonGroup>
             <button type="button" className="btn cancel" onClick={onDismiss}>
-              Cancel
+              {t('Cancel')}
             </button>
             <CustomButton
               type="button"
@@ -465,7 +477,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
               }
               onClick={handleButtonClick}
             >
-              Confirm
+              {t('Confirm')}
             </CustomButton>
           </ButtonGroup>
         </ContentContainer>

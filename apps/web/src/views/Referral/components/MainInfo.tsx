@@ -1163,7 +1163,7 @@ const MainInfo = ({
     }
 
     if (listUserRanks[tabChainLeaderBoard]?.length === 0) {
-      return <NoDataWraper>No data</NoDataWraper>
+      return <NoDataWraper>{t('No Data')}</NoDataWraper>
     }
 
     return (
@@ -1210,7 +1210,7 @@ const MainInfo = ({
                         onClick={() => handleOnChangeChainTab(item)}
                         role="button"
                       >
-                        {item}
+                        {t(item)}
                       </div>
                     )
                   })}
@@ -1225,7 +1225,7 @@ const MainInfo = ({
                       onClick={() => handleOnChangeRankTab(item)}
                       className={tabLeaderBoard === item ? 'tab_item active' : 'tab_item'}
                     >
-                      {item}
+                      {t(item)}
                     </div>
                   )
                 })}
@@ -1274,7 +1274,7 @@ const MainInfo = ({
                 <div className="corner2" />
                 <div className="edge2" />
                 <div className="total_point">
-                  <p className="title">Your Current Total Points</p>
+                  <p className="title">{t('Your Current Total Points')}</p>
                   <div className="total_point_bar">
                     <div className="current_point_bar">
                       {totalPoint ? (
@@ -1299,11 +1299,13 @@ const MainInfo = ({
                 <div className="corner2" />
                 <div className="edge2" />
                 <div className="total_point_content " style={{ height: '100%', padding: '58px 0' }}>
-                  <SubTitle className="please-connec">Please connect wallet to view your referral information</SubTitle>
+                  <SubTitle className="please-connec">
+                    {t('Please connect wallet to view your referral information')}
+                  </SubTitle>
                   <ConnectBox>
                     <ConnectWalletButtonWraper scale="sm">
                       <BoxWrapper display={['flex', , , 'flex']}>
-                        <Trans>Connect Wallet</Trans>
+                        <Trans>{t('Connect Wallet')}</Trans>
                       </BoxWrapper>
                     </ConnectWalletButtonWraper>
                   </ConnectBox>
@@ -1324,11 +1326,13 @@ const MainInfo = ({
                   <div className="edge1" />
                   <div className="corner2" />
                   <div className="edge2" />
-                  <SubTitle className="please-connec">Please connect wallet to view your referral information</SubTitle>
+                  <SubTitle className="please-connec">
+                    {t('Please connect wallet to view your referral information')}
+                  </SubTitle>
                   <ConnectBox>
                     <ConnectWalletButtonWraper scale="sm">
                       <BoxWrapper display={['flex', , , 'flex']}>
-                        <Trans>Connect Wallet</Trans>
+                        <Trans>{t('Connect Wallet')}</Trans>
                       </BoxWrapper>
                     </ConnectWalletButtonWraper>
                   </ConnectBox>
@@ -1344,14 +1348,14 @@ const MainInfo = ({
                     <div className="edge1" />
                     <div className="corner2" />
                     <div className="edge2" />
-                    <p className="title">Referral friends</p>
+                    <p className="title">{t('Referral friends')}</p>
                     {listFriends.length !== 0 ? (
                       <StyledTable>
                         <div className="table">
                           <div className="table-head">
-                            <p>Username</p>
-                            <p>Referral Code</p>
-                            <p>Total Points</p>
+                            <p>{t('Username')}</p>
+                            <p>{t('Referral Code')}</p>
+                            <p>{t('Total Points')}</p>
                           </div>
                           <div className="table-row">
                             {[...listFriends].map((row) => (
@@ -1400,7 +1404,7 @@ const MainInfo = ({
                         </div>
                       </StyledTable>
                     ) : (
-                      <div className="no-data">No Data</div>
+                      <div className="no-data">{t('No Data')}</div>
                     )}
                   </WrapperLeftV2>
                 )}
@@ -1423,7 +1427,7 @@ const MainInfo = ({
                       onClick={() => setSubTabIndex(index)}
                       className={subTabIndex === index ? 'subTab_item active' : 'subTab_item'}
                     >
-                      {item}
+                      {t(item)}
                     </div>
                   )
                 })}
@@ -1473,7 +1477,7 @@ const MainInfo = ({
                           <div className="shadow" />
 
                           <p className="title">
-                            {item.point.toLocaleString()} points
+                            {t('%num% points', { num: item.point.toLocaleString() })}
                             <br />
                             ~${item.dollar.toLocaleString()}
                           </p>

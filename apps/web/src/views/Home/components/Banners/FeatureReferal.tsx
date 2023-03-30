@@ -19,6 +19,7 @@ import LeaderBoardItemLP from 'views/Referral/components/LearderBoardItemForLand
 import { filterChain, FilterChain, filterTime, FilterTime, ListRankingByChain } from 'views/Referral'
 import { GridLoader } from 'react-spinners'
 import { ColumnCenter } from 'components/Layout/Column'
+import { useTranslation } from '@pancakeswap/localization'
 
 export interface IItemLeaderBoard {
   name: string
@@ -303,6 +304,7 @@ type FunctionList = {
 }
 
 const FeatureReferal = () => {
+  const { t } = useTranslation()
   const startOfDay = moment().startOf('days').toString()
   const startOfMonth = moment().startOf('month').toString()
   const startOfWeek = moment().startOf('isoWeek').toString()
@@ -487,7 +489,7 @@ const FeatureReferal = () => {
     }
 
     if (listUserRanks[tabChainLeaderBoard].length === 0) {
-      return <NoDataWraper>No data</NoDataWraper>
+      return <NoDataWraper>{t('No Data')}</NoDataWraper>
     }
 
     return (
@@ -522,7 +524,7 @@ const FeatureReferal = () => {
                             onClick={() => handleOnChangeChainTab(item)}
                             role="button"
                           >
-                            {item}
+                            {t(item)}
                           </div>
                         )
                       })}
@@ -538,7 +540,7 @@ const FeatureReferal = () => {
                           className={tabLeaderBoard === item ? 'tab_item active' : 'tab_item'}
                           style={{ cursor: 'pointer' }}
                         >
-                          {item}
+                          {t(item)}
                         </div>
                       )
                     })}

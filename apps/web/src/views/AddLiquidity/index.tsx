@@ -469,7 +469,12 @@ export default function AddLiquidity({ currencyA, currencyB }) {
           const symbolB = currencies[Field.CURRENCY_B]?.symbol
           const amountB = parsedAmounts[Field.CURRENCY_B]?.toSignificant(3)
           addTransaction(response, {
-            summary: `Add ${amountA} ${symbolA} and ${amountB} ${symbolB}`,
+            summary: t('Add %amountA% %symbolA% and %amountB% %symbolB%', {
+              amountA: amountA,
+              symbolA: symbolA,
+              amountB: amountB,
+              symbolB: symbolB,
+            }),
             translatableSummary: {
               text: 'Add %amountA% %symbolA% and %amountB% %symbolB%',
               data: { amountA, symbolA, amountB, symbolB },
@@ -484,11 +489,11 @@ export default function AddLiquidity({ currencyA, currencyB }) {
       )
       .catch((err) => {
         if (err?.code === 'ACTION_REJECTED' || err?.message.includes('rejected')) {
-          toastWarning('Confirm add liquidity', 'Transaction rejected.')
+          toastWarning(t('Confirm add liquidity'), t('Transaction rejected.'))
         }
         if (err && err.code !== 4001) {
           logError(err)
-          console.error(`Add Liquidity failed`, err, args, value)
+          console.error(t('Add Liquidity failed'), err, args, value)
         }
         onDismissModal()
         setLiquidityState({
@@ -533,9 +538,9 @@ export default function AddLiquidity({ currencyA, currencyB }) {
           : attemptingTxn
           ? t('Confirm add liquidity')
           : txHash
-          ? 'Confirm add liquidity'
+          ? t('Confirm add liquidity')
           : liquidityErrorMessage
-          ? 'Confirm add liquidity'
+          ? t('Confirm add liquidity')
           : t('You will receive')
       }
       customOnDismiss={handleDismissConfirmation}
@@ -787,11 +792,12 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                       )}`
                     : t('Add Liquidity')
                 }
-                subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
+                subtitle={t('Receive LP tokens and earn %number%% trading fees', {
+                  number: chainId === 5 || chainId === 1 ? 0.3 : 0.25,
+                })}
                 helper={t(
-                  `Liquidity providers earn a ${
-                    chainId === 5 || chainId === 1 ? 0.3 : 0.25
-                  }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+                  `Liquidity providers earn a %number%% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+                  { number: chainId === 5 || chainId === 1 ? 0.3 : 0.25 },
                 )}
                 backTo="/liquidity"
               />
@@ -976,21 +982,27 @@ export default function AddLiquidity({ currencyA, currencyB }) {
       </>
     )} */}
 
-                  <Text className="text-share">Price and pool share</Text>
+                  <Text className="text-share">{t('Price and pool share')}</Text>
 
                   {currencies[Field.CURRENCY_A] && currencies[Field.CURRENCY_B] && price && (
                     <>
                       <CustomRowBetween>
-                        <Text className="text-left">{`${currencies[Field.CURRENCY_A]?.symbol} per ${
-                          currencies[Field.CURRENCY_B]?.symbol
-                        }`}</Text>
+                        <Text className="text-left">
+                          {t('%assetA% per %assetB%', {
+                            assetA: currencies[Field.CURRENCY_A]?.symbol,
+                            assetB: currencies[Field.CURRENCY_B]?.symbol,
+                          })}
+                        </Text>
                         <Text className="text-right">{formatAmountString(price.invert(), 6)}</Text>
                       </CustomRowBetween>
 
                       <CustomRowBetween>
-                        <Text className="text-left">{`${currencies[Field.CURRENCY_B]?.symbol} per ${
-                          currencies[Field.CURRENCY_A]?.symbol
-                        }`}</Text>
+                        <Text className="text-left">
+                          {t('%assetA% per %assetB%', {
+                            assetA: currencies[Field.CURRENCY_B]?.symbol,
+                            assetB: currencies[Field.CURRENCY_A]?.symbol,
+                          })}
+                        </Text>
                         <Text className="text-right">{formatAmountString(price, 6)}</Text>
                       </CustomRowBetween>
                     </>
