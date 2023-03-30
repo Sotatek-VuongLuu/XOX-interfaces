@@ -36,6 +36,7 @@ const BGMobileRight = styled.img`
   z-index: -1;
   right: 0;
   top: 53%;
+  width: 100%;
 `
 
 const BGMobileCubeRight = styled.img`

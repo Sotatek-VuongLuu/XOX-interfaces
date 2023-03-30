@@ -41,6 +41,9 @@ const Wrapper = styled.div`
       left: unset;
       width: 100%;
       height: 280px;
+      top: 50px;
+      position: absolute;
+      
       transform: scale(1.5);
     }
   }
