@@ -531,14 +531,8 @@ export default function CompanyPage() {
         </p>
       </StyledSectionText>
 
-      <Box marginBottom={[64, null, null, 100]} style={{ display: 'flex' }}>
-        <img
-          src="/images/company/bg-team.png"
-          alt=""
-          draggable="false"
-          loading="lazy"
-          style={{ margin: '0 auto', maxWidth: '100%' }}
-        />
+      <Box marginBottom={[64, null, null, 100]}>
+        <img src="/images/company/bg-team.png" alt="" draggable="false" loading="lazy" style={{ width: '100%' }} />
       </Box>
 
       <StyledSectionText style={{ marginBottom: 40 }}>
