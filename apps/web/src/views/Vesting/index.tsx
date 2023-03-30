@@ -953,7 +953,7 @@ function VestingPage() {
     })
     getBalancesForEthereumAddress({
       // erc20 tokens you want to query!
-      contractAddresses: [USDC_TEST],
+      contractAddresses: [USDT[ChainId.GOERLI]],
       // ethereum address of the user you want to get the balances for
       ethereumAddress: account,
       // your ethers provider
