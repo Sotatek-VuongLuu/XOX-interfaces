@@ -363,14 +363,10 @@ export default function TokenomicsPage() {
   }, [width])
 
   const handleExpandXAxis = () => {
-    const newXAxis = handleRenderXAxis().map((item) => item.title)
-
-    const timePrefix = moment.unix(LAUNCH_APP_TIME).subtract(3, 'days').format('')
-
-    console.log(`timePrefix`, timePrefix)
+    const newXAxis: string[] = handleRenderXAxis().map((item) => item.title)
+    newXAxis[16] = ''
+    return newXAxis
   }
-
-  handleExpandXAxis()
 
   const TVS_CHART_OPTION: EChartsOption = {
     title: { show: false },
@@ -413,11 +409,15 @@ export default function TokenomicsPage() {
       textStyle: { color: '#FFFFFFDE' },
     },
     toolbox: { feature: { saveAsImage: { show: false } } },
-    grid: { top: 0, left: -49, right: 0, bottom: controllBottom, containLabel: true },
+    grid: { top: 0, left: -30, right: 0, bottom: controllBottom, containLabel: true },
     xAxis: {
       type: 'category',
       boundaryGap: false,
-      data: handleRenderXAxis().map((item) => item.title),
+      data: handleExpandXAxis(),
+      nameTextStyle: {
+        fontSize: 8,
+        color: 'red',
+      },
     },
     yAxis: { type: 'value', show: false },
     series: [

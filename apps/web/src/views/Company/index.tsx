@@ -567,7 +567,7 @@ export default function CompanyPage() {
         <h3>XOX Labs Core Team</h3>
         <p>
           A highly qualified and professional team built to deliver top class DeFi products and support Web 3.0 mass
-          adoption. Our mission and vision is to create a self sustainable decentralized ecosystem with multiple revenue
+          adoption. Our mission and vision is to create a self-sustainable decentralized ecosystem with multiple revenue
           sources in every leading Blockchain.
         </p>
       </StyledSectionText>
