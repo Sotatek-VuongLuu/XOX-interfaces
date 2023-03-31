@@ -246,7 +246,7 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 576px) {
     margin-bottom: unset;
-    margin-top: 260px;
+    margin-top: 150px;
   }
 
   @media screen and (max-width: 415px) {
@@ -256,7 +256,7 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 400px) {
     margin-bottom: unset;
-    margin-top: 180px;
+    margin-top: 130px;
   }
 
   .coin-block {
