@@ -1,10 +1,12 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-cycle */
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useWindowSize from 'hooks/useWindowSize'
 import { useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { A11y, Navigation, Pagination } from 'swiper'
-import { Swiper, SwiperSlide } from 'swiper/react'
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
 import 'swiper/css/pagination'
@@ -320,6 +322,7 @@ function SaleMechanism({
   const { account } = useActiveWeb3React()
   const [isMore, setIsMore] = useState(false)
   const swiperRef = useRef(null)
+  const swiper = useSwiper()
 
   const renderBody = useMemo(() => {
     switch (tabActiveMechansim) {
@@ -411,6 +414,7 @@ function SaleMechanism({
         {/* </div> */}
 
         <div style={{ marginBottom: '24px' }}>
+          {/* <img src="/images/prev.svg" alt="" onClick={() => swiperRef?.current?.slideNext()} /> */}
           <Swiper
             slidesPerView="auto"
             modules={[Navigation, Pagination, A11y]}
