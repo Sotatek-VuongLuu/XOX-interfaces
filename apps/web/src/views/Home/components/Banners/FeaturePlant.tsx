@@ -204,7 +204,14 @@ const FeaturePlant = () => {
           <RightContent data-aos="fade-left">
             <div className="video-container">
               <div className="overlay"></div>
-              <video autoPlay loop muted>
+              <video
+                loop
+                playsInline
+                autoPlay={true}
+                controls={false}
+                preload='auto'
+                style={{ pointerEvents: 'none' }}
+              >
                 <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
               </video>
             </div>
