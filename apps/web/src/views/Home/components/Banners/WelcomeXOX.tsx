@@ -306,6 +306,10 @@ const LeftContent = styled.div`
         font-weight: 700;
         cursor: pointer;
         align-items: center;
+
+        @media screen and (max-width: 400px) {
+          margin-top: 24px;
+        }
       }
 
       button {

@@ -122,6 +122,14 @@ const Wrapper = styled.div`
           color: #F44336;
         }
       }
+
+      .hover-button {
+        svg {
+          path {
+            stroke: #FB8618;
+          }
+        }
+      }
     }
   }
 
