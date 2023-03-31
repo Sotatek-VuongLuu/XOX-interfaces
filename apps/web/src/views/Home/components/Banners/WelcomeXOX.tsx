@@ -781,9 +781,9 @@ const WelcomeXOX = (): JSX.Element => {
             {/* {isDesktop && <canvas id="canvas3d_pc" />} */}
 
             <div className="video-container">
-              <div className="overlay"></div>
-              <video loop playsInline autoPlay={true} controls={false} preload="auto" style={{ pointerEvents: 'none' }}>
-                <source src="/videos/home/laptop_project.mp4" type="video/mp4"></source>
+              <div className="overlay" />
+              <video loop playsInline autoPlay controls={false} preload="auto" style={{ pointerEvents: 'none' }}>
+                <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4" />
               </video>
             </div>
           </Grid>
