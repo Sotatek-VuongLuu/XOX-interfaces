@@ -391,6 +391,7 @@ export default function TokenomicsPage() {
     ],
     tooltip: {
       trigger: 'axis',
+      position: width < 900 && ['10%', '41%'],
       axisPointer: {
         type: 'cross',
         label: {

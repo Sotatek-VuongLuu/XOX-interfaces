@@ -849,6 +849,10 @@ export const StyledTVS = styled(StyledCard)`
       -webkit-mask-composite: xor;
       mask-composite: exclude;
     }
+
+    @media screen and (max-width: 900px) {
+      background: #1e2127 !important;
+    }
   }
 
   > div:nth-child(1) {
