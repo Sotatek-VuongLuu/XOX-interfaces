@@ -173,6 +173,8 @@ const Wrapper = styled.div`
             img {
               width: 28px;
             }
+
+            margin-right: 6px;
           }
       
           .email-icon {
