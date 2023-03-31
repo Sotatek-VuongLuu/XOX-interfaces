@@ -162,6 +162,7 @@ const First = styled.div`
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
   padding: 24px;
+  position: relative;
 
   @media screen and (max-width: 900px) {
     padding: 19px;

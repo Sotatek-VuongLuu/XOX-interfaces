@@ -229,7 +229,7 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 900px) {
     margin-bottom: unset;
-    margin-top: 200px;
+    margin-top: 20px;
     .title {
       flex-direction: column;
       justify-content: center;
@@ -248,17 +248,17 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 576px) {
     margin-bottom: unset;
-    margin-top: 150px;
+    margin-top: 0px;
   }
 
   @media screen and (max-width: 415px) {
     margin-bottom: unset;
-    margin-top: 140px;
+    margin-top: 0px;
   }
 
   @media screen and (max-width: 400px) {
     margin-bottom: unset;
-    margin-top: 130px;
+    margin-top: 0px;
   }
 
   .coin-block {
