@@ -277,6 +277,7 @@ const LeftContent = styled.div`
 
     @media screen and (max-width: 576px) {
       grid-template-columns: 0.75fr 0.4fr;
+      margin-bottom: 12px;
     }
 
     @media screen and (max-width: 400px) {
