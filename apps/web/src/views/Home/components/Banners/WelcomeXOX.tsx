@@ -41,6 +41,9 @@ const Wrapper = styled.div`
       left: unset;
       width: 100%;
       height: 280px;
+      top: 0;
+      position: absolute;
+      
       transform: scale(1.5);
     }
   }
@@ -680,7 +683,14 @@ const WelcomeXOX = (): JSX.Element => {
 
             <div className="video-container">
               <div className="overlay"></div>
-              <video autoPlay loop muted>
+              <video
+                loop
+                playsInline
+                autoPlay={true}
+                controls={false}
+                preload='auto'
+                style={{ pointerEvents: 'none' }}
+              >
                 <source src="/videos/home/laptop_project.mp4" type="video/mp4"></source>
               </video>
             </div>

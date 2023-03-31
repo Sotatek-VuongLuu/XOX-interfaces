@@ -86,6 +86,21 @@ const WrapperI = styled.div`
       border-radius: 10px;
       background: rgba(16, 16, 16, 0.3);
       backdrop-filter: blur(10px);
+      height: 100%;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        z-index: -1;
+      }
 
       .data-box {
         display: flex;
@@ -95,21 +110,6 @@ const WrapperI = styled.div`
         width: 100%;
         height: 100%;
         border-radius: inherit;
-
-        &:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          border-radius: inherit;
-          padding: 1px;
-          background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          mask-composite: exclude;
-        }
       }
     }
   }
@@ -246,11 +246,23 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 576px) {
     margin-bottom: unset;
+    margin-top: 260px;
+  }
+
+  @media screen and (max-width: 415px) {
+    margin-bottom: unset;
+    margin-top: 140px;
+  }
+
+  @media screen and (max-width: 400px) {
+    margin-bottom: unset;
+    margin-top: 180px;
   }
 
   .coin-block {
     display: flex;
     justify-content: center;
+    position: relative;
 
     .coin-box {
       display: grid;
