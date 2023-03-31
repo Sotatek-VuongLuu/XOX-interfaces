@@ -36,11 +36,11 @@ const Wrapper = styled.div`
     @media screen and (max-width: 900px) {
       width: 100%;
       height: auto;
-      left: 0;
+      left: unset;
     }
 
     @media screen and (max-width: 576px) {
-      left: 0;
+      left: unset;
       width: 100%;
       height: 250px;
       top: 0;
@@ -664,7 +664,7 @@ const WelcomeXOX = (): JSX.Element => {
                 >
                   <div className="popover-coin">
                     <div className="coin-info">
-                      <img src="/images/home/hero/xox.svg" alt="xox" />
+                      <img src="/images/home/hero/bsc.svg" alt="bsc" />
                       <div className="coin-data">
                         <p className="title">HECO</p>
                         <p className="description">0x64ff...428a2fd</p>

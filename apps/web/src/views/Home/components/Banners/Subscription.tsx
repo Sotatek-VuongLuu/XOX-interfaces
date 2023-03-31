@@ -186,7 +186,7 @@ const Wrapper = styled.div`
               width: 28px;
             }
 
-            margin-right: 12px;
+            margin-right: 6px;
           }
       
           .email-icon {
@@ -315,7 +315,7 @@ const Subscription = () => {
               onMouseOver={handleMouseOver}
             />
             <button type="submit" className={'btn-submit ' + btnHoverClass}>
-              <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <svg width="30" height="30" viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M6.75 15.3066H24.25"
                   stroke="#515151"
