@@ -99,7 +99,7 @@ export default function TokenomicsPage() {
         .unix(LAUNCH_APP_TIME)
         .add(6 * i, 'months')
         .unix()
-      const title = moment.unix(time).format('MMM DD YY')
+      const title = moment.unix(time).format('MMM DD YYYY')
       data.push({ time, title, amount: 0 })
     }
     return data
@@ -361,6 +361,16 @@ export default function TokenomicsPage() {
 
     return defaultTop
   }, [width])
+
+  const handleExpandXAxis = () => {
+    const newXAxis = handleRenderXAxis().map((item) => item.title)
+
+    const timePrefix = moment.unix(LAUNCH_APP_TIME).subtract(3, 'days').format('')
+
+    console.log(`timePrefix`, timePrefix)
+  }
+
+  handleExpandXAxis()
 
   const TVS_CHART_OPTION: EChartsOption = {
     title: { show: false },
