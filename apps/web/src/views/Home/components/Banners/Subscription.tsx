@@ -4,9 +4,10 @@
 /* eslint-disable prefer-template */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
 import { useTranslation } from '@pancakeswap/localization'
-import useWindowSize from 'hooks/useWindowSize'
-import { useState } from 'react'
+import { useToast } from '@pancakeswap/uikit'
+import { useCallback, useState } from 'react'
 import styled from 'styled-components'
+import axios from 'axios'
 
 const Wrapper = styled.div`
   margin-top: 100px;
@@ -52,6 +53,7 @@ const Wrapper = styled.div`
             -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
             -webkit-transition-delay: 9999s;
         }
+        border: 2px solid transparent;
   
         input {
           background: transparent;
@@ -89,7 +91,7 @@ const Wrapper = styled.div`
         }
       }
 
-      .hover-form {
+      .subscription-form.hover-form {
         border: 2px solid #FB8618;
       }
   
@@ -244,6 +246,7 @@ const Subscription = () => {
   const [btnHoverClass, setBtnHoverClass] = useState<string>('')
   const [emailErrorClass, setEmailErrorClass] = useState<string>('')
   const [textErrorClass, setTextErrorClass] = useState<string>('')
+  const { toastSuccess, toastError } = useToast()
 
   const handleChange = (event) => {
     const email = event.target.value
@@ -268,7 +271,7 @@ const Subscription = () => {
     return reg.test(email)
   }
 
-  const handleMouseOut = (event) => { 
+  const handleBlur = () => {
     setEmailBorderClass('')
     setBtnHoverClass('')
     if (inputValue.length == 0) {
@@ -277,10 +280,27 @@ const Subscription = () => {
     }
   }
 
-  const handleMouseOver = (event) => {
+  const handleFocus = () => {
     setEmailBorderClass(' hover-form')
     setBtnHoverClass(' hover-button')
   }
+
+  const handleBtnSubmit = useCallback(() => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/subscribe`, { email: inputValue })
+      .then(() => {
+        toastSuccess(t('Subscribed successfully.'))
+      })
+      .catch((error) => {
+        console.log(error.response)
+        if (error.response.status === 400) {
+          toastSuccess(t('The email is already registered.'))
+          return
+        }
+
+        toastError(t('System error'))
+      })
+  }, [inputValue])
 
   return (
     <Wrapper>
@@ -307,14 +327,14 @@ const Subscription = () => {
               type="text"
               id="email"
               name="email"
-              placeholder="Your email"
+              placeholder={t('Your email')}
               required
               value={inputValue}
               onChange={handleChange}
-              onMouseOut={handleMouseOut}
-              onMouseOver={handleMouseOver}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
             />
-            <button type="submit" className={'btn-submit ' + btnHoverClass}>
+            <button onClick={handleBtnSubmit} type="button" className={'btn-submit ' + btnHoverClass}>
               <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M6.75 15.3066H24.25"
@@ -334,7 +354,7 @@ const Subscription = () => {
             </button>
           </form>
           <span className={'hidden-text' + textErrorClass}>
-            <p>Invalid email address</p>
+            <p>{t('Invalid email address')}</p>
           </span>
         </div>
       </div>

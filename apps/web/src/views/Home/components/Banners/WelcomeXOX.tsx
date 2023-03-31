@@ -30,9 +30,7 @@ const Wrapper = styled.div`
     top: 0;
     left: -90px;
     width: 50vw;
-    height: 50vh 
-    
-    @media screen and (max-width: 900px) {
+    height: 50vh @media screen and (max-width: 900px) {
       width: 100%;
       height: auto;
       left: 0;
@@ -644,7 +642,7 @@ const WelcomeXOX = (): JSX.Element => {
                       button={<img src="/images/home/hero/copy.svg" alt="copy" style={{ marginTop: '3px' }} />}
                     />
                     <button
-                      style={{ border: 'none', background: 'none', padding: 0 }}
+                      style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
                       onClick={() => {
                         window.ethereum.request({
                           method: 'wallet_watchAsset',
@@ -663,7 +661,7 @@ const WelcomeXOX = (): JSX.Element => {
                       <img src="/images/home/hero/shield.svg" alt="shield" />
                     </button>
                     <button
-                      style={{ border: 'none', background: 'none', padding: 0 }}
+                      style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
                       onClick={() => {
                         window.ethereum.request({
                           method: 'wallet_watchAsset',
@@ -727,7 +725,7 @@ const WelcomeXOX = (): JSX.Element => {
                         button={<img src="/images/home/hero/copy.svg" alt="copy" style={{ marginTop: '7px' }} />}
                       />
                       <button
-                        style={{ border: 'none', background: 'none', padding: 0 }}
+                        style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
                         onClick={() => {
                           window.ethereum.request({
                             method: 'wallet_watchAsset',
@@ -746,7 +744,7 @@ const WelcomeXOX = (): JSX.Element => {
                         <img src="/images/home/hero/shield.svg" alt="shield" />
                       </button>
                       <button
-                        style={{ border: 'none', background: 'none', padding: 0 }}
+                        style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
                         onClick={() => {
                           window.ethereum.request({
                             method: 'wallet_watchAsset',
