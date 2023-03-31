@@ -700,7 +700,7 @@ const WelcomeXOX = (): JSX.Element => {
                 preload='auto'
                 style={{ pointerEvents: 'none' }}
               >
-                <source src="/videos/home/laptop_project.mp4" type="video/mp4"></source>
+                <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
               </video>
             </div>
           </Grid>
