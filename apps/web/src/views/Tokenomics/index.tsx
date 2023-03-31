@@ -414,10 +414,6 @@ export default function TokenomicsPage() {
       type: 'category',
       boundaryGap: false,
       data: handleExpandXAxis(),
-      nameTextStyle: {
-        fontSize: 8,
-        color: 'red',
-      },
     },
     yAxis: { type: 'value', show: false },
     series: [

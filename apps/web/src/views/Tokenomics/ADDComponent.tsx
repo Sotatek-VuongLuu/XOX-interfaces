@@ -152,9 +152,15 @@ export default function ADDComponent() {
         type: 'pie',
         radius: ['35%', '74%'],
         itemStyle: { borderWidth: 3, borderColor: '#fff' },
-        label: { show: !(width < 1080), formatter: (param) => `${param.percent}%`, color: '#ffffff', fontSize: 14 },
+        label: {
+          show: !(width < 1200),
+          formatter: (param) => `${param.percent}%`,
+          color: '#ffffff',
+          fontSize: 14,
+          width: 100,
+        },
         labelLine: {
-          show: !(width < 1080),
+          show: !(width < 1200),
         },
         data: [...AAD_DATA_L, ...AAD_DATA_R].map((item) => ({
           name: item.title,
