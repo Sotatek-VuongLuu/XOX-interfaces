@@ -31,14 +31,16 @@ const Wrapper = styled.div`
     top: 0;
     left: -90px;
     width: 50vw;
-    height: 50vh @media screen and (max-width: 900px) {
+    height: 50vh 
+    
+    @media screen and (max-width: 900px) {
       width: 100%;
       height: auto;
-      left: unset;
+      left: 0;
     }
 
     @media screen and (max-width: 576px) {
-      left: unset;
+      left: 0;
       width: 100%;
       height: 280px;
       top: 0;
@@ -303,6 +305,7 @@ const LeftContent = styled.div`
         line-height: 17px;
         font-weight: 700;
         cursor: pointer;
+        align-items: center;
       }
 
       button {
@@ -319,6 +322,7 @@ const LeftContent = styled.div`
       padding: 9px 6px;
       margin-top: 24px;
       justify-content: space-around;
+      align-items: center;
 
       span {
         color: rgba(255, 255, 255, 0.87);
