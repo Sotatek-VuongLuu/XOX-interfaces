@@ -186,7 +186,7 @@ const Wrapper = styled.div`
               width: 28px;
             }
 
-            margin-right: 6px;
+            margin-right: 12px;
           }
       
           .email-icon {
