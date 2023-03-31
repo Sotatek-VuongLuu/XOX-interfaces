@@ -94,7 +94,7 @@ export default function TokenomicsPage() {
 
   const handleRenderXAxis = (): IDataOBJReturn[] => {
     const data = []
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 17; i++) {
       const time = moment
         .unix(LAUNCH_APP_TIME)
         .add(6 * i, 'months')
@@ -161,7 +161,7 @@ export default function TokenomicsPage() {
 
   const handleRenderSeedSale = () => {
     const dataSeedSale: number[] = [360000]
-    for (let index = 0; index < 15; index++) {
+    for (let index = 0; index < 16; index++) {
       const element = 3240000
       dataSeedSale.push(element)
     }
@@ -261,8 +261,6 @@ export default function TokenomicsPage() {
       })
     }
 
-    console.log(`dataAmount`, dataAmount)
-
     for (let i = 0; i < mileStone.length; i++) {
       const itemTime = mileStone[i].time
       for (let index = 0; index < dataAmount.length; index++) {
@@ -279,8 +277,6 @@ export default function TokenomicsPage() {
       }
     })
 
-    console.log(`indexOfHasAmountField`, indexOfHasAmountField)
-
     for (let index = 0; index < indexOfHasAmountField.length; index++) {
       const { id, amount: amountReal } = indexOfHasAmountField[index]
       for (let i = id; i < mileStone.length; i++) {
@@ -289,8 +285,6 @@ export default function TokenomicsPage() {
     }
     return mileStone
   }
-
-  console.log(`getDataYearlyWithTEG`, getDataYearlyWithTEG(18000000, 10, 20))
 
   const ADDRESS: Array<IAddress> = [
     {
@@ -380,6 +374,21 @@ export default function TokenomicsPage() {
       textStyle: { color: '#FFFFFFDE', fontSize: 14, fontWeight: 'normal' },
       icon: 'roundRect',
     },
+    color: [
+      '#D8D8D8',
+      '#969696',
+      '#BAFFBF',
+      '#86B6FF',
+      '#50817C',
+      '#64C6BA',
+      '#FFB547',
+      '#FB8618',
+      '#FF5353',
+      '#C20DA3',
+      '#A964C9',
+      '#3D8AFF',
+      'pink',
+    ],
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -405,79 +414,79 @@ export default function TokenomicsPage() {
         ...defaultOptionTVS,
         name: 'Team allocation',
         data: getDataYearly(12600000, 20, 5).map((item) => item.amount),
-        areaStyle: { color: '#BAFFBF' },
+        areaStyle: { color: '#D8D8D8' },
       },
       {
         ...defaultOptionTVS,
         name: 'Company Reserve',
         data: getDataYearly(27000000, 25, 4).map((item) => item.amount),
-        areaStyle: { color: '#86B6FF' },
+        areaStyle: { color: '#969696' },
       },
       {
         ...defaultOptionTVS,
         name: 'Strategic Partnership',
         data: getDataYearly(9000000, 20, 5).map((item) => item.amount),
-        areaStyle: { color: '#64C6BA' },
+        areaStyle: { color: '#BAFFBF' },
       },
       {
         ...defaultOptionTVS,
         name: 'Ecosystem Growth',
         data: getDataYearly(36000000, 25, 4).map((item) => item.amount),
-        areaStyle: { color: '#3D8AFF' },
+        areaStyle: { color: '#86B6FF' },
       },
       {
         ...defaultOptionTVS,
         name: 'Community Rewards',
         data: getDataYearly(1800000, 20, 5).map((item) => item.amount),
-        areaStyle: { color: '#A964C9' },
+        areaStyle: { color: '#50817C' },
       },
       {
         ...defaultOptionTVS,
         name: 'XOX labs Foundation',
         data: getDataYearly(5400000, 20, 5).map((item) => item.amount),
-        areaStyle: { color: '#C20DA3' },
+        areaStyle: { color: '#64C6BA' },
       },
       {
         ...defaultOptionTVS,
         name: 'LP Farming',
-        data: [220, 302, 181, 234, 210, 290, 150],
-        areaStyle: { color: '#FF5353' },
+        data: getDataYearlyWithTEG(18000000, 10, 20).map((item) => item.amount),
+        areaStyle: { color: '#FFB547' },
       },
       {
         ...defaultOptionTVS,
         name: 'Seed Sale',
         data: handleRenderSeedSale(),
-        areaStyle: { color: 'red' },
+        areaStyle: { color: '#FB8618' },
       },
       {
         ...defaultOptionTVS,
         name: 'Partners Sale',
         data: getDataMonthly(5400000, 30, 10).map((item) => item.amount),
-        areaStyle: { color: '#FFB547' },
+        areaStyle: { color: '#FF5353' },
       },
       {
         ...defaultOptionTVS,
         name: 'Private Sale',
         data: getDataMonthly(10800000, 60, 10).map((item) => item.amount),
-        areaStyle: { color: 'yellow' },
+        areaStyle: { color: '#C20DA3' },
       },
       {
         ...defaultOptionTVS,
         name: 'Public Sale',
         data: getDataMonthly(18000000, 60, 40).map((item) => item.amount),
-        areaStyle: { color: 'green' },
+        areaStyle: { color: '#A964C9' },
       },
       {
         ...defaultOptionTVS,
         name: 'Liquidity Pools DEX',
         data: getLiquidityPool(14400000).map((item) => item.amount),
-        areaStyle: { color: 'white' },
+        areaStyle: { color: '#3D8AFF' },
       },
       {
         ...defaultOptionTVS,
         name: 'CEX Listing',
         data: getDataMonthly(18000000, 60, 40).map((item) => item.amount),
-        areaStyle: { color: 'purple' },
+        areaStyle: { color: 'pink' },
       },
     ],
   }

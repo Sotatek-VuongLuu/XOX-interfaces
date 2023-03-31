@@ -128,7 +128,7 @@ export default function ADDComponent() {
     {
       title: 'CEX Listing',
       content: [`${new BigNumber(18000000).toFormat()} Tokens`, 'TGE = 40% then 10% Monthly Release'],
-      color: '#3D8AFF',
+      color: 'pink',
       value: 18000000,
     },
   ]
