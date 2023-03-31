@@ -1,3 +1,5 @@
+import { useMemo } from 'react'
+import useWindowSize from 'hooks/useWindowSize'
 import { BTNLearnMore } from 'views/Company'
 import ReactECharts from 'echarts-for-react'
 import { EChartsOption, SeriesOption } from 'echarts'
@@ -16,6 +18,7 @@ import {
   StyledAddress,
   StyledCertik,
   StyledTVS,
+  ContainnerStyledF2,
 } from './styled'
 import ADDComponent from './ADDComponent'
 
@@ -38,9 +41,12 @@ function BG() {
 }
 
 function Address({ addr, ...props }: { addr: IAddress }) {
+  const { width } = useWindowSize()
   const { asset, logo, name, address, text } = addr
-  const prefixAddress = address?.substring(0, address.length - 5) || ''
-  const suffixAddress = address?.substring(address.length - 5, address.length) || ''
+  const prefixAddress = address?.substring(0, 4) || ''
+  const suffixAddress = address?.substring(address.length - 21, address.length) || ''
+
+  const suffixAddressMobile = address?.substring(address.length - 8, address.length) || ''
 
   function copy() {
     if (text || !address) return
@@ -57,9 +63,10 @@ function Address({ addr, ...props }: { addr: IAddress }) {
           {!text && !address && <p>...</p>}
           {text && !address && <p>{text}</p>}
           {!text && address && (
-            <div>
+            <div style={{ textDecoration: 'underline' }}>
               <p>{prefixAddress}</p>
-              <p>{suffixAddress}</p>
+              <p>...</p>
+              {width < 490 ? <p>{suffixAddressMobile}</p> : <p>{suffixAddress}</p>}
             </div>
           )}
         </div>
@@ -77,22 +84,23 @@ function Address({ addr, ...props }: { addr: IAddress }) {
 interface IDataOBJReturn {
   time: number
   title: string
-  amountPerYear: number
+  amount: number
   id?: number
 }
 
 export default function TokenomicsPage() {
+  const { width } = useWindowSize()
   const LAUNCH_APP_TIME = 1679850000 /// (seconds) can change
 
   const handleRenderXAxis = (): IDataOBJReturn[] => {
     const data = []
-    for (let i = 0; i < 16; i++) {
+    for (let i = 0; i < 17; i++) {
       const time = moment
         .unix(LAUNCH_APP_TIME)
         .add(6 * i, 'months')
         .unix()
       const title = moment.unix(time).format('MMM DD YY')
-      data.push({ time, title, amountPerYear: 0 })
+      data.push({ time, title, amount: 0 })
     }
     return data
   }
@@ -100,17 +108,159 @@ export default function TokenomicsPage() {
   /// 0% at TGE and yearly
   const getDataYearly = (totalAmount: number, percentPerYear: number, inYear: number) => {
     const mileStone: IDataOBJReturn[] = handleRenderXAxis()
-    const dataAmount = []
+    const dataAmount: IDataOBJReturn[] = []
     const period = (totalAmount * percentPerYear) / 100
     for (let i = 1; i <= inYear; i++) {
       const time = moment.unix(LAUNCH_APP_TIME).add(i, 'year').unix()
-      const amountPerYear = period * i
+      const amount = period * i
       dataAmount.push({
         time,
         title: moment.unix(time).format('MMM DD YY'),
-        amountPerYear,
+        amount,
       })
     }
+    const dataMapping = handleMapping(mileStone, dataAmount)
+    const indexOfHasAmountField = handleRetunId(dataMapping)
+    const finalData = handleformatData(dataMapping, indexOfHasAmountField)
+    return finalData
+  }
+
+  const handleRetunId = (dataMapping: IDataOBJReturn[]): IDataOBJReturn[] => {
+    const indexOfHasAmountField = []
+    dataMapping.forEach((item, index) => {
+      if (item.amount > 0) {
+        indexOfHasAmountField.push({ id: index, ...item })
+      }
+    })
+    return indexOfHasAmountField
+  }
+
+  const handleMapping = (mileStone: IDataOBJReturn[], dataAmountMapping: IDataOBJReturn[]): IDataOBJReturn[] => {
+    const cloneData = [...mileStone]
+    for (let i = 0; i < cloneData.length; i++) {
+      const itemTime = cloneData[i].time
+      for (let index = 0; index < dataAmountMapping.length; index++) {
+        if (itemTime === dataAmountMapping[index].time) {
+          cloneData[i] = dataAmountMapping[index]
+        }
+      }
+    }
+    return cloneData
+  }
+
+  const handleformatData = (mileStone: IDataOBJReturn[], indexOfHasAmountField: IDataOBJReturn[]) => {
+    const cloneData = [...mileStone]
+    for (let index = 0; index < indexOfHasAmountField.length; index++) {
+      const { id, amount: amountReal } = indexOfHasAmountField[index]
+      for (let i = id; i < cloneData.length; i++) {
+        cloneData[i].amount = amountReal
+      }
+    }
+    return cloneData
+  }
+
+  const handleRenderSeedSale = () => {
+    const dataSeedSale: number[] = [360000]
+    for (let index = 0; index < 16; index++) {
+      const element = 3240000
+      dataSeedSale.push(element)
+    }
+    return dataSeedSale
+  }
+
+  ///  percent at TGE and release percent monthly
+  const getDataMonthly = (totalAmount: number, percentPerHalfYear: number, percentInit: number) => {
+    const mileStone: IDataOBJReturn[] = handleRenderXAxis()
+    const initReleaseAtTGE = (totalAmount * percentInit) / 100
+    mileStone[0].amount = initReleaseAtTGE
+    const dataAmount: IDataOBJReturn[] = []
+    const percentRest = 100 - percentInit
+    const isNOTindivisible = percentRest % percentPerHalfYear === 0
+    const everySixMonths = Math.ceil(percentRest / percentPerHalfYear)
+    const period = (totalAmount * percentPerHalfYear) / 100
+    let plus = initReleaseAtTGE
+
+    if (isNOTindivisible) {
+      for (let i = 1; i <= everySixMonths; i++) {
+        const time = moment
+          .unix(LAUNCH_APP_TIME)
+          .add(i * 6, 'months')
+          .unix()
+        const amountPerHalfYear = period + plus
+        plus = amountPerHalfYear
+        dataAmount.push({
+          time,
+          title: moment.unix(time).format('MMM DD YY'),
+          amount: amountPerHalfYear,
+        })
+      }
+    }
+    if (!isNOTindivisible) {
+      for (let i = 1; i <= everySixMonths; i++) {
+        const time = moment
+          .unix(LAUNCH_APP_TIME)
+          .add(i * 6, 'months')
+          .unix()
+        const amountPerHalfYear = period + plus
+        if (i % 2 === 0) {
+          dataAmount.push({
+            time,
+            title: moment.unix(time).format('MMM DD YY'),
+            amount: totalAmount,
+          })
+        } else {
+          dataAmount.push({
+            time,
+            title: moment.unix(time).format('MMM DD YY'),
+            amount: amountPerHalfYear,
+          })
+        }
+      }
+    }
+    const dataMapping = handleMapping(mileStone, dataAmount)
+    const indexOfHasAmountField = handleRetunId(dataMapping)
+    const finalData = handleformatData(dataMapping, indexOfHasAmountField)
+    return finalData
+  }
+
+  const getLiquidityPool = (totalAmount: number) => {
+    const mileStone: IDataOBJReturn[] = handleRenderXAxis()
+    const dataAmount: IDataOBJReturn[] = []
+    const time = moment.unix(LAUNCH_APP_TIME).add(60, 'months').unix()
+    dataAmount.push({
+      time,
+      title: moment.unix(time).format('MMM DD YY'),
+      amount: totalAmount,
+    })
+
+    const dataMapping = handleMapping(mileStone, dataAmount)
+    const indexOfHasAmountField = handleRetunId(dataMapping)
+    const finalData = handleformatData(dataMapping, indexOfHasAmountField)
+    return finalData
+  }
+  /// percent% at TGE and yearly
+  const getDataYearlyWithTEG = (totalAmount: number, percentPerYear: number, percentInit: number) => {
+    const mileStone: IDataOBJReturn[] = handleRenderXAxis()
+    const dataAmount: IDataOBJReturn[] = []
+    const initReleaseAtTGE = (totalAmount * percentInit) / 100
+    mileStone[0].amount = initReleaseAtTGE
+    const period = (totalAmount * percentPerYear) / 100
+    const percentRest = 100 - percentInit
+    const everyYear = Math.ceil(percentRest / percentPerYear)
+
+    let plus = initReleaseAtTGE
+
+    for (let i = 1; i <= everyYear; i++) {
+      const time = moment.unix(LAUNCH_APP_TIME).add(i, 'year').unix()
+      const amountPerYear = period + plus
+      plus = amountPerYear
+      dataAmount.push({
+        time,
+        title: moment.unix(time).format('MMM DD YY'),
+        amount: amountPerYear,
+      })
+    }
+
     for (let i = 0; i < mileStone.length; i++) {
       const itemTime = mileStone[i].time
       for (let index = 0; index < dataAmount.length; index++) {
@@ -119,25 +269,21 @@ export default function TokenomicsPage() {
         }
       }
     }
+
     const indexOfHasAmountField = []
     mileStone.forEach((item, index) => {
-      if (item.amountPerYear > 0) {
+      if (item.amount > 0) {
         indexOfHasAmountField.push({ id: index, ...item })
       }
     })
-    const finalData = handleformatData(mileStone, indexOfHasAmountField)
-    return finalData
-  }
 
-  const handleformatData = (mileStone: IDataOBJReturn[], indexOfHasAmountField: IDataOBJReturn[]) => {
-    const cloneData = [...mileStone]
     for (let index = 0; index < indexOfHasAmountField.length; index++) {
-      const { id, amountPerYear: amountPerYearReal } = indexOfHasAmountField[index]
-      for (let i = id; i < cloneData.length; i++) {
-        cloneData[i].amountPerYear = amountPerYearReal
+      const { id, amount: amountReal } = indexOfHasAmountField[index]
+      for (let i = id; i < mileStone.length; i++) {
+        mileStone[i].amount = amountReal
       }
     }
-    return cloneData
+    return mileStone
   }
 
   const ADDRESS: Array<IAddress> = [
@@ -187,11 +333,40 @@ export default function TokenomicsPage() {
     lineStyle: { width: 0 },
     emphasis: { focus: 'self' },
   }
+
+  const controllBottom = useMemo(() => {
+    let defaultBottom = 100
+
+    if (width < 968) {
+      defaultBottom = 150
+    }
+
+    if (width < 852) {
+      defaultBottom = 300
+    }
+
+    return defaultBottom
+  }, [width])
+
+  const controllTop = useMemo(() => {
+    let defaultTop = 340
+
+    if (width < 968) {
+      defaultTop = 260
+    }
+
+    if (width < 852) {
+      defaultTop = 230
+    }
+
+    return defaultTop
+  }, [width])
+
   const TVS_CHART_OPTION: EChartsOption = {
     title: { show: false },
     legend: {
-      type: 'scroll',
-      bottom: 0,
+      type: 'plain',
+      top: controllTop,
       align: 'left',
       itemGap: 16,
       itemWidth: 20,
@@ -199,6 +374,21 @@ export default function TokenomicsPage() {
       textStyle: { color: '#FFFFFFDE', fontSize: 14, fontWeight: 'normal' },
       icon: 'roundRect',
     },
+    color: [
+      '#D8D8D8',
+      '#969696',
+      '#BAFFBF',
+      '#86B6FF',
+      '#50817C',
+      '#64C6BA',
+      '#FFB547',
+      '#FB8618',
+      '#FF5353',
+      '#C20DA3',
+      '#A964C9',
+      '#3D8AFF',
+      'pink',
+    ],
     tooltip: {
       trigger: 'axis',
       axisPointer: {
@@ -212,7 +402,7 @@ export default function TokenomicsPage() {
       textStyle: { color: '#FFFFFFDE' },
     },
     toolbox: { feature: { saveAsImage: { show: false } } },
-    grid: { top: 0, left: 0, right: 0, containLabel: true },
+    grid: { top: 0, left: -49, right: 0, bottom: controllBottom, containLabel: true },
     xAxis: {
       type: 'category',
       boundaryGap: false,
@@ -222,58 +412,82 @@ export default function TokenomicsPage() {
     series: [
       {
         ...defaultOptionTVS,
-        name: 'Seed Round',
-        data: getDataYearly(12600000, 20, 5).map((item) => item.amountPerYear),
+        name: 'Team allocation',
+        data: getDataYearly(12600000, 20, 5).map((item) => item.amount),
+        areaStyle: { color: '#D8D8D8' },
+      },
+      {
+        ...defaultOptionTVS,
+        name: 'Company Reserve',
+        data: getDataYearly(27000000, 25, 4).map((item) => item.amount),
+        areaStyle: { color: '#969696' },
+      },
+      {
+        ...defaultOptionTVS,
+        name: 'Strategic Partnership',
+        data: getDataYearly(9000000, 20, 5).map((item) => item.amount),
         areaStyle: { color: '#BAFFBF' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Round 1 Sale',
-        data: getDataYearly(27000000, 25, 4).map((item) => item.amountPerYear),
+        name: 'Ecosystem Growth',
+        data: getDataYearly(36000000, 25, 4).map((item) => item.amount),
         areaStyle: { color: '#86B6FF' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Round 2 Sale',
-        data: getDataYearly(9000000, 20, 5).map((item) => item.amountPerYear),
+        name: 'Community Rewards',
+        data: getDataYearly(1800000, 20, 5).map((item) => item.amount),
+        areaStyle: { color: '#50817C' },
+      },
+      {
+        ...defaultOptionTVS,
+        name: 'XOX labs Foundation',
+        data: getDataYearly(5400000, 20, 5).map((item) => item.amount),
         areaStyle: { color: '#64C6BA' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Team Fund',
-        data: getDataYearly(36000000, 25, 4).map((item) => item.amountPerYear),
-        areaStyle: { color: '#3D8AFF' },
+        name: 'LP Farming',
+        data: getDataYearlyWithTEG(18000000, 10, 20).map((item) => item.amount),
+        areaStyle: { color: '#FFB547' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Marketing Fund',
-        data: getDataYearly(1800000, 20, 5).map((item) => item.amountPerYear),
+        name: 'Seed Sale',
+        data: handleRenderSeedSale(),
+        areaStyle: { color: '#FB8618' },
+      },
+      {
+        ...defaultOptionTVS,
+        name: 'Partners Sale',
+        data: getDataMonthly(5400000, 30, 10).map((item) => item.amount),
+        areaStyle: { color: '#FF5353' },
+      },
+      {
+        ...defaultOptionTVS,
+        name: 'Private Sale',
+        data: getDataMonthly(10800000, 60, 10).map((item) => item.amount),
+        areaStyle: { color: '#C20DA3' },
+      },
+      {
+        ...defaultOptionTVS,
+        name: 'Public Sale',
+        data: getDataMonthly(18000000, 60, 40).map((item) => item.amount),
         areaStyle: { color: '#A964C9' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Reserve Fund',
-        data: getDataYearly(5400000, 20, 5).map((item) => item.amountPerYear),
-        areaStyle: { color: '#C20DA3' },
+        name: 'Liquidity Pools DEX',
+        data: getLiquidityPool(14400000).map((item) => item.amount),
+        areaStyle: { color: '#3D8AFF' },
       },
-      // {
-      //   ...defaultOptionTVS,
-      //   name: 'Staking Rewards',
-      //   data: [220, 302, 181, 234, 210, 290, 150],
-      //   areaStyle: { color: '#FF5353' },
-      // },
-      // {
-      //   ...defaultOptionTVS,
-      //   name: 'Ecosystem',
-      //   data: [220, 302, 181, 234, 210, 290, 150],
-      //   areaStyle: { color: '#FB8618' },
-      // },
-      // {
-      //   ...defaultOptionTVS,
-      //   name: 'Liquidity Allocation',
-      //   data: [220, 302, 181, 234, 210, 290, 150],
-      //   areaStyle: { color: '#FFB547' },
-      // },
+      {
+        ...defaultOptionTVS,
+        name: 'CEX Listing',
+        data: getDataMonthly(18000000, 60, 40).map((item) => item.amount),
+        areaStyle: { color: 'pink' },
+      },
     ],
   }
 
@@ -370,11 +584,13 @@ export default function TokenomicsPage() {
 
         <StyledTitle>Contract Address</StyledTitle>
 
-        <StyledF2>
-          {ADDRESS.map((item, index) => (
-            <Address addr={item} key={String(item.asset + index)} />
-          ))}
-        </StyledF2>
+        <ContainnerStyledF2>
+          <StyledF2>
+            {ADDRESS.map((item, index) => (
+              <Address addr={item} key={String(item.asset + index)} />
+            ))}
+          </StyledF2>
+        </ContainnerStyledF2>
 
         <StyledCertik>
           <img src="/images/tokenomics/certik.svg" alt="" draggable="false" loading="lazy" />

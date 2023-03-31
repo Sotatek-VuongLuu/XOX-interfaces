@@ -378,11 +378,17 @@ export const Dot = styled('span')`
   }
 `
 
+export const ContainnerStyledF2 = styled.div`
+  display: flex;
+  justify-content: center;
+`
+
 export const StyledF2 = styled('div')`
   display: flex;
   flex-direction: column;
   gap: 16px;
   margin-bottom: 64px;
+  width: 1189px;
 
   ${({ theme }) => theme.mediaQueries.lg} {
     margin-bottom: 80px;
@@ -846,7 +852,10 @@ export const StyledTVS = styled(StyledCard)`
   }
 
   > div:nth-child(1) {
-    height: 525px !important;
+    height: 500px !important;
+    @media screen and (min-width: 852px) {
+      height: 400px !important;
+    }
   }
 
   > div:nth-child(2) {

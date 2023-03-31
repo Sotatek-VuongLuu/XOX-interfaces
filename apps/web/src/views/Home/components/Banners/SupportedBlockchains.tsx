@@ -87,6 +87,8 @@ const WrapperI = styled.div`
       background: rgba(16, 16, 16, 0.3);
       backdrop-filter: blur(10px);
       height: 100%;
+      position: relative;
+      
       &:before {
         content: '';
         position: absolute;

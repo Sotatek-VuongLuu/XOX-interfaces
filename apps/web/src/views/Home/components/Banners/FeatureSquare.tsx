@@ -30,6 +30,7 @@ const WrapperI = styled.div`
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
   border-radius: 20px;
+  position: relative;
 
   &:before {
     content: '';
