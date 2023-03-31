@@ -474,7 +474,7 @@ function CardSocial({ social, ...props }: { social: ISocial }) {
         </div>
         <div>
           <h4 className="social_name">{social.name}</h4>
-          <p>
+          <p style={{ whiteSpace: 'nowrap' }}>
             <span>•</span>
             {social.link} <img src="/images/company/ArrowUpRight.svg" alt="" draggable="false" loading="lazy" />
           </p>
@@ -517,7 +517,7 @@ export default function CompanyPage() {
     { icon: '/images/company/3.svg', name: 'Bridge', link: 'Bridge Now', heft: '/bridge-token' },
     { icon: '/images/company/4.svg', name: 'Stable Coin', link: 'Stake Now', heft: '/stable-coin' },
     { icon: '/images/company/5.svg', name: 'Liquidity Mining', link: 'Earn Now', heft: '/liquidity' },
-    { icon: '/images/company/6.svg', name: 'Yield farming', link: 'Earn Now', heft: '#' },
+    { icon: '/images/company/6.svg', name: 'Yield farming', link: 'Earn Now', heft: '/pools' },
     { icon: '/images/company/7.svg', name: 'Assets Manager', link: 'Explore Now ', heft: '/info' },
     { icon: '/images/company/1.svg', name: 'XOX Dex V2', link: 'Best Rates on DeFi', heft: '#' },
     { icon: '/images/company/8.svg', name: 'XOX Mobile App', link: 'Your Defi Key ', heft: '#' },
