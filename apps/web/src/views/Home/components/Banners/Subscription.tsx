@@ -139,6 +139,10 @@ const Wrapper = styled.div`
     font-size: 16px;
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 48px;
+
+    @media screen and (max-width: 576px) {
+      font-size: 14px;
+    }
   }
 
   .privacy-link {
