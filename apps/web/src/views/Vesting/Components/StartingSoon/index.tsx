@@ -279,7 +279,7 @@ function StartingSoon({
     if (infoRoundOne.startDate < time && time < infoRoundOne.endDate) {
       return (
         <>
-          <p className="title">XOX Token is on sale</p>
+          <p className="title">XOX TOKEN SALE IS LIVE!</p>
           <p className="notice">Sale 1 will end on {moment.unix(infoRoundOne.endDate / 1000).format('DD/MM/YYYY')}.</p>
           {handleCountdownArg(infoRoundOne.endDate)}
         </>
@@ -302,7 +302,7 @@ function StartingSoon({
       if (infoRoundTow.startDate <= time && time < infoRoundTow.endDate) {
         return (
           <>
-            <p className="title">XOX Token is on sale</p>
+            <p className="title">XOX TOKEN SALE IS LIVE!</p>
             <p className="notice">
               Sale 2 will end on {moment.unix(infoRoundTow.endDate / 1000).format('DD/MM/YYYY')}.
             </p>
@@ -327,7 +327,7 @@ function StartingSoon({
       if (infoRoundThree.startDate <= time && time < infoRoundThree.endDate) {
         return (
           <>
-            <p className="title">XOX Token is on sale</p>
+            <p className="title">XOX TOKEN SALE IS LIVE!</p>
             <p className="notice">
               Sale 3 will end on {moment.unix(infoRoundThree.endDate / 1000).format('DD/MM/YYYY')}.
             </p>

@@ -181,10 +181,17 @@ const Wrapper = styled.div<IPropsWrapper>`
 const Content = styled.div`
   .tab-mechanism {
     display: flex;
+    width: fit-content;
     color: white;
     cursor: pointer;
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
     justify-content: center;
+    background: #131313;
+    border-radius: 30px;
+
+    > div:nth-child(even) {
+      margin: 0px 8px;
+    }
 
     .item-tab-mechanism {
       font-weight: 700;
@@ -192,16 +199,18 @@ const Content = styled.div`
       line-height: 17px;
       color: #ffffff;
       padding: 10px 20px;
-      margin-right: 8px;
+      /* margin-right: 8px; */
       border-radius: 8px;
       white-space: nowrap;
       &:hover {
         background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+        border-radius: 30px;
       }
     }
 
     .item-tab-mechanism.active {
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      border-radius: 30px;
     }
 
     @media screen and (max-width: 1200px) {
@@ -309,20 +318,22 @@ function SaleMechanism({
       <div className="corner2" />
       <div className="edge2" />
       <Content>
-        <div className="tab-mechanism">
-          {Array.from(tabSaleMechanism).map((item, index) => {
-            return (
-              <div
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
-                onClick={() => setTabActiveMechansim(item)}
-                aria-hidden="true"
-              >
-                {item}
-              </div>
-            )
-          })}
+        <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+          <div className="tab-mechanism">
+            {Array.from(tabSaleMechanism).map((item, index) => {
+              return (
+                <div
+                  // eslint-disable-next-line react/no-array-index-key
+                  key={index}
+                  className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
+                  onClick={() => setTabActiveMechansim(item)}
+                  aria-hidden="true"
+                >
+                  {item}
+                </div>
+              )
+            })}
+          </div>
         </div>
         <div className="body">{renderBody}</div>
       </Content>

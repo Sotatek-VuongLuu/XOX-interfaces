@@ -293,7 +293,7 @@ const initStat: Start[] = [
   },
   {
     id: 2,
-    title: 'XOX amount bought',
+    title: 'Total XOX Sold',
     amount: '',
     field: 'xox_amount_bought',
     decimal: 18,
@@ -693,7 +693,7 @@ function VestingPage() {
         toastSuccess(
           `Claimed XOX`,
           <ToastDescriptionWithTx txHash={txHash.transactionHash}>
-            {t('Your %symbol% invests have been sent to your wallet!', { symbol: 'XOX' })}
+            {t('Your %symbol% Tokens have been claimed and sent to your wallet!', { symbol: 'XOX' })}
           </ToastDescriptionWithTx>,
         )
       }
