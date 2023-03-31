@@ -33,11 +33,11 @@ const Wrapper = styled.div`
     height: 50vh @media screen and (max-width: 900px) {
       width: 100%;
       height: auto;
-      left: 0;
+      left: unset;
     }
 
     @media screen and (max-width: 576px) {
-      left: 0;
+      left: unset;
       width: 100%;
       height: 250px;
       top: 0;
@@ -707,7 +707,7 @@ const WelcomeXOX = (): JSX.Element => {
                 >
                   <div className="popover-coin">
                     <div className="coin-info">
-                      <img src="/images/home/hero/xox.svg" alt="xox" />
+                      <img src="/images/home/hero/bsc.svg" alt="bsc" />
                       <div className="coin-data">
                         <p className="title">Binance Smart Chain (BSC)</p>
                         <p className="description">{`${XOX_ADDRESS[chainId == 97 ? chainId : 56].substring(
