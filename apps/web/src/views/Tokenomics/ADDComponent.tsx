@@ -1,6 +1,7 @@
 import ReactECharts from 'echarts-for-react'
 import { Ref, useEffect, useRef, useState } from 'react'
 import { BTNLearnMore } from 'views/Company'
+import useWindowSize from 'hooks/useWindowSize'
 import { EChartsOption, SeriesOption } from 'echarts'
 import BigNumber from 'bignumber.js'
 import { StyledAAD, StyledItemAAD, StyledTitle } from './styled'
@@ -47,6 +48,7 @@ function AADItem({
 
 export default function ADDComponent() {
   const AADChart = useRef<ReactECharts>()
+  const { width } = useWindowSize()
 
   const AAD_DATA_L: Array<IAAD> = [
     {
@@ -149,8 +151,11 @@ export default function ADDComponent() {
         name: 'Access From',
         type: 'pie',
         radius: ['35%', '74%'],
-        // itemStyle: { borderWidth: 3, borderColor: '#fff' },
-        label: { formatter: (param) => `${param.percent}%`, color: '#ffffff', fontSize: 14 },
+        itemStyle: { borderWidth: 3, borderColor: '#fff' },
+        label: { show: !(width < 1080), formatter: (param) => `${param.percent}%`, color: '#ffffff', fontSize: 14 },
+        labelLine: {
+          show: !(width < 1080),
+        },
         data: [...AAD_DATA_L, ...AAD_DATA_R].map((item) => ({
           name: item.title,
           value: item.value,
