@@ -224,7 +224,7 @@ const Wrapper = styled.div`
 
 const Subscription = () => {
   const { t } = useTranslation()
-  const [inputValue, setInputValue] = useState<any>(null)
+  const [inputValue, setInputValue] = useState<string>('')
   const [emailValid, setEmailValid] = useState(true)
   const [emailBorderClass, setEmailBorderClass] = useState<string>('')
   const [btnHoverClass, setBtnHoverClass] = useState<string>('')
@@ -254,9 +254,13 @@ const Subscription = () => {
     return reg.test(email)
   }
 
-  const handleMouseOut = (event) => {
+  const handleMouseOut = (event) => { 
     setEmailBorderClass('')
     setBtnHoverClass('')
+    if (inputValue.length == 0) {
+      setTextErrorClass('')
+      setEmailErrorClass('')
+    }
   }
 
   const handleMouseOver = (event) => {
