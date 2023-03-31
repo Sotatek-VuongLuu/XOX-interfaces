@@ -42,7 +42,7 @@ const Wrapper = styled.div`
     @media screen and (max-width: 576px) {
       left: 0;
       width: 100%;
-      height: 280px;
+      height: 250px;
       top: 0;
       position: absolute;
       
