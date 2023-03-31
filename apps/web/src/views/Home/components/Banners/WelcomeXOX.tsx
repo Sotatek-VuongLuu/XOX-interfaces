@@ -2,14 +2,13 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
 import styled from 'styled-components'
-import { Box, Grid, Popover, Typography } from '@mui/material'
-import { useRouter } from 'next/router'
+import { Box, Grid, Popover } from '@mui/material'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
-import useWindowSize from 'hooks/useWindowSize'
-import { useEffect } from 'react'
-import { Application } from '@splinetool/runtime'
 import React from 'react'
 import { useTranslation } from '@pancakeswap/localization'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { CopyButton } from '@pancakeswap/uikit'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -45,7 +44,7 @@ const Wrapper = styled.div`
       height: 280px;
       top: 0;
       position: absolute;
-      
+
       transform: scale(1.5);
     }
   }
@@ -520,6 +519,7 @@ const CustomPopover = styled(Popover)`
 const WelcomeXOX = (): JSX.Element => {
   const { t } = useTranslation()
   const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
+  const { chainId } = useActiveChainId()
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
@@ -565,12 +565,15 @@ const WelcomeXOX = (): JSX.Element => {
               </Description>
               <div className="grid-button">
                 <div>
-                  <Button className="btn_read_doc" onClick={() => window.open('')}>
+                  <Button className="btn_read_doc" onClick={() => window.open('/whitepaper')}>
                     {t('Read Documentation')}
                   </Button>
                 </div>
                 <div>
-                  <a href="/swap" target="_blank">
+                  <a
+                    href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
+                    target="_blank"
+                  >
                     <div className="get_xox">
                       <div className="boxed-child">
                         <span>{t('Get %symbol%', { symbol: 'XOX' })}</span>
@@ -597,7 +600,7 @@ const WelcomeXOX = (): JSX.Element => {
                 </div>
 
                 <div>
-                  <a href="/chart" target="_blank">
+                  <a href="/info" target="_blank">
                     <div className="chart">
                       <div className="bg-button">
                         <p>{t('Chart')}</p>
@@ -618,20 +621,62 @@ const WelcomeXOX = (): JSX.Element => {
 
                     {isDesktop && (
                       <>
-                        <span>ETH:</span>
+                        <span style={{ display: 'flex', alignItems: 'center' }}>ETH:</span>
                         <input
                           type="text"
                           id="email"
                           name="email"
                           placeholder=""
-                          value="0xA...C6bf853a0a8ad7f"
+                          value={`${XOX_ADDRESS[chainId == 5 ? chainId : 1].substring(0, 8)}...${XOX_ADDRESS[
+                            chainId == 5 ? chainId : 1
+                          ].substring(XOX_ADDRESS[chainId == 5 ? chainId : 1].length - 4)}`}
                           required
                         />
                       </>
                     )}
-                    <img src="/images/home/hero/copy.svg" alt="copy" />
-                    <img src="/images/home/hero/shield.svg" alt="shield" />
-                    <img src="/images/home/hero/wolf.svg" alt="wolf" />
+                    <CopyButton
+                      text={XOX_ADDRESS[chainId == 5 ? chainId : 1]}
+                      tooltipMessage={t('Copied')}
+                      button={<img src="/images/home/hero/copy.svg" alt="copy" style={{ marginTop: '3px' }} />}
+                    />
+                    <button
+                      style={{ border: 'none', background: 'none', padding: 0 }}
+                      onClick={() => {
+                        window.ethereum.request({
+                          method: 'wallet_watchAsset',
+                          params: {
+                            type: 'ERC20',
+                            options: {
+                              address: XOX_ADDRESS[chainId == 5 ? chainId : 1],
+                              symbol: 'XOX',
+                              decimals: 18,
+                              image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
+                            },
+                          },
+                        })
+                      }}
+                    >
+                      <img src="/images/home/hero/shield.svg" alt="shield" />
+                    </button>
+                    <button
+                      style={{ border: 'none', background: 'none', padding: 0 }}
+                      onClick={() => {
+                        window.ethereum.request({
+                          method: 'wallet_watchAsset',
+                          params: {
+                            type: 'ERC20',
+                            options: {
+                              address: XOX_ADDRESS[chainId == 5 ? chainId : 1],
+                              symbol: 'XOX',
+                              decimals: 18,
+                              image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
+                            },
+                          },
+                        })
+                      }}
+                    >
+                      <img src="/images/home/hero/wolf.svg" alt="wolf" />
+                    </button>
                   </div>
                 </div>
                 {/* <div className="more-btn">
@@ -662,14 +707,59 @@ const WelcomeXOX = (): JSX.Element => {
                     <div className="coin-info">
                       <img src="/images/home/hero/xox.svg" alt="xox" />
                       <div className="coin-data">
-                        <p className="title">HECO</p>
-                        <p className="description">0x64ff...428a2fd</p>
+                        <p className="title">Binance Smart Chain (BSC)</p>
+                        <p className="description">{`${XOX_ADDRESS[chainId == 97 ? chainId : 56].substring(
+                          0,
+                          8,
+                        )}...${XOX_ADDRESS[chainId == 97 ? chainId : 56].substring(
+                          XOX_ADDRESS[chainId == 97 ? chainId : 56].length - 4,
+                        )}`}</p>
                       </div>
                     </div>
                     <div className="coin-buttons">
-                      <img src="/images/home/hero/copy.svg" alt="copy" />
-                      <img src="/images/home/hero/shield.svg" alt="shield" />
-                      <img src="/images/home/hero/wolf.svg" alt="wolf" />
+                      <CopyButton
+                        text={XOX_ADDRESS[chainId == 97 ? chainId : 56]}
+                        tooltipMessage={t('Copied')}
+                        button={<img src="/images/home/hero/copy.svg" alt="copy" style={{ marginTop: '7px' }} />}
+                      />
+                      <button
+                        style={{ border: 'none', background: 'none', padding: 0 }}
+                        onClick={() => {
+                          window.ethereum.request({
+                            method: 'wallet_watchAsset',
+                            params: {
+                              type: 'ERC20',
+                              options: {
+                                address: XOX_ADDRESS[chainId == 97 ? chainId : 56],
+                                symbol: 'XOX',
+                                decimals: 18,
+                                image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
+                              },
+                            },
+                          })
+                        }}
+                      >
+                        <img src="/images/home/hero/shield.svg" alt="shield" />
+                      </button>
+                      <button
+                        style={{ border: 'none', background: 'none', padding: 0 }}
+                        onClick={() => {
+                          window.ethereum.request({
+                            method: 'wallet_watchAsset',
+                            params: {
+                              type: 'ERC20',
+                              options: {
+                                address: XOX_ADDRESS[chainId == 97 ? chainId : 56],
+                                symbol: 'XOX',
+                                decimals: 18,
+                                image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
+                              },
+                            },
+                          })
+                        }}
+                      >
+                        <img src="/images/home/hero/wolf.svg" alt="wolf" />
+                      </button>
                     </div>
                   </div>
                 </CustomPopover>
@@ -687,14 +777,7 @@ const WelcomeXOX = (): JSX.Element => {
 
             <div className="video-container">
               <div className="overlay"></div>
-              <video
-                loop
-                playsInline
-                autoPlay={true}
-                controls={false}
-                preload='auto'
-                style={{ pointerEvents: 'none' }}
-              >
+              <video loop playsInline autoPlay={true} controls={false} preload="auto" style={{ pointerEvents: 'none' }}>
                 <source src="/videos/home/laptop_project.mp4" type="video/mp4"></source>
               </video>
             </div>
