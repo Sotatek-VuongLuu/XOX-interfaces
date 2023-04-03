@@ -29,9 +29,9 @@ const Wrapper = styled.div`
     z-index: -1;
     top: 0;
     left: -90px;
-    width: 50vw;
-    height: 50vh;
-    transform: scale(1.5); 
+    width: 45vw;
+    height: auto;
+    transform: scale(1.2);
     
     @media screen and (max-width: 900px) {
       width: 100%;
