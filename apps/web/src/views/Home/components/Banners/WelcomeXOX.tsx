@@ -30,8 +30,9 @@ const Wrapper = styled.div`
     top: 0;
     left: -90px;
     width: 50vw;
-    height: 48vh;
-
+    height: 50vh;
+    transform: scale(1.5); 
+    
     @media screen and (max-width: 900px) {
       width: 100%;
       height: auto;
@@ -781,9 +782,17 @@ const WelcomeXOX = (): JSX.Element => {
             {/* {isDesktop && <canvas id="canvas3d_pc" />} */}
 
             <div className="video-container">
-              <div className="overlay" />
-              <video loop playsInline autoPlay controls={false} preload="auto" style={{ pointerEvents: 'none' }}>
-                <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4" />
+              <div className="overlay"></div>
+              <video
+                loop
+                playsInline
+                autoPlay
+                controls={false}
+                preload='auto'
+                style={{ pointerEvents: 'none' }}
+                muted
+              >
+                <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4"></source>
               </video>
             </div>
           </Grid>

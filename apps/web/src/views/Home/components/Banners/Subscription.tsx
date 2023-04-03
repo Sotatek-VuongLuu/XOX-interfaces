@@ -75,8 +75,8 @@ const Wrapper = styled.div`
   
         button {
           border: 0;
-          width: 60px;
-          height: 60px;
+          width: auto;
+          height: 100%;
           cursor: pointer;
           background: #1D1C1C;
     
@@ -181,15 +181,15 @@ const Wrapper = styled.div`
             line-height: 22px;
           }
       
-          button {
-            width: 32px;
-            height: 32px;
-            img {
-              width: 28px;
-            }
+          // button {
+          //   width: 32px;
+          //   height: 32px;
+          //   img {
+          //     width: 28px;
+          //   }
 
-            margin-right: 6px;
-          }
+          //   margin-right: 6px;
+          // }
       
           .email-icon {
             width: 19px;
@@ -212,17 +212,17 @@ const Wrapper = styled.div`
             font-size: 16px;
           }
       
-          button {
-            border: 0;
-            width: 32px;
-            height: 32px;
-            cursor: pointer;
-            background: #1D1C1C;
+          // button {
+          //   border: 0;
+          //   width: 32px;
+          //   height: 32px;
+          //   cursor: pointer;
+          //   background: #1D1C1C;
       
-            img {
-              width: 32px;
-            }
-          }
+          //   img {
+          //     width: 32px;
+          //   }
+          // }
       
           .email-icon {
             width: 16px;
