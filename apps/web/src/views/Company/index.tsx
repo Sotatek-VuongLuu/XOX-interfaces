@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import { Box } from '@pancakeswap/uikit'
 import ReactPlayer from 'react-player'
 import styled from 'styled-components'
@@ -485,45 +486,48 @@ function CardSocial({ social, ...props }: { social: ISocial }) {
 }
 
 export function BTNLearnMore() {
+  const { t } = useTranslation()
   return (
     <StyledLearnMore>
-      <h1>Learn More about the XOX labs Multi-chain Ecosystem.</h1>
+      <h1>{t('Learn More about the XOX labs Multi-chain Ecosystem.')}</h1>
 
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
       <a href="#" target="_blank" rel="noreferrer">
-        Learn More
+        {t('Learn More')}
       </a>
     </StyledLearnMore>
   )
 }
 
 export default function CompanyPage() {
+  const { t } = useTranslation()
+
   const MEMBERS: Array<IMember> = [
-    { avatar: '/images/company/Livan G.M.png', name: 'Livan G.M', position: 'Chief Operating Officer' },
-    { avatar: '/images/company/Zayn.png', name: 'Zayn', position: 'Chief Marketing Officer' },
-    { avatar: '/images/company/Marcos.png', name: 'Marcos', position: 'Chief Legal Officer' },
-    { avatar: '/images/company/Edward.png', name: 'Edward', position: 'Lead Designer' },
-    { avatar: '/images/company/Ralph Edwards.png', name: 'Ralph Edwards', position: 'SC Developer' },
-    { avatar: '/images/company/Floyd Miles.png', name: 'Floyd Miles', position: 'Front-end Developer' },
-    { avatar: '/images/company/Albert Flores.png', name: 'Albert Flores', position: 'Front-end Developer' },
-    { avatar: '/images/company/Eleanor Pena.png', name: 'Eleanor Pena', position: 'Back-end Developer' },
-    { avatar: '/images/company/Ronald Richards.png', name: 'Ronald Richards', position: 'Tester' },
-    { avatar: '/images/company/Courtney Henry.png', name: 'Courtney Henry', position: 'Product Manager' },
+    { avatar: '/images/company/Livan G.M.png', name: 'Livan G.M', position: t('Chief Operating Officer') },
+    { avatar: '/images/company/Zayn.png', name: 'Zayn', position: t('Chief Marketing Officer') },
+    { avatar: '/images/company/Marcos.png', name: 'Marcos', position: t('Chief Legal Officer') },
+    { avatar: '/images/company/Edward.png', name: 'Edward', position: t('Lead Designer') },
+    { avatar: '/images/company/Ralph Edwards.png', name: 'Ralph Edwards', position: t('SC Developer') },
+    { avatar: '/images/company/Floyd Miles.png', name: 'Floyd Miles', position: t('Front-end Developer') },
+    { avatar: '/images/company/Albert Flores.png', name: 'Albert Flores', position: t('Front-end Developer') },
+    { avatar: '/images/company/Eleanor Pena.png', name: 'Eleanor Pena', position: t('Back-end Developer') },
+    { avatar: '/images/company/Ronald Richards.png', name: 'Ronald Richards', position: t('Tester') },
+    { avatar: '/images/company/Courtney Henry.png', name: 'Courtney Henry', position: t('Product Manager') },
   ]
 
   const SOCIALS: Array<ISocial> = [
-    { icon: '/images/company/1.svg', name: 'XOX Dex V1', link: 'Trade Now', heft: '#' },
-    { icon: '/images/company/2.svg', name: 'Referral Program ', link: 'Earn Now', heft: '/referral' },
-    { icon: '/images/company/3.svg', name: 'Bridge', link: 'Bridge Now', heft: '/bridge-token' },
-    { icon: '/images/company/4.svg', name: 'Stable Coin', link: 'Stake Now', heft: '/stable-coin' },
-    { icon: '/images/company/5.svg', name: 'Liquidity Mining', link: 'Earn Now', heft: '/liquidity' },
-    { icon: '/images/company/6.svg', name: 'Yield farming', link: 'Earn Now', heft: '/pools' },
-    { icon: '/images/company/7.svg', name: 'Assets Manager', link: 'Explore Now ', heft: '/info' },
-    { icon: '/images/company/1.svg', name: 'XOX Dex V2', link: 'Best Rates on DeFi', heft: '#' },
-    { icon: '/images/company/8.svg', name: 'XOX Mobile App', link: 'Your Defi Key ', heft: '#' },
-    { icon: '/images/company/9.svg', name: 'XOX Launchpad', link: 'Invest Now', heft: '/vesting' },
-    { icon: '/images/company/10.svg', name: 'Coin Listing Site', link: 'Don’t Miss Out', heft: '#' },
-    { icon: '/images/company/11.svg', name: 'Lottery Game ', link: 'Risk Small - Earn Big ', heft: '#' },
+    { icon: '/images/company/1.svg', name: t('XOX Dex V1'), link: t('Trade Now'), heft: '#' },
+    { icon: '/images/company/2.svg', name: t('Referral Program'), link: t('Earn Now'), heft: '/referral' },
+    { icon: '/images/company/3.svg', name: t('Bridge'), link: t('Bridge Now'), heft: '/bridge-token' },
+    { icon: '/images/company/4.svg', name: t('Stable Coin'), link: t('Stake Now'), heft: '/stable-coin' },
+    { icon: '/images/company/5.svg', name: t('Liquidity Mining'), link: t('Earn Now'), heft: '/liquidity' },
+    { icon: '/images/company/6.svg', name: t('Yield farming'), link: t('Earn Now'), heft: '/pools' },
+    { icon: '/images/company/7.svg', name: t('Assets Manager'), link: t('Explore Now'), heft: '/info' },
+    { icon: '/images/company/1.svg', name: t('XOX Dex V2'), link: t('Best Rates on DeFi'), heft: '#' },
+    { icon: '/images/company/8.svg', name: t('XOX Mobile App'), link: t('Your Defi Key'), heft: '#' },
+    { icon: '/images/company/9.svg', name: t('XOX Launchpad'), link: t('Invest Now'), heft: '/vesting' },
+    { icon: '/images/company/10.svg', name: t('Coin Listing Site'), link: t('Don’t Miss Out'), heft: '#' },
+    { icon: '/images/company/11.svg', name: t('Lottery Game'), link: t('Risk Small - Earn Big'), heft: '#' },
   ]
 
   return (
@@ -552,10 +556,11 @@ export default function CompanyPage() {
       </StyledHeader>
 
       <StyledSectionText style={{ marginBottom: 40 }}>
-        <h3>Build to Inspire</h3>
+        <h3>{t('Build to Inspire')}</h3>
         <p>
-          XOX Protocol is The Next Generation Multi-chain DeFi Dapps & Web3 Solutions Provider. An Ecosystem Built to
-          Provide Sustainability, Decentralization, Scalability & Transparency to the Space.
+          {t(
+            'XOX Protocol is The Next Generation Multi-chain DeFi Dapps & Web3 Solutions Provider. An Ecosystem Built to Provide Sustainability, Decentralization, Scalability & Transparency to the Space.',
+          )}
         </p>
       </StyledSectionText>
 
@@ -564,11 +569,11 @@ export default function CompanyPage() {
       </Box>
 
       <StyledSectionText style={{ marginBottom: 40 }}>
-        <h3>XOX Labs Core Team</h3>
+        <h3>{t('XOX Labs Core Team')}</h3>
         <p>
-          A highly qualified and professional team built to deliver top class DeFi products and support Web 3.0 mass
-          adoption. Our mission and vision is to create a self-sustainable decentralized ecosystem with multiple revenue
-          sources in every leading Blockchain.
+          {t(
+            'A highly qualified and professional team built to deliver top class DeFi products and support Web 3.0 mass adoption. Our mission and vision is to create a self-sustainable decentralized ecosystem with multiple revenue sources in every leading Blockchain.',
+          )}
         </p>
       </StyledSectionText>
 
@@ -578,8 +583,10 @@ export default function CompanyPage() {
         ))}
       </StyledMembers>
 
-      <StyledTitle>XOX Labs Ecosystem Products</StyledTitle>
-      <StyledSubtitle style={{ marginBottom: 48 }}>A true one Multi-chain stop for all your Defi Needs.</StyledSubtitle>
+      <StyledTitle>{t('XOX Labs Ecosystem Products')}</StyledTitle>
+      <StyledSubtitle style={{ marginBottom: 48 }}>
+        {t('A true one Multi-chain stop for all your Defi Needs.')}
+      </StyledSubtitle>
 
       <StyledSocial marginBottom={[64, null, null, 100]}>
         {SOCIALS.map((social, i) => (

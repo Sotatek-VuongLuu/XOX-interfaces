@@ -519,7 +519,6 @@ export default function TokenomicsPage() {
           </div>
 
           <div>
-            <div />
             <video
               loop
               playsInline
