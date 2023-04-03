@@ -3,6 +3,7 @@ import { CheckmarkIcon, CloseIcon, ErrorIcon, Link, LinkExternal, OpenNewIcon } 
 import { getBlockExploreLink } from 'utils'
 import { TransactionDetails } from 'state/transactions/reducer'
 import CircleLoader from '../../Loader/CircleLoader'
+import { useTranslation } from '@pancakeswap/localization'
 
 const TransactionState = styled.div<{ pending: boolean; success?: boolean }>`
   display: flex;
@@ -50,7 +51,8 @@ export default function Transaction({
   chainId: number
   hiddenIcon?: boolean
 }) {
-  const summary = tx?.summary
+  const { t } = useTranslation()
+  const summary = tx?.translatableSummary ? t(tx.translatableSummary?.text, tx.translatableSummary?.data) : tx?.summary
   const pending = !tx?.receipt
   const success = !pending && tx && (tx.receipt?.status === 1 || typeof tx.receipt?.status === 'undefined')
 

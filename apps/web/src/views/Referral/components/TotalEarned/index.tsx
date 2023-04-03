@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
@@ -106,6 +107,7 @@ const Wrapper = styled.div`
   }
 `
 const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
+  const { t } = useTranslation()
   const { width } = useWindowSize()
   return (
     <Wrapper>
@@ -120,7 +122,7 @@ const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
           </>
         )}
       </div>
-      <p className="title">Total Earned By Referrals</p>
+      <p className="title">{t('Total Earned By Referrals')}</p>
 
       <p className="amount">
         <span className="dollar">$</span>
@@ -128,8 +130,9 @@ const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
       </p>
 
       <p className="guide">
-        This number represents the total value in $ earned so far by all referral users since day one till today. Start
-        Earning Now.
+        {t(
+          'This number represents the total value in $ earned so far by all referral users since day one till today. Start Earning Now.',
+        )}
       </p>
     </Wrapper>
   )

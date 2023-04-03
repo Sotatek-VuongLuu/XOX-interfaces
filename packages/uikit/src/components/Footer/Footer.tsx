@@ -20,6 +20,7 @@ import {
 } from "./styles";
 import { LogoWithTextIcon } from "../Svg";
 import { FooterProps } from "./types";
+import { useTranslation } from "@pancakeswap/localization";
 
 const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   items,
@@ -33,6 +34,8 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   windowSize,
   ...props
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Flex
       data-theme="dark"
@@ -64,8 +67,8 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
                 marginBottom="24px"
                 marginTop="24px"
               >
-                Managed by XOX Labs. <br />
-                Building the economy of the Future.
+                {t("Managed by XOX Labs.")} <br />
+                {t("Building the economy of the Future.")}
               </Text>
 
               <Flex
@@ -86,7 +89,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
               flexDirection={["column", null, "column"]}
               mb={["0", null, "36px"]}
             >
-              <SubTitleStyle>{item.label}</SubTitleStyle>
+              <SubTitleStyle>{t(item.label)}</SubTitleStyle>
               <StyledList key={item.label}>
                 {item.items?.map(({ label, href, isHighlighted = false, label2, icon, product }) => (
                   <StyledListItem key={label}>
@@ -100,7 +103,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
                         color={isHighlighted ? vars.colors.warning : "text"}
                         bold={false}
                       >
-                        {`${label} `}
+                        {`${t(label)} `}
                         {label2 && (
                           <>
                             <br />
@@ -129,7 +132,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
                       </Link>
                     ) : (
                       <>
-                        <StyledText>{`${label} `}</StyledText>
+                        <StyledText>{`${t(label)} `}</StyledText>
                         {label2 && (
                           <StyledText>
                             <br />
@@ -163,7 +166,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             color="rgba(255, 255, 255, 0.87)"
             textAlign="center"
           >
-            © {new Date().getFullYear()} XOX Labs. All Rights Reserved
+            © {new Date().getFullYear()} {t("XOX Labs. All Rights Reserved")}
           </Text>
         </Wrapper>
       </Flex>

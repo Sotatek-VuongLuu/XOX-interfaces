@@ -9,6 +9,7 @@ import SelectTokenButton from './SelectTokenButton'
 import { NETWORK_LABEL } from '../networks'
 import { getChainIdToByChainId } from '..'
 import { formatAmountNumber, formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
+import { useTranslation } from '@pancakeswap/localization'
 
 const Wrapper = styled.div`
   border-radius: 10px;
@@ -167,9 +168,10 @@ const AmountInput: React.FC<Props> = ({
   isShowDrop,
   handleShowDrop,
 }) => {
+  const { t } = useTranslation()
   const { chainId } = useActiveChainId()
   const getInputLabel = () => {
-    return (isTokenFrom && 'From') || 'To (est)'
+    return (isTokenFrom && t('From')) || t('To (estimated)')
   }
   const { isMobile } = useMatchBreakpoints()
 
@@ -183,7 +185,7 @@ const AmountInput: React.FC<Props> = ({
             className="balance_container"
             onClick={() => balance !== '-' && handleBalanceMax(balance)}
           >
-            Balance
+            {t('Balance')}
             {isMobile ? '' : ':'}
             <span className="balance">&nbsp;{formatAmountNumber2(balance, 6)}</span>
           </span>
@@ -191,7 +193,7 @@ const AmountInput: React.FC<Props> = ({
 
         {!isTokenFrom && (
           <span aria-hidden="true" className="balance_pool_container">
-            {NETWORK_LABEL[getChainIdToByChainId(chainId)]} Pool balance
+            {t('%chainname% Pool balance', { chainname: NETWORK_LABEL[getChainIdToByChainId(chainId)] })}
             {isMobile ? '' : ':'}
             <span className="balance_pool">&nbsp;{formatAmountNumber2(balance, 6)}</span>
           </span>

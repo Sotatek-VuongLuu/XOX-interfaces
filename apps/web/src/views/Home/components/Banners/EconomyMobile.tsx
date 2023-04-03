@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import styled, { keyframes } from 'styled-components'
 
 export const floatingAnim = (x: string, y: string) => keyframes`
@@ -26,7 +27,7 @@ const Wrapper = styled.div`
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: rgba(255, 255, 255, 0.87);
+      color: rgba(255, 255, 255, 0.6);
       margin-bottom: 40px;
       margin-top: 16px;
     }
@@ -68,15 +69,18 @@ const Wrapper = styled.div`
 `
 
 const EconomyMobile = () => {
+  const { t } = useTranslation()
+
   return (
     <Wrapper style={{ overflow: 'hidden' }}>
       <div className="title_container">
         <p className="title" data-aos="fade-right">
-          Built and Available on every leading blockchain.
+          {t('Built and Available on every leading blockchain.')}
         </p>
         <p className="description" data-aos="fade-left">
-          Creating A Truly Decentralized Multichain Ecosystem with Unlimited possibilities. Supporting Defi and Web3
-          global adoption for a better future.
+          {t(
+            'Creating A Truly Decentralized Multichain Ecosystem with Unlimited possibilities. Supporting Defi and Web3 global adoption for a better future.',
+          )}
         </p>
       </div>
       <div className="chain_container" data-aos="fade-right">

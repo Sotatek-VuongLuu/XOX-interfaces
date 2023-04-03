@@ -1,5 +1,6 @@
-import React from "react";
-import styled from "styled-components";
+import { useTranslation } from '@pancakeswap/localization'
+import React from 'react'
+import styled from 'styled-components'
 
 interface PropInput {
   messageAddress?: string
@@ -10,7 +11,7 @@ const Wrapper = styled.div`
   @media (max-width: 576px) {
     margin: 16px 0;
   }
-`;
+`
 
 const Text = styled.div`
   font-size: 14px;
@@ -19,14 +20,14 @@ const Text = styled.div`
   @media (max-width: 576px) {
     font-size: 12px;
   }
-`;
+`
 
 const Input = styled.input<PropInput>`
   width: 100%;
   background: transparent;
   padding: 10px 14px;
   outline: none;
-  border: 1px solid ${({theme}) => theme.colors.hr};
+  border: 1px solid ${({ theme }) => theme.colors.hr};
   border-radius: 6px;
   margin-top: 10px;
   font-size: 16px;
@@ -34,12 +35,12 @@ const Input = styled.input<PropInput>`
   box-shadow: none;
   height: 43px;
   margin-bottom: 5px;
-  :focus{
+  :focus {
     outline: none;
   }
-  &.error{
+  &.error {
     background: rgba(255, 112, 112, 0.1);
-    border-color: #FF7070;
+    border-color: #ff7070;
   }
   @media (max-width: 576px) {
     margin-top: 5px;
@@ -47,36 +48,33 @@ const Input = styled.input<PropInput>`
     height: 37px;
     border-radius: 4px;
   }
-`;
+`
 
 const ErrorMessage = styled.div`
   color: ${({ theme }) => theme.colors.error};
   font-size: 14px;
-`;
+`
 
 type Props = {
-  address: any;
-  handleAddressTo: any;
-  messageAddress: string;
-};
+  address: any
+  handleAddressTo: any
+  messageAddress: string
+}
 
-const AddressInput: React.FC<Props> = ({
-  address,
-  handleAddressTo,
-  messageAddress,
-}) => {
+const AddressInput: React.FC<Props> = ({ address, handleAddressTo, messageAddress }) => {
+  const { t } = useTranslation()
   return (
     <Wrapper>
-      <Text>To Address</Text>
+      <Text>{t('To Address')}</Text>
       <Input
         value={address}
         onChange={(e) => handleAddressTo(e.target.value)}
         messageAddress={messageAddress}
-        className={`${messageAddress?'error':''}`}
+        className={`${messageAddress ? 'error' : ''}`}
       />
       <ErrorMessage>{messageAddress}</ErrorMessage>
     </Wrapper>
-  );
-};
+  )
+}
 
-export default AddressInput;
+export default AddressInput

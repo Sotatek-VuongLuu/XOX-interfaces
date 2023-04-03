@@ -637,7 +637,7 @@ const TransactionsTable: React.FC = () => {
           color="rgba(255, 255, 255, 0.87)"
           height="24px"
         >
-          Transactions History
+          {t('Transactions History')}
         </Text>
       </Flex>
       <CustomTableWrapper className="transaction-table">
@@ -651,7 +651,7 @@ const TransactionsTable: React.FC = () => {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            No
+            {t('No')}
           </Text>
           <Text
             fontSize="16px"
@@ -662,7 +662,7 @@ const TransactionsTable: React.FC = () => {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Action
+            {t('Action')}
           </Text>
           <Text
             fontSize="16px"
@@ -673,7 +673,7 @@ const TransactionsTable: React.FC = () => {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Time
+            {t('Time')}
           </Text>
           <ClickableColumnHeader
             fontSize="16px"
@@ -686,7 +686,7 @@ const TransactionsTable: React.FC = () => {
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>Amount</span>{' '}
+              <span style={{ marginRight: '12px' }}>{t('Amount')}</span>{' '}
               {iconSortStable === null ? IconSort : iconSortStable ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>
@@ -826,30 +826,30 @@ const TransactionsTable: React.FC = () => {
               options={[
                 {
                   value: 5,
-                  label: '5/Page',
+                  label: t('%number%/Page', { number: 5 }),
                 },
                 {
                   value: 10,
-                  label: '10/Page',
+                  label: t('%number%/Page', { number: 10 }),
                 },
                 {
                   value: 20,
-                  label: '20/Page',
+                  label: t('%number%/Page', { number: 20 }),
                 },
                 {
                   value: 50,
-                  label: '50/Page',
+                  label: t('%number%/Page', { number: 50 }),
                 },
                 {
                   value: 100,
-                  label: '100/Page',
+                  label: t('%number%/Page', { number: 100 }),
                 },
               ]}
               onOptionChange={(option: any) => setPerPage(option.value)}
               className="select-page"
             />
             <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
-              Go to page
+              {t('Go to page')}
             </Text>
             <Input
               value={tempPage}

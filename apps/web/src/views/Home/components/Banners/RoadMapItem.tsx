@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import styled from 'styled-components'
 // eslint-disable-next-line import/no-cycle
 import { IRoadMapItem } from './RoadMap'
@@ -10,13 +11,13 @@ interface Iprops {
 const ContainerItem = styled.div`
   width: 326px;
   height: fit-content;
-  &.left{
-    &::before{
-      content: "";
+  &.left {
+    &::before {
+      content: '';
       display: inline-block;
       width: 15px;
       height: 3px;
-      background: #9072FF;
+      background: #8beac5;
       position: absolute;
       top: -1px;
       left: -27px;
@@ -33,7 +34,7 @@ const ContainerItem = styled.div`
     font-weight: 400;
     font-size: 16px;
     line-height: 160%;
-    color: #f2f2f2;
+    color: rgba(255, 255, 255, 0.6);
     overflow-wrap: break-word;
     width: 220px;
   }
@@ -55,7 +56,7 @@ const ContainerItem = styled.div`
   }
 
   .time {
-    color: #9072ff;
+    color: #8beac5;
   }
 
   .margin_top {
@@ -83,7 +84,7 @@ const LineNotDone = styled.div`
   transform: translateY(50%);
   left: 0;
   position: absolute;
-  background: #5f35eb;
+  // background: #5f35eb;
 `
 
 const LineDash = styled.div`
@@ -92,7 +93,7 @@ const LineDash = styled.div`
   height: 3px;
   left: 0;
   position: absolute;
-  background-image: linear-gradient(to left, #9072ff 50%, black 50%);
+  background-image: linear-gradient(to left, #8beac5 50%, black 50%);
   background-position: top;
   background-size: 30px 3px;
   background-repeat: repeat-x;
@@ -105,6 +106,8 @@ const Wrapper = styled.div`
 `
 
 const RoadMapItem = ({ item, index }: Iprops) => {
+  const { t } = useTranslation()
+
   return (
     <Wrapper className={`timeline-item timeline-item-${index}`} data-aos={index % 2 === 0 ? `fade-down` : `fade-up`}>
       <ContainerItem className={index === 1 ? 'left' : ''}>
@@ -118,7 +121,7 @@ const RoadMapItem = ({ item, index }: Iprops) => {
         )}
         <Line className="line" />
         <div className="item__main-content">
-          <div className="title">{item.year}</div>
+          <div className="title">{t(item.year)}</div>
 
           <div className="item_main_content">
             {Array.from(item.describe).map((entry) => {
@@ -127,7 +130,7 @@ const RoadMapItem = ({ item, index }: Iprops) => {
                   <div>
                     <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
                   </div>
-                  <div className="describe">{entry}</div>
+                  <div className="describe">{t(entry)}</div>
                 </div>
               )
             })}

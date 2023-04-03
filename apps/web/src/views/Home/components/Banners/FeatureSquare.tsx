@@ -9,6 +9,9 @@ import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css' // optional
 import { Box, Grid } from '@mui/material'
 import { useRouter } from 'next/router'
+import { useTranslation } from '@pancakeswap/localization'
+import { useActiveChainId } from 'hooks/useActiveChainId'
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 
 // eslint-disable-next-line import/no-cycle
 
@@ -25,9 +28,27 @@ export interface ISquareItem {
 
 const WrapperI = styled.div`
   height: 100%;
-  background: #242424;
-  border-radius: 10px;
   padding: 24px 22px 32px;
+  background: rgba(16, 16, 16, 0.3);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  position: relative;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: 20px;
+    padding: 1px;
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+  }
 
   .main_container {
     display: flex;
@@ -40,17 +61,19 @@ const WrapperI = styled.div`
       width: fit-content;
       margin-top: 40px;
       border-radius: 8px;
-      background-image: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       cursor: pointer;
 
       .boxed-child {
         width: 100%;
         height: 100%;
-        background-color: #242424;
+        background: rgba(16, 16, 16, 1);
         padding: 10px 20px;
         border-radius: inherit;
+        cursor: pointer;
+
         span {
-          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+          background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
@@ -63,10 +86,14 @@ const WrapperI = styled.div`
           border-radius: inherit;
         }
       }
+
+      @media screen and (max-width: 576px) {
+        margin-top: 16px;
+      }
     }
 
     .expand {
-      color: #9072ff;
+      color: #fb8618;
       font-size: 14px;
       font-weight: 600;
     }
@@ -89,13 +116,13 @@ const Title = styled.p`
 const Description = styled.p`
   font-weight: 400;
   font-size: 14px;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.6);
   margin: 16px 0 0;
   line-height: 24px;
 `
 
 const Icon = styled.div`
-  background: linear-gradient(100.7deg, #6034ff 0%, #a35aff 100%);
+  background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   width: 48px;
   height: 48px;
   display: flex;
@@ -106,8 +133,9 @@ const Icon = styled.div`
 `
 
 const SquareItem = ({ item }: Iprops) => {
+  const { t } = useTranslation()
   const [isShowReadMore, setIsShow] = useState(item.description.length > 330)
-  const route = useRouter()
+
   return (
     <WrapperI className="item">
       <div className="main_container">
@@ -115,13 +143,17 @@ const SquareItem = ({ item }: Iprops) => {
           <Icon>
             <img src={item.icon} alt="icon" />
           </Icon>
-          <Title>{item.title}</Title>
+          <Title>{t(item.title)}</Title>
           <Description>
             {/* {item.description} */}
-            {isShowReadMore ? `${item.description.slice(0, 330)}...` : item.description}{' '}
-            {item.description.length > 330 ? (
+            {isShowReadMore ? `${t(item.description).slice(0, 330)}...` : t(item.description)}{' '}
+            {t(item.description).length > 330 ? (
               <span onClick={() => setIsShow(!isShowReadMore)} style={{ cursor: 'pointer' }}>
-                {isShowReadMore ? <span className="expand">Read more</span> : <span className="expand">Read less</span>}
+                {isShowReadMore ? (
+                  <span className="expand">{t('Read more')}</span>
+                ) : (
+                  <span className="expand">{t('Read less')}</span>
+                )}
               </span>
             ) : null}
           </Description>
@@ -129,7 +161,7 @@ const SquareItem = ({ item }: Iprops) => {
         <a href={item.link} target="_blank" rel="noreferrer">
           <div className="get_xox">
             <div className="boxed-child">
-              <span>Discover More</span>
+              <span>{t('Discover More')}</span>
             </div>
           </div>
         </a>
@@ -156,7 +188,7 @@ const Wrapper = styled.div`
       font-weight: 400;
       font-size: 16px;
       line-height: 24px;
-      color: rgba(255, 255, 255, 0.6);
+      color: #fb8618;
       width: 409px;
     }
   }
@@ -169,26 +201,63 @@ const Wrapper = styled.div`
       .heart {
         font-size: 20px;
         line-height: 32px;
+        text-align: center;
+        font-style: normal;
+        font-weight: 700;
+        font-size: 19px;
+        line-height: 32px;
       }
       .describe {
+        font-style: normal;
+        font-weight: 400;
         font-size: 14px;
         line-height: 24px;
         width: unset;
+        text-align: center;
       }
     }
   }
 `
 
 const FeatureSquare = () => {
+  const { t } = useTranslation()
+  const { chainId } = useActiveChainId()
+
+  const listSquare = [
+    {
+      icon: '/images/exchange.svg',
+      title: 'Revolutionary Multi-chain DEX with Dual Cash Back Rewards',
+      description:
+        'Our Multi-chain DEX platform offers a unique opportunity for users to earn dual cash back rewards for every transaction performed. Through our multi-token ecosystem and revolutionary referral program, users receive XOXS Stable Coins and USDT or USDC not only from their own transactions but also from every user transaction using their Referral Code. This provides an unprecedented level of rewards and incentives for our users, setting our platform apart from traditional DEXs.',
+      link: `/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`,
+    },
+    {
+      icon: '/images/wallet.svg',
+      title: 'Liquidity Provision and Reward System',
+      description:
+        'Our Liquidity Pool rewards system provides a win-win situation for users by allowing them to add liquidity and earn rewards. By contributing liquidity to a Liquidity Pool, users receive Liquidity Provider (LP) tokens and a share in the fees generated by traders. This incentivizes users to hold their assets in our platform while also supporting the project. Users can easily remove their liquidity at any time.',
+      link: '/liquidity',
+    },
+    {
+      icon: '/images/refferal.svg',
+      title: 'Gamified Referral Program with Dual USDT/USDC Rewards',
+      description:
+        'Our XOX Gamified Referral Program is the first of its kind and designed to give users cash-back rewards in USDT/USDC for every transaction performed using their referral code. The program is designed to be fun and interactive with a level system based on points. Users can earn points, level up, reach milestones, and claim their rewards in USDT or USDC. This innovative referral program sets our platform apart from traditional DEXs and provides an exciting way for users to earn additional rewards.',
+      link: '/referral',
+    },
+  ]
+
   return (
     <Wrapper>
       <div className="title" style={{ overflow: 'hidden' }}>
         <p className="heart" data-aos="fade-right">
-          The Heart of the XOX Ecosystem
+          {t('The Heart of the XOX Ecosystem')}
+          <span style={{ color: '#FB8618' }}>.</span>
         </p>
         <p className="describe" data-aos="fade-left">
-          Wide range of apps, utilities and solutions powering the protocol creating a True One-Stop Ecosystem for all
-          your DeFi needs.
+          {t(
+            'Wide range of apps, utilities and solutions powering the protocol creating a True One-Stop Ecosystem for all your DeFi needs.',
+          )}
         </p>
       </div>
 
@@ -206,29 +275,5 @@ const FeatureSquare = () => {
     </Wrapper>
   )
 }
-
-const listSquare = [
-  {
-    icon: '/images/exchange.svg',
-    title: 'Revolutionary Multichain DEX',
-    description:
-      'Not just swap for free, but get dual cash back for doing so. Our multi token ecosystem & revolutionary referral program is designed to reward you twice on every transaction you perform in our DEX, receiving XOXS Stable Coins & USDT or USDC not just from your transactions but from every user transactions using your Referral Code.',
-    link: '/swap',
-  },
-  {
-    icon: '/images/wallet.svg',
-    title: 'Add liquidity & Earn rewards',
-    description:
-      'By adding liquidity to a Liquidity Pool you will receive Liquidity Provider (LP) tokens and share in the fees generated by traders. This way you are not just earning while holding but also supporting the project. You can also redeem your funds at any time by removing your liquidity.',
-    link: '/liquidity',
-  },
-  {
-    icon: '/images/refferal.svg',
-    title: 'First Ever Gamified Referral Program With Dual USDT/USDC Rewards',
-    description:
-      'The XOX Gamified Referral Program is designed to give you cash-back like USDT/USDC rewards from every transaction that you or any other user applying your referral code perform in our DEX. To make it fun and interactive we have designed a level system based on points where the more points you get the more you earn. Basically you just need to earn points, level up, reach milestones and claim your rewards on USDT or USDC.',
-    link: 'referral',
-  },
-]
 
 export default FeatureSquare

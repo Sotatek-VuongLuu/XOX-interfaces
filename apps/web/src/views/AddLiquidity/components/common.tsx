@@ -311,11 +311,13 @@ export const AddLiquidityModalHeader = ({
       </CustomRowBetween>
       <CustomRowBetween className="estimated">
         <Text maxWidth="460px">
-          Output is estimated. If the price changes by more than {allowedSlippage / 100}% your transaction will revert
+          {t('Output is estimated. If the price changes by more than %slippage%% your transaction will revert.', {
+            slippage: allowedSlippage / 100,
+          })}
         </Text>
       </CustomRowBetween>
       <CustomRowBetween>
-        <Text className="text-left">{`${currencies[Field.CURRENCY_A]?.symbol} Deposited`}</Text>
+        <Text className="text-left">{t('%token% Deposited', { token: currencies[Field.CURRENCY_A]?.symbol })}</Text>
         <Flex className="logo">
           {currencies[Field.CURRENCY_A] && <CurrencyLogo currency={currencies[Field.CURRENCY_A]} />}
           <Text className="text-right" ml="8px">
@@ -324,7 +326,7 @@ export const AddLiquidityModalHeader = ({
         </Flex>
       </CustomRowBetween>
       <CustomRowBetween>
-        <Text className="text-left">{`${currencies[Field.CURRENCY_B]?.symbol} Deposited`}</Text>
+        <Text className="text-left">{t('%token% Deposited', { token: currencies[Field.CURRENCY_B]?.symbol })}</Text>
         <Flex className="logo">
           {currencies[Field.CURRENCY_B] && <CurrencyLogo currency={currencies[Field.CURRENCY_B]} />}
           <Text className="text-right" ml="8px">

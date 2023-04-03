@@ -10,6 +10,7 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { NETWORK_LABEL, NETWORK_LINK } from './networks'
 // eslint-disable-next-line import/no-cycle
 import { getChainIdToByChainId } from '.'
+import { useTranslation } from '@pancakeswap/localization'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -214,6 +215,7 @@ export function capitalizeFirstLetter(string) {
 }
 
 const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss }) => {
+  const { t } = useTranslation()
   const { account, chainId } = useActiveWeb3React()
   const [historyData, setHistoryData] = useState<Array<any>>([])
   const [loading, setLoading] = useState<boolean>(false)
@@ -254,10 +256,10 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
     const toAddress = to.toLowerCase()
     const accountReal = account.toLowerCase()
     if (fromAddress === accountReal && chainId === chainIdSender) {
-      return 'Sender'
+      return t('Sender')
       // eslint-disable-next-line no-else-return
     } else if (toAddress === accountReal && chainId !== chainIdSender) {
-      return 'Receiver'
+      return t('Receiver')
     }
   }
 
@@ -269,7 +271,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
 
   return (
     <StyledModalContainer>
-      <StyledModalHeader>Bridge Token History</StyledModalHeader>
+      <StyledModalHeader>{t('Bridge Token History')}</StyledModalHeader>
       <img
         src="/images/close-one.svg"
         alt="close-one"
@@ -288,18 +290,18 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
               <StyledTable>
                 <div className="table">
                   <div className="table-head">
-                    <p style={{ width: '3%' }}>No</p>
-                    <p style={{ width: '15%' }}>Input Transaction</p>
-                    <p style={{ width: '15%' }}>Input Amount</p>
-                    <p style={{ width: '15%' }}>Output Transaction</p>
-                    <p style={{ width: '15%' }}>Output Amount</p>
+                    <p style={{ width: '3%' }}>{t('No')}</p>
+                    <p style={{ width: '15%' }}>{t('Input Transaction')}</p>
+                    <p style={{ width: '15%' }}>{t('Input Amount')}</p>
+                    <p style={{ width: '15%' }}>{t('Output Transaction')}</p>
+                    <p style={{ width: '15%' }}>{t('Output Amount')}</p>
                     <p style={{ width: '11%' }} className="center">
-                      Type
+                      {t('Type')}
                     </p>
                     <p style={{ width: '11%' }} className="center">
-                      Status
+                      {t('Status')}
                     </p>
-                    <p style={{ width: '15%' }}> </p>
+                    <p style={{ width: '15%' }} />
                   </div>
                   <div className="table-row">
                     {[...historyData].map((row, index) => (
@@ -351,8 +353,8 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                             }
                           >
                             {row.status === 'processing' || row.status === 'excuting'
-                              ? 'Processing'
-                              : capitalizeFirstLetter(row.status === 'completed' ? 'Success' : row.status)}
+                              ? t('Processing')
+                              : capitalizeFirstLetter(row.status === 'completed' ? t('Success') : t(row.status))}
                           </div>
                         </div>
                         <div className="row-item" style={{ width: '15%' }}>
@@ -381,7 +383,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                     marginTop: '16px',
                   }}
                 >
-                  No transactions
+                  {t('No transactions')}
                 </p>
               </NoData>
             )}

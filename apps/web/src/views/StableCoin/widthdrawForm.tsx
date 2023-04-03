@@ -18,6 +18,7 @@ import ConfirmSwapModal from '../Swap/components/ConfirmSwapModal'
 import StableCoinModal from './StableCoinModal'
 // eslint-disable-next-line import/no-cycle
 import { formatNumberDecimal } from './index'
+import { useTranslation } from '@pancakeswap/localization'
 
 const WrapForm = styled.div`
   padding: 60px 0;
@@ -74,7 +75,7 @@ const BoxRight = styled.div`
     padding: 0 15px;
     height: 44px;
     font-size: 16px;
-    padding-right: 80px;
+    padding-right: 90px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
     border: 1px solid rgba(255, 255, 255, 0.2);
@@ -228,6 +229,7 @@ const ButtonRight = styled(Button)`
 `
 
 const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; onSuccess?: any }) => {
+  const { t } = useTranslation()
   const [withdrawErrorMessage, setWithdrawErrorMessage] = useState('')
   const [priceState, setPriceState] = useState<any>(priceAvailable)
   const inputRef = useRef(null)
@@ -282,7 +284,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
     addTransaction(response)
     setTimeout(() => {
       toastSuccess(
-        'Transaction receipt',
+        t('Transaction receipt'),
         <ToastDescriptionWithTx txHash={response?.hash} txChainId={response?.chainId} />,
       )
       inputRef.current.value = ''
@@ -297,7 +299,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
     const estimatedGas: any = await contractTreasuryXOX.estimateGas
       .claimFarmingReward(fullDecimalWithdrawAmount.toString())
       .catch((err) => {
-        toastError('Error', 'Can not estimate gas')
+        toastError('Error', t('Can not estimate gas'))
       })
 
     onPresentConfirmModal()
@@ -311,12 +313,12 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
       .catch((error: any) => {
         setTxHas('')
         onDismissModal()
-        setWithdrawErrorMessage('Transaction rejected.')
+        setWithdrawErrorMessage(t('Transaction rejected.'))
         setPending(false)
         if (error?.code === 'ACTION_REJECTED' || error?.message?.includes('User rejected')) {
-          toastWarning('Confirm Withdraw', 'Transaction rejected.')
+          toastWarning(t('Confirm Withdraw'), t('Transaction rejected.'))
         } else {
-          toastError('Error', 'Transaction failed')
+          toastError('Error', t('Transaction failed'))
         }
       })
   }
@@ -331,7 +333,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
 
   const handleValidateForm = (value: any) => {
     if (parseFloat(value) > priceState) {
-      setError('Insufficient balance')
+      setError(t('Insufficient balance'))
     } else {
       setError('')
     }
@@ -350,13 +352,13 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
   return (
     <WrapForm>
       <Flex justifyContent="space-between" alignItems="center">
-        <TextStyle>Network</TextStyle>
+        <TextStyle>{t('Network')}</TextStyle>
         <BoxRight className="wrap-select">
           <NetworkSwitcher removeTxtHeader />
         </BoxRight>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
-        <TextStyle>Interest</TextStyle>
+        <TextStyle>{t('Interest')}</TextStyle>
         <BoxRight>
           <InputFill className="no-border">
             {isUSDT ? (
@@ -369,7 +371,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         </BoxRight>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
-        <TextStyle>Available</TextStyle>
+        <TextStyle>{t('Available')}</TextStyle>
         <BoxRight>
           <Flex alignItems="center" height={44}>
             <TextStyle className="color-white">
@@ -384,7 +386,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         </BoxRight>
       </Flex>
       <Flex justifyContent="space-between" alignItems="center">
-        <TextStyle>Amount</TextStyle>
+        <TextStyle>{t('Amount')}</TextStyle>
         <BoxRight>
           <input
             ref={inputRef}
@@ -401,9 +403,8 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
           />
 
           <ButtonRight
-            width={43}
             height={27}
-            style={{ fontSize: 12 }}
+            style={{ fontSize: 12, padding: '0 16px' }}
             onClick={() => {
               setAmount(formatE(priceState))
               handleValidateForm(formatE(priceState))
@@ -411,13 +412,13 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
               setError('')
             }}
           >
-            All
+            {t('All')}
           </ButtonRight>
         </BoxRight>
       </Flex>
       {error && <TextStyle className="error">{error}</TextStyle>}
-      <Flex justifyContent="space-between" alignItems="center">
-        <TextStyle>Platform Fee</TextStyle>
+      <Flex justifyContent="space-between" alignItems="center" mt="2">
+        <TextStyle>{t('Platform Fee')}</TextStyle>
         <BoxRight style={{ minHeight: 'unset' }}>
           {amount === undefined || amount === '' ? (
             <TextStyle></TextStyle>
@@ -430,7 +431,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
       </Flex>
       <Flex justifyContent="end">
         <Button width={140} height={43} disabled={error || !amount || decimalError} onClick={handleWidthdraw}>
-          Withdraw
+          {t('Withdraw')}
         </Button>
       </Flex>
     </WrapForm>

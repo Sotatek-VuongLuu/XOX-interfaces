@@ -186,7 +186,7 @@ export const ChartContent = styled.div`
     button {
       border-radius: 8px;
       height: 31px;
-      width: 40px;
+      min-width: 40px;
       border: none;
       outline: none;
       cursor: pointer;
@@ -201,7 +201,7 @@ export const ChartContent = styled.div`
     }
     @media (max-width: 576px) {
       button {
-        padding: 8px 0;
+        padding: 8px;
         margin-right: 8px;
       }
     }
@@ -227,7 +227,7 @@ export const ChartContent = styled.div`
 
       button {
         margin-left: 8px;
-        width: 50px;
+        min-width: 50px;
       }
     }
 

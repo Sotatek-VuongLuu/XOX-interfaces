@@ -102,12 +102,10 @@ const PerPriceTitle = styled.div`
 `
 
 export default function SwapForm() {
-  const { isAccessTokenSupported } = useContext(SwapFeaturesContext)
   const { t } = useTranslation()
   const { refreshBlockNumber, isLoading } = useRefreshBlockNumberID()
   const stableFarms = useStableFarms()
   const warningSwapHandler = useWarningImport()
-  const tokenMap = useAtomValue(combinedTokenMapFromOfficialsUrlsAtom)
   const [referralCode, setReferralCode] = useState(null)
   const { account, chainId } = useActiveWeb3React()
   const [referralError, setReferralError] = useState(null)
@@ -305,7 +303,7 @@ export default function SwapForm() {
     <>
       <CurrencyInputHeader
         title={t('Swap')}
-        subtitle="Trade tokens in an instant"
+        subtitle={t('Trade tokens in an instant')}
         hasAmount={hasAmount}
         onRefreshPrice={onRefreshPrice}
       />
@@ -424,7 +422,7 @@ export default function SwapForm() {
                   className="referral"
                 >
                   {t('Referral Code')}
-                  <p>(Optional)</p>
+                  <p>{t('Optional')}</p>
                 </Text>
                 <ReferralInput
                   onChange={(e) => {
@@ -434,7 +432,7 @@ export default function SwapForm() {
                   maxLength={8}
                 />
               </ReferralCode>
-              {referralError && <ErrorReferral>{referralError}</ErrorReferral>}
+              {referralError && <ErrorReferral>{t(referralError)}</ErrorReferral>}
             </>
           )}
         </AutoColumn>
@@ -460,7 +458,7 @@ export default function SwapForm() {
             currencies={currencies}
             isExpertMode={isExpertMode}
             trade={trade}
-            swapInputError={swapInputError || referralError}
+            swapInputError={swapInputError || t(referralError)}
             currencyBalances={currencyBalances}
             recipient={recipient}
             referral={referralCode}

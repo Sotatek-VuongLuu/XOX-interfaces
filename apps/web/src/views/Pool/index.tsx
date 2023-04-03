@@ -355,7 +355,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
                 fontWeight={400}
                 lineHeight={['17px', , '22px']}
               >
-                Your Liquidity
+                {t('Your Liquidity')}
               </Text>
             </div>
             <ConnectSub
@@ -364,7 +364,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
               fontWeight={400}
               lineHeight={['14px', , '19px']}
             >
-              Connect to a wallet to view your liquidity
+              {t('Connect to a wallet to view your liquidity.')}
             </ConnectSub>
           </Title>
         </>
@@ -407,7 +407,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
                 fontWeight={400}
                 lineHeight={['17px', , '22px']}
               >
-                Your Liquidity
+                {t('Your Liquidity')}
               </Text>
             </div>
           </Title>
@@ -424,7 +424,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
           lineHeight={['17px', , '22px']}
           color="rgba(255, 255, 255, 0.87)"
         >
-          Pool
+          {t('Pool')}
         </Text>
         <div className="pair-icon">
           <Flex
@@ -454,7 +454,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
         <div className="pair-balance">
           <Flex flexDirection="row" justifyContent="space-between">
             <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)">
-              Balance
+              {t('Balance')}
             </Text>
             <Flex flexDirection="column" alignItems="flex-end">
               <Text
@@ -489,7 +489,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
           <div />
           <Flex flexDirection="row" justifyContent="space-between">
             <Text fontWeight="400" fontSize="12px" lineHeight="15px" color="rgba(255, 255, 255, 0.6)">
-              Balance
+              {t('Balance')}
             </Text>
             <Flex flexDirection="column" alignItems="flex-end">
               <Text
@@ -527,7 +527,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
             lineHeight={['17px', , '19px']}
             color="rgba(255, 255, 255, 0.87)"
           >
-            LP reward APR
+            {t('LP reward APR')}
           </Text>
           <Text
             fontWeight="700"
@@ -571,12 +571,13 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
 
             <StyledLiquidityContainer>
               <AppHeader
-                title="Liquidity"
-                subtitle={`Receive LP tokens and earn ${chainId === 5 || chainId === 1 ? 0.3 : 0.25}% trading fees`}
+                title={t('Liquidity')}
+                subtitle={t('Receive LP tokens and earn %number%% trading fees', {
+                  number: chainId === 5 || chainId === 1 ? 0.3 : 0.25,
+                })}
                 helper={t(
-                  `Liquidity providers earn a ${
-                    chainId === 5 || chainId === 1 ? 0.3 : 0.25
-                  }% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+                  `Liquidity providers earn a %number%% trading fee on all trades made for that token pair, proportional to their share of the liquidity pool.`,
+                  { number: chainId === 5 || chainId === 1 ? 0.3 : 0.25 },
                 )}
                 backTo={stateAdd ? '/liquidity' : undefined}
               />

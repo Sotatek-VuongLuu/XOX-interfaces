@@ -9,6 +9,7 @@ import SwiperCore, { Autoplay } from 'swiper'
 import { useState } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import { useTranslation } from '@pancakeswap/localization'
 
 SwiperCore.use([Autoplay])
 
@@ -40,7 +41,8 @@ const Wrapper = styled.div`
     text-align: center;
     font-weight: 400;
     font-size: 16px;
-    color: rgba(255, 255, 255, 0.6);
+    color: #FB8618;
+
     margin-bottom: 48px;
 
     @media screen and (max-width: 900px) {
@@ -104,7 +106,7 @@ const Wrapper = styled.div`
       height: 100%;
       width: 117px;
       left: -1px;
-      background: linear-gradient(90deg, black 0%, black 20%, rgba(18, 18, 18, 0) 100%);
+      background: linear-gradient(90deg, #0A0A0A 0%, rgba(10, 10, 10, 0) 100%);
       z-index: 99;
     }
 
@@ -115,7 +117,8 @@ const Wrapper = styled.div`
       right: -1px;
       top: 0;
       width: 117px;
-      background: linear-gradient(90deg, rgba(18, 18, 18, 0) 0%, black 80%, black 100%);
+      background: linear-gradient(90deg, #0A0A0A 0%, rgba(10, 10, 10, 0) 70.83%);
+      transform: matrix(-1, 0, 0, 1, 0, 0);
       z-index: 99;
     }
   }
@@ -178,12 +181,12 @@ const SliderWrapper = styled.div`
   
   @keyframes translateinfinitetl {
     100% {
-      transform: translateX(calc(-144px * 10));
+      transform: translateX(calc(-160px * 10));
     }
   }
   @keyframes translateinfinitetr {
     0% {
-      transform: translateX(calc(-144px * 10));
+      transform: translateX(calc(-160px * 10));
     }
     100% {
       transform: translateX(0);
@@ -205,7 +208,7 @@ const SliderWrapper = styled.div`
     box-shadow: 0 3px 10px -3px rgba(0, 0, 0, 0.3);
   }
   #infinite div.highway-barrier ul.highway-lane {
-    width: calc(144px * 20);
+    width: calc(160px * 20);
     &:hover li.highway-car{
       animation-play-state: paused !important;
     }
@@ -236,6 +239,7 @@ const SliderWrapper = styled.div`
 `
 
 const Partners = () => {
+  const {t} = useTranslation()
   const [isShowMore, setIsShowMore] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
 
@@ -256,10 +260,10 @@ const Partners = () => {
   return (
     <Wrapper>
       <div className="title" data-aos="fade-up">
-        Strategic Partners
+        {t('Strategic Partners')}
       </div>
       <p className="decoration" data-aos="fade-up" data-aos-duration="2300">
-        Backed by the Best to Deliver the Best.
+        {t('Backed by the Best to Deliver the Best.')}
       </p>
 
       <div className="slide_container">
@@ -420,7 +424,7 @@ const Partners = () => {
         ) : null}
       </div>
 
-      <div className="btn_see_all" data-aos="fade-up">
+      <div className="btn_see_all" data-aos="fade-up" style={{ display: 'none' }}>
         <div className="get_xox" onClick={handleChangeShowMore}>
           <div className="boxed-child">{isShowMore ? <span>See Less</span> : <span>See All</span>}</div>
         </div>
@@ -431,35 +435,34 @@ const Partners = () => {
 
 const listPartners = [
   {
-    icon: '/images/l1.svg',
+    icon: '/images/partners/airbnb_partner.svg',
   },
   {
-    icon: '/images/l2.svg',
+    icon: '/images/partners/microsoft_partner.svg',
   },
   {
-    icon: '/images/l3.svg',
-  },
-
-  {
-    icon: '/images/l4.svg',
+    icon: '/images/partners/walmart_partner.svg',
   },
   {
-    icon: '/images/l5.svg',
+    icon: '/images/partners/hubspot_partner.svg',
   },
   {
-    icon: '/images/l6.svg',
+    icon: '/images/partners/google_partner.svg',
   },
   {
-    icon: '/images/l7.svg',
+    icon: '/images/partners/fedex_partner.svg',
   },
   {
-    icon: '/images/l9.svg',
+    icon: '/images/partners/airbnb_partner.svg',
   },
   {
-    icon: '/images/l14.svg',
+    icon: '/images/partners/google_partner.svg',
   },
   {
-    icon: '/images/l111.svg',
+    icon: '/images/partners/microsoft_partner.svg',
+  },
+  {
+    icon: '/images/partners/hubspot_partner.svg',
   },
 ]
 

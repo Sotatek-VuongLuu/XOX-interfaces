@@ -113,6 +113,7 @@ function TabSaleHistory({ currentTransactions }) {
   const [tempPage, setTempPage] = useState('1')
   const [page, setPage] = useState(1)
   const [maxPage, setMaxPage] = useState(1)
+  const { t } = useTranslation()
 
   const setPagePagination = useCallback(
     (p: number) => {
@@ -219,7 +220,7 @@ function TabSaleHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            XOXS Received
+            {t('XOXS received')}
           </Text>
           <Text
             fontSize="16px"
@@ -373,29 +374,29 @@ function TabSaleHistory({ currentTransactions }) {
               options={[
                 {
                   value: 5,
-                  label: '5/Page',
+                  label: t('%number%/Page', { number: 5 }),
                 },
                 {
                   value: 10,
-                  label: '10/Page',
+                  label: t('%number%/Page', { number: 10 }),
                 },
                 {
                   value: 20,
-                  label: '20/Page',
+                  label: t('%number%/Page', { number: 20 }),
                 },
                 {
                   value: 50,
-                  label: '50/Page',
+                  label: t('%number%/Page', { number: 50 }),
                 },
                 {
                   value: 100,
-                  label: '100/Page',
+                  label: t('%number%/Page', { number: 100 }),
                 },
               ]}
               onOptionChange={(option: any) => handleSelectPerPage(option.value)}
               className="select-page"
             />
-            <Text className="go-page">Go to page</Text>
+            <Text className="go-page">{t('Go to page')}</Text>
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}

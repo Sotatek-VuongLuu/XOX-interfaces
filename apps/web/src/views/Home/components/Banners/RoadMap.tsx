@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 // eslint-disable-next-line import/no-cycle
@@ -39,7 +40,7 @@ const Wrapper = styled.div`
     .timeline-item-2,
     .timeline-item-4 {
       .line {
-        background: linear-gradient(180deg, #000000 0%, #9072ff 100%);
+        background: linear-gradient(180deg, #000000 0%, #FB8618 100%);
         bottom: 0;
         opacity: 0.25;
       }
@@ -65,7 +66,7 @@ const Wrapper = styled.div`
     .timeline-item-5 {
       align-self: flex-end;
       .line {
-        background: linear-gradient(0deg, #000000 0%, #9072ff 100%);
+        background: linear-gradient(0deg, #FB8618 0%, #FB8618 100%);
         top: 0;
         opacity: 0.25;
       }
@@ -83,17 +84,30 @@ const Wrapper = styled.div`
         margin-left: 20px;
       }
     }
+
+    .timeline-item-3 .line_status {
+      background: linear-gradient(90deg, rgba(155,243,203,1) 0%, rgba(62,192,166,1) 100%);
+    }
+
+    .timeline-item-4 .line_status {
+      background: linear-gradient(90deg, rgba(62,192,166,1) 0%, rgba(244,66,52,1) 100%);
+    }
+
+    .timeline-item-5 .line_status {
+      background: linear-gradient(90deg, rgba(244,66,52,1) 0%, rgba(159,58,131,1) 75%);
+    }
   }
 `
 
 const Description = styled.p`
   font-weight: 400;
   font-size: 16px;
-  color: rgba(255, 255, 255, 0.6);
+  color: #FB8618;
   text-align: center;
 
   @media screen and (max-width: 900px) {
     font-size: 14px;
+    line-height: 24px;
   }
 `
 
@@ -111,12 +125,14 @@ const Title = styled.div`
 `
 
 const RoadMap = () => {
+  const {t} = useTranslation()
   const { width } = useWindowSize()
+
   return (
     <Wrapper>
-      <Title data-aos="fade-up">Development map</Title>
+      <Title data-aos="fade-up">{t('Development map')}</Title>
       <Description data-aos="fade-up" data-aos-duration="2300">
-        Building The Road For Web3 & Blockchain Mass Adoption
+        {t('Building The Road For Web3 & Blockchain Mass Adoption')}
       </Description>
 
       {width < 970 ? (

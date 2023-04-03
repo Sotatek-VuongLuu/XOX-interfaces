@@ -19,6 +19,7 @@ import LeaderBoardItemLP from 'views/Referral/components/LearderBoardItemForLand
 import { filterChain, FilterChain, filterTime, FilterTime, ListRankingByChain } from 'views/Referral'
 import { GridLoader } from 'react-spinners'
 import { ColumnCenter } from 'components/Layout/Column'
+import { useTranslation } from '@pancakeswap/localization'
 
 export interface IItemLeaderBoard {
   name: string
@@ -100,7 +101,7 @@ const Wrapper = styled(Box)`
   .title_list_item {
     font-weight: 400;
     font-size: 18px;
-    color: rgba(255, 255, 255, 0.87);
+    color: rgba(255, 255, 255, 0.6);
     @media screen and (max-width: 900px) {
       font-size: 16px;
     }
@@ -112,12 +113,12 @@ const Wrapper = styled(Box)`
     font-size: 18px;
     color: #ffffff;
     border: none;
-    background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-    border-radius: 8px;
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    border-radius: 12px;
     cursor: pointer;
 
     &:hover {
-      background: #5f35eb;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     }
 
     @media screen and (max-width: 900px) {
@@ -134,14 +135,14 @@ const Wrapper = styled(Box)`
   }
 
   @media screen and (max-width: 900px) {
-    margin-top: 64px;
+    margin-top: 16px;
   }
 `
 
 const Paragraph = styled.p`
   font-weight: 400;
   font-size: 18px;
-  color: rgba(255, 255, 255, 0.87);
+  color: rgba(255, 255, 255, 0.6);
   font-weight: 400;
   line-height: 32px;
   margin: 24px 0px;
@@ -155,11 +156,13 @@ const Paragraph = styled.p`
 const First = styled.div`
   width: 100%;
   height: 100%;
-  background: linear-gradient(100.7deg, rgba(96, 52, 255, 0.1) 0%, rgba(163, 90, 255, 0.1) 100%);
+  // background: linear-gradient(100.7deg, rgba(96, 52, 255, 0.1) 0%, rgba(163, 90, 255, 0.1) 100%);
+  background: rgba(10, 10, 10, 0.9);
   backdrop-filter: blur(10px);
   box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
   border-radius: 20px;
   padding: 24px;
+  position: relative;
 
   @media screen and (max-width: 900px) {
     padding: 19px;
@@ -179,8 +182,8 @@ const First = styled.div`
 
     .tab_item.active,
     .tab_item:hover {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-      border-radius: 4px;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      border-radius: 8px;
     }
 
     @media screen and (max-width: 900px) {
@@ -208,12 +211,28 @@ const First = styled.div`
       border-radius: 50%;
     }
   }
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 2px;
+    background: linear-gradient(0deg, rgba(184, 9, 181, 0) 0%, rgba(237, 28, 81, 1) 80%, rgba(255, 176, 0, 1) 100%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    z-index: -1;
+  }
 `
 
 const WrapperLeft = styled.div``
 
 const Container = styled(Box)`
-  background: linear-gradient(#6034ff, #a35aff, #111111);
+  // background: linear-gradient(#6034ff, #a35aff, #111111);
   padding: 1px;
   border-radius: 20px;
 `
@@ -241,7 +260,7 @@ const FilterChainWrapper = styled.div`
   .tab_filter_chain_container {
     display: flex;
     padding: 3px;
-    background: rgba(255, 255, 255, 0.1);
+    background: rgba(255, 255, 255, 0.03);
     border-radius: 30px;
     margin-bottom: 35px;
     .filter_chain {
@@ -254,7 +273,7 @@ const FilterChainWrapper = styled.div`
 
     .filter_chain.active,
     .filter_chain:hover {
-      background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       border-radius: 30px;
     }
 
@@ -286,6 +305,7 @@ type FunctionList = {
 }
 
 const FeatureReferal = () => {
+  const { t } = useTranslation()
   const startOfDay = moment().startOf('days').toString()
   const startOfMonth = moment().startOf('month').toString()
   const startOfWeek = moment().startOf('isoWeek').toString()
@@ -463,14 +483,14 @@ const FeatureReferal = () => {
       return (
         <NoDataWraper>
           <ConfirmedIcon>
-            <GridLoader color="#9072FF" style={{ width: '51px', height: '51px' }} />
+            <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
           </ConfirmedIcon>
         </NoDataWraper>
       )
     }
 
     if (listUserRanks[tabChainLeaderBoard].length === 0) {
-      return <NoDataWraper>No data</NoDataWraper>
+      return <NoDataWraper>{t('No Data')}</NoDataWraper>
     }
 
     return (
@@ -505,7 +525,7 @@ const FeatureReferal = () => {
                             onClick={() => handleOnChangeChainTab(item)}
                             role="button"
                           >
-                            {item}
+                            {t(item)}
                           </div>
                         )
                       })}
@@ -521,7 +541,7 @@ const FeatureReferal = () => {
                           className={tabLeaderBoard === item ? 'tab_item active' : 'tab_item'}
                           style={{ cursor: 'pointer' }}
                         >
-                          {item}
+                          {t(item)}
                         </div>
                       )
                     })}
@@ -536,10 +556,14 @@ const FeatureReferal = () => {
         <Grid item xs={12} md={1} />
         <Grid item xs={12} md={6}>
           <div className="ref_container" data-aos="fade-left">
-            <p className="title_ref">Gamified Referral Program</p>
+            <p className="title_ref">
+              {t('Gamified Referral Program')}
+              <span style={{ color: '#FB8618' }}>.</span>
+            </p>
             <Paragraph className="description">
-              Built to give back, the XOX Gamified Referral Program rewards both "The Referee" & "The Referrer" Earn
-              Points that's are redeemable for USDT/USDC after reaching different levels & milestones.
+              {t(
+                'The XOX Gamified Referral Program is a unique incentive system that rewards both referees and referrers with USDT/USDC points for successful referrals. The program is designed to boost community engagement through gamification, with different levels and milestones that unlock greater rewards. By participating in our referral program, users can earn passive income while supporting the growth of the XOX Labs ecosystem.',
+              )}
             </Paragraph>
             <div className="list">
               {listTag.map(({ title }) => {
@@ -548,14 +572,14 @@ const FeatureReferal = () => {
                     <span>
                       <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
                     </span>
-                    <span className="title_list_item">{title}</span>
+                    <span className="title_list_item">{t(title)}</span>
                   </p>
                 )
               })}
             </div>
 
             <a href="/referral" target="_blank">
-              <button className="btn_join">Join Now</button>
+              <button className="btn_join">{t('Join Now')}</button>
             </a>
           </div>
         </Grid>
@@ -582,39 +606,6 @@ const listTag = [
   },
   {
     title: 'Get USDT/USDC',
-  },
-]
-
-const listLeader = [
-  {
-    name: 'Ha Anh Tuan',
-    point: '10293',
-    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-    rank: 1,
-  },
-  {
-    name: 'My Tam',
-    point: '10200',
-    avatar: 'https://danviet.mediacdn.vn/296231569849192448/2022/12/13/hen-uoc-tu-hu-vo-16709038452871766603715.jpg',
-    rank: 2,
-  },
-  {
-    name: 'Wade Warren',
-    point: '10110',
-    avatar: 'https://newsmd2fr.keeng.net/tiin/archive/images/296/202104/20210408/tinngan_115312_856826867_0.jpg',
-    rank: 3,
-  },
-  {
-    name: 'Wade Warren',
-    point: '9000',
-    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-    rank: 4,
-  },
-  {
-    name: 'Wade Warren',
-    point: '900',
-    avatar: 'https://ss-images.saostar.vn/wwebp700/pc/1668184763837/saostar-zniwtnewidjz7yhb.jpg',
-    rank: 5,
   },
 ]
 

@@ -12,6 +12,7 @@ import { Tooltip } from '@mui/material'
 import BigNumber from 'bignumber.js'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { NumericalInputStyled, ShowBalance } from './ModalUnStake'
+import { useTranslation } from '@pancakeswap/localization'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -291,6 +292,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   amount,
   setAmount,
 }) => {
+  const { t } = useTranslation()
   const chainIdSupport = [97, 56]
   const { chainId } = useActiveChainId()
   const { account } = useActiveWeb3React()
@@ -323,6 +325,11 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
           parseEther(Number(amount).toFixed(18)).gt(parseEther(Number(balanceLP).toFixed(18)))
         ) {
           setMessageError(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} Balance`)
+          setMessageError(
+            t('Insuficient Your %symbol% Balance', {
+              symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC',
+            }),
+          )
         } else {
           setMessageError('')
         }
@@ -330,7 +337,11 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
         setMessageError('')
       }
     } else {
-      setMessageError(`No tokens to stake: Get ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP`)
+      setMessageError(
+        t('No tokens to stake: Get %symbol%', {
+          symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+        }),
+      )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amount, balanceLP])
@@ -370,11 +381,11 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   return (
     <>
       <StyledModalContainer>
-        <StyledModalHeader>Stake LP Tokens</StyledModalHeader>
+        <StyledModalHeader>{t('Stake LP tokens')}</StyledModalHeader>
         <ContentContainer>
           <ContentStake>
             <div className="flex stake">
-              <p>Stake</p>
+              <p>{t('Stake')}</p>
               <ShowBalance balance={balanceLP} />
             </div>
             <div className="flex token_lp">
@@ -412,7 +423,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
                     }}
                     disabled={!Number(balanceLP)}
                   >
-                    {item}
+                    {t(item)}
                   </button>
                 )
               })}
@@ -422,7 +433,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
           {messageError && <p className="mes_error">{messageError}</p>}
           <ButtonGroup>
             <button type="button" className="btn cancel" onClick={onDismiss}>
-              Cancel
+              {t('Cancel')}
             </button>
             <CustomButton
               type="button"
@@ -432,7 +443,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
               }
               onClick={handleButtonClick}
             >
-              Confirm
+              {t('Confirm')}
             </CustomButton>
           </ButtonGroup>
           <GetLP className="get_lp">
@@ -442,7 +453,9 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
               rel="noreferrer"
             >
               <p style={{ display: 'flex', alignItems: 'center' }}>
-                <span>Get {chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP</span>
+                <span>
+                  {t('Get %symbol%', { symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP' })}
+                </span>
                 <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center' }}>
                   <img src="/images/external-icon.svg" alt="external-icon" />
                 </span>

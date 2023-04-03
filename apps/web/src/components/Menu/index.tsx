@@ -27,19 +27,20 @@ import { useMenuItems } from './hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { configLanding } from './config/config'
+import LangSelector from '@pancakeswap/uikit/src/components/LangSelector/LangSelector'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;
   font-size: 16px;
   color: #ffffff;
   padding: 12px 30px;
-  background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-  border-radius: 6px;
+  background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+  border-radius: 10px;
   border: none;
   cursor: pointer;
 
   &:hover {
-    background: #5f35eb;
+    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
   }
 `
 
@@ -193,6 +194,7 @@ const Menu = (props) => {
   const [activeNotifi, setActiveNotifi] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement>(null)
   const host = process.env.NEXT_PUBLIC_SOCKET_API
+  const menuLandingPath = ['/', '/company', '/tokenomics']
   const menuItemsLanding = useMemo(() => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
   }, [t, isDark, currentLanguage.code, chainId])
@@ -279,8 +281,8 @@ const Menu = (props) => {
       <ModalV2Wrapper closeOnOverlayClick isOpen={openHeader} onDismiss={handleCloseHeaderMenu}>
         <CustomModalWrapper onDismiss={handleCloseHeaderMenu} style={{ overflow: 'visible', border: 'none' }}>
           <MenuItemsWrapper
-            items={route.pathname === '/' ? menuItemsLanding : menuItems}
-            activeItem={route.pathname === '/' ? activeMenuItemLanding?.href : activeMenuItem?.href}
+            items={menuLandingPath.includes(route.pathname) ? menuItemsLanding : menuItems}
+            activeItem={menuLandingPath.includes(route.pathname) ? activeMenuItemLanding?.href : activeMenuItem?.href}
             activeSubItem={activeSubMenuItem?.href}
           />
         </CustomModalWrapper>
@@ -290,7 +292,7 @@ const Menu = (props) => {
           return <NextLinkFromReactRouter to={linkProps.href} {...linkProps} prefetch={false} />
         }}
         rightSide={
-          route.pathname === '/' ? (
+          menuLandingPath.includes(route.pathname) ? (
             <>
               <a href="/swap" style={{ marginRight: '11px' }} target="_blank">
                 <BTNLaunchApp>Launch App</BTNLaunchApp>
@@ -357,10 +359,18 @@ const Menu = (props) => {
                       <p>Your referral code has been applied in a "Buy XOX” transaction</p>
                     </NotificationMenu>
                   )}
-                </NotificationField>
+                </NotificationField> 
               ) : (
                 <></>
               )}
+              <LangSelector
+                currentLang={currentLanguage.code}
+                langs={languageList}
+                setLang={setLanguage}
+                buttonScale="xs"
+                color="textSubtle"
+                hideLanguage
+              />
               <NetworkSwitcher />
               <UserMenu />
               {openHeader ? (
@@ -406,13 +416,13 @@ const Menu = (props) => {
         langs={languageList}
         setLang={setLanguage}
         cakePriceUsd={cakePriceUsd}
-        links={route.pathname === '/' ? menuItemsLanding : menuItems}
+        links={menuLandingPath.includes(route.pathname) ? menuItemsLanding : menuItems}
         subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : []}
         footerLinks={getFooterLinks}
-        activeItem={route.pathname === '/' ? activeMenuItemLanding?.href : activeMenuItem?.href}
+        activeItem={menuLandingPath.includes(route.pathname) ? activeMenuItemLanding?.href : activeMenuItem?.href}
         activeSubItem={activeSubMenuItem?.href}
         buyCakeLabel={t('Buy CAKE')}
-        isLanding={route.pathname === '/'}
+        isLanding={menuLandingPath.includes(route.pathname)}
         {...props}
       />
     </>

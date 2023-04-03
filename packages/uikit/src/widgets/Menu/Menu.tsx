@@ -57,7 +57,7 @@ const FixedContainer = styled.div<{ showMenu: boolean; height: number; isLanding
   height: ${({ height }) => `${height}px`};
   width: 100vw;
   z-index: 20;
-  background-color: ${({ theme, isLanding }) => (isLanding ? "black" : "#101010")};
+  background-color: ${({ theme, isLanding }) => (isLanding ? "#101010" : "#101010")};
   /* ${({ theme, isLanding }) => !isLanding && ` border-bottom: 1px solid ${theme.colors.cardBorder}`}; */
   display: flex;
   justify-content: center;

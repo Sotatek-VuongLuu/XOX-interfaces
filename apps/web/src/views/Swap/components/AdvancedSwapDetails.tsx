@@ -152,7 +152,7 @@ export function AdvancedSwapDetails({ trade, showXOXSreceived, value }: Advanced
               {showXOXSreceived && (
                 <RowBetweenStyle style={{ padding: '0 16px' }}>
                   <Text fontSize="16px" color="textSubtle">
-                    XOXS received
+                    {t("XOXS received")}
                   </Text>
                   <Text fontSize="16px" color="rgba(255,255,255,0.87)">
                     {formatBalanceComma(numberXOXSreceived.toString())}

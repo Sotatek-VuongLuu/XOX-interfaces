@@ -32,7 +32,7 @@ export const FooterMainContent = styled.div`
   display: flex;
   justify-content: center;
   padding: 92px 119px;
-  background-color: #1d1d1d;
+  background: #101010;
   position: relative;
   width: 100%;
 

@@ -152,7 +152,7 @@ export const configLanding: (
   [
     {
       label: t('Tokenomics'),
-      href: '/',
+      href: '/tokenomics',
       icon: Tokenomics,
       fillIcon: TokenomicsFill,
       image: '/images/decorations/pe2.png',
@@ -170,7 +170,15 @@ export const configLanding: (
       label: t('Company'),
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,
+      href: '/company',
+      showItemsOnMobile: false,
+      items: [],
+    },
+    {
+      label: t('XOX Dex V2'),
       href: '#',
+      icon: WhitepaperIcon,
+      fillIcon: SwapFillIcon,
       showItemsOnMobile: false,
       items: [],
     },
@@ -233,14 +241,14 @@ export const configLanding: (
           showTooltip: true,
         },
         {
-          label: 'XOX Mobile App/Wallet ',
+          label: 'XOX Mobile App/Wallet',
           icon: '',
           fillIcon: '',
           href: '/stable-coin',
           showTooltip: true,
         },
         {
-          label: 'XOX Multi-chain Launchpad',
+          label: 'XOX Multi-Chain Launchpad',
           icon: '',
           fillIcon: 'StableCoinIcon',
           href: '/stable-coin',

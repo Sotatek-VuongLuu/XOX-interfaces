@@ -14,15 +14,20 @@ import FeaturePlant from './components/Banners/FeaturePlant'
 import RoadMap from './components/Banners/RoadMap'
 import Partners from './components/Partners'
 import Community from './components/Banners/Community'
-import FeatureEconomy from './components/Banners/FeatureEconomy'
+// import FeatureEconomy from './components/Banners/FeatureEconomy'
 import BackgroudWatch from './components/Banners/BackgroundWatch'
 import FeatureReferal from './components/Banners/FeatureReferal'
 import UpComing from './components/Banners/FeatureUpComing'
 import SecuredBy from './components/Banners/SecuredBy'
 import BGPartner from './components/Banners/BackgroundPartner'
+import BGSecured from './components/Banners/BackgroundSecured'
+import BGXOXDapp from './components/Banners/BackgroundXOXDapp'
+import BGBlockchain from './components/Banners/BackgroundBlockchain'
 import FeatureSquare from './components/Banners/FeatureSquare'
+import Subscription from './components/Banners/Subscription'
+import SupportedBlockchains from './components/Banners/SupportedBlockchains'
 
-const StyledSection = styled(PageSection)`
+export const StyledSection = styled(PageSection)`
   padding-top: 16px;
   padding: 0px 21px;
 
@@ -48,7 +53,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx global>{`
         #home .page-bg {
-          background: black;
+          background: #0a0a0a;
         }
       `}</style>
       <StyledSection
@@ -60,20 +65,20 @@ const Home: React.FC<React.PropsWithChildren> = () => {
             alignItems: 'center',
             justifyContent: innerWidth > 900 ? 'space-around' : 'unset',
             width: widthResize,
-            height: '80vh',
+            height: 'fit-content',
           },
         }}
         containerProps={{
           id: 'home',
           style: {
-            height: innerHeight < 700 && innerWidth <= 376 ? '100vh' : '',
+            height: 'fit-content',
           },
         }}
         innerClass="welcome"
         index={2}
         hasCurvedDivider={false}
       >
-        <BallPurple src="/images/bg-pur.svg" />
+        {/* <BallPurple src="/images/bg-pur.svg" /> */}
         <div>
           <WelcomeXOX />
         </div>
@@ -87,10 +92,12 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={1}
         hasCurvedDivider={false}
       >
-        <BackgroudWatch />
-
+        {/* <BackgroudWatch /> */}
+        <BGBlockchain />
+        <BGXOXDapp />
         <div style={{ width: widthResize }}>
-          <FeatureEconomy />
+          {/* <FeatureEconomy /> */}
+          <SupportedBlockchains />
           <FeatureSquare />
           <FeatureWatch />
           <FeaturePlant />
@@ -106,6 +113,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={2}
         hasCurvedDivider={false}
       >
+        <BGSecured />
         <BGPartner />
         <div style={{ width: widthResize }}>
           <Partners />
@@ -113,6 +121,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           <UpComing />
           <RoadMap />
           <Community />
+          <Subscription />
         </div>
       </StyledSection>
     </>
