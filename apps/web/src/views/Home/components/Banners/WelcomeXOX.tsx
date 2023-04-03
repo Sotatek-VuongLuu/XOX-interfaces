@@ -41,7 +41,7 @@ const Wrapper = styled.div`
 
     @media screen and (max-width: 576px) {
       height: 280px;
-      transform: scale(1.5);
+      transform: scale(1.7);
     }
   }
 
