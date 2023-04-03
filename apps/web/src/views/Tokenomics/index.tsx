@@ -21,6 +21,7 @@ import {
   ContainnerStyledF2,
 } from './styled'
 import ADDComponent from './ADDComponent'
+import { useTranslation } from '@pancakeswap/localization'
 
 interface IAddress {
   asset: string
@@ -89,6 +90,7 @@ interface IDataOBJReturn {
 }
 
 export default function TokenomicsPage() {
+  const { t } = useTranslation()
   const { width } = useWindowSize()
   const LAUNCH_APP_TIME = 1679850000 /// (seconds) can change
 
@@ -315,13 +317,13 @@ export default function TokenomicsPage() {
       asset: 'SOL',
       name: 'Solana',
       logo: '/images/tokenomics/SOL.png',
-      text: 'Deployment  Coming',
+      text: t('Deployment Coming'),
     },
     {
       asset: 'OP',
       name: 'Optimism',
       logo: '/images/tokenomics/OP.png',
-      text: 'Deployment  Coming',
+      text: t('Deployment Coming'),
     },
   ]
 
@@ -505,16 +507,16 @@ export default function TokenomicsPage() {
         <StyledHeader>
           <div>
             <h1>
-              Everything
+              {t('Everything')}
               <br />
-              about our
+              {t('about our')}
               <br />
-              Tokenomics
+              {t('Tokenomics')}
             </h1>
             <p>
-              XOX is the native token that powers the XOX Labs Cross-Chain Defi Ecosystem. XOX is built on Ethereum but
-              XOX Labs is a multi-chain Protocol so XOX Token can be acquired in other chains like (BSC, Solana,
-              Polygon, Arbitrum, Optimism..) through liquidity pools created by XOX Labs.
+              {t(
+                'XOX is the native token that powers the XOX Labs Cross-Chain Defi Ecosystem. XOX is built on Ethereum but XOX Labs is a multi-chain Protocol so XOX Token can be acquired in other chains like (BSC, Solana, Polygon, Arbitrum, Optimism...) through liquidity pools created by XOX Labs.',
+              )}
             </p>
           </div>
 
@@ -535,72 +537,76 @@ export default function TokenomicsPage() {
           </div>
         </StyledHeader>
 
-        <StyledTitle>About XOX Tokenomics</StyledTitle>
+        <StyledTitle>{t('About XOX Tokenomics')}</StyledTitle>
         <StyledDescription>
-          XOX Labs is building a the next-gen multi-chain decentralized ecosystem focused on revenue sharing,
-          sustainability, transparency and cross-chain integration leverage for mass exposure. And the $XOX Token is the
-          currency that brings it all together.
+          {t(
+            'XOX Labs is building a the next-gen multi-chain decentralized ecosystem focused on revenue sharing, sustainability, transparency and cross-chain integration leverage for mass exposure. And the $XOX Token is the currency that brings it all together.',
+          )}
         </StyledDescription>
 
         <StyledF>
           <StyledCard1>
-            <h1>Token Name</h1>
+            <h1>{t('Token Name')}</h1>
             <p>XOX</p>
           </StyledCard1>
           <StyledCard1>
-            <h1>Token Supply</h1>
+            <h1>{t('Token Supply')}</h1>
             <p>180.000.000</p>
           </StyledCard1>
           <StyledCard1>
-            <h1>Networks</h1>
+            <h1>{t('Networks')}</h1>
             <p>ETH - BSC - ARB - Polygon - SOL - OP</p>
           </StyledCard1>
         </StyledF>
 
-        <StyledTitle>Transaction Tax</StyledTitle>
+        <StyledTitle>{t('Transaction Tax')}</StyledTitle>
         <StyledDescription>
-          Good Tokenomics are crucial to creating sustainability, and scalability to ensure the constant growth of the
-          ecosystem in the long run.
+          {t(
+            'Good Tokenomics are crucial to creating sustainability, and scalability to ensure the constant growth of the ecosystem in the long run.',
+          )}
         </StyledDescription>
 
         <StyledF>
           <StyledCard2>
-            <h1>Buy Tax</h1>
-            <h2>0% Buy Tax</h2>
-            <p className="center">On any DEX or CEX (Decentralized or Centralized Exchanges)</p>
+            <h1>{t('Buy Tax')}</h1>
+            <h2>0% {t('Buy Tax')}</h2>
+            <p className="center">{t('On any DEX or CEX (Decentralized or Centralized Exchanges)')}</p>
             <div className="divide" />
-            <h2>10% Buy Tax</h2>
+            <h2>10% {t('Buy Tax')}</h2>
             <p className="center">
-              In the XOX Dex V1. Only applicable for <span className="hl">XOX-USDT</span> and{' '}
-              <span className="hl">XOX-USDC</span> pairs. The 10% is given back to the buyers in the form of XOXS which
-              is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.
+              {t('In the XOX Dex V1. Only applicable for')} <span className="hl">XOX-USDT</span> {t('and')}{' '}
+              <span className="hl">XOX-USDC</span>{' '}
+              {t(
+                'pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.',
+              )}
             </p>
             <p className="center">
-              <Dot /> The Full <span className="hl">USDT</span> & <span className="hl">USDC</span> collected from buy
-              tax is later given back to the stakers as Stable Coin (XOXS) Staking Rewards <Dot />
+              <Dot /> {t('The Full')} <span className="hl">USDT</span> & <span className="hl">USDC</span>{' '}
+              {t('collected from buytax is later given back to the stakers as Stable Coin (XOXS) Staking Rewards')}{' '}
+              <Dot />
             </p>
           </StyledCard2>
 
           <StyledCard2>
-            <h1>Sell Tax</h1>
-            <h2>10% Sell Tax On Every DEX</h2>
-            <p className="center">The 10% sell tax is allocated as follows:</p>
+            <h1>{t('Sell Tax')}</h1>
+            <h2>10% {t('Sell Tax On Every DEX')}</h2>
+            <p className="center">{t('The 10% sell tax is allocated as follows:')}</p>
             <div className="divide" />
             <p>
-              <Dot /> <span className="white">4%</span> - Stable Coin (XOXS) Staking Rewards
+              <Dot /> <span className="white">4%</span> - {t('Stable Coin (XOXS) Staking Rewards')}
               <br />
-              <Dot /> <span className="white">2%</span> - Marketing
+              <Dot /> <span className="white">2%</span> - {t('Marketing')}
               <br />
-              <Dot /> <span className="white">2%</span> - Development
+              <Dot /> <span className="white">2%</span> - {t('Development')}
               <br />
-              <Dot /> <span className="white">1%</span> - Added to the Lottery Fund/ Used to Buy Back & Burn
+              <Dot /> <span className="white">1%</span> - {t('Added to the Lottery Fund/ Used to Buy Back & Burn')}
               <br />
-              <Dot /> <span className="white">1%</span> - Team
+              <Dot /> <span className="white">1%</span> - {t('Team')}
             </p>
           </StyledCard2>
         </StyledF>
 
-        <StyledTitle>Contract Address</StyledTitle>
+        <StyledTitle>{t('Contract Address')}</StyledTitle>
 
         <ContainnerStyledF2>
           <StyledF2>
@@ -618,7 +624,7 @@ export default function TokenomicsPage() {
 
         <ADDComponent />
 
-        <StyledTitle>XOX Token Vesting Schedule</StyledTitle>
+        <StyledTitle>{t('XOX Token Vesting Schedule')}</StyledTitle>
 
         <StyledTVS>
           {/* <div> */}

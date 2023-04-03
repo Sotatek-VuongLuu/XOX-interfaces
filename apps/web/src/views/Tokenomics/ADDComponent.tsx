@@ -5,6 +5,7 @@ import useWindowSize from 'hooks/useWindowSize'
 import { EChartsOption, SeriesOption } from 'echarts'
 import BigNumber from 'bignumber.js'
 import { StyledAAD, StyledItemAAD, StyledTitle } from './styled'
+import { useTranslation } from '@pancakeswap/localization'
 
 interface IAAD {
   title: string
@@ -47,94 +48,98 @@ function AADItem({
 }
 
 export default function ADDComponent() {
+  const { t } = useTranslation()
   const AADChart = useRef<ReactECharts>()
   const { width } = useWindowSize()
 
   const AAD_DATA_L: Array<IAAD> = [
     {
-      title: 'Team allocation',
-      content: [`${new BigNumber(12600000).toFormat()} Tokens`, '0% at TGE & 5 years vesting 20% Yearly'],
+      title: t('Team allocation'),
+      content: [`${new BigNumber(12600000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
       color: '#D8D8D8',
       value: 12600000,
     },
     {
-      title: 'Company Reserve',
-      content: [`${new BigNumber(27000000).toFormat()} Tokens`, '0% at TGE & 4 years vesting 25% Yearly'],
+      title: t('Company Reserve'),
+      content: [`${new BigNumber(27000000).toFormat()} Tokens`, t('0% at TGE & 4 years vesting 25% Yearly')],
       color: '#969696',
       value: 27000000,
     },
     {
-      title: 'Strategic Partnership',
-      content: [`${new BigNumber(9000000).toFormat()} Tokens`, '0% at TGE & 5 years vesting 20% Yearly'],
+      title: t('Strategic Partnership'),
+      content: [`${new BigNumber(9000000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
       color: '#BAFFBF',
       value: 9000000,
     },
     {
-      title: 'Ecosystem Growth',
-      content: [`${new BigNumber(36000000).toFormat()} Tokens`, '0% at TGE & 4 years vesting 25% Yearly'],
+      title: t('Ecosystem Growth'),
+      content: [`${new BigNumber(36000000).toFormat()} Tokens`, t('0% at TGE & 4 years vesting 25% Yearly')],
       color: '#86B6FF',
       value: 36000000,
     },
     {
-      title: 'Community Rewards',
-      content: [`${new BigNumber(1800000).toFormat()} Tokens`, '0% at TGE & 5 years vesting 20% Yearly'],
+      title: t('Community Rewards'),
+      content: [`${new BigNumber(1800000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
       color: '#50817C',
       value: 1800000,
     },
     {
-      title: 'XOX labs Foundation',
-      content: [`${new BigNumber(5400000).toFormat()} Tokens`, '0% at TGE & 5 years vesting 20% Yearly'],
+      title: t('XOX labs Foundation'),
+      content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
       color: '#64C6BA',
       value: 5400000,
     },
   ]
   const AAD_DATA_R: Array<IAAD> = [
     {
-      title: 'LP Farming',
-      content: [`${new BigNumber(18000000).toFormat()} Tokens`, '20% at Launch then 10% unlock Each year for 8 years'],
+      title: t('LP Farming'),
+      content: [
+        `${new BigNumber(18000000).toFormat()} Tokens`,
+        t('20% at Launch then 10% unlock Each year for 8 years'),
+      ],
       color: '#FFB547',
       value: 18000000,
     },
     {
-      title: 'Seed Sale',
-      content: [`${new BigNumber(3600000).toFormat()} Tokens`, '10% release at TGE then 10% Unlock Weekly'],
+      title: t('Seed Sale'),
+      content: [`${new BigNumber(3600000).toFormat()} Tokens`, t('10% release at TGE then 10% Unlock Weekly')],
       color: '#FB8618',
       value: 3600000,
     },
     {
-      title: 'Partners Sale',
-      content: [`${new BigNumber(5400000).toFormat()} Tokens`, '10% release at TGE then 5% release Monthly'],
+      title: t('Partners Sale'),
+      content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('10% release at TGE then 5% release Monthly')],
       color: '#FF5353',
       value: 5400000,
     },
     {
-      title: 'Private Sale',
-      content: [`${new BigNumber(10800000).toFormat()} Tokens`, '10% release at TGE then 10% release Monthly'],
+      title: t('Private Sale'),
+      content: [`${new BigNumber(10800000).toFormat()} Tokens`, t('10% release at TGE then 10% release Monthly')],
       color: '#C20DA3',
       value: 10800000,
     },
     {
-      title: 'Public Sale',
-      content: [`${new BigNumber(18000000).toFormat()} Tokens`, '40% realease at TGE then 10% Monthly'],
+      title: t('Public Sale'),
+      content: [`${new BigNumber(18000000).toFormat()} Tokens`, t('40% realease at TGE then 10% Monthly')],
       color: '#A964C9',
       value: 18000000,
     },
     {
-      title: 'Liquidity Pools DEX',
-      content: [`${new BigNumber(14400000).toFormat()} Tokens`, '100% lock 5 years'],
+      title: t('Liquidity Pools DEX'),
+      content: [`${new BigNumber(14400000).toFormat()} Tokens`, t('100% lock 5 years')],
       color: '#3D8AFF',
       value: 14400000,
     },
     {
-      title: 'CEX Listing',
-      content: [`${new BigNumber(18000000).toFormat()} Tokens`, 'TGE = 40% then 10% Monthly Release'],
+      title: t('CEX Listing'),
+      content: [`${new BigNumber(18000000).toFormat()} Tokens`, t('TGE = 40% then 10% Monthly Release')],
       color: 'pink',
       value: 18000000,
     },
   ]
   const AAD_TOTAL = [...AAD_DATA_L, ...AAD_DATA_R].map((aad) => aad.value).reduce((a, b) => a + b, 0)
   const AAD_DATA_TOTAL: IAAD = {
-    title: 'XOX Token Metrics',
+    title: t('XOX Token Metrics'),
     content: [`TGE (100%) - ${new BigNumber(AAD_TOTAL).toFormat()} Tokens`],
     highLight: true,
     value: AAD_TOTAL,
@@ -204,7 +209,7 @@ export default function ADDComponent() {
 
   return (
     <>
-      <StyledTitle>Allocation and Distribution</StyledTitle>
+      <StyledTitle>{t('Allocation and Distribution')}</StyledTitle>
 
       <StyledAAD>
         <div className="l">
@@ -235,7 +240,7 @@ export default function ADDComponent() {
               }}
             />
             <div>
-              <h1>Total Supply</h1>
+              <h1>{t('Total Supply')}</h1>
               <p>
                 {new BigNumber(AAD_DATA_TOTAL.value).toFormat()}
                 <br />
