@@ -79,10 +79,7 @@ const Wrapper = styled.div`
           height: 100%;
           cursor: pointer;
           background: #1D1C1C;
-    
-          img {
-            width: 30px;
-          }
+          padding: 0;
         }
     
         .email-icon {
@@ -176,7 +173,7 @@ const Wrapper = styled.div`
           padding: 6px;
       
           input {
-            padding: 7.5px 0px 7.5px 8px;
+            padding: 7.5px 8px 7.5px 8px;
             font-size: 16px;
             line-height: 22px;
           }
@@ -208,7 +205,7 @@ const Wrapper = styled.div`
       .subscription-box {
         .subscription-form {
           input {
-            padding: 7.5px 0px 7.5px 8px;
+            padding: 7.5px 8px 7.5px 8px;
             font-size: 16px;
           }
       
