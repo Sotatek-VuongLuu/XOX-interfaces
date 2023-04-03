@@ -520,7 +520,19 @@ export default function TokenomicsPage() {
 
           <div>
             <div />
-            <img src="/images/tokenomics/Untitled@5-1397x721 1.png" alt="" draggable="false" loading="lazy" />
+            <video
+              loop
+              playsInline
+              autoPlay
+              controls={false}
+              preload="auto"
+              style={{ pointerEvents: 'none' }}
+              controlsList="nodownload"
+              muted
+            >
+              <source src="/videos/home/pie_chart.mp4" type="video/mp4"></source>
+            </video>
+            {/* <img src="/images/tokenomics/Untitled@5-1397x721 1.png" alt="" draggable="false" loading="lazy" /> */}
           </div>
         </StyledHeader>
 

@@ -100,8 +100,10 @@ export const StyledHeader = styled('div')`
       background: radial-gradient(50% 50% at 50% 50%, rgba(237, 28, 81, 0.2) 0%, rgba(237, 28, 81, 0) 100%);
     }
 
-    > img {
+    > video {
       margin: 0 auto;
+      width: 725px;
+      max-width: 100%;
     }
 
     ${({ theme }) => theme.mediaQueries.sm} {
@@ -113,6 +115,14 @@ export const StyledHeader = styled('div')`
 
     ${({ theme }) => theme.mediaQueries.lg} {
       width: initial;
+    }
+
+    ${({ theme }) => theme.mediaQueries.xxl} {
+      width: initial;
+
+      > video {
+        transform: translateY(-80px);
+      }
     }
   }
 `
