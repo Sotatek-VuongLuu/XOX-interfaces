@@ -56,6 +56,7 @@ const LeftContent = styled.div`
 `
 
 const RightContent = styled.div`
+  padding-left: 50px;
   .video-container {
     position: relative;
     border-radius: 5px;
@@ -74,6 +75,7 @@ const RightContent = styled.div`
       width: 100%;
       height: auto;
       left: unset;
+      padding-left: 0;
     }
 
     @media screen and (max-width: 576px) {
@@ -191,7 +193,7 @@ const FeaturePlant = () => {
             </Watch>
           </RightContent>
         </Grid> */}
-        <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }} pl={[0, 0, '50px']}>
+        <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
           <RightContent data-aos="fade-left">
             <div className="video-container">
               <div className="overlay"></div>
