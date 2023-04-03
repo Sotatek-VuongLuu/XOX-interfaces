@@ -3,12 +3,11 @@
 /* eslint-disable react/button-has-type */
 import styled from 'styled-components'
 import { Box, Grid, Popover } from '@mui/material'
-import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import { useMatchBreakpoints, CopyButton } from '@pancakeswap/uikit'
 import React from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
-import { CopyButton } from '@pancakeswap/uikit'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -31,8 +30,8 @@ const Wrapper = styled.div`
     left: -90px;
     width: 50vw;
     height: 50vh;
-    transform: scale(1.5); 
-    
+    transform: scale(1.5);
+
     @media screen and (max-width: 900px) {
       width: 100%;
       height: auto;
@@ -540,19 +539,6 @@ const WelcomeXOX = (): JSX.Element => {
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
-  // useEffect(() => {
-  //   const canvasPC = document.getElementById('canvas3d_pc')
-  //   const canvas = document.getElementById('canvas3d_mobile')
-  //   if (canvasPC) {
-  //     const app = new Application(canvasPC as any)
-  //     app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode').catch((error) => console.log(error))
-  //   }
-  //   if (canvas) {
-  //     const app = new Application(canvas as any)
-  //     app.load('https://prod.spline.design/USClwyyALgodYuZC/scene.splinecode').catch((error) => console.log(error))
-  //   }
-  // }, [])
-
   return (
     <Wrapper>
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
@@ -579,6 +565,7 @@ const WelcomeXOX = (): JSX.Element => {
                   <a
                     href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
                     target="_blank"
+                    rel="noreferrer"
                   >
                     <div className="get_xox">
                       <div className="boxed-child">
@@ -589,19 +576,19 @@ const WelcomeXOX = (): JSX.Element => {
                 </div>
                 <div className="icon-box">
                   <div className="single-icon">
-                    <img src="/images/home/hero/twitter.svg"></img>
+                    <img src="/images/home/hero/twitter.svg" alt="social_media" />
                   </div>
                   <div className="single-icon">
-                    <img src="/images/home/hero/speaker.svg"></img>
+                    <img src="/images/home/hero/speaker.svg" alt="social_media" />
                   </div>
                   <div className="single-icon">
-                    <img src="/images/home/hero/telegram.svg"></img>
+                    <img src="/images/home/hero/telegram.svg" alt="social_media" />
                   </div>
                   <div className="single-icon">
-                    <img src="/images/home/hero/discord.svg"></img>
+                    <img src="/images/home/hero/discord.svg" alt="social_media" />
                   </div>
                   <div className="single-icon">
-                    <img src="/images/home/hero/youtube.svg"></img>
+                    <img src="/images/home/hero/youtube.svg" alt="social_media" />
                   </div>
                 </div>
 
@@ -633,15 +620,15 @@ const WelcomeXOX = (): JSX.Element => {
                           id="email"
                           name="email"
                           placeholder=""
-                          value={`${XOX_ADDRESS[chainId == 5 ? chainId : 1].substring(0, 8)}...${XOX_ADDRESS[
-                            chainId == 5 ? chainId : 1
-                          ].substring(XOX_ADDRESS[chainId == 5 ? chainId : 1].length - 4)}`}
+                          value={`${XOX_ADDRESS[chainId === 5 ? chainId : 1].substring(0, 8)}...${XOX_ADDRESS[
+                            chainId === 5 ? chainId : 1
+                          ].substring(XOX_ADDRESS[chainId === 5 ? chainId : 1].length - 4)}`}
                           required
                         />
                       </>
                     )}
                     <CopyButton
-                      text={XOX_ADDRESS[chainId == 5 ? chainId : 1]}
+                      text={XOX_ADDRESS[chainId === 5 ? chainId : 1]}
                       tooltipMessage={t('Copied')}
                       button={<img src="/images/home/hero/copy.svg" alt="copy" style={{ marginTop: '3px' }} />}
                     />
@@ -653,7 +640,7 @@ const WelcomeXOX = (): JSX.Element => {
                           params: {
                             type: 'ERC20',
                             options: {
-                              address: XOX_ADDRESS[chainId == 5 ? chainId : 1],
+                              address: XOX_ADDRESS[chainId === 5 ? chainId : 1],
                               symbol: 'XOX',
                               decimals: 18,
                               image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
@@ -672,7 +659,7 @@ const WelcomeXOX = (): JSX.Element => {
                           params: {
                             type: 'ERC20',
                             options: {
-                              address: XOX_ADDRESS[chainId == 5 ? chainId : 1],
+                              address: XOX_ADDRESS[chainId === 5 ? chainId : 1],
                               symbol: 'XOX',
                               decimals: 18,
                               image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
@@ -714,17 +701,17 @@ const WelcomeXOX = (): JSX.Element => {
                       <img src="/images/home/hero/bsc.svg" alt="bsc" />
                       <div className="coin-data">
                         <p className="title">Binance Smart Chain (BSC)</p>
-                        <p className="description">{`${XOX_ADDRESS[chainId == 97 ? chainId : 56].substring(
+                        <p className="description">{`${XOX_ADDRESS[chainId === 97 ? chainId : 56].substring(
                           0,
                           8,
-                        )}...${XOX_ADDRESS[chainId == 97 ? chainId : 56].substring(
-                          XOX_ADDRESS[chainId == 97 ? chainId : 56].length - 4,
+                        )}...${XOX_ADDRESS[chainId === 97 ? chainId : 56].substring(
+                          XOX_ADDRESS[chainId === 97 ? chainId : 56].length - 4,
                         )}`}</p>
                       </div>
                     </div>
                     <div className="coin-buttons">
                       <CopyButton
-                        text={XOX_ADDRESS[chainId == 97 ? chainId : 56]}
+                        text={XOX_ADDRESS[chainId === 97 ? chainId : 56]}
                         tooltipMessage={t('Copied')}
                         button={<img src="/images/home/hero/copy.svg" alt="copy" style={{ marginTop: '7px' }} />}
                       />
@@ -736,7 +723,7 @@ const WelcomeXOX = (): JSX.Element => {
                             params: {
                               type: 'ERC20',
                               options: {
-                                address: XOX_ADDRESS[chainId == 97 ? chainId : 56],
+                                address: XOX_ADDRESS[chainId === 97 ? chainId : 56],
                                 symbol: 'XOX',
                                 decimals: 18,
                                 image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
@@ -755,7 +742,7 @@ const WelcomeXOX = (): JSX.Element => {
                             params: {
                               type: 'ERC20',
                               options: {
-                                address: XOX_ADDRESS[chainId == 97 ? chainId : 56],
+                                address: XOX_ADDRESS[chainId === 97 ? chainId : 56],
                                 symbol: 'XOX',
                                 decimals: 18,
                                 image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
@@ -773,26 +760,10 @@ const WelcomeXOX = (): JSX.Element => {
             </LeftContent>
           </GridLeft>
           <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
-            {/* {(isMobile || isTablet) && (
-              <ImageWrapper>
-                <canvas id="canvas3d_mobile" />
-              </ImageWrapper>
-            )} */}
-
-            {/* {isDesktop && <canvas id="canvas3d_pc" />} */}
-
             <div className="video-container">
-              <div className="overlay"></div>
-              <video
-                loop
-                playsInline
-                autoPlay
-                controls={false}
-                preload='auto'
-                style={{ pointerEvents: 'none' }}
-                muted
-              >
-                <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4"></source>
+              <div className="overlay" />
+              <video loop playsInline autoPlay controls={false} preload="auto" style={{ pointerEvents: 'none' }} muted>
+                <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4" />
               </video>
             </div>
           </Grid>
