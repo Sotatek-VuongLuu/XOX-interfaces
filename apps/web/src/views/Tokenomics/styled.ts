@@ -425,6 +425,13 @@ export const StyledAddress = styled('div')`
     border-radius: 6px;
     overflow: hidden;
     gap: 8px;
+    position: relative;
+
+    .copied_btn {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
 
     > div {
       display: flex;

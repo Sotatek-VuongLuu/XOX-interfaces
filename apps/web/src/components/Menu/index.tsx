@@ -13,6 +13,7 @@ import {
 } from '@pancakeswap/uikit'
 import { useTranslation, languageList } from '@pancakeswap/localization'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
+import LangSelector from '@pancakeswap/uikit/src/components/LangSelector/LangSelector'
 import useTheme from 'hooks/useTheme'
 import io from 'socket.io-client'
 import axios from 'axios'
@@ -27,7 +28,6 @@ import { useMenuItems } from './hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { configLanding } from './config/config'
-import LangSelector from '@pancakeswap/uikit/src/components/LangSelector/LangSelector'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;
