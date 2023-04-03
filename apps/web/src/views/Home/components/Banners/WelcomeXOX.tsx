@@ -31,7 +31,8 @@ const Wrapper = styled.div`
     top: 0;
     left: -90px;
     width: 50vw;
-    height: 48vh; 
+    height: 50vh;
+    transform: scale(1.5); 
     
     @media screen and (max-width: 900px) {
       width: 100%;
@@ -695,12 +696,13 @@ const WelcomeXOX = (): JSX.Element => {
               <video
                 loop
                 playsInline
-                autoPlay={true}
+                autoPlay
                 controls={false}
                 preload='auto'
                 style={{ pointerEvents: 'none' }}
+                muted
               >
-                <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
+                <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4"></source>
               </video>
             </div>
           </Grid>
