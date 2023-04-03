@@ -34,13 +34,13 @@ const BTNLaunchApp = styled.button`
   font-size: 16px;
   color: #ffffff;
   padding: 12px 30px;
-  background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+  background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   border-radius: 10px;
   border: none;
   cursor: pointer;
 
   &:hover {
-    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   }
 `
 
@@ -359,18 +359,18 @@ const Menu = (props) => {
                       <p>Your referral code has been applied in a "Buy XOX” transaction</p>
                     </NotificationMenu>
                   )}
-                </NotificationField> 
+                </NotificationField>
               ) : (
                 <></>
               )}
-              <LangSelector
+              {/* <LangSelector
                 currentLang={currentLanguage.code}
                 langs={languageList}
                 setLang={setLanguage}
                 buttonScale="xs"
                 color="textSubtle"
                 hideLanguage
-              />
+              /> */}
               <NetworkSwitcher />
               <UserMenu />
               {openHeader ? (
