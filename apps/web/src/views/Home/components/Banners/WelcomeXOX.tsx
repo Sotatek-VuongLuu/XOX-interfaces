@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 
   .video-container video {
     position: absolute;
-    z-index: -1;
+    z-index: 1;
     top: 0;
     left: -90px;
     width: 45vw;
@@ -40,30 +40,9 @@ const Wrapper = styled.div`
     }
 
     @media screen and (max-width: 576px) {
-      left: unset;
-      width: 100%;
       height: 280px;
-      top: 0;
-      position: absolute;
-
       transform: scale(1.5);
     }
-  }
-
-  .video-container .overlay {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 2;
-    background: radial-gradient(
-      50% 50% at 50% 50%,
-      rgba(249, 124, 29, 0.5) 0%,
-      rgba(246, 99, 42, 0.5) 0.01%,
-      rgba(249, 124, 29, 0) 100%
-    );
-    // opacity: 0.5;
   }
 
   @media screen and (max-width: 900px) {
@@ -621,7 +600,16 @@ const WelcomeXOX = (): JSX.Element => {
                     {(isMobile || isTablet) && (
                       <>
                         <span>ETH:</span>
-                        <input type="text" id="email" name="email" placeholder="" value="0xA...d7f" required />
+                        <input
+                          type="text"
+                          id="email"
+                          name="email"
+                          placeholder=""
+                          value={`${XOX_ADDRESS[chainId == 5 ? chainId : 1].substring(0, 8)}...${XOX_ADDRESS[
+                            chainId == 5 ? chainId : 1
+                          ].substring(XOX_ADDRESS[chainId == 5 ? chainId : 1].length - 4)}`}
+                          required
+                        />
                       </>
                     )}
 
@@ -782,7 +770,6 @@ const WelcomeXOX = (): JSX.Element => {
             {/* {isDesktop && <canvas id="canvas3d_pc" />} */}
 
             <div className="video-container">
-              <div className="overlay"></div>
               <video
                 loop
                 playsInline
@@ -790,6 +777,7 @@ const WelcomeXOX = (): JSX.Element => {
                 controls={false}
                 preload='auto'
                 style={{ pointerEvents: 'none' }}
+                controlsList="nodownload"
                 muted
               >
                 <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4"></source>

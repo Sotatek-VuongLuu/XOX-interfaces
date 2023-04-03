@@ -66,8 +66,9 @@ const RightContent = styled.div`
     z-index: 1;
     top: 0;
     left: 0;
-    width: 50vw;
-    height: 50vh;
+    width: 45vw;
+    height: auto;
+    transform: scale(1.1);
 
     @media screen and (max-width: 900px) {
       width: 100%;
@@ -79,16 +80,6 @@ const RightContent = styled.div`
       height: 280px;
       transform: scale(1.5);
     }
-  }
-  .video-container .overlay {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 2;
-    background: #0a0a0a;
-    opacity: 0.5;
   }
 `
 
@@ -207,10 +198,12 @@ const FeaturePlant = () => {
               <video
                 loop
                 playsInline
-                autoPlay={true}
+                autoPlay
                 controls={false}
                 preload='auto'
                 style={{ pointerEvents: 'none' }}
+                controlsList="nodownload"
+                muted
               >
                 <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
               </video>
