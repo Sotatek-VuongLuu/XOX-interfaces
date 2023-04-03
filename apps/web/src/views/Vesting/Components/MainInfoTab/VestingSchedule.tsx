@@ -216,7 +216,7 @@ const SaleItem = ({
   useEffect(() => {
     const id = setTimeout(() => {
       index === 0 && handleGetDataVesting()
-    }, 5000)
+    }, 20000)
     return () => clearTimeout(id)
   }, [count])
 
@@ -512,6 +512,8 @@ function VestingSchedule({
       </>
     )
   }, [handleClaim, handleGetDataVesting, newVesting])
+
+  console.log(`newVesting`, newVesting)
 
   return (
     <Wrapper>
