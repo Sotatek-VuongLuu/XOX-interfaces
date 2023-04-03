@@ -12,7 +12,7 @@ import { ApprovalState, useApproveCallback } from 'hooks/useApproveCallback'
 import { useXOXPreSaleContract } from 'hooks/useContract'
 import moment from 'moment'
 import axios from 'axios'
-import { useCallback, useContext, useEffect, useState } from 'react'
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
 import { getContractPreSaleAddress } from 'utils/addressHelpers'
@@ -42,6 +42,7 @@ import SaleStats from './Components/SaleStats'
 import SaleStatus from './Components/SaleStatus'
 import SaleHistorySession from './VestingSaleHistory'
 import { useGetSaleStats } from './hooks'
+import ModalWarning from './Components/ModalWarning'
 
 const Page = styled.div`
   height: 100%;
@@ -452,6 +453,7 @@ function VestingPage() {
 
   const [whiteList, setWhiteList] = useState<string[]>([])
   const [isUserInWhiteList, setIsUserInWhiteList] = useState<boolean>(false)
+  const [lanchTime, setLanchTime] = useState<number | null>(null)
 
   const [approvalState, approveCallback] = useApproveCallback(
     USDT[ChainId.GOERLI] && tryParseAmount('0.01', USDT_GOERLI),
@@ -472,7 +474,6 @@ function VestingPage() {
   const [messageConfirm, setMessageConfirm] = useState<string>('')
   const [massageErrorAmount, setMassageErrorAmount] = useState<string>('')
   const [reacheZero, setReachZero] = useState<boolean>(null)
-  const [isTimeAllowWhitelist, setIsTimeAllowWhitelist] = useState<boolean>(false)
   const [_, setisReachWhitelist] = useState<boolean>(false)
   const [loadOk, setLoadOk] = useState(false)
   const [timeRecall, setTimeRecall] = useState(7)
@@ -501,10 +502,11 @@ function VestingPage() {
   const handleGetInfoRound = async () => {
     try {
       if (chainId === 97 || chainId === 56) return
-      const [dataROne, dataRTwo, dataRThree] = await Promise.all([
+      const [dataROne, dataRTwo, dataRThree, launchTime] = await Promise.all([
         contractPreSale.saleRound(ROUND.ONE),
         contractPreSale.saleRound(ROUND.TWO),
         contractPreSale.saleRound(ROUND.THREE),
+        contractPreSale.launchTime(),
       ])
       setInfoRoundOne({
         ...infoRoundOne,
@@ -531,6 +533,7 @@ function VestingPage() {
         bonusPercentage: new BigNumber(dataRThree.bonusPercentage._hex).toNumber(),
         exchangeRate: new BigNumber(dataRThree.exchangeRate._hex).toNumber(),
       })
+      setLanchTime(new BigNumber(launchTime._hex).toNumber())
     } catch (error) {
       console.warn(error)
     }
@@ -554,13 +557,13 @@ function VestingPage() {
     }
   }
 
-  const handleGetOneHourBeforeSale = () => {
+  const handleGetOneHourAfterSale = useMemo(() => {
     const timeStartWhiteList = moment
       .unix(infoRoundOne.startDate / 1000)
-      .subtract(1, 'hour')
+      .add(1, 'hour')
       .unix()
     return timeStartWhiteList * 1000
-  }
+  }, [infoRoundOne])
 
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
 
@@ -586,16 +589,14 @@ function VestingPage() {
   }
 
   const handeInvest = async (code: any) => {
+    const timeStamp = Date.now()
     const valueETH = typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseEther('0')
     const addressTokenBuy = typeBuyPrice === TYPE_BY.BY_ETH ? NATIVE_TOKEN : USDT[ChainId.GOERLI]
     const amountParse =
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), decimal)
     setMessageConfirm(`Buying ${Number(amountXOX).toLocaleString()} XOX`)
-    if (
-      isUserInWhiteList &&
-      handleGetOneHourBeforeSale() <= timeStampOfNow &&
-      timeStampOfNow < infoRoundOne.startDate
-    ) {
+
+    if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate) {
       try {
         setIsOpenLoadingClaimModal(true)
         const _merkleProof = getHexProof(dataWhitelist, account)
@@ -615,6 +616,7 @@ function VestingPage() {
         const txHash = await txWhitelist.wait(1)
         if (txHash?.transactionHash) {
           setIsOpenLoadingClaimModal(false)
+          handleGetDataVesting()
           handleGetTotalTokenInvested(currentRound)
           onDissmiss()
           toastSuccess(
@@ -638,43 +640,43 @@ function VestingPage() {
           toastError('Error', 'Transaction failed')
         }
       }
+      return
     }
 
-    if (isInTimeRangeSale) {
-      try {
-        setIsOpenLoadingClaimModal(true)
-        const gasFee = await contractPreSale.estimateGas.invest(addressTokenBuy, amountParse, code, {
-          value: valueETH,
-        })
-        const txInvest = await contractPreSale.invest(addressTokenBuy, amountParse, code, {
-          value: valueETH,
-          gasLimit: gasFee,
-        })
-        const txHashInvest = await txInvest.wait(1)
-        if (txHashInvest?.transactionHash) {
-          onDissmiss()
-          setIsOpenLoadingClaimModal(false)
-          handleGetTotalTokenInvested(currentRound)
-          toastSuccess(
-            `Bought XOX`,
-            <ToastDescriptionWithTx txHash={txHashInvest.transactionHash}>
-              {t('Your %symbol% investment has been confirmed!', { symbol: 'XOX' })}
-            </ToastDescriptionWithTx>,
-          )
-        }
-      } catch (error: any) {
+    try {
+      setIsOpenLoadingClaimModal(true)
+      const gasFee = await contractPreSale.estimateGas.invest(addressTokenBuy, amountParse, code, {
+        value: valueETH,
+      })
+      const txInvest = await contractPreSale.invest(addressTokenBuy, amountParse, code, {
+        value: valueETH,
+        gasLimit: gasFee,
+      })
+      const txHashInvest = await txInvest.wait(1)
+      if (txHashInvest?.transactionHash) {
+        onDissmiss()
+        handleGetDataVesting()
         setIsOpenLoadingClaimModal(false)
-        if (error?.message?.includes('rejected')) {
-          toastError('Error', 'User rejected the request.')
-          return
-        }
-        if (error?.message?.includes('PreSale: Exchange amount exceed limit!')) {
-          toastError('Error', 'Exchange amount exceed limit!')
-          return
-        }
-        if (error?.code !== 4001) {
-          toastError('Error', 'Transaction failed')
-        }
+        handleGetTotalTokenInvested(currentRound)
+        toastSuccess(
+          `Bought XOX`,
+          <ToastDescriptionWithTx txHash={txHashInvest.transactionHash}>
+            {t('Your %symbol% investment has been confirmed!', { symbol: 'XOX' })}
+          </ToastDescriptionWithTx>,
+        )
+      }
+    } catch (error: any) {
+      setIsOpenLoadingClaimModal(false)
+      if (error?.message?.includes('rejected')) {
+        toastError('Error', 'User rejected the request.')
+        return
+      }
+      if (error?.message?.includes('PreSale: Exchange amount exceed limit!')) {
+        toastError('Error', 'Exchange amount exceed limit!')
+        return
+      }
+      if (error?.code !== 4001) {
+        toastError('Error', 'Transaction failed')
       }
     }
   }
@@ -712,11 +714,7 @@ function VestingPage() {
 
   const handleRenderTenMonths = (dateAgr: number) => {
     const arrLockingTime = []
-    const timeInit = moment
-      .unix(dateAgr / 1000)
-      .add(0.5, 'hour')
-      .unix()
-    arrLockingTime.push(timeInit * 1000)
+    arrLockingTime.push(dateAgr * 1000)
     for (let i = 0; i < 9; i++) {
       const time = moment
         .unix(arrLockingTime[i] / 1000)
@@ -731,7 +729,6 @@ function VestingPage() {
     if (chainId === 97 || chainId === 56) return
     const dataClone: IVestingTime[] = [...vestingTiming]
     const round = [1, 2, 3]
-    const dataRoundDate = [infoRoundOne, infoRoundTow, infoRoundThree]
 
     round.forEach(async (item) => {
       const [vested, currentXOX, userInvested] = await Promise.all([
@@ -744,9 +741,7 @@ function VestingPage() {
       dataClone[item - 1].remaining = new BigNumber(formatEther(userInvested).toString())
         .minus(formatEther(vested).toString())
         .toFixed(2)
-      dataClone[item - 1].startTime = dataRoundDate[item - 1].endDate
-        ? handleRenderTenMonths(dataRoundDate[item - 1].endDate)
-        : []
+      dataClone[item - 1].startTime = lanchTime ? handleRenderTenMonths(lanchTime) : []
     })
     setDataVestingSchedule(dataClone)
   }
@@ -761,10 +756,6 @@ function VestingPage() {
     } else {
       setIsInTimeRangeSale(false)
     }
-  }
-
-  const handleIsTimeAllowWhitelist = (time: number) => {
-    setIsTimeAllowWhitelist(handleGetOneHourBeforeSale() <= time && time < infoRoundOne.startDate)
   }
 
   const handleGetTotalTokenInvested = async (round: number) => {
@@ -820,6 +811,17 @@ function VestingPage() {
       })
   }
 
+  const onModal = () => {
+    const timeStamp = Date.now()
+    if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate && !isUserInWhiteList) {
+      onModalWarning()
+      return
+    }
+    onModalExchangeSale()
+  }
+
+  const [onModalWarning] = useModal(<ModalWarning timeWhitelist={handleGetOneHourAfterSale} />)
+
   const [onModalExchangeSale, onDissmiss] = useModal(
     <ModalSaleExchange
       amount={amount}
@@ -842,7 +844,6 @@ function VestingPage() {
       setAmountXOXS={setAmountXOXS}
       balanceLP={balanceLP}
       balanceNative={balanceNative}
-      isTimeAllowWhitelist={isTimeAllowWhitelist}
     />,
     true,
     true,
@@ -897,7 +898,7 @@ function VestingPage() {
   const handleGetDataTransaction = async () => {
     try {
       const result = await getDataTransaction()
-      if (result && result?.transactionPreSales) {
+      if (result && result?.transactionPreSales && result?.transactionPreSales.length > 0) {
         const listAddress = result?.transactionPreSales.map((item: any) => item?.sender)
         const response = await axios.post(`${process.env.NEXT_PUBLIC_API}/users/address/mapping`, {
           wallets: listAddress,
@@ -1081,13 +1082,12 @@ function VestingPage() {
   }, [account, chainId, provider, nodeId])
 
   useEffect(() => {
-    if (!account || !chainId || !infoRoundOne.startDate) return
+    if (!account || !chainId || lanchTime === null) return
     handleGetDataVesting()
     handCheckInTimeRangeSale(timeStampOfNow)
-    handleIsTimeAllowWhitelist(timeStampOfNow)
     handleGetCurrentRound(timeStampOfNow)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, chainId, infoRoundOne, infoRoundThree, infoRoundTow])
+  }, [account, chainId, infoRoundOne, infoRoundThree, infoRoundTow, lanchTime])
 
   useEffect(() => {
     setReferralError(null)
@@ -1106,7 +1106,6 @@ function VestingPage() {
     if (reacheZero) {
       const timeStampAtNow = Date.now()
       handCheckInTimeRangeSale(timeStampAtNow)
-      handleIsTimeAllowWhitelist(timeStampAtNow)
       handleGetCurrentRound(timeStampAtNow)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1122,11 +1121,6 @@ function VestingPage() {
   }, [whiteList, setWhiteList, account, dataWhitelist])
 
   useEffect(() => {
-    handleGetOneHourBeforeSale()
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [infoRoundOne])
-
-  useEffect(() => {
     if (!account || !chainId) return
     if (loadOk) window.location.reload()
     setLoadOk(true)
@@ -1138,20 +1132,18 @@ function VestingPage() {
       <Page>
         <ContentContainer>
           <CountDownBlock
-            onModalExchangeSale={onModalExchangeSale}
+            onModalExchangeSale={onModal}
             currentRound={currentRound}
             infoRoundOne={infoRoundOne}
             infoRoundTow={infoRoundTow}
             infoRoundThree={infoRoundThree}
             isInTimeRangeSale={isInTimeRangeSale}
-            isUserInWhiteList={isUserInWhiteList}
-            isTimeAllowWhitelist={isTimeAllowWhitelist}
             setTypeBuyPrice={setTypeBuyPrice}
             typeBuyPrice={typeBuyPrice}
             totalXOXTokenInRound={totalXOXTokenInRound}
             reacheZero={reacheZero}
             setReachZero={setReachZero}
-            oneHourBeforeStart={handleGetOneHourBeforeSale()}
+            oneHourBeforeStart={handleGetOneHourAfterSale}
             setisReachWhitelist={setisReachWhitelist}
           />
           <SaleStats dataStat={arrSaleStats} />

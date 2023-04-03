@@ -198,7 +198,6 @@ const Content = styled.div`
     &:hover {
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       color: #ffffff;
-
       border-radius: 30px;
       /* &:before {
           content: '';
@@ -242,7 +241,6 @@ const Content = styled.div`
   .tab-mechanism {
     display: flex;
     width: fit-content;
-    color: white;
     cursor: pointer;
     /* margin-bottom: 24px; */
     justify-content: center;
@@ -279,14 +277,11 @@ const Content = styled.div`
 
   .swiper-button-next {
     z-index: 999;
-    background-image: url(/images/next.svg);
+    background-image: url(/images/new_next.svg);
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
     border-radius: 50%;
-    @media screen and (max-width: 555px) {
-      margin-right: -14px;
-    }
   }
 
   .swiper-button-next::after {
@@ -294,7 +289,7 @@ const Content = styled.div`
   }
 
   .swiper-button-prev {
-    background-image: url(/images/prev.svg);
+    background-image: url(/images/new_prev.svg);
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
@@ -322,7 +317,6 @@ function SaleMechanism({
   const { account } = useActiveWeb3React()
   const [isMore, setIsMore] = useState(false)
   const swiperRef = useRef(null)
-  const swiper = useSwiper()
 
   const renderBody = useMemo(() => {
     switch (tabActiveMechansim) {
@@ -395,51 +389,53 @@ function SaleMechanism({
       <div className="corner2" />
       <div className="edge2" />
       <Content>
-        {/* <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}> */}
-        {/* <div className="tab-mechanism">
-            {Array.from(tabSaleMechanism).map((item, index) => {
-              return (
-                <div
-                  // eslint-disable-next-line react/no-array-index-key
-                  key={index}
-                  className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
-                  onClick={() => setTabActiveMechansim(item)}
-                  aria-hidden="true"
-                >
-                  {item}
-                </div>
-              )
-            })}
-          </div> */}
-        {/* </div> */}
-
-        <div style={{ marginBottom: '24px' }}>
-          {/* <img src="/images/prev.svg" alt="" onClick={() => swiperRef?.current?.slideNext()} /> */}
-          <Swiper
-            slidesPerView="auto"
-            modules={[Navigation, Pagination, A11y]}
-            navigation
-            scrollbar={{ draggable: true }}
-            ref={swiperRef}
-          >
-            {Array.from(tabSaleMechanism).map((item, index) => {
-              return (
-                <SwiperSlide style={{ width: 'fit-content' }}>
+        {width >= 900 && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+            <div className="tab-mechanism">
+              {Array.from(tabSaleMechanism).map((item, index) => {
+                return (
                   <div
                     // eslint-disable-next-line react/no-array-index-key
                     key={index}
                     className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
                     onClick={() => setTabActiveMechansim(item)}
                     aria-hidden="true"
-                    style={{ color: 'white' }}
                   >
                     {item}
                   </div>
-                </SwiperSlide>
-              )
-            })}
-          </Swiper>
-        </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+        {width < 900 && (
+          <div style={{ marginBottom: '24px' }}>
+            <Swiper
+              slidesPerView="auto"
+              modules={[Navigation, Pagination, A11y]}
+              navigation
+              scrollbar={{ draggable: true }}
+              ref={swiperRef}
+            >
+              {Array.from(tabSaleMechanism).map((item, index) => {
+                return (
+                  <SwiperSlide style={{ width: 'fit-content' }}>
+                    <div
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={index}
+                      className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
+                      onClick={() => setTabActiveMechansim(item)}
+                      aria-hidden="true"
+                    >
+                      {item}
+                    </div>
+                  </SwiperSlide>
+                )
+              })}
+            </Swiper>
+          </div>
+        )}
+
         <div className="body">{renderBody}</div>
       </Content>
       {!account && (tabActiveMechansim === 'Vesting Schedule' || tabActiveMechansim === 'Your Information')

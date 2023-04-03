@@ -169,11 +169,9 @@ interface IProps {
   infoRoundThree: RoundInfo
   totalXOXTokenInRound: number | string
   isInTimeRangeSale: boolean
-  isUserInWhiteList: boolean
-  isTimeAllowWhitelist: boolean
   setReachZero: (isReach: boolean) => void
   reacheZero: boolean
-  oneHourBeforeStart: number
+  oneHourBeforeStart?: number
   setisReachWhitelist: (reach: boolean) => void
 }
 
@@ -187,21 +185,16 @@ function StartingSoon({
   totalXOXTokenInRound,
   currentRound,
   isInTimeRangeSale,
-  isUserInWhiteList,
-  isTimeAllowWhitelist,
   reacheZero,
   setReachZero,
-  oneHourBeforeStart,
   setisReachWhitelist,
 }: IProps) {
-  const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
   const [timeNow, setTimeNow] = useState(timeStampOfNow)
 
   const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
 
   const handleReturnPercent = useMemo(() => {
-    const roundCheckWithWhitelist = isTimeAllowWhitelist ? 1 : currentRound
-    switch (roundCheckWithWhitelist) {
+    switch (currentRound) {
       case 1: {
         const percent = new BigNumber(totalXOXTokenInRound)
           .multipliedBy(100)
@@ -251,17 +244,10 @@ function StartingSoon({
       default:
         break
     }
-  }, [totalXOXTokenInRound, currentRound, isTimeAllowWhitelist])
+  }, [totalXOXTokenInRound, currentRound])
 
   const handleCountdownArg = (startDate: number) => {
-    return (
-      <CountDown
-        startTime={startDate}
-        setReachZero={setReachZero}
-        oneHourBeforeStart={oneHourBeforeStart}
-        setisReachWhitelist={setisReachWhitelist}
-      />
-    )
+    return <CountDown startTime={startDate} setReachZero={setReachZero} setisReachWhitelist={setisReachWhitelist} />
   }
 
   const handleRenderCountdown = (time: number) => {
@@ -404,7 +390,7 @@ function StartingSoon({
       ) : (
         handleRenderCountdown(timeNow)
       )}
-      {(isInTimeRangeSale || isCanBuyWithWhitelistUser) && handleReturnPercent}
+      {isInTimeRangeSale && handleReturnPercent}
     </Wrapper>
   )
 }

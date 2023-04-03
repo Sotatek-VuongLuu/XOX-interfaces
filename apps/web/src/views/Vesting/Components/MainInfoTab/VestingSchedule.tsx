@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 import { Button } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -214,7 +215,7 @@ const SaleItem = ({
 
   useEffect(() => {
     const id = setTimeout(() => {
-      handleGetDataVesting()
+      index === 0 && handleGetDataVesting()
     }, 5000)
     return () => clearTimeout(id)
   }, [count])
@@ -524,25 +525,17 @@ function VestingSchedule({
       )}
       {account && (
         <>
-          {newVesting.length > 0 && newVesting[0]?.startTime.length !== 0 ? (
-            <div className="total_vested">
-              Current XOX Tokens Vested:{' '}
-              {Number(
-                new BigNumber(newVesting[0]?.remaining)
-                  .plus(newVesting[1]?.remaining)
-                  .plus(newVesting[2]?.remaining)
-                  .toFixed(2),
-              ).toLocaleString()}
-            </div>
-          ) : (
-            <div className="btn_connect_container">
-              <p className="nodata">No Data</p>
-            </div>
-          )}
+          <div className="total_vested">
+            Current XOX Tokens Vested:{' '}
+            {Number(
+              new BigNumber(newVesting[0]?.remaining)
+                .plus(newVesting[1]?.remaining)
+                .plus(newVesting[2]?.remaining)
+                .toFixed(2),
+            ).toLocaleString()}
+          </div>
           <Content>
-            <div className="over_flow">
-              {newVesting.length > 0 && newVesting[0]?.startTime.length !== 0 ? renderVestingSale : null}
-            </div>
+            <div className="over_flow">{renderVestingSale}</div>
           </Content>
         </>
       )}

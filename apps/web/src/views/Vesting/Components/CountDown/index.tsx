@@ -148,12 +148,12 @@ interface Props {
   setisReachWhitelist?: (reach: boolean) => void
 }
 
-const handleTime = (time: number) => {
+export const handleTime = (time: number) => {
   return time < 10 ? `0${time}` : time
 }
 
 // const timeStart = 1665892723
-const CountDown = ({ startTime, setReachZero, oneHourBeforeStart, setisReachWhitelist }: Props) => {
+const CountDown = ({ startTime, setReachZero, setisReachWhitelist }: Props) => {
   const [timeList, setTimeList] = useState({
     days: 0,
     hours: 0,

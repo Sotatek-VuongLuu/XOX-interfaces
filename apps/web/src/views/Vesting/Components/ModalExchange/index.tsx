@@ -274,7 +274,7 @@ const FlexCustom = styled(Flex)`
   }
 `
 
-const TextCustom = styled(Text)`
+export const TextCustom = styled(Text)`
   @media screen and (max-width: 900px) {
     font-size: 18px;
     line-height: 22px;
@@ -294,7 +294,7 @@ interface Props extends InjectedModalProps {
   handleChangeReferal: (value: string) => void
   setCodeRef: (value: any) => void
   referralError: any
-  isTimeAllowWhitelist: boolean
+  isTimeAllowWhitelist?: boolean
   amountXOX: string | number
   amountXOXS: string | number
   setAmountXOX: (value: string | number) => void
@@ -319,7 +319,6 @@ function ModalSaleExchange({
   handleChangeReferal,
   setCodeRef,
   referralError,
-  isTimeAllowWhitelist,
   amountXOX,
   amountXOXS,
   massageErrorAmount,
@@ -333,12 +332,11 @@ function ModalSaleExchange({
   const isSwap = approvalState !== ApprovalState.APPROVED && typeBuyPrice === TYPE_BY.BY_ERC20
 
   const handleRenderXOXAmount = (typeBuy: number, round: number, amountToken: any) => {
-    const roundCheckWithWhitelist = isTimeAllowWhitelist ? 1 : round
     const totalDolla =
       typeBuy === TYPE_BY.BY_ETH
         ? new BigNumber(amountToken || 0).multipliedBy(ethPerDolla).toNumber()
         : amountToken || 0
-    switch (roundCheckWithWhitelist) {
+    switch (round) {
       case 1:
         setAmountXOX(new BigNumber(totalDolla).div(0.044).toNumber().toFixed(2))
         setAmountXOXS(new BigNumber(totalDolla).multipliedBy(0.08).toNumber().toFixed(2))

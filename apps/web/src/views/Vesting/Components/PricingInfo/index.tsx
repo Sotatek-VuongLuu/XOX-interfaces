@@ -435,24 +435,14 @@ interface IProps {
   onModalExchangeSale: () => void
   currentRound: number
   isInTimeRangeSale: boolean
-  isUserInWhiteList: boolean
-  isTimeAllowWhitelist: boolean
   setTypeBuyPrice: (typeBuy: number) => void
   typeBuyPrice: number
 }
 
-function PricingInfo({
-  onModalExchangeSale,
-  currentRound,
-  isInTimeRangeSale,
-  isUserInWhiteList,
-  isTimeAllowWhitelist,
-  setTypeBuyPrice,
-}: IProps) {
+function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, setTypeBuyPrice }: IProps) {
   const { account } = useActiveWeb3React()
   const [arrDataRound, setArrDataRound] = useState<dataRoundPricing[]>(dataPricing)
   const { width } = useWindowSize()
-  const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
 
   const handleCheckRound = (num: number) => {
     const dataUpdate = Array.from(dataPricing).map((item: dataRoundPricing) => {
@@ -541,63 +531,33 @@ function PricingInfo({
         {!account && <ConnectWalletButtonCustom width="100%" />}
         {account && (
           <div className="btn_group">
-            {isCanBuyWithWhitelistUser ? (
-              <>
-                <CustomButton
-                  onClick={() => {
-                    onModalExchangeSale()
-                    setTypeBuyPrice(TYPE_BY.BY_ERC20)
-                  }}
-                >
-                  Buy with USDT
-                </CustomButton>
+            <CustomButton
+              onClick={() => {
+                onModalExchangeSale()
+                setTypeBuyPrice(TYPE_BY.BY_ERC20)
+              }}
+              disabled={!isInTimeRangeSale}
+            >
+              Buy with USDT
+            </CustomButton>
 
-                <ButtonETH
-                  className="btn_get_eth"
-                  onClick={() => {
-                    onModalExchangeSale()
-                    setTypeBuyPrice(TYPE_BY.BY_ETH)
-                  }}
-                  aria-hidden="true"
-                >
-                  <div className="corner_btn_1" />
-                  <div className="edge_btn_1" />
-                  <div className="corner_btn_2" />
-                  <div className="edge_btn_2" />
-                  <span>Buy with ETH</span>
-                </ButtonETH>
-              </>
+            {!isInTimeRangeSale ? (
+              <CustomButton disabled={!isInTimeRangeSale}>Buy with ETH</CustomButton>
             ) : (
-              <>
-                <CustomButton
-                  onClick={() => {
-                    onModalExchangeSale()
-                    setTypeBuyPrice(TYPE_BY.BY_ERC20)
-                  }}
-                  disabled={!isInTimeRangeSale}
-                >
-                  Buy with USDT
-                </CustomButton>
-
-                {!isInTimeRangeSale ? (
-                  <CustomButton disabled={!isInTimeRangeSale}>Buy with ETH</CustomButton>
-                ) : (
-                  <ButtonETH
-                    className="btn_get_eth"
-                    onClick={() => {
-                      onModalExchangeSale()
-                      setTypeBuyPrice(TYPE_BY.BY_ETH)
-                    }}
-                    aria-hidden="true"
-                  >
-                    <div className="corner_btn_1" />
-                    <div className="edge_btn_1" />
-                    <div className="corner_btn_2" />
-                    <div className="edge_btn_2" />
-                    <span>Buy with ETH</span>
-                  </ButtonETH>
-                )}
-              </>
+              <ButtonETH
+                className="btn_get_eth"
+                onClick={() => {
+                  onModalExchangeSale()
+                  setTypeBuyPrice(TYPE_BY.BY_ETH)
+                }}
+                aria-hidden="true"
+              >
+                <div className="corner_btn_1" />
+                <div className="edge_btn_1" />
+                <div className="corner_btn_2" />
+                <div className="edge_btn_2" />
+                <span>Buy with ETH</span>
+              </ButtonETH>
             )}
           </div>
         )}
