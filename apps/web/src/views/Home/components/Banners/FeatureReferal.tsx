@@ -562,7 +562,7 @@ const FeatureReferal = () => {
             </p>
             <Paragraph className="description">
               {t(
-                'Built to give back, the XOX Gamified Referral Program rewards both "The Referee" & "The Referrer" Earn Points that\'s are redeemable for USDT/USDC after reaching different levels & milestones.',
+                'The XOX Gamified Referral Program is a unique incentive system that rewards both referees and referrers with USDT/USDC points for successful referrals. The program is designed to boost community engagement through gamification, with different levels and milestones that unlock greater rewards. By participating in our referral program, users can earn passive income while supporting the growth of the XOX Labs ecosystem.',
               )}
             </Paragraph>
             <div className="list">

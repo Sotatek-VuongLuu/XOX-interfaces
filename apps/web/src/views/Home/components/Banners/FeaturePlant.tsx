@@ -66,8 +66,9 @@ const RightContent = styled.div`
     z-index: 1;
     top: 0;
     left: 0;
-    width: 50vw;
-    height: 50vh;
+    width: 45vw;
+    height: auto;
+    transform: scale(1.1);
 
     @media screen and (max-width: 900px) {
       width: 100%;
@@ -79,16 +80,6 @@ const RightContent = styled.div`
       height: 280px;
       transform: scale(1.5);
     }
-  }
-  .video-container .overlay {
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    z-index: 2;
-    background: #0a0a0a;
-    opacity: 0.5;
   }
 `
 
@@ -163,7 +154,7 @@ const FeaturePlant = () => {
             </Title>
             <Paragraph style={{ margin: '24px 0' }}>
               {t(
-                "Primarily design to provide simple solutions to its users and XOX Holders, the XOX Dapp already provides and will keep implementing more robuts functionalities which will eventually make it a truly One Stop Solution for Crypto Traders. What's ready:",
+                "The XOX Multi-chain Dapp is designed to offer user-friendly solutions to our users and XOX holders and users. We are continuously working on enhancing our Dapp's functionalities to make it a comprehensive one-stop solution for crypto traders. Our current features include:",
               )}
             </Paragraph>
 
@@ -207,10 +198,12 @@ const FeaturePlant = () => {
               <video
                 loop
                 playsInline
-                autoPlay={true}
+                autoPlay
                 controls={false}
                 preload='auto'
                 style={{ pointerEvents: 'none' }}
+                controlsList="nodownload"
+                muted
               >
                 <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
               </video>

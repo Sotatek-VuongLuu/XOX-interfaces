@@ -250,12 +250,12 @@ const listItem = [
   },
   {
     title: 'XOX Mobile App/Wallet',
-    describe: 'After the recent downfall of Centralized Exchanges, crypto investors have finally realized that "Not your Keys not your Crypto", and Decentralized wallets like Trust Wallet & Metamask now more important than ever. The XOX Decentralized Wallet bring innovative Multi-chain features for users to enjoy while being sure that their funds are safe.',
+    describe: 'In light of recent events, decentralized wallets such as Trust Wallet and Metamask have become increasingly important for investors who value the security of their assets. Our XOX Decentralized Wallet offers advanced multi-chain capabilities to users while ensuring the safety of their funds. With top-of-the-line security features and seamless chain management, our wallet provides a convenient and secure solution for navigating the complex world of cryptocurrency.',
     link: linkWhitepaper,
   },
   {
     title: 'XOX Multi-chain Launchpad',
-    describe: 'Investing in ICOs, Fair Launches and Pre-sales could be very profitable if you find the right projects. We have set the task to Develop The Best Web3 Multi-Chain Launchpad on the Space and after studying over 50 Launchpads we have a pretty good idea of what works and what does not.',
+    describe: "XOX Labs is committed to developing the best web3 multi-chain launchpad in the market. With extensive research on over 50 launchpads, we'll provide seamless and secure access to profitable ICOs, fair launches, and pre-sales. Setting the industry standard and maximizing returns for investors.",
     link: linkWhitepaper,
   },
   {
