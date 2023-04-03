@@ -513,8 +513,6 @@ function VestingSchedule({
     )
   }, [handleClaim, handleGetDataVesting, newVesting])
 
-  console.log(`newVesting`, newVesting)
-
   return (
     <Wrapper>
       {!account && (
