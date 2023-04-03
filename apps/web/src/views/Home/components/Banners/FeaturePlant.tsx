@@ -191,7 +191,7 @@ const FeaturePlant = () => {
             </Watch>
           </RightContent>
         </Grid> */}
-        <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
+        <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }} pl={[0, 0, '50px']}>
           <RightContent data-aos="fade-left">
             <div className="video-container">
               <div className="overlay"></div>
@@ -200,7 +200,7 @@ const FeaturePlant = () => {
                 playsInline
                 autoPlay
                 controls={false}
-                preload='auto'
+                preload="auto"
                 style={{ pointerEvents: 'none' }}
                 controlsList="nodownload"
                 muted
