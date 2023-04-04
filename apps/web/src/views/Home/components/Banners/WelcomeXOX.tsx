@@ -754,7 +754,7 @@ const WelcomeXOX = (): JSX.Element => {
               </div>
             </LeftContent>
           </GridLeft>
-          <Grid item xs={12} md={5} sx={{ overflow: 'visible' }}>
+          <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
             <div className="video-container">
               <video
                 loop

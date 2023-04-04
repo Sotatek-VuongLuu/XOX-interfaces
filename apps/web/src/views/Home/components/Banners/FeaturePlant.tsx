@@ -57,10 +57,10 @@ const LeftContent = styled.div`
 
 const RightContent = styled.div`
   padding-left: 50px;
+  margin-bottom: -2px;
 
   .video-container {
     position: relative;
-    border-radius: 5px;
     outline :none;
 
     &:focus {
