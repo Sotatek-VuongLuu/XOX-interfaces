@@ -26,6 +26,14 @@ const StyledToastContainer = styled.div`
     opacity: 0.01;
     transition: opacity 250ms ease-out;
   }
+
+  & > div > div:last-child {
+    display: none;
+  }
+
+  & > div > div:first-child {
+    display: block;
+  }
 `;
 
 export const ToastContainer: React.FC<React.PropsWithChildren<ToastContainerProps>> = ({

@@ -12,20 +12,8 @@ import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 const Wrapper = styled.div`
   width: 100%;
 
-  #portal-root {
-    z-index: 9999;
-    position: fixed;
-  }
-
   .video-container {
     position: relative;
-    border-radius: 5px;
-    background: radial-gradient(
-      50% 50% at 50% 50%,
-      rgba(249, 124, 29, 0.5) 0%,
-      rgba(246, 99, 42, 0.5) 0.01%,
-      rgba(249, 124, 29, 0) 100%
-    );
     outline: none;
     border: none !important;
 
@@ -43,7 +31,7 @@ const Wrapper = styled.div`
     height: auto;
     transform: scale(1.2);
     outline: none;
-    margin-top: -2px;
+    margin-bottom: -2px;
     border: none !important;
     clip-path: inset(1px 1px);
 
@@ -766,7 +754,7 @@ const WelcomeXOX = (): JSX.Element => {
               </div>
             </LeftContent>
           </GridLeft>
-          <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
+          <Grid item xs={12} md={5} sx={{ overflow: 'visible' }}>
             <div className="video-container">
               <video
                 loop
