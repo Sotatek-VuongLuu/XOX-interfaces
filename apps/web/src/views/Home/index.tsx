@@ -55,6 +55,11 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         #home .page-bg {
           background: #0B0A0B;
         }
+
+        #portal-root {
+          z-index: 9999;
+          position: fixed;
+        }
       `}</style>
       <StyledSection
         innerProps={{
