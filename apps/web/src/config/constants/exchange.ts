@@ -47,9 +47,9 @@ export const ROUTER_ADDRESS: ChainMap<string> = {
 export const ROUTER_XOX: ChainMap<string> = {
   [ChainId.ETHEREUM]: '',
   [ChainId.RINKEBY]: '',
-  [ChainId.GOERLI]: '0xB904c5a434bBdbB52A91bBf4D48b9B0c546a7DeD',
+  [ChainId.GOERLI]: '0x13fb99768A6a7BAbA445465D4ba147dcF07EBe93',
   [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0xfcdD04b6a25E533d8F16210Cb552020D6d880749',
+  [ChainId.BSC_TESTNET]: '0x1a3Cfe273FaF8a8a940b583b7f3Cf105B1Ef9f85',
 }
 
 export const XOX_ADDRESS: ChainMap<string> = {
@@ -63,9 +63,9 @@ export const XOX_ADDRESS: ChainMap<string> = {
 export const XOX_LP: ChainMap<string> = {
   [ChainId.ETHEREUM]: '',
   [ChainId.RINKEBY]: '',
-  [ChainId.GOERLI]: '0x9E2F87E1D7BaEdB76c870dBF65adB70fFeD851a5',
+  [ChainId.GOERLI]: '0x0651979C3C13278607Ac4AEBFA2e17eFE0886c49',
   [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0x04892F0E0CFa0309b2c01321d81e33ca64Bcd16B',
+  [ChainId.BSC_TESTNET]: '0xf10642da580e459a941766af33a977086037f020',
 }
 
 export const USD_ADDRESS: ChainMap<string> = {
