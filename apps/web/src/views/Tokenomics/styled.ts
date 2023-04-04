@@ -19,7 +19,7 @@ export const StyledHeader = styled('div')`
 
   ${({ theme }) => theme.mediaQueries.lg} {
     flex-direction: row;
-    margin-bottom: 151px;
+    margin-bottom: 0px;
   }
 
   > div:nth-child(1) {

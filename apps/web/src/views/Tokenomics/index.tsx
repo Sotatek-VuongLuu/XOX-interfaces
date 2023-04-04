@@ -170,7 +170,7 @@ export default function TokenomicsPage() {
   const handleRenderSeedSale = () => {
     const dataSeedSale: number[] = [360000]
     for (let index = 0; index < 16; index++) {
-      const element = 3240000
+      const element = 3600000
       dataSeedSale.push(element)
     }
     return dataSeedSale

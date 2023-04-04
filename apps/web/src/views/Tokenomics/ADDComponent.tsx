@@ -135,7 +135,7 @@ export default function ADDComponent() {
   const AAD_TOTAL = [...AAD_DATA_L, ...AAD_DATA_R].map((aad) => aad.value).reduce((a, b) => a + b, 0)
   const AAD_DATA_TOTAL: IAAD = {
     title: 'XOX Token Metrics',
-    content: [`TGE (100%) - ${new BigNumber(AAD_TOTAL).toFormat()} Tokens`],
+    content: [` TGE (19%) - 34,200,000 Tokens`],
     highLight: true,
     value: AAD_TOTAL,
   }
@@ -210,8 +210,8 @@ export default function ADDComponent() {
         <div className="l">
           <AADItem
             data={AAD_DATA_TOTAL}
-            onMouseEnter={() => itemHandleChart(AADIndex, true)}
-            onMouseLeave={() => itemHandleChart(AADIndex, false)}
+            // onMouseEnter={() => itemHandleChart(AADIndex, true)}
+            // onMouseLeave={() => itemHandleChart(AADIndex, false)}
           />
 
           {AAD_DATA_L.map((item, i) => (
