@@ -78,6 +78,8 @@ const RightContent = styled.div`
     height: auto;
     outline: none;
     border: none;
+    max-height: 470px;
+    max-width: 670px;
     
     &:focus {
         outline: none;
@@ -208,7 +210,6 @@ const FeaturePlant = () => {
         <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
           <RightContent data-aos="fade-left">
             <div className="video-container">
-              <div className="overlay"></div>
               <video
                 loop
                 playsInline
