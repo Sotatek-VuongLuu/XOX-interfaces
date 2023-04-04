@@ -26,7 +26,8 @@ const Wrapper = styled.div`
       rgba(246, 99, 42, 0.5) 0.01%,
       rgba(249, 124, 29, 0) 100%
     );
-    outline :none;
+    outline: none;
+    border: none !important;
     
     &:focus {
       outline: none;
@@ -42,6 +43,9 @@ const Wrapper = styled.div`
     height: auto;
     transform: scale(1.2);
     outline: none;
+    margin-top: -2px;
+    border: none !important;
+    clip-path: inset(1px 1px);
 
     &:focus {
       outline: none;
