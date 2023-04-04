@@ -4,13 +4,13 @@ import styled from 'styled-components'
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 import { spawn } from 'child_process'
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css' // optional
 import { Box, Grid } from '@mui/material'
 import { useRouter } from 'next/router'
 import { useTranslation } from '@pancakeswap/localization'
-
+import axios from 'axios'
 // eslint-disable-next-line import/no-cycle
 interface ItemProps {
   item: CoinItem
@@ -26,8 +26,10 @@ export interface CoinItem {
 
 export interface DataItem {
   currency: string
-  data: string
+  dataEmpty: string
   description: string
+  field?: string
+  realData?: string
 }
 
 const WrapperI = styled.div`
@@ -88,7 +90,7 @@ const WrapperI = styled.div`
       backdrop-filter: blur(10px);
       height: 100%;
       position: relative;
-      
+
       &:before {
         content: '';
         position: absolute;
@@ -112,24 +114,27 @@ const WrapperI = styled.div`
         width: 100%;
         height: 100%;
         border-radius: inherit;
+
+        .icon_dolla {
+          font-size: 20px;
+          line-height: 24px;
+          vertical-align: top;
+          color: rgba(255, 255, 255, 0.6);
+        }
       }
     }
   }
 `
 
-const Title = styled.p`
+interface IPropsTitle {
+  realData?: string
+}
+
+const Title = styled.p<IPropsTitle>`
   font-weight: bold;
   font-size: 40px;
   color: rgba(255, 255, 255, 0.87);
   line-height: 48px;
-
-  :before {
-    content: '$';
-    font-size: 20px;
-    line-height: 24px;
-    vertical-align: top;
-    color: rgba(255, 255, 255, 0.6);
-  }
 
   @media screen and (max-width: 900px) {
     font-size: 18px;
@@ -185,7 +190,10 @@ const DataItemDisplay = ({ item }: DataItemProps) => {
       <div className="main_container">
         <div className="data-item">
           <div className="data-box">
-            <Title>{item.data}</Title>
+            <Title>
+              {item.description !== 'Total Users' && item.realData && <span className="icon_dolla">$</span>}
+              {item.realData ? item.realData : item.dataEmpty}
+            </Title>
             <Description>{t(item.description)}</Description>
           </div>
         </div>
@@ -297,13 +305,35 @@ const Wrapper = styled.div`
 
 const SupportedBlockchains = () => {
   const { t } = useTranslation()
+  const [dataAnalyst, setdataAnalyst] = useState<DataItem[]>(dataCollected)
+
+  const handleGetDataAnalyst = () => {
+    axios
+      .get(`${process.env.NEXT_PUBLIC_API}/analyst`)
+      .then((response) => {
+        const { data: result } = response
+        const data: DataItem[] = dataCollected.map((item: DataItem) => {
+          return {
+            ...item,
+            realData: result[`${item?.field}`],
+          }
+        })
+        setdataAnalyst(data)
+      })
+      .catch((e) => console.warn(e, 'analyst'))
+  }
+
+  useEffect(() => {
+    handleGetDataAnalyst()
+  }, [])
 
   return (
     <Wrapper>
       <Box sx={{ flexGrow: 1, display: 'flex' }}>
         <Grid container spacing={2}>
-          {dataCollected.map((item: DataItem, index) => {
+          {dataAnalyst.map((item: DataItem, index) => {
             return (
+              // eslint-disable-next-line react/no-array-index-key
               <Grid item xs={12} md={3} key={index} data-aos="fade-up">
                 <DataItemDisplay item={item} />
               </Grid>
@@ -339,6 +369,7 @@ const SupportedBlockchains = () => {
                   item
                   xs={1.71428571429}
                   md={0.85714285714}
+                  // eslint-disable-next-line react/no-array-index-key
                   key={index + 1}
                   data-aos="fade-up"
                   className="coin-item"
@@ -570,23 +601,27 @@ const listCoin = [
 const dataCollected = [
   {
     currency: '/images/home/coins/1_eth.svg',
-    data: '22.09M',
+    dataEmpty: '-',
     description: 'Market Cap',
+    field: 'marketCap',
   },
   {
     currency: '/images/home/coins/1_eth.svg',
-    data: '22.09M',
+    dataEmpty: '-',
     description: 'Total Volume',
+    field: 'volumn',
   },
   {
     currency: '/images/home/coins/1_eth.svg',
-    data: '22.09M',
-    description: 'Holders',
+    dataEmpty: '-',
+    description: 'Total Users',
+    field: 'totalUsers',
   },
   {
     currency: '/images/home/coins/1_eth.svg',
-    data: '22.09M',
+    dataEmpty: '-',
     description: 'XOXS Staked',
+    field: 'stakedXOXS',
   },
 ]
 
