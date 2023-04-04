@@ -122,7 +122,7 @@ const Wrapper = styled.div`
         }
       }
 
-      .hover-button {
+      .hover-button:enabled {
         svg {
           path {
             stroke: #FB8618;
@@ -238,7 +238,6 @@ const Wrapper = styled.div`
 const Subscription = () => {
   const { t } = useTranslation()
   const [inputValue, setInputValue] = useState<string>('')
-  const [emailValid, setEmailValid] = useState(true)
   const [emailBorderClass, setEmailBorderClass] = useState<string>('')
   const [btnHoverClass, setBtnHoverClass] = useState<string>('')
   const [emailErrorClass, setEmailErrorClass] = useState<string>('')
@@ -249,7 +248,6 @@ const Subscription = () => {
     const email = event.target.value
     const isValid = validateEmail(email)
     setInputValue(email)
-    setEmailValid(isValid)
 
     if (!isValid) {
       setEmailErrorClass(' error')
@@ -280,6 +278,11 @@ const Subscription = () => {
   const handleFocus = () => {
     setEmailBorderClass(' hover-form')
     setBtnHoverClass(' hover-button')
+    if (textErrorClass) {
+      setEmailErrorClass(' error')
+      setTextErrorClass(' text-error')
+      setEmailBorderClass('')
+    }
   }
 
   const handleBtnSubmit = useCallback(() => {
@@ -289,8 +292,7 @@ const Subscription = () => {
         toastSuccess(t('Subscribed successfully.'))
       })
       .catch((error) => {
-        console.log(error.response)
-        if (error.response.status === 400) {
+        if (error.response.status === 400 && error.response.message === 'Email is already existed!') {
           toastSuccess(t('The email is already registered.'))
           return
         }
@@ -331,7 +333,12 @@ const Subscription = () => {
               onBlur={handleBlur}
               onFocus={handleFocus}
             />
-            <button onClick={handleBtnSubmit} type="button" className={'btn-submit ' + btnHoverClass}>
+            <button
+              onClick={handleBtnSubmit}
+              disabled={!!textErrorClass || !inputValue}
+              type="button"
+              className={'btn-submit ' + btnHoverClass}
+            >
               <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path
                   d="M6.75 15.3066H24.25"
