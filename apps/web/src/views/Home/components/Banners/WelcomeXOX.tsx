@@ -28,7 +28,7 @@ const Wrapper = styled.div`
     );
     outline: none;
     border: none !important;
-    
+
     &:focus {
       outline: none;
     }
@@ -611,9 +611,9 @@ const WelcomeXOX = (): JSX.Element => {
                           id="email"
                           name="email"
                           placeholder=""
-                          value={`${XOX_ADDRESS[chainId == 5 ? chainId : 1].substring(0, 8)}...${XOX_ADDRESS[
-                            chainId == 5 ? chainId : 1
-                          ].substring(XOX_ADDRESS[chainId == 5 ? chainId : 1].length - 4)}`}
+                          value={`${XOX_ADDRESS[chainId === 5 ? chainId : 1].substring(0, 8)}...${XOX_ADDRESS[
+                            chainId === 5 ? chainId : 1
+                          ].substring(XOX_ADDRESS[chainId === 5 ? chainId : 1].length - 4)}`}
                           required
                         />
                       </>
@@ -778,7 +778,7 @@ const WelcomeXOX = (): JSX.Element => {
                 controlsList="nodownload"
                 muted
               >
-                <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4"></source>
+                <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4" />
               </video>
             </div>
           </Grid>
