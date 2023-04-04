@@ -21,6 +21,11 @@ const Wrapper = styled.div`
       rgba(246, 99, 42, 0.5) 0.01%,
       rgba(249, 124, 29, 0) 100%
     );
+    outline :none;
+    
+    &:focus {
+      outline: none;
+    }
   }
 
   .video-container video {
@@ -31,6 +36,11 @@ const Wrapper = styled.div`
     width: 45vw;
     height: auto;
     transform: scale(1.2);
+    outline: none;
+
+    &:focus {
+      outline: none;
+    }
 
     @media screen and (max-width: 900px) {
       width: 100%;

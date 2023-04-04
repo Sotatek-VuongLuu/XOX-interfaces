@@ -57,9 +57,15 @@ const LeftContent = styled.div`
 
 const RightContent = styled.div`
   padding-left: 50px;
+
   .video-container {
     position: relative;
     border-radius: 5px;
+    outline :none;
+
+    &:focus {
+      outline: none;
+    }
   }
 
   .video-container video {
@@ -70,6 +76,11 @@ const RightContent = styled.div`
     width: 45vw;
     height: auto;
     transform: scale(1.1);
+    outline: none;
+    
+    &:focus {
+        outline: none;
+    }
 
     @media screen and (max-width: 900px) {
       width: 100%;
