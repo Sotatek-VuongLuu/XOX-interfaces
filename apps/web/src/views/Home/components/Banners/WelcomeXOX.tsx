@@ -12,6 +12,11 @@ import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 const Wrapper = styled.div`
   width: 100%;
 
+  #portal-root {
+    z-index: 9999;
+    position: fixed;
+  }
+
   .video-container {
     position: relative;
     border-radius: 5px;
