@@ -28,7 +28,6 @@ const Wrapper = styled.div`
     );
     outline: none;
     border: none !important;
-    clip-path: inset(1px 1px);
     
     &:focus {
       outline: none;
