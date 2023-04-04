@@ -13,6 +13,7 @@ import {
 } from '@pancakeswap/uikit'
 import { useTranslation, languageList } from '@pancakeswap/localization'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
+import LangSelector from '@pancakeswap/uikit/src/components/LangSelector/LangSelector'
 import useTheme from 'hooks/useTheme'
 import io from 'socket.io-client'
 import axios from 'axios'
@@ -27,20 +28,19 @@ import { useMenuItems } from './hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { configLanding } from './config/config'
-import LangSelector from '@pancakeswap/uikit/src/components/LangSelector/LangSelector'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;
   font-size: 16px;
   color: #ffffff;
   padding: 12px 30px;
-  background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+  background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   border-radius: 10px;
   border: none;
   cursor: pointer;
 
   &:hover {
-    background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
   }
 `
 
@@ -359,7 +359,7 @@ const Menu = (props) => {
                       <p>Your referral code has been applied in a "Buy XOX” transaction</p>
                     </NotificationMenu>
                   )}
-                </NotificationField> 
+                </NotificationField>
               ) : (
                 <></>
               )}

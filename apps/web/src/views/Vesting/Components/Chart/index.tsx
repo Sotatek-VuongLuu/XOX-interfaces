@@ -2,10 +2,11 @@ import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import moment from 'moment'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useMemo, useState } from 'react'
 import { getRaiseDailies } from 'services/presale'
 import styled from 'styled-components'
-import { useGetDataChartPreSale } from 'views/Vesting/hooks'
+import { timeStampOfNow } from 'views/Vesting'
+import { useGetDataChartPreSale, useGetDataChartPreSaleAfter } from 'views/Vesting/hooks'
 import ChartColumnSale from './ChartColumnSale'
 
 const Wrapper = styled.div`
@@ -56,7 +57,7 @@ const Wrapper = styled.div`
     margin-bottom: 40px;
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     padding: 15px 22px 24px;
     height: 270px;
     margin-bottom: 20px;
@@ -78,31 +79,41 @@ const Wrapper = styled.div`
   }
 `
 
-interface IListPoint {
-  reward: number
-  point: number
+interface IProps {
+  infoRoundOne: any
 }
 
-interface IDataChart {
-  id: string
-  volumeUSD: string
-  data: number
+const startDate = new Date()
+startDate.setDate(startDate.getDate() - 14)
+startDate.setHours(0, 0, 0, 0)
+const endDate = new Date()
+endDate.setHours(23, 59, 59, 999)
+const time = {
+  from: moment(startDate).unix(),
+  to: moment(endDate).unix(),
 }
 
-function ChartSalePage() {
+function ChartSalePage({ infoRoundOne }: IProps) {
   const [dataChart, setDataChart] = useState([])
-  const dataChartPreSale = useGetDataChartPreSale()
-  const startDate = new Date()
-  startDate.setDate(startDate.getDate() - 14)
-  startDate.setHours(0, 0, 0, 0)
-  const endDate = new Date()
-  endDate.setHours(23, 59, 59, 999)
+  const [dataChartFifteenDay, setDataChartFifteenDay] = useState([])
 
+  const isAfterFifteenDayAfterSaleOne = useMemo(() => {
+    if (!infoRoundOne.startDate) return null
+    const timeInit = moment.unix(infoRoundOne.startDate).add(14, 'days').unix()
+    return timeStampOfNow < timeInit * 1000
+  }, [infoRoundOne])
+
+  const dateOfStartSaleOne = useMemo(() => {
+    if (!infoRoundOne.startDate) return null
+    return new Date(infoRoundOne.startDate)
+  }, [infoRoundOne])
+
+  const dataChartPreSale = useGetDataChartPreSale(time)
   function createDataChartDay(name: string, uv: number) {
     return { name, uv }
   }
 
-  const getPointDataDays = (result: any) => {
+  const getPointDataDays = (result: any, callBack: (data: any) => void, fromDate: any, toDate: any) => {
     try {
       if (result && result.raiseDailies && result.raiseDailies.length > 0) {
         const arr = Array.from(result.raiseDailies).map((item: any) => {
@@ -111,12 +122,12 @@ function ChartSalePage() {
             id: String(item?.id).split('-')[1],
           }
         })
-        const chartData = createArray(startDate, endDate, arr)
+        const chartData = createArray(fromDate, toDate, arr)
         const data = chartData.map((item: any) => {
           const amount = new BigNumber(item.amount).div(10 ** 6).toNumber()
           return createDataChartDay(moment(item.date * 1000).format('DD MMM'), amount)
         })
-        setDataChart(data)
+        callBack(data)
       }
     } catch (error) {
       console.warn(error)
@@ -144,15 +155,31 @@ function ChartSalePage() {
   }
 
   useEffect(() => {
-    getPointDataDays(dataChartPreSale)
+    getPointDataDays(dataChartPreSale, setDataChart, startDate, endDate)
+    if (!dateOfStartSaleOne) return
+    const startDateFifteenDayAfterSaleOne = new Date(dateOfStartSaleOne)
+    startDateFifteenDayAfterSaleOne.setHours(0, 0, 0, 0)
+    const end = new Date(dateOfStartSaleOne)
+    const endDateFifteenDayAfterSaleOne = new Date(end.setDate(end.getDate() + 14))
+    endDateFifteenDayAfterSaleOne.setHours(23, 59, 59, 999)
+    getPointDataDays(
+      dataChartPreSale,
+      setDataChartFifteenDay,
+      startDateFifteenDayAfterSaleOne,
+      endDateFifteenDayAfterSaleOne,
+    )
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataChartPreSale])
+  }, [dataChartPreSale, dateOfStartSaleOne])
 
   return (
     <Wrapper>
       <div className="fake_blur" />
       <p className="title">Daily Raise</p>
-      <ChartColumnSale data={dataChart} />
+      {typeof isAfterFifteenDayAfterSaleOne === 'boolean' && isAfterFifteenDayAfterSaleOne ? (
+        <ChartColumnSale data={dataChartFifteenDay} />
+      ) : (
+        <ChartColumnSale data={dataChart} />
+      )}
     </Wrapper>
   )
 }

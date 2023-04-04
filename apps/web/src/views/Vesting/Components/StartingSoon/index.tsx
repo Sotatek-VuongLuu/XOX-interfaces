@@ -1,7 +1,7 @@
 /* eslint-disable consistent-return */
 import BigNumber from 'bignumber.js'
 import moment from 'moment'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { RoundInfo } from 'views/Vesting'
 import CountDown from '../CountDown'
@@ -30,6 +30,15 @@ const Wrapper = styled.div`
     text-align: center;
     margin-top: 12px;
     margin-bottom: 47px;
+  }
+
+  .notice_after {
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 19px;
+    color: rgba(255, 255, 255, 0.6);
+    text-align: center;
+    margin-top: 12px;
   }
 
   .percent_sale {
@@ -111,7 +120,7 @@ const Wrapper = styled.div`
       max-width: 100% !important;
       height: auto;
       display: block;
-      margin-top: 30px;
+      margin-top: 20px;
     }
   }
 
@@ -128,6 +137,12 @@ const Wrapper = styled.div`
       line-height: 17px;
       margin-top: 10px;
       margin-bottom: 24px;
+    }
+
+    .notice_after {
+      font-size: 14px;
+      line-height: 17px;
+      margin-top: 10px;
     }
 
     .processing {
@@ -154,11 +169,9 @@ interface IProps {
   infoRoundThree: RoundInfo
   totalXOXTokenInRound: number | string
   isInTimeRangeSale: boolean
-  isUserInWhiteList: boolean
-  isTimeAllowWhitelist: boolean
   setReachZero: (isReach: boolean) => void
   reacheZero: boolean
-  oneHourBeforeStart: number
+  oneHourBeforeStart?: number
   setisReachWhitelist: (reach: boolean) => void
 }
 
@@ -172,21 +185,16 @@ function StartingSoon({
   totalXOXTokenInRound,
   currentRound,
   isInTimeRangeSale,
-  isUserInWhiteList,
-  isTimeAllowWhitelist,
   reacheZero,
   setReachZero,
-  oneHourBeforeStart,
   setisReachWhitelist,
 }: IProps) {
-  const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
   const [timeNow, setTimeNow] = useState(timeStampOfNow)
 
   const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
 
-  const handleReturnPercent = (round: any) => {
-    const roundCheckWithWhitelist = isTimeAllowWhitelist ? 1 : round
-    switch (roundCheckWithWhitelist) {
+  const handleReturnPercent = useMemo(() => {
+    switch (currentRound) {
       case 1: {
         const percent = new BigNumber(totalXOXTokenInRound)
           .multipliedBy(100)
@@ -194,9 +202,9 @@ function StartingSoon({
           .toNumber()
         return (
           <>
-            <p className="percent_sale">{`${percent}%`} SOLD</p>
+            <p className="percent_sale">{`${Number(percent).toFixed(2)}%`} SOLD</p>
             <div className="processing">
-              <div className="processing_child" style={{ width: `${percent}%` }} />
+              <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
             </div>
           </>
         )
@@ -209,9 +217,9 @@ function StartingSoon({
           .toNumber()
         return (
           <>
-            <p className="percent_sale">{`${percent}%`} SOLD</p>
+            <p className="percent_sale">{`${Number(percent).toFixed(2)}%`} SOLD</p>
             <div className="processing">
-              <div className="processing_child" style={{ width: `${percent}%` }} />
+              <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
             </div>
           </>
         )
@@ -220,15 +228,15 @@ function StartingSoon({
       case 3: {
         const percent = new BigNumber(totalXOXTokenInRound)
           .multipliedBy(100)
-          .dividedBy(TOKEN_IN_ROUND.ROUND_ONE)
+          .dividedBy(TOKEN_IN_ROUND.ROUND_THREE)
           .toNumber()
         return (
           <>
-            <p className="percent_sale">
-              <p className="percent_sale">{`${percent}%`} SOLD</p>
-            </p>
+            <div className="percent_sale">
+              <p className="percent_sale">{`${Number(percent).toFixed(2)}%`} SOLD</p>
+            </div>
             <div className="processing">
-              <div className="processing_child" style={{ width: `${percent}%` }} />
+              <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
             </div>
           </>
         )
@@ -236,23 +244,17 @@ function StartingSoon({
       default:
         break
     }
-  }
+  }, [totalXOXTokenInRound, currentRound])
 
   const handleCountdownArg = (startDate: number) => {
-    return (
-      <CountDown
-        startTime={startDate}
-        setReachZero={setReachZero}
-        oneHourBeforeStart={oneHourBeforeStart}
-        setisReachWhitelist={setisReachWhitelist}
-      />
-    )
+    return <CountDown startTime={startDate} setReachZero={setReachZero} setisReachWhitelist={setisReachWhitelist} />
   }
 
   const handleRenderCountdown = (time: number) => {
     if (time < infoRoundOne.startDate) {
       return (
         <>
+          <p className="title">New sale will start soon</p>
           <p className="notice">
             Sale 1 will start on {moment.unix(infoRoundOne.startDate / 1000).format('DD/MM/YYYY')}.
           </p>
@@ -263,6 +265,7 @@ function StartingSoon({
     if (infoRoundOne.startDate < time && time < infoRoundOne.endDate) {
       return (
         <>
+          <p className="title">XOX TOKEN SALE IS LIVE!</p>
           <p className="notice">Sale 1 will end on {moment.unix(infoRoundOne.endDate / 1000).format('DD/MM/YYYY')}.</p>
           {handleCountdownArg(infoRoundOne.endDate)}
         </>
@@ -273,6 +276,7 @@ function StartingSoon({
       if (infoRoundOne.endDate <= time && time < infoRoundTow.startDate) {
         return (
           <>
+            <p className="title">New sale will start soon</p>
             <p className="notice">
               Sale 2 will start on {moment.unix(infoRoundTow.startDate / 1000).format('DD/MM/YYYY')}.
             </p>
@@ -284,6 +288,7 @@ function StartingSoon({
       if (infoRoundTow.startDate <= time && time < infoRoundTow.endDate) {
         return (
           <>
+            <p className="title">XOX TOKEN SALE IS LIVE!</p>
             <p className="notice">
               Sale 2 will end on {moment.unix(infoRoundTow.endDate / 1000).format('DD/MM/YYYY')}.
             </p>
@@ -296,6 +301,7 @@ function StartingSoon({
       if (infoRoundTow.endDate <= time && time < infoRoundThree.startDate) {
         return (
           <>
+            <p className="title">New sale will start soon</p>
             <p className="notice">
               Sale 3 will start on {moment.unix(infoRoundThree.startDate / 1000).format('DD/MM/YYYY')}.
             </p>
@@ -307,6 +313,7 @@ function StartingSoon({
       if (infoRoundThree.startDate <= time && time < infoRoundThree.endDate) {
         return (
           <>
+            <p className="title">XOX TOKEN SALE IS LIVE!</p>
             <p className="notice">
               Sale 3 will end on {moment.unix(infoRoundThree.endDate / 1000).format('DD/MM/YYYY')}.
             </p>
@@ -314,15 +321,17 @@ function StartingSoon({
           </>
         )
       }
+    }
 
-      if (infoRoundThree.endDate <= time) {
-        return (
-          <>
-            <p className="notice">Pre-Sale is end!.</p>
-            <CountDown startTime={null} />
-          </>
-        )
-      }
+    if (infoRoundThree.endDate && infoRoundThree.endDate <= time) {
+      return (
+        <>
+          <p className="title">XOX Token pre-sale is Ended</p>
+          <div className="rocket_container">
+            <img src="/images/rocket_xox.png" alt="rocket_xox" />
+          </div>
+        </>
+      )
     }
 
     return (
@@ -331,6 +340,30 @@ function StartingSoon({
       </div>
     )
   }
+
+  const handleRenderTitle = useMemo(() => {
+    if (!infoRoundOne.startDate && !infoRoundTow.startDate && !infoRoundThree.startDate) {
+      return <p className="title">Pre-sale is coming soon</p>
+    }
+
+    if (infoRoundOne.endDate && infoRoundOne.endDate < timeNow && !infoRoundTow.startDate) {
+      return (
+        <>
+          <p className="title"> Round 1 Has Successfully Ended</p>
+          <p className="notice_after">Round 2 Starting Soon</p>
+        </>
+      )
+    }
+
+    if (infoRoundTow.endDate && infoRoundTow.endDate < timeNow && !infoRoundThree.startDate) {
+      return (
+        <>
+          <p className="title"> Round 2 Has Successfully Ended</p>
+          <p className="notice_after">Round 3 Starting Soon</p>
+        </>
+      )
+    }
+  }, [infoRoundOne, infoRoundTow, infoRoundThree, timeNow])
 
   useEffect(() => {
     if (reacheZero) {
@@ -349,7 +382,7 @@ function StartingSoon({
       <div className="edge1" />
       <div className="corner2" />
       <div className="edge2" />
-      <p className="title">{isInTimeRangeSale ? 'XOX Token is on sale' : 'New Sale Will Start Soon'}</p>
+      {handleRenderTitle}
       {isNotSetDataForAll ? (
         <div className="rocket_container">
           <img src="/images/rocket_xox.png" alt="rocket_xox" />
@@ -357,7 +390,7 @@ function StartingSoon({
       ) : (
         handleRenderCountdown(timeNow)
       )}
-      {(isInTimeRangeSale || isCanBuyWithWhitelistUser) && handleReturnPercent(currentRound)}
+      {isInTimeRangeSale && handleReturnPercent}
     </Wrapper>
   )
 }

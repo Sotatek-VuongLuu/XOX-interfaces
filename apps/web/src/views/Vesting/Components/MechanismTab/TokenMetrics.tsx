@@ -24,7 +24,7 @@ const CustomTable = styled(Table)`
     padding-bottom: 16px;
     margin-bottom: 0px;
 
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       margin-bottom: 0px;
     }
   }
@@ -58,7 +58,7 @@ const Wrapper = styled.div`
     }
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     .heading_info_vesting {
       font-size: 16px;
       line-height: 19px;
@@ -146,8 +146,9 @@ function TokenMetrics({ initialTokenMetrics }: IProps) {
           <Text className="table-header">Initial Marketcap</Text>
           <Text className="table-header">Fully Dilited MC ($)</Text>
         </CustomTable>
-        {Array.from(initialTokenMetrics).map((item) => {
-          return <DataRow item={item} />
+        {Array.from(initialTokenMetrics).map((item, index) => {
+          // eslint-disable-next-line react/no-array-index-key
+          return <DataRow item={item} key={index} />
         })}
       </CustomTableSale>
     </Wrapper>

@@ -1,3 +1,4 @@
+import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { useMemo } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
@@ -46,7 +47,7 @@ function Address({ addr, ...props }: { addr: IAddress }) {
   const { asset, logo, name, address, text } = addr
   const prefixAddress = address?.substring(0, 4) || ''
   const suffixAddress = address?.substring(address.length - 21, address.length) || ''
-
+  const { t } = useTranslation()
   const suffixAddressMobile = address?.substring(address.length - 8, address.length) || ''
 
   function copy() {
@@ -71,8 +72,14 @@ function Address({ addr, ...props }: { addr: IAddress }) {
             </div>
           )}
         </div>
-        {/* eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions */}
-        <img src="/images/tokenomics/CopySimple.svg" alt="" draggable="false" loading="lazy" onClick={copy} />
+        <CopyButton
+          width="19px"
+          height="19px"
+          className="copied_btn"
+          text={address || ''}
+          tooltipMessage={t('Copied')}
+          button={<img src="/images/tokenomics/CopySimple.svg" alt="CopySimple" />}
+        />
       </div>
 
       <a href="/#" target="_blank" rel="noreferrer">
@@ -164,7 +171,7 @@ export default function TokenomicsPage() {
   const handleRenderSeedSale = () => {
     const dataSeedSale: number[] = [360000]
     for (let index = 0; index < 16; index++) {
-      const element = 3240000
+      const element = 3600000
       dataSeedSale.push(element)
     }
     return dataSeedSale

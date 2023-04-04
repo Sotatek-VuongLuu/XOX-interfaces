@@ -1,7 +1,7 @@
 import { formatEther } from '@ethersproject/units'
 import { Box, Grid } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { RoundInfo } from 'views/Vesting'
 
@@ -319,12 +319,12 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     font-size: 36px;
     line-height: 19px;
     color: #64c66d;
-    @media screen and (max-width: 900px) {
+    @media screen and (max-width: 1200px) {
       top: -8px !important;
     }
   }
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     .mbpadding {
       padding: 35px 24px !important;
     }
@@ -350,7 +350,7 @@ const CustomGrid = styled(Grid)`
   grid-template-columns: 1fr 1fr 1fr;
   gap: 24px;
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr;
     gap: 37px;
   }
@@ -365,7 +365,8 @@ enum StatusSale {
 const Item = ({ item }) => {
   const percent = new BigNumber(
     new BigNumber(formatEther(item?.xox_amount_bought || '0')).multipliedBy(100).dividedBy(item.xOXforSale),
-  ).toFixed(4, 1)
+  ).toFixed(2)
+
   return (
     <WrapperItem status={item.status === StatusSale.LIVE} percent={parseFloat(percent)}>
       {item.status === StatusSale.LIVE && (
@@ -400,7 +401,7 @@ const Item = ({ item }) => {
       <Grid gridTemplateColumns="1.25fr 0.75fr" padding="35px 34px" gridGap="22px" className="mbpadding">
         <div>
           <p className="status_name">Status</p>
-          <p className={`status_value ${String(item.status).toLocaleLowerCase()} status`}>
+          <div className={`status_value ${String(item.status).toLocaleLowerCase()} status`}>
             {item.status === StatusSale.LIVE ? (
               <span className="dot_contain">
                 <div>{item.status}</div>
@@ -412,7 +413,7 @@ const Item = ({ item }) => {
             ) : (
               `${item.status}`
             )}
-          </p>
+          </div>
         </div>
         <div>
           <p className="status_name">Current raise</p>
@@ -473,61 +474,73 @@ interface IProps {
   infoRoundOne: RoundInfo
   infoRoundTow: RoundInfo
   infoRoundThree: RoundInfo
+  totalXOXTokenInRound: any
+  currentRound: number
 }
 
-const now = new Date()
-const timeStampOfNow = now.getTime()
-
-function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: IProps) {
+function SaleStatus({
+  isInTimeRangeSale,
+  currentRound,
+  dataStatus,
+  infoRoundOne,
+  infoRoundTow,
+  infoRoundThree,
+}: IProps) {
   const [dataFormat, setDataFormat] = useState<any[]>([])
 
-  const arrStatus = [
-    {
-      name: 'Sale 1',
-      status: infoRoundOne.startDate
-        ? timeStampOfNow < infoRoundOne.startDate
-          ? StatusSale.INCOMING
-          : infoRoundOne.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundOne.endDate
-          ? StatusSale.LIVE
-          : StatusSale.END
-        : StatusSale.INCOMING,
-      currentRaise: '-',
-      price: '0.044',
-      xOXforSale: 2700000,
-      investors: '-',
-      xOXSRewarded: '-',
-    },
-    {
-      name: 'Sale 2',
-      status: infoRoundTow.startDate
-        ? timeStampOfNow < infoRoundTow.startDate
-          ? StatusSale.INCOMING
-          : infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundTow.endDate
-          ? StatusSale.LIVE
-          : StatusSale.END
-        : StatusSale.INCOMING,
-      currentRaise: '-',
-      price: '0.045',
-      xOXforSale: 3600000,
-      investors: '-',
-      xOXSRewarded: '-',
-    },
-    {
-      name: 'Sale 3',
-      status: infoRoundThree.startDate
-        ? timeStampOfNow < infoRoundThree.startDate
-          ? StatusSale.INCOMING
-          : infoRoundThree.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundThree.endDate
-          ? StatusSale.LIVE
-          : StatusSale.END
-        : StatusSale.INCOMING,
-      currentRaise: '-',
-      price: '0.046',
-      xOXforSale: 4500000,
-      investors: '-',
-      xOXSRewarded: '-',
-    },
-  ]
+  const arrStatus = useMemo(() => {
+    const now = new Date()
+    const timeStampOfNow = now.getTime()
+    return [
+      {
+        name: 'Sale 1',
+        status: infoRoundOne.startDate
+          ? timeStampOfNow < infoRoundOne.startDate
+            ? StatusSale.INCOMING
+            : infoRoundOne.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundOne.endDate && isInTimeRangeSale
+            ? StatusSale.LIVE
+            : StatusSale.END
+          : StatusSale.INCOMING,
+        currentRaise: '-',
+        price: '0.044',
+        xOXforSale: 2700000,
+        investors: '-',
+        xOXSRewarded: '-',
+      },
+      {
+        name: 'Sale 2',
+        status: infoRoundTow.startDate
+          ? timeStampOfNow < infoRoundTow.startDate
+            ? StatusSale.INCOMING
+            : infoRoundTow.startDate <= timeStampOfNow && timeStampOfNow <= infoRoundTow.endDate && isInTimeRangeSale
+            ? StatusSale.LIVE
+            : StatusSale.END
+          : StatusSale.INCOMING,
+        currentRaise: '-',
+        price: '0.045',
+        xOXforSale: 3600000,
+        investors: '-',
+        xOXSRewarded: '-',
+      },
+      {
+        name: 'Sale 3',
+        status: infoRoundThree.startDate
+          ? timeStampOfNow < infoRoundThree.startDate
+            ? StatusSale.INCOMING
+            : infoRoundThree.startDate <= timeStampOfNow &&
+              timeStampOfNow <= infoRoundThree.endDate &&
+              isInTimeRangeSale
+            ? StatusSale.LIVE
+            : StatusSale.END
+          : StatusSale.INCOMING,
+        currentRaise: '-',
+        price: '0.046',
+        xOXforSale: 4500000,
+        investors: '-',
+        xOXSRewarded: '-',
+      },
+    ]
+  }, [infoRoundOne, infoRoundThree, infoRoundTow, isInTimeRangeSale])
 
   const handleFormatData = (roundArr: any[]) => {
     const newDataFormat = []
@@ -551,7 +564,7 @@ function SaleStatus({ dataStatus, infoRoundOne, infoRoundTow, infoRoundThree }: 
   useEffect(() => {
     handleFormatData(dataStatus)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dataStatus, infoRoundOne, infoRoundTow, infoRoundThree])
+  }, [dataStatus, infoRoundOne, infoRoundTow, infoRoundThree, arrStatus])
 
   return (
     <CustomGrid>

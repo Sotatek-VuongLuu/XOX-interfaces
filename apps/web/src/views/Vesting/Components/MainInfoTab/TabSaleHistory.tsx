@@ -283,7 +283,8 @@ function TabSaleHistory({ currentTransactions }) {
                 [...Array(maxPage)].map((_, i) => (
                   <button
                     type="button"
-                    key={_}
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={i}
                     onClick={() => setPagePagination(i + 1)}
                     className={`page ${page === i + 1 ? 'current' : ''}`}
                   >

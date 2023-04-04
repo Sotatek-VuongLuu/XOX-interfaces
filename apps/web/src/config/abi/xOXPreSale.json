@@ -104,6 +104,13 @@
     "type": "function"
   },
   {
+    "inputs": [{ "internalType": "uint256", "name": "time_", "type": "uint256" }],
+    "name": "changeTimeLock",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
     "inputs": [],
     "name": "currentRound",
     "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
@@ -146,6 +153,13 @@
     "name": "invest",
     "outputs": [],
     "stateMutability": "payable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "launchTime",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
     "type": "function"
   },
   {
@@ -199,7 +213,14 @@
       { "internalType": "uint256", "name": "_startDate", "type": "uint256" },
       { "internalType": "uint256", "name": "_endDate", "type": "uint256" }
     ],
-    "name": "startNewPrivateSaleRound",
+    "name": "setUpNewSaleRound",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_time", "type": "uint256" }],
+    "name": "setupLaunchTime",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"

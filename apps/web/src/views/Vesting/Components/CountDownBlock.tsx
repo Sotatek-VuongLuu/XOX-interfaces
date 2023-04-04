@@ -18,7 +18,7 @@ const Content = styled.div`
   grid-template-columns: 1fr 1fr;
   gap: 24px;
 
-  @media screen and (max-width: 900px) {
+  @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr;
   }
 `
@@ -29,8 +29,6 @@ interface IProps {
   infoRoundTow: RoundInfo
   infoRoundThree: RoundInfo
   isInTimeRangeSale: boolean
-  isUserInWhiteList: boolean
-  isTimeAllowWhitelist: boolean
   setTypeBuyPrice: (typeBuy: number) => void
   typeBuyPrice: number
   totalXOXTokenInRound: number | string
@@ -47,8 +45,6 @@ function CountDownBlock({
   infoRoundTow,
   infoRoundThree,
   isInTimeRangeSale,
-  isUserInWhiteList,
-  isTimeAllowWhitelist,
   setTypeBuyPrice,
   typeBuyPrice,
   totalXOXTokenInRound,
@@ -64,8 +60,6 @@ function CountDownBlock({
           onModalExchangeSale={onModalExchangeSale}
           currentRound={currentRound}
           isInTimeRangeSale={isInTimeRangeSale}
-          isUserInWhiteList={isUserInWhiteList}
-          isTimeAllowWhitelist={isTimeAllowWhitelist}
           setTypeBuyPrice={setTypeBuyPrice}
           typeBuyPrice={typeBuyPrice}
         />
@@ -76,8 +70,6 @@ function CountDownBlock({
           infoRoundThree={infoRoundThree}
           totalXOXTokenInRound={totalXOXTokenInRound}
           isInTimeRangeSale={isInTimeRangeSale}
-          isUserInWhiteList={isUserInWhiteList}
-          isTimeAllowWhitelist={isTimeAllowWhitelist}
           reacheZero={reacheZero}
           setReachZero={setReachZero}
           oneHourBeforeStart={oneHourBeforeStart}

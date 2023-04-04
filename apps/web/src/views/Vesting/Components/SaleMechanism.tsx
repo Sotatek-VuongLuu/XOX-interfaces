@@ -1,8 +1,15 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable import/no-cycle */
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useWindowSize from 'hooks/useWindowSize'
-import { useMemo, useState } from 'react'
+import { useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
+import { A11y, Navigation, Pagination } from 'swiper'
+import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
+import 'swiper/css'
+import 'swiper/css/navigation'
+import 'swiper/css/pagination'
 import { IVestingTime } from '..'
 import VestingSchedule from './MainInfoTab/VestingSchedule'
 import YourInfo from './MainInfoTab/YourInfo'
@@ -179,33 +186,72 @@ const Wrapper = styled.div<IPropsWrapper>`
   }
 `
 const Content = styled.div`
+  .item-tab-mechanism {
+    font-weight: 700;
+    font-size: 14px;
+    line-height: 17px;
+    padding: 10px 20px;
+    color: rgba(255, 255, 255, 0.6);
+    border-radius: 8px;
+    white-space: nowrap;
+    /* position: relative; */
+    &:hover {
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      color: #ffffff;
+      border-radius: 30px;
+      /* &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: inherit;
+          padding: 1px;
+          background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          -webkit-mask-composite: exclude;
+          mask-composite: exclude;
+        } */
+    }
+  }
+
+  .item-tab-mechanism.active {
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    border-radius: 30px;
+    color: #ffffff;
+
+    /* &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      -webkit-mask-composite: exclude;
+      mask-composite: exclude;
+    } */
+  }
   .tab-mechanism {
     display: flex;
-    color: white;
+    width: fit-content;
     cursor: pointer;
-    margin-bottom: 24px;
+    /* margin-bottom: 24px; */
     justify-content: center;
+    background: #131313;
+    border-radius: 30px;
 
-    .item-tab-mechanism {
-      font-weight: 700;
-      font-size: 14px;
-      line-height: 17px;
-      color: #ffffff;
-      padding: 10px 20px;
-      margin-right: 8px;
-      border-radius: 8px;
-      white-space: nowrap;
-      &:hover {
-        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-      }
+    > div:nth-child(even) {
+      margin: 0px 8px;
     }
 
-    .item-tab-mechanism.active {
-      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-    }
-
-    @media screen and (max-width: 900px) {
-      justify-content: flex-start;
+    @media screen and (max-width: 1200px) {
       overflow-x: auto;
       &::-webkit-scrollbar {
         display: none;
@@ -215,6 +261,42 @@ const Content = styled.div`
         line-height: 15px;
       }
     }
+
+    @media screen and (max-width: 900px) {
+      justify-content: flex-start;
+    }
+  }
+
+  .swiper.swiper-initialized {
+    background: #131313;
+    border-radius: 30px;
+  }
+
+  .swiper-wrapper {
+  }
+
+  .swiper-button-next {
+    z-index: 999;
+    background-image: url(/images/new_next.svg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+    border-radius: 50%;
+  }
+
+  .swiper-button-next::after {
+    display: none;
+  }
+
+  .swiper-button-prev {
+    background-image: url(/images/new_prev.svg);
+    background-repeat: no-repeat;
+    background-size: 100% auto;
+    background-position: center;
+  }
+
+  .swiper-button-prev::after {
+    display: none;
   }
 `
 
@@ -234,6 +316,7 @@ function SaleMechanism({
   const { width } = useWindowSize()
   const { account } = useActiveWeb3React()
   const [isMore, setIsMore] = useState(false)
+  const swiperRef = useRef(null)
 
   const renderBody = useMemo(() => {
     switch (tabActiveMechansim) {
@@ -306,21 +389,53 @@ function SaleMechanism({
       <div className="corner2" />
       <div className="edge2" />
       <Content>
-        <div className="tab-mechanism">
-          {Array.from(tabSaleMechanism).map((item, index) => {
-            return (
-              <div
-                // eslint-disable-next-line react/no-array-index-key
-                key={index}
-                className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
-                onClick={() => setTabActiveMechansim(item)}
-                aria-hidden="true"
-              >
-                {item}
-              </div>
-            )
-          })}
-        </div>
+        {width >= 900 && (
+          <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
+            <div className="tab-mechanism">
+              {Array.from(tabSaleMechanism).map((item, index) => {
+                return (
+                  <div
+                    // eslint-disable-next-line react/no-array-index-key
+                    key={index}
+                    className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
+                    onClick={() => setTabActiveMechansim(item)}
+                    aria-hidden="true"
+                  >
+                    {item}
+                  </div>
+                )
+              })}
+            </div>
+          </div>
+        )}
+        {width < 900 && (
+          <div style={{ marginBottom: '24px' }}>
+            <Swiper
+              slidesPerView="auto"
+              modules={[Navigation, Pagination, A11y]}
+              navigation
+              scrollbar={{ draggable: true }}
+              ref={swiperRef}
+            >
+              {Array.from(tabSaleMechanism).map((item, index) => {
+                return (
+                  <SwiperSlide style={{ width: 'fit-content' }}>
+                    <div
+                      // eslint-disable-next-line react/no-array-index-key
+                      key={index}
+                      className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
+                      onClick={() => setTabActiveMechansim(item)}
+                      aria-hidden="true"
+                    >
+                      {item}
+                    </div>
+                  </SwiperSlide>
+                )
+              })}
+            </Swiper>
+          </div>
+        )}
+
         <div className="body">{renderBody}</div>
       </Content>
       {!account && (tabActiveMechansim === 'Vesting Schedule' || tabActiveMechansim === 'Your Information')

@@ -13,50 +13,50 @@ const Wrapper = styled.div`
 
   .corner1 {
     position: absolute;
-    bottom: 0;
     left: 0;
-    width: 50%;
-    height: 28px;
+    width: 40px;
+    height: 100%;
     border-radius: 20px;
-    z-index: 1;
-    border-bottom: 1px solid #ffb000;
-    border-left: 1px solid #ffb000;
+    z-index: 99;
+    border-bottom: 1px solid #b809b5;
+    border-top: 1px solid #b809b5;
+    border-left: 1px solid #b809b5;
     border-bottom-right-radius: unset;
-    border-top-left-radius: unset;
+    border-top-right-radius: unset;
   }
 
   .edge1 {
-    width: 1px;
-    height: calc(75% - 28px);
     position: absolute;
-    bottom: 28px;
-    left: 0;
-    z-index: 1;
-    background: linear-gradient(to bottom, rgba(16, 16, 16, 0.3) 15%, #ed1c51, #ffb000);
+    top: 0;
+    left: 40px;
+    z-index: 99;
+    height: 1px;
+    width: calc(100% - 80px);
+    background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
   }
 
   .corner2 {
     position: absolute;
-    bottom: 0;
     right: 0;
-    width: 50%;
-    height: 28px;
+    width: 40px;
+    height: 100%;
     border-radius: 20px;
-    z-index: 1;
+    z-index: 99;
     border-bottom: 1px solid #ffb000;
+    border-top: 1px solid #ffb000;
     border-right: 1px solid #ffb000;
     border-bottom-left-radius: unset;
-    border-top-right-radius: unset;
+    border-top-left-radius: unset;
   }
 
   .edge2 {
-    width: 1px;
-    height: calc(75% - 28px);
     position: absolute;
-    bottom: 28px;
-    right: 0;
-    z-index: 1;
-    background: linear-gradient(to bottom, rgba(16, 16, 16, 0.3) 15%, #ed1c51, #ffb000);
+    bottom: 0;
+    left: 40px;
+    z-index: 99;
+    height: 1px;
+    width: calc(100% - 80px);
+    background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
   }
 
   .btn_group {
@@ -435,24 +435,14 @@ interface IProps {
   onModalExchangeSale: () => void
   currentRound: number
   isInTimeRangeSale: boolean
-  isUserInWhiteList: boolean
-  isTimeAllowWhitelist: boolean
   setTypeBuyPrice: (typeBuy: number) => void
   typeBuyPrice: number
 }
 
-function PricingInfo({
-  onModalExchangeSale,
-  currentRound,
-  isInTimeRangeSale,
-  isUserInWhiteList,
-  isTimeAllowWhitelist,
-  setTypeBuyPrice,
-}: IProps) {
+function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, setTypeBuyPrice }: IProps) {
   const { account } = useActiveWeb3React()
   const [arrDataRound, setArrDataRound] = useState<dataRoundPricing[]>(dataPricing)
   const { width } = useWindowSize()
-  const isCanBuyWithWhitelistUser = isUserInWhiteList && isTimeAllowWhitelist
 
   const handleCheckRound = (num: number) => {
     const dataUpdate = Array.from(dataPricing).map((item: dataRoundPricing) => {
@@ -541,63 +531,33 @@ function PricingInfo({
         {!account && <ConnectWalletButtonCustom width="100%" />}
         {account && (
           <div className="btn_group">
-            {isCanBuyWithWhitelistUser ? (
-              <>
-                <CustomButton
-                  onClick={() => {
-                    onModalExchangeSale()
-                    setTypeBuyPrice(TYPE_BY.BY_USDC)
-                  }}
-                >
-                  Buy with USDC
-                </CustomButton>
+            <CustomButton
+              onClick={() => {
+                onModalExchangeSale()
+                setTypeBuyPrice(TYPE_BY.BY_ERC20)
+              }}
+              disabled={!isInTimeRangeSale}
+            >
+              Buy with USDT
+            </CustomButton>
 
-                <ButtonETH
-                  className="btn_get_eth"
-                  onClick={() => {
-                    onModalExchangeSale()
-                    setTypeBuyPrice(TYPE_BY.BY_ETH)
-                  }}
-                  aria-hidden="true"
-                >
-                  <div className="corner_btn_1" />
-                  <div className="edge_btn_1" />
-                  <div className="corner_btn_2" />
-                  <div className="edge_btn_2" />
-                  <span>Buy with ETH</span>
-                </ButtonETH>
-              </>
+            {!isInTimeRangeSale ? (
+              <CustomButton disabled={!isInTimeRangeSale}>Buy with ETH</CustomButton>
             ) : (
-              <>
-                <CustomButton
-                  onClick={() => {
-                    onModalExchangeSale()
-                    setTypeBuyPrice(TYPE_BY.BY_USDC)
-                  }}
-                  disabled={!isInTimeRangeSale}
-                >
-                  Buy with USDC
-                </CustomButton>
-
-                {!isInTimeRangeSale ? (
-                  <CustomButton disabled={!isInTimeRangeSale}>Buy with ETH</CustomButton>
-                ) : (
-                  <ButtonETH
-                    className="btn_get_eth"
-                    onClick={() => {
-                      onModalExchangeSale()
-                      setTypeBuyPrice(TYPE_BY.BY_ETH)
-                    }}
-                    aria-hidden="true"
-                  >
-                    <div className="corner_btn_1" />
-                    <div className="edge_btn_1" />
-                    <div className="corner_btn_2" />
-                    <div className="edge_btn_2" />
-                    <span>Buy with ETH</span>
-                  </ButtonETH>
-                )}
-              </>
+              <ButtonETH
+                className="btn_get_eth"
+                onClick={() => {
+                  onModalExchangeSale()
+                  setTypeBuyPrice(TYPE_BY.BY_ETH)
+                }}
+                aria-hidden="true"
+              >
+                <div className="corner_btn_1" />
+                <div className="edge_btn_1" />
+                <div className="corner_btn_2" />
+                <div className="edge_btn_2" />
+                <span>Buy with ETH</span>
+              </ButtonETH>
             )}
           </div>
         )}
