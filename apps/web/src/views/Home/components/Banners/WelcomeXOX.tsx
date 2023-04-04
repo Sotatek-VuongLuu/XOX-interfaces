@@ -12,6 +12,11 @@ import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 const Wrapper = styled.div`
   width: 100%;
 
+  #portal-root {
+    z-index: 9999;
+    position: fixed;
+  }
+
   .video-container {
     position: relative;
     border-radius: 5px;
@@ -21,6 +26,11 @@ const Wrapper = styled.div`
       rgba(246, 99, 42, 0.5) 0.01%,
       rgba(249, 124, 29, 0) 100%
     );
+    outline :none;
+    
+    &:focus {
+      outline: none;
+    }
   }
 
   .video-container video {
@@ -31,6 +41,11 @@ const Wrapper = styled.div`
     width: 45vw;
     height: auto;
     transform: scale(1.2);
+    outline: none;
+
+    &:focus {
+      outline: none;
+    }
 
     @media screen and (max-width: 900px) {
       width: 100%;
