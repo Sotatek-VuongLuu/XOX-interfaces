@@ -62,6 +62,7 @@ const RightContent = styled.div`
     position: relative;
     outline: none;
     border: none;
+    line-height: 0;
 
     &:focus {
       outline: none;
@@ -70,7 +71,7 @@ const RightContent = styled.div`
 
   .video-container video {
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     left: 0;
     width: 45vw;
@@ -157,7 +158,7 @@ const FeaturePlant = () => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex', marginBottom: '-2px' }}>
+    <Box sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <LeftContent data-aos="fade-right">
