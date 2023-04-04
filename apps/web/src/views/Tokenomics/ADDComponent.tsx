@@ -2,10 +2,10 @@ import ReactECharts from 'echarts-for-react'
 import { Ref, useEffect, useRef, useState } from 'react'
 import { BTNLearnMore } from 'views/Company'
 import useWindowSize from 'hooks/useWindowSize'
+import { useTranslation } from '@pancakeswap/localization'
 import { EChartsOption, SeriesOption } from 'echarts'
 import BigNumber from 'bignumber.js'
 import { StyledAAD, StyledItemAAD, StyledTitle } from './styled'
-import { useTranslation } from '@pancakeswap/localization'
 
 interface IAAD {
   title: string

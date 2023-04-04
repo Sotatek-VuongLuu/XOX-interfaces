@@ -1,3 +1,4 @@
+import { Tooltip } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
 import { Box } from '@pancakeswap/uikit'
 import ReactPlayer from 'react-player'
@@ -86,6 +87,7 @@ const StyledHeader = styled('div')`
 `
 
 const StyledPreviewVideo = styled('div')`
+  height: 336px;
   .player-wrapper {
     position: relative;
     padding-top: 56.25%;
@@ -379,10 +381,15 @@ const StyledLearnMore = styled('div')`
     line-height: 19px;
     text-transform: uppercase;
     color: #000000;
+
+    &:hover {
+      background: #000000;
+      color: #ffffff;
+    }
   }
 
-  ${({ theme }) => theme.mediaQueries.md} {
-    padding: 40px;
+  ${({ theme }) => theme.mediaQueries.xl} {
+    padding: 30px;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
@@ -391,6 +398,7 @@ const StyledLearnMore = styled('div')`
       font-size: 20px;
       line-height: 32px;
       margin-bottom: initial;
+      white-space: nowrap;
     }
 
     > a {
@@ -468,19 +476,41 @@ function CardMember({ member, ...props }: { member: IMember }) {
 
 function CardSocial({ social, ...props }: { social: ISocial }) {
   return (
-    <a href={social.heft} target="_blank" rel="noreferrer" style={{ display: 'inline-block' }}>
-      <StyledCardSocial {...props}>
-        <div>
-          <img src={social.icon} alt="" draggable="false" loading="lazy" />
-        </div>
-        <div>
-          <h4 className="social_name">{social.name}</h4>
-          <p style={{ whiteSpace: 'nowrap' }}>
-            <span>•</span>
-            {social.link} <img src="/images/company/ArrowUpRight.svg" alt="" draggable="false" loading="lazy" />
-          </p>
-        </div>
-      </StyledCardSocial>
+    <a
+      href={social.heft === '#' ? null : social.heft}
+      target="_blank"
+      rel="noreferrer"
+      style={{ display: 'inline-block' }}
+    >
+      {social.heft === '#' ? (
+        <Tooltip title="Under Development" placement="top">
+          <StyledCardSocial {...props}>
+            <div>
+              <img src={social.icon} alt="" draggable="false" loading="lazy" />
+            </div>
+            <div>
+              <h4 className="social_name">{social.name}</h4>
+              <p style={{ whiteSpace: 'nowrap' }}>
+                <span>•</span>
+                {social.link} <img src="/images/company/ArrowUpRight.svg" alt="" draggable="false" loading="lazy" />
+              </p>
+            </div>
+          </StyledCardSocial>
+        </Tooltip>
+      ) : (
+        <StyledCardSocial {...props}>
+          <div>
+            <img src={social.icon} alt="" draggable="false" loading="lazy" />
+          </div>
+          <div>
+            <h4 className="social_name">{social.name}</h4>
+            <p style={{ whiteSpace: 'nowrap' }}>
+              <span>•</span>
+              {social.link} <img src="/images/company/ArrowUpRight.svg" alt="" draggable="false" loading="lazy" />
+            </p>
+          </div>
+        </StyledCardSocial>
+      )}
     </a>
   )
 }
@@ -516,7 +546,7 @@ export default function CompanyPage() {
   ]
 
   const SOCIALS: Array<ISocial> = [
-    { icon: '/images/company/1.svg', name: t('XOX Dex V1'), link: t('Trade Now'), heft: '#' },
+    { icon: '/images/company/1.svg', name: t('XOX Dex V1'), link: t('Trade Now'), heft: '/swap' },
     { icon: '/images/company/2.svg', name: t('Referral Program'), link: t('Earn Now'), heft: '/referral' },
     { icon: '/images/company/3.svg', name: t('Bridge'), link: t('Bridge Now'), heft: '/bridge-token' },
     { icon: '/images/company/4.svg', name: t('Stable Coin'), link: t('Stake Now'), heft: '/stable-coin' },
@@ -539,7 +569,7 @@ export default function CompanyPage() {
 
       <StyledHeader>
         <StyledPreviewVideo>
-          <div className="player-wrapper">
+          {/* <div className="player-wrapper">
             <ReactPlayer
               className="react-player"
               url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
@@ -549,7 +579,7 @@ export default function CompanyPage() {
               width="100%"
               height="100%"
             />
-          </div>
+          </div> */}
         </StyledPreviewVideo>
 
         <img src="/images/company/bg-header.png" alt="" draggable="false" loading="lazy" className="bg-header" />

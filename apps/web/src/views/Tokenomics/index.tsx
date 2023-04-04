@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import { useMemo } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
 import { BTNLearnMore } from 'views/Company'
@@ -21,7 +22,6 @@ import {
   ContainnerStyledF2,
 } from './styled'
 import ADDComponent from './ADDComponent'
-import { useTranslation } from '@pancakeswap/localization'
 
 interface IAddress {
   asset: string
@@ -531,7 +531,7 @@ export default function TokenomicsPage() {
               controlsList="nodownload"
               muted
             >
-              <source src="/videos/home/pie_chart.mp4" type="video/mp4"></source>
+              <source src="/videos/home/pie_chart.mp4" type="video/mp4" />
             </video>
             {/* <img src="/images/tokenomics/Untitled@5-1397x721 1.png" alt="" draggable="false" loading="lazy" /> */}
           </div>
