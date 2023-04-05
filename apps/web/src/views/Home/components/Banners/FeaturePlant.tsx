@@ -211,14 +211,14 @@ const FeaturePlant = () => {
           <RightContent data-aos="fade-left">
             <div className="video-container">
               <video
-                loop
-                playsInline
                 autoPlay
+                loop
+                muted
+                playsInline
                 controls={false}
-                preload="auto"
+                preload="yes"
                 style={{ pointerEvents: 'none' }}
                 controlsList="nodownload"
-                muted
               >
                 <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
                 <source src="/videos/home/3d_xox_utilities.webm" type="video/webm"></source>
