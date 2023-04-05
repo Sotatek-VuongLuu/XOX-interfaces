@@ -293,7 +293,7 @@ const Subscription = () => {
       })
       .catch((error) => {
         if (error.response.status === 400 && error.response.data.message === 'Email is already existed!') {
-          toastSuccess(t('The email is already registered.'))
+          toastError(t('The email is already registered.'))
           return
         }
 
