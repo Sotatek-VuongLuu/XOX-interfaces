@@ -808,8 +808,8 @@ const WelcomeXOX = (): JSX.Element => {
                 // style={{ pointerEvents: 'none' }}
                 // controlsList="nodownload"
               >
-                <source src="/videos/home/laptop_project.webm" type="video/webm" />
                 <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4" />
+                <source src="/videos/home/laptop_project.webm" type="video/webm" />
               </video>
             </div>
           </Grid>
