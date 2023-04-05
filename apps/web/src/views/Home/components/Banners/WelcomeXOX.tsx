@@ -22,34 +22,62 @@ const Wrapper = styled.div`
     }
   }
 
-  .video-container video {
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: -90px;
-    width: 45vw;
-    height: auto;
-    scale: 1.2;
-    outline: none;
-    margin-bottom: -2px;
-    border: none !important;
-    clip-path: inset(1px 1px);
-    max-width: 1040px;
-    max-height: 520px;
+  .video-container {
+    height: inherit;
 
-    &:focus {
-      outline: none;
-    }
-
-    @media screen and (max-width: 900px) {
+    video {
+      position: absolute;
+      z-index: -1;
+      top: 0;
+      left: 10%;
       width: 100%;
-      height: auto;
-      left: unset;
+      scale: 1.4;
+      outline: none;
+      border: none !important;
+      clip-path: inset(1px 1px);
+      max-width: 1040px;
+      max-height: 520px;
+
+      &:focus {
+        outline: none;
+      }
+
+      @media screen and (max-width: 900px) {
+        width: 100%;
+        left: unset;
+      }
+
+      @media screen and (max-width: 576px) {
+        height: 230px;
+        scale: 1.6;
+      }
     }
 
-    @media screen and (max-width: 576px) {
-      height: 230px;
-      scale: 1.6;
+    .overlay {
+      height: 457px;
+      width: 457px;
+      border-radius: 50%;
+      position: absolute;
+      top: 0px;
+      left: 15%;
+      z-index: -2;
+      background: radial-gradient(
+        50% 50% at 50% 50%,
+        rgba(249, 124, 29, 0.5) 0%,
+        rgba(246, 99, 42, 0.5) 0.01%,
+        rgba(249, 124, 29, 0) 100%
+      );
+      opacity: 0.7;
+      scale: 1.3;
+
+      @media screen and (max-width: 900px) {
+        width: 100%;
+        left: unset;
+      }
+
+      @media screen and (max-width: 576px) {
+        height: 230px;
+      }
     }
   }
 
@@ -514,6 +542,7 @@ const WelcomeXOX = (): JSX.Element => {
   const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
   const { chainId } = useActiveChainId()
 
+  const [validSafari, setValidSafari] = React.useState<boolean>(true)
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -528,7 +557,14 @@ const WelcomeXOX = (): JSX.Element => {
   const id = open ? 'simple-popover' : undefined
 
   const { userAgent } = navigator
-  console.log(userAgent);
+
+  var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
+               navigator.userAgent &&
+               navigator.userAgent.indexOf('CriOS') == -1 &&
+               navigator.userAgent.indexOf('FxiOS') == -1
+  console.log("isSafari: " + isSafari)
+  console.log("vendor: " + navigator.vendor)
+  console.log("vendor: " + navigator.vendor)
 
   return (
     <Wrapper>
@@ -761,6 +797,7 @@ const WelcomeXOX = (): JSX.Element => {
           </GridLeft>
           <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
             <div className="video-container">
+              <div className="overlay"></div>
               <video
                 loop
                 playsInline
@@ -771,6 +808,7 @@ const WelcomeXOX = (): JSX.Element => {
                 controlsList="nodownload"
                 muted
               >
+                <source src="/videos/home/laptop_project.webm" type="video/mp4" />
                 <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4" />
               </video>
             </div>

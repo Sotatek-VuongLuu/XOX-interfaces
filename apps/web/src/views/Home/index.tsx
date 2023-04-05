@@ -76,8 +76,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         containerProps={{
           id: 'home',
           style: {
-            height: 'fit-content',
-            marginTop: '-2px'
+            height: 'fit-content'
           },
         }}
         innerClass="welcome"
