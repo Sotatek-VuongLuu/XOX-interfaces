@@ -29,7 +29,7 @@ const Wrapper = styled.div`
       position: absolute;
       z-index: -1;
       top: 0;
-      left: 10%;
+      left: 0;
       width: 100%;
       scale: 1.4;
       outline: none;
@@ -53,32 +53,32 @@ const Wrapper = styled.div`
       }
     }
 
-    .overlay {
-      height: 457px;
-      width: 457px;
-      border-radius: 50%;
-      position: absolute;
-      top: 0px;
-      left: 15%;
-      z-index: -2;
-      background: radial-gradient(
-        50% 50% at 50% 50%,
-        rgba(249, 124, 29, 0.5) 0%,
-        rgba(246, 99, 42, 0.5) 0.01%,
-        rgba(249, 124, 29, 0) 100%
-      );
-      opacity: 0.7;
-      scale: 1.3;
+    // .overlay {
+    //   height: 457px;
+    //   width: 457px;
+    //   border-radius: 50%;
+    //   position: absolute;
+    //   top: 0px;
+    //   left: 15%;
+    //   z-index: -2;
+    //   background: radial-gradient(
+    //     50% 50% at 50% 50%,
+    //     rgba(249, 124, 29, 0.5) 0%,
+    //     rgba(246, 99, 42, 0.5) 0.01%,
+    //     rgba(249, 124, 29, 0) 100%
+    //   );
+    //   opacity: 0.7;
+    //   scale: 1.3;
 
-      @media screen and (max-width: 900px) {
-        width: 100%;
-        left: unset;
-      }
+    //   @media screen and (max-width: 900px) {
+    //     width: 100%;
+    //     left: unset;
+    //   }
 
-      @media screen and (max-width: 576px) {
-        height: 230px;
-      }
-    }
+    //   @media screen and (max-width: 576px) {
+    //     height: 230px;
+    //   }
+    // }
   }
 
   @media screen and (max-width: 900px) {
@@ -797,7 +797,7 @@ const WelcomeXOX = (): JSX.Element => {
           </GridLeft>
           <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
             <div className="video-container">
-              <div className="overlay"></div>
+              {/* <div className="overlay"></div> */}
               <video
                 autoPlay
                 loop
