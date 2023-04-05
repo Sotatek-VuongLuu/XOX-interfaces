@@ -57,11 +57,12 @@ const LeftContent = styled.div`
 
 const RightContent = styled.div`
   padding-left: 50px;
-  margin-bottom: -2px;
 
   .video-container {
     position: relative;
-    outline :none;
+    outline: none;
+    border: none;
+    line-height: 0;
 
     &:focus {
       outline: none;
@@ -70,13 +71,15 @@ const RightContent = styled.div`
 
   .video-container video {
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     left: 0;
     width: 45vw;
     height: auto;
-    transform: scale(1.1);
     outline: none;
+    border: none;
+    max-height: 470px;
+    max-width: 670px;
     
     &:focus {
         outline: none;
@@ -207,7 +210,6 @@ const FeaturePlant = () => {
         <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
           <RightContent data-aos="fade-left">
             <div className="video-container">
-              <div className="overlay"></div>
               <video
                 loop
                 playsInline

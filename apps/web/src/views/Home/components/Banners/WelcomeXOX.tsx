@@ -24,16 +24,18 @@ const Wrapper = styled.div`
 
   .video-container video {
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     left: -90px;
     width: 45vw;
     height: auto;
-    transform: scale(1.2);
+    scale: 1.2;
     outline: none;
     margin-bottom: -2px;
     border: none !important;
     clip-path: inset(1px 1px);
+    max-width: 1040px;
+    max-height: 520px;
 
     &:focus {
       outline: none;
@@ -46,8 +48,8 @@ const Wrapper = styled.div`
     }
 
     @media screen and (max-width: 576px) {
-      height: 280px;
-      transform: scale(1.7);
+      height: 230px;
+      scale: 1.6;
     }
   }
 
@@ -524,6 +526,9 @@ const WelcomeXOX = (): JSX.Element => {
 
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
+
+  const { userAgent } = navigator
+  console.log(userAgent);
 
   return (
     <Wrapper>
