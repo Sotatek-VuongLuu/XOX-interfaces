@@ -527,6 +527,9 @@ const WelcomeXOX = (): JSX.Element => {
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
+  const { userAgent } = navigator
+  console.log(userAgent);
+
   return (
     <Wrapper>
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
