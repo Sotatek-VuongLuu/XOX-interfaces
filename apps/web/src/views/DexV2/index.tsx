@@ -1,9 +1,29 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 import { useTranslation } from '@pancakeswap/localization'
 import { Box } from '@pancakeswap/uikit'
+import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { CardSocial, StyledS, StyledSubtitle } from 'views/Company'
 import { StyledTitle } from 'views/Tokenomics/styled'
 import BackedBy from 'views/Vesting/Components/BackedBy'
+
+interface ISocial {
+  icon: string
+  name: string
+  link: string
+  heft: string
+}
+
+interface ISafeReliable {
+  icon: string
+  name: string
+  describe: string
+}
+
+interface IValue {
+  title: string
+  value: string
+}
 
 const StyledContainer = styled(StyledS)`
   .hight-light {
@@ -13,6 +33,153 @@ const StyledContainer = styled(StyledS)`
   .describe {
     color: rgba(255, 255, 255, 0.6) !important;
   }
+
+  .btn_learn_more_ecosystem {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+
+  .btn_learn_more_wycd {
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 30px;
+  }
+
+  button {
+    background: unset;
+    border: unset;
+    cursor: pointer;
+  }
+
+  .subscription-form-container {
+    display: flex;
+    justify-content: center;
+
+    .subscription-box {
+      width: 100%;
+      max-width: 680px;
+
+      .subscription-form {
+        background: #1d1c1c;
+        display: flex;
+        align-items: center;
+        border-radius: 12px;
+        padding: 6px;
+        justify-content: center;
+        border: unset;
+        margin-bottom: 8px;
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        input:-webkit-autofill:active {
+          -webkit-transition: 'color 9999s ease-out, background-color 9999s ease-out';
+          -webkit-transition-delay: 9999s;
+        }
+        border: 2px solid transparent;
+
+        input {
+          background: transparent;
+          flex: 1;
+          border: 0;
+          outline: none;
+          padding: 12px 16px 12px 8px;
+          font-size: 18px;
+          line-height: 22px;
+          color: rgba(255, 255, 255, 0.38);
+          width: 100%;
+
+          &:hover {
+            .subscription-form {
+              border: 1px solid #fb8618;
+            }
+          }
+        }
+
+        button {
+          border: 0;
+          width: auto;
+          height: 100%;
+          cursor: pointer;
+          background: #1d1c1c;
+          padding: 0;
+        }
+
+        .email-icon {
+          width: 25px;
+          margin-left: 16px;
+        }
+      }
+
+      .subscription-form.hover-form {
+        border: 2px solid #fb8618;
+      }
+
+      .error {
+        border: 2px solid #ff5353;
+
+        .text-error {
+          p {
+            font-style: normal;
+            font-weight: 400;
+            font-size: 14px;
+            line-height: 17px;
+            color: #f44336;
+          }
+        }
+      }
+
+      .hidden-text {
+        display: none;
+      }
+
+      .text-error {
+        display: block;
+
+        p {
+          font-style: normal;
+          font-weight: 400;
+          font-size: 14px;
+          line-height: 17px;
+          color: #f44336;
+        }
+      }
+
+      .hover-button:enabled {
+        svg {
+          path {
+            stroke: #fb8618;
+          }
+        }
+      }
+    }
+  }
+
+  .subtitle {
+    text-align: center;
+    font-weight: 400;
+    font-size: 16px;
+    color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 48px;
+
+    @media screen and (max-width: 576px) {
+      font-size: 14px;
+    }
+  }
+
+  .privacy-link {
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.87);
+    text-decoration: underline;
+    &:hover {
+      -webkit-transition: 0.5s ease;
+      transition: 0.5s ease;
+      left: 6px;
+      bottom: 5px;
+    }
+  }
 `
 const StyledHeader = styled.div`
   > h1 {
@@ -20,6 +187,14 @@ const StyledHeader = styled.div`
     font-size: 64px;
     text-align: center;
     color: rgba(255, 255, 255, 0.6);
+    margin-bottom: 80px;
+  }
+
+  > div {
+    > img {
+      display: block;
+      margin: auto;
+    }
   }
 `
 
@@ -87,18 +262,61 @@ const ReStyledSubtitle = styled(StyledSubtitle)`
   color: rgba(255, 255, 255, 0.62);
 `
 
-interface ISocial {
-  icon: string
-  name: string
-  link: string
-  heft: string
-}
+const StyledRevenue = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  > div:nth-child(1) {
+    display: flex;
+    position: relative;
+    width: 100%;
 
-interface ISafeReliable {
-  icon: string
-  name: string
-  describe: string
-}
+    > video {
+      width: 600px;
+      max-width: 100%;
+    }
+
+    ${({ theme }) => theme.mediaQueries.xl} {
+      min-width: 400px !important;
+
+      > video {
+        transform: translateY(-124px);
+      }
+    }
+  }
+
+  > div:nth-child(2) {
+    > h3 {
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 48px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 24px;
+    }
+    > p {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 32px;
+      color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 24px;
+    }
+
+    > ul {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    > ul li {
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 32px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    > div {
+      margin-top: 24px;
+    }
+  }
+`
 
 const StyledLearMore = styled.div`
   width: 100%;
@@ -176,28 +394,63 @@ const StyledReferralProgram = styled(StyledBLock)`
   }
 `
 
-const CardSafeReliable = ({ safe }: { safe: ISafeReliable }) => {
-  return (
-    <StyledCardSafeReliable>
-      <img src={safe.icon} alt="icon" />
-      <h3>{safe.name}</h3>
-      <p>{safe.describe}</p>
-    </StyledCardSafeReliable>
-  )
-}
+const StyledWhatYouCanDo = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 
-const BtnLearMore = ({ href }: { href?: string }) => {
-  return (
-    <a href={href} target="_blank" rel="noreferrer">
-      <StyledLearMore>
-        <div>
-          <span>Learn more</span>
-          <img src="/images/dex-v2/ArrowUpRight.png" alt="ArrowUpRight" />
-        </div>
-      </StyledLearMore>
-    </a>
-  )
-}
+  > div:nth-child(1) {
+    min-width: 700px !important;
+  }
+
+  > div:nth-child(2) {
+    > h3 {
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 48px;
+      color: rgba(255, 255, 255, 0.87);
+      margin-bottom: 24px;
+    }
+    > .tab_what_you_can_do_container {
+      width: fit-content;
+      display: flex;
+      background: #101010;
+      border-radius: 30px;
+      margin-bottom: 24px;
+      gap: 16px;
+      > div {
+        padding: 16px 24px;
+        font-weight: 500;
+        font-size: 18px;
+        line-height: 22px;
+        color: rgba(255, 255, 255, 0.6);
+        cursor: pointer;
+      }
+
+      .tab_what_you_can_do.active {
+        position: relative;
+        background: rgba(255, 255, 255, 0.05);
+        border-radius: 30px;
+        color: #ffffff;
+        &:before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          border-radius: inherit;
+          padding: 1px;
+          background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          -webkit-mask-composite: exclude;
+          mask-composite: exclude;
+        }
+      }
+    }
+  }
+`
 
 const StyledEcosystem = styled.div`
   > p {
@@ -231,11 +484,34 @@ const StyledTabEcosystem = styled.div`
     background: #101010;
     border-radius: 30px;
 
+    .active {
+      position: relative;
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 30px;
+      color: #ffffff;
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit;
+        padding: 1px;
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        -webkit-mask-composite: exclude;
+        mask-composite: exclude;
+      }
+    }
+
     > div {
       padding: 15px 23px;
       font-weight: 500;
       font-size: 18px;
       color: rgba(255, 255, 255, 0.87);
+      cursor: pointer;
     }
     > div:nth-child(2) {
       margin: 0px 12px;
@@ -262,40 +538,326 @@ const StyledDexes = styled.div`
   }
 `
 
+const StyledAggregator = styled(StyledDexes)`
+  height: auto;
+`
+
+const StyledBtnStartTrading = styled.div`
+  width: 100%;
+  margin-top: 80px;
+  display: flex;
+  justify-content: center;
+  > div {
+    display: flex;
+    align-items: center;
+
+    button {
+      padding: 12px 30px;
+    }
+    > button:nth-child(1) {
+      display: flex;
+      align-items: center;
+      margin-right: 16px;
+      background: #ffffff;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: #000000;
+      > span {
+        margin-right: 10px;
+      }
+    }
+
+    > button:nth-child(2) {
+      border: 1px solid #ffffff;
+      border-radius: 10px;
+      font-weight: 700;
+      font-size: 16px;
+      line-height: 19px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+  }
+`
+
+const StyledValue = styled.div`
+  display: flex;
+  justify-content: center;
+  margin-top: 80px;
+  > div {
+    width: 1000px;
+    max-width: 100%;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    padding: 31px 47px;
+    border-radius: 10px;
+    box-shadow: inset 0px 0px 6px rgba(255, 255, 255, 0.3);
+
+    > div {
+      > p:nth-child(1) {
+        position: relative;
+        font-weight: 700;
+        font-size: 48px;
+        line-height: 58px;
+        color: rgba(255, 255, 255, 0.87);
+        text-align: center;
+        &::after {
+          content: '+';
+          position: absolute;
+          font-weight: 700;
+          font-size: 25px;
+          line-height: 30px;
+          color: rgba(255, 255, 255, 0.6);
+          top: 50%;
+          transform: translateY(-50%);
+        }
+      }
+
+      > p:nth-child(2) {
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 17px;
+        color: rgba(255, 255, 255, 0.6);
+        text-align: center;
+      }
+    }
+
+    > div:nth-child(2) {
+      border-left: 2px solid rgba(255, 255, 255, 0.38);
+      border-right: 2px solid rgba(255, 255, 255, 0.38);
+    }
+    > div:nth-child(3) {
+      border-right: 2px solid rgba(255, 255, 255, 0.38);
+    }
+  }
+`
+
+const StyledSwap = styled.div`
+  > p {
+    font-weight: 400;
+    font-size: 18px;
+    line-height: 32px;
+    color: rgba(255, 255, 255, 0.6);
+  }
+`
+
+const handleRange = (start: number, end: number, step = 1) => {
+  const range = []
+  const typeofStart = typeof start
+  const typeofEnd = typeof end
+
+  if (step === 0) {
+    throw TypeError('Step cannot be zero.')
+  }
+
+  if (typeofStart === 'undefined' || typeofEnd === 'undefined') {
+    throw TypeError('Must pass start and end arguments.')
+  } else if (typeofStart !== typeofEnd) {
+    throw TypeError('Start and end arguments must be of same type.')
+  }
+
+  if (end < start) {
+    // eslint-disable-next-line no-param-reassign
+    step = -step
+  }
+
+  if (typeofStart === 'number') {
+    while (step > 0 ? end >= start : end <= start) {
+      range.push(start)
+      // eslint-disable-next-line no-param-reassign
+      start += step
+    }
+  } else {
+    throw TypeError('Only string and number types are supported')
+  }
+  return range
+}
+
+const CardSafeReliable = ({ safe }: { safe: ISafeReliable }) => {
+  return (
+    <StyledCardSafeReliable>
+      <img src={safe.icon} alt="icon" />
+      <h3>{safe.name}</h3>
+      <p>{safe.describe}</p>
+    </StyledCardSafeReliable>
+  )
+}
+
+const BtnLearMore = ({ href }: { href?: string }) => {
+  return (
+    <a href={href} target="_blank" rel="noreferrer">
+      <StyledLearMore>
+        <div>
+          <span>Learn more</span>
+          <img src="/images/dex-v2/ArrowUpRight.png" alt="ArrowUpRight" />
+        </div>
+      </StyledLearMore>
+    </a>
+  )
+}
+
+const Swap = () => {
+  return (
+    <>
+      <StyledSwap>
+        <p>
+          Trade any token on the supported networks by aggregating liquidity from hundreds of aggregators and DEXes that
+          ensure the best swap rates for your trades.{' '}
+        </p>
+      </StyledSwap>
+
+      <div className="btn_learn_more_wycd">
+        <BtnLearMore />
+      </div>
+    </>
+  )
+}
+
+const LimitOrder = () => {
+  return (
+    <>
+      <StyledSwap>
+        <p>
+          Secure your position ahead of time at a specific price. A buy limit order can only be executed at the limit
+          price or lower, and a sell limit order can only be executed at the limit price or higher. Don&lsquo;t miss a
+          trade.
+        </p>
+      </StyledSwap>
+
+      <div className="btn_learn_more_wycd">
+        <BtnLearMore />
+      </div>
+    </>
+  )
+}
+
+const Earn = () => {
+  return (
+    <>
+      <StyledSwap>
+        <p>
+          Share your unique referral code with other users to earn a small % of the XOX Labs Protocol&lsquo;s revenue.
+          It&lsquo;s simple, just copy and share your code, then enjoy the profits. No sharing links, no sign-up, no
+          waste of time. 100% Decentralized and Simple.
+        </p>
+      </StyledSwap>
+
+      <div className="btn_learn_more_wycd">
+        <BtnLearMore />
+      </div>
+    </>
+  )
+}
+
+const Liquidity = () => {
+  return (
+    <>
+      <StyledSwap>
+        <p>
+          Provide liquidity to hundreds of liquidity pairs to receive a share in the transaction fees of the respective
+          pools.
+        </p>
+      </StyledSwap>
+
+      <div className="btn_learn_more_wycd">
+        <BtnLearMore />
+      </div>
+    </>
+  )
+}
+
+const API = () => {
+  return (
+    <>
+      <StyledSwap>
+        <p>
+          XOX Dex V2 API provides high-tech API to fetch asset balances, fees, and liquidity-pool and route them to
+          create the most efficient transaction for each trade + providing trade options as well for traders to choose
+          from.
+        </p>
+      </StyledSwap>
+
+      <div className="btn_learn_more_wycd">
+        <BtnLearMore />
+      </div>
+    </>
+  )
+}
+
+const DexesComponent = () => {
+  return (
+    <>
+      <StyledDexes>
+        {handleRange(1, 149).map((item, i) => (
+          <img src={`/images/dex-v2/dexes/${item}.png`} key={String(i + item)} alt="dex" />
+        ))}
+      </StyledDexes>
+
+      <div className="btn_learn_more_ecosystem">
+        <BtnLearMore />
+      </div>
+    </>
+  )
+}
+
+const Aggregators = () => {
+  return (
+    <>
+      <StyledAggregator>
+        {handleRange(1, 30).map((item, i) => (
+          <img src={`/images/dex-v2/aggregators/${item}.png`} key={String(i + item)} alt="dex" />
+        ))}
+      </StyledAggregator>
+
+      <div className="btn_learn_more_ecosystem">
+        <BtnLearMore />
+      </div>
+    </>
+  )
+}
+const BlockChains = () => {
+  return (
+    <>
+      <StyledAggregator>
+        {handleRange(1, 70).map((item, i) => (
+          <img src={`/images/dex-v2/blockchains/${item}.png`} key={String(i + item)} alt="dex" />
+        ))}
+      </StyledAggregator>
+
+      <div className="btn_learn_more_ecosystem">
+        <BtnLearMore />
+      </div>
+    </>
+  )
+}
+
+const Bridges = () => {
+  return (
+    <>
+      <StyledAggregator>
+        {handleRange(1, 13).map((item, i) => (
+          <img src={`/images/dex-v2/bridges/${item}.png`} key={String(i + item)} alt="dex" />
+        ))}
+      </StyledAggregator>
+
+      <div className="btn_learn_more_ecosystem">
+        <BtnLearMore />
+      </div>
+    </>
+  )
+}
+
 function DevV2() {
   const { t } = useTranslation()
+  const [tabEcosystem, setTabEcosystem] = useState<number>(0)
+  const [tabWHatYouCanDo, setTabWHatYouCanDo] = useState<number>(0)
+  const [emailBorderClass, setEmailBorderClass] = useState<string>('')
+  const [btnHoverClass, setBtnHoverClass] = useState<string>('')
+  const [emailErrorClass, setEmailErrorClass] = useState<string>('')
+  const [textErrorClass, setTextErrorClass] = useState<string>('')
 
-  const handleRange = (start: number, end: number, step = 1) => {
-    const range = []
-    const typeofStart = typeof start
-    const typeofEnd = typeof end
-
-    if (step === 0) {
-      throw TypeError('Step cannot be zero.')
-    }
-
-    if (typeofStart === 'undefined' || typeofEnd === 'undefined') {
-      throw TypeError('Must pass start and end arguments.')
-    } else if (typeofStart !== typeofEnd) {
-      throw TypeError('Start and end arguments must be of same type.')
-    }
-
-    if (end < start) {
-      // eslint-disable-next-line no-param-reassign
-      step = -step
-    }
-
-    if (typeofStart === 'number') {
-      while (step > 0 ? end >= start : end <= start) {
-        range.push(start)
-        // eslint-disable-next-line no-param-reassign
-        start += step
-      }
-    } else {
-      throw TypeError('Only string and number types are supported')
-    }
-    return range
-  }
+  const [timeRecall, setTimeRecall] = useState(7)
+  const [flow, setFlow] = useState('increase')
 
   const SOCIALS: Array<ISocial> = [
     { icon: '/images/company/1.svg', name: t('XOX Dex V1'), link: t('Trade Now'), heft: '/swap' },
@@ -313,6 +875,7 @@ function DevV2() {
   ]
 
   const TABECOSYSTEM: Array<string> = ['DEXes', 'Aggregators', 'Blockchains', 'Bridges']
+  const TABWHATYOUCANDO: Array<string> = ['Swap', 'Limit Order', 'Earn', 'Liquidity', 'API']
 
   const SAFERELIABLE: Array<any> = [
     {
@@ -350,6 +913,85 @@ function DevV2() {
     },
   ]
 
+  const VALUE: Array<IValue> = [
+    {
+      title: 'Integrated Aggregators',
+      value: '30',
+    },
+    {
+      title: 'Supported Chains',
+      value: '60',
+    },
+    {
+      title: 'Integrated DEXs',
+      value: '150',
+    },
+    {
+      title: 'Liquidity Sources ',
+      value: '640',
+    },
+  ]
+
+  const renderTab = useMemo(() => {
+    switch (tabEcosystem) {
+      case 0:
+        return <DexesComponent />
+      case 1:
+        return <Aggregators />
+      case 2:
+        return <BlockChains />
+      case 3:
+        return <Bridges />
+      default:
+        break
+    }
+    return null
+  }, [tabEcosystem])
+
+  const renderTabWhatYouCanDo = useMemo(() => {
+    switch (tabWHatYouCanDo) {
+      case 0:
+        return <Swap />
+      case 1:
+        return <LimitOrder />
+      case 2:
+        return <Earn />
+      case 3:
+        return <Liquidity />
+      case 4:
+        return <API />
+      default:
+        break
+    }
+    return null
+  }, [tabWHatYouCanDo])
+
+  // useEffect(() => {
+  //   const myId = setTimeout(() => {
+  //     if (timeRecall > 0) {
+  //       setTimeRecall(timeRecall - 1)
+  //       return
+  //     }
+  //     if (flow === 'increase' && tabEcosystem < 3) {
+  //       const nextIndex = tabEcosystem + 1
+  //       if (nextIndex === 3) {
+  //         setFlow('decrease')
+  //       }
+  //       setTabEcosystem(nextIndex)
+  //     }
+  //     if (flow === 'decrease' && tabEcosystem > 0) {
+  //       const prevIndex = tabEcosystem - 1
+  //       if (prevIndex === 0) {
+  //         setFlow('increase')
+  //       }
+  //       setTabEcosystem(prevIndex)
+  //     }
+  //     setTimeRecall(7)
+  //   }, 1000)
+  //   return () => clearTimeout(myId)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [timeRecall])
+
   return (
     <StyledContainer>
       <StyledHeader>
@@ -360,7 +1002,31 @@ function DevV2() {
           </span>{' '}
           Powering Web3.
         </h1>
+        <div>
+          <img src="/images/dex-v2/heading.png" alt="" />
+        </div>
       </StyledHeader>
+
+      <StyledBtnStartTrading>
+        <div>
+          <button type="button">
+            <span>Start Trading</span>
+            <img src="/images/dex-v2/start_trading.png" alt="start_trading" />
+          </button>
+          <button type="button">GitHub</button>
+        </div>
+      </StyledBtnStartTrading>
+
+      <StyledValue>
+        <div>
+          {VALUE.map((item: IValue, i) => (
+            <div key={String(i + item.title)}>
+              <p>{item.value}</p>
+              <p>{item.title}</p>
+            </div>
+          ))}
+        </div>
+      </StyledValue>
 
       <StyledEcosystem>
         <p>
@@ -378,16 +1044,19 @@ function DevV2() {
       <StyledTabEcosystem>
         <div>
           {TABECOSYSTEM.map((item, i) => (
-            <div key={String(i + item)}>{item}</div>
+            <div
+              key={String(i + item)}
+              onClick={() => setTabEcosystem(i)}
+              aria-hidden="true"
+              className={`${i === tabEcosystem ? 'tab_ecosystem active' : 'tab_ecosystem'}`}
+            >
+              {item}
+            </div>
           ))}
         </div>
       </StyledTabEcosystem>
 
-      <StyledDexes>
-        {handleRange(1, 149).map((item, i) => (
-          <img src={`/images/dex-v2/dexes/${item}.png`} key={String(i + item)} alt="dex" />
-        ))}
-      </StyledDexes>
+      {renderTab}
 
       <StyledBLock>
         <div>
@@ -420,6 +1089,29 @@ function DevV2() {
           </video>
         </div>
       </StyledBLock>
+
+      <StyledWhatYouCanDo>
+        <div>
+          <img src="/images/dex-v2/what_you_can_do.png" alt="what_you_can_do" />
+        </div>
+
+        <div>
+          <h3>What can you do.</h3>
+          <div className="tab_what_you_can_do_container">
+            {TABWHATYOUCANDO.map((item, i) => (
+              <div
+                key={String(i + item)}
+                onClick={() => setTabWHatYouCanDo(i)}
+                aria-hidden="true"
+                className={`${tabWHatYouCanDo === i ? 'tab_what_you_can_do active' : 'tab_what_you_can_do'}`}
+              >
+                {item}
+              </div>
+            ))}
+          </div>
+          {renderTabWhatYouCanDo}
+        </div>
+      </StyledWhatYouCanDo>
 
       <StyledReferralProgram>
         <div>
@@ -458,10 +1150,51 @@ function DevV2() {
             controlsList="nodownload"
             muted
           >
-            <source src="/images/dex-v2/referral.mp4" type="video/mp4" />
+            <source src="/images/dex-v2/ref.webm" type="video/webm" />
           </video>
         </div>
       </StyledReferralProgram>
+
+      <StyledRevenue>
+        <div>
+          <video
+            loop
+            playsInline
+            autoPlay
+            controls={false}
+            preload="auto"
+            style={{ pointerEvents: 'none' }}
+            controlsList="nodownload"
+            muted
+          >
+            <source src="/images/dex-v2/revenue.webm" type="video/webm" />
+          </video>
+        </div>
+
+        <div>
+          <h3>
+            <span className="hight-light">Revenue Sharing</span> Program
+          </h3>
+          <p>
+            The key <span className="hight-light">Revenue Source</span> for{' '}
+            <span className="hight-light">XOX Dex V2</span> is trading fees captured on every successful transaction
+            performed in our protocol. Which is <span className="hight-light">automatically redistributed</span> among:
+          </p>
+
+          <ul>
+            <li>XOX Token stakers </li>
+            <li>Liquidity providers</li>
+            <li>Referrals</li>
+            <li>Buyback and burn </li>
+            <li>Development</li>
+            <li>XOX Labs Treasury</li>
+          </ul>
+
+          <div>
+            <BtnLearMore />
+          </div>
+        </div>
+      </StyledRevenue>
 
       <StyledTitle style={{ marginBottom: 48 }}>Safe and Reliable.</StyledTitle>
       <StyledSaleAndReliable>
@@ -485,6 +1218,65 @@ function DevV2() {
       </StyledSocial>
 
       <BackedBy />
+
+      <StyledTitle style={{ marginBottom: 16 }}>Join The Wait List Here.</StyledTitle>
+      <p className="subtitle">
+        {t('Unsubscribe at any time.')}{' '}
+        <a className="privacy-link" href="#">
+          {t('Privacy policy')}
+          <span className="up-icon" style={{ marginLeft: 6 }}>
+            <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.5 8L7.5 3" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
+              <path d="M3.4375 3H7.5V7.0625" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
+            </svg>
+          </span>
+        </a>
+      </p>
+
+      <div className="subscription-form-container">
+        <div className="subscription-box">
+          <form action="#" method="post" className={`subscription-form ${emailBorderClass} ${emailErrorClass}`}>
+            <img src="/images/home/subscription/email.svg" alt="email" className="email-icon" />
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder={t('Your email')}
+              required
+              // value={inputValue}
+              // onChange={handleChange}
+              // onBlur={handleBlur}
+              // onFocus={handleFocus}
+            />
+            <button
+              // onClick={handleBtnSubmit}
+              // disabled={!!textErrorClass || !inputValue}
+              type="button"
+              className={`btn-submit ${btnHoverClass}`}
+            >
+              <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M6.75 15.3066H24.25"
+                  stroke="#515151"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+                <path
+                  d="M15.5 6.55664L24.25 15.3066L15.5 24.0566"
+                  stroke="#515151"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </form>
+          <span className={`hidden-text ${textErrorClass}`}>
+            <p>{t('Invalid email address')}</p>
+          </span>
+        </div>
+      </div>
     </StyledContainer>
   )
 }
