@@ -221,6 +221,7 @@ const FeaturePlant = () => {
                 muted
               >
                 <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
+                <source src="/videos/home/3d_xox_utilities.webm" type="video/webm"></source>
               </video>
             </div>
           </RightContent>
