@@ -547,7 +547,7 @@ const WelcomeXOX = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
   useEffect(() => {
-    document.getElementById('laptopVideo').play();
+    (document.getElementById('laptopVideo') as any).play();
   }, [])
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
