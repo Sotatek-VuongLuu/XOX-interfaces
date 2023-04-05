@@ -556,15 +556,15 @@ const WelcomeXOX = (): JSX.Element => {
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
-  const { userAgent } = navigator
+  const { detect } = require('detect-browser');
+  const browser = detect();
 
-  var isSafari = navigator.vendor && navigator.vendor.indexOf('Apple') > -1 &&
-               navigator.userAgent &&
-               navigator.userAgent.indexOf('CriOS') == -1 &&
-               navigator.userAgent.indexOf('FxiOS') == -1
-  console.log("isSafari: " + isSafari)
-  console.log("vendor: " + navigator.vendor)
-  console.log("vendor: " + navigator.vendor)
+  // handle the case where we don't detect the browser
+  if (browser) {
+    console.log(browser.name);
+    console.log(browser.version);
+    console.log(browser.os);
+  }
 
   return (
     <Wrapper>
