@@ -28,10 +28,10 @@ const Wrapper = styled.div`
     video {
       position: absolute;
       z-index: -1;
-      top: 0;
+      top: 30%;
       left: 0;
       width: 100%;
-      scale: 1.4;
+      scale: 2;
       outline: none;
       border: none !important;
       clip-path: inset(1px 1px);
@@ -45,10 +45,11 @@ const Wrapper = styled.div`
       @media screen and (max-width: 900px) {
         width: 100%;
         left: unset;
+        top: unset;
       }
 
       @media screen and (max-width: 576px) {
-        height: 230px;
+        height: 280px;
         scale: 1.6;
       }
     }
@@ -803,10 +804,10 @@ const WelcomeXOX = (): JSX.Element => {
                 loop
                 muted
                 playsInline
-                // controls={false}
-                // preload="yes"
-                // style={{ pointerEvents: 'none' }}
-                // controlsList="nodownload"
+                controls={false}
+                preload="yes"
+                style={{ pointerEvents: 'none' }}
+                controlsList="nodownload"
               >
                 <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4" />
                 <source src="/videos/home/laptop_project.webm" type="video/webm" />
