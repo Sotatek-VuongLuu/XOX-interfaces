@@ -339,7 +339,7 @@ const StyledTitle = styled('h1')`
   }
 `
 
-const StyledSubtitle = styled('p')`
+export const StyledSubtitle = styled('p')`
   font-weight: 400;
   text-align: center;
   color: #fb8618;
@@ -474,7 +474,7 @@ function CardMember({ member, ...props }: { member: IMember }) {
   )
 }
 
-function CardSocial({ social, ...props }: { social: ISocial }) {
+export function CardSocial({ social, ...props }: { social: ISocial }) {
   return (
     <a
       href={social.heft === '#' ? null : social.heft}

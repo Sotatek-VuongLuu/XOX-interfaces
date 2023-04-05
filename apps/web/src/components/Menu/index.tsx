@@ -194,7 +194,7 @@ const Menu = (props) => {
   const [activeNotifi, setActiveNotifi] = useState<boolean>(false)
   const ref = useRef<HTMLDivElement>(null)
   const host = process.env.NEXT_PUBLIC_SOCKET_API
-  const menuLandingPath = ['/', '/company', '/tokenomics']
+  const menuLandingPath = ['/', '/company', '/tokenomics', '/dex-v2']
   const menuItemsLanding = useMemo(() => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
   }, [t, isDark, currentLanguage.code, chainId])
