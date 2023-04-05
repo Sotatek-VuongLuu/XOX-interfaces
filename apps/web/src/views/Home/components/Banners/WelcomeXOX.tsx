@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 import { Box, Grid, Popover } from '@mui/material'
 import { useMatchBreakpoints, CopyButton } from '@pancakeswap/uikit'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
@@ -546,6 +546,10 @@ const WelcomeXOX = (): JSX.Element => {
   const [validSafari, setValidSafari] = React.useState<boolean>(true)
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
+  useEffect(() => {
+    document.getElementById('laptopVideo').play();
+  }, [])
+
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
   }
@@ -553,6 +557,7 @@ const WelcomeXOX = (): JSX.Element => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  
 
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
@@ -800,7 +805,6 @@ const WelcomeXOX = (): JSX.Element => {
             <div className="video-container">
               {/* <div className="overlay"></div> */}
               <video
-                autoPlay
                 loop
                 muted
                 playsInline
@@ -808,6 +812,7 @@ const WelcomeXOX = (): JSX.Element => {
                 preload="yes"
                 style={{ pointerEvents: 'none' }}
                 controlsList="nodownload"
+                id="laptopVideo"
               >
                 <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4" />
                 <source src="/videos/home/laptop_project.webm" type="video/webm" />
