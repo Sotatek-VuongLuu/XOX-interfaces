@@ -808,7 +808,7 @@ const WelcomeXOX = (): JSX.Element => {
                 controlsList="nodownload"
                 muted
               >
-                <source src="/videos/home/laptop_project.webm" type="video/mp4" />
+                <source src="/videos/home/laptop_project.webm" type="video/webm" />
                 <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4" />
               </video>
             </div>
