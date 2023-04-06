@@ -507,24 +507,60 @@ const StyledWhatYouCanDo = styled.div`
       font-size: 20px;
       line-height: 32px;
     }
-    > .tab_what_you_can_do_container {
+    .tab_what_you_can_do_container {
       overflow: scroll;
       display: flex;
       background: #101010;
       border-radius: 30px;
       margin-bottom: 15px;
       gap: 16px;
-      > div {
+
+      .tab_wycd_contain.wycd_active {
+        position: relative;
+        &::before {
+          content: '';
+          position: absolute;
+          background-image: url(/images/dex-v2/prev-tab.png);
+          top: 10px;
+          left: -16px;
+          color: rgba(255, 255, 255, 0.38);
+          width: 8px;
+          height: 10px;
+        }
+        &::after {
+          content: '';
+          position: absolute;
+          background-image: url(/images/dex-v2/next-tab.png);
+          top: 10px;
+          right: -16px;
+          color: rgba(255, 255, 255, 0.38);
+          width: 8px;
+          height: 10px;
+        }
+      }
+
+      .tab_wycd_contain_0.wycd_active {
+        &::before {
+          height: 0px;
+        }
+      }
+      .tab_wycd_contain_4.wycd_active {
+        &::after {
+          height: 0px;
+        }
+      }
+
+      .tab_what_you_can_do {
         padding: 9px 25px;
         font-weight: 500;
         font-size: 14px;
-        line-height: 17px;
         color: rgba(255, 255, 255, 0.6);
         cursor: pointer;
         white-space: nowrap;
       }
 
       .tab_what_you_can_do.active {
+        padding: 9px 25px;
         position: relative;
         background: rgba(255, 255, 255, 0.05);
         border-radius: 30px;
@@ -565,17 +601,30 @@ const StyledWhatYouCanDo = styled.div`
         line-height: 48px;
         margin-bottom: 24px;
       }
-      > .tab_what_you_can_do_container {
+      .tab_what_you_can_do_container {
         overflow: unset;
         width: fit-content;
         border-radius: 30px;
         margin-bottom: 24px;
         gap: 16px;
-        > div {
+
+        .tab_wycd_contain.wycd_active {
+          position: relative;
+          &::before {
+            height: 0px;
+          }
+          &::after {
+            height: 0px;
+          }
+        }
+        .tab_what_you_can_do {
           padding: 16px 24px;
           font-weight: 500;
           font-size: 18px;
           line-height: 22px;
+        }
+        .tab_what_you_can_do.active {
+          padding: 16px 24px;
         }
       }
     }
@@ -631,7 +680,53 @@ const StyledTabEcosystem = styled.div`
     background: #101010;
     border-radius: 30px;
 
-    .active {
+    .tab_ecosystem_contain {
+      font-weight: 500;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.87);
+      cursor: pointer;
+    }
+    .tab_ecosystem_contain.contain_active {
+      position: relative;
+      &::before {
+        content: '';
+        position: absolute;
+        background-image: url(/images/dex-v2/prev-tab.png);
+        top: 10px;
+        left: -16px;
+        color: rgba(255, 255, 255, 0.38);
+        width: 8px;
+        height: 10px;
+      }
+      &::after {
+        content: '';
+        position: absolute;
+        background-image: url(/images/dex-v2/next-tab.png);
+        top: 10px;
+        right: -16px;
+        color: rgba(255, 255, 255, 0.38);
+        width: 8px;
+        height: 10px;
+      }
+    }
+
+    .tab_ecosystem_contain_0.contain_active {
+      &::before {
+        height: 0px;
+      }
+    }
+    .tab_ecosystem_contain_3.contain_active {
+      &::after {
+        height: 0px;
+      }
+    }
+
+    .tab_ecosystem {
+      padding: 9px 25px;
+    }
+
+    .tab_ecosystem.active {
+      padding: 9px 25px;
       position: relative;
       background: rgba(255, 255, 255, 0.05);
       border-radius: 30px;
@@ -653,13 +748,6 @@ const StyledTabEcosystem = styled.div`
       }
     }
 
-    > div {
-      padding: 15px 25px;
-      font-weight: 500;
-      font-size: 14px;
-      color: rgba(255, 255, 255, 0.87);
-      cursor: pointer;
-    }
     > div:nth-child(2) {
       margin: 0px 12px;
     }
@@ -676,9 +764,21 @@ const StyledTabEcosystem = styled.div`
     margin-top: 40px;
 
     > div {
-      > div {
+      .tab_ecosystem {
         padding: 15px 23px;
         font-size: 18px;
+      }
+      .tab_ecosystem_contain.contain_active {
+        position: relative;
+        &::before {
+          height: 0px;
+        }
+        &::after {
+          height: 0px;
+        }
+      }
+      .tab_ecosystem.active {
+        padding: 15px 23px;
       }
     }
   }
@@ -1288,12 +1388,20 @@ function DevV2() {
         <div>
           {TABECOSYSTEM.map((item, i) => (
             <div
-              key={String(i + item)}
-              onClick={() => setTabEcosystem(i)}
-              aria-hidden="true"
-              className={`${i === tabEcosystem ? 'tab_ecosystem active' : 'tab_ecosystem'}`}
+              className={`${
+                i === tabEcosystem
+                  ? `tab_ecosystem_contain tab_ecosystem_contain_${i} contain_active`
+                  : `tab_ecosystem_contain tab_ecosystem_contain_${i}`
+              }`}
             >
-              {item}
+              <div
+                key={String(i + item)}
+                onClick={() => setTabEcosystem(i)}
+                aria-hidden="true"
+                className={`${i === tabEcosystem ? 'tab_ecosystem active' : 'tab_ecosystem'}`}
+              >
+                {item}
+              </div>
             </div>
           ))}
         </div>
@@ -1343,12 +1451,20 @@ function DevV2() {
           <div className="tab_what_you_can_do_container">
             {TABWHATYOUCANDO.map((item, i) => (
               <div
-                key={String(i + item)}
-                onClick={() => setTabWHatYouCanDo(i)}
-                aria-hidden="true"
-                className={`${tabWHatYouCanDo === i ? 'tab_what_you_can_do active' : 'tab_what_you_can_do'}`}
+                className={`${
+                  tabWHatYouCanDo === i
+                    ? `tab_wycd_contain tab_wycd_contain_${i} wycd_active`
+                    : `tab_wycd_contain tab_wycd_contain_${i}`
+                }`}
               >
-                {item}
+                <div
+                  key={String(i + item)}
+                  onClick={() => setTabWHatYouCanDo(i)}
+                  aria-hidden="true"
+                  className={`${tabWHatYouCanDo === i ? 'tab_what_you_can_do active' : 'tab_what_you_can_do'}`}
+                >
+                  {item}
+                </div>
               </div>
             ))}
           </div>
