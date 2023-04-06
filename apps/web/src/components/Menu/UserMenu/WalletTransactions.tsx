@@ -36,7 +36,7 @@ const WalletTransactions: React.FC<React.PropsWithChildren<WalletTransactionsPro
         </Text>
         {hasTransactions && (
           <Button scale="sm" onClick={handleClearAll} variant="text" px="0">
-            {t('Clear all')}
+            {t('Clear All')}
           </Button>
         )}
       </Flex>

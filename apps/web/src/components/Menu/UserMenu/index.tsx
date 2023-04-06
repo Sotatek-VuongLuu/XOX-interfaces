@@ -315,7 +315,7 @@ const UserMenu = () => {
               <img src={`/images/chains/${chainId}.svg`} alt="BNB" />
             </Flex>
             <Text color="white" ml="4px" fontSize="12px" lineHeight="15px">
-              {chainName()} Smart Chain
+              {chainName() === 'BNB' ? `${chainName()} Smart Chain` : chainName()}
             </Text>
           </Flex>
           <LinkExternal href={getBlockExploreLink(account, 'address', chainId)} className="link-bnb">

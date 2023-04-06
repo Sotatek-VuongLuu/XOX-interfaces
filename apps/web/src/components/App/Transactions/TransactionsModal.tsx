@@ -94,7 +94,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
                   {t('Recent Transactions')}
                 </Text>
                 <RecentButton variant="tertiary" scale="xs" onClick={clearAllTransactionsCallback}>
-                  {t('Clear all')}
+                  {t('Clear All')}
                 </RecentButton>
               </AutoRow>
               <div style={{ maxHeight: '200px', overflowY: 'auto', overflowX: 'hidden' }}>
