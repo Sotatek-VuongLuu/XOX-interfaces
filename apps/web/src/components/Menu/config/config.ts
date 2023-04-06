@@ -52,7 +52,7 @@ const config: (
       items: [],
     },
     {
-      label: 'Trade',
+      label: t('Trade'),
       href: ['/swap', '/bridge-token'],
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,
@@ -72,7 +72,7 @@ const config: (
       ].map((item) => addMenuItemSupported(item, chainId)),
     },
     {
-      label: 'Earn',
+      label: t('Earn'),
       href: ['/liquidity', '/add', '/remove', '/pools'],
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,
@@ -109,7 +109,7 @@ const config: (
     //   items: [],
     // },
     {
-      label: 'Stable Coin',
+      label: t('Stable Coin'),
       icon: SwapIcon,
       fillIcon: SwapFillIcon,
       href: '/stable-coin',

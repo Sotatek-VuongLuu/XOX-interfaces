@@ -1,3 +1,4 @@
+import { useTranslation } from "@pancakeswap/localization";
 import { Price, Currency } from "@pancakeswap/swap-sdk-core";
 import { Text } from "@pancakeswap/uikit";
 import { formatAmountNumber2 } from "@pancakeswap/utils/formatBalance";
@@ -22,13 +23,20 @@ interface TradePriceProps {
 }
 
 export function TradePrice({ price }: TradePriceProps) {
+  const { t } = useTranslation();
   const [showInverted, setShowInverted] = useState<boolean>(false);
   const formattedPrice = showInverted ? price?.toSignificant(6) : price?.invert()?.toSignificant(6);
 
   const show = Boolean(price?.baseCurrency && price?.quoteCurrency);
   const label = showInverted
-    ? `${price?.quoteCurrency?.symbol} per ${price?.baseCurrency?.symbol}`
-    : `${price?.baseCurrency?.symbol} per ${price?.quoteCurrency?.symbol}`;
+    ? t("%tokenA% per %tokenB%", {
+        tokenA: price?.quoteCurrency?.symbol || "",
+        tokenB: price?.baseCurrency?.symbol || "",
+      })
+    : t("%tokenA% per %tokenB%", {
+        tokenA: price?.baseCurrency?.symbol || "",
+        tokenB: price?.quoteCurrency?.symbol || "",
+      });
 
   return (
     <>

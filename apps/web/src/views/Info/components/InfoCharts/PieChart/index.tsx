@@ -1,4 +1,5 @@
 import { isAddress } from '@ethersproject/address'
+import { useTranslation } from '@pancakeswap/localization'
 import { ChainId, Token } from '@pancakeswap/sdk'
 import { CurrencyLogo } from 'components/Logo'
 import BNBIcon from 'components/Svg/BNBIcon'
@@ -138,6 +139,7 @@ const CustomTooltip = ({ active, payload }: any) => {
 }
 
 export default function InfoPieChart({ data, colors, total }) {
+  const { t } = useTranslation()
   const { chainId } = useActiveChainId()
   return (
     <PieWrapper>
@@ -188,7 +190,7 @@ export default function InfoPieChart({ data, colors, total }) {
           {(chainId === ChainId.GOERLI || chainId === ChainId.ETHEREUM) && <GoerliIcon />}
         </>
       ) : (
-        'No data'
+        t('No Data')
       )}
     </PieWrapper>
   )
