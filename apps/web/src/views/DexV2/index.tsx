@@ -1,6 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { useTranslation } from '@pancakeswap/localization'
 import { Box } from '@pancakeswap/uikit'
+import useWindowSize from 'hooks/useWindowSize'
 import { useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { CardSocial, StyledS, StyledSubtitle } from 'views/Company'
@@ -45,7 +46,11 @@ const StyledContainer = styled(StyledS)`
     width: 100%;
     display: flex;
     justify-content: flex-start;
-    margin-top: 30px;
+    margin-top: 17px;
+
+    ${({ theme }) => theme.mediaQueries.xl} {
+      margin-top: 30px;
+    }
   }
 
   button {
@@ -184,16 +189,25 @@ const StyledContainer = styled(StyledS)`
 const StyledHeader = styled.div`
   > h1 {
     font-weight: 700;
-    font-size: 64px;
-    text-align: center;
+    font-size: 24px;
+    text-align: start;
     color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 80px;
+    margin-bottom: 60px;
+    line-height: 40px;
   }
 
   > div {
     > img {
       display: block;
       margin: auto;
+    }
+  }
+  ${({ theme }) => theme.mediaQueries.xl} {
+    > h1 {
+      font-size: 64px;
+      line-height: 88px;
+      text-align: center;
+      margin-bottom: 80px;
     }
   }
 `
@@ -219,12 +233,12 @@ const StyledSaleAndReliable = styled(Box)`
 `
 
 const StyledCardSafeReliable = styled.div`
-  padding: 24px;
+  padding: 17px 24px;
   position: relative;
   border-radius: 20px;
   > h3 {
     font-weight: 700;
-    font-size: 20px;
+    font-size: 14px;
     color: rgba(255, 255, 255, 0.87);
     margin-top: 24px;
     margin-bottom: 16px;
@@ -253,8 +267,19 @@ const StyledCardSafeReliable = styled.div`
   > p {
     font-weight: 400;
     font-size: 14px;
-    line-height: 24px;
+    line-height: 17px;
     color: rgba(255, 255, 255, 0.6);
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    padding: 24px;
+
+    > h3 {
+      font-size: 20px;
+    }
+    > p {
+      line-height: 24px;
+    }
   }
 `
 
@@ -266,6 +291,8 @@ const StyledRevenue = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
+  flex-direction: column-reverse;
+  margin-bottom: 60px;
   > div:nth-child(1) {
     display: flex;
     position: relative;
@@ -274,6 +301,7 @@ const StyledRevenue = styled.div`
     > video {
       width: 600px;
       max-width: 100%;
+      transform: translateY(-30px);
     }
 
     ${({ theme }) => theme.mediaQueries.xl} {
@@ -288,17 +316,17 @@ const StyledRevenue = styled.div`
   > div:nth-child(2) {
     > h3 {
       font-weight: 700;
-      font-size: 36px;
-      line-height: 48px;
+      font-size: 20px;
+      line-height: 32px;
       color: rgba(255, 255, 255, 0.6);
-      margin-bottom: 24px;
+      margin-bottom: 8px;
     }
     > p {
       font-weight: 400;
-      font-size: 18px;
+      font-size: 14px;
       line-height: 32px;
       color: rgba(255, 255, 255, 0.6);
-      margin-bottom: 24px;
+      margin-bottom: 8px;
     }
 
     > ul {
@@ -307,13 +335,37 @@ const StyledRevenue = styled.div`
     }
     > ul li {
       font-weight: 400;
-      font-size: 18px;
+      font-size: 14px;
       line-height: 32px;
       color: rgba(255, 255, 255, 0.6);
     }
 
     > div {
-      margin-top: 24px;
+      margin-top: 10px;
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    flex-direction: row;
+
+    > div:nth-child(2) {
+      > h3 {
+        font-size: 36px;
+        line-height: 48px;
+        margin-bottom: 24px;
+      }
+      > p {
+        font-size: 18px;
+        margin-bottom: 24px;
+      }
+
+      > ul li {
+        font-size: 18px;
+      }
+
+      > div {
+        margin-top: 24px;
+      }
     }
   }
 `
@@ -327,10 +379,18 @@ const StyledLearMore = styled.div`
 
     > span {
       font-weight: 500;
-      font-size: 18px;
+      font-size: 14px;
       text-decoration-line: underline;
       color: rgba(255, 255, 255, 0.6);
       margin-right: 7px;
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    > div {
+      > span {
+        font-size: 18px;
+      }
     }
   }
 `
@@ -340,19 +400,19 @@ const StyledBLock = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  margin: 80px 0px;
+  margin: 60px 0px;
 
   > div:nth-child(1) {
     > h3 {
       font-weight: 700;
-      font-size: 36px;
-      line-height: 48px;
+      font-size: 20px;
+      line-height: 32px;
       color: rgba(255, 255, 255, 0.87);
-      margin-bottom: 24px;
+      margin-bottom: 8px;
     }
     > p {
       font-weight: 400;
-      font-size: 18px;
+      font-size: 14px;
       line-height: 32px;
       color: rgba(255, 255, 255, 0.6);
     }
@@ -362,6 +422,7 @@ const StyledBLock = styled.div`
     display: flex;
     position: relative;
     width: 100%;
+    padding-top: 30px;
 
     > video {
       margin: 0 auto;
@@ -376,6 +437,18 @@ const StyledBLock = styled.div`
   ${({ theme }) => theme.mediaQueries.xl} {
     flex-direction: row;
     justify-content: space-between;
+    margin: 80px 0px;
+
+    > div:nth-child(1) {
+      > h3 {
+        font-size: 36px;
+        line-height: 48px;
+        margin-bottom: 24px;
+      }
+      > p {
+        font-size: 18px;
+      }
+    }
   }
 `
 
@@ -383,13 +456,29 @@ const StyledReferralProgram = styled(StyledBLock)`
   > div:nth-child(1) {
     > h3 {
       color: rgba(255, 255, 255, 0.6);
+      margin-bottom: 8px !important;
     }
     > p:nth-child(3) {
-      margin-top: 40px !important;
+      margin-top: 25px !important;
     }
 
     > div {
-      margin-top: 24px;
+      margin-top: 10px;
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    > div:nth-child(1) {
+      > h3 {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      > p:nth-child(3) {
+        margin-top: 40px !important;
+      }
+
+      > div {
+        margin-top: 24px;
+      }
     }
   }
 `
@@ -397,34 +486,42 @@ const StyledReferralProgram = styled(StyledBLock)`
 const StyledWhatYouCanDo = styled.div`
   display: flex;
   align-items: center;
+  flex-direction: column-reverse;
   justify-content: space-between;
 
   > div:nth-child(1) {
-    min-width: 700px !important;
+    width: 100%;
+    > img {
+      display: block;
+      margin: auto;
+      max-width: 100%;
+    }
   }
 
   > div:nth-child(2) {
+    width: 100% !important;
     > h3 {
       font-weight: 700;
-      font-size: 36px;
-      line-height: 48px;
       color: rgba(255, 255, 255, 0.87);
-      margin-bottom: 24px;
+      margin-bottom: 15px;
+      font-size: 20px;
+      line-height: 32px;
     }
     > .tab_what_you_can_do_container {
-      width: fit-content;
+      overflow: scroll;
       display: flex;
       background: #101010;
       border-radius: 30px;
-      margin-bottom: 24px;
+      margin-bottom: 15px;
       gap: 16px;
       > div {
-        padding: 16px 24px;
+        padding: 9px 25px;
         font-weight: 500;
-        font-size: 18px;
-        line-height: 22px;
+        font-size: 14px;
+        line-height: 17px;
         color: rgba(255, 255, 255, 0.6);
         cursor: pointer;
+        white-space: nowrap;
       }
 
       .tab_what_you_can_do.active {
@@ -448,6 +545,39 @@ const StyledWhatYouCanDo = styled.div`
           mask-composite: exclude;
         }
       }
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    flex-direction: row;
+
+    > div:nth-child(1) {
+      flex: 1;
+    }
+    > div:nth-child(2) {
+      width: 700px !important;
+      > h3 {
+        font-size: 36px;
+        line-height: 48px;
+        margin-bottom: 24px;
+      }
+      > .tab_what_you_can_do_container {
+        overflow: unset;
+        width: fit-content;
+        border-radius: 30px;
+        margin-bottom: 24px;
+        gap: 16px;
+        > div {
+          padding: 16px 24px;
+          font-weight: 500;
+          font-size: 18px;
+          line-height: 22px;
+        }
+      }
     }
   }
 `
@@ -459,25 +589,42 @@ const StyledEcosystem = styled.div`
 
   > p:nth-child(1) {
     font-weight: 700;
-    font-size: 36px;
-    line-height: 48px;
+    font-size: 20px;
+    line-height: 32px;
+    text-align: center;
     color: rgba(255, 255, 255, 0.6);
-    margin-top: 80px;
-    margin-bottom: 24px;
+    margin-top: 60px;
+    margin-bottom: 16px;
   }
 
   p:nth-child(2) {
     font-weight: 400;
-    font-size: 18px;
-    line-height: 32px;
+    font-size: 14px;
+    line-height: 24px;
     color: rgba(255, 255, 255, 0.6);
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    > p:nth-child(1) {
+      font-size: 36px;
+      line-height: 48px;
+      margin-top: 80px;
+      margin-bottom: 24px;
+    }
+
+    p:nth-child(2) {
+      font-size: 18px;
+      line-height: 32px;
+    }
   }
 `
 
 const StyledTabEcosystem = styled.div`
   display: flex;
-  justify-content: center;
-  margin-top: 40px;
+  justify-content: flex-start;
+  margin-top: 60px;
+  max-width: 100%;
+  overflow-x: auto;
   > div {
     display: flex;
     align-items: center;
@@ -507,9 +654,9 @@ const StyledTabEcosystem = styled.div`
     }
 
     > div {
-      padding: 15px 23px;
+      padding: 15px 25px;
       font-weight: 500;
-      font-size: 18px;
+      font-size: 14px;
       color: rgba(255, 255, 255, 0.87);
       cursor: pointer;
     }
@@ -520,21 +667,46 @@ const StyledTabEcosystem = styled.div`
       margin-right: 12px;
     }
   }
+  &::-webkit-scrollbar {
+    display: none;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    justify-content: center;
+    margin-top: 40px;
+
+    > div {
+      > div {
+        padding: 15px 23px;
+        font-size: 18px;
+      }
+    }
+  }
 `
 
 const StyledDexes = styled.div`
   width: 1100px;
-  height: 520px;
+  max-width: 100%;
+  height: 325px;
   overflow-y: scroll;
   display: grid;
   margin: auto;
   margin-top: 32px;
-  grid-template-columns: repeat(14, minmax(0, 1fr));
-  grid-row-gap: 32px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-row-gap: 15px;
+  grid-column-gap: 15px;
 
   > img {
     display: block;
     margin: auto;
+    max-width: 100% !important;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    height: 520px;
+    grid-row-gap: 32px;
+
+    grid-template-columns: repeat(14, minmax(0, 1fr));
   }
 `
 
@@ -576,6 +748,61 @@ const StyledBtnStartTrading = styled.div`
       font-size: 16px;
       line-height: 19px;
       color: rgba(255, 255, 255, 0.6);
+    }
+  }
+`
+
+const StyedValueMobile = styled.div`
+  margin-top: 60px;
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  row-gap: 24px;
+  > div {
+    position: relative;
+    border-radius: 20px;
+    background: rgba(16, 16, 16, 0.3);
+    backdrop-filter: blur(10px);
+    padding: 32px 0px;
+    > p {
+      text-align: center;
+    }
+    > p:nth-child(1) {
+      position: relative;
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 48px;
+      color: rgba(255, 255, 255, 0.87);
+      margin-bottom: 12px;
+      &::after {
+        content: '+';
+        position: absolute;
+        font-weight: 700;
+        font-size: 25px;
+        line-height: 30px;
+        color: rgba(255, 255, 255, 0.6);
+        top: 50%;
+        transform: translateY(-50%);
+      }
+    }
+    > p:nth-child(2) {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    &:before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      border-width: 1px;
+      border-radius: inherit;
+      border-color: white;
+      border-style: solid;
+      mask: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
     }
   }
 `
@@ -635,9 +862,16 @@ const StyledValue = styled.div`
 const StyledSwap = styled.div`
   > p {
     font-weight: 400;
-    font-size: 18px;
+    font-size: 14px;
     line-height: 32px;
     color: rgba(255, 255, 255, 0.6);
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    > p {
+      font-size: 18px;
+      line-height: 32px;
+    }
   }
 `
 
@@ -855,9 +1089,9 @@ function DevV2() {
   const [btnHoverClass, setBtnHoverClass] = useState<string>('')
   const [emailErrorClass, setEmailErrorClass] = useState<string>('')
   const [textErrorClass, setTextErrorClass] = useState<string>('')
-
   const [timeRecall, setTimeRecall] = useState(7)
   const [flow, setFlow] = useState('increase')
+  const { width } = useWindowSize()
 
   const SOCIALS: Array<ISocial> = [
     { icon: '/images/company/1.svg', name: t('XOX Dex V1'), link: t('Trade Now'), heft: '/swap' },
@@ -996,11 +1230,7 @@ function DevV2() {
     <StyledContainer>
       <StyledHeader>
         <h1>
-          Multi-Chain{' '}
-          <span className="hight-light">
-            Decentralized Trading <br /> Solution{' '}
-          </span>{' '}
-          Powering Web3.
+          Multi-Chain <span className="hight-light">Decentralized Trading Solution </span> Powering Web3.
         </h1>
         <div>
           <img src="/images/dex-v2/heading.png" alt="" />
@@ -1017,16 +1247,29 @@ function DevV2() {
         </div>
       </StyledBtnStartTrading>
 
-      <StyledValue>
-        <div>
+      {width >= 1080 && (
+        <StyledValue>
+          <div>
+            {VALUE.map((item: IValue, i) => (
+              <div key={String(i + item.title)}>
+                <p>{item.value}</p>
+                <p>{item.title}</p>
+              </div>
+            ))}
+          </div>
+        </StyledValue>
+      )}
+
+      {width < 1080 && (
+        <StyedValueMobile>
           {VALUE.map((item: IValue, i) => (
             <div key={String(i + item.title)}>
               <p>{item.value}</p>
               <p>{item.title}</p>
             </div>
           ))}
-        </div>
-      </StyledValue>
+        </StyedValueMobile>
+      )}
 
       <StyledEcosystem>
         <p>
@@ -1196,13 +1439,22 @@ function DevV2() {
         </div>
       </StyledRevenue>
 
-      <StyledTitle style={{ marginBottom: 48 }}>Safe and Reliable.</StyledTitle>
+      <StyledTitle style={{ marginBottom: width < 1080 ? 30 : 48 }}>Safe and Reliable.</StyledTitle>
+
       <StyledSaleAndReliable>
         {SAFERELIABLE.map((safe, i) => (
           <CardSafeReliable safe={safe} key={String(i + safe.name)} />
         ))}
       </StyledSaleAndReliable>
-      <div style={{ marginTop: 48, marginBottom: 80, display: 'flex', justifyContent: 'center' }}>
+
+      <div
+        style={{
+          marginTop: width < 1080 ? 30 : 48,
+          marginBottom: width < 1080 ? 60 : 80,
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
         <BtnLearMore />
       </div>
 
@@ -1211,13 +1463,15 @@ function DevV2() {
         {t('A true one Multi-chain stop for all your Defi Needs.')}
       </ReStyledSubtitle>
 
-      <StyledSocial marginBottom={[64, null, null, 80]}>
+      <StyledSocial marginBottom={[60, null, null, 80]}>
         {SOCIALS.map((social, i) => (
           <CardSocial social={social} key={String(i + social.name)} />
         ))}
       </StyledSocial>
 
-      <BackedBy />
+      <Box marginBottom={[60, null, null, null]}>
+        <BackedBy />
+      </Box>
 
       <StyledTitle style={{ marginBottom: 16 }}>Join The Wait List Here.</StyledTitle>
       <p className="subtitle">
