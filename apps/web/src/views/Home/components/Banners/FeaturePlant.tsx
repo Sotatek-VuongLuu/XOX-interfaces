@@ -62,6 +62,7 @@ const RightContent = styled.div`
     position: relative;
     outline: none;
     border: none;
+    line-height: 0;
 
     &:focus {
       outline: none;
@@ -70,13 +71,15 @@ const RightContent = styled.div`
 
   .video-container video {
     position: absolute;
-    z-index: 1;
+    z-index: -1;
     top: 0;
     left: 0;
     width: 45vw;
     height: auto;
     outline: none;
     border: none;
+    max-height: 470px;
+    max-width: 670px;
     
     &:focus {
         outline: none;
@@ -157,7 +160,7 @@ const FeaturePlant = () => {
   const { t } = useTranslation()
 
   return (
-    <Box sx={{ flexGrow: 1, display: 'flex', marginBottom: '-2px' }}>
+    <Box sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2}>
         <Grid item xs={12} md={6}>
           <LeftContent data-aos="fade-right">
@@ -207,18 +210,18 @@ const FeaturePlant = () => {
         <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
           <RightContent data-aos="fade-left">
             <div className="video-container">
-              <div className="overlay"></div>
               <video
-                loop
-                playsInline
                 autoPlay
+                loop
+                muted
+                playsInline
                 controls={false}
-                preload="auto"
+                preload="yes"
                 style={{ pointerEvents: 'none' }}
                 controlsList="nodownload"
-                muted
               >
                 <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
+                <source src="/videos/home/3d_xox_utilities.webm" type="video/webm"></source>
               </video>
             </div>
           </RightContent>

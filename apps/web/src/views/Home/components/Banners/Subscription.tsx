@@ -292,8 +292,8 @@ const Subscription = () => {
         toastSuccess(t('Subscribed successfully.'))
       })
       .catch((error) => {
-        if (error.response.status === 400 && error.response.message === 'Email is already existed!') {
-          toastSuccess(t('The email is already registered.'))
+        if (error.response.status === 400 && error.response.data.message === 'Email is already existed!') {
+          toastError(t('The email is already registered.'))
           return
         }
 
