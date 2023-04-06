@@ -1,5 +1,6 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import { useTranslation } from '@pancakeswap/localization'
+import { TranslateFunction, useTranslation } from '@pancakeswap/localization'
 import { Box } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
 import { useEffect, useMemo, useState } from 'react'
@@ -1018,11 +1019,13 @@ const CardSafeReliable = ({ safe }: { safe: ISafeReliable }) => {
 }
 
 const BtnLearMore = ({ href }: { href?: string }) => {
+  const { t } = useTranslation()
+
   return (
     <a href={href} target="_blank" rel="noreferrer">
       <StyledLearMore>
         <div>
-          <span>Learn more</span>
+          <span>{t('Learn more')}</span>
           <img src="/images/dex-v2/ArrowUpRight.png" alt="ArrowUpRight" />
         </div>
       </StyledLearMore>
@@ -1030,13 +1033,14 @@ const BtnLearMore = ({ href }: { href?: string }) => {
   )
 }
 
-const Swap = () => {
+const Swap = ({ t }: { t: TranslateFunction }) => {
   return (
     <>
       <StyledSwap>
         <p>
-          Trade any token on the supported networks by aggregating liquidity from hundreds of aggregators and DEXes that
-          ensure the best swap rates for your trades.{' '}
+          {t(
+            'Trade any token on the supported networks by aggregating liquidity from hundreds of aggregators and DEXes that ensure the best swap rates for your trades.',
+          )}
         </p>
       </StyledSwap>
 
@@ -1047,14 +1051,17 @@ const Swap = () => {
   )
 }
 
-const LimitOrder = () => {
+const LimitOrder = ({ t }: { t: TranslateFunction }) => {
   return (
     <>
       <StyledSwap>
         <p>
-          Secure your position ahead of time at a specific price. A buy limit order can only be executed at the limit
-          price or lower, and a sell limit order can only be executed at the limit price or higher. Don&lsquo;t miss a
-          trade.
+          {t(
+            `Secure your position ahead of time at a specific price. 
+            A buy limit order can only be executed at the limit price or 
+            lower, and a sell limit order can only be executed at the 
+            limit price or higher. Don't miss a trade.`,
+          )}
         </p>
       </StyledSwap>
 
@@ -1065,14 +1072,14 @@ const LimitOrder = () => {
   )
 }
 
-const Earn = () => {
+const Earn = ({ t }: { t: TranslateFunction }) => {
   return (
     <>
       <StyledSwap>
         <p>
-          Share your unique referral code with other users to earn a small % of the XOX Labs Protocol&lsquo;s revenue.
-          It&lsquo;s simple, just copy and share your code, then enjoy the profits. No sharing links, no sign-up, no
-          waste of time. 100% Decentralized and Simple.
+          {t(`Share your unique referral code with other users to earn a small % of the XOX Labs Protocol&lsquo;s revenue.
+          It's simple, just copy and share your code, then enjoy the profits. No sharing links, no sign-up, no waste of
+          time. 100% Decentralized and Simple.`)}
         </p>
       </StyledSwap>
 
@@ -1083,13 +1090,14 @@ const Earn = () => {
   )
 }
 
-const Liquidity = () => {
+const Liquidity = ({ t }: { t: TranslateFunction }) => {
   return (
     <>
       <StyledSwap>
         <p>
-          Provide liquidity to hundreds of liquidity pairs to receive a share in the transaction fees of the respective
-          pools.
+          {t(
+            'Provide liquidity to hundreds of liquidity pairs to receive a share in the transaction fees of the respective pools.',
+          )}
         </p>
       </StyledSwap>
 
@@ -1100,14 +1108,14 @@ const Liquidity = () => {
   )
 }
 
-const API = () => {
+const API = ({ t }: { t: TranslateFunction }) => {
   return (
     <>
       <StyledSwap>
         <p>
-          XOX Dex V2 API provides high-tech API to fetch asset balances, fees, and liquidity-pool and route them to
-          create the most efficient transaction for each trade + providing trade options as well for traders to choose
-          from.
+          {t(
+            'XOX Dex V2 API provides high-tech API to fetch asset balances, fees, and liquidity-pool and route them to create the most efficient transaction for each trade + providing trade options as well for traders to choose from.',
+          )}
         </p>
       </StyledSwap>
 
@@ -1215,53 +1223,58 @@ function DevV2() {
     {
       icon: '/images/dex-v2/non-custodial.png',
       name: 'Non-custodial',
-      describe: 'XOX Dex V2 is a Permissionless and Non-custodial Decentralized Protocol.',
+      describe: t('XOX Dex V2 is a Permissionless and Non-custodial Decentralized Protocol.'),
     },
     {
       icon: '/images/dex-v2/anonymus.png',
       name: 'Anonymous',
-      describe: 'No KYC or Sign Up required. Just connect your wallets and start trading.',
+      describe: t('No KYC or Sign Up required. Just connect your wallets and start trading.'),
     },
     {
       icon: '/images/dex-v2/transparent.png',
       name: 'Transparent',
-      describe:
+      describe: t(
         'Check every single transaction or smart contract before allowing it to access your funds, track the whole chain of events happening in every blockchain.',
+      ),
     },
     {
       icon: '/images/dex-v2/permission.png',
       name: 'Permissionless',
-      describe:
-        'Every  supported Blockchains is public and open for everyone to trade and own assets without the supervision of governments or financial institutions.',
+      describe: t(
+        'Every supported Blockchains is public and open for everyone to trade and own assets without the supervision of governments or financial institutions.',
+      ),
     },
     {
       icon: '/images/dex-v2/audited.png',
       name: 'Audited',
-      describe: `XOX Labs' smart contracts and platforms are fully audited by top-tier auditors to ensure the security of the users.`,
+      describe: t(
+        `XOX Labs' smart contracts and platforms are fully audited by top-tier auditors to ensure the security of the users.`,
+      ),
     },
     {
       icon: '/images/dex-v2/tested.png',
       name: 'Tested',
-      describe:
-        'Every new feature and protocol integration is heavily tested in every possible situation before making it accessible to the users to ensure performance and safety. ',
+      describe: t(
+        'Every new feature and protocol integration is heavily tested in every possible situation before making it accessible to the users to ensure performance and safety.',
+      ),
     },
   ]
 
   const VALUE: Array<IValue> = [
     {
-      title: 'Integrated Aggregators',
+      title: t('Integrated Aggregators'),
       value: '30',
     },
     {
-      title: 'Supported Chains',
+      title: t('Supported Chains'),
       value: '60',
     },
     {
-      title: 'Integrated DEXs',
+      title: t('Integrated DEXs'),
       value: '150',
     },
     {
-      title: 'Liquidity Sources ',
+      title: t('Liquidity Sources'),
       value: '640',
     },
   ]
@@ -1285,15 +1298,15 @@ function DevV2() {
   const renderTabWhatYouCanDo = useMemo(() => {
     switch (tabWHatYouCanDo) {
       case 0:
-        return <Swap />
+        return <Swap t={t} />
       case 1:
-        return <LimitOrder />
+        return <LimitOrder t={t} />
       case 2:
-        return <Earn />
+        return <Earn t={t} />
       case 3:
-        return <Liquidity />
+        return <Liquidity t={t} />
       case 4:
-        return <API />
+        return <API t={t} />
       default:
         break
     }
@@ -1330,7 +1343,8 @@ function DevV2() {
     <StyledContainer>
       <StyledHeader>
         <h1>
-          Multi-Chain <span className="hight-light">Decentralized Trading Solution </span> Powering Web3.
+          {t('Multi-Chain')} <span className="hight-light">{t('Decentralized Trading Solution')} </span>
+          {t('Powering Web3')}.
         </h1>
         <div>
           <img src="/images/dex-v2/heading.png" alt="" />
@@ -1340,7 +1354,7 @@ function DevV2() {
       <StyledBtnStartTrading>
         <div>
           <button type="button">
-            <span>Start Trading</span>
+            <span>{t('Start Trading')}</span>
             <img src="/images/dex-v2/start_trading.png" alt="start_trading" />
           </button>
           <button type="button">GitHub</button>
@@ -1373,14 +1387,16 @@ function DevV2() {
 
       <StyledEcosystem>
         <p>
-          <span className="hight-light">XOX Dex V2</span> Ecosystem
+          <span className="hight-light">{t('XOX Dex V2')}</span> {t('Ecosystem')}
         </p>
         <p>
-          Why trade in a single Dex when you can Trade in all DEXs at Once? XOX Dex V2 finds you the best prices across
+          {t(
+            'Why trade in a single Dex when you can Trade in all DEXs at Once? XOX Dex V2 finds you the best prices across',
+          )}
           <br />
-          60+ Chains & 150+ DEXes and combines them into a single trade, all while giving you many other trade
+          {t('60+ Chains & 150+ DEXes and combines them into a single trade, all while giving you many other trade')}
           <br />
-          options to choose from, Ranking them by Lowest Fees, Best Rates, and Higher Liquidity.
+          {t('options to choose from, Ranking them by Lowest Fees, Best Rates, and Higher Liquidity.')}
         </p>
       </StyledEcosystem>
 
@@ -1447,7 +1463,7 @@ function DevV2() {
         </div>
 
         <div>
-          <h3>What can you do.</h3>
+          <h3>{t('What can you do.')}</h3>
           <div className="tab_what_you_can_do_container">
             {TABWHATYOUCANDO.map((item, i) => (
               <div
@@ -1475,22 +1491,29 @@ function DevV2() {
       <StyledReferralProgram>
         <div>
           <h3>
-            Next Gen <span className="hight-light">Referral Program </span>
+            {t('Next Gen')} <span className="hight-light">{t('Referral Program')}</span>
           </h3>
           <p>
-            <span className="hight-light">XOX Dex V1</span> has already one of the most advanced referral programs in
-            the space, allowing <span className="hight-light">Dual Cash Back</span> and referral earning on every
-            transaction that the code has been applied for both the (<span className="hight-light">referee</span> &{' '}
-            <span className="hight-light">referrer</span>). It is also gamified, implements leader-boards and milestones
-            and users can withdraw their earnings in <span className="hight-light">USDT/USDC</span>.
+            <span className="hight-light">{t('XOX Dex V1')}</span>{' '}
+            {t('has already one of the most advanced referral programs in the space')}, {t('allowing')}{' '}
+            <span className="hight-light">{t('Dual Cash Back')}</span>{' '}
+            {t('and referral earning on every transaction that the code has been applied for both the')} (
+            <span className="hight-light">{t('referee')}</span> & <span className="hight-light">{t('referrer')}</span>).
+            {t(
+              'It is also gamified, implements leader-boards and milestones and users can withdraw their earnings in',
+            )}{' '}
+            <span className="hight-light">USDT/USDC</span>.
           </p>
 
           <p>
-            <span className="hight-light">But</span>, in <span className="hight-light">XOX Dex V2</span> we are
-            upgrading it by making it <span className="hight-light">Multi-Chain</span> and
-            <span className="hight-light">Multi Token</span>. It&lsquo;s simple, just{' '}
-            <span className="hight-light">Share Your Code</span> and <span className="hight-light">Earn</span> some
-            <span className="hight-light">Free Cash</span> as <span className="hight-light">Passive Income</span>.
+            <span className="hight-light">{t('But')}</span>, {t('in')}{' '}
+            <span className="hight-light">{t('XOX Dex V2')}</span> {t('we are upgrading it by making it')}{' '}
+            <span className="hight-light">{t('Multi-Chain')}</span> {t('and')}
+            <span className="hight-light">{t('Multi Token')}</span>. {t(`It's simple`)}, {t('just')}{' '}
+            <span className="hight-light">{t('Share Your Code')}</span> {t('and')}{' '}
+            <span className="hight-light">{t('Earn')}</span> {t('some')}
+            <span className="hight-light">{t('Free Cash')}</span> {t('as')}{' '}
+            <span className="hight-light">{t('Passive Income')}</span>.
           </p>
 
           <div>
@@ -1532,21 +1555,22 @@ function DevV2() {
 
         <div>
           <h3>
-            <span className="hight-light">Revenue Sharing</span> Program
+            <span className="hight-light">{t('Revenue Sharing')}</span> {t('Program')}
           </h3>
           <p>
-            The key <span className="hight-light">Revenue Source</span> for{' '}
-            <span className="hight-light">XOX Dex V2</span> is trading fees captured on every successful transaction
-            performed in our protocol. Which is <span className="hight-light">automatically redistributed</span> among:
+            {t('The key')} <span className="hight-light">{t('Revenue Source')}</span> {t('for')}{' '}
+            <span className="hight-light">{t('XOX Dex V2')}</span>{' '}
+            {t('is trading fees captured on every successful transaction performed in our protocol.')} {t('Which is')}{' '}
+            <span className="hight-light">{t('automatically redistributed')}</span> {t('among')}:
           </p>
 
           <ul>
-            <li>XOX Token stakers </li>
-            <li>Liquidity providers</li>
-            <li>Referrals</li>
-            <li>Buyback and burn </li>
-            <li>Development</li>
-            <li>XOX Labs Treasury</li>
+            <li>{t('XOX Token stakers')}</li>
+            <li>{t('Liquidity providers')}</li>
+            <li>{t('Referrals')}</li>
+            <li>{t('Buyback and burn')}</li>
+            <li>{t('Development')}</li>
+            <li>{t('XOX Labs Treasury')}</li>
           </ul>
 
           <div>
@@ -1555,7 +1579,7 @@ function DevV2() {
         </div>
       </StyledRevenue>
 
-      <StyledTitle style={{ marginBottom: width < 1080 ? 30 : 48 }}>Safe and Reliable.</StyledTitle>
+      <StyledTitle style={{ marginBottom: width < 1080 ? 30 : 48 }}>{t('Safe and Reliable.')}</StyledTitle>
 
       <StyledSaleAndReliable>
         {SAFERELIABLE.map((safe, i) => (
@@ -1589,7 +1613,7 @@ function DevV2() {
         <BackedBy />
       </Box>
 
-      <StyledTitle style={{ marginBottom: 16 }}>Join The Wait List Here.</StyledTitle>
+      <StyledTitle style={{ marginBottom: 16 }}>{t('Join The Wait List Here.')}</StyledTitle>
       <p className="subtitle">
         {t('Unsubscribe at any time.')}{' '}
         <a className="privacy-link" href="#">
