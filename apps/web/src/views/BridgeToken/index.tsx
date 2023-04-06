@@ -807,10 +807,10 @@ export default function BridgeToken() {
                 </div>
                 <div className="noti_claim_pending_h1">{t('Waiting For Confirmation')}</div>
                 <div className="noti_claim_pending_h3">
-                  {t('Bridging %number% XOX ', { number: formatAmountNumber2(Number(amountInput), 6) })}
-                  <span>(</span> {NETWORK_LABEL[chainId]} <span>)</span>{' '}
-                  {t('to %number% XOX ', { number: formatAmountNumber2(Number(amountTo), 6) })}
-                  <span>(</span> {NETWORK_LABEL[getChainIdToByChainId(chainId)]} <span>)</span>
+                  {t('Bridging %number% XOX', { number: formatAmountNumber2(Number(amountInput), 6) })} <span>(</span>{' '}
+                  {NETWORK_LABEL[chainId]} <span>)</span>{' '}
+                  {t('to %number% XOX', { number: formatAmountNumber2(Number(amountTo), 6) })} <span>(</span>{' '}
+                  {NETWORK_LABEL[getChainIdToByChainId(chainId)]} <span>)</span>
                 </div>
                 <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
                 <img
