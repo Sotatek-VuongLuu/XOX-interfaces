@@ -1331,31 +1331,31 @@ function DevV2() {
     return null
   }, [tabWHatYouCanDo])
 
-  // useEffect(() => {
-  //   const myId = setTimeout(() => {
-  //     if (timeRecall > 0) {
-  //       setTimeRecall(timeRecall - 1)
-  //       return
-  //     }
-  //     if (flow === 'increase' && tabEcosystem < 3) {
-  //       const nextIndex = tabEcosystem + 1
-  //       if (nextIndex === 3) {
-  //         setFlow('decrease')
-  //       }
-  //       setTabEcosystem(nextIndex)
-  //     }
-  //     if (flow === 'decrease' && tabEcosystem > 0) {
-  //       const prevIndex = tabEcosystem - 1
-  //       if (prevIndex === 0) {
-  //         setFlow('increase')
-  //       }
-  //       setTabEcosystem(prevIndex)
-  //     }
-  //     setTimeRecall(7)
-  //   }, 1000)
-  //   return () => clearTimeout(myId)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [timeRecall])
+  useEffect(() => {
+    const myId = setTimeout(() => {
+      if (timeRecall > 0) {
+        setTimeRecall(timeRecall - 1)
+        return
+      }
+      if (flow === 'increase' && tabEcosystem < 3) {
+        const nextIndex = tabEcosystem + 1
+        if (nextIndex === 3) {
+          setFlow('decrease')
+        }
+        setTabEcosystem(nextIndex)
+      }
+      if (flow === 'decrease' && tabEcosystem > 0) {
+        const prevIndex = tabEcosystem - 1
+        if (prevIndex === 0) {
+          setFlow('increase')
+        }
+        setTabEcosystem(prevIndex)
+      }
+      setTimeRecall(7)
+    }, 1000)
+    return () => clearTimeout(myId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeRecall])
 
   return (
     <StyledContainer>
