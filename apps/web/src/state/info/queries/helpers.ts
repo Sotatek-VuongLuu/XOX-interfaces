@@ -52,7 +52,7 @@ const calculatorAmountUSDBurn = (burn: BurnResponse) => {
 export const mapDataChartXOX = (pairData: PairData) => {
   return {
     date: pairData.hourStartUnix || pairData.date,
-    priceUSD: formatAmountNumber(pairData.reserve0 / pairData.reserve1, 4),
+    priceUSD: formatAmountNumber(pairData.reserve1 / pairData.reserve0, 4),
     VolUSD: formatAmountNumber(pairData.hourlyVolumeToken1 || pairData.dailyVolumeToken1, 4),
   }
 }
