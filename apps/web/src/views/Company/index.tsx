@@ -542,7 +542,7 @@ export default function CompanyPage() {
     { avatar: '/images/company/Albert Flores.png', name: 'Albert Flores', position: t('Front-end Developer') },
     { avatar: '/images/company/Eleanor Pena.png', name: 'Eleanor Pena', position: t('Back-end Developer') },
     { avatar: '/images/company/Ronald Richards.png', name: 'Ronald Richards', position: t('Tester') },
-    { avatar: '/images/company/Courtney Henry.png', name: 'Courtney Henry', position: t('Product Manager') },
+    { avatar: '/images/company/Courtney Henry.png', name: 'Courtney Henry', position: t('Project Manager') },
   ]
 
   const SOCIALS: Array<ISocial> = [
