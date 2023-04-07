@@ -23,6 +23,8 @@ import {
   ContainnerStyledF2,
 } from './styled'
 import ADDComponent from './ADDComponent'
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { ChainId } from '@pancakeswap/sdk'
 
 interface IAddress {
   asset: string
@@ -30,6 +32,7 @@ interface IAddress {
   text?: string
   address?: string
   logo: string
+  chainId?: number
 }
 
 function BG() {
@@ -49,11 +52,6 @@ function Address({ addr, ...props }: { addr: IAddress }) {
   const suffixAddress = address?.substring(address.length - 21, address.length) || ''
   const { t } = useTranslation()
   const suffixAddressMobile = address?.substring(address.length - 8, address.length) || ''
-
-  function copy() {
-    if (text || !address) return
-    navigator.clipboard.writeText(address)
-  }
 
   return (
     <StyledAddress {...props}>
@@ -82,7 +80,13 @@ function Address({ addr, ...props }: { addr: IAddress }) {
         />
       </div>
 
-      <a href="/#" target="_blank" rel="noreferrer">
+      <a
+        href={`/add/${XOX_ADDRESS[ChainId[`${asset}`]]}/${USD_ADDRESS[ChainId[`${asset}`]]}?step=1&chainId=${
+          ChainId[`${asset}`]
+        }`}
+        target="_blank"
+        rel="noreferrer"
+      >
         Get XOX
       </a>
     </StyledAddress>
@@ -538,7 +542,7 @@ export default function TokenomicsPage() {
               controlsList="nodownload"
               muted
             >
-              <source src="/videos/home/pie_chart.mp4" type="video/mp4" />
+              <source src="/videos/home/pie-chart.webm" type="video/webm" />
             </video>
             {/* <img src="/images/tokenomics/Untitled@5-1397x721 1.png" alt="" draggable="false" loading="lazy" /> */}
           </div>

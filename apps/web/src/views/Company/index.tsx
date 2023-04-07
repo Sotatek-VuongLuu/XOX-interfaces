@@ -419,23 +419,23 @@ const StyledBG = styled('div')`
     left: 0;
   }
 
-  > div:nth-child(1) {
+  /* > div:nth-child(1) {
     width: 414px;
     height: 414px;
     left: -60px;
     top: 210px;
     background: radial-gradient(50% 50% at 50% 50%, rgba(237, 28, 81, 0.2) 0%, rgba(237, 28, 81, 0) 100%);
-  }
+  } */
 
-  > div:nth-child(2) {
+  /* > div:nth-child(2) {
     width: 841px;
     height: 841px;
     top: 1510px;
     left: -430px;
     background: radial-gradient(50% 50% at 50% 50%, rgba(237, 28, 81, 0.2) 0%, rgba(237, 28, 81, 0) 100%);
-  }
+  } */
 
-  ${({ theme }) => theme.mediaQueries.lg} {
+  /* ${({ theme }) => theme.mediaQueries.lg} {
     > div:nth-child(1) {
       width: 607px;
       height: 607px;
@@ -448,7 +448,7 @@ const StyledBG = styled('div')`
       top: 1510px;
       left: -430px;
     }
-  }
+  } */
 `
 
 interface IMember {

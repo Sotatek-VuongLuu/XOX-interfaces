@@ -30,11 +30,12 @@ export const StyledHeader = styled('div')`
       font-size: 36px;
       line-height: 48px;
       margin-bottom: 16px;
-      background: linear-gradient(82.42deg, #a73b7c 2.51%, #f34236 25.44%, #968470 44.85%, #6ee1d0 69.87%);
+      color: white;
+      /* background: linear-gradient(82.42deg, #a73b7c 2.51%, #f34236 25.44%, #968470 44.85%, #6ee1d0 69.87%);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
       background-clip: text;
-      text-fill-color: transparent;
+      text-fill-color: transparent; */
     }
 
     > p {
@@ -154,12 +155,12 @@ export const StyledBG = styled('div')`
     height: var(--w);
   }
 
-  > div:nth-child(1) {
+  /* > div:nth-child(1) {
     --w: 841px;
     left: -1170px;
     top: 190px;
     background: radial-gradient(50% 50% at 50% 50%, rgba(237, 28, 81, 0.2) 0%, rgba(237, 28, 81, 0) 100%);
-  }
+  } */
 
   > div:nth-child(2) {
     --w: 729px;
