@@ -364,10 +364,9 @@ const Menu = (props) => {
                 <></>
               )}
               <LangSelector
-                currentLang={currentLanguage.code}
+                currentLang={currentLanguage.language}
                 langs={languageList}
                 setLang={setLanguage}
-                buttonScale="xs"
                 color="textSubtle"
                 hideLanguage
               />
