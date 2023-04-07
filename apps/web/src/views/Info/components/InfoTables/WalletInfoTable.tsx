@@ -608,7 +608,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
               color="rgba(255, 255, 255)"
               textAlign="center"
             >
-              Please connect wallet to view your token balance.{' '}
+              {t('Please connect wallet to view your token balance.')}{' '}
             </Text>
             <ConnectButton>
               <svg xmlns="http://www.w3.org/2000/svg" width="124" height="37" viewBox="0 0 124 37" fill="none">

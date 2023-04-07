@@ -339,7 +339,7 @@ const StyledTitle = styled('h1')`
   }
 `
 
-const StyledSubtitle = styled('p')`
+export const StyledSubtitle = styled('p')`
   font-weight: 400;
   text-align: center;
   color: #fb8618;
@@ -474,7 +474,7 @@ function CardMember({ member, ...props }: { member: IMember }) {
   )
 }
 
-function CardSocial({ social, ...props }: { social: ISocial }) {
+export function CardSocial({ social, ...props }: { social: ISocial }) {
   return (
     <a
       href={social.heft === '#' ? null : social.heft}
@@ -542,7 +542,7 @@ export default function CompanyPage() {
     { avatar: '/images/company/Albert Flores.png', name: 'Albert Flores', position: t('Front-end Developer') },
     { avatar: '/images/company/Eleanor Pena.png', name: 'Eleanor Pena', position: t('Back-end Developer') },
     { avatar: '/images/company/Ronald Richards.png', name: 'Ronald Richards', position: t('Tester') },
-    { avatar: '/images/company/Courtney Henry.png', name: 'Courtney Henry', position: t('Product Manager') },
+    { avatar: '/images/company/Courtney Henry.png', name: 'Courtney Henry', position: t('Project Manager') },
   ]
 
   const SOCIALS: Array<ISocial> = [

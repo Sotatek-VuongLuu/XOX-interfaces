@@ -19,6 +19,7 @@ const Content = styled(Grid)`
 `
 
 const WrapperItem = styled(Flex)`
+  position: relative;
   padding: 24px 109px;
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
@@ -55,38 +56,18 @@ const WrapperItem = styled(Flex)`
     border-top-left-radius: unset;
   }
 
-  .edge1 {
-    width: 1px;
-    height: calc(100% - 50px);
+  &:before {
+    content: '';
     position: absolute;
-    bottom: 50px;
+    top: 0;
     left: 0;
-    z-index: 1;
-    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
-  }
-
-  .corner2 {
-    position: absolute;
+    right: 0;
     bottom: 0;
-    right: 0;
-    width: 50%;
-    height: 50px;
-    border-radius: 20px;
-    z-index: 1;
-    border-bottom: 1px solid #ffffff30;
-    border-right: 1px solid #ffffff30;
-    border-bottom-left-radius: unset;
-    border-top-right-radius: unset;
-  }
-
-  .edge2 {
-    width: 1px;
-    height: calc(100% - 50px);
-    position: absolute;
-    bottom: 50px;
-    right: 0;
-    z-index: 1;
-    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+    border-width: 1px;
+    border-radius: inherit;
+    border-color: white;
+    border-style: solid;
+    mask: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
   }
 
   .airbnb {
@@ -118,10 +99,6 @@ const SecuredByItem = ({ item }) => {
       alignItems="center"
       position="relative"
     >
-      <div className="corner1" />
-      <div className="edge1" />
-      <div className="corner2" />
-      <div className="edge2" />
       <p className="title">{item.title}</p>
       <p className="describe">{item.describe}</p>
 
