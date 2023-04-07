@@ -480,7 +480,7 @@ function CardSocial({ social, ...props }: { social: ISocial }) {
       href={social.heft === '#' ? null : social.heft}
       target="_blank"
       rel="noreferrer"
-      style={{ display: 'inline-block' }}
+      style={{ display: 'inline-block', cursor: 'pointer' }}
     >
       {social.heft === '#' ? (
         <Tooltip title="Under Development" placement="top">
@@ -555,7 +555,7 @@ export default function CompanyPage() {
     { icon: '/images/company/7.svg', name: t('Assets Manager'), link: t('Explore Now'), heft: '/info' },
     { icon: '/images/company/1.svg', name: t('XOX Dex V2'), link: t('Best Rates on DeFi'), heft: '#' },
     { icon: '/images/company/8.svg', name: t('XOX Mobile App'), link: t('Your Defi Key'), heft: '#' },
-    { icon: '/images/company/9.svg', name: t('XOX Launchpad'), link: t('Invest Now'), heft: '/vesting' },
+    { icon: '/images/company/9.svg', name: t('XOX Launchpad'), link: t('Invest Now'), heft: '#' },
     { icon: '/images/company/10.svg', name: t('Coin Listing Site'), link: t('Don’t Miss Out'), heft: '#' },
     { icon: '/images/company/11.svg', name: t('Lottery Game'), link: t('Risk Small - Earn Big'), heft: '#' },
   ]

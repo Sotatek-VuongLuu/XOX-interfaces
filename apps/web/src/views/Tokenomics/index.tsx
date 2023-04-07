@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
+import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { Tooltip } from '@mui/material'
 import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { useMemo } from 'react'
@@ -23,8 +26,6 @@ import {
   ContainnerStyledF2,
 } from './styled'
 import ADDComponent from './ADDComponent'
-import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
-import { ChainId } from '@pancakeswap/sdk'
 
 interface IAddress {
   asset: string
@@ -47,7 +48,7 @@ function BG() {
 
 function Address({ addr, ...props }: { addr: IAddress }) {
   const { width } = useWindowSize()
-  const { asset, logo, name, address, text } = addr
+  const { asset, logo, name, address, text, chainId } = addr
   const prefixAddress = address?.substring(0, 4) || ''
   const suffixAddress = address?.substring(address.length - 21, address.length) || ''
   const { t } = useTranslation()
@@ -80,15 +81,21 @@ function Address({ addr, ...props }: { addr: IAddress }) {
         />
       </div>
 
-      <a
-        href={`/add/${XOX_ADDRESS[ChainId[`${asset}`]]}/${USD_ADDRESS[ChainId[`${asset}`]]}?step=1&chainId=${
-          ChainId[`${asset}`]
-        }`}
-        target="_blank"
-        rel="noreferrer"
-      >
-        Get XOX
-      </a>
+      {chainId ? (
+        <a
+          href={chainId ? `/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}` : null}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Get XOX
+        </a>
+      ) : (
+        <Tooltip title="Deployment Coming" placement="top">
+          <a href={null} target="_blank" rel="noreferrer">
+            Get XOX
+          </a>
+        </Tooltip>
+      )}
     </StyledAddress>
   )
 }
@@ -305,12 +312,14 @@ export default function TokenomicsPage() {
       name: 'Ethereum',
       address: '0xa2dD817c2fDc3a2996f1A5174CF8f1AaED466E82',
       logo: '/images/tokenomics/ETH.png',
+      chainId: 5,
     },
     {
       asset: 'BSC',
       name: 'BSC',
       address: '0xa2dD817c2fDc3a2996f1A5174CF8f1AaED466E82',
       logo: '/images/tokenomics/BSC.png',
+      chainId: 97,
     },
     {
       asset: 'ARB',
