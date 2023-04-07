@@ -1311,6 +1311,24 @@ function DevV2() {
         break
     }
     return null
+  }, [tabWHatYouCanDo, t])
+
+  const renderImageWhatYouCando = useMemo(() => {
+    switch (tabWHatYouCanDo) {
+      case 0:
+        return <img src="/images/dex-v2/swap.png" alt="swap" />
+      case 1:
+        return <img src="/images/dex-v2/limit_order.png" alt="limit_order" />
+      case 2:
+        return <img src="/images/dex-v2/earn.png" alt="earn" />
+      case 3:
+        return <img src="/images/dex-v2/liquidity.png" alt="liquidity" />
+      case 4:
+        return <img src="/images/dex-v2/api.png" alt="api" />
+      default:
+        break
+    }
+    return null
   }, [tabWHatYouCanDo])
 
   // useEffect(() => {
@@ -1452,15 +1470,13 @@ function DevV2() {
             controlsList="nodownload"
             muted
           >
-            <source src="/images/dex-v2/how_it_work.mp4" type="video/mp4" />
+            <source src="/images/dex-v2/how_it_work.webm" type="video/webm" />
           </video>
         </div>
       </StyledBLock>
 
       <StyledWhatYouCanDo>
-        <div>
-          <img src="/images/dex-v2/what_you_can_do.png" alt="what_you_can_do" />
-        </div>
+        <div>{renderImageWhatYouCando}</div>
 
         <div>
           <h3>{t('What can you do.')}</h3>
