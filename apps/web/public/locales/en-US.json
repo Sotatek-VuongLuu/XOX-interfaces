@@ -2383,7 +2383,6 @@
   "Everything": "Everything",
   "about our": "about our",
   "Tokenomics": "Tokenomics",
-  "About XOX Tokenomics": "About XOX Tokenomics",
   "XOX Labs is building a the next-gen multi-chain decentralized ecosystem focused on revenue sharing, sustainability, transparency and cross-chain integration leverage for mass exposure. And the $XOX Token is the currency that brings it all together.": "XOX Labs is building a the next-gen multi-chain decentralized ecosystem focused on revenue sharing, sustainability, transparency and cross-chain integration leverage for mass exposure. And the $XOX Token is the currency that brings it all together.",
   "Token Name": "Token Name",
   "Token Supply": "Token Supply",
@@ -2431,5 +2430,6 @@
   "XOX Token Metrics": "XOX Token Metrics",
   "Token": "Token",
   "Total Supply": "Total Supply",
-  "Vesting chart": "Vesting chart"
+  "Vesting chart": "Vesting chart",
+  "Learn Less": "Learn Less"
 }

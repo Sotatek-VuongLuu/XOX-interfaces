@@ -428,79 +428,79 @@ export default function TokenomicsPage() {
     series: [
       {
         ...defaultOptionTVS,
-        name: 'Team allocation',
+        name: t('Team allocation'),
         data: getDataYearly(12600000, 20, 5).map((item) => item.amount),
         areaStyle: { color: '#D8D8D8' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Company Reserve',
+        name: t('Company Reserve'),
         data: getDataYearly(27000000, 25, 4).map((item) => item.amount),
         areaStyle: { color: '#969696' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Strategic Partnership',
+        name: t('Strategic Partnership'),
         data: getDataYearly(9000000, 20, 5).map((item) => item.amount),
         areaStyle: { color: '#BAFFBF' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Ecosystem Growth',
+        name: t('Ecosystem Growth'),
         data: getDataYearly(36000000, 25, 4).map((item) => item.amount),
         areaStyle: { color: '#86B6FF' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Community Rewards',
+        name: t('Community Rewards'),
         data: getDataYearly(1800000, 20, 5).map((item) => item.amount),
         areaStyle: { color: '#50817C' },
       },
       {
         ...defaultOptionTVS,
-        name: 'XOX labs Foundation',
+        name: t('XOX labs Foundation'),
         data: getDataYearly(5400000, 20, 5).map((item) => item.amount),
         areaStyle: { color: '#64C6BA' },
       },
       {
         ...defaultOptionTVS,
-        name: 'LP Farming',
+        name: t('LP Farming'),
         data: getDataYearlyWithTEG(18000000, 10, 20).map((item) => item.amount),
         areaStyle: { color: '#FFB547' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Seed Sale',
+        name: t('Seed Sale'),
         data: handleRenderSeedSale(),
         areaStyle: { color: '#FB8618' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Partners Sale',
+        name: t('Partners Sale'),
         data: getDataMonthly(5400000, 30, 10).map((item) => item.amount),
         areaStyle: { color: '#FF5353' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Private Sale',
+        name: t('Private Sale'),
         data: getDataMonthly(10800000, 60, 10).map((item) => item.amount),
         areaStyle: { color: '#C20DA3' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Public Sale',
+        name: t('Public Sale'),
         data: getDataMonthly(18000000, 60, 40).map((item) => item.amount),
         areaStyle: { color: '#A964C9' },
       },
       {
         ...defaultOptionTVS,
-        name: 'Liquidity Pools DEX',
+        name: t('Liquidity Pools DEX'),
         data: getLiquidityPool(14400000).map((item) => item.amount),
         areaStyle: { color: '#3D8AFF' },
       },
       {
         ...defaultOptionTVS,
-        name: 'CEX Listing',
+        name: t('CEX Listing'),
         data: getDataMonthly(18000000, 60, 40).map((item) => item.amount),
         areaStyle: { color: 'pink' },
       },
@@ -544,7 +544,7 @@ export default function TokenomicsPage() {
           </div>
         </StyledHeader>
 
-        <StyledTitle>{t('About XOX Tokenomics')}</StyledTitle>
+        <StyledTitle>{t('XOX Tokenomics')}</StyledTitle>
         <StyledDescription>
           {t(
             'XOX Labs is building a the next-gen multi-chain decentralized ecosystem focused on revenue sharing, sustainability, transparency and cross-chain integration leverage for mass exposure. And the $XOX Token is the currency that brings it all together.',

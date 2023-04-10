@@ -16,6 +16,7 @@ import YourInfo from './MainInfoTab/YourInfo'
 import PrivateSale from './MechanismTab/PrivateSale'
 import ReferralProgram from './MechanismTab/ReferralProgram'
 import TokenMetrics from './MechanismTab/TokenMetrics'
+import { useTranslation } from '@pancakeswap/localization'
 
 interface IProps {
   tabSaleMechanism: string[]
@@ -317,6 +318,7 @@ function SaleMechanism({
   const { account } = useActiveWeb3React()
   const [isMore, setIsMore] = useState(false)
   const swiperRef = useRef(null)
+  const { t } = useTranslation()
 
   const renderBody = useMemo(() => {
     switch (tabActiveMechansim) {
@@ -364,7 +366,7 @@ function SaleMechanism({
             <div>
               <img src="/images/fi_chevrons-down.png" alt="fi_chevrons-down" className="fi_chevrons-up" />
               <button type="button" className="btn_learnless" onMouseDown={() => setIsMore(false)}>
-                Learn Less
+                {t('Learn Less')}
               </button>
             </div>
           </div>
@@ -373,7 +375,7 @@ function SaleMechanism({
         {width <= 900 && !isMore && (
           <div className="overlay_learmore">
             <button type="button" className="btn_learnmore" onClick={() => setIsMore(true)}>
-              Learn More
+              {t('Learn More')}
             </button>
             <img src="/images/fi_chevrons-down.svg" alt="fi_chevrons-down" className="fi_chevrons-down" />
           </div>

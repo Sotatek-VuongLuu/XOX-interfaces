@@ -1,11 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { createElement, memo, useState } from "react";
-import { Tooltip } from "@mui/material";
 import { Flex } from "../Box";
 import isTouchDevice from "../../util/isTouchDevice";
 import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import MenuItem from "../MenuItem/MenuItem";
 import { MenuItemsProps } from "./types";
+import { useMatchBreakpoints } from "../../contexts";
+import LangSelector from "../LangSelector/LangSelector";
+import { useTranslation, languageList } from "@pancakeswap/localization";
 
 const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
   items = [],
@@ -14,6 +16,8 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
   isLanding = false,
   ...props
 }) => {
+  const { currentLanguage, setLanguage, t } = useTranslation();
+  const { isMobile } = useMatchBreakpoints();
   const [isHover, setIsHover] = useState(false);
 
   const handleMouseEnter = () => {
@@ -56,6 +60,15 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
           </DropdownMenu>
         );
       })}
+      {isMobile && (
+        <LangSelector
+          currentLang={currentLanguage.language}
+          langs={languageList}
+          setLang={setLanguage}
+          color="textSubtle"
+          hideLanguage
+        />
+      )}
     </Flex>
   );
 };

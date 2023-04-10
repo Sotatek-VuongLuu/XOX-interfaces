@@ -294,9 +294,9 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
     <Wrapper>
       {!account && (
         <div className="btn_connect_container">
-          <p>Connect to your wallet to view your vesting shedule.</p>
+          <p>{t('Connect to your wallet to view your vesting shedule.')}</p>
           <ConnectWalletButton scale="sm" style={{ whiteSpace: 'nowrap' }} className="btn_connect">
-            <span>Connect Wallet</span>
+            <span>{t('Connect Wallet')}</span>
           </ConnectWalletButton>
         </div>
       )}
@@ -315,7 +315,7 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
                     {item.title === 'Amount invested' && item.amount !== '-' && <span>$</span>}
                     {item.amount !== '-' ? Number(item.amount).toLocaleString() : item.amount}
                   </p>
-                  <p className="item_title">{item.title}</p>
+                  <p className="item_title">{t(item.title)}</p>
                 </div>
               )
             })}
@@ -332,7 +332,7 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
                 color="rgba(255, 255, 255, 0.87)"
                 onClick={() => setTab(0)}
               >
-                Sale History
+                {t('Sale History')}
               </Text>
 
               <Text
@@ -344,7 +344,7 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
                 color="rgba(255, 255, 255, 0.87)"
                 onClick={() => setTab(1)}
               >
-                Claim History
+                {t('Claim History')}
               </Text>
             </Flex>
           </div>
@@ -363,7 +363,7 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
               color="rgba(255, 255, 255, 0.87)"
               height="24px"
             >
-              Referral
+              {t('Referral')}
             </Text>
           </Flex>
 
@@ -388,7 +388,7 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
               )
             })}
             <div className="ngumy_code">
-              <p className="my_code">My Referral Code</p>
+              <p className="my_code">{t('My Referral Code')}</p>
               <div className="code">
                 <div className="content_code_number">
                   {account && (

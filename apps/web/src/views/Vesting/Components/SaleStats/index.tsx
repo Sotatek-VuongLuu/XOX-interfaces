@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import BigNumber from 'bignumber.js'
 import styled from 'styled-components'
 import { Start } from 'views/Vesting'
@@ -151,10 +152,12 @@ interface IProps {
 }
 
 function SaleStats({ dataStat }: IProps) {
+  const { t } = useTranslation()
+
   return (
     <Wrapper>
       <div className="fake_blur" />
-      <p className="title">Sale Stats</p>
+      <p className="title">{t('Sale Stats')}</p>
       <div className="content_stat">
         {Array.from(dataStat).map((item: Start, index: number) => {
           return (
@@ -171,7 +174,7 @@ function SaleStats({ dataStat }: IProps) {
                     : '-'}
                 </span>
               </p>
-              <p className="item_content_title">{item.title}</p>
+              <p className="item_content_title">{t(item.title)}</p>
               <div className={`divide divide_${index}`} />
             </div>
           )

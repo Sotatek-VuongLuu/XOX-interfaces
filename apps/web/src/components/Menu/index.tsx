@@ -363,13 +363,15 @@ const Menu = (props) => {
               ) : (
                 <></>
               )}
-              <LangSelector
-                currentLang={currentLanguage.language}
-                langs={languageList}
-                setLang={setLanguage}
-                color="textSubtle"
-                hideLanguage
-              />
+              {isDesktop && (
+                <LangSelector
+                  currentLang={currentLanguage.language}
+                  langs={languageList}
+                  setLang={setLanguage}
+                  color="textSubtle"
+                  hideLanguage
+                />
+              )}
               <NetworkSwitcher />
               <UserMenu />
               {openHeader ? (

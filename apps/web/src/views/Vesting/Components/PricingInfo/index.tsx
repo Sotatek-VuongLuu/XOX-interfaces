@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import { Button, Flex, Text } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
@@ -443,6 +444,7 @@ function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, set
   const { account } = useActiveWeb3React()
   const [arrDataRound, setArrDataRound] = useState<dataRoundPricing[]>(dataPricing)
   const { width } = useWindowSize()
+  const { t } = useTranslation()
 
   const handleCheckRound = (num: number) => {
     const dataUpdate = Array.from(dataPricing).map((item: dataRoundPricing) => {
@@ -466,15 +468,15 @@ function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, set
       <div className="corner2" />
       <div className="edge2" />
       <Content>
-        <p className="title">ROUNDS AND PRICING INFORMATION</p>
+        <p className="title">{t('ROUNDS AND PRICING INFORMATION')}</p>
         <CustomTableWrapper>
           <Table>
             <Text className="table-header_col" />
-            <Text className="table-header_col">Round</Text>
-            <Text className="table-header_col">XOX Coins</Text>
-            <Text className="table-header_col">Price</Text>
-            {width > 900 && <Text className="table-header_col">XOXS Bonus</Text>}
-            {width <= 900 && <Text className="table-header_col"> Bonus</Text>}
+            <Text className="table-header_col">{t('Round')}</Text>
+            <Text className="table-header_col">{t('XOX Coins')}</Text>
+            <Text className="table-header_col">{t('Price')}</Text>
+            {width > 900 && <Text className="table-header_col">{t('XOXS Bonus')}</Text>}
+            {width <= 900 && <Text className="table-header_col"> {t('Bonus')}</Text>}
           </Table>
 
           {Array.from(arrDataRound).map((item: dataRoundPricing, index: number) => {
@@ -504,7 +506,7 @@ function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, set
                     className={!!item.status && `active_text`}
                   >
                     <>
-                      <div>Live</div>
+                      <div>{t('Live')}</div>
                       <div className="ring-container">
                         <div className="ringring" />
                         <div className="circle" />
@@ -515,7 +517,11 @@ function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, set
                   <Text className="table-header" />
                 )}
 
-                {width > 900 && <Text className="table-header">Round {item.round}</Text>}
+                {width > 900 && (
+                  <Text className="table-header">
+                    {t('Round')} {item.round}
+                  </Text>
+                )}
                 {width <= 900 && (
                   <Text className="table-header" textAlign="center">
                     R{item.round}
@@ -538,11 +544,11 @@ function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, set
               }}
               disabled={!isInTimeRangeSale}
             >
-              Buy with USDT
+              {t('Buy with USDT')}
             </CustomButton>
 
             {!isInTimeRangeSale ? (
-              <CustomButton disabled={!isInTimeRangeSale}>Buy with ETH</CustomButton>
+              <CustomButton disabled={!isInTimeRangeSale}>{t('Buy with ETH')}</CustomButton>
             ) : (
               <ButtonETH
                 className="btn_get_eth"
@@ -556,7 +562,7 @@ function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, set
                 <div className="edge_btn_1" />
                 <div className="corner_btn_2" />
                 <div className="edge_btn_2" />
-                <span>Buy with ETH</span>
+                <span>{t('Buy with ETH')}</span>
               </ButtonETH>
             )}
           </div>

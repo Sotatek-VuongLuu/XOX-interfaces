@@ -569,6 +569,10 @@ export const StyledAAD = styled(StyledCard)`
   gap: 28px;
   margin-top: 40px;
   margin-bottom: 64px;
+  height: fit-content;
+  width: fit-content;
+  transform: translateX(-50%);
+  left: 50%;
 
   > div.l,
   > div.r {

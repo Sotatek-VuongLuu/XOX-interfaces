@@ -679,7 +679,7 @@
   "After every round, if nobody wins in one of the prize brackets, the unclaimed XOX for that bracket rolls over into the next round and are redistributed among the prize pools.": "Sau mỗi vòng chơi, nếu không có ai thắng giải trong một hạng giải thưởng, lượng XOX chưa nhận cho hạng đó sẽ chuyển tiếp sang vòng tiếp theo và được tái phân phối trong quỹ giải thưởng.",
   "XOX Injections": "Bơm XOX",
   "An average total of 35,000 XOX from the treasury is added to lottery rounds over the course of a week. This XOX is of course also included in rollovers! Read more in our guide to ": "Tổng cộng khoảng 35.000 XOX từ kho bạc được thêm vào các vòng xổ số trong cả tuần. Lượng XOX này dĩ nhiên cũng được chuyển tiếp! Hãy đọc thêm trong hướng dẫn ",
-  "XOX Tokenomics": "Kinh tế học token về XOX",
+  "XOX Tokenomics": "XOX Tokenomics",
   "Digits matched": "Ký tự số khớp",
   "Prize pool allocation": "Phân bổ quỹ giải thưởng",
   "Matches first %digits%": "Khớp %digits% đầu tiên",
@@ -2383,8 +2383,7 @@
   "XOX is the native token that powers the XOX Labs Cross-Chain Defi Ecosystem. XOX is built on Ethereum but XOX Labs is a multi-chain Protocol so XOX Token can be acquired in other chains like (BSC, Solana, Polygon, Arbitrum, Optimism...) through liquidity pools created by XOX Labs.": "XOX là token mặc định được sử dụng để thúc đẩy hệ sinh thái tài chính phi tập trung đa mạng XOX Labs. XOX được tạo ra trên Ethereum nhưng XOX Labs là một phương thức đa mạng, vì vậy đồng XOX có thể mua được trên các mạng khác như BSC, Solana, Polygon, Arbitrum, Optimism... qua các bể thanh khoản được tạo bởi XOX Labs. ",
   "Everything": "Mọi thứ",
   "about our": "vể Tokenomics",
-  "Tokenomics": "của chúng tôi",
-  "About XOX Tokenomics": "",
+  "Tokenomics": "Tokenomics",
   "XOX Labs is building a the next-gen multi-chain decentralized ecosystem focused on revenue sharing, sustainability, transparency and cross-chain integration leverage for mass exposure. And the $XOX Token is the currency that brings it all together.": "XOX Labs đang xây dựng một hệ sinh thái phi tập trung đa mạng mới tập trung vào chia sẻ doanh thu, sự bền vững, tính minh bạch và tích hợp đa mạng để tiếp cận đại chúng. Và XOXS là token kết nối tất cả với nhau.",
   "Token Name": "Tên token",
   "Token Supply": "Tổng cung",
@@ -2432,5 +2431,6 @@
   "XOX Token Metrics": "Số liệu token XOX",
   "Token": "Token",
   "Total Supply": "Tổng cung",
-  "Vesting chart": "Biểu đồ phân bổ token"
+  "Vesting chart": "Biểu đồ phân bổ token",
+  "Learn Less": "Ẩn bớt"
 }
