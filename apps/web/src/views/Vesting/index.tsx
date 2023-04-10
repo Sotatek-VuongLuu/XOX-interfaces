@@ -503,9 +503,32 @@ function VestingPage() {
   const XOXMAXSALE2 = 5000 / 0.045
   const XOXMAXSALE3 = 5000 / 0.046
 
-  const [availableXOXForSale1, setAvailableXOXForSale1] = useState<number>(XOXMAXSALE1)
-  const [availableXOXForSale2, setAvailableXOXForSale2] = useState<number>(XOXMAXSALE2)
-  const [availableXOXForSale3, setAvailableXOXForSale3] = useState<number>(XOXMAXSALE3)
+  const [availableXOXForSale, setAvailableXOXForSale] = useState<number>(XOXMAXSALE1)
+
+  const handleGetTotalXOXOfUserInRound = async (acc: string, curRound: number) => {
+    if (chainId === 97 || chainId === 56) return
+    try {
+      const result = await contractPreSale.userInvestedAmount(acc, curRound)
+      const formatNumber = new BigNumber(formatEther(result._hex)).toNumber()
+      if (curRound === 1) {
+        const sub = XOXMAXSALE1 - formatNumber
+        const res = sub > 0 ? sub : 0
+        setAvailableXOXForSale(res)
+      }
+      if (curRound === 2) {
+        const sub = XOXMAXSALE2 - formatNumber
+        const res = sub > 0 ? sub : 0
+        setAvailableXOXForSale(res)
+      }
+      if (curRound === 3) {
+        const sub = XOXMAXSALE3 - formatNumber
+        const res = sub > 0 ? sub : 0
+        setAvailableXOXForSale(res)
+      }
+    } catch (error) {
+      console.warn(`error`, error)
+    }
+  }
 
   const handleGetInfoRound = async () => {
     try {
@@ -626,6 +649,7 @@ function VestingPage() {
           setIsOpenLoadingClaimModal(false)
           handleGetDataVesting()
           handleGetTotalTokenInvested(currentRound)
+          handleGetTotalXOXOfUserInRound(account, currentRound)
           onDissmiss()
           toastSuccess(
             `Bought XOX`,
@@ -666,6 +690,7 @@ function VestingPage() {
         handleGetDataVesting()
         setIsOpenLoadingClaimModal(false)
         handleGetTotalTokenInvested(currentRound)
+        handleGetTotalXOXOfUserInRound(account, currentRound)
         toastSuccess(
           `Bought XOX`,
           <ToastDescriptionWithTx txHash={txHashInvest.transactionHash}>
@@ -996,7 +1021,7 @@ function VestingPage() {
     }
   }
 
-  const validateAmount = (value: string, typeBuy: number) => {
+  const validateAmount = (value: string, typeBuy: number, aXOX: any) => {
     let message = ''
     const totalDolla = typeBuy === TYPE_BY.BY_ETH ? new BigNumber(value).multipliedBy(ethPerDolla).toNumber() : value
     const balanceCompare = typeBuy === TYPE_BY.BY_ETH ? balanceNative : balanceLP
@@ -1004,11 +1029,16 @@ function VestingPage() {
       message = 'Insufficient balance'
       return message
     }
+
+    if (Number(aXOX) > availableXOXForSale) {
+      message = 'Maximum investment: $5000'
+      return message
+    }
+
     if (totalDolla < 50) {
       message = 'Minimum investment: $50'
-    } else {
-      message = ''
     }
+
     return message
   }
 
@@ -1073,14 +1103,20 @@ function VestingPage() {
   }, [currentRound])
 
   useEffect(() => {
+    if (!account || !chainId || !currentRound) return
+    handleGetTotalXOXOfUserInRound(account, currentRound)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentRound, chainId, account])
+
+  useEffect(() => {
     if (amount === '') {
       setMassageErrorAmount('This is required')
     } else {
-      const mess: string = validateAmount(amount, typeBuyPrice)
+      const mess: string = validateAmount(amount, typeBuyPrice, amountXOX)
       setMassageErrorAmount(mess)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amount, typeBuyPrice])
+  }, [amount, typeBuyPrice, amountXOX])
 
   useEffect(() => {
     if (!account || !chainId) return
@@ -1128,12 +1164,12 @@ function VestingPage() {
     }
   }, [whiteList, setWhiteList, account, dataWhitelist])
 
-  useEffect(() => {
-    if (!account || !chainId) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, chainId])
+  // useEffect(() => {
+  //   if (!account || !chainId) return
+  //   if (loadOk) window.location.reload()
+  //   setLoadOk(true)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [account, chainId])
 
   return (
     <>
