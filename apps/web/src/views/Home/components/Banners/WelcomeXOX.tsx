@@ -4,10 +4,12 @@
 import styled from 'styled-components'
 import { Box, Grid, Popover } from '@mui/material'
 import { useMatchBreakpoints, CopyButton } from '@pancakeswap/uikit'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { Application } from '@splinetool/runtime';
+
 
 const Wrapper = styled.div`
   width: 100%;
@@ -22,35 +24,64 @@ const Wrapper = styled.div`
     }
   }
 
-  .video-container video {
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: -90px;
-    width: 45vw;
-    height: auto;
-    scale: 1.2;
-    outline: none;
-    margin-bottom: -2px;
-    border: none !important;
-    clip-path: inset(1px 1px);
-    max-width: 1040px;
-    max-height: 520px;
+  .video-container {
+    height: inherit;
 
-    &:focus {
-      outline: none;
-    }
-
-    @media screen and (max-width: 900px) {
+    video {
+      position: absolute;
+      z-index: -1;
+      top: 30%;
+      left: 0;
       width: 100%;
-      height: auto;
-      left: unset;
+      transform: scale(2);
+      outline: none;
+      border: none !important;
+      clip-path: inset(1px 1px);
+      max-width: 1040px;
+      max-height: 520px;
+
+      &:focus {
+        outline: none;
+      }
+
+      @media screen and (max-width: 900px) {
+        width: 100%;
+        left: unset;
+        top: unset;
+      }
+
+      @media screen and (max-width: 576px) {
+        height: 280px;
+        transform: scale(1.8);
+      }
     }
 
-    @media screen and (max-width: 576px) {
-      height: 230px;
-      scale: 1.6;
-    }
+    // .overlay {
+    //   height: 457px;
+    //   width: 457px;
+    //   border-radius: 50%;
+    //   position: absolute;
+    //   top: 0px;
+    //   left: 15%;
+    //   z-index: -2;
+    //   background: radial-gradient(
+    //     50% 50% at 50% 50%,
+    //     rgba(249, 124, 29, 0.5) 0%,
+    //     rgba(246, 99, 42, 0.5) 0.01%,
+    //     rgba(249, 124, 29, 0) 100%
+    //   );
+    //   opacity: 0.7;
+    //   scale: 1.3;
+
+    //   @media screen and (max-width: 900px) {
+    //     width: 100%;
+    //     left: unset;
+    //   }
+
+    //   @media screen and (max-width: 576px) {
+    //     height: 230px;
+    //   }
+    // }
   }
 
   @media screen and (max-width: 900px) {
@@ -514,7 +545,12 @@ const WelcomeXOX = (): JSX.Element => {
   const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
   const { chainId } = useActiveChainId()
 
+  const [validSafari, setValidSafari] = React.useState<boolean>(true)
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
+
+  useEffect(() => {
+    (document.getElementById('laptopVideo') as any).play();
+  }, [])
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -523,12 +559,28 @@ const WelcomeXOX = (): JSX.Element => {
   const handleClose = () => {
     setAnchorEl(null)
   }
+  
 
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
 
-  const { userAgent } = navigator
-  console.log(userAgent);
+  const { detect } = require('detect-browser');
+  const browser = detect();
+
+  // handle the case where we don't detect the browser
+  if (browser) {
+    console.log(browser.name);
+    console.log(browser.version);
+    console.log(browser.os);
+  }
+
+  useEffect(() => {
+    const canvas = document.getElementById('laptopVideo')['0']
+    if (canvas) {
+      const app = new Application(canvas as any)
+      app.load('https://prod.spline.design/mJdmb5heSYCQCvOo/scene.splinecode')
+    }
+  }, [])
 
   return (
     <Wrapper>
@@ -761,17 +813,19 @@ const WelcomeXOX = (): JSX.Element => {
           </GridLeft>
           <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
             <div className="video-container">
+              {/* <div className="overlay"></div> */}
               <video
                 loop
+                muted
                 playsInline
-                autoPlay
                 controls={false}
-                preload="auto"
+                preload="yes"
                 style={{ pointerEvents: 'none' }}
                 controlsList="nodownload"
-                muted
+                id="laptopVideo"
               >
                 <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4" />
+                <source src="/videos/home/laptop_project.webm" type="video/webm" />
               </video>
             </div>
           </Grid>

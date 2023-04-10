@@ -129,7 +129,7 @@ export default function SwapCommitButton({
           message = 'Transaction rejected.'
         }
 
-        toastWarning('Confirm Swap', message)
+        toastWarning(t('Confirm Swap'), t(message))
 
         setSwapState({
           attemptingTxn: false,

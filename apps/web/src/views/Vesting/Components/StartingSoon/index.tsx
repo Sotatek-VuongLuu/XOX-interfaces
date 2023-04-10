@@ -1,4 +1,5 @@
 /* eslint-disable consistent-return */
+import { useTranslation } from '@pancakeswap/localization'
 import BigNumber from 'bignumber.js'
 import moment from 'moment'
 import { useEffect, useMemo, useState } from 'react'
@@ -189,6 +190,7 @@ function StartingSoon({
   setReachZero,
   setisReachWhitelist,
 }: IProps) {
+  const { t } = useTranslation()
   const [timeNow, setTimeNow] = useState(timeStampOfNow)
 
   const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
@@ -202,7 +204,9 @@ function StartingSoon({
           .toNumber()
         return (
           <>
-            <p className="percent_sale">{`${Number(percent).toFixed(2)}%`} SOLD</p>
+            <p className="percent_sale">
+              {`${Number(percent).toFixed(2)}%`} {t('SOLD')}
+            </p>
             <div className="processing">
               <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
             </div>
@@ -217,7 +221,9 @@ function StartingSoon({
           .toNumber()
         return (
           <>
-            <p className="percent_sale">{`${Number(percent).toFixed(2)}%`} SOLD</p>
+            <p className="percent_sale">
+              {`${Number(percent).toFixed(2)}%`} {t('SOLD')}
+            </p>
             <div className="processing">
               <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
             </div>
@@ -233,7 +239,9 @@ function StartingSoon({
         return (
           <>
             <div className="percent_sale">
-              <p className="percent_sale">{`${Number(percent).toFixed(2)}%`} SOLD</p>
+              <p className="percent_sale">
+                {`${Number(percent).toFixed(2)}%`} {t('SOLD')}
+              </p>
             </div>
             <div className="processing">
               <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
@@ -254,9 +262,9 @@ function StartingSoon({
     if (time < infoRoundOne.startDate) {
       return (
         <>
-          <p className="title">New sale will start soon</p>
+          <p className="title">{t('New sale will start soon')}</p>
           <p className="notice">
-            Sale 1 will start on {moment.unix(infoRoundOne.startDate / 1000).format('DD/MM/YYYY')}.
+            {t('Sale 1 will start on')} {moment.unix(infoRoundOne.startDate / 1000).format('DD/MM/YYYY')}.
           </p>
           {handleCountdownArg(infoRoundOne.startDate)}
         </>
@@ -265,8 +273,10 @@ function StartingSoon({
     if (infoRoundOne.startDate < time && time < infoRoundOne.endDate) {
       return (
         <>
-          <p className="title">XOX TOKEN SALE IS LIVE!</p>
-          <p className="notice">Sale 1 will end on {moment.unix(infoRoundOne.endDate / 1000).format('DD/MM/YYYY')}.</p>
+          <p className="title">{t('XOX TOKEN SALE IS LIVE!')}</p>
+          <p className="notice">
+            {t('Sale 1 will end on')} {moment.unix(infoRoundOne.endDate / 1000).format('DD/MM/YYYY')}.
+          </p>
           {handleCountdownArg(infoRoundOne.endDate)}
         </>
       )
@@ -276,9 +286,9 @@ function StartingSoon({
       if (infoRoundOne.endDate <= time && time < infoRoundTow.startDate) {
         return (
           <>
-            <p className="title">New sale will start soon</p>
+            <p className="title">{t('New sale will start soon')}</p>
             <p className="notice">
-              Sale 2 will start on {moment.unix(infoRoundTow.startDate / 1000).format('DD/MM/YYYY')}.
+              {t('Sale 2 will start on')} {moment.unix(infoRoundTow.startDate / 1000).format('DD/MM/YYYY')}.
             </p>
             {handleCountdownArg(infoRoundTow.startDate)}
           </>
@@ -288,9 +298,9 @@ function StartingSoon({
       if (infoRoundTow.startDate <= time && time < infoRoundTow.endDate) {
         return (
           <>
-            <p className="title">XOX TOKEN SALE IS LIVE!</p>
+            <p className="title">{t('XOX TOKEN SALE IS LIVE!')}</p>
             <p className="notice">
-              Sale 2 will end on {moment.unix(infoRoundTow.endDate / 1000).format('DD/MM/YYYY')}.
+              {t('Sale 2 will end on')} {moment.unix(infoRoundTow.endDate / 1000).format('DD/MM/YYYY')}.
             </p>
             {handleCountdownArg(infoRoundTow.endDate)}
           </>
@@ -301,9 +311,9 @@ function StartingSoon({
       if (infoRoundTow.endDate <= time && time < infoRoundThree.startDate) {
         return (
           <>
-            <p className="title">New sale will start soon</p>
+            <p className="title">{t('New sale will start soon')}</p>
             <p className="notice">
-              Sale 3 will start on {moment.unix(infoRoundThree.startDate / 1000).format('DD/MM/YYYY')}.
+              {t('Sale 3 will start on')} {moment.unix(infoRoundThree.startDate / 1000).format('DD/MM/YYYY')}.
             </p>
             {handleCountdownArg(infoRoundThree.startDate)}
           </>
@@ -313,9 +323,9 @@ function StartingSoon({
       if (infoRoundThree.startDate <= time && time < infoRoundThree.endDate) {
         return (
           <>
-            <p className="title">XOX TOKEN SALE IS LIVE!</p>
+            <p className="title">{t('XOX TOKEN SALE IS LIVE!')}</p>
             <p className="notice">
-              Sale 3 will end on {moment.unix(infoRoundThree.endDate / 1000).format('DD/MM/YYYY')}.
+              {t('Sale 3 will end on')} {moment.unix(infoRoundThree.endDate / 1000).format('DD/MM/YYYY')}.
             </p>
             {handleCountdownArg(infoRoundThree.endDate)}
           </>
@@ -326,7 +336,7 @@ function StartingSoon({
     if (infoRoundThree.endDate && infoRoundThree.endDate <= time) {
       return (
         <>
-          <p className="title">XOX Token pre-sale is Ended</p>
+          <p className="title">{t('XOX Token pre-sale is Ended')}</p>
           <div className="rocket_container">
             <img src="/images/rocket_xox.png" alt="rocket_xox" />
           </div>
@@ -343,14 +353,14 @@ function StartingSoon({
 
   const handleRenderTitle = useMemo(() => {
     if (!infoRoundOne.startDate && !infoRoundTow.startDate && !infoRoundThree.startDate) {
-      return <p className="title">Pre-sale is coming soon</p>
+      return <p className="title">{t('Pre-sale is coming soon')}</p>
     }
 
     if (infoRoundOne.endDate && infoRoundOne.endDate < timeNow && !infoRoundTow.startDate) {
       return (
         <>
-          <p className="title"> Round 1 Has Successfully Ended</p>
-          <p className="notice_after">Round 2 Starting Soon</p>
+          <p className="title"> {t('Round 1 Has Successfully Ended')}</p>
+          <p className="notice_after">{t('Round 2 Starting Soon')}</p>
         </>
       )
     }
@@ -358,12 +368,12 @@ function StartingSoon({
     if (infoRoundTow.endDate && infoRoundTow.endDate < timeNow && !infoRoundThree.startDate) {
       return (
         <>
-          <p className="title"> Round 2 Has Successfully Ended</p>
-          <p className="notice_after">Round 3 Starting Soon</p>
+          <p className="title"> {t('Round 2 Has Successfully Ended')}</p>
+          <p className="notice_after">{t('Round 3 Starting Soon')}</p>
         </>
       )
     }
-  }, [infoRoundOne, infoRoundTow, infoRoundThree, timeNow])
+  }, [infoRoundOne, infoRoundTow, infoRoundThree, timeNow, t])
 
   useEffect(() => {
     if (reacheZero) {

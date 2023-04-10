@@ -123,7 +123,7 @@ export default function ManageTokens({
           </Text>
           {userAddedTokens.length > 0 && (
             <Button variant="tertiary" onClick={handleRemoveAll}>
-              {t('Clear all')}
+              {t('Clear All')}
             </Button>
           )}
         </Footer>

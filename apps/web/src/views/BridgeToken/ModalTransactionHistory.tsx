@@ -383,7 +383,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                     marginTop: '16px',
                   }}
                 >
-                  {t('No transactions')}
+                  {t('No Transactions')}
                 </p>
               </NoData>
             )}

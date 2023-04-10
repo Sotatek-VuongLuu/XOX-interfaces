@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import { Flex, Grid } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
@@ -19,6 +20,7 @@ const Content = styled(Grid)`
 `
 
 const WrapperItem = styled(Flex)`
+  position: relative;
   padding: 24px 109px;
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
@@ -55,42 +57,42 @@ const WrapperItem = styled(Flex)`
     border-top-left-radius: unset;
   }
 
-  .edge1 {
-    width: 1px;
-    height: calc(100% - 50px);
+  &:before {
+    content: '';
     position: absolute;
-    bottom: 50px;
+    top: 0;
     left: 0;
-    z-index: 1;
-    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
-  }
-
-  .corner2 {
-    position: absolute;
+    right: 0;
+    z-index: -1;
     bottom: 0;
-    right: 0;
-    width: 50%;
-    height: 50px;
-    border-radius: 20px;
-    z-index: 1;
-    border-bottom: 1px solid #ffffff30;
-    border-right: 1px solid #ffffff30;
-    border-bottom-left-radius: unset;
-    border-top-right-radius: unset;
-  }
-
-  .edge2 {
-    width: 1px;
-    height: calc(100% - 50px);
-    position: absolute;
-    bottom: 50px;
-    right: 0;
-    z-index: 1;
-    background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
+    border-width: 1px;
+    border-radius: inherit;
+    border-color: white;
+    border-style: solid;
+    mask: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
   }
 
   .airbnb {
     margin-top: 35px;
+  }
+
+  > div {
+    > div:nth-child(1) {
+      margin-bottom: 32px;
+      padding: 0px 40px;
+    }
+    > div:nth-child(2) {
+      padding-left: 20px;
+    }
+    > div {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-column-gap: 64px;
+      img {
+        max-width: 100%;
+        cursor: pointer !important;
+      }
+    }
   }
 
   @media screen and (max-width: 900px) {
@@ -105,11 +107,27 @@ const WrapperItem = styled(Flex)`
       line-height: 24px;
       margin-top: 10px;
     }
+
+    > div {
+      > div {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-column-gap: 58px;
+      }
+      > div:nth-child(1) {
+        padding: 0px;
+      }
+      > div:nth-child(2) {
+        padding-left: 0px;
+        margin: 32px 0px;
+      }
+    }
   }
 `
 
 const SecuredByItem = ({ item }) => {
   const { width } = useWindowSize()
+  const { t } = useTranslation()
   return (
     <WrapperItem
       className="container"
@@ -118,20 +136,42 @@ const SecuredByItem = ({ item }) => {
       alignItems="center"
       position="relative"
     >
-      <div className="corner1" />
-      <div className="edge1" />
-      <div className="corner2" />
-      <div className="edge2" />
-      <p className="title">{item.title}</p>
-      <p className="describe">{item.describe}</p>
+      <p className="title">{t(item.title)}</p>
+      <p className="describe">{t(item.describe)}</p>
 
-      {width <= 900 && <img src="/images/logo_backed_mb.svg" alt="microsoft" />}
-      {width > 900 && (
-        <>
-          <img src={item.sv2} alt="microsoft" />
-          <img src={item.sv1} alt="airbnb" className="airbnb" />
-        </>
-      )}
+      <div>
+        {width >= 900 && (
+          <>
+            <div>
+              <img src="/images/dex-v2/AirbnbLogo.svg" alt="AirbnbLogo" />
+              <img src="/images/dex-v2/HubspotLogo.svg" alt="HubspotLogo" />
+              <img src="/images/dex-v2/GoogleLogo.svg" alt="GoogleLogo" />
+            </div>
+            <div>
+              <img src="/images/dex-v2/MicrosoftLogo.svg" alt="MicrosoftLogo" />
+              <img src="/images/dex-v2/WalmartLogo.svg" alt="WalmartLogo" />
+              <img src="/images/dex-v2/FedExLogo.svg" alt="FedExLogo" />
+            </div>
+          </>
+        )}
+
+        {width < 900 && (
+          <>
+            <div>
+              <img src="/images/dex-v2/AirbnbLogo.svg" alt="AirbnbLogo" />
+              <img src="/images/dex-v2/HubspotLogo.svg" alt="HubspotLogo" />
+            </div>
+            <div>
+              <img src="/images/dex-v2/GoogleLogo.svg" alt="GoogleLogo" />
+              <img src="/images/dex-v2/MicrosoftLogo.svg" alt="MicrosoftLogo" />
+            </div>
+            <div>
+              <img src="/images/dex-v2/WalmartLogo.svg" alt="WalmartLogo" />
+              <img src="/images/dex-v2/FedExLogo.svg" alt="FedExLogo" />
+            </div>
+          </>
+        )}
+      </div>
     </WrapperItem>
   )
 }
@@ -141,14 +181,10 @@ function BackedBy() {
     {
       title: 'Secured By',
       describe: 'XOX has Industry Leading Security. Protected By The Best.',
-      sv1: '/microsoft.svg',
-      sv2: '/airbnb.svg',
     },
     {
       title: 'Back By',
       describe: 'The Best to Deliver the Best.',
-      sv1: '/microsoft.svg',
-      sv2: '/airbnb.svg',
     },
   ]
   return (

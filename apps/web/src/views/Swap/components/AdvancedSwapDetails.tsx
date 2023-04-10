@@ -92,7 +92,7 @@ function TradeSummary({
           <QuestionHelper
             text={
               <>
-                <Text mb="12px">{t('For each trade a %amount% fee is paid', { amount: totalFeePercent })}</Text>
+                <Text mb="12px">{t('For each trade a %amount%% fee is paid', { amount: totalFeePercent })}</Text>
                 {/* <Text>- {t('%amount% to LP token holders', { amount: lpHoldersFeePercent })}</Text>
                 <Text>- {t('%amount% to the Treasury', { amount: treasuryFeePercent })}</Text>
                 <Text>- {t('%amount% towards CAKE buyback and burn', { amount: buyBackFeePercent })}</Text> */}
@@ -138,7 +138,7 @@ export function AdvancedSwapDetails({ trade, showXOXSreceived, value }: Advanced
             <>
               <RowBetweenStyle style={{ padding: '0 16px' }}>
                 <span style={{ display: 'flex', alignItems: 'center' }}>
-                  <Text fontSize="16px" color="textSubtle">
+                  <Text fontSize="16px" color="textSubtle" style={{ whiteSpace: 'nowrap' }}>
                     {t('Route')}
                   </Text>
                   <QuestionHelper
@@ -152,7 +152,7 @@ export function AdvancedSwapDetails({ trade, showXOXSreceived, value }: Advanced
               {showXOXSreceived && (
                 <RowBetweenStyle style={{ padding: '0 16px' }}>
                   <Text fontSize="16px" color="textSubtle">
-                    {t("XOXS received")}
+                    {t('XOXS received')}
                   </Text>
                   <Text fontSize="16px" color="rgba(255,255,255,0.87)">
                     {formatBalanceComma(numberXOXSreceived.toString())}

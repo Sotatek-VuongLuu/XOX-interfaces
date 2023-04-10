@@ -424,7 +424,7 @@ function SaleHistory({ dataTransaction }: IProps) {
             color="rgba(255, 255, 255, 0.87)"
             height="24px"
           >
-            Sale History
+            {t('Sale History')}
           </Text>
         </Flex>
         <CustomTableWrapper>
@@ -438,7 +438,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              No
+              {t('No')}
             </Text>
             <Text
               fontSize="16px"
@@ -449,7 +449,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              Username
+              {t('Username')}
             </Text>
             <Text
               fontSize="16px"
@@ -460,7 +460,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              Time
+              {t('Time')}
             </Text>
             <Text
               fontSize="16px"
@@ -471,7 +471,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              Total Value
+              {t('Total Value')}
             </Text>
             <Text
               fontSize="16px"
@@ -482,7 +482,7 @@ function SaleHistory({ dataTransaction }: IProps) {
               color="rgba(255, 255, 255, 0.6)"
               className="table-header"
             >
-              XOX Bought
+              {t('XOX Bought')}
             </Text>
             <Text
               fontSize="16px"
@@ -518,7 +518,7 @@ function SaleHistory({ dataTransaction }: IProps) {
                 })}
                 {sortedTransactions.length === 0 ? (
                   <NoTransactionWrapper justifyContent="center">
-                    <Text textAlign="center">No Transactions</Text>
+                    <Text textAlign="center">{t('No Transactions')}</Text>
                   </NoTransactionWrapper>
                 ) : undefined}
               </>
@@ -649,29 +649,29 @@ function SaleHistory({ dataTransaction }: IProps) {
               options={[
                 {
                   value: 5,
-                  label: '5/Page',
+                  label: t('%number%/Page', { number: 5 }),
                 },
                 {
                   value: 10,
-                  label: '10/Page',
+                  label: t('%number%/Page', { number: 10 }),
                 },
                 {
                   value: 20,
-                  label: '20/Page',
+                  label: t('%number%/Page', { number: 20 }),
                 },
                 {
                   value: 50,
-                  label: '50/Page',
+                  label: t('%number%/Page', { number: 50 }),
                 },
                 {
                   value: 100,
-                  label: '100/Page',
+                  label: t('%number%/Page', { number: 100 }),
                 },
               ]}
               onOptionChange={(option: any) => handleSelectPerPage(option.value)}
               className="select-page"
             />
-            <Text className="go-page">Go to page</Text>
+            <Text className="go-page">{t('Go to page')}</Text>
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}

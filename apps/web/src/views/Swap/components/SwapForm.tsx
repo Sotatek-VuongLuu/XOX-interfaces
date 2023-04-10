@@ -422,7 +422,7 @@ export default function SwapForm() {
                   className="referral"
                 >
                   {t('Referral Code')}
-                  <p>{t('Optional')}</p>
+                  <p>({t('Optional')})</p>
                 </Text>
                 <ReferralInput
                   onChange={(e) => {

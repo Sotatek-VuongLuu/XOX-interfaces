@@ -302,11 +302,13 @@ export const AddLiquidityModalHeader = ({
         <Text fontSize="18px" margin="16px 0" fontWeight="500" lineHeight="22px" color="#FB8618">
           {currencies[Field.CURRENCY_A]?.symbol &&
             currencies[Field.CURRENCY_B]?.symbol &&
-            getLPSymbol2(
-              currencies[Field.CURRENCY_A]?.symbol,
-              currencies[Field.CURRENCY_B]?.symbol,
-              currencies[Field.CURRENCY_A]?.chainId,
-            )}
+            t('%str% Pool Tokens', {
+              str: `${getLPSymbol2(
+                currencies[Field.CURRENCY_A]?.symbol,
+                currencies[Field.CURRENCY_B]?.symbol,
+                currencies[Field.CURRENCY_A]?.chainId,
+              )}`,
+            })}
         </Text>
       </CustomRowBetween>
       <CustomRowBetween className="estimated">

@@ -1,4 +1,5 @@
 import { formatEther } from '@ethersproject/units'
+import { useTranslation } from '@pancakeswap/localization'
 import { Box, Grid } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
 import { useEffect, useMemo, useState } from 'react'
@@ -363,6 +364,7 @@ enum StatusSale {
 }
 
 const Item = ({ item }) => {
+  const { t } = useTranslation()
   const percent = new BigNumber(
     new BigNumber(formatEther(item?.xox_amount_bought || '0')).multipliedBy(100).dividedBy(item.xOXforSale),
   ).toFixed(2)
@@ -396,27 +398,27 @@ const Item = ({ item }) => {
             <div className="edge_name_2" />
           </>
         )}
-        {item.name}
+        {t(item.name)}
       </div>
       <Grid gridTemplateColumns="1.25fr 0.75fr" padding="35px 34px" gridGap="22px" className="mbpadding">
         <div>
-          <p className="status_name">Status</p>
+          <p className="status_name">{t('Status')}</p>
           <div className={`status_value ${String(item.status).toLocaleLowerCase()} status`}>
             {item.status === StatusSale.LIVE ? (
               <span className="dot_contain">
-                <div>{item.status}</div>
+                <div>{t(item.status)}</div>
                 <div className="ring-container">
                   <div className="ringring" />
                   <div className="circle" />
                 </div>
               </span>
             ) : (
-              `${item.status}`
+              `${t(item.status)}`
             )}
           </div>
         </div>
         <div>
-          <p className="status_name">Current raise</p>
+          <p className="status_name">{t('Current raise')}</p>
           <p className="status_value">
             {item?.total_raised_usd && <span className="dollar_sign">$</span>}
             <span className="raised_dollar">
@@ -430,22 +432,22 @@ const Item = ({ item }) => {
           </p>
         </div>
         <div>
-          <p className="status_name">Price</p>
+          <p className="status_name">{t('Price')}</p>
           <p className="status_value">
             <span>1 XOX =</span> <span className="dollar_sign">$</span>
             <span className="price_dollar">{item.price}</span>
           </p>
         </div>
         <div>
-          <p className="status_name">XOX for Sale</p>
+          <p className="status_name">{t('XOX for Sale')}</p>
           <p className="status_value">{item.xOXforSale.toLocaleString()}</p>
         </div>
         <div>
-          <p className="status_name">Investors</p>
+          <p className="status_name">{t('Investors')}</p>
           <p className="status_value">{item?.total_investor ? item?.total_investor : item.investors}</p>
         </div>
         <div>
-          <p className="status_name">XOXS Rewarded</p>
+          <p className="status_name">{t('XOXS Rewarded')}</p>
           <p className="status_value">
             {item?.xox_amount_bought
               ? Number(
@@ -460,7 +462,7 @@ const Item = ({ item }) => {
         <div className="value">
           <span>
             {`${parseFloat(percent)}% `}
-            SOLD
+            {t('SOLD')}
           </span>
         </div>
       </div>

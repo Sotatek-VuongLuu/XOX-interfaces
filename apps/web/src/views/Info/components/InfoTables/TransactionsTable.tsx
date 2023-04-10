@@ -176,16 +176,16 @@ const Wrapper = styled.div`
 
 const Table = styled.div`
   display: grid;
-  grid-gap: 16px 35px;
+  grid-gap: 16px 0;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1.1fr repeat(3, 0.7fr) 1.2fr 0.4fr;
+  grid-template-columns: 0.15fr 1.4fr 1.1fr repeat(3, 0.7fr) 0.93fr 0.81fr;
   .table-header {
     margin-bottom: 16px;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    grid-gap: 24px 35px;
+    grid-gap: 24px 30px;
 
     .table-header {
       margin-bottom: 8px;
@@ -424,7 +424,7 @@ const DataRow: React.FC<
   // }
   const stablCoin =
     (inputTokenSymbol === 'USDC' || inputTokenSymbol === 'USDT') && outputTokenSymbol?.toLocaleLowerCase() === 'xox'
-      ? `${formatAmount(abs1 * 0.1)} Stable coin`
+      ? `${formatAmount(abs1 * 0.1)} XOXS`
       : '--'
 
   return (
@@ -949,7 +949,7 @@ const TransactionsTable: React.FC = () => {
             className="table-header"
           >
             <Flex alignItems="center">
-              <span style={{ marginRight: '12px' }}>{t('Stable Coin Staked')}</span>
+              <span style={{ marginRight: '12px' }}>{t('%asset% staked', { asset: 'XOXS' })}</span>
               {iconSortStable === null ? IconSort : iconSortStable ? IconDown : IconUp}
             </Flex>
           </ClickableColumnHeader>

@@ -92,7 +92,7 @@ const Wrapper = styled.div`
         border: 2px solid #FB8618;
       }
   
-      .error {
+      .subscription-form.error {
         border: 2px solid #FF5353;
   
         .text-error {
@@ -239,6 +239,7 @@ const Subscription = () => {
   const { t } = useTranslation()
   const [inputValue, setInputValue] = useState<string>('')
   const [emailBorderClass, setEmailBorderClass] = useState<string>('')
+  const [emailBorderClassHover, setEmailBorderClassHover] = useState<string>('')
   const [btnHoverClass, setBtnHoverClass] = useState<string>('')
   const [emailErrorClass, setEmailErrorClass] = useState<string>('')
   const [textErrorClass, setTextErrorClass] = useState<string>('')
@@ -285,6 +286,14 @@ const Subscription = () => {
     }
   }
 
+  const handleMouseLeave = () => {
+    setEmailBorderClassHover('')
+  }
+
+  const handleMouseOver = () => {
+    setEmailBorderClassHover(' hover-form')
+  }
+
   const handleBtnSubmit = useCallback(() => {
     axios
       .post(`${process.env.NEXT_PUBLIC_API}/subscribe`, { email: inputValue })
@@ -293,7 +302,7 @@ const Subscription = () => {
       })
       .catch((error) => {
         if (error.response.status === 400 && error.response.data.message === 'Email is already existed!') {
-          toastSuccess(t('The email is already registered.'))
+          toastError(t('The email is already registered.'))
           return
         }
 
@@ -319,8 +328,12 @@ const Subscription = () => {
         </a>
       </p>
       <div className="subscription-form-container">
-        <div className="subscription-box">
-          <form action="#" method="post" className={'subscription-form ' + emailBorderClass + emailErrorClass}>
+        <div className="subscription-box" onMouseLeave={handleMouseLeave} onMouseOver={handleMouseOver}>
+          <form
+            action="#"
+            method="post"
+            className={'subscription-form ' + emailBorderClassHover + emailBorderClass + emailErrorClass}
+          >
             <img src="/images/home/subscription/email.svg" alt="email" className="email-icon" />
             <input
               type="text"

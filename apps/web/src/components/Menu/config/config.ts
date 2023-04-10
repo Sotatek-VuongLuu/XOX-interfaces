@@ -52,7 +52,7 @@ const config: (
       items: [],
     },
     {
-      label: 'Trade',
+      label: t('Trade'),
       href: ['/swap', '/bridge-token'],
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,
@@ -72,7 +72,7 @@ const config: (
       ].map((item) => addMenuItemSupported(item, chainId)),
     },
     {
-      label: 'Earn',
+      label: t('Earn'),
       href: ['/liquidity', '/add', '/remove', '/pools'],
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,
@@ -109,7 +109,7 @@ const config: (
     //   items: [],
     // },
     {
-      label: 'Stable Coin',
+      label: t('Stable Coin'),
       icon: SwapIcon,
       fillIcon: SwapFillIcon,
       href: '/stable-coin',
@@ -171,14 +171,6 @@ export const configLanding: (
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,
       href: '/company',
-      showItemsOnMobile: false,
-      items: [],
-    },
-    {
-      label: t('XOX Dex V2'),
-      href: '#',
-      icon: WhitepaperIcon,
-      fillIcon: SwapFillIcon,
       showItemsOnMobile: false,
       items: [],
     },
@@ -262,6 +254,14 @@ export const configLanding: (
           showTooltip: true,
         },
       ].map((item) => addMenuItemSupported(item, chainId)),
+    },
+    {
+      label: t('Dex V2'),
+      href: '/dex-v2',
+      icon: WhitepaperIcon,
+      fillIcon: SwapFillIcon,
+      showItemsOnMobile: false,
+      items: [],
     },
   ].map((item) => addMenuItemSupported(item, chainId))
 

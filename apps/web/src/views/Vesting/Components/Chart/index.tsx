@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
 import { USD_DECIMALS } from 'config/constants/exchange'
@@ -94,6 +95,7 @@ const time = {
 }
 
 function ChartSalePage({ infoRoundOne }: IProps) {
+  const { t } = useTranslation()
   const [dataChart, setDataChart] = useState([])
   const [dataChartFifteenDay, setDataChartFifteenDay] = useState([])
 
@@ -174,7 +176,7 @@ function ChartSalePage({ infoRoundOne }: IProps) {
   return (
     <Wrapper>
       <div className="fake_blur" />
-      <p className="title">Daily Raise</p>
+      <p className="title">{t('Daily Raise')}</p>
       {typeof isAfterFifteenDayAfterSaleOne === 'boolean' && isAfterFifteenDayAfterSaleOne ? (
         <ChartColumnSale data={dataChartFifteenDay} />
       ) : (

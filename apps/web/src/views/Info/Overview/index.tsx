@@ -176,7 +176,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
   const native = useNativeCurrency()
   const [coinmarketcapIds, setCoinmarketcapIds] = useState<any>()
   const [coinmarketcapId, setCoinmarketcapId] = useState<number | undefined>()
-  const [filter, setFilter] = useState('ALL')
+  const [filter, setFilter] = useState('1D')
   const [chartData, setChardData] = useState<Array<any> | undefined>()
   const [currencyDatas, setCurrencyDatas] = useState<Array<any> | undefined>()
   const { chainId } = useActiveChainId()
