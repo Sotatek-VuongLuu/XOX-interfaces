@@ -163,7 +163,7 @@ function MobileModal<T>({
             textAlign="center"
             mb="8px"
           >
-            Connect Wallet
+            {t('Connect Wallet')}
           </Heading>
           <Text
             fontSize="16px"
@@ -176,7 +176,7 @@ function MobileModal<T>({
             mb="40px"
             style={{ width: '239px' }}
           >
-            Start by connecting with one of these wallets below.
+            {t('Start by connecting with one of these wallets below.')}
           </Text>
         </AtomBox>
       )}
@@ -365,7 +365,7 @@ function DesktopModal<T>({
             textAlign="center"
             mb="8px"
           >
-            Connect Wallet
+            {t('Connect Wallet')}
           </Heading>
           <Text
             fontSize="16px"
@@ -377,7 +377,7 @@ function DesktopModal<T>({
             textAlign="center"
             mb="40px"
           >
-            Start by connecting with one of these wallets below.
+            {t('Start by connecting with one of these wallets below.')}
           </Text>
         </AtomBox>
         <WalletSelect

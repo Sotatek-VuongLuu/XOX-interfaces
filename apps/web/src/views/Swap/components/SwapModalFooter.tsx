@@ -133,7 +133,7 @@ export default function SwapModalFooter({
             <QuestionHelper
               text={
                 <>
-                  <Text mb="12px">{t('For each trade a %amount% fee is paid', { amount: totalFeePercent })}</Text>
+                  <Text mb="12px">{t('For each trade a %amount%% fee is paid', { amount: totalFeePercent })}</Text>
                 </>
               }
               ml="4px"

@@ -1,7 +1,7 @@
 import { Language } from '@pancakeswap/uikit'
 
 export const EN: Language = { locale: 'en-US', language: 'English', code: 'en' }
-export const VI: Language = { locale: 'vi-VN', language: 'Tiếng Việt', code: 'vi' }
+export const VI: Language = { locale: 'vi-VN', language: 'Vietnamese', code: 'vi' }
 // export const AR: Language = { locale: 'ar-SA', language: 'العربية', code: 'ar' }
 // export const BN: Language = { locale: 'bn-BD', language: 'বাংলা', code: 'bn' }
 // export const DE: Language = { locale: 'de-DE', language: 'Deutsch', code: 'de' }

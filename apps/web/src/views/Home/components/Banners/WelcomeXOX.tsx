@@ -8,6 +8,8 @@ import React, { useEffect } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { Application } from '@splinetool/runtime';
+
 
 const Wrapper = styled.div`
   width: 100%;
@@ -31,7 +33,7 @@ const Wrapper = styled.div`
       top: 30%;
       left: 0;
       width: 100%;
-      scale: 2;
+      transform: scale(2);
       outline: none;
       border: none !important;
       clip-path: inset(1px 1px);
@@ -50,7 +52,7 @@ const Wrapper = styled.div`
 
       @media screen and (max-width: 576px) {
         height: 280px;
-        scale: 1.6;
+        transform: scale(1.8);
       }
     }
 
@@ -571,6 +573,14 @@ const WelcomeXOX = (): JSX.Element => {
     console.log(browser.version);
     console.log(browser.os);
   }
+
+  useEffect(() => {
+    const canvas = document.getElementById('laptopVideo')['0']
+    if (canvas) {
+      const app = new Application(canvas as any)
+      app.load('https://prod.spline.design/mJdmb5heSYCQCvOo/scene.splinecode')
+    }
+  }, [])
 
   return (
     <Wrapper>
