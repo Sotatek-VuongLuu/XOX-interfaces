@@ -1465,7 +1465,7 @@ function DevV2() {
             <span>{t('Start Trading')}</span>
             <img src="/images/dex-v2/start_trading.png" alt="start_trading" />
           </button>
-          <button type="button" onClick={() => window.open('https://github.com/')}>
+          <button type="button" onClick={() => window.open('https://github.com/')} style={{ height: '100%' }}>
             GitHub
           </button>
         </div>

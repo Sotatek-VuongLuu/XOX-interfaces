@@ -294,8 +294,17 @@ const Menu = (props) => {
         rightSide={
           menuLandingPath.includes(route.pathname) ? (
             <>
+              {isDesktop && (
+                <LangSelector
+                  currentLang={currentLanguage.language}
+                  langs={languageList}
+                  setLang={setLanguage}
+                  color="textSubtle"
+                  hideLanguage
+                />
+              )}
               <a href="/swap" style={{ marginRight: '11px' }} target="_blank">
-                <BTNLaunchApp>Launch App</BTNLaunchApp>
+                <BTNLaunchApp>{t('Launch App')}</BTNLaunchApp>
               </a>
 
               {openHeader ? (
@@ -355,8 +364,8 @@ const Menu = (props) => {
                   )}
                   {isOpen && (
                     <NotificationMenu ref={ref}>
-                      <h3>Notification</h3>
-                      <p>Your referral code has been applied in a "Buy XOX” transaction</p>
+                      <h3>{t('Notification')}</h3>
+                      <p>{t('Your referral code has been applied in a ”Buy XOX” transaction')}</p>
                     </NotificationMenu>
                   )}
                 </NotificationField>
