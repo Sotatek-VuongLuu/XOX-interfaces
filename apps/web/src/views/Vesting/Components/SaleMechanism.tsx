@@ -403,7 +403,7 @@ function SaleMechanism({
                     onClick={() => setTabActiveMechansim(item)}
                     aria-hidden="true"
                   >
-                    {item}
+                    {t(item)}
                   </div>
                 )
               })}
@@ -429,7 +429,7 @@ function SaleMechanism({
                       onClick={() => setTabActiveMechansim(item)}
                       aria-hidden="true"
                     >
-                      {item}
+                      {t(item)}
                     </div>
                   </SwiperSlide>
                 )

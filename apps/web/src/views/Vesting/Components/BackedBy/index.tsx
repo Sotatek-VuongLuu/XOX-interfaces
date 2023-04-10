@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import { Flex, Grid } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
@@ -126,6 +127,7 @@ const WrapperItem = styled(Flex)`
 
 const SecuredByItem = ({ item }) => {
   const { width } = useWindowSize()
+  const { t } = useTranslation()
   return (
     <WrapperItem
       className="container"
@@ -134,8 +136,8 @@ const SecuredByItem = ({ item }) => {
       alignItems="center"
       position="relative"
     >
-      <p className="title">{item.title}</p>
-      <p className="describe">{item.describe}</p>
+      <p className="title">{t(item.title)}</p>
+      <p className="describe">{t(item.describe)}</p>
 
       <div>
         {width >= 900 && (

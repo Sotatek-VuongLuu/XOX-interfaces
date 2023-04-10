@@ -157,7 +157,7 @@ function TabClaimHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            No
+            {t('No')}
           </Text>
           <Text
             fontSize="16px"
@@ -168,7 +168,7 @@ function TabClaimHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Time
+            {t('Time')}
           </Text>
           <Text
             fontSize="16px"
@@ -179,7 +179,7 @@ function TabClaimHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            XOX claimed
+            {t('XOX claimed')}
           </Text>
           <Text
             fontSize="16px"
@@ -190,7 +190,7 @@ function TabClaimHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Sale
+            {t('Sale')}
           </Text>
           <Text
             fontSize="16px"
@@ -215,7 +215,7 @@ function TabClaimHistory({ currentTransactions }) {
               })}
               {sortedTransactions.length === 0 ? (
                 <NoTransactionWrapper justifyContent="center">
-                  <Text textAlign="center">No Transactions</Text>
+                  <Text textAlign="center">{t('No Transactions')}</Text>
                 </NoTransactionWrapper>
               ) : undefined}
             </>
@@ -365,7 +365,7 @@ function TabClaimHistory({ currentTransactions }) {
               onOptionChange={(option: any) => handleSelectPerPage(option.value)}
               className="select-page"
             />
-            <Text className="go-page">Go to page</Text>
+            <Text className="go-page">{t('Go to page')}</Text>
             <Input
               value={tempPage}
               onChange={handleChangeTempPage}

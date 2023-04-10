@@ -383,7 +383,7 @@ function YourInfo({ dataInfo, dataRefInfo, dataTransaction, dataTransactionClaim
                         : Number(item.totalTransactionApplyReferral).toLocaleString()
                       : item.amountInit}
                   </p>
-                  <p className="item_your-ref_title">{item.title}</p>
+                  <p className="item_your-ref_title">{t(item.title)}</p>
                 </div>
               )
             })}

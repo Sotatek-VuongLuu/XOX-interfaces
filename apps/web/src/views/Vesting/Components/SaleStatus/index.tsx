@@ -406,14 +406,14 @@ const Item = ({ item }) => {
           <div className={`status_value ${String(item.status).toLocaleLowerCase()} status`}>
             {item.status === StatusSale.LIVE ? (
               <span className="dot_contain">
-                <div>{item.status}</div>
+                <div>{t(item.status)}</div>
                 <div className="ring-container">
                   <div className="ringring" />
                   <div className="circle" />
                 </div>
               </span>
             ) : (
-              `${item.status}`
+              `${t(item.status)}`
             )}
           </div>
         </div>

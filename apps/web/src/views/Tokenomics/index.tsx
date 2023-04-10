@@ -83,7 +83,7 @@ function Address({ addr, ...props }: { addr: IAddress }) {
       </div>
 
       <a href="/#" target="_blank" rel="noreferrer">
-        Get XOX
+        {t('Get %symbol%', { symbol: 'XOX' })}
       </a>
     </StyledAddress>
   )
