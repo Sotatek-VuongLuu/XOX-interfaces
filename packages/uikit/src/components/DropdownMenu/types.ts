@@ -20,6 +20,7 @@ export interface DropdownMenuProps extends BoxProps {
   handleMouseLeave?: () => void;
   setIsHover?: () => void;
   isLanding?: boolean;
+  isLanguage?: boolean;
 }
 
 export interface StyledDropdownMenuItemProps extends React.ComponentPropsWithoutRef<"button"> {

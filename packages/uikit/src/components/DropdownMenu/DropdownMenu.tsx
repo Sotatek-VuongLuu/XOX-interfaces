@@ -36,9 +36,10 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   handleMouseLeave,
   setIsHover,
   isLanding = false,
+  isLanguage = false,
   ...props
 }) => {
-  const { t } = useTranslation();
+  const { currentLanguage, setLanguage, t } = useTranslation();
   const { linkComponent } = useContext(MenuContext);
   const [isOpen, setIsOpen] = useState(false);
   const [targetRef, setTargetRef] = useState<HTMLDivElement | null>(null);

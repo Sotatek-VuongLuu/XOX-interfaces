@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import { Flex, Text } from '@pancakeswap/uikit'
 import { useState } from 'react'
 import styled from 'styled-components'
@@ -96,9 +97,10 @@ const Row = styled(CustomTable)`
 `
 
 const DataRow = ({ item }) => {
+  const { t } = useTranslation()
   return (
     <Row className={`item_${item.id}`}>
-      <Text className="text-token-metrics">{item.title}</Text>
+      <Text className="text-token-metrics">{t(item.title)}</Text>
       <Text className="text-token-metrics">
         {item.tokenAllocationPercent ? `${item.tokenAllocationPercent}%` : `-`}
       </Text>
@@ -120,6 +122,8 @@ const DataRow = ({ item }) => {
 }
 
 function TokenMetrics({ initialTokenMetrics }: IProps) {
+  const { t } = useTranslation()
+
   return (
     <Wrapper>
       <Flex mb="16px" justifyContent="space-between">
@@ -139,12 +143,12 @@ function TokenMetrics({ initialTokenMetrics }: IProps) {
       <CustomTableSale>
         <CustomTable>
           <Text className="table-header">Tokenometrics</Text>
-          <Text className="table-header">Token Allocation (%)</Text>
-          <Text className="table-header">Token Allocation</Text>
+          <Text className="table-header">{t('Token Allocation')} (%)</Text>
+          <Text className="table-header">{t('Token Allocation')}</Text>
           <Text className="table-header">TGE (%)</Text>
-          <Text className="table-header">Token Allocation at TGE</Text>
-          <Text className="table-header">Initial Marketcap</Text>
-          <Text className="table-header">Fully Dilited MC ($)</Text>
+          <Text className="table-header">{t('Token Allocation at TGE')}</Text>
+          <Text className="table-header">{t('Initial Marketcap')}</Text>
+          <Text className="table-header">{t('Fully Dilited MC ($)')}</Text>
         </CustomTable>
         {Array.from(initialTokenMetrics).map((item, index) => {
           // eslint-disable-next-line react/no-array-index-key

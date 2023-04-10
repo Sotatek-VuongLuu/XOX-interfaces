@@ -1,4 +1,5 @@
 /* eslint-disable react/no-unescaped-entities */
+import { useTranslation } from '@pancakeswap/localization'
 import { Text } from '@pancakeswap/uikit'
 import styled from 'styled-components'
 import { CustomTableWrapper, Table } from '../MainInfoTab/SaleHistory'
@@ -32,7 +33,7 @@ const Content = styled.div`
   .table_ref {
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
-    width: 760px;
+    max-width: 1000px;
     min-width: 760px;
     padding: 19px 21px;
     margin-bottom: 16px;
@@ -118,6 +119,7 @@ const CusTableRow = styled(CusTable)`
 `
 
 function ReferralProgram() {
+  const { t } = useTranslation()
   const data = [
     {
       round: 'Round 1',
@@ -138,29 +140,27 @@ function ReferralProgram() {
   return (
     <Wrapper>
       <Content>
-        <p className="high_light">Referral Program Mechanism for Pre-Sales</p>
+        <p className="high_light">{t('Referral Program Mechanism for Pre-Sales')}</p>
         <p className="nomal">
-          Apart from earning XOXS as a bonus by investing in the Pre-Sales, users and investors (BOTH) can also earn
-          more XOXS by referring others to invest. Each user will get a custom Code after connecting their wallet to the
-          XOX Labs dapp, users and influencers only need to share the their code with other investors and communities
-          then when they invest using the codes the XOXS earned by both (the person that owns the code and the person
-          that is using the code) will be automatically added to the respective wallets.
+          {t(
+            `Apart from earning XOXS as a bonus by investing in the Pre-Sales, users and investors (BOTH) can also earn more XOXS by referring others to invest. Each user will get a custom Code after connecting their wallet to the XOX Labs dapp, users and influencers only need to share the their code with other investors and communities then when they invest using the codes the XOXS earned by both (the person that owns the code and the person that is using the code) will be automatically added to the respective wallets.`,
+          )}
         </p>
 
         <div className="scroll">
           <div className="table_ref">
             <StyleWrapperTable>
               <CusTable>
-                <Text className="table-header">Token Sale</Text>
-                <Text className="table-header">Referral bonus XOXS ( referrer )</Text>
-                <Text className="table-header">Referral bonus XOXS ( referee )</Text>
+                <Text className="table-header">{t('Token Sale')}</Text>
+                <Text className="table-header">{t('Referral bonus XOXS ( referrer )')}</Text>
+                <Text className="table-header">{t('Referral bonus XOXS ( referee )')}</Text>
               </CusTable>
 
               {Array.from(data).map((item, index) => {
                 return (
                   // eslint-disable-next-line react/no-array-index-key
                   <CusTableRow key={index}>
-                    <Text className="value_round">{item.round}</Text>
+                    <Text className="value_round">{t(item.round)}</Text>
                     <Text className="value_round">{item.referrer}</Text>
                     <Text className="value_round">{item.referee}</Text>
                   </CusTableRow>
@@ -171,26 +171,26 @@ function ReferralProgram() {
         </div>
 
         <p className="nomal">
-          Example: User A shares referral code with B, A gets 3% of total transaction amount of Investor B in XOXS and B
-          which is the person that is buying using A's code also gets an extra 2% of his own total transaction amount in
-          XOXS on top of the XOXS he is getting already as a bonus by investing depending on which sale he is buying in.
+          {t(
+            `Example: User A shares referral code with B, A gets 3% of total transaction amount of Investor B in XOXS and B which is the person that is buying using A's code also gets an extra 2% of his own total transaction amount in XOXS on top of the XOXS he is getting already as a bonus by investing depending on which sale he is buying in.`,
+          )}
         </p>
 
         <p className="nomal">
           <i>
-            *Important to note that Both sides will earn XOXS by just applying 1 code, so it's a win win situation for
-            Both. Also the XOXS earned will be automatically staked once the project launch to the public and it will
-            generate all XOXS holders passive income (APY) in USDT/USDC on autopilot.
+            {t(
+              `*Important to note that Both sides will earn XOXS by just applying 1 code, so it's a win win situation for Both. Also the XOXS earned will be automatically staked once the project launch to the public and it will generate all XOXS holders passive income (APY) in USDT/USDC on autopilot.`,
+            )}
           </i>
         </p>
 
-        <p className="high_light">4 Steps to Earn</p>
+        <p className="high_light">{t('4 Steps to Earn')}</p>
 
         <div className="nomal no-margin-bottom">
-          1. Connect Wallet <br />
-          2. Copy Your Unique Referral Code <br />
-          3. Share it with friends <br />
-          4. Earn XOXS
+          1. {t('Connect Wallet')} <br />
+          2. {t('Copy Your Unique Referral Code')} <br />
+          3. {t('Share it with friends')} <br />
+          4. {t('Earn XOXS')}
         </div>
       </Content>
     </Wrapper>

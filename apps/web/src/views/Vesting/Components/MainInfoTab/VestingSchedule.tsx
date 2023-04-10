@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-expressions */
+import { useTranslation } from '@pancakeswap/localization'
 import { Button } from '@pancakeswap/uikit'
 import BigNumber from 'bignumber.js'
 import ConnectWalletButton from 'components/ConnectWalletButton'
@@ -210,6 +211,7 @@ const SaleItem = ({
   handleClaim: (round: number, remainning: any) => void
   handleGetDataVesting: () => void
 }) => {
+  const { t } = useTranslation()
   const [count, setCount] = useState<number>(null)
   const [itemVesting, setItem] = useState(item)
 
@@ -254,7 +256,7 @@ const SaleItem = ({
             </p>
             <div>
               <p className="amount_vested">{Number(itemVesting.remaining).toLocaleString()}</p>
-              <p className="title_vested">Unclaimed</p>
+              <p className="title_vested">{t('Unclaimed')}</p>
             </div>
           </div>
         </div>
@@ -265,7 +267,7 @@ const SaleItem = ({
             </p>
             <div>
               <p className="amount_vested">{Number(itemVesting.amountVested).toLocaleString()}</p>
-              <p className="title_vested">Claimed</p>
+              <p className="title_vested">{t('Claimed')}</p>
             </div>
           </div>
         </div>
@@ -276,13 +278,13 @@ const SaleItem = ({
             </p>
             <div>
               <p className="amount_vested">{Number(itemVesting.yourCurrentXOX).toLocaleString()}</p>
-              <p className="title_vested">Available To Claim</p>
+              <p className="title_vested">{t('Available To Claim')}</p>
             </div>
           </div>
         </div>
         <div className="sale-schedule-item flex-col">
           <p className="next_day">
-            Next unlocking date:{' '}
+            {t('Next unlocking date:')}{' '}
             {itemVesting.startTime.length !== 0
               ? moment.unix(itemVesting.startTime[count] / 1000).format('MM/DD/YYYY')
               : ' -/-/-'}
@@ -299,7 +301,7 @@ const SaleItem = ({
             onClick={() => handleClaim(itemVesting.round, itemVesting.yourCurrentXOX)}
             disabled={Number(itemVesting.yourCurrentXOX) === 0}
           >
-            Claim
+            {t('Claim')}
           </CustomButtom>
         </div>
       </div>
@@ -487,6 +489,7 @@ function VestingSchedule({
   handleClaim: (round: number, remainning: number) => void
   handleGetDataVesting: () => void
 }) {
+  const { t } = useTranslation()
   const { account } = useActiveWeb3React()
   const [newVesting, setNewVesting] = useState<IVestingTime[]>(dataVesting)
 
@@ -517,16 +520,16 @@ function VestingSchedule({
     <Wrapper>
       {!account && (
         <div className="btn_connect_container">
-          <p>Connect to your wallet to view your vesting shedule.</p>
+          <p>{t('Connect to your wallet to view your vesting shedule.')}</p>
           <ConnectWalletButton scale="sm" style={{ whiteSpace: 'nowrap' }} className="btn_connect">
-            <span>Connect Wallet</span>
+            <span>{t('Connect Wallet')}</span>
           </ConnectWalletButton>
         </div>
       )}
       {account && (
         <>
           <div className="total_vested">
-            Current XOX Tokens Vested:{' '}
+            {t('Current XOX Tokens Vested:')}{' '}
             {Number(
               new BigNumber(newVesting[0]?.remaining)
                 .plus(newVesting[1]?.remaining)

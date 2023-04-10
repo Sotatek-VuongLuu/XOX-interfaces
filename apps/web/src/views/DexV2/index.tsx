@@ -1082,10 +1082,7 @@ const LimitOrder = ({ t }: { t: TranslateFunction }) => {
       <StyledSwap>
         <p>
           {t(
-            `Secure your position ahead of time at a specific price. 
-            A buy limit order can only be executed at the limit price or 
-            lower, and a sell limit order can only be executed at the 
-            limit price or higher. Don't miss a trade.`,
+            "Secure your position ahead of time at a specific price. A buy limit order can only be executed at the limit price or lower, and a sell limit order can only be executed at the limit price or higher. Don't miss a trade.",
           )}
         </p>
       </StyledSwap>
@@ -1102,9 +1099,9 @@ const Earn = ({ t }: { t: TranslateFunction }) => {
     <>
       <StyledSwap>
         <p>
-          {t(`Share your unique referral code with other users to earn a small % of the XOX Labs Protocol&lsquo;s revenue.
-          It's simple, just copy and share your code, then enjoy the profits. No sharing links, no sign-up, no waste of
-          time. 100% Decentralized and Simple.`)}
+          {t(
+            "Share your unique referral code with other users to earn a small % of the XOX Labs Protocol's revenue. It's simple, just copy and share your code, then enjoy the profits. No sharing links, no sign-up, no waste of time. 100% Decentralized and Simple.",
+          )}
         </p>
       </StyledSwap>
 
@@ -1469,7 +1466,7 @@ function DevV2() {
             <span>{t('Start Trading')}</span>
             <img src="/images/dex-v2/start_trading.png" alt="start_trading" />
           </button>
-          <button type="button" onClick={() => window.open('https://github.com/')}>
+          <button type="button" onClick={() => window.open('https://github.com/')} style={{ height: '100%' }}>
             GitHub
           </button>
         </div>
