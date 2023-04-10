@@ -1659,7 +1659,6 @@ function DevV2() {
               ),
             }}
           />
-          <p></p>
 
           <ul>
             <li>{t('XOX Token stakers')}</li>
