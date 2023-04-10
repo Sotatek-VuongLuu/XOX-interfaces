@@ -1248,43 +1248,43 @@ function DevV2() {
   ]
 
   const TABECOSYSTEM: Array<string> = ['DEXes', 'Aggregators', 'Blockchains', 'Bridges']
-  const TABWHATYOUCANDO: Array<string> = ['Swap', 'Limit Order', 'Earn', 'Liquidity', 'API']
+  const TABWHATYOUCANDO: Array<string> = [t('Swap'), t('Limit Order'), t('Earn'), t('Liquidity'), t('API')]
 
   const SAFERELIABLE: Array<any> = [
     {
       icon: '/images/dex-v2/non-custodial.png',
-      name: 'Non-custodial',
+      name: t('Non-custodial'),
       describe: t('XOX Dex V2 is a Permissionless and Non-custodial Decentralized Protocol.'),
     },
     {
       icon: '/images/dex-v2/anonymus.png',
-      name: 'Anonymous',
+      name: t('Anonymous'),
       describe: t('No KYC or Sign Up required. Just connect your wallets and start trading.'),
     },
     {
       icon: '/images/dex-v2/transparent.png',
-      name: 'Transparent',
+      name: t('Transparent'),
       describe: t(
         'Check every single transaction or smart contract before allowing it to access your funds, track the whole chain of events happening in every blockchain.',
       ),
     },
     {
       icon: '/images/dex-v2/permission.png',
-      name: 'Permissionless',
+      name: t('Permissionless'),
       describe: t(
         'Every supported Blockchains is public and open for everyone to trade and own assets without the supervision of governments or financial institutions.',
       ),
     },
     {
       icon: '/images/dex-v2/audited.png',
-      name: 'Audited',
+      name: t('Audited'),
       describe: t(
         `XOX Labs' smart contracts and platforms are fully audited by top-tier auditors to ensure the security of the users.`,
       ),
     },
     {
       icon: '/images/dex-v2/tested.png',
-      name: 'Tested',
+      name: t('Tested'),
       describe: t(
         'Every new feature and protocol integration is heavily tested in every possible situation before making it accessible to the users to ensure performance and safety.',
       ),
@@ -1449,10 +1449,11 @@ function DevV2() {
   return (
     <StyledContainer>
       <StyledHeader>
-        <h1>
-          {t('Multi-Chain')} <span className="hight-light">{t('Decentralized Trading Solution')} </span>
-          {t('Powering Web3')}.
-        </h1>
+        <h1
+          dangerouslySetInnerHTML={{
+            __html: t('Multi-Chain <span class="hight-light">Decentralized Trading Solution</span> Powering Web3.'),
+          }}
+        />
         <div>
           <img src="/images/dex-v2/heading.png" alt="" />
         </div>
@@ -1495,9 +1496,7 @@ function DevV2() {
       )}
 
       <StyledEcosystem>
-        <p>
-          <span className="hight-light">{t('XOX Dex V2')}</span> {t('Ecosystem')}
-        </p>
+        <p dangerouslySetInnerHTML={{ __html: t('<span class="hight-light">XOX Dex V2</span> Ecosystem') }} />
         <p>
           {t(
             'Why trade in a single Dex when you can Trade in all DEXs at Once? XOX Dex V2 finds you the best prices across',
@@ -1536,18 +1535,14 @@ function DevV2() {
 
       <StyledBLock>
         <div>
-          <h3>How it works.</h3>
-          <p>
-            <span className="hight-light">XOX Dex V2</span> is more than just another aggregator. We have taken a{' '}
-            <span className="hight-light">revolutionary approach</span> by aggregating from all{' '}
-            <span className="hight-light">DEXs</span>, <span className="hight-light">aggregators</span>, and{' '}
-            <span className="hight-light">bridges</span> to provide users with the{' '}
-            <span className="hight-light">most advanced and efficient aggregator service available</span> .{' '}
-            <span className="hight-light">The XOX Dex V2</span> platform saves users both{' '}
-            <span className="hight-light">Time and Money</span> , while also providing them with access to the most
-            complex <span className="hight-light">in-chain and cross-chain</span> swap capabilities available on the{' '}
-            <span className="hight-light">Defi Market.</span>
-          </p>
+          <h3>{t('How it works.')}</h3>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: t(
+                '<span class="hight-light">XOX Dex V2</span> is more than just another aggregator. We have taken a <span class="hight-light">revolutionary approach</span> by aggregating from all <span class="hight-light">DEXs</span>, <span class="hight-light">aggregators</span>, and <span class="hight-light">bridges</span> to provide users with the <span class="hight-light">most advanced and efficient aggregator service available</span> . <span class="hight-light">The XOX Dex V2</span> platform saves users both <span class="hight-light">Time and Money</span> , while also providing them with access to the most complex <span class="hight-light">in-chain and cross-chain</span> swap capabilities available on the <span class="hight-light">Defi Market.</span>',
+              ),
+            }}
+          />
         </div>
 
         <div>
@@ -1597,31 +1592,22 @@ function DevV2() {
 
       <StyledReferralProgram>
         <div>
-          <h3>
-            {t('Next Gen')} <span className="hight-light">{t('Referral Program')}</span>
-          </h3>
-          <p>
-            <span className="hight-light">{t('XOX Dex V1')}</span>{' '}
-            {t('has already one of the most advanced referral programs in the space')}, {t('allowing')}{' '}
-            <span className="hight-light">{t('Dual Cash Back')}</span>{' '}
-            {t('and referral earning on every transaction that the code has been applied for both the')} (
-            <span className="hight-light">{t('referee')}</span> & <span className="hight-light">{t('referrer')}</span>).
-            {t(
-              'It is also gamified, implements leader-boards and milestones and users can withdraw their earnings in',
-            )}{' '}
-            <span className="hight-light">USDT/USDC</span>.
-          </p>
+          <h3 dangerouslySetInnerHTML={{ __html: t('Next Gen <span class="hight-light">Referral Program</span>') }} />
+          <p
+            dangerouslySetInnerHTML={{
+              __html: t(
+                '<span class="hight-light">XOX Dex V1</span> has already one of the most advanced referral programs in the space, allowing <span class="hight-light">Dual Cash Back</span> and referral earning on every transaction that the code has been applied for both the <span class="hight-light">referee</span> & <span class="hight-light">referrer</span>). It is also gamified, implements leader-boards and milestones and users can withdraw their earnings in, <span class="hight-light">USDT/USDC</span>.',
+              ),
+            }}
+          />
 
-          <p>
-            <span className="hight-light">{t('But')}</span>, {t('in')}{' '}
-            <span className="hight-light">{t('XOX Dex V2')}</span> {t('we are upgrading it by making it')}{' '}
-            <span className="hight-light">{t('Multi-Chain')}</span> {t('and')}
-            <span className="hight-light">{t('Multi Token')}</span>. {t(`It's simple`)}, {t('just')}{' '}
-            <span className="hight-light">{t('Share Your Code')}</span> {t('and')}{' '}
-            <span className="hight-light">{t('Earn')}</span> {t('some')}
-            <span className="hight-light">{t('Free Cash')}</span> {t('as')}{' '}
-            <span className="hight-light">{t('Passive Income')}</span>.
-          </p>
+          <p
+            dangerouslySetInnerHTML={{
+              __html: t(
+                '<span class="hight-light">But</span>, in <span class="hight-light">XOX Dex V2</span> we are upgrading it by making it <span class="hight-light">Multi-Chain</span> and <span class="hight-light">Multi Token</span>. It\'s simple, just <span class="hight-light">Share Your Code</span> and <span class="hight-light">Earn</span> some <span class="hight-light">Free Cash</span> as <span class="hight-light">Passive Income</span>.',
+              ),
+            }}
+          />
 
           <div>
             <BtnLearMore />
@@ -1661,15 +1647,15 @@ function DevV2() {
         </div>
 
         <div>
-          <h3>
-            <span className="hight-light">{t('Revenue Sharing')}</span> {t('Program')}
-          </h3>
-          <p>
-            {t('The key')} <span className="hight-light">{t('Revenue Source')}</span> {t('for')}{' '}
-            <span className="hight-light">{t('XOX Dex V2')}</span>{' '}
-            {t('is trading fees captured on every successful transaction performed in our protocol.')} {t('Which is')}{' '}
-            <span className="hight-light">{t('automatically redistributed')}</span> {t('among')}:
-          </p>
+          <h3 dangerouslySetInnerHTML={{ __html: t('<span class="hight-light">Revenue Sharing</span> Program') }} />
+          <p
+            dangerouslySetInnerHTML={{
+              __html: t(
+                'The key <span class="hight-light">Revenue Source</span> for <span class="hight-light">XOX Dex V2</span> is trading fees captured on every successful transaction performed in our protocol. Which is <span class="hight-light">automatically redistributed</span> among:',
+              ),
+            }}
+          />
+          <p></p>
 
           <ul>
             <li>{t('XOX Token stakers')}</li>
