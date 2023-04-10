@@ -68,6 +68,7 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
         handleMouseEnter={handleMouseEnter}
         handleMouseLeave={handleMouseLeave}
         isLanding={isLanding}
+        isLanguage
       >
         {/* <MenuItem
           {...linkProps}
