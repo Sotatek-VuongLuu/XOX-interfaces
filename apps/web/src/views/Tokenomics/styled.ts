@@ -569,10 +569,6 @@ export const StyledAAD = styled(StyledCard)`
   gap: 28px;
   margin-top: 40px;
   margin-bottom: 64px;
-  height: fit-content;
-  width: fit-content;
-  transform: translateX(-50%);
-  left: 50%;
 
   > div.l,
   > div.r {
@@ -724,6 +720,10 @@ export const StyledAAD = styled(StyledCard)`
   ${({ theme }) => theme.mediaQueries.xl} {
     padding: 24px;
     flex-direction: row;
+    height: fit-content;
+    width: fit-content;
+    transform: translateX(-50%);
+    left: 50%;
   }
 `
 
@@ -735,7 +735,6 @@ export const StyledItemAAD = styled('div')`
   backdrop-filter: blur(10px);
   border-radius: 16px;
   text-align: left;
-  height: 78px;
   transition: all 0.4s ease;
   transform: translateX(0);
 
@@ -824,12 +823,16 @@ export const StyledItemAAD = styled('div')`
     line-height: 15px;
     color: rgba(255, 255, 255, 0.6);
     margin-bottom: 4px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    white-space: wrap;
 
     &:last-child {
       margin-bottom: 0;
+    }
+  }
+
+  ${({ theme }) => theme.mediaQueries.md} {
+    > p {
+      white-space: nowrap;
     }
   }
 `
