@@ -263,22 +263,6 @@ export const configLanding: (
       showItemsOnMobile: false,
       items: [],
     },
-    {
-      label: t('Dex V2'),
-      href: '/dex-v2',
-      icon: WhitepaperIcon,
-      fillIcon: SwapFillIcon,
-      showItemsOnMobile: true,
-      items: [
-        {
-          label: t('Swap'),
-          href: '/swap',
-          icon: SwapIcon,
-          fillIcon: SwapIcon,
-        },
-      ],
-      mobileOnly: true,
-    },
   ].map((item) => addMenuItemSupported(item, chainId))
 
 export default config

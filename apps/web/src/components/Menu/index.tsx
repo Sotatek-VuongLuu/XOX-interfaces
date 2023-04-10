@@ -180,7 +180,6 @@ const IconAlertSvg = (
 )
 
 const Menu = (props) => {
-  const [argsMes, setArgsMes] = useState<any>([])
   const [isOpen, setIsOpen] = useState(false)
   const { isDark, setTheme } = useTheme()
   const cakePriceUsd = useCakeBusdPrice({ forceMainnet: true })

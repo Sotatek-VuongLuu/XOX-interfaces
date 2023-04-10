@@ -60,6 +60,26 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
           </DropdownMenu>
         );
       })}
+      {/* <DropdownMenu
+        key={currentLanguage.language}
+        items={[]}
+        py={1}
+        activeItem={activeSubItem}
+        handleMouseEnter={handleMouseEnter}
+        handleMouseLeave={handleMouseLeave}
+        isLanding={isLanding}
+      >
+        <MenuItem
+          {...linkProps}
+          isActive={isActive}
+          statusColor={statusColor}
+          isDisabled={disabled}
+          isHover={isHover}
+          label={label}
+        >
+          {label || (icon && createElement(Icon as any, { color: isActive ? "secondary" : "textSubtle" }))}
+        </MenuItem>
+      </DropdownMenu> */}
       {isMobile && (
         <LangSelector
           currentLang={currentLanguage.language}
