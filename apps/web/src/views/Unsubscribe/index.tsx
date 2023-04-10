@@ -9,6 +9,7 @@ const DivWrapper = styled.div`
   align-items: center;
   text-align: center;
   min-height: 100vh;
+  background: whitesmoke;
 
   .main_container {
     display: flex;
@@ -22,6 +23,7 @@ const DivWrapper = styled.div`
   p {
     font-size: 20px;
     font-weight: 600;
+    color: #90dd90;
   }
 `
 
