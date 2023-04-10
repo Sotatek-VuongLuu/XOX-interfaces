@@ -1030,10 +1030,10 @@ function VestingPage() {
       return message
     }
 
-    if (Number(aXOX) > availableXOXForSale) {
-      message = 'Maximum investment: $5000'
-      return message
-    }
+    // if (Number(aXOX) > availableXOXForSale) {
+    //   message = 'Maximum investment: $5000'
+    //   return message
+    // }
 
     if (totalDolla < 50) {
       message = 'Minimum investment: $50'
