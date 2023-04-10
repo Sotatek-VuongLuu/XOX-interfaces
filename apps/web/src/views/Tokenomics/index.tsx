@@ -82,11 +82,7 @@ function Address({ addr, ...props }: { addr: IAddress }) {
       </div>
 
       {chainId ? (
-        <a
-          href={chainId ? `/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}` : null}
-          target="_blank"
-          rel="noreferrer"
-        >
+        <a href={chainId ? `/swap?chainId=${chainId}` : null} target="_blank" rel="noreferrer">
           Get XOX
         </a>
       ) : (
