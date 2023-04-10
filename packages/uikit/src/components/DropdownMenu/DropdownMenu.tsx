@@ -36,6 +36,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   handleMouseLeave,
   setIsHover,
   isLanding = false,
+  isLanguage = false,
   ...props
 }) => {
   const { t } = useTranslation();
