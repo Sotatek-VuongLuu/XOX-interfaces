@@ -118,6 +118,10 @@ const StyledContainer = styled(StyledS)`
           width: 25px;
           margin-left: 16px;
         }
+
+        &:hover {
+          border: 2px solid #fb8618;
+        }
       }
 
       .subscription-form.hover-form {

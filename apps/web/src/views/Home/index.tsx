@@ -53,7 +53,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx global>{`
         #home .page-bg {
-          background: #0B0A0B;
+          background: #0b0a0b;
         }
 
         #portal-root {
@@ -76,7 +76,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         containerProps={{
           id: 'home',
           style: {
-            height: 'fit-content'
+            height: 'fit-content',
           },
         }}
         innerClass="welcome"
