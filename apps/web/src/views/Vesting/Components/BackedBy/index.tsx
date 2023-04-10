@@ -62,6 +62,7 @@ const WrapperItem = styled(Flex)`
     top: 0;
     left: 0;
     right: 0;
+    z-index: -1;
     bottom: 0;
     border-width: 1px;
     border-radius: inherit;
@@ -72,6 +73,25 @@ const WrapperItem = styled(Flex)`
 
   .airbnb {
     margin-top: 35px;
+  }
+
+  > div {
+    > div:nth-child(1) {
+      margin-bottom: 32px;
+      padding: 0px 40px;
+    }
+    > div:nth-child(2) {
+      padding-left: 20px;
+    }
+    > div {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-column-gap: 64px;
+      img {
+        max-width: 100%;
+        cursor: pointer !important;
+      }
+    }
   }
 
   @media screen and (max-width: 900px) {
@@ -85,6 +105,21 @@ const WrapperItem = styled(Flex)`
       font-size: 14px;
       line-height: 24px;
       margin-top: 10px;
+    }
+
+    > div {
+      > div {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        grid-column-gap: 58px;
+      }
+      > div:nth-child(1) {
+        padding: 0px;
+      }
+      > div:nth-child(2) {
+        padding-left: 0px;
+        margin: 32px 0px;
+      }
     }
   }
 `
@@ -102,13 +137,39 @@ const SecuredByItem = ({ item }) => {
       <p className="title">{item.title}</p>
       <p className="describe">{item.describe}</p>
 
-      {width <= 900 && <img src="/images/logo_backed_mb.svg" alt="microsoft" />}
-      {width > 900 && (
-        <>
-          <img src={item.sv2} alt="microsoft" />
-          <img src={item.sv1} alt="airbnb" className="airbnb" />
-        </>
-      )}
+      <div>
+        {width >= 900 && (
+          <>
+            <div>
+              <img src="/images/dex-v2/AirbnbLogo.svg" alt="AirbnbLogo" />
+              <img src="/images/dex-v2/HubspotLogo.svg" alt="HubspotLogo" />
+              <img src="/images/dex-v2/GoogleLogo.svg" alt="GoogleLogo" />
+            </div>
+            <div>
+              <img src="/images/dex-v2/MicrosoftLogo.svg" alt="MicrosoftLogo" />
+              <img src="/images/dex-v2/WalmartLogo.svg" alt="WalmartLogo" />
+              <img src="/images/dex-v2/FedExLogo.svg" alt="FedExLogo" />
+            </div>
+          </>
+        )}
+
+        {width < 900 && (
+          <>
+            <div>
+              <img src="/images/dex-v2/AirbnbLogo.svg" alt="AirbnbLogo" />
+              <img src="/images/dex-v2/HubspotLogo.svg" alt="HubspotLogo" />
+            </div>
+            <div>
+              <img src="/images/dex-v2/GoogleLogo.svg" alt="GoogleLogo" />
+              <img src="/images/dex-v2/MicrosoftLogo.svg" alt="MicrosoftLogo" />
+            </div>
+            <div>
+              <img src="/images/dex-v2/WalmartLogo.svg" alt="WalmartLogo" />
+              <img src="/images/dex-v2/FedExLogo.svg" alt="FedExLogo" />
+            </div>
+          </>
+        )}
+      </div>
     </WrapperItem>
   )
 }
@@ -118,14 +179,10 @@ function BackedBy() {
     {
       title: 'Secured By',
       describe: 'XOX has Industry Leading Security. Protected By The Best.',
-      sv1: '/microsoft.svg',
-      sv2: '/airbnb.svg',
     },
     {
       title: 'Back By',
       describe: 'The Best to Deliver the Best.',
-      sv1: '/microsoft.svg',
-      sv2: '/airbnb.svg',
     },
   ]
   return (

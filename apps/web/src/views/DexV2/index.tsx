@@ -1,13 +1,14 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { TranslateFunction, useTranslation } from '@pancakeswap/localization'
-import { Box } from '@pancakeswap/uikit'
+import { Box, useToast } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
-import { useEffect, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { CardSocial, StyledS, StyledSubtitle } from 'views/Company'
 import { StyledTitle } from 'views/Tokenomics/styled'
 import BackedBy from 'views/Vesting/Components/BackedBy'
+import axios from 'axios'
 
 interface ISocial {
   icon: string
@@ -377,7 +378,7 @@ const StyledLearMore = styled.div`
   > div {
     display: flex;
     align-items: center;
-
+    cursor: pointer;
     > span {
       font-weight: 500;
       font-size: 14px;
@@ -989,6 +990,13 @@ const StyleFixHeight = styled.div`
   }
 `
 
+const ReStyledTitle = styled(StyledTitle)`
+  font-size: 20px;
+  ${({ theme }) => theme.mediaQueries.xl} {
+    font-size: 36px;
+  }
+`
+
 const handleRange = (start: number, end: number, step = 1) => {
   const range = []
   const typeofStart = typeof start
@@ -1214,10 +1222,12 @@ function DevV2() {
   const { t } = useTranslation()
   const [tabEcosystem, setTabEcosystem] = useState<number>(0)
   const [tabWHatYouCanDo, setTabWHatYouCanDo] = useState<number>(0)
+  const [inputValue, setInputValue] = useState<string>('')
   const [emailBorderClass, setEmailBorderClass] = useState<string>('')
   const [btnHoverClass, setBtnHoverClass] = useState<string>('')
   const [emailErrorClass, setEmailErrorClass] = useState<string>('')
   const [textErrorClass, setTextErrorClass] = useState<string>('')
+  const { toastSuccess, toastError } = useToast()
   const [timeRecall, setTimeRecall] = useState(7)
   const [flow, setFlow] = useState('increase')
   const { width } = useWindowSize()
@@ -1296,7 +1306,7 @@ function DevV2() {
     },
     {
       title: t('Liquidity Sources'),
-      value: '640',
+      value: '540',
     },
   ]
 
@@ -1352,6 +1362,64 @@ function DevV2() {
     return null
   }, [tabWHatYouCanDo])
 
+  const handleChange = (event) => {
+    const email = event.target.value
+    const isValid = validateEmail(email)
+    setInputValue(email)
+
+    if (!isValid) {
+      setEmailErrorClass(' error')
+      setTextErrorClass(' text-error')
+      setEmailBorderClass('')
+    } else {
+      setTextErrorClass('')
+      setEmailErrorClass('')
+      setEmailBorderClass(' hover-form')
+    }
+  }
+
+  const validateEmail = (email) => {
+    const reg =
+      // eslint-disable-next-line no-useless-escape
+      /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+    return reg.test(email)
+  }
+
+  const handleBlur = () => {
+    setEmailBorderClass('')
+    setBtnHoverClass('')
+    if (inputValue.length === 0) {
+      setTextErrorClass('')
+      setEmailErrorClass('')
+    }
+  }
+
+  const handleFocus = () => {
+    setEmailBorderClass(' hover-form')
+    setBtnHoverClass(' hover-button')
+    if (textErrorClass) {
+      setEmailErrorClass(' error')
+      setTextErrorClass(' text-error')
+      setEmailBorderClass('')
+    }
+  }
+
+  const handleBtnSubmit = useCallback(() => {
+    axios
+      .post(`${process.env.NEXT_PUBLIC_API}/subscribe`, { email: inputValue })
+      .then(() => {
+        toastSuccess(t('Subscribed successfully.'))
+      })
+      .catch((error) => {
+        if (error.response.status === 400 && error.response.data.message === 'Email is already existed!') {
+          toastError(t('The email is already registered.'))
+          return
+        }
+
+        toastError(t('System error'))
+      })
+  }, [inputValue])
+
   // useEffect(() => {
   //   const myId = setTimeout(() => {
   //     if (timeRecall > 0) {
@@ -1392,11 +1460,13 @@ function DevV2() {
 
       <StyledBtnStartTrading>
         <div>
-          <button type="button">
+          <button type="button" onClick={() => window.open('/swap')}>
             <span>{t('Start Trading')}</span>
             <img src="/images/dex-v2/start_trading.png" alt="start_trading" />
           </button>
-          <button type="button">GitHub</button>
+          <button type="button" onClick={() => window.open('https://github.com/')}>
+            GitHub
+          </button>
         </div>
       </StyledBtnStartTrading>
 
@@ -1475,8 +1545,8 @@ function DevV2() {
             <span className="hight-light">most advanced and efficient aggregator service available</span> .{' '}
             <span className="hight-light">The XOX Dex V2</span> platform saves users both{' '}
             <span className="hight-light">Time and Money</span> , while also providing them with access to the most
-            complex <span className="hight-light">in-chain and cross-chain</span> swap capabilities available on the
-            <span>Defi Market.</span>
+            complex <span className="hight-light">in-chain and cross-chain</span> swap capabilities available on the{' '}
+            <span className="hight-light">Defi Market.</span>
           </p>
         </div>
 
@@ -1616,7 +1686,7 @@ function DevV2() {
         </div>
       </StyledRevenue>
 
-      <StyledTitle style={{ marginBottom: width < 1080 ? 30 : 48 }}>{t('Safe and Reliable.')}</StyledTitle>
+      <ReStyledTitle style={{ marginBottom: width < 1080 ? 30 : 48 }}>{t('Safe and Reliable.')}</ReStyledTitle>
 
       <StyledSaleAndReliable>
         {SAFERELIABLE.map((safe, i) => (
@@ -1635,7 +1705,7 @@ function DevV2() {
         <BtnLearMore />
       </div>
 
-      <StyledTitle>{t('XOX Labs Ecosystem Products')}</StyledTitle>
+      <ReStyledTitle>{t('XOX Labs Ecosystem Products')}</ReStyledTitle>
       <ReStyledSubtitle style={{ marginBottom: 48 }}>
         {t('A true one Multi-chain stop for all your Defi Needs.')}
       </ReStyledSubtitle>
@@ -1650,7 +1720,7 @@ function DevV2() {
         <BackedBy />
       </Box>
 
-      <StyledTitle style={{ marginBottom: 16 }}>{t('Join The Wait List Here.')}</StyledTitle>
+      <ReStyledTitle style={{ marginBottom: 16 }}>{t('Join The Wait List Here.')}</ReStyledTitle>
       <p className="subtitle">
         {t('Unsubscribe at any time.')}{' '}
         <a className="privacy-link" href="#">
@@ -1674,14 +1744,14 @@ function DevV2() {
               name="email"
               placeholder={t('Your email')}
               required
-              // value={inputValue}
-              // onChange={handleChange}
-              // onBlur={handleBlur}
-              // onFocus={handleFocus}
+              value={inputValue}
+              onChange={handleChange}
+              onBlur={handleBlur}
+              onFocus={handleFocus}
             />
             <button
-              // onClick={handleBtnSubmit}
-              // disabled={!!textErrorClass || !inputValue}
+              onClick={handleBtnSubmit}
+              disabled={!!textErrorClass || !inputValue}
               type="button"
               className={`btn-submit ${btnHoverClass}`}
             >
