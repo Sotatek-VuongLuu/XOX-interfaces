@@ -499,6 +499,14 @@ function VestingPage() {
     await approveCallback()
   }, [approveCallback])
 
+  const XOXMAXSALE1 = 5000 / 0.044
+  const XOXMAXSALE2 = 5000 / 0.045
+  const XOXMAXSALE3 = 5000 / 0.046
+
+  const [availableXOXForSale1, setAvailableXOXForSale1] = useState<number>(XOXMAXSALE1)
+  const [availableXOXForSale2, setAvailableXOXForSale2] = useState<number>(XOXMAXSALE2)
+  const [availableXOXForSale3, setAvailableXOXForSale3] = useState<number>(XOXMAXSALE3)
+
   const handleGetInfoRound = async () => {
     try {
       if (chainId === 97 || chainId === 56) return
