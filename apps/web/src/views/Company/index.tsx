@@ -68,70 +68,13 @@ const StyledHeader = styled('div')`
   position: relative;
   margin-bottom: 97px;
 
-  .bg-header {
-    position: relative;
-    width: 100%;
-  }
-
   ${({ theme }) => theme.mediaQueries.lg} {
     margin-bottom: 116px;
-    .bg-header {
-      position: absolute;
-      top: 50%;
-      right: 0;
-      transform: translate(0, -50%);
-      z-index: -1;
-      width: fit-content;
-    }
+    display: flex;
   }
 `
 
-const StyledPreviewVideo = styled('div')`
-  height: 336px;
-  .player-wrapper {
-    position: relative;
-    padding-top: 56.25%;
-    margin-bottom: 65px;
-    border-radius: 20px;
-    overflow: hidden;
-  }
-
-  .react-player {
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  ${({ theme }) => theme.mediaQueries.lg} {
-    width: fit-content;
-    margin-bottom: initial;
-
-    > img:nth-child(1) {
-      width: initial;
-    }
-  }
-
-  @media screen and (min-width: 968px) {
-    .player-wrapper {
-      width: 600px;
-      height: 337px;
-    }
-  }
-
-  @media screen and (min-width: 1200px) {
-    .player-wrapper {
-      width: 600px;
-      height: 337px;
-    }
-  }
-
-  @media screen and (min-width: 1400px) {
-    .player-wrapper {
-      width: 640px;
-      height: 360px;
-    }
-  }
-`
+const StyledPreviewVideo = styled('div')``
 
 const StyledMembers = styled(Box)`
   display: grid;
@@ -569,20 +512,23 @@ export default function CompanyPage() {
 
       <StyledHeader>
         <StyledPreviewVideo>
-          {/* <div className="player-wrapper">
-            <ReactPlayer
-              className="react-player"
-              url="https://www.youtube.com/watch?v=ysz5S6PUM-U"
-              playing
-              controls
-              light
-              width="100%"
-              height="100%"
-            />
-          </div> */}
+          <video
+            loop
+            playsInline
+            autoPlay
+            controls={false}
+            preload="auto"
+            style={{ pointerEvents: 'none' }}
+            controlsList="nodownload"
+            muted
+          >
+            <source src="/images/company/Coding_footage.webm" type="video/webm" />
+          </video>
         </StyledPreviewVideo>
 
-        <img src="/images/company/bg-header.png" alt="" draggable="false" loading="lazy" className="bg-header" />
+        <div>
+          <img src="/images/company/bg-header.png" alt="" draggable="false" loading="lazy" className="bg-header" />
+        </div>
       </StyledHeader>
 
       <StyledSectionText style={{ marginBottom: 40 }}>
