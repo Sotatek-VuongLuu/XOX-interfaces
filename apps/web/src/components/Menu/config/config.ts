@@ -175,14 +175,6 @@ export const configLanding: (
       items: [],
     },
     {
-      label: t('XOX Dex V2'),
-      href: '/dex-v2',
-      icon: WhitepaperIcon,
-      fillIcon: SwapFillIcon,
-      showItemsOnMobile: false,
-      items: [],
-    },
-    {
       label: t('Products'),
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,
@@ -262,6 +254,14 @@ export const configLanding: (
           showTooltip: true,
         },
       ].map((item) => addMenuItemSupported(item, chainId)),
+    },
+    {
+      label: t('Dex V2'),
+      href: '/dex-v2',
+      icon: WhitepaperIcon,
+      fillIcon: SwapFillIcon,
+      showItemsOnMobile: false,
+      items: [],
     },
   ].map((item) => addMenuItemSupported(item, chainId))
 

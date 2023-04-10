@@ -788,7 +788,7 @@ const StyledTabEcosystem = styled.div`
 const StyledDexes = styled.div`
   width: 1100px;
   max-width: 100%;
-  height: 325px;
+  height: 100%;
   overflow-y: scroll;
   display: grid;
   margin: auto;
@@ -804,15 +804,21 @@ const StyledDexes = styled.div`
   }
 
   ${({ theme }) => theme.mediaQueries.xl} {
-    height: 520px;
     grid-row-gap: 32px;
-
     grid-template-columns: repeat(14, minmax(0, 1fr));
   }
 `
 
-const StyledAggregator = styled(StyledDexes)`
-  height: auto;
+const AUTOHEIGHT = ['aggregators', 'bridges']
+interface IPropsStyledAggregator {
+  name?: string
+}
+
+const StyledAggregator = styled(StyledDexes)<IPropsStyledAggregator>`
+  height: ${({ name }) => (name && AUTOHEIGHT.includes(name) ? 'auto' : '100%')};
+  ${({ theme }) => theme.mediaQueries.xl} {
+    height: auto;
+  }
 `
 
 const StyledBtnStartTrading = styled.div`
@@ -976,6 +982,13 @@ const StyledSwap = styled.div`
   }
 `
 
+const StyleFixHeight = styled.div`
+  height: 325px;
+  ${({ theme }) => theme.mediaQueries.xl} {
+    height: 520px;
+  }
+`
+
 const handleRange = (start: number, end: number, step = 1) => {
   const range = []
   const typeofStart = typeof start
@@ -1129,11 +1142,13 @@ const API = ({ t }: { t: TranslateFunction }) => {
 const DexesComponent = () => {
   return (
     <>
-      <StyledDexes>
-        {handleRange(1, 149).map((item, i) => (
-          <img src={`/images/dex-v2/dexes/${item}.png`} key={String(i + item)} alt="dex" />
-        ))}
-      </StyledDexes>
+      <StyleFixHeight>
+        <StyledDexes>
+          {handleRange(1, 149).map((item, i) => (
+            <img src={`/images/dex-v2/dexes/${item}.png`} key={String(i + item)} alt="dex" />
+          ))}
+        </StyledDexes>
+      </StyleFixHeight>
 
       <div className="btn_learn_more_ecosystem">
         <BtnLearMore />
@@ -1145,11 +1160,13 @@ const DexesComponent = () => {
 const Aggregators = () => {
   return (
     <>
-      <StyledAggregator>
-        {handleRange(1, 30).map((item, i) => (
-          <img src={`/images/dex-v2/aggregators/${item}.png`} key={String(i + item)} alt="dex" />
-        ))}
-      </StyledAggregator>
+      <StyleFixHeight>
+        <StyledAggregator name="aggregators">
+          {handleRange(1, 30).map((item, i) => (
+            <img src={`/images/dex-v2/aggregators/${item}.png`} key={String(i + item)} alt="dex" />
+          ))}
+        </StyledAggregator>
+      </StyleFixHeight>
 
       <div className="btn_learn_more_ecosystem">
         <BtnLearMore />
@@ -1160,11 +1177,13 @@ const Aggregators = () => {
 const BlockChains = () => {
   return (
     <>
-      <StyledAggregator>
-        {handleRange(1, 70).map((item, i) => (
-          <img src={`/images/dex-v2/blockchains/${item}.png`} key={String(i + item)} alt="dex" />
-        ))}
-      </StyledAggregator>
+      <StyleFixHeight>
+        <StyledAggregator>
+          {handleRange(1, 70).map((item, i) => (
+            <img src={`/images/dex-v2/blockchains/${item}.png`} key={String(i + item)} alt="dex" />
+          ))}
+        </StyledAggregator>
+      </StyleFixHeight>
 
       <div className="btn_learn_more_ecosystem">
         <BtnLearMore />
@@ -1176,11 +1195,13 @@ const BlockChains = () => {
 const Bridges = () => {
   return (
     <>
-      <StyledAggregator>
-        {handleRange(1, 13).map((item, i) => (
-          <img src={`/images/dex-v2/bridges/${item}.png`} key={String(i + item)} alt="dex" />
-        ))}
-      </StyledAggregator>
+      <StyleFixHeight>
+        <StyledAggregator name="bridges">
+          {handleRange(1, 13).map((item, i) => (
+            <img src={`/images/dex-v2/bridges/${item}.png`} key={String(i + item)} alt="dex" />
+          ))}
+        </StyledAggregator>
+      </StyleFixHeight>
 
       <div className="btn_learn_more_ecosystem">
         <BtnLearMore />
@@ -1331,31 +1352,31 @@ function DevV2() {
     return null
   }, [tabWHatYouCanDo])
 
-  useEffect(() => {
-    const myId = setTimeout(() => {
-      if (timeRecall > 0) {
-        setTimeRecall(timeRecall - 1)
-        return
-      }
-      if (flow === 'increase' && tabEcosystem < 3) {
-        const nextIndex = tabEcosystem + 1
-        if (nextIndex === 3) {
-          setFlow('decrease')
-        }
-        setTabEcosystem(nextIndex)
-      }
-      if (flow === 'decrease' && tabEcosystem > 0) {
-        const prevIndex = tabEcosystem - 1
-        if (prevIndex === 0) {
-          setFlow('increase')
-        }
-        setTabEcosystem(prevIndex)
-      }
-      setTimeRecall(7)
-    }, 1000)
-    return () => clearTimeout(myId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeRecall])
+  // useEffect(() => {
+  //   const myId = setTimeout(() => {
+  //     if (timeRecall > 0) {
+  //       setTimeRecall(timeRecall - 1)
+  //       return
+  //     }
+  //     if (flow === 'increase' && tabEcosystem < 3) {
+  //       const nextIndex = tabEcosystem + 1
+  //       if (nextIndex === 3) {
+  //         setFlow('decrease')
+  //       }
+  //       setTabEcosystem(nextIndex)
+  //     }
+  //     if (flow === 'decrease' && tabEcosystem > 0) {
+  //       const prevIndex = tabEcosystem - 1
+  //       if (prevIndex === 0) {
+  //         setFlow('increase')
+  //       }
+  //       setTabEcosystem(prevIndex)
+  //     }
+  //     setTimeRecall(7)
+  //   }, 1000)
+  //   return () => clearTimeout(myId)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [timeRecall])
 
   return (
     <StyledContainer>
