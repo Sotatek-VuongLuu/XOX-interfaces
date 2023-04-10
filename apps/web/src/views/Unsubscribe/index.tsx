@@ -32,7 +32,7 @@ const UnsubscribePage = () => {
   const handleUnsubscribe = async () => {
     const decodedEmail = decodeURIComponent(email.toString())
     try {
-      const result = await axios.post(`http://localhost:3000/unsubscribe`, { emailHash: decodedEmail })
+      const result = await axios.post(`${process.env.NEXT_PUBLIC_API}/unsubscribe`, { emailHash: decodedEmail })
       setData({ state: 1, msg: 'Unsubscribe successfully!' })
     } catch (error) {
       setData({
