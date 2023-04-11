@@ -4,7 +4,7 @@
 import styled from 'styled-components'
 import { Box, Grid, Popover } from '@mui/material'
 import { useMatchBreakpoints, CopyButton } from '@pancakeswap/uikit'
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
@@ -551,6 +551,88 @@ const CustomPopover = styled(Popover)`
   }
 `
 
+const CustomDropdown = styled.div`
+  position: absolute;
+  width: fit-content;
+  height: fit-content;
+  top: 100%;
+  left: 0;
+  padding: 16px;
+  background: #1d1c1c;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+  min-width: 250px;
+
+  .blur {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    z-index: -1;
+  }
+
+  .popover-coin {
+    display: flex;
+    background: #1d1c1c;
+    flex-direction: row;
+    justify-content: space-between;
+
+    .coin-info {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 12px 8px 12px;
+      gap: 8px;
+
+      .coin-data {
+        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .title {
+          font-size: 16px;
+          line-height: 19px;
+          text-align: center;
+          color: rgba(255, 255, 255, 0.87);
+          white-space: nowrap;
+        }
+
+        .description {
+          font-weight: 400;
+          font-size: 12px;
+          line-height: 15px;
+          color: rgba(255, 255, 255, 0.87);
+        }
+      }
+    }
+
+    .coin-buttons {
+      justify-content: center;
+      display: flex;
+      flex-direction: row;
+      padding: 8px 12px 8px 12px;
+      gap: 8px;
+      min-width: 97px;
+    }
+  }
+
+  @media screen and (max-width: 560px) {
+    left: unset;
+    right: 0;
+
+    .popover-coin .coin-info .coin-data {
+      width: 118px;
+    }
+
+    .popover-coin .coin-info .coin-data .title {
+      white-space: pre-wrap;
+    }
+  }
+`
+
 const networks = [
   {
     title: 'Binance Smart Chain (BSC)',
@@ -583,20 +665,16 @@ const WelcomeXOX = (): JSX.Element => {
   const { t } = useTranslation()
   const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
   const { chainId } = useActiveChainId()
+  const [openDropdown, setOpenDropdown] = useState(false)
 
-  const [validSafari, setValidSafari] = React.useState<boolean>(true)
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
   useEffect(() => {
-    (document.getElementById('laptopVideo') as any).play();
+    ;(document.getElementById('laptopVideo') as any).play()
   }, [])
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setAnchorEl(event.currentTarget)
-  }
-
-  const handleClose = () => {
-    setAnchorEl(null)
+    setOpenDropdown(!openDropdown)
   }
 
   const open = Boolean(anchorEl)
@@ -606,11 +684,11 @@ const WelcomeXOX = (): JSX.Element => {
   const browser = detect()
 
   // handle the case where we don't detect the browser
-  if (browser) {
-    console.log(browser.name)
-    console.log(browser.version)
-    console.log(browser.os)
-  }
+  // if (browser) {
+  //   console.log(browser.name)
+  //   console.log(browser.version)
+  //   console.log(browser.os)
+  // }
 
   return (
     <Wrapper>
@@ -754,14 +832,106 @@ const WelcomeXOX = (): JSX.Element => {
                     </button>
                   </div>
                 </div>
-                <div className="more-btn">
+                {/* <div className="more-btn">
+                  <div className="bg-btn" aria-describedby={id} variant='contained' onClick={handleClick}>
+                    <img src="/images/home/hero/checklist.svg" alt="checklist" />
+                    <p>More</p>
+                    <img src="/images/home/hero/down.svg" alt="down" />
+                  </div>
+                </div> */}
+                <div className="more-btn" style={{ position: 'relative' }}>
                   <Button aria-describedby={id} onClick={handleClick} className="bg-btn">
                     <img src="/images/home/hero/checklist.svg" alt="checklist" />
                     {t('More')}
                     <img src="/images/home/hero/down.svg" alt="down" />
                   </Button>
+                  {openDropdown && (
+                    <CustomDropdown tabIndex={0} id="dropdown-networks">
+                      <div className="blur" onClick={() => setOpenDropdown(false)} />
+                      {networks.map((network) => {
+                        return (
+                          <>
+                            <div className="popover-coin">
+                              <div className="coin-info">
+                                <img
+                                  src={network.image}
+                                  alt="bsc"
+                                  width={22}
+                                  height={22}
+                                  style={{ maxWidth: '22px', maxHeight: '22px' }}
+                                />
+                                <div className="coin-data">
+                                  <p className="title">
+                                    {isMobile
+                                      ? network.title === 'Binance Smart Chain (BSC)'
+                                        ? 'BSC'
+                                        : network.title
+                                      : network.title}
+                                  </p>
+                                  <p className="description">
+                                    {network.address
+                                      ? `${network.address.substring(0, 8)}...${network.address.substring(
+                                          network.address.length - 4,
+                                        )}`
+                                      : '--'}
+                                  </p>
+                                </div>
+                              </div>
+                              <div className="coin-buttons">
+                                <CopyButton
+                                  text={network.address || ''}
+                                  tooltipMessage={t('Copied')}
+                                  button={
+                                    <img src="/images/home/hero/copy.svg" alt="copy" style={{ marginTop: '7px' }} />
+                                  }
+                                />
+                                <button
+                                  style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
+                                  onClick={() => {
+                                    window.ethereum.request({
+                                      method: 'wallet_watchAsset',
+                                      params: {
+                                        type: 'ERC20',
+                                        options: {
+                                          address: network.address,
+                                          symbol: 'XOX',
+                                          decimals: 18,
+                                          image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
+                                        },
+                                      },
+                                    })
+                                  }}
+                                >
+                                  <img src="/images/home/hero/shield.svg" alt="shield" />
+                                </button>
+                                <button
+                                  style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
+                                  onClick={() => {
+                                    window.ethereum.request({
+                                      method: 'wallet_watchAsset',
+                                      params: {
+                                        type: 'ERC20',
+                                        options: {
+                                          address: network.address,
+                                          symbol: 'XOX',
+                                          decimals: 18,
+                                          image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
+                                        },
+                                      },
+                                    })
+                                  }}
+                                >
+                                  <img src="/images/home/hero/wolf.svg" alt="wolf" />
+                                </button>
+                              </div>
+                            </div>
+                          </>
+                        )
+                      })}
+                    </CustomDropdown>
+                  )}
                 </div>
-                <CustomPopover
+                {/* <CustomPopover
                   id={id}
                   open={open}
                   anchorEl={anchorEl}
@@ -841,7 +1011,7 @@ const WelcomeXOX = (): JSX.Element => {
                       </div>
                     )
                   })}
-                </CustomPopover>
+                </CustomPopover> */}
               </div>
             </LeftContent>
           </GridLeft>
