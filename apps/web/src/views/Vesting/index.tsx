@@ -252,7 +252,7 @@ const initialTokenMetrics = [
   },
   {
     id: 14,
-    title: 'Total include LP',
+    title: 'Total Include LP',
     tokenAllocationPercent: '100',
     tokenAllocation: '180000000',
     tge: '19',
