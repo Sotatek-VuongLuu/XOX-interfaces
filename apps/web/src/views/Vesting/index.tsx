@@ -680,8 +680,6 @@ function VestingPage() {
 
     try {
       setIsOpenLoadingClaimModal(true)
-      console.log(`vao`)
-
       const gasFee = await contractPreSale.estimateGas.invest(addressTokenBuy, amountParse, code, {
         value: valueETH,
       })
