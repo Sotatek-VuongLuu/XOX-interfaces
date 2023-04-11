@@ -1,4 +1,5 @@
 /* eslint-disable no-unused-expressions */
+import { useTranslation } from '@pancakeswap/localization'
 import {
   AutoRow,
   Box,
@@ -328,6 +329,7 @@ function ModalSaleExchange({
   balanceNative,
   referralCode,
 }: Props) {
+  const { t } = useTranslation()
   const { width } = useWindowSize()
   const isSwap = approvalState !== ApprovalState.APPROVED && typeBuyPrice === TYPE_BY.BY_ERC20
 
@@ -367,7 +369,7 @@ function ModalSaleExchange({
       <StyledModalHeader>
         <ModalTitle>
           <TextCustom color="rgba(255, 255, 255, 0.87)" fontWeight={700} fontSize="24px" textAlign="center">
-            EXCHANGE
+            {t('EXCHANGE')}
           </TextCustom>
         </ModalTitle>
         <ModalCloseButton onDismiss={onDismiss} />
@@ -376,11 +378,11 @@ function ModalSaleExchange({
         {width > 900 && (
           <>
             <p style={{ textAlign: 'right', paddingRight: '83px' }} className="balance">
-              Balance: {typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative}
+              {t('Balance')}: {typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative}
             </p>
             <Flex alignItems="center">
               <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="53px">
-                Amount
+                {t('Amount')}
               </Text>
               <Flex flexDirection="column">
                 <BoxCenter>
@@ -391,7 +393,7 @@ function ModalSaleExchange({
                     placeholder="0.00"
                   />
                   <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative)}>
-                    All
+                    {t('All')}
                   </ButtonStyle>
                 </BoxCenter>
               </Flex>
@@ -418,9 +420,11 @@ function ModalSaleExchange({
           <>
             <Flex alignItems="center" justifyContent="space-between">
               <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} className="text_mb">
-                Amount
+                {t('Amount')}
               </Text>
-              <p className="balance_mb">Balance: {typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative}</p>
+              <p className="balance_mb">
+                {t('Balance')}: {typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative}
+              </p>
               <Text className="coin">
                 {typeBuyPrice === TYPE_BY.BY_ERC20 && (
                   <>
@@ -446,7 +450,7 @@ function ModalSaleExchange({
                   placeholder="0.00"
                 />
                 <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative)}>
-                  All
+                  {t('All')}
                 </ButtonStyle>
               </BoxCenter>
               {massageErrorAmount && <ErrorReferral>{massageErrorAmount}</ErrorReferral>}
@@ -456,7 +460,7 @@ function ModalSaleExchange({
 
         <Flex alignItems="center" margin="26px 0px" className="xox_amount">
           <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="25px">
-            XOX Amount
+            {t('XOX Amount')}
           </Text>
           <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
             {Number(amountXOX) !== 0 ? Number(amountXOX).toLocaleString() : '-'} XOX
@@ -464,7 +468,7 @@ function ModalSaleExchange({
         </Flex>
         <Flex alignItems="center" marginBottom="26px" className="xoxs_amount">
           <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="20px">
-            XOXS Reward
+            {t('XOXS Reward')}
           </Text>
           <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
             {Number(amountXOXS) !== 0 ? Number(amountXOXS).toLocaleString() : '-'} XOXS
@@ -472,7 +476,7 @@ function ModalSaleExchange({
         </Flex>
 
         <FlexCustom>
-          <Text className="title_ref">Referral Code</Text>
+          <Text className="title_ref">{t('Referral Code')}</Text>
 
           <Flex flexDirection="column" className="full_width">
             <BoxCenter>
@@ -504,13 +508,13 @@ function ModalSaleExchange({
             >
               {approvalState === ApprovalState.PENDING || approvalSubmitted ? (
                 <AutoRow justifyContent="center" gap="8px">
-                  Approving
+                  {t('Approving')}
                   <CircleLoader stroke="white" />
                 </AutoRow>
               ) : approvalState === ApprovalState.APPROVED ? (
-                'Approved'
+                t('Approved')
               ) : (
-                'Approve USDT'
+                t('Approve %symbol%', { symbol: 'USDT' })
               )}
             </Button>
           ) : (
@@ -519,7 +523,7 @@ function ModalSaleExchange({
               onClick={() => handeInvest(referralCode, currentRound)}
               disabled={referralError || !amount || massageErrorAmount}
             >
-              Buy XOX
+              {t('Buy XOX')}
             </Button>
           )}
         </Flex>

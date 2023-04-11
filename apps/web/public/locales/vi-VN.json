@@ -2543,7 +2543,7 @@
   "Token Allocation": "Phân bổ token",
   "Token Allocation at TGE": "Phân bổ token tại TGE",
   "Initial Marketcap": "Tổng vốn ban đầu",
-  "Fully Dilited MC ($)": "",
+  "Fully Dilited MC ($)": "MC bị giãn hoàn toàn ($)",
   "Team allocation (0% at TGE & 5 years vesting 20% Yearly)": "Phân bổ nhóm (0% tại TGE & trả 20% mỗi năm trong 5 năm)",
   "Company Reserve (0% at TGE & 4 years vesting 25% Yearly)": "Dự trữ của công ty (0% tại TGE & trả 25% mỗi năm trong 4 năm)",
   "Strategic Partnership (0% at TGE & 5 years vesting 20% Yearly)": "Đối tác chiến lược (0% tại TGE & trả 20% mỗi năm trong 5 năm)",
@@ -2563,5 +2563,12 @@
   "Available To Claim": "Lượng XOX có thể rút",
   "Next unlocking date:": "Thời điểm trả token tiếp theo:",
   "Current XOX Tokens Vested:": "Tổng XOX hiện tại đã được trả:",
-  "Sale": "Doanh thu"
+  "Sale": "Doanh thu",
+  "Launch price 0.06$ ($)": "Giá ra mắt 0.06$ ($)",
+  "Days": "Ngày",
+  "Hours": "Giờ",
+  "Minutes": "Phút",
+  "Seconds": "Giây",
+  "EXCHANGE": "ĐẦU TƯ",
+  "XOX Amount": "Số lượng XOX"
 }

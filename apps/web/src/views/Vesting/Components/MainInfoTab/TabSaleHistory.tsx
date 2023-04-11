@@ -176,7 +176,7 @@ function TabSaleHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            No
+            {t('No')}
           </Text>
           <Text
             fontSize="16px"
@@ -187,7 +187,7 @@ function TabSaleHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Time
+            {t('Time')}
           </Text>
           <Text
             fontSize="16px"
@@ -198,7 +198,7 @@ function TabSaleHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Total Value
+            {t('Total Value')}
           </Text>
           <Text
             fontSize="16px"
@@ -209,7 +209,7 @@ function TabSaleHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            XOX Bought
+            {t('XOX Bought')}
           </Text>
           <Text
             fontSize="16px"
@@ -245,7 +245,7 @@ function TabSaleHistory({ currentTransactions }) {
               })}
               {sortedTransactions.length === 0 ? (
                 <NoTransactionWrapper justifyContent="center">
-                  <Text textAlign="center">No Transactions</Text>
+                  <Text textAlign="center">{t('No Transactions')}</Text>
                 </NoTransactionWrapper>
               ) : undefined}
             </>

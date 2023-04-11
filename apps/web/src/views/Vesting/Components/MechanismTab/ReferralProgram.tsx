@@ -33,7 +33,7 @@ const Content = styled.div`
   .table_ref {
     border: 1px solid rgba(255, 255, 255, 0.2);
     border-radius: 16px;
-    max-width: 1000px;
+    max-width: 1100px;
     min-width: 760px;
     padding: 19px 21px;
     margin-bottom: 16px;
@@ -57,6 +57,7 @@ const Content = styled.div`
 
     .table_ref {
       padding: 15px 16px;
+      min-width: 1100px;
     }
     .scroll {
       margin-bottom: 16px;
