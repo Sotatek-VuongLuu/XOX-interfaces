@@ -241,7 +241,7 @@ const SaleItem = ({
 
   return (
     <div className={`sale_item sale_item_${index}`}>
-      <div className="heading-sale">{itemVesting.title}</div>
+      <div className="heading-sale">{t(itemVesting.title)}</div>
       <div className="sale-container-bottom ">
         <div className="sale-schedule-item ">
           <div className="item_wrap">

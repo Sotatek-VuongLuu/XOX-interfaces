@@ -2535,7 +2535,7 @@
   "Round 2": "Đợt 2",
   "Round 3": "Đợt 3",
   "Example: User A shares referral code with B, A gets 3% of total transaction amount of Investor B in XOXS and B which is the person that is buying using A's code also gets an extra 2% of his own total transaction amount in XOXS on top of the XOXS he is getting already as a bonus by investing depending on which sale he is buying in.": "Ví dụ: Người dùng A chia sẻ mã giới thiệu với B, A nhận được 3% XOXS trên tổng lượng giao dịch của Nhà đầu tư B và B, người đang mua XOX bằng cách sử dụng mã của A, cũng nhận được thêm 2% trên tổng lượng giao dịch của riêng mình ngoài số XOXS mà B đã nhận được như 1 phần thưởng khi đầu tư, tuỳ thuộc vào đợt bán mà B tham gia.",
-  "*Important to note that Both sides will earn XOXS by just applying 1 code, so it's a win win situation for Both. Also the XOXS earned will be automatically staked once the project launch to the public and it will generate all XOXS holders passive income (APY) in USDT/USDC on autopilot.": "",
+  "*Important to note that Both sides will earn XOXS by just applying 1 code, so it's a win win situation for Both. Also the XOXS earned will be automatically staked once the project launch to the public and it will generate all XOXS holders passive income (APY) in USDT/USDC on autopilot.": "*Chú ý quan trọng là Cả hai bên sẽ kiếm được XOXS chỉ bằng cách áp dụng 1 mã giới thiệu, vì vậy đây là tình huống mang lại lợi ích cho Cả hai bên. Hơn nữa, số XOXS kiếm được sẽ được tự động gửi lãi một khi dự án được ra mắt công khai và sẽ mang lại thu nhập thụ động (APY) bằng USDT/USDC cho tất cả các chủ sở hữu XOXS.",
   "4 Steps to Earn": "4 bước kiếm tiền",
   "Copy Your Unique Referral Code": "Sao chép mã giới thiệu duy nhất của bạn",
   "Share it with friends": "Chia sẻ mã với bạn bè",
@@ -2558,7 +2558,7 @@
   "Liquidity Pools DEX (100% lock 5 years)": "Bể thanh khoản DEX (Khóa 100% trong vòng 5 năm)",
   "CEX Listing (TGE = 40% then 10% Monthly Release)": "Niêm yết trên CEX (40% tại TGE & trả 10% mỗi tháng sau đó)",
   "Total Include LP": "Tổng đã bao gồm LP",
-  "Total Exclude LP": "Tổng chưa bào gồm LP",
+  "Total Exclude LP": "Tổng chưa bao gồm LP",
   "Unclaimed": "Chưa trả",
   "Available To Claim": "Lượng XOX có thể rút",
   "Next unlocking date:": "Thời điểm trả token tiếp theo:",
@@ -2570,5 +2570,8 @@
   "Minutes": "Phút",
   "Seconds": "Giây",
   "EXCHANGE": "ĐẦU TƯ",
-  "XOX Amount": "Số lượng XOX"
+  "XOX Amount": "Số lượng XOX",
+  "Sale 1": "Đợt 1",
+  "Sale 2": "Đợt 2",
+  "Sale 3": "Đợt 3"
 }

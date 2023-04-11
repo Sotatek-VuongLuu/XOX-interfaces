@@ -16,7 +16,7 @@ import { Arrow } from 'views/Info/components/InfoTables/shared'
 import { ClickableColumnHeader, CustomTableWrapper, NoTransactionWrapper, PageButtons, Table } from './SaleHistory'
 
 const CustomTable = styled(Table)`
-  grid-template-columns: 0.15fr 1fr 1fr repeat(2, 0.7fr) 1fr;
+  grid-template-columns: 0.15fr 1fr 1fr 0.7fr 1fr 1fr;
 
   @media screen and (max-width: 900px) {
     .table-header {
