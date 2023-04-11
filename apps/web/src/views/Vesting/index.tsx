@@ -252,7 +252,7 @@ const initialTokenMetrics = [
   },
   {
     id: 14,
-    title: 'Total include LP',
+    title: 'Total Include LP',
     tokenAllocationPercent: '100',
     tokenAllocation: '180000000',
     tge: '19',
@@ -505,6 +505,9 @@ function VestingPage() {
 
   const [availableXOXForSale, setAvailableXOXForSale] = useState<number>(XOXMAXSALE1)
 
+  // console.log(`availableXOXForSale`, availableXOXForSale)
+  // console.log(`cerr`, currentRound)
+
   const handleGetTotalXOXOfUserInRound = async (acc: string, curRound: number) => {
     if (chainId === 97 || chainId === 56) return
     try {
@@ -619,7 +622,7 @@ function VestingPage() {
     }
   }
 
-  const handeInvest = async (code: any) => {
+  const handeInvest = async (code: any, current: number) => {
     const timeStamp = Date.now()
     const valueETH = typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseEther('0')
     const addressTokenBuy = typeBuyPrice === TYPE_BY.BY_ETH ? NATIVE_TOKEN : USDT[ChainId.GOERLI]
@@ -627,7 +630,7 @@ function VestingPage() {
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), decimal)
     setMessageConfirm(`Buying ${Number(amountXOX).toLocaleString()} XOX`)
 
-    if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate) {
+    if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate && current === ROUND.ONE) {
       try {
         setIsOpenLoadingClaimModal(true)
         const _merkleProof = getHexProof(dataWhitelist, account)
@@ -677,6 +680,8 @@ function VestingPage() {
 
     try {
       setIsOpenLoadingClaimModal(true)
+      console.log(`vao`)
+
       const gasFee = await contractPreSale.estimateGas.invest(addressTokenBuy, amountParse, code, {
         value: valueETH,
       })
@@ -1030,10 +1035,10 @@ function VestingPage() {
       return message
     }
 
-    // if (Number(aXOX) > availableXOXForSale) {
-    //   message = 'Maximum investment: $5000'
-    //   return message
-    // }
+    if (Number(aXOX) > availableXOXForSale) {
+      message = 'Maximum investment: $5000'
+      return message
+    }
 
     if (totalDolla < 50) {
       message = 'Minimum investment: $50'
@@ -1164,12 +1169,12 @@ function VestingPage() {
     }
   }, [whiteList, setWhiteList, account, dataWhitelist])
 
-  useEffect(() => {
-    if (!account || !chainId) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [account, chainId])
+  // useEffect(() => {
+  //   if (!account || !chainId) return
+  //   if (loadOk) window.location.reload()
+  //   setLoadOk(true)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [account, chainId])
 
   return (
     <>

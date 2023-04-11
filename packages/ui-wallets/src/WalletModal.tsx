@@ -377,7 +377,7 @@ function DesktopModal<T>({
             textAlign="center"
             mb="40px"
           >
-            {t('Start by connecting with one of these wallets below.')}
+            {t('Start by connecting with one of these wallets below')}
           </Text>
         </AtomBox>
         <WalletSelect

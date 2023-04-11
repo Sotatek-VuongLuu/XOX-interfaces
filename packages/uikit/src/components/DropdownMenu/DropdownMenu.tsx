@@ -11,7 +11,8 @@ import { LogoutIcon } from "../Svg";
 import UpIcon from "../Svg/Icons/UpIcon";
 import { DropdownMenuDivider, DropdownMenuItem, StyledDropdownMenu, LinkStatus, BoxDropdown } from "./styles";
 import { DropdownMenuItemType, DropdownMenuProps } from "./types";
-import { useTranslation } from "@pancakeswap/localization";
+import { useTranslation, languageList } from "@pancakeswap/localization";
+import Image from "next/image";
 
 const StyledBoxContainer = styled(Box)`
   :hover .hover_active {
@@ -37,6 +38,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
   setIsHover,
   isLanding = false,
   isLanguage = false,
+  setOpenHeader,
   ...props
 }) => {
   const { currentLanguage, setLanguage, t } = useTranslation();
@@ -94,8 +96,40 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
         isActive={isOpen}
       >
         {children}
-        {items.length > 0 && <UpIcon />}
+        {(items.length > 0 || isLanguage) && <UpIcon />}
       </BoxDropdown>
+      {isLanguage && (
+        <StyledDropdownMenu
+          ref={setTooltipRef}
+          {...attributes.popper}
+          $isBottomNav={isBottomNav}
+          $isOpen={isMenuShow}
+          $isLanding={isLanding}
+          onMouseEnter={handleMouseEnter}
+          onMouseLeave={handleMouseLeave}
+          className="dropdown-menu"
+        >
+          {languageList.map((lang: any) => {
+            return (
+              <div key={lang}>
+                <DropdownMenuItem
+                  $isActive={lang === currentLanguage.language}
+                  onClick={() => {
+                    setLanguage(lang);
+                    setOpenHeader && setOpenHeader(false);
+                  }}
+                  className="submenu"
+                >
+                  <div style={{ display: "flex" }}>
+                    <Image src={`/images/${lang.language}.png`} alt={lang.language} width={19} height={19} />
+                    <span style={{ marginLeft: "10px" }}>{t(lang.language)}</span>
+                  </div>
+                </DropdownMenuItem>
+              </div>
+            );
+          })}
+        </StyledDropdownMenu>
+      )}
       {hasItems && (
         <StyledDropdownMenu
           // style={styles.popper}

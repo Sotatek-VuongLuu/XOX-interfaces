@@ -6,14 +6,15 @@ import DropdownMenu from "../DropdownMenu/DropdownMenu";
 import MenuItem from "../MenuItem/MenuItem";
 import { MenuItemsProps } from "./types";
 import { useMatchBreakpoints } from "../../contexts";
-import LangSelector from "../LangSelector/LangSelector";
-import { useTranslation, languageList } from "@pancakeswap/localization";
+import { useTranslation } from "@pancakeswap/localization";
+import Image from "next/image";
 
 const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
   items = [],
   activeItem,
   activeSubItem,
   isLanding = false,
+  setOpenHeader,
   ...props
 }) => {
   const { currentLanguage, setLanguage, t } = useTranslation();
@@ -60,35 +61,30 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
           </DropdownMenu>
         );
       })}
-      <DropdownMenu
-        key={currentLanguage.language}
-        items={[]}
-        py={1}
-        activeItem={activeSubItem}
-        handleMouseEnter={handleMouseEnter}
-        handleMouseLeave={handleMouseLeave}
-        isLanding={isLanding}
-        isLanguage
-      >
-        {/* <MenuItem
-          {...linkProps}
-          isActive={isActive}
-          statusColor={statusColor}
-          isDisabled={disabled}
-          isHover={isHover}
-          label={label}
-        >
-          {label || (icon && createElement(Icon as any, { color: isActive ? "secondary" : "textSubtle" }))}
-        </MenuItem> */}
-      </DropdownMenu>
       {isMobile && (
-        <LangSelector
-          currentLang={currentLanguage.language}
-          langs={languageList}
-          setLang={setLanguage}
-          color="textSubtle"
-          hideLanguage
-        />
+        <DropdownMenu
+          key={currentLanguage.language}
+          items={[]}
+          py={1}
+          activeItem={activeSubItem}
+          handleMouseEnter={handleMouseEnter}
+          handleMouseLeave={handleMouseLeave}
+          isLanding={isLanding}
+          isLanguage
+          setOpenHeader={setOpenHeader}
+        >
+          <MenuItem isHover={isHover} label={currentLanguage.language}>
+            <div style={{ display: "flex" }}>
+              <Image
+                src={`/images/${currentLanguage.language}.png`}
+                alt={currentLanguage.language}
+                width={19}
+                height={19}
+              />
+              <span style={{ marginLeft: "10px" }}>{t(currentLanguage.language)}</span>
+            </div>
+          </MenuItem>
+        </DropdownMenu>
       )}
     </Flex>
   );
