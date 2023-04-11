@@ -53,7 +53,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
       {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx global>{`
         #home .page-bg {
-          background: #0b0a0b;
+          background: #0a0a0a;
         }
 
         #portal-root {
