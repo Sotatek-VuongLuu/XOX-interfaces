@@ -596,9 +596,8 @@ const StyledWhatYouCanDo = styled.div`
 
   ${({ theme }) => theme.mediaQueries.xl} {
     flex-direction: row;
-
     > div:nth-child(1) {
-      flex: 1;
+      width: 500px;
     }
     > div:nth-child(2) {
       width: 700px !important;
@@ -1364,15 +1363,15 @@ function DevV2() {
   const renderImageWhatYouCando = useMemo(() => {
     switch (tabWHatYouCanDo) {
       case 0:
-        return <img src="/images/dex-v2/swap.png" alt="swap" />
+        return <img src="/images/dex-v2/new_swap.png" alt="swap" />
       case 1:
-        return <img src="/images/dex-v2/limit_order.png" alt="limit_order" />
+        return <img src="/images/dex-v2/new_limit_order.png" alt="limit_order" />
       case 2:
-        return <img src="/images/dex-v2/earn.png" alt="earn" />
+        return <img src="/images/dex-v2/new_earn.png" alt="earn" />
       case 3:
-        return <img src="/images/dex-v2/liquidity.png" alt="liquidity" />
+        return <img src="/images/dex-v2/new_liquidity.png" alt="liquidity" />
       case 4:
-        return <img src="/images/dex-v2/api.png" alt="api" />
+        return <img src="/images/dex-v2/new_API.png" alt="api" />
       default:
         break
     }
@@ -1437,31 +1436,31 @@ function DevV2() {
       })
   }, [inputValue])
 
-  // useEffect(() => {
-  //   const myId = setTimeout(() => {
-  //     if (timeRecall > 0) {
-  //       setTimeRecall(timeRecall - 1)
-  //       return
-  //     }
-  //     if (flow === 'increase' && tabEcosystem < 3) {
-  //       const nextIndex = tabEcosystem + 1
-  //       if (nextIndex === 3) {
-  //         setFlow('decrease')
-  //       }
-  //       setTabEcosystem(nextIndex)
-  //     }
-  //     if (flow === 'decrease' && tabEcosystem > 0) {
-  //       const prevIndex = tabEcosystem - 1
-  //       if (prevIndex === 0) {
-  //         setFlow('increase')
-  //       }
-  //       setTabEcosystem(prevIndex)
-  //     }
-  //     setTimeRecall(7)
-  //   }, 1000)
-  //   return () => clearTimeout(myId)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [timeRecall])
+  useEffect(() => {
+    const myId = setTimeout(() => {
+      if (timeRecall > 0) {
+        setTimeRecall(timeRecall - 1)
+        return
+      }
+      if (flow === 'increase' && tabEcosystem < 3) {
+        const nextIndex = tabEcosystem + 1
+        if (nextIndex === 3) {
+          setFlow('decrease')
+        }
+        setTabEcosystem(nextIndex)
+      }
+      if (flow === 'decrease' && tabEcosystem > 0) {
+        const prevIndex = tabEcosystem - 1
+        if (prevIndex === 0) {
+          setFlow('increase')
+        }
+        setTabEcosystem(prevIndex)
+      }
+      setTimeRecall(7)
+    }, 1000)
+    return () => clearTimeout(myId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeRecall])
 
   return (
     <StyledContainer>
@@ -1472,7 +1471,7 @@ function DevV2() {
           }}
         />
         <div>
-          <img src="/images/dex-v2/heading.png" alt="" />
+          <img src="/images/dex-v2/new_top.png" alt="" />
         </div>
       </StyledHeader>
 
