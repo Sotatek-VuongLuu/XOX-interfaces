@@ -871,6 +871,11 @@ const StyledBtnStartTrading = styled.div`
       font-size: 16px;
       line-height: 19px;
       color: rgba(255, 255, 255, 0.6);
+
+      &:hover {
+        background: #ffff;
+        color: #000;
+      }
     }
   }
 `
