@@ -286,7 +286,7 @@ interface Props extends InjectedModalProps {
   setAmount: (amount: string) => void
   typeBuyPrice: number
   approvalState: number
-  handeInvest: (code: any) => void
+  handeInvest: (code: any, curr: number) => void
   approvalSubmitted: boolean
   handleApprove: () => void
   ethPerDolla: number
@@ -516,7 +516,7 @@ function ModalSaleExchange({
           ) : (
             <Button
               className="buy_xox"
-              onClick={() => handeInvest(referralCode)}
+              onClick={() => handeInvest(referralCode, currentRound)}
               disabled={referralError || !amount || massageErrorAmount}
             >
               Buy XOX

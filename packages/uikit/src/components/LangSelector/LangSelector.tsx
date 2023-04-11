@@ -1,7 +1,4 @@
 import React, { useEffect, useState } from "react";
-import Dropdown from "../Dropdown/Dropdown";
-import Button from "../Button/Button";
-import LanguageIcon from "../Svg/Icons/Language";
 import MenuButton from "./MenuButton";
 import { Colors } from "../../theme";
 import { Language } from "./types";
@@ -12,6 +9,7 @@ import styled from "styled-components";
 import { usePopper } from "react-popper";
 import { Box, Flex } from "../../components/Box";
 import { ChevronDownIcon } from "../Svg";
+import Image from "next/image";
 
 export const StyledUserMenu = styled(Flex)`
   align-items: center;
@@ -95,7 +93,6 @@ interface Props {
 
 const LangSelector: React.FC<React.PropsWithChildren<Props>> = ({ currentLang, langs, setLang }) => {
   const { t } = useTranslation();
-
   const [isOpen, setIsOpen] = useState(false);
   const [targetRef, setTargetRef] = useState<HTMLDivElement | null>(null);
   const [tooltipRef, setTooltipRef] = useState<HTMLDivElement | null>(null);
@@ -146,7 +143,12 @@ const LangSelector: React.FC<React.PropsWithChildren<Props>> = ({ currentLang, l
             setIsOpen((s) => !s);
           }}
         >
-          <LabelText title={currentLang}>{currentLang}</LabelText>
+          <LabelText title={currentLang} style={{ marginRight: 0 }}>
+            <div style={{ display: "flex" }}>
+              <Image src={`/images/${currentLang}.png`} alt={currentLang} width={19} height={19} />
+              <span style={{ marginLeft: "10px" }}>{t(currentLang)}</span>
+            </div>
+          </LabelText>
           <ChevronDownIcon color="text" width="24px" style={{ marginLeft: "6px" }} />
         </StyledUserMenu>
         <Menu style={styles.popper} ref={setTooltipRef} {...attributes.popper} isOpen={isOpen}>
@@ -157,9 +159,19 @@ const LangSelector: React.FC<React.PropsWithChildren<Props>> = ({ currentLang, l
                 fullWidth
                 onClick={() => setLang(lang)}
                 // Safari fix
-                style={{ minHeight: "32px", height: "auto", whiteSpace: "nowrap" }}
+                style={{
+                  minHeight: "32px",
+                  height: "auto",
+                  whiteSpace: "nowrap",
+                  padding: "10px",
+                  display: "flex",
+                  justifyContent: "flex-start",
+                }}
               >
-                {t(lang.language)}
+                <div style={{ display: "flex" }}>
+                  <Image src={`/images/${lang.language}.png`} alt={lang.language} width={19} height={19} />
+                  <span style={{ marginLeft: "10px" }}>{t(lang.language)}</span>
+                </div>
               </MenuButtonWrapper>
             ))}
           </BoxWrapper>
