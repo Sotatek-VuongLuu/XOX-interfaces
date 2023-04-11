@@ -587,9 +587,9 @@ const WelcomeXOX = (): JSX.Element => {
   const [validSafari, setValidSafari] = React.useState<boolean>(true)
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
-  // useEffect(() => {
-  //   (document.getElementById('laptopVideo') as any).play();
-  // }, [])
+  useEffect(() => {
+    (document.getElementById('laptopVideo') as any).play();
+  }, [])
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -612,13 +612,13 @@ const WelcomeXOX = (): JSX.Element => {
     console.log(browser.os)
   }
 
-  useEffect(() => {
-    const canvas = document.getElementById('laptopVideo')['0']
-    if (canvas) {
-      const app = new Application(canvas as any)
-      app.load('https://prod.spline.design/mJdmb5heSYCQCvOo/scene.splinecode')
-    }
-  }, [])
+  // useEffect(() => {
+  //   const canvas = document.getElementById('laptopVideo')['0']
+  //   if (canvas) {
+  //     const app = new Application(canvas as any)
+  //     app.load('https://prod.spline.design/mJdmb5heSYCQCvOo/scene.splinecode')
+  //   }
+  // }, [])
 
   return (
     <Wrapper>
@@ -869,10 +869,9 @@ const WelcomeXOX = (): JSX.Element => {
                 muted
                 playsInline
                 id="laptopVideo"
-                // controls={false}
-                // preload="yes"
-                // style={{ pointerEvents: 'none' }}
-                // controlsList="nodownload"
+                controls={false}
+                preload="yes"
+                style={{ pointerEvents: 'none' }}
               >
                 <source src="/videos/home/laptop.mov" type='video/mp4; codecs="hvc1"' />
                 <source src="/videos/home/laptop.webm" type="video/webm" />
