@@ -80,7 +80,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           },
         }}
         innerClass="welcome"
-        index={2}
+        index={3}
         hasCurvedDivider={false}
       >
         {/* <BallPurple src="/images/bg-pur.svg" /> */}
