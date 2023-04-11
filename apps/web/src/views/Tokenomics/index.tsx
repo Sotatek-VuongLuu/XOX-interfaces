@@ -82,12 +82,12 @@ function Address({ addr, ...props }: { addr: IAddress }) {
       </div>
       {chainId ? (
         <a href={chainId ? `/swap?chainId=${chainId}` : null} target="_blank" rel="noreferrer">
-          Get XOX
+          {t('Get %symbol%', { symbol: 'XOX' })}
         </a>
       ) : (
         <Tooltip title="Deployment Coming" placement="top">
           <a href={null} target="_blank" rel="noreferrer">
-            Get XOX
+            {t('Get %symbol%', { symbol: 'XOX' })}
           </a>
         </Tooltip>
       )}
