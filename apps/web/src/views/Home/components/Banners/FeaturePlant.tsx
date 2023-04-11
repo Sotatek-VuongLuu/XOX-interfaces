@@ -2,6 +2,7 @@
 import { Box, Grid } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
+import { useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
 
 const floatingAnim = (x: string, y: string) => keyframes`
@@ -159,6 +160,10 @@ const Watch = styled.div`
 const FeaturePlant = () => {
   const { t } = useTranslation()
 
+  useEffect(() => {
+    (document.getElementById('3dboxVideo') as any).play()
+  }, [])
+
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
       <Grid container spacing={2}>
@@ -215,13 +220,13 @@ const FeaturePlant = () => {
                 loop
                 muted
                 playsInline
+                id="3dboxVideo"
                 controls={false}
                 preload="yes"
                 style={{ pointerEvents: 'none' }}
-                controlsList="nodownload"
               >
-                <source src="/videos/home/3d_xox_utilities.mp4" type="video/mp4"></source>
-                <source src="/videos/home/3d_xox_utilities.webm" type="video/webm"></source>
+                <source src="/videos/home/3d_xox.mov" type='video/mp4; codecs="hvc1"' />
+                <source src="/videos/home/3d_xox.webm" type="video/webm" />
               </video>
             </div>
           </RightContent>
