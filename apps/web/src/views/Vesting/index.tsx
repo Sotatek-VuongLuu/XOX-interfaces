@@ -505,6 +505,9 @@ function VestingPage() {
 
   const [availableXOXForSale, setAvailableXOXForSale] = useState<number>(XOXMAXSALE1)
 
+  console.log(`availableXOXForSale`, availableXOXForSale)
+  console.log(`cerr`, currentRound)
+
   const handleGetTotalXOXOfUserInRound = async (acc: string, curRound: number) => {
     if (chainId === 97 || chainId === 56) return
     try {
@@ -627,7 +630,7 @@ function VestingPage() {
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), decimal)
     setMessageConfirm(`Buying ${Number(amountXOX).toLocaleString()} XOX`)
 
-    if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate) {
+    if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate && currentRound === ROUND.ONE) {
       try {
         setIsOpenLoadingClaimModal(true)
         const _merkleProof = getHexProof(dataWhitelist, account)
@@ -677,6 +680,8 @@ function VestingPage() {
 
     try {
       setIsOpenLoadingClaimModal(true)
+      console.log(`vao`)
+
       const gasFee = await contractPreSale.estimateGas.invest(addressTokenBuy, amountParse, code, {
         value: valueETH,
       })
@@ -1030,10 +1035,10 @@ function VestingPage() {
       return message
     }
 
-    // if (Number(aXOX) > availableXOXForSale) {
-    //   message = 'Maximum investment: $5000'
-    //   return message
-    // }
+    if (Number(aXOX) > availableXOXForSale) {
+      message = 'Maximum investment: $5000'
+      return message
+    }
 
     if (totalDolla < 50) {
       message = 'Minimum investment: $50'
