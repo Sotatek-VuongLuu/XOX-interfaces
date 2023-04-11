@@ -188,6 +188,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                           <span>
                             <DropdownMenuItem
                               $isActive={isActive}
+                              $hasLable={label !== ""}
                               disabled={disabled || isDisabled}
                               as={linkComponent}
                               href={href}
@@ -204,6 +205,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                       ) : (
                         <DropdownMenuItem
                           $isActive={isActive}
+                          $hasLable={label !== ""}
                           disabled={disabled || isDisabled}
                           as={linkComponent}
                           href={href}

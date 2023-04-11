@@ -45,7 +45,7 @@ export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $i
   }
 
   &:hover:not(:disabled) {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: ${({ $hasLable }) => ($hasLable ? "rgba(255, 255, 255, 0.05)" : "unset")};
   }
 
   &:active:not(:disabled) {
@@ -70,7 +70,7 @@ export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: b
   visibility: visible;
   z-index: 1001;
   display: grid;
-  grid-template-columns: ${({ $isLanding }) => ($isLanding ? "1fr 1fr" : "1fr")};
+  grid-template-columns: ${({ $isLanding }) => ($isLanding ? "1fr 1fr 1fr" : "1fr")};
   height: auto;
 
   ${({ theme }) => theme.mediaQueries.xxl} {
