@@ -622,7 +622,7 @@ function VestingPage() {
     }
   }
 
-  const handeInvest = async (code: any, current: number) => {
+  const handeInvest = async (code: any) => {
     const timeStamp = Date.now()
     const valueETH = typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseEther('0')
     const addressTokenBuy = typeBuyPrice === TYPE_BY.BY_ETH ? NATIVE_TOKEN : USDT[ChainId.GOERLI]
@@ -630,7 +630,7 @@ function VestingPage() {
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), decimal)
     setMessageConfirm(`Buying ${Number(amountXOX).toLocaleString()} XOX`)
 
-    if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate && current === ROUND.ONE) {
+    if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate) {
       try {
         setIsOpenLoadingClaimModal(true)
         const _merkleProof = getHexProof(dataWhitelist, account)
@@ -680,7 +680,6 @@ function VestingPage() {
 
     try {
       setIsOpenLoadingClaimModal(true)
-      console.log(`vao`)
 
       const gasFee = await contractPreSale.estimateGas.invest(addressTokenBuy, amountParse, code, {
         value: valueETH,
@@ -1035,10 +1034,10 @@ function VestingPage() {
       return message
     }
 
-    if (Number(aXOX) > availableXOXForSale) {
-      message = 'Maximum investment: $5000'
-      return message
-    }
+    // if (Number(aXOX) > availableXOXForSale) {
+    //   message = 'Maximum investment: $5000'
+    //   return message
+    // }
 
     if (totalDolla < 50) {
       message = 'Minimum investment: $50'
