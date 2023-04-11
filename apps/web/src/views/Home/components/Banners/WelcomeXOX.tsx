@@ -873,8 +873,10 @@ const WelcomeXOX = (): JSX.Element => {
                 preload="yes"
                 style={{ pointerEvents: 'none' }}
               >
-                <source src="/videos/home/laptop.mov" type='video/mp4; codecs="hvc1"' />
-                <source src="/videos/home/laptop.webm" type="video/webm" />
+                {/* <source src="/videos/home/laptop.mov" type='video/mp4; codecs="hvc1"' />
+                <source src="/videos/home/laptop.webm" type="video/webm" /> */}
+                  <source src="https://rotato.netlify.app/alpha-demo/movie-hevc.mov" type='video/mp4; codecs="hvc1"' />
+                  <source src="https://rotato.netlify.app/alpha-demo/movie-webm.webm" type="video/webm" />
               </video>
             </div>
           </Grid>
