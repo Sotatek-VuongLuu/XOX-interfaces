@@ -815,14 +815,15 @@ const WelcomeXOX = (): JSX.Element => {
             <div className="video-container">
               {/* <div className="overlay"></div> */}
               <video
+                autoPlay
                 loop
                 muted
                 playsInline
-                controls={false}
-                preload="yes"
-                style={{ pointerEvents: 'none' }}
-                controlsList="nodownload"
                 id="laptopVideo"
+                // controls={false}
+                // preload="yes"
+                // style={{ pointerEvents: 'none' }}
+                // controlsList="nodownload"
               >
                 <source src="/videos/home/laptop.mov" type='video/mp4; codecs="hvc1"' />
                 <source src="/videos/home/laptop.webm" type="video/webm" />
