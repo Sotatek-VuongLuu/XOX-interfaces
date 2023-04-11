@@ -853,7 +853,7 @@ const WelcomeXOX = (): JSX.Element => {
                 // loop
                 // muted
                 // playsInline
-                // id="laptopVideo"
+                id="laptopVideo"
                 // controls={false}
                 // preload="yes"
                 // style={{ pointerEvents: 'none' }}
