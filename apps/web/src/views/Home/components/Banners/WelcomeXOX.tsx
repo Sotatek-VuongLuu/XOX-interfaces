@@ -43,7 +43,7 @@ const Wrapper = styled.div`
       top: 30%;
       left: 0;
       width: 100%;
-      transform: scale(2);
+      transform: scale(1.8);
       outline: none;
       border: none !important;
       clip-path: inset(1px 1px);
@@ -849,19 +849,17 @@ const WelcomeXOX = (): JSX.Element => {
             <div className="video-container">
               {/* <div className="overlay"></div> */}
               <video
-                // autoPlay
-                // loop
-                // muted
-                // playsInline
+                autoPlay
+                loop
+                muted
+                playsInline
                 id="laptopVideo"
-                // controls={false}
-                // preload="yes"
-                // style={{ pointerEvents: 'none' }}
+                controls={false}
+                preload="yes"
+                style={{ pointerEvents: 'none' }}
               >
-                {/* <source src="/videos/home/laptop.mov" type='video/mp4; codecs="hvc1"' />
-                <source src="/videos/home/laptop.webm" type="video/webm" /> */}
-                  <source src="https://rotato.netlify.app/alpha-demo/movie-hevc.mov" type='video/mp4; codecs="hvc1"' />
-                  <source src="https://rotato.netlify.app/alpha-demo/movie-webm.webm" type="video/webm" />
+                <source src="/videos/home/laptop.mov" type='video/mp4; codecs="hvc1"' />
+                <source src="/videos/home/laptop.webm" type="video/webm" />
               </video>
             </div>
           </Grid>
