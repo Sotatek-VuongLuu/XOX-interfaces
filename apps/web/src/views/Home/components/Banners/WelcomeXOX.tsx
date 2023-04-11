@@ -80,7 +80,7 @@ const Wrapper = styled.div`
         rgba(246, 99, 42, 0.5) 0.01%,
         rgba(249, 124, 29, 0) 100%
       );
-      opacity: 0.7;
+      opacity: 0.5;
       scale: 1.3;
 
       @media screen and (max-width: 900px) {
@@ -670,7 +670,7 @@ const WelcomeXOX = (): JSX.Element => {
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
   useEffect(() => {
-    ;(document.getElementById('laptopVideo') as any).play()
+    (document.getElementById('laptopVideo') as any).play()
   }, [])
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
