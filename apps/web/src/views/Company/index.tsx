@@ -67,16 +67,29 @@ const StyledSectionText = styled('div')`
 const StyledHeader = styled('div')`
   position: relative;
   margin-bottom: 97px;
+  > div:nth-child(1) {
+    > video {
+      width: 800px;
+      max-width: 100%;
+      margin-bottom: 30px;
+    }
+  }
 
+  > div:nth-child(2) {
+    > img {
+      display: block;
+      margin: 0px auto;
+    }
+  }
   ${({ theme }) => theme.mediaQueries.lg} {
     margin-bottom: 116px;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
   }
 `
 
-const StyledPreviewVideo = styled('div')`
-  height: 340px;
-`
+const StyledPreviewVideo = styled('div')``
 
 const StyledMembers = styled(Box)`
   display: grid;
