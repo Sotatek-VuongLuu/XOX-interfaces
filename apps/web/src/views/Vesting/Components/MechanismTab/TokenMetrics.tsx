@@ -9,7 +9,7 @@ interface IProps {
 }
 
 const CustomTable = styled(Table)`
-  grid-template-columns: 5fr 1.6fr 1.3fr 0.7fr 1.8fr 1.4fr 1.5fr;
+  grid-template-columns: 5fr 1.6fr 1.3fr 0.7fr 1.8fr 1.5fr 2fr;
   gap: 20px;
 
   &::before {

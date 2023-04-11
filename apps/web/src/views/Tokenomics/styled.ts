@@ -142,7 +142,7 @@ export const StyledBG = styled('div')`
     right: 0;
     bottom: 0;
     z-index: -4;
-    background-color: #0b0a0b;
+    background-color: #0a0a0a;
   }
 
   > div {

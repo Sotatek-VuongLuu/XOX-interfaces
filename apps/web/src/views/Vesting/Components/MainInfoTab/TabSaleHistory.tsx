@@ -16,7 +16,7 @@ import { Arrow } from 'views/Info/components/InfoTables/shared'
 import { ClickableColumnHeader, CustomTableWrapper, NoTransactionWrapper, PageButtons, Table } from './SaleHistory'
 
 const CustomTable = styled(Table)`
-  grid-template-columns: 0.15fr 1fr 1fr repeat(2, 0.7fr) 1fr;
+  grid-template-columns: 0.15fr 1fr 1fr 0.7fr 1fr 1fr;
 
   @media screen and (max-width: 900px) {
     .table-header {
@@ -176,7 +176,7 @@ function TabSaleHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            No
+            {t('No')}
           </Text>
           <Text
             fontSize="16px"
@@ -187,7 +187,7 @@ function TabSaleHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Time
+            {t('Time')}
           </Text>
           <Text
             fontSize="16px"
@@ -198,7 +198,7 @@ function TabSaleHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            Total Value
+            {t('Total Value')}
           </Text>
           <Text
             fontSize="16px"
@@ -209,7 +209,7 @@ function TabSaleHistory({ currentTransactions }) {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            XOX Bought
+            {t('XOX Bought')}
           </Text>
           <Text
             fontSize="16px"
@@ -245,7 +245,7 @@ function TabSaleHistory({ currentTransactions }) {
               })}
               {sortedTransactions.length === 0 ? (
                 <NoTransactionWrapper justifyContent="center">
-                  <Text textAlign="center">No Transactions</Text>
+                  <Text textAlign="center">{t('No Transactions')}</Text>
                 </NoTransactionWrapper>
               ) : undefined}
             </>

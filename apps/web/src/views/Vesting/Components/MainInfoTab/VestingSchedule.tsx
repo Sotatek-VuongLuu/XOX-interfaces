@@ -241,7 +241,7 @@ const SaleItem = ({
 
   return (
     <div className={`sale_item sale_item_${index}`}>
-      <div className="heading-sale">{itemVesting.title}</div>
+      <div className="heading-sale">{t(itemVesting.title)}</div>
       <div className="sale-container-bottom ">
         <div className="sale-schedule-item ">
           <div className="item_wrap">
@@ -414,6 +414,7 @@ const WrapperTime = styled.div`
 `
 
 const CountDown = ({ startTime, setCount, count }: Props) => {
+  const { t } = useTranslation()
   const [timeList, setTimeList] = useState({
     days: 0,
     hours: 0,
@@ -472,7 +473,7 @@ const CountDown = ({ startTime, setCount, count }: Props) => {
             <div className="corner2" />
             <div className="edge2" />
             <div className="number_time">{handleTime(item)}</div>
-            <div className="name_time">{renderTitleTime(index)}</div>
+            <div className="name_time">{t(renderTitleTime(index))}</div>
           </div>
         )
       })}

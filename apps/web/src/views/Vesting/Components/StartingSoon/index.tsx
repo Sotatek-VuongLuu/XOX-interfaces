@@ -123,6 +123,13 @@ const Wrapper = styled.div`
       display: block;
       margin-top: 20px;
     }
+
+    video {
+      max-width: 100% !important;
+      height: auto;
+      display: block;
+      margin-top: 20px;
+    }
   }
 
   @media screen and (max-width: 900px) {
@@ -194,6 +201,10 @@ function StartingSoon({
   const [timeNow, setTimeNow] = useState(timeStampOfNow)
 
   const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
+
+  useEffect(() => {
+    (document.getElementById('presaleVideo') as any).play()
+  }, [])
 
   const handleReturnPercent = useMemo(() => {
     switch (currentRound) {
@@ -338,7 +349,20 @@ function StartingSoon({
         <>
           <p className="title">{t('XOX Token pre-sale is Ended')}</p>
           <div className="rocket_container">
-            <img src="/images/rocket_xox.png" alt="rocket_xox" />
+            {/* <img src="/images/rocket_xox.png" alt="rocket_xox" /> */}
+            <video
+              autoPlay
+              loop
+              muted
+              playsInline
+              id="presaleVideo"
+              controls={false}
+              preload="yes"
+              style={{ pointerEvents: 'none' }}
+            >
+              <source src="/videos/presale/presale.mov" type='video/mp4; codecs="hvc1"' />
+              <source src="/videos/presale/presale.webm" type="video/webm" />
+            </video>
           </div>
         </>
       )
@@ -346,7 +370,20 @@ function StartingSoon({
 
     return (
       <div className="rocket_container">
-        <img src="/images/rocket_xox.png" alt="rocket_xox" />
+        {/* <img src="/images/rocket_xox.png" alt="rocket_xox" /> */}
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          id="presaleVideo"
+          controls={false}
+          preload="yes"
+          style={{ pointerEvents: 'none' }}
+        >
+          <source src="/videos/presale/presale.mov" type='video/mp4; codecs="hvc1"' />
+          <source src="/videos/presale/presale.webm" type="video/webm" />
+        </video>
       </div>
     )
   }
@@ -395,7 +432,20 @@ function StartingSoon({
       {handleRenderTitle}
       {isNotSetDataForAll ? (
         <div className="rocket_container">
-          <img src="/images/rocket_xox.png" alt="rocket_xox" />
+          {/* <img src="/images/rocket_xox.png" alt="rocket_xox" /> */}
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            id="presaleVideo"
+            controls={false}
+            preload="yes"
+            style={{ pointerEvents: 'none' }}
+          >
+            <source src="/videos/presale/presale.mov" type='video/mp4; codecs="hvc1"' />
+            <source src="/videos/presale/presale.webm" type="video/webm" />
+          </video>
         </div>
       ) : (
         handleRenderCountdown(timeNow)
