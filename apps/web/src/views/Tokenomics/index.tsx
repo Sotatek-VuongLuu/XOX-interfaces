@@ -3,7 +3,7 @@ import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { Tooltip } from '@mui/material'
 import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
-import { useMemo } from 'react'
+import { useEffect, useMemo } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
 import { BTNLearnMore } from 'views/Company'
 import ReactECharts from 'echarts-for-react'
@@ -106,6 +106,10 @@ export default function TokenomicsPage() {
   const { t } = useTranslation()
   const { width } = useWindowSize()
   const LAUNCH_APP_TIME = 1679850000 /// (seconds) can change
+
+  useEffect(() => {
+    (document.getElementById('pieChart') as any).play()
+  }, [])
 
   const handleRenderXAxis = (): IDataOBJReturn[] => {
     const data = []
@@ -537,16 +541,17 @@ export default function TokenomicsPage() {
 
           <div>
             <video
-              loop
-              playsInline
               autoPlay
-              controls={false}
-              preload="auto"
-              style={{ pointerEvents: 'none' }}
-              controlsList="nodownload"
+              loop
               muted
+              playsInline
+              id="pieChart"
+              controls={false}
+              preload="yes"
+              style={{ pointerEvents: 'none' }}
             >
-              <source src="/videos/home/pie-chart.webm" type="video/webm" />
+              <source src="/videos/tokenomics/pie_chart.mov" type='video/mp4; codecs="hvc1"' />
+              <source src="/videos/tokenomics/pie_chart.webm" type="video/webm" />
             </video>
             {/* <img src="/images/tokenomics/Untitled@5-1397x721 1.png" alt="" draggable="false" loading="lazy" /> */}
           </div>
