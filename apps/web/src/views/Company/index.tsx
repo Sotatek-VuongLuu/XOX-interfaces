@@ -74,7 +74,9 @@ const StyledHeader = styled('div')`
   }
 `
 
-const StyledPreviewVideo = styled('div')``
+const StyledPreviewVideo = styled('div')`
+  height: 340px;
+`
 
 const StyledMembers = styled(Box)`
   display: grid;
