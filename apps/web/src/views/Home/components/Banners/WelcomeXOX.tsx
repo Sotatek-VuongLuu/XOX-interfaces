@@ -612,14 +612,6 @@ const WelcomeXOX = (): JSX.Element => {
     console.log(browser.os)
   }
 
-  // useEffect(() => {
-  //   const canvas = document.getElementById('laptopVideo')['0']
-  //   if (canvas) {
-  //     const app = new Application(canvas as any)
-  //     app.load('https://prod.spline.design/mJdmb5heSYCQCvOo/scene.splinecode')
-  //   }
-  // }, [])
-
   return (
     <Wrapper>
       <Box sx={{ flexGrow: 1, display: 'flex', alignItems: 'center' }}>
@@ -762,13 +754,6 @@ const WelcomeXOX = (): JSX.Element => {
                     </button>
                   </div>
                 </div>
-                {/* <div className="more-btn">
-                  <div className="bg-btn" aria-describedby={id} variant='contained' onClick={handleClick}>
-                    <img src="/images/home/hero/checklist.svg" alt="checklist" />
-                    <p>More</p>
-                    <img src="/images/home/hero/down.svg" alt="down" />
-                  </div>
-                </div> */}
                 <div className="more-btn">
                   <Button aria-describedby={id} onClick={handleClick} className="bg-btn">
                     <img src="/images/home/hero/checklist.svg" alt="checklist" />
@@ -864,14 +849,14 @@ const WelcomeXOX = (): JSX.Element => {
             <div className="video-container">
               {/* <div className="overlay"></div> */}
               <video
-                autoPlay
-                loop
-                muted
-                playsInline
-                id="laptopVideo"
-                controls={false}
-                preload="yes"
-                style={{ pointerEvents: 'none' }}
+                // autoPlay
+                // loop
+                // muted
+                // playsInline
+                // id="laptopVideo"
+                // controls={false}
+                // preload="yes"
+                // style={{ pointerEvents: 'none' }}
               >
                 {/* <source src="/videos/home/laptop.mov" type='video/mp4; codecs="hvc1"' />
                 <source src="/videos/home/laptop.webm" type="video/webm" /> */}
