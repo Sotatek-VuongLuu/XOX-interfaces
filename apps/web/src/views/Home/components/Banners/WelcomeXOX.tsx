@@ -587,9 +587,9 @@ const WelcomeXOX = (): JSX.Element => {
   const [validSafari, setValidSafari] = React.useState<boolean>(true)
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
-  useEffect(() => {
-    ;(document.getElementById('laptopVideo') as any).play()
-  }, [])
+  // useEffect(() => {
+  //   (document.getElementById('laptopVideo') as any).play();
+  // }, [])
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget)
@@ -864,17 +864,18 @@ const WelcomeXOX = (): JSX.Element => {
             <div className="video-container">
               {/* <div className="overlay"></div> */}
               <video
+                autoPlay
                 loop
                 muted
                 playsInline
-                controls={false}
-                preload="yes"
-                style={{ pointerEvents: 'none' }}
-                controlsList="nodownload"
                 id="laptopVideo"
+                // controls={false}
+                // preload="yes"
+                // style={{ pointerEvents: 'none' }}
+                // controlsList="nodownload"
               >
-                <source src="/videos/home/laptop_project_16_9.mp4" type="video/mp4" />
-                <source src="/videos/home/laptop_project.webm" type="video/webm" />
+                <source src="/videos/home/laptop.mov" type='video/mp4; codecs="hvc1"' />
+                <source src="/videos/home/laptop.webm" type="video/webm" />
               </video>
             </div>
           </Grid>
