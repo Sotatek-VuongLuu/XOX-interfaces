@@ -2,13 +2,12 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
 import styled from 'styled-components'
-import { Box, Grid, Popover } from '@mui/material'
+import { Box, Grid } from '@mui/material'
 import { useMatchBreakpoints, CopyButton } from '@pancakeswap/uikit'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
-import { Application } from '@splinetool/runtime'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -382,6 +381,7 @@ const LeftContent = styled.div`
         color: rgba(255, 255, 255, 0.87);
         font-weight: 400;
         max-width: 150px;
+        text-decoration: underline;
       }
 
       @media screen and (max-width: 576px) {
@@ -501,61 +501,6 @@ const ImageWrapper = styled.div`
   }
 `
 
-const CustomPopover = styled(Popover)`
-  .MuiPopover-paper {
-    background: #1d1c1c;
-    border-radius: 10px;
-    min-width: 250px;
-    margin-top: 2px;
-
-    .popover-coin {
-      display: flex;
-      background: #1d1c1c;
-      box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.2);
-      flex-direction: row;
-      justify-content: space-between;
-
-      .coin-info {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-        justify-content: space-between;
-        padding: 8px 12px 8px 12px;
-        gap: 8px;
-
-        .coin-data {
-          justify-content: center;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-
-          .title {
-            font-size: 16px;
-            line-height: 19px;
-            text-align: center;
-            color: rgba(255, 255, 255, 0.87);
-          }
-
-          .description {
-            font-weight: 400;
-            font-size: 12px;
-            line-height: 15px;
-            color: rgba(255, 255, 255, 0.87);
-          }
-        }
-      }
-
-      .coin-buttons {
-        justify-content: center;
-        display: flex;
-        flex-direction: row;
-        padding: 8px 12px 8px 12px;
-        gap: 8px;
-      }
-    }
-  }
-`
-
 const CustomDropdown = styled.div`
   position: absolute;
   width: fit-content;
@@ -611,6 +556,7 @@ const CustomDropdown = styled.div`
           font-size: 12px;
           line-height: 15px;
           color: rgba(255, 255, 255, 0.87);
+          text-decoration: underline;
         }
       }
     }
