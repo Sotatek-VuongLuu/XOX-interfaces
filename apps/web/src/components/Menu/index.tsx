@@ -284,6 +284,7 @@ const Menu = (props) => {
             activeItem={menuLandingPath.includes(route.pathname) ? activeMenuItemLanding?.href : activeMenuItem?.href}
             activeSubItem={activeSubMenuItem?.href}
             setOpenHeader={setOpenHeader}
+            isLanding={menuLandingPath.includes(route.pathname)}
           />
         </CustomModalWrapper>
       </ModalV2Wrapper>
@@ -372,14 +373,16 @@ const Menu = (props) => {
               ) : (
                 <></>
               )}
-              {/* <LangSelector
-                currentLang={currentLanguage.code}
-                langs={languageList}
-                setLang={setLanguage}
-                buttonScale="xs"
-                color="textSubtle"
-                hideLanguage
-              /> */}
+              {isDesktop && (
+                <LangSelector
+                  currentLang={currentLanguage.language}
+                  langs={languageList}
+                  setLang={setLanguage}
+                  buttonScale="xs"
+                  color="textSubtle"
+                  hideLanguage
+                />
+              )}
               <NetworkSwitcher />
               <UserMenu />
               {openHeader ? (

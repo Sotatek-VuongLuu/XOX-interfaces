@@ -225,7 +225,7 @@ const SaleItem = ({
   const handleCheckCount = (it: any) => {
     if (it.startTime.length === 0) return
     const NOW = Date.now()
-    const i = Array.from(it.startTime).findIndex((value) => value > NOW)
+    const i = Array.from(it.startTime).findIndex((value: any) => value > NOW)
 
     if (i === -1) {
       setCount(9)

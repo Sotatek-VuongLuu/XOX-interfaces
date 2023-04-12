@@ -593,6 +593,7 @@ const CustomDropdown = styled.div`
         align-items: flex-start;
 
         .title {
+          font-weight: bold;
           font-size: 16px;
           line-height: 19px;
           text-align: center;

@@ -1,9 +1,7 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useContext, useEffect, useState, useCallback, createElement } from "react";
 import { usePopper } from "react-popper";
-import { Tooltip } from "@mui/material";
 import styled from "styled-components";
-
 import { useOnClickOutside } from "../../hooks";
 import { MenuContext } from "../../widgets/Menu/context";
 import { Box, Flex } from "../Box";
@@ -13,6 +11,7 @@ import { DropdownMenuDivider, DropdownMenuItem, StyledDropdownMenu, LinkStatus, 
 import { DropdownMenuItemType, DropdownMenuProps } from "./types";
 import { useTranslation, languageList } from "@pancakeswap/localization";
 import Image from "next/image";
+import { DropdownMenuItems } from "./types";
 
 const StyledBoxContainer = styled(Box)`
   :hover .hover_active {
@@ -21,6 +20,49 @@ const StyledBoxContainer = styled(Box)`
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
+  }
+`;
+
+const Tooltip = styled.div`
+  position: relative;
+  display: inline-block;
+  border-bottom: 1px dotted black;
+  width: 100%;
+
+  & .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #555;
+    color: #fff;
+    text-align: center;
+    padding: 5px 0;
+    border-radius: 6px;
+
+    position: absolute;
+    z-index: 1;
+    bottom: 125%;
+    left: 50%;
+    margin-left: -60px;
+
+    /* Fade in tooltip */
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  & .tooltiptext::after {
+    content: "";
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: #555 transparent transparent transparent;
+  }
+
+  &:hover .tooltiptext {
+    visibility: visible;
+    opacity: 1;
   }
 `;
 
@@ -87,6 +129,103 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
     }, [setIsOpen])
   );
 
+  const renderItems = (items: DropdownMenuItems[]) => {
+    return items
+      .filter((item: any) => !item.isMobileOnly)
+      .map(
+        (
+          {
+            type = DropdownMenuItemType.INTERNAL_LINK,
+            label,
+            href = "/",
+            status,
+            disabled,
+            icon,
+            showTooltip,
+            ...itemProps
+          },
+          itemItem
+        ) => {
+          const MenuItemContent = (
+            <>
+              {icon && createElement(icon as any)}
+              {label}
+              {status && (
+                <LinkStatus textTransform="uppercase" color={status.color} fontSize="14px">
+                  {status.text}
+                </LinkStatus>
+              )}
+            </>
+          );
+          const isActive = href === activeItem;
+          return (
+            <div key={itemItem}>
+              {type === DropdownMenuItemType.BUTTON && (
+                <DropdownMenuItem $isActive={isActive} disabled={disabled || isDisabled} type="button" {...itemProps}>
+                  {MenuItemContent}
+                </DropdownMenuItem>
+              )}
+              {type === DropdownMenuItemType.INTERNAL_LINK &&
+                (showTooltip ? (
+                  <Tooltip>
+                    <span>
+                      <DropdownMenuItem
+                        $isActive={isActive}
+                        disabled={disabled || isDisabled}
+                        as={linkComponent}
+                        href={href}
+                        onClick={() => setIsOpen(false)}
+                        className="submenu"
+                        {...itemProps}
+                      >
+                        {MenuItemContent}
+                      </DropdownMenuItem>
+                    </span>
+                    <span className="tooltiptext">{t("Under Development")}</span>
+                  </Tooltip>
+                ) : (
+                  // <Tooltip title="Under Development" placement="right">
+
+                  // </Tooltip>
+                  <DropdownMenuItem
+                    $isActive={isActive}
+                    disabled={disabled || isDisabled}
+                    as={linkComponent}
+                    href={href}
+                    onClick={() => {
+                      setIsOpen(false);
+                    }}
+                    {...itemProps}
+                    className="submenu"
+                  >
+                    {MenuItemContent}
+                  </DropdownMenuItem>
+                ))}
+              {type === DropdownMenuItemType.EXTERNAL_LINK && (
+                <DropdownMenuItem
+                  $isActive={isActive}
+                  disabled={disabled || isDisabled}
+                  as="a"
+                  href={href}
+                  target="_blank"
+                  onClick={() => {
+                    setIsOpen(false);
+                  }}
+                  {...itemProps}
+                >
+                  <Flex alignItems="center" justifyContent="space-between" width="100%">
+                    {label}
+                    <LogoutIcon color={disabled ? "textDisabled" : "textSubtle"} />
+                  </Flex>
+                </DropdownMenuItem>
+              )}
+              {type === DropdownMenuItemType.DIVIDER && <DropdownMenuDivider />}
+            </div>
+          );
+        }
+      );
+  };
+
   return (
     <StyledBoxContainer ref={setTargetRef} {...props} style={{ position: "relative" }}>
       <BoxDropdown
@@ -104,7 +243,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
           {...attributes.popper}
           $isBottomNav={isBottomNav}
           $isOpen={isMenuShow}
-          $isLanding={isLanding}
+          $isLanding={false}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           className="dropdown-menu"
@@ -142,103 +281,9 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
           onMouseLeave={handleMouseLeave}
           className="dropdown-menu"
         >
-          {items
-            .filter((item) => !item.isMobileOnly)
-            .map(
-              (
-                {
-                  type = DropdownMenuItemType.INTERNAL_LINK,
-                  label,
-                  href = "/",
-                  status,
-                  disabled,
-                  icon,
-                  showTooltip,
-                  ...itemProps
-                },
-                itemItem
-              ) => {
-                const MenuItemContent = (
-                  <>
-                    {icon && createElement(icon as any)}
-                    {label}
-                    {status && (
-                      <LinkStatus textTransform="uppercase" color={status.color} fontSize="14px">
-                        {status.text}
-                      </LinkStatus>
-                    )}
-                  </>
-                );
-                const isActive = href === activeItem;
-                return (
-                  <div key={itemItem}>
-                    {type === DropdownMenuItemType.BUTTON && (
-                      <DropdownMenuItem
-                        $isActive={isActive}
-                        disabled={disabled || isDisabled}
-                        type="button"
-                        {...itemProps}
-                      >
-                        {MenuItemContent}
-                      </DropdownMenuItem>
-                    )}
-                    {type === DropdownMenuItemType.INTERNAL_LINK &&
-                      (showTooltip ? (
-                        <Tooltip title="Under Development" placement="top-start">
-                          <span>
-                            <DropdownMenuItem
-                              $isActive={isActive}
-                              disabled={disabled || isDisabled}
-                              as={linkComponent}
-                              href={href}
-                              onClick={() => {
-                                setIsOpen(false);
-                              }}
-                              {...itemProps}
-                              className="submenu"
-                            >
-                              {MenuItemContent}
-                            </DropdownMenuItem>
-                          </span>
-                        </Tooltip>
-                      ) : (
-                        <DropdownMenuItem
-                          $isActive={isActive}
-                          disabled={disabled || isDisabled}
-                          as={linkComponent}
-                          href={href}
-                          onClick={() => {
-                            setIsOpen(false);
-                          }}
-                          {...itemProps}
-                          className="submenu"
-                        >
-                          {MenuItemContent}
-                        </DropdownMenuItem>
-                      ))}
-                    {type === DropdownMenuItemType.EXTERNAL_LINK && (
-                      <DropdownMenuItem
-                        $isActive={isActive}
-                        disabled={disabled || isDisabled}
-                        as="a"
-                        href={href}
-                        target="_blank"
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
-                        {...itemProps}
-                      >
-                        <Flex alignItems="center" justifyContent="space-between" width="100%">
-                          {label}
-                          <LogoutIcon color={disabled ? "textDisabled" : "textSubtle"} />
-                        </Flex>
-                      </DropdownMenuItem>
-                    )}
-                    {type === DropdownMenuItemType.DIVIDER && <DropdownMenuDivider />}
-                  </div>
-                );
-              }
-            )}
+          {items.slice(0, 4).length > 0 && <div>{renderItems(items.slice(0, 4))}</div>}
+          {items.slice(4, 7).length > 0 && <div>{renderItems(items.slice(4, 7))}</div>}
+          {items.slice(7, 11).length > 0 && <div>{renderItems(items.slice(7, 11))}</div>}
         </StyledDropdownMenu>
       )}
     </StyledBoxContainer>

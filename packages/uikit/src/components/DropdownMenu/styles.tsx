@@ -63,14 +63,13 @@ export const DropdownMenuDivider = styled.hr`
 
 export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: boolean; $isLanding: boolean }>`
   border-radius: 6px;
-
   pointer-events: auto;
   margin-bottom: 0;
   width: ${({ $isBottomNav, $isLanding }) => ($isBottomNav ? "100%" : $isLanding ? "515px" : "160px")};
   visibility: visible;
   z-index: 1001;
   display: grid;
-  grid-template-columns: ${({ $isLanding }) => ($isLanding ? "1fr 1fr" : "1fr")};
+  grid-template-columns: ${({ $isLanding }) => ($isLanding ? "1fr 1fr 1fr" : "1fr")};
   height: auto;
 
   ${({ theme }) => theme.mediaQueries.xxl} {
@@ -87,6 +86,12 @@ export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: b
 
   @media (max-width: 576px) {
     width: ${({ $isBottomNav, $isLanding }) => ($isBottomNav ? "100%" : $isLanding ? "515px" : "100%")};
+    grid-template-columns: ${({ $isLanding }) => ($isLanding ? "1fr auto" : "1fr")};
+    max-width: 100%;
+
+    & > div:nth-child(3) {
+      grid-column: 1 / 3;
+    }
   }
 
   ${({ $isOpen }) =>

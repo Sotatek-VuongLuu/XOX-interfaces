@@ -570,6 +570,7 @@ export const StyledAAD = styled(StyledCard)`
   gap: 28px;
   margin-top: 40px;
   margin-bottom: 64px;
+  min-width: 100%;
 
   > div.l,
   > div.r {

@@ -8,6 +8,14 @@ import { MenuItemsProps } from "./types";
 import { useMatchBreakpoints } from "../../contexts";
 import { useTranslation } from "@pancakeswap/localization";
 import Image from "next/image";
+import styled from "styled-components";
+
+const Wrapper = styled(Flex)`
+  @media screen and (max-width: 560px) {
+    overflow: auto;
+    max-height: calc(100vh - 172px);
+  }
+`;
 
 const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
   items = [],
@@ -29,7 +37,7 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
   };
 
   return (
-    <Flex {...props}>
+    <Wrapper {...props}>
       {items.map(({ label, items: menuItems = [], href, icon, disabled }) => {
         const statusColor = menuItems?.find((menuItem) => menuItem.status !== undefined)?.status?.color;
         const isActive = activeItem === href;
@@ -86,7 +94,7 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
           </MenuItem>
         </DropdownMenu>
       )}
-    </Flex>
+    </Wrapper>
   );
 };
 

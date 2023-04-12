@@ -11,6 +11,7 @@ import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { handleTime } from '../CountDown'
 import { TextCustom } from '../ModalExchange'
+import { useTranslation } from '@pancakeswap/localization'
 
 const StyledModalContainer = styled(ModalContainer)`
   width: 337px;
@@ -76,6 +77,8 @@ interface IProps extends InjectedModalProps {
 }
 
 function ModalWarning({ onDismiss, timeWhitelist }: IProps) {
+  const {t} = useTranslation()
+
   return (
     <StyledModalContainer>
       <div className="corner1" />
@@ -85,7 +88,7 @@ function ModalWarning({ onDismiss, timeWhitelist }: IProps) {
       <StyledModalHeader>
         <ModalTitle>
           <TextCustom color="rgba(255, 255, 255, 0.87)" fontWeight={700} fontSize="24px" textAlign="center">
-            Pre-sale warning!
+            {t('Pre-sale warning!')}
           </TextCustom>
         </ModalTitle>
         <ModalCloseButton onDismiss={onDismiss} />
@@ -97,7 +100,7 @@ function ModalWarning({ onDismiss, timeWhitelist }: IProps) {
 
         <Flex alignItems="center" marginBottom="26px" padding="0px 24px" className="xox_amount" justifyContent="center">
           <p style={{ textAlign: 'center' }}>
-            Sorry, Looks like your wallet is not Whitelisted &ldquo;You can invest after [
+            {t('Sorry, Looks like your wallet is not Whitelisted &ldquo;You can invest after')} [
             <CountDown startTime={timeWhitelist} />
             ]&ldquo;
           </p>
