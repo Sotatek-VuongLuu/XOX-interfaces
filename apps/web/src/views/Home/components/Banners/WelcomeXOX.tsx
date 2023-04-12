@@ -669,9 +669,12 @@ const WelcomeXOX = (): JSX.Element => {
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
+  const lapTop = document.getElementById('laptopVideo') as any
+
   useEffect(() => {
-    (document.getElementById('laptopVideo') as any).play()
-  }, [])
+    if (!lapTop) return
+    lapTop.play()
+  }, [lapTop])
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setOpenDropdown(!openDropdown)
@@ -1017,7 +1020,7 @@ const WelcomeXOX = (): JSX.Element => {
           </GridLeft>
           <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
             <div className="video-container">
-              <div className="overlay"></div>
+              <div className="overlay" />
               <video
                 autoPlay
                 loop

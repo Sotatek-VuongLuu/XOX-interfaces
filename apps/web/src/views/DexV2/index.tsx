@@ -1252,6 +1252,7 @@ function DevV2() {
   const { toastSuccess, toastError } = useToast()
   const [timeRecall, setTimeRecall] = useState(7)
   const [flow, setFlow] = useState('increase')
+  const [flowWwycd, setFlowWycd] = useState('increase')
   const { width } = useWindowSize()
 
   const SOCIALS: Array<ISocial> = [
@@ -1440,33 +1441,49 @@ function DevV2() {
 
         toastError(t('System error'))
       })
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue])
 
-  // useEffect(() => {
-  //   const myId = setTimeout(() => {
-  //     if (timeRecall > 0) {
-  //       setTimeRecall(timeRecall - 1)
-  //       return
-  //     }
-  //     if (flow === 'increase' && tabEcosystem < 3) {
-  //       const nextIndex = tabEcosystem + 1
-  //       if (nextIndex === 3) {
-  //         setFlow('decrease')
-  //       }
-  //       setTabEcosystem(nextIndex)
-  //     }
-  //     if (flow === 'decrease' && tabEcosystem > 0) {
-  //       const prevIndex = tabEcosystem - 1
-  //       if (prevIndex === 0) {
-  //         setFlow('increase')
-  //       }
-  //       setTabEcosystem(prevIndex)
-  //     }
-  //     setTimeRecall(7)
-  //   }, 1000)
-  //   return () => clearTimeout(myId)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [timeRecall])
+  useEffect(() => {
+    const myId = setTimeout(() => {
+      if (timeRecall > 0) {
+        setTimeRecall(timeRecall - 1)
+        return
+      }
+      if (flow === 'increase' && tabEcosystem < 3) {
+        const nextIndex = tabEcosystem + 1
+        if (nextIndex === 3) {
+          setFlow('decrease')
+        }
+        setTabEcosystem(nextIndex)
+      }
+      if (flow === 'decrease' && tabEcosystem > 0) {
+        const prevIndex = tabEcosystem - 1
+        if (prevIndex === 0) {
+          setFlow('increase')
+        }
+        setTabEcosystem(prevIndex)
+      }
+
+      if (flowWwycd === 'increase' && tabWHatYouCanDo < 4) {
+        const nextIndex = tabWHatYouCanDo + 1
+        if (nextIndex === 4) {
+          setFlowWycd('decrease')
+        }
+        setTabWHatYouCanDo(nextIndex)
+      }
+      if (flowWwycd === 'decrease' && tabWHatYouCanDo > 0) {
+        const prevIndex = tabWHatYouCanDo - 1
+        if (prevIndex === 0) {
+          setFlowWycd('increase')
+        }
+        setTabWHatYouCanDo(prevIndex)
+      }
+      setTimeRecall(7)
+    }, 1000)
+    return () => clearTimeout(myId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeRecall])
 
   return (
     <>
