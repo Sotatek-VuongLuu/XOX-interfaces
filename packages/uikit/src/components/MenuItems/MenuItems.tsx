@@ -12,7 +12,8 @@ import styled from "styled-components";
 
 const Wrapper = styled(Flex)`
   @media screen and (max-width: 560px) {
-    overflow: auto;
+    overflow-x: hidden;
+    overflow-y: auto;
     max-height: calc(100vh - 172px);
   }
 `;
