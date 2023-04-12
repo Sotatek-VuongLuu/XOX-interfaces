@@ -1164,12 +1164,12 @@ function VestingPage() {
     }
   }, [whiteList, setWhiteList, account, dataWhitelist])
 
-  // useEffect(() => {
-  //   if (!account || !chainId) return
-  //   if (loadOk) window.location.reload()
-  //   setLoadOk(true)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [account, chainId])
+  useEffect(() => {
+    if (!account || !chainId) return
+    if (loadOk) window.location.reload()
+    setLoadOk(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [account, chainId])
 
   return (
     <>
