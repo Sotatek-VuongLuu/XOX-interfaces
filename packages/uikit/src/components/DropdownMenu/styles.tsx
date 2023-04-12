@@ -45,7 +45,7 @@ export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $i
   }
 
   &:hover:not(:disabled) {
-    background-color: rgba(255, 255, 255, 0.05);
+    background-color: ${({ $hasLable }) => ($hasLable ? "rgba(255, 255, 255, 0.05)" : "unset")};
   }
 
   &:active:not(:disabled) {

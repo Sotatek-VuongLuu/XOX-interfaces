@@ -606,9 +606,8 @@ const StyledWhatYouCanDo = styled.div`
 
   ${({ theme }) => theme.mediaQueries.xl} {
     flex-direction: row;
-
     > div:nth-child(1) {
-      flex: 1;
+      width: 500px;
     }
     > div:nth-child(2) {
       width: 700px !important;
@@ -881,6 +880,11 @@ const StyledBtnStartTrading = styled.div`
       font-size: 16px;
       line-height: 19px;
       color: rgba(255, 255, 255, 0.6);
+
+      &:hover {
+        background: #ffff;
+        color: #000;
+      }
     }
   }
 `
@@ -1370,15 +1374,15 @@ function DevV2() {
   const renderImageWhatYouCando = useMemo(() => {
     switch (tabWHatYouCanDo) {
       case 0:
-        return <img src="/images/dex-v2/swap.png" alt="swap" />
+        return <img src="/images/dex-v2/new_swap.png" alt="swap" />
       case 1:
-        return <img src="/images/dex-v2/limit_order.png" alt="limit_order" />
+        return <img src="/images/dex-v2/new_limit_order.png" alt="limit_order" />
       case 2:
-        return <img src="/images/dex-v2/earn.png" alt="earn" />
+        return <img src="/images/dex-v2/new_earn.png" alt="earn" />
       case 3:
-        return <img src="/images/dex-v2/liquidity.png" alt="liquidity" />
+        return <img src="/images/dex-v2/new_liquidity.png" alt="liquidity" />
       case 4:
-        return <img src="/images/dex-v2/api.png" alt="api" />
+        return <img src="/images/dex-v2/new_API.png" alt="api" />
       default:
         break
     }
@@ -1464,7 +1468,6 @@ function DevV2() {
         }
         setTabEcosystem(prevIndex)
       }
-
       if (flowWwycd === 'increase' && tabWHatYouCanDo < 4) {
         const nextIndex = tabWHatYouCanDo + 1
         if (nextIndex === 4) {
@@ -1496,7 +1499,7 @@ function DevV2() {
             }}
           />
           <div>
-            <img src="/images/dex-v2/heading.png" alt="" />
+            <img src="/images/dex-v2/new_top.png" alt="" />
           </div>
         </StyledHeader>
 

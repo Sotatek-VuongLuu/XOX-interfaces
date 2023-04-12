@@ -27,6 +27,7 @@ export interface DropdownMenuProps extends BoxProps {
 export interface StyledDropdownMenuItemProps extends React.ComponentPropsWithoutRef<"button"> {
   disabled?: boolean;
   isActive?: boolean;
+  $hasLable?: boolean;
 }
 
 export enum DropdownMenuItemType {

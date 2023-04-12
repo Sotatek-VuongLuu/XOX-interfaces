@@ -1,6 +1,6 @@
 /* eslint-disable react/no-unknown-property */
-import { SvgProps } from "@pancakeswap/uikit";
-import React from "react";
+import { SvgProps } from '@pancakeswap/uikit'
+import React from 'react'
 
 const BridgeIcon: React.FC<React.PropsWithChildren<SvgProps>> = () => {
   return (
@@ -34,7 +34,7 @@ const BridgeIcon: React.FC<React.PropsWithChildren<SvgProps>> = () => {
         strokeLinejoin="round"
       />
     </svg>
-  );
-};
+  )
+}
 
-export default BridgeIcon;
+export default BridgeIcon
