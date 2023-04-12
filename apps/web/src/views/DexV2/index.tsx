@@ -239,6 +239,9 @@ const StyledSocial = styled(Box)`
 `
 
 const StyledSaleAndReliable = styled(Box)`
+  width: 1200px;
+  max-width: 100%;
+  margin: auto;
   display: grid;
   grid-template-columns: repeat(1, minmax(0, 1fr));
 
@@ -258,6 +261,7 @@ const StyledCardSafeReliable = styled.div`
     color: rgba(255, 255, 255, 0.87);
     margin-top: 24px;
     margin-bottom: 16px;
+    text-align: center;
   }
 
   > img {
@@ -1269,7 +1273,7 @@ function DevV2() {
     { icon: '/images/company/7.svg', name: t('Assets Manager'), link: t('Explore Now'), heft: '/info' },
     { icon: '/images/company/1.svg', name: t('XOX Dex V2'), link: t('Best Rates on DeFi'), heft: '#' },
     { icon: '/images/company/8.svg', name: t('XOX Mobile App'), link: t('Your Defi Key'), heft: '#' },
-    { icon: '/images/company/9.svg', name: t('XOX Launchpad'), link: t('Invest Now'), heft: '/vesting' },
+    { icon: '/images/company/9.svg', name: t('XOX Launchpad'), link: t('Invest Now'), heft: '#' },
     { icon: '/images/company/10.svg', name: t('Coin Listing Site'), link: t('Don’t Miss Out'), heft: '#' },
     { icon: '/images/company/11.svg', name: t('Lottery Game'), link: t('Risk Small - Earn Big'), heft: '#' },
   ]
@@ -1756,7 +1760,7 @@ function DevV2() {
           <BackedBy />
         </Box>
 
-        <ReStyledTitle style={{ marginBottom: 16 }}>{t('Join The Wait List Here.')}</ReStyledTitle>
+        <ReStyledTitle style={{ marginBottom: 16 }}>{t('Join The Waitlist Here.')}</ReStyledTitle>
         <p className="subtitle">
           {t('Unsubscribe at any time.')}{' '}
           <a className="privacy-link" href="#">
