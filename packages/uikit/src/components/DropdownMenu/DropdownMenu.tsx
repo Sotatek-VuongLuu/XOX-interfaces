@@ -184,7 +184,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                         {MenuItemContent}
                       </DropdownMenuItem>
                     </span>
-                    <span className="tooltiptext">Under Development</span>
+                    <span className="tooltiptext">{t('Under Development')}</span>
                   </Tooltip>
                 ) : (
                   // <Tooltip title="Under Development" placement="right">
