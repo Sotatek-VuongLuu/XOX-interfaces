@@ -241,7 +241,9 @@ const FeatureWatch = () => {
                     <div className="img-container">
                       <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
                     </div>
-                    <span className="title_list_item">{t(title)}</span>
+                    <span className="title_list_item" style={{ lineHeight: '24px' }}>
+                      {t(title)}
+                    </span>
                   </div>
                 )
               })}
@@ -255,13 +257,15 @@ const FeatureWatch = () => {
 
 const listTag = [
   {
-    title: 'XOXS can only be obtained by purchasing our governance token XOX, and is provided as a bonus with auto-staking functionalities and flexible APY.',
+    title:
+      'XOXS can only be obtained by purchasing our governance token XOX, and is provided as a bonus with auto-staking functionalities and flexible APY.',
   },
   {
     title: 'XOXS can also be earned through community activities such as giveaways and completing tasks.',
   },
   {
-    title: 'XOXS ensures long-term sustainability, providing a risk-free and profitable experience for both token holders and the project.',
+    title:
+      'XOXS ensures long-term sustainability, providing a risk-free and profitable experience for both token holders and the project.',
   },
   {
     title:

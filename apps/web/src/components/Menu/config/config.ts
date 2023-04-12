@@ -17,10 +17,10 @@ import ReferralIcon from 'components/Svg/ReferralIcon'
 import AssetIcon from 'components/Svg/AssetIcon'
 import StableCoinIcon from 'components/Svg/StableCoinIcon'
 import FarmingIcon from 'components/Svg/FarmingIcon'
-import XOXDEXV2 from 'components/Svg/XOXDEXV2'
-import MobileApp from 'components/Svg/MobileApp'
-import LaunchPad from 'components/Svg/LaunchPad'
-import CoinList from 'components/Svg/CoinList'
+import DexIcon from 'components/Svg/DexIcon'
+import MobileIcon from 'components/Svg/MobileIcon'
+import LaunchpadIcon from 'components/Svg/LaunchpadIcon'
+import RankingIcon from 'components/Svg/RankingIcon'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean; showTooltip?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -197,13 +197,6 @@ export const configLanding: (
           href: '/bridge-token',
         },
         {
-          label: t('XOX DEX V2'),
-          icon: XOXDEXV2,
-          fillIcon: XOXDEXV2,
-          href: '#',
-          showTooltip: true,
-        },
-        {
           label: t('Liquidity'),
           icon: LiquidityIcon,
           fillIcon: LiquidityIcon,
@@ -215,13 +208,6 @@ export const configLanding: (
           icon: FarmingIcon,
           fillIcon: FarmingIcon,
           image: '/images/decorations/pe2.png',
-        },
-        {
-          label: t('Mobile App'),
-          icon: MobileApp,
-          fillIcon: MobileApp,
-          href: '#',
-          showTooltip: true,
         },
         {
           label: t('Referral'),
@@ -238,30 +224,37 @@ export const configLanding: (
           image: '/images/decorations/pe2.png',
         },
         {
-          label: t('Launchpad'),
-          href: '/info',
-          icon: LaunchPad,
-          fillIcon: LaunchPad,
-          image: '/images/decorations/pe2.png',
-          showTooltip: true,
-        },
-        {
           label: 'Stable Coin',
           icon: StableCoinIcon,
           fillIcon: StableCoinIcon,
           href: '/stable-coin',
         },
         {
-          label: '',
-          icon: null,
-          fillIcon: null,
-          href: '#',
+          label: t('XOX Dex V2'),
+          icon: DexIcon,
+          fillIcon: '',
+          href: '/#',
+          showTooltip: true,
         },
         {
-          label: 'Coin Listing',
-          icon: CoinList,
-          fillIcon: CoinList,
-          href: '#',
+          label: t('Mobile App'),
+          icon: MobileIcon,
+          fillIcon: '',
+          href: '/stable-coin',
+          showTooltip: true,
+        },
+        {
+          label: t('Launchpad'),
+          icon: LaunchpadIcon,
+          fillIcon: 'StableCoinIcon',
+          href: '/stable-coin',
+          showTooltip: true,
+        },
+        {
+          label: t('Coin Listing'),
+          icon: RankingIcon,
+          fillIcon: 'StableCoinIcon',
+          href: '/stable-coin',
           showTooltip: true,
         },
       ].map((item) => addMenuItemSupported(item, chainId)),

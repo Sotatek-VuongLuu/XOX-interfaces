@@ -560,7 +560,7 @@ const CustomDropdown = styled.div`
   position: absolute;
   width: fit-content;
   height: fit-content;
-  top: 100%;
+  top: calc(100% + 5px);
   left: 0;
   padding: 16px;
   background: #1d1c1c;
@@ -641,7 +641,7 @@ const CustomDropdown = styled.div`
 
 const networks = [
   {
-    title: 'Binance Smart Chain (BSC)',
+    title: 'BNB Chain',
     address: XOX_ADDRESS[56],
     image: '/images/home/hero/bsc.svg',
   },
@@ -870,13 +870,7 @@ const WelcomeXOX = (): JSX.Element => {
                                   style={{ maxWidth: '22px', maxHeight: '22px' }}
                                 />
                                 <div className="coin-data">
-                                  <p className="title">
-                                    {isMobile
-                                      ? network.title === 'Binance Smart Chain (BSC)'
-                                        ? 'BSC'
-                                        : network.title
-                                      : network.title}
-                                  </p>
+                                  <p className="title">{network.title}</p>
                                   <p className="description">
                                     {network.address
                                       ? `${network.address.substring(0, 8)}...${network.address.substring(

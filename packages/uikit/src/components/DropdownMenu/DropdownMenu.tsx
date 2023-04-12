@@ -26,16 +26,15 @@ const StyledBoxContainer = styled(Box)`
 const Tooltip = styled.div`
   position: relative;
   display: inline-block;
-  border-bottom: 1px dotted black;
   width: 100%;
 
   & .tooltiptext {
     visibility: hidden;
-    width: 120px;
+    width: 100%;
     background-color: #555;
     color: #fff;
     text-align: center;
-    padding: 5px 0;
+    padding: 5px;
     border-radius: 6px;
 
     position: absolute;
