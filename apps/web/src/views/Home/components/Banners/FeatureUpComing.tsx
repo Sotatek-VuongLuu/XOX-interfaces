@@ -60,29 +60,43 @@ const WrapperItem = styled.div<IPropsWI>`
     width: fit-content;
     margin-top: 26px;
     border-radius: 8px;
-    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    // background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     cursor: pointer;
 
     .boxed-child {
       width: 100%;
       height: 100%;
-      background: rgba(16, 16, 16, 1);
       padding: 10px 20px;
       border-radius: inherit;
       border-radius: 8px;
-      span {
+      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-fill-color: transparent;
+      position: relative;
+
+      &:before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border-radius: inherit;
+        padding: 1px;
         background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        text-fill-color: transparent;
+        -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+        -webkit-mask-composite: xor;
+        -webkit-mask-composite: exclude;
+        mask-composite: exclude;
+      }
+
+      p {
+        font-style: normal;
         font-weight: 700;
         font-size: 14px;
-        width: 100%;
-        height: 100%;
-        background-color: #191a28;
-        border-radius: inherit;
-        border-radius: 8px;
+        line-height: 17px;
       }
     }
 
@@ -103,6 +117,10 @@ const WrapperItem = styled.div<IPropsWI>`
       font-size: 20px;
       line-height: 24px;
       color: rgba(255, 255, 255, 0.87);
+    }
+
+    img {
+      cursor: pointer;
     }
   }
   .describe {
@@ -178,7 +196,7 @@ const UpComingItem = ({ title, describe, link }) => {
             <a href={link} target="_blank" rel="noreferrer">
               <div className="get_xox">
                 <div className="boxed-child">
-                  <span>{t('Discover More')}</span>
+                  <p>{t('Discover More')}</p>
                 </div>
               </div>
             </a>
@@ -201,7 +219,7 @@ const UpComingItem = ({ title, describe, link }) => {
           <div className="get_xox box_absolute">
             <a href={link} target="_blank" rel="noreferrer">
               <div className="boxed-child">
-                <span>{t('Discover More')}</span>
+                <p>{t('Discover More')}</p>
               </div>
             </a>
           </div>
