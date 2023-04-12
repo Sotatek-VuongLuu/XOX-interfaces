@@ -117,13 +117,8 @@ const Wrapper = styled.div`
   .rocket_container {
     display: flex;
     justify-content: center;
-    img {
-      max-width: 100% !important;
-      height: auto;
-      display: block;
-      margin-top: 20px;
-    }
-
+    width: 500px;
+    margin: auto;
     video {
       max-width: 100% !important;
       height: auto;
@@ -167,6 +162,10 @@ const Wrapper = styled.div`
     .processing_child {
       height: 100%;
     }
+
+    .rocket_container {
+      width: 100%;
+    }
   }
 `
 
@@ -203,7 +202,7 @@ function StartingSoon({
   const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
 
   useEffect(() => {
-    (document.getElementById('presaleVideo') as any).play()
+    ;(document.getElementById('presaleVideo') as any).play()
   }, [])
 
   const handleReturnPercent = useMemo(() => {
