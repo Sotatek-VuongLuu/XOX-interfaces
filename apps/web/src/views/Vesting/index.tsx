@@ -505,8 +505,7 @@ function VestingPage() {
 
   const [availableXOXForSale, setAvailableXOXForSale] = useState<number>(XOXMAXSALE1)
 
-  // console.log(`availableXOXForSale`, availableXOXForSale)
-  // console.log(`cerr`, currentRound)
+  console.log(`availableXOXForSale`, availableXOXForSale)
 
   const handleGetTotalXOXOfUserInRound = async (acc: string, curRound: number) => {
     if (chainId === 97 || chainId === 56) return
@@ -630,7 +629,11 @@ function VestingPage() {
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), decimal)
     setMessageConfirm(`Buying ${Number(amountXOX).toLocaleString()} XOX`)
 
+    console.log(`current`, currentRound)
+
     if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate && current === ROUND.ONE) {
+      console.log(`whitelist`)
+
       try {
         setIsOpenLoadingClaimModal(true)
         const _merkleProof = getHexProof(dataWhitelist, account)
