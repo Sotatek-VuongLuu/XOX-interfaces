@@ -392,7 +392,10 @@ function ModalSaleExchange({
                     onUserInput={(value) => setAmount(value)}
                     placeholder="0.00"
                   />
-                  <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative)}>
+                  <ButtonStyle
+                    onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative)}
+                    style={{ whiteSpace: 'nowrap' }}
+                  >
                     {t('All')}
                   </ButtonStyle>
                 </BoxCenter>
@@ -449,7 +452,10 @@ function ModalSaleExchange({
                   onUserInput={(value) => setAmount(value)}
                   placeholder="0.00"
                 />
-                <ButtonStyle onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative)}>
+                <ButtonStyle
+                  onClick={() => setAmount(typeBuyPrice === TYPE_BY.BY_ERC20 ? balanceLP : balanceNative)}
+                  style={{ whiteSpace: 'nowrap' }}
+                >
                   {t('All')}
                 </ButtonStyle>
               </BoxCenter>
@@ -458,22 +464,47 @@ function ModalSaleExchange({
           </>
         )}
 
-        <Flex alignItems="center" margin="26px 0px" className="xox_amount">
-          <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="25px">
-            {t('XOX Amount')}
-          </Text>
-          <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
-            {Number(amountXOX) !== 0 ? Number(amountXOX).toLocaleString() : '-'} XOX
-          </Text>
-        </Flex>
-        <Flex alignItems="center" marginBottom="26px" className="xoxs_amount">
-          <Text color="rgba(255, 255, 255, 0.6)" fontWeight={700} fontSize="12px" marginRight="20px">
-            {t('XOXS Reward')}
-          </Text>
-          <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
-            {Number(amountXOXS) !== 0 ? Number(amountXOXS).toLocaleString() : '-'} XOXS
-          </Text>
-        </Flex>
+        <div style={{ display: 'flex' }}>
+          <div>
+            <Flex alignItems="center" margin="26px 0px" className="xox_amount">
+              <Text
+                color="rgba(255, 255, 255, 0.6)"
+                fontWeight={700}
+                fontSize="12px"
+                marginRight="25px"
+                lineHeight={['17px', , , '24px']}
+              >
+                {t('XOX Amount')}
+              </Text>
+            </Flex>
+
+            <Flex alignItems="center" marginBottom="26px" className="xoxs_amount">
+              <Text
+                color="rgba(255, 255, 255, 0.6)"
+                fontWeight={700}
+                fontSize="12px"
+                marginRight="20px"
+                lineHeight={['17px', , , '24px']}
+              >
+                {t('XOXS Reward')}
+              </Text>
+            </Flex>
+          </div>
+
+          <div>
+            <Flex alignItems="center" margin="26px 0px" className="xox_amount">
+              <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
+                {Number(amountXOX) !== 0 ? Number(amountXOX).toLocaleString() : '-'} XOX
+              </Text>
+            </Flex>
+
+            <Flex alignItems="center" marginBottom="26px" className="xoxs_amount">
+              <Text color="rgba(255, 255, 255, 0.87)" fontWeight={400} fontSize="16px" className="value">
+                {Number(amountXOXS) !== 0 ? Number(amountXOXS).toLocaleString() : '-'} XOXS
+              </Text>
+            </Flex>
+          </div>
+        </div>
 
         <FlexCustom>
           <Text className="title_ref">{t('Referral Code')}</Text>
@@ -481,7 +512,7 @@ function ModalSaleExchange({
           <Flex flexDirection="column" className="full_width">
             <BoxCenter>
               <input
-                placeholder="Optional"
+                placeholder={t('Optional')}
                 className="ref_code"
                 onChange={(e) => {
                   handleChangeReferal(e.target.value)

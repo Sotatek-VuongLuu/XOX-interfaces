@@ -625,7 +625,7 @@ function VestingPage() {
     const addressTokenBuy = typeBuyPrice === TYPE_BY.BY_ETH ? NATIVE_TOKEN : USDT[ChainId.GOERLI]
     const amountParse =
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), decimal)
-    setMessageConfirm(`Buying ${Number(amountXOX).toLocaleString()} XOX`)
+    setMessageConfirm(`${t('Buying')} ${Number(amountXOX).toLocaleString()} XOX`)
 
     if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate && current === ROUND.ONE) {
       try {
@@ -652,7 +652,7 @@ function VestingPage() {
           handleGetTotalXOXOfUserInRound(account, currentRound)
           onDissmiss()
           toastSuccess(
-            `Bought XOX`,
+            `${t('Bought')} XOX`,
             <ToastDescriptionWithTx txHash={txHash.transactionHash}>
               {t('Your %symbol% investment has been confirmed!', { symbol: 'XOX' })}
             </ToastDescriptionWithTx>,
@@ -661,15 +661,15 @@ function VestingPage() {
       } catch (error: any) {
         setIsOpenLoadingClaimModal(false)
         if (error?.message?.includes('rejected')) {
-          toastError('Error', 'User rejected the request.')
+          toastError('Error', t('User rejected the request.'))
           return
         }
         if (error?.message?.includes('PreSale: Exchange amount exceed limit!')) {
-          toastError('Error', 'Exchange amount exceed limit!')
+          toastError('Error', t('Exchange amount exceed limit!'))
           return
         }
         if (error?.code !== 4001) {
-          toastError('Error', 'Transaction failed')
+          toastError('Error', t('Transaction failed'))
         }
       }
       return
@@ -692,7 +692,7 @@ function VestingPage() {
         handleGetTotalTokenInvested(currentRound)
         handleGetTotalXOXOfUserInRound(account, currentRound)
         toastSuccess(
-          `Bought XOX`,
+          `${t('Bought')} XOX`,
           <ToastDescriptionWithTx txHash={txHashInvest.transactionHash}>
             {t('Your %symbol% investment has been confirmed!', { symbol: 'XOX' })}
           </ToastDescriptionWithTx>,
@@ -701,15 +701,15 @@ function VestingPage() {
     } catch (error: any) {
       setIsOpenLoadingClaimModal(false)
       if (error?.message?.includes('rejected')) {
-        toastError('Error', 'User rejected the request.')
+        toastError('Error', t('User rejected the request.'))
         return
       }
       if (error?.message?.includes('PreSale: Exchange amount exceed limit!')) {
-        toastError('Error', 'Exchange amount exceed limit!')
+        toastError('Error', t('Exchange amount exceed limit!'))
         return
       }
       if (error?.code !== 4001) {
-        toastError('Error', 'Transaction failed')
+        toastError('Error', t('Transaction failed'))
       }
     }
   }
@@ -717,7 +717,7 @@ function VestingPage() {
   const handleClaim = async (round: number, amoutXOXPending: any) => {
     try {
       setIsOpenLoadingClaimModal(true)
-      setMessageConfirm(`Claim ${Number(amoutXOXPending).toLocaleString()} XOX`)
+      setMessageConfirm(`${t('Claim')} ${Number(amoutXOXPending).toLocaleString()} XOX`)
       const gas = await contractPreSale.estimateGas.userClaimInvestedToken(BigNumberEthers.from(round))
       const result = await contractPreSale.userClaimInvestedToken(BigNumberEthers.from(round), { gasLimit: gas })
       const txHash = await result.wait(1)
@@ -726,7 +726,7 @@ function VestingPage() {
         setIsOpenLoadingClaimModal(false)
         handleGetDataVesting()
         toastSuccess(
-          `Claimed XOX`,
+          `${t('Claimed')} XOX`,
           <ToastDescriptionWithTx txHash={txHash.transactionHash}>
             {t('Your %symbol% Tokens have been claimed and sent to your wallet!', { symbol: 'XOX' })}
           </ToastDescriptionWithTx>,
@@ -736,11 +736,11 @@ function VestingPage() {
       console.warn(error)
       setIsOpenLoadingClaimModal(false)
       if (error?.message?.includes('rejected')) {
-        toastError('Error', 'User rejected the request.')
+        toastError('Error', t('User rejected the request.'))
         return
       }
       if (error?.code !== 4001) {
-        toastError('Error', 'Transaction failed')
+        toastError('Error', t('Transaction failed'))
       }
     }
   }
@@ -800,7 +800,7 @@ function VestingPage() {
       }
     } catch (error: any) {
       if (error?.code !== 4001) {
-        toastError('Error', 'Transaction failed')
+        toastError('Error', t('Transaction failed'))
       }
     }
   }
@@ -1031,17 +1031,17 @@ function VestingPage() {
     const totalDolla = typeBuy === TYPE_BY.BY_ETH ? new BigNumber(value).multipliedBy(ethPerDolla).toNumber() : value
     const balanceCompare = typeBuy === TYPE_BY.BY_ETH ? balanceNative : balanceLP
     if (new BigNumber(value).isGreaterThan(balanceCompare)) {
-      message = 'Insufficient balance'
+      message = t('Insufficient balance')
       return message
     }
 
     if (Number(aXOX) > availableXOXForSale) {
-      message = 'Maximum investment: $5000'
+      message = t('Maximum investment: $5000')
       return message
     }
 
-    if (totalDolla < 50) {
-      message = 'Minimum investment: $50'
+    if (Number(totalDolla) < 50) {
+      message = t('Minimum investment: $50')
     }
 
     return message
@@ -1115,7 +1115,7 @@ function VestingPage() {
 
   useEffect(() => {
     if (amount === '') {
-      setMassageErrorAmount('This is required')
+      setMassageErrorAmount(t('This is required'))
     } else {
       const mess: string = validateAmount(amount, typeBuyPrice, amountXOX)
       setMassageErrorAmount(mess)
@@ -1227,15 +1227,15 @@ function VestingPage() {
       <ModalBase
         open={isOpenLoadingClaimModal}
         handleClose={() => setIsOpenLoadingClaimModal(false)}
-        title="Confirm PreSale"
+        title={t('Confirm PreSale')}
       >
         <Content>
           <div className="xox_loading" style={{ margin: '24px 0px' }}>
             <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
           </div>
-          <div className="noti_claim_pending_h1">Waiting For Confirmation</div>
+          <div className="noti_claim_pending_h1">{t('Waiting For Confirmation')}</div>
           <div className="noti_claim_pending_h3">{messageConfirm}</div>
-          <div className="noti_claim_pending_h2">Confirm this transaction in your wallet</div>
+          <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
           <img
             src="/images/close-one.svg"
             alt="close-one"

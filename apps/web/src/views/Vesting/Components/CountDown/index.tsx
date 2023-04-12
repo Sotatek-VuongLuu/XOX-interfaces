@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
@@ -154,6 +155,7 @@ export const handleTime = (time: number) => {
 
 // const timeStart = 1665892723
 const CountDown = ({ startTime, setReachZero, setisReachWhitelist }: Props) => {
+  const { t } = useTranslation()
   const [timeList, setTimeList] = useState({
     days: 0,
     hours: 0,
@@ -196,28 +198,28 @@ const CountDown = ({ startTime, setReachZero, setisReachWhitelist }: Props) => {
         <div className="blur">
           <div className="time_item">{handleTime(timeList.days)}</div>
         </div>
-        <div className="title_time">Days</div>
+        <div className="title_time">{t('Days')}</div>
       </div>
       <span className="two_dot">:</span>
       <div>
         <div className="blur">
           <div className="time_item">{handleTime(timeList.hours)}</div>
         </div>
-        <div className="title_time">Hours</div>
+        <div className="title_time">{t('Hours')}</div>
       </div>
       <span className="two_dot">:</span>
       <div>
         <div className="blur">
           <div className="time_item">{handleTime(timeList.minutes)}</div>
         </div>
-        <div className="title_time">Minutes</div>
+        <div className="title_time">{t('Minutes')}</div>
       </div>
       <span className="two_dot">:</span>
       <div>
         <div className="blur">
           <div className="time_item">{handleTime(timeList.seconds)}</div>
         </div>
-        <div className="title_time">Seconds</div>
+        <div className="title_time">{t('Seconds')}</div>
       </div>
     </CountDownWrapper>
   )
