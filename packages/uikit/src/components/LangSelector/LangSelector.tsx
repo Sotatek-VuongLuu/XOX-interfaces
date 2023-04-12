@@ -145,7 +145,7 @@ const LangSelector: React.FC<React.PropsWithChildren<Props>> = ({ currentLang, l
         >
           <LabelText title={currentLang} style={{ marginRight: 0 }}>
             <div style={{ display: "flex" }}>
-              <Image src={`/images/${currentLang}.png`} alt={currentLang} width={19} height={19} />
+              <Image src={`/images/${currentLang}.svg`} alt={currentLang} width={19} height={19} />
               <span style={{ marginLeft: "10px" }}>{t(currentLang)}</span>
             </div>
           </LabelText>
@@ -169,7 +169,7 @@ const LangSelector: React.FC<React.PropsWithChildren<Props>> = ({ currentLang, l
                 }}
               >
                 <div style={{ display: "flex" }}>
-                  <Image src={`/images/${lang.language}.png`} alt={lang.language} width={19} height={19} />
+                  <Image src={`/images/${lang.language}.svg`} alt={lang.language} width={19} height={19} />
                   <span style={{ marginLeft: "10px" }}>{t(lang.language)}</span>
                 </div>
               </MenuButtonWrapper>
