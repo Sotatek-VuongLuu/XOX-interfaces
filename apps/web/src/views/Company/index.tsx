@@ -80,10 +80,12 @@ const StyledHeader = styled('div')`
   > div:nth-child(1) {
     border: 1px solid rgba(242, 242, 242, 0.4);
     border-radius: 20px;
+    margin-bottom: 30px;
+
     > video {
       width: 750px;
       max-width: 100%;
-      margin-bottom: 30px;
+      margin-bottom: 0px;
     }
   }
 
@@ -98,6 +100,16 @@ const StyledHeader = styled('div')`
     display: flex;
     align-items: center;
     justify-content: space-between;
+
+    > div:nth-child(1) {
+      border: 1px solid rgba(242, 242, 242, 0.4);
+      border-radius: 20px;
+      margin-bottom: 0px;
+
+      > video {
+        margin-bottom: 30px;
+      }
+    }
   }
 `
 
