@@ -84,7 +84,7 @@ const MenuItems: React.FC<React.PropsWithChildren<MenuItemsProps>> = ({
           <MenuItem isHover={isHover} label={currentLanguage.language}>
             <div style={{ display: "flex" }}>
               <Image
-                src={`/images/${currentLanguage.language}.png`}
+                src={`/images/${currentLanguage.language}.svg`}
                 alt={currentLanguage.language}
                 width={19}
                 height={19}

@@ -3,14 +3,12 @@ import styled from 'styled-components'
 
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
-import { spawn } from 'child_process'
 import React, { useEffect, useState } from 'react'
-import Tippy from '@tippyjs/react'
 import 'tippy.js/dist/tippy.css' // optional
 import { Box, Grid } from '@mui/material'
-import { useRouter } from 'next/router'
 import { useTranslation } from '@pancakeswap/localization'
 import axios from 'axios'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 // eslint-disable-next-line import/no-cycle
 interface ItemProps {
   item: CoinItem
@@ -191,8 +189,10 @@ const DataItemDisplay = ({ item }: DataItemProps) => {
         <div className="data-item">
           <div className="data-box">
             <Title>
-              {item.description !== 'Total Users' && item.realData && <span className="icon_dolla">$</span>}
-              {item.realData ? item.realData : item.dataEmpty}
+              {item.description !== 'Total Users' && item.description !== 'XOXS Staked' && item.realData && (
+                <span className="icon_dolla">$</span>
+              )}
+              {item.realData ? formatAmountNumber(Number(item.realData)) : item.dataEmpty}
             </Title>
             <Description>{t(item.description)}</Description>
           </div>

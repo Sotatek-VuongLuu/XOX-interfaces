@@ -135,6 +135,11 @@ const Wrapper = styled.div`
 const LeftContent = styled.div`
   min-width: 600px;
 
+  .metamask-icon {
+    border-radius: 50%;
+    background: #fff;
+  }
+
   @media screen and (max-width: 530px) {
     min-width: unset;
   }
@@ -643,22 +648,22 @@ const networks = [
   {
     title: 'Arbitrum',
     address: XOX_ADDRESS[200],
-    image: '/images/Arbitrum.png',
+    image: '/images/Arbitrum.svg',
   },
   {
     title: 'Polygon',
     address: XOX_ADDRESS[137],
-    image: '/images/Polygon.png',
+    image: '/images/Polygon.svg',
   },
   {
     title: 'Solana',
     address: XOX_ADDRESS[1399811149],
-    image: '/images/Solana.png',
+    image: '/images/Solana.svg',
   },
   {
     title: 'Optimism',
     address: XOX_ADDRESS[10],
-    image: '/images/Optimism.png',
+    image: '/images/Optimism.svg',
   },
 ]
 
@@ -813,7 +818,7 @@ const WelcomeXOX = (): JSX.Element => {
                         })
                       }}
                     >
-                      <img src="/images/home/hero/shield.svg" alt="shield" />
+                      <img src="/images/shield.svg" alt="shield" />
                     </button>
                     <button
                       style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
@@ -832,7 +837,7 @@ const WelcomeXOX = (): JSX.Element => {
                         })
                       }}
                     >
-                      <img src="/images/home/hero/wolf.svg" alt="wolf" />
+                      <img src="/images/metamask-no-bg.svg" alt="wolf" />
                     </button>
                   </div>
                 </div>
@@ -906,7 +911,7 @@ const WelcomeXOX = (): JSX.Element => {
                                     })
                                   }}
                                 >
-                                  <img src="/images/home/hero/shield.svg" alt="shield" />
+                                  <img src="/images/shield-icon.svg" alt="shield" />
                                 </button>
                                 <button
                                   style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
@@ -925,7 +930,7 @@ const WelcomeXOX = (): JSX.Element => {
                                     })
                                   }}
                                 >
-                                  <img src="/images/home/hero/wolf.svg" alt="wolf" />
+                                  <img src="/images/metamask-icon.svg" alt="wolf" />
                                 </button>
                               </div>
                             </div>
@@ -990,7 +995,7 @@ const WelcomeXOX = (): JSX.Element => {
                               })
                             }}
                           >
-                            <img src="/images/home/hero/shield.svg" alt="shield" />
+                            <img src="/images/shield.svg" alt="shield" />
                           </button>
                           <button
                             style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
@@ -1009,7 +1014,7 @@ const WelcomeXOX = (): JSX.Element => {
                               })
                             }}
                           >
-                            <img src="/images/home/hero/wolf.svg" alt="wolf" />
+                            <img src="/images/metamask-no-bg.svg" alt="wolf" />
                           </button>
                         </div>
                       </div>

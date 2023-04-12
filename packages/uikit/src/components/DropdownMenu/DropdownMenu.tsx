@@ -260,7 +260,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                   className="submenu"
                 >
                   <div style={{ display: "flex" }}>
-                    <Image src={`/images/${lang.language}.png`} alt={lang.language} width={19} height={19} />
+                    <Image src={`/images/${lang.language}.svg`} alt={lang.language} width={19} height={19} />
                     <span style={{ marginLeft: "10px" }}>{t(lang.language)}</span>
                   </div>
                 </DropdownMenuItem>
