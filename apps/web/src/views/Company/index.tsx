@@ -31,6 +31,16 @@ export const StyledS = styled('div')`
   }
 `
 
+const BG = styled.div`
+  background: #0a0a0a;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+`
+
 const StyledSectionText = styled('div')`
   text-align: center;
   width: 100%;
@@ -519,73 +529,76 @@ export default function CompanyPage() {
   ]
 
   return (
-    <StyledS>
-      <StyledBG>
-        <div />
-        <div />
-      </StyledBG>
+    <>
+      <BG />
+      <StyledS>
+        <StyledBG>
+          <div />
+          <div />
+        </StyledBG>
 
-      <StyledHeader>
-        <StyledPreviewVideo>
-          <video
-            loop
-            playsInline
-            autoPlay
-            controls={false}
-            preload="auto"
-            style={{ pointerEvents: 'none' }}
-            controlsList="nodownload"
-            muted
-          >
-            <source src="/images/company/Coding_footage.webm" type="video/webm" />
-          </video>
-        </StyledPreviewVideo>
+        <StyledHeader>
+          <StyledPreviewVideo>
+            <video
+              loop
+              playsInline
+              autoPlay
+              controls={false}
+              preload="auto"
+              style={{ pointerEvents: 'none' }}
+              controlsList="nodownload"
+              muted
+            >
+              <source src="/images/company/Coding_footage.webm" type="video/webm" />
+            </video>
+          </StyledPreviewVideo>
 
-        <div>
-          <img src="/images/company/bg-header.png" alt="" draggable="false" loading="lazy" className="bg-header" />
-        </div>
-      </StyledHeader>
+          <div>
+            <img src="/images/company/bg-header.png" alt="" draggable="false" loading="lazy" className="bg-header" />
+          </div>
+        </StyledHeader>
 
-      <StyledSectionText style={{ marginBottom: 40 }}>
-        <h3>{t('Build to Inspire')}</h3>
-        <p>
-          {t(
-            'XOX Protocol is The Next Generation Multi-chain DeFi Dapps & Web3 Solutions Provider. An Ecosystem Built to Provide Sustainability, Decentralization, Scalability & Transparency to the Space.',
-          )}
-        </p>
-      </StyledSectionText>
+        <StyledSectionText style={{ marginBottom: 40 }}>
+          <h3>{t('Build to Inspire')}</h3>
+          <p>
+            {t(
+              'XOX Protocol is The Next Generation Multi-chain DeFi Dapps & Web3 Solutions Provider. An Ecosystem Built to Provide Sustainability, Decentralization, Scalability & Transparency to the Space.',
+            )}
+          </p>
+        </StyledSectionText>
 
-      <Box marginBottom={[64, null, null, 100]}>
-        <img src="/images/company/bg-team.png" alt="" draggable="false" loading="lazy" style={{ width: '100%' }} />
-      </Box>
+        <Box marginBottom={[64, null, null, 100]}>
+          <img src="/images/company/bg-team.png" alt="" draggable="false" loading="lazy" style={{ width: '100%' }} />
+        </Box>
 
-      <StyledSectionText style={{ marginBottom: 40 }}>
-        <h3>{t('XOX Labs Core Team')}</h3>
-        <p>
-          {t(
-            'A highly qualified and professional team built to deliver top class DeFi products and support Web 3.0 mass adoption. Our mission and vision is to create a self-sustainable decentralized ecosystem with multiple revenue sources in every leading Blockchain.',
-          )}
-        </p>
-      </StyledSectionText>
+        <StyledSectionText style={{ marginBottom: 40 }}>
+          <h3>{t('XOX Labs Core Team')}</h3>
+          <p>
+            {t(
+              'A highly qualified and professional team built to deliver top class DeFi products and support Web 3.0 mass adoption. Our mission and vision is to create a self-sustainable decentralized ecosystem with multiple revenue sources in every leading Blockchain.',
+            )}
+          </p>
+        </StyledSectionText>
 
-      <StyledMembers marginBottom={[64, null, null, 100]}>
-        {MEMBERS.map((member, i) => (
-          <CardMember member={member} key={String(i + member.name)} />
-        ))}
-      </StyledMembers>
+        <StyledMembers marginBottom={[64, null, null, 100]}>
+          {MEMBERS.map((member, i) => (
+            <CardMember member={member} key={String(i + member.name)} />
+          ))}
+        </StyledMembers>
 
-      <StyledTitle>{t('XOX Labs Ecosystem Products')}</StyledTitle>
-      <StyledSubtitle style={{ marginBottom: 48 }}>
-        {t('A true one Multi-chain stop for all your Defi Needs.')}
-      </StyledSubtitle>
+        <StyledTitle>{t('XOX Labs Ecosystem Products')}</StyledTitle>
+        <StyledSubtitle style={{ marginBottom: 48 }}>
+          {t('A true one Multi-chain stop for all your Defi Needs.')}
+        </StyledSubtitle>
 
-      <StyledSocial marginBottom={[64, null, null, 100]}>
-        {SOCIALS.map((social, i) => (
-          <CardSocial social={social} key={String(i + social.name)} />
-        ))}
-      </StyledSocial>
+        <StyledSocial marginBottom={[64, null, null, 100]}>
+          {SOCIALS.map((social, i) => (
+            <CardSocial social={social} key={String(i + social.name)} />
+          ))}
+        </StyledSocial>
 
-      <BTNLearnMore />
-    </StyledS>
+        <BTNLearnMore />
+      </StyledS>
+    </>
   )
 }

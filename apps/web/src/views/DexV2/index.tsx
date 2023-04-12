@@ -28,6 +28,16 @@ interface IValue {
   value: string
 }
 
+const BG = styled.div`
+  background: #0a0a0a;
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  z-index: -1;
+`
+
 const StyledContainer = styled(StyledS)`
   .hight-light {
     color: rgba(255, 255, 255, 0.87) !important;
@@ -1459,330 +1469,333 @@ function DevV2() {
   // }, [timeRecall])
 
   return (
-    <StyledContainer>
-      <StyledHeader>
-        <h1
-          dangerouslySetInnerHTML={{
-            __html: t('Multi-Chain <span class="hight-light">Decentralized Trading Solution</span> Powering Web3.'),
-          }}
-        />
-        <div>
-          <img src="/images/dex-v2/heading.png" alt="" />
-        </div>
-      </StyledHeader>
-
-      <StyledBtnStartTrading>
-        <div>
-          <button type="button" onClick={() => window.open('/swap')}>
-            <span>{t('Start Trading')}</span>
-            {/* <img src="/images/dex-v2/start_trading.png" alt="start_trading" />
-             */}
-            <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
-              <path
-                d="M16.1873 4.35359L13.0206 1.18692C12.9468 1.11311 12.8592 1.05456 12.7627 1.01461C12.6663 0.974663 12.5629 0.954102 12.4585 0.954102C12.2477 0.954102 12.0455 1.03785 11.8964 1.18692C11.7474 1.336 11.6636 1.53819 11.6636 1.74901C11.6636 1.95983 11.7474 2.16202 11.8964 2.31109L13.7173 4.12401H4.54186C4.3319 4.12401 4.13053 4.20742 3.98207 4.35588C3.8336 4.50435 3.75019 4.70571 3.75019 4.91567C3.75019 5.12564 3.8336 5.327 3.98207 5.47547C4.13053 5.62393 4.3319 5.70734 4.54186 5.70734H15.6252C15.7815 5.70656 15.9341 5.65953 16.0637 5.57219C16.1933 5.48484 16.2941 5.36108 16.3535 5.21651C16.4141 5.07234 16.4307 4.91344 16.4011 4.75986C16.3715 4.60629 16.2971 4.46492 16.1873 4.35359ZM12.4585 7.29067H1.37519C1.2189 7.29145 1.06633 7.33848 0.936718 7.42583C0.807106 7.51318 0.706249 7.63693 0.646858 7.78151C0.586233 7.92568 0.569669 8.08458 0.599257 8.23815C0.628845 8.39173 0.703259 8.5331 0.813108 8.64442L3.97978 11.8111C4.05337 11.8853 4.14093 11.9442 4.2374 11.9844C4.33387 12.0246 4.43735 12.0453 4.54186 12.0453C4.64637 12.0453 4.74984 12.0246 4.84631 11.9844C4.94279 11.9442 5.03035 11.8853 5.10394 11.8111C5.17814 11.7375 5.23704 11.6499 5.27723 11.5535C5.31742 11.457 5.33812 11.3535 5.33812 11.249C5.33812 11.1445 5.31742 11.041 5.27723 10.9446C5.23704 10.8481 5.17814 10.7605 5.10394 10.6869L3.28311 8.87401H12.4585C12.6685 8.87401 12.8699 8.7906 13.0183 8.64213C13.1668 8.49367 13.2502 8.2923 13.2502 8.08234C13.2502 7.87238 13.1668 7.67101 13.0183 7.52255C12.8699 7.37408 12.6685 7.29067 12.4585 7.29067Z"
-                fill="black"
-              />
-            </svg>
-          </button>
-          <button type="button" onClick={() => window.open('https://github.com/')} style={{ height: '100%' }}>
-            GitHub
-          </button>
-        </div>
-      </StyledBtnStartTrading>
-
-      {width >= 1080 && (
-        <StyledValue>
+    <>
+      <BG />
+      <StyledContainer>
+        <StyledHeader>
+          <h1
+            dangerouslySetInnerHTML={{
+              __html: t('Multi-Chain <span class="hight-light">Decentralized Trading Solution</span> Powering Web3.'),
+            }}
+          />
           <div>
+            <img src="/images/dex-v2/heading.png" alt="" />
+          </div>
+        </StyledHeader>
+
+        <StyledBtnStartTrading>
+          <div>
+            <button type="button" onClick={() => window.open('/swap')}>
+              <span>{t('Start Trading')}</span>
+              {/* <img src="/images/dex-v2/start_trading.png" alt="start_trading" />
+               */}
+              <svg xmlns="http://www.w3.org/2000/svg" width="17" height="13" viewBox="0 0 17 13" fill="none">
+                <path
+                  d="M16.1873 4.35359L13.0206 1.18692C12.9468 1.11311 12.8592 1.05456 12.7627 1.01461C12.6663 0.974663 12.5629 0.954102 12.4585 0.954102C12.2477 0.954102 12.0455 1.03785 11.8964 1.18692C11.7474 1.336 11.6636 1.53819 11.6636 1.74901C11.6636 1.95983 11.7474 2.16202 11.8964 2.31109L13.7173 4.12401H4.54186C4.3319 4.12401 4.13053 4.20742 3.98207 4.35588C3.8336 4.50435 3.75019 4.70571 3.75019 4.91567C3.75019 5.12564 3.8336 5.327 3.98207 5.47547C4.13053 5.62393 4.3319 5.70734 4.54186 5.70734H15.6252C15.7815 5.70656 15.9341 5.65953 16.0637 5.57219C16.1933 5.48484 16.2941 5.36108 16.3535 5.21651C16.4141 5.07234 16.4307 4.91344 16.4011 4.75986C16.3715 4.60629 16.2971 4.46492 16.1873 4.35359ZM12.4585 7.29067H1.37519C1.2189 7.29145 1.06633 7.33848 0.936718 7.42583C0.807106 7.51318 0.706249 7.63693 0.646858 7.78151C0.586233 7.92568 0.569669 8.08458 0.599257 8.23815C0.628845 8.39173 0.703259 8.5331 0.813108 8.64442L3.97978 11.8111C4.05337 11.8853 4.14093 11.9442 4.2374 11.9844C4.33387 12.0246 4.43735 12.0453 4.54186 12.0453C4.64637 12.0453 4.74984 12.0246 4.84631 11.9844C4.94279 11.9442 5.03035 11.8853 5.10394 11.8111C5.17814 11.7375 5.23704 11.6499 5.27723 11.5535C5.31742 11.457 5.33812 11.3535 5.33812 11.249C5.33812 11.1445 5.31742 11.041 5.27723 10.9446C5.23704 10.8481 5.17814 10.7605 5.10394 10.6869L3.28311 8.87401H12.4585C12.6685 8.87401 12.8699 8.7906 13.0183 8.64213C13.1668 8.49367 13.2502 8.2923 13.2502 8.08234C13.2502 7.87238 13.1668 7.67101 13.0183 7.52255C12.8699 7.37408 12.6685 7.29067 12.4585 7.29067Z"
+                  fill="black"
+                />
+              </svg>
+            </button>
+            <button type="button" onClick={() => window.open('https://github.com/')} style={{ height: '100%' }}>
+              GitHub
+            </button>
+          </div>
+        </StyledBtnStartTrading>
+
+        {width >= 1080 && (
+          <StyledValue>
+            <div>
+              {VALUE.map((item: IValue, i) => (
+                <div key={String(i + item.title)}>
+                  <p>{item.value}</p>
+                  <p>{item.title}</p>
+                </div>
+              ))}
+            </div>
+          </StyledValue>
+        )}
+
+        {width < 1080 && (
+          <StyedValueMobile>
             {VALUE.map((item: IValue, i) => (
               <div key={String(i + item.title)}>
                 <p>{item.value}</p>
                 <p>{item.title}</p>
               </div>
             ))}
-          </div>
-        </StyledValue>
-      )}
+          </StyedValueMobile>
+        )}
 
-      {width < 1080 && (
-        <StyedValueMobile>
-          {VALUE.map((item: IValue, i) => (
-            <div key={String(i + item.title)}>
-              <p>{item.value}</p>
-              <p>{item.title}</p>
-            </div>
-          ))}
-        </StyedValueMobile>
-      )}
+        <StyledEcosystem>
+          <p dangerouslySetInnerHTML={{ __html: t('<span class="hight-light">XOX Dex V2</span> Ecosystem') }} />
+          <p>
+            {t(
+              'Why trade in a single Dex when you can Trade in all DEXs at Once? XOX Dex V2 finds you the best prices across',
+            )}
+            <br />
+            {t('60+ Chains & 150+ DEXes and combines them into a single trade, all while giving you many other trade')}
+            <br />
+            {t('options to choose from, Ranking them by Lowest Fees, Best Rates, and Higher Liquidity.')}
+          </p>
+        </StyledEcosystem>
 
-      <StyledEcosystem>
-        <p dangerouslySetInnerHTML={{ __html: t('<span class="hight-light">XOX Dex V2</span> Ecosystem') }} />
-        <p>
-          {t(
-            'Why trade in a single Dex when you can Trade in all DEXs at Once? XOX Dex V2 finds you the best prices across',
-          )}
-          <br />
-          {t('60+ Chains & 150+ DEXes and combines them into a single trade, all while giving you many other trade')}
-          <br />
-          {t('options to choose from, Ranking them by Lowest Fees, Best Rates, and Higher Liquidity.')}
-        </p>
-      </StyledEcosystem>
-
-      <StyledTabEcosystem>
-        <div>
-          {TABECOSYSTEM.map((item, i) => (
-            <div
-              className={`${
-                i === tabEcosystem
-                  ? `tab_ecosystem_contain tab_ecosystem_contain_${i} contain_active`
-                  : `tab_ecosystem_contain tab_ecosystem_contain_${i}`
-              }`}
-            >
-              <div
-                key={String(i + item)}
-                onClick={() => setTabEcosystem(i)}
-                aria-hidden="true"
-                className={`${i === tabEcosystem ? 'tab_ecosystem active' : 'tab_ecosystem'}`}
-              >
-                {item}
-              </div>
-            </div>
-          ))}
-        </div>
-      </StyledTabEcosystem>
-
-      {renderTab}
-
-      <StyledBLock>
-        <div>
-          <h3>{t('How it works.')}</h3>
-          <p
-            dangerouslySetInnerHTML={{
-              __html: t(
-                '<span class="hight-light">XOX Dex V2</span> is more than just another aggregator. We have taken a <span class="hight-light">revolutionary approach</span> by aggregating from all <span class="hight-light">DEXs</span>, <span class="hight-light">aggregators</span>, and <span class="hight-light">bridges</span> to provide users with the <span class="hight-light">most advanced and efficient aggregator service available</span> . <span class="hight-light">The XOX Dex V2</span> platform saves users both <span class="hight-light">Time and Money</span> , while also providing them with access to the most complex <span class="hight-light">in-chain and cross-chain</span> swap capabilities available on the <span class="hight-light">Defi Market.</span>',
-              ),
-            }}
-          />
-        </div>
-
-        <div>
-          <video
-            loop
-            playsInline
-            autoPlay
-            controls={false}
-            preload="auto"
-            style={{ pointerEvents: 'none' }}
-            controlsList="nodownload"
-            muted
-          >
-            <source src="/images/dex-v2/how_it_work.webm" type="video/webm" />
-          </video>
-        </div>
-      </StyledBLock>
-
-      <StyledWhatYouCanDo>
-        <div>{renderImageWhatYouCando}</div>
-
-        <div>
-          <h3>{t('What can you do.')}</h3>
-          <div className="tab_what_you_can_do_container">
-            {TABWHATYOUCANDO.map((item, i) => (
+        <StyledTabEcosystem>
+          <div>
+            {TABECOSYSTEM.map((item, i) => (
               <div
                 className={`${
-                  tabWHatYouCanDo === i
-                    ? `tab_wycd_contain tab_wycd_contain_${i} wycd_active`
-                    : `tab_wycd_contain tab_wycd_contain_${i}`
+                  i === tabEcosystem
+                    ? `tab_ecosystem_contain tab_ecosystem_contain_${i} contain_active`
+                    : `tab_ecosystem_contain tab_ecosystem_contain_${i}`
                 }`}
               >
                 <div
                   key={String(i + item)}
-                  onClick={() => setTabWHatYouCanDo(i)}
+                  onClick={() => setTabEcosystem(i)}
                   aria-hidden="true"
-                  className={`${tabWHatYouCanDo === i ? 'tab_what_you_can_do active' : 'tab_what_you_can_do'}`}
+                  className={`${i === tabEcosystem ? 'tab_ecosystem active' : 'tab_ecosystem'}`}
                 >
                   {item}
                 </div>
               </div>
             ))}
           </div>
-          {renderTabWhatYouCanDo}
-        </div>
-      </StyledWhatYouCanDo>
+        </StyledTabEcosystem>
 
-      <StyledReferralProgram>
-        <div>
-          <h3 dangerouslySetInnerHTML={{ __html: t('Next Gen <span class="hight-light">Referral Program</span>') }} />
-          <p
-            dangerouslySetInnerHTML={{
-              __html: t(
-                '<span class="hight-light">XOX Dex V1</span> has already one of the most advanced referral programs in the space, allowing <span class="hight-light">Dual Cash Back</span> and referral earning on every transaction that the code has been applied for both the <span class="hight-light">referee</span> & <span class="hight-light">referrer</span>). It is also gamified, implements leader-boards and milestones and users can withdraw their earnings in, <span class="hight-light">USDT/USDC</span>.',
-              ),
-            }}
-          />
+        {renderTab}
 
-          <p
-            dangerouslySetInnerHTML={{
-              __html: t(
-                '<span class="hight-light">But</span>, in <span class="hight-light">XOX Dex V2</span> we are upgrading it by making it <span class="hight-light">Multi-Chain</span> and <span class="hight-light">Multi Token</span>. It\'s simple, just <span class="hight-light">Share Your Code</span> and <span class="hight-light">Earn</span> some <span class="hight-light">Free Cash</span> as <span class="hight-light">Passive Income</span>.',
-              ),
-            }}
-          />
-
+        <StyledBLock>
           <div>
-            <BtnLearMore />
-          </div>
-        </div>
-
-        <div>
-          <video
-            loop
-            playsInline
-            autoPlay
-            controls={false}
-            preload="auto"
-            style={{ pointerEvents: 'none' }}
-            controlsList="nodownload"
-            muted
-          >
-            <source src="/images/dex-v2/ref.webm" type="video/webm" />
-          </video>
-        </div>
-      </StyledReferralProgram>
-
-      <StyledRevenue>
-        <div>
-          <video
-            loop
-            playsInline
-            autoPlay
-            controls={false}
-            preload="auto"
-            style={{ pointerEvents: 'none' }}
-            controlsList="nodownload"
-            muted
-          >
-            <source src="/images/dex-v2/revenue.webm" type="video/webm" />
-          </video>
-        </div>
-
-        <div>
-          <h3 dangerouslySetInnerHTML={{ __html: t('<span class="hight-light">Revenue Sharing</span> Program') }} />
-          <p
-            dangerouslySetInnerHTML={{
-              __html: t(
-                'The key <span class="hight-light">Revenue Source</span> for <span class="hight-light">XOX Dex V2</span> is trading fees captured on every successful transaction performed in our protocol. Which is <span class="hight-light">automatically redistributed</span> among:',
-              ),
-            }}
-          />
-
-          <ul>
-            <li>{t('XOX Token stakers')}</li>
-            <li>{t('Liquidity providers')}</li>
-            <li>{t('Referrals')}</li>
-            <li>{t('Buyback and burn')}</li>
-            <li>{t('Development')}</li>
-            <li>{t('XOX Labs Treasury')}</li>
-          </ul>
-
-          <div>
-            <BtnLearMore />
-          </div>
-        </div>
-      </StyledRevenue>
-
-      <ReStyledTitle style={{ marginBottom: width < 1080 ? 30 : 48 }}>{t('Safe and Reliable.')}</ReStyledTitle>
-
-      <StyledSaleAndReliable>
-        {SAFERELIABLE.map((safe, i) => (
-          <CardSafeReliable safe={safe} key={String(i + safe.name)} />
-        ))}
-      </StyledSaleAndReliable>
-
-      <div
-        style={{
-          marginTop: width < 1080 ? 30 : 48,
-          marginBottom: width < 1080 ? 60 : 80,
-          display: 'flex',
-          justifyContent: 'center',
-        }}
-      >
-        <BtnLearMore />
-      </div>
-
-      <ReStyledTitle>{t('XOX Labs Ecosystem Products')}</ReStyledTitle>
-      <ReStyledSubtitle style={{ marginBottom: 48 }}>
-        {t('A true one Multi-chain stop for all your Defi Needs.')}
-      </ReStyledSubtitle>
-
-      <StyledSocial marginBottom={[60, null, null, 80]}>
-        {SOCIALS.map((social, i) => (
-          <CardSocial social={social} key={String(i + social.name)} />
-        ))}
-      </StyledSocial>
-
-      <Box marginBottom={[60, null, null, null]}>
-        <BackedBy />
-      </Box>
-
-      <ReStyledTitle style={{ marginBottom: 16 }}>{t('Join The Wait List Here.')}</ReStyledTitle>
-      <p className="subtitle">
-        {t('Unsubscribe at any time.')}{' '}
-        <a className="privacy-link" href="#">
-          {t('Privacy policy')}
-          <span className="up-icon" style={{ marginLeft: 6 }}>
-            <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M2.5 8L7.5 3" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
-              <path d="M3.4375 3H7.5V7.0625" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
-            </svg>
-          </span>
-        </a>
-      </p>
-
-      <div className="subscription-form-container">
-        <div className="subscription-box">
-          <form action="#" method="post" className={`subscription-form ${emailBorderClass} ${emailErrorClass}`}>
-            <img src="/images/home/subscription/email.svg" alt="email" className="email-icon" />
-            <input
-              type="text"
-              id="email"
-              name="email"
-              placeholder={t('Your email')}
-              required
-              value={inputValue}
-              onChange={handleChange}
-              onBlur={handleBlur}
-              onFocus={handleFocus}
+            <h3>{t('How it works.')}</h3>
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t(
+                  '<span class="hight-light">XOX Dex V2</span> is more than just another aggregator. We have taken a <span class="hight-light">revolutionary approach</span> by aggregating from all <span class="hight-light">DEXs</span>, <span class="hight-light">aggregators</span>, and <span class="hight-light">bridges</span> to provide users with the <span class="hight-light">most advanced and efficient aggregator service available</span> . <span class="hight-light">The XOX Dex V2</span> platform saves users both <span class="hight-light">Time and Money</span> , while also providing them with access to the most complex <span class="hight-light">in-chain and cross-chain</span> swap capabilities available on the <span class="hight-light">Defi Market.</span>',
+                ),
+              }}
             />
-            <button
-              onClick={handleBtnSubmit}
-              disabled={!!textErrorClass || !inputValue}
-              type="button"
-              className={`btn-submit ${btnHoverClass}`}
+          </div>
+
+          <div>
+            <video
+              loop
+              playsInline
+              autoPlay
+              controls={false}
+              preload="auto"
+              style={{ pointerEvents: 'none' }}
+              controlsList="nodownload"
+              muted
             >
-              <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M6.75 15.3066H24.25"
-                  stroke="#515151"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-                <path
-                  d="M15.5 6.55664L24.25 15.3066L15.5 24.0566"
-                  stroke="#515151"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                />
-              </svg>
-            </button>
-          </form>
-          <span className={`hidden-text ${textErrorClass}`}>
-            <p>{t('Invalid email address')}</p>
-          </span>
+              <source src="/images/dex-v2/how_it_work.webm" type="video/webm" />
+            </video>
+          </div>
+        </StyledBLock>
+
+        <StyledWhatYouCanDo>
+          <div>{renderImageWhatYouCando}</div>
+
+          <div>
+            <h3>{t('What can you do.')}</h3>
+            <div className="tab_what_you_can_do_container">
+              {TABWHATYOUCANDO.map((item, i) => (
+                <div
+                  className={`${
+                    tabWHatYouCanDo === i
+                      ? `tab_wycd_contain tab_wycd_contain_${i} wycd_active`
+                      : `tab_wycd_contain tab_wycd_contain_${i}`
+                  }`}
+                >
+                  <div
+                    key={String(i + item)}
+                    onClick={() => setTabWHatYouCanDo(i)}
+                    aria-hidden="true"
+                    className={`${tabWHatYouCanDo === i ? 'tab_what_you_can_do active' : 'tab_what_you_can_do'}`}
+                  >
+                    {item}
+                  </div>
+                </div>
+              ))}
+            </div>
+            {renderTabWhatYouCanDo}
+          </div>
+        </StyledWhatYouCanDo>
+
+        <StyledReferralProgram>
+          <div>
+            <h3 dangerouslySetInnerHTML={{ __html: t('Next Gen <span class="hight-light">Referral Program</span>') }} />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t(
+                  '<span class="hight-light">XOX Dex V1</span> has already one of the most advanced referral programs in the space, allowing <span class="hight-light">Dual Cash Back</span> and referral earning on every transaction that the code has been applied for both the <span class="hight-light">referee</span> & <span class="hight-light">referrer</span>). It is also gamified, implements leader-boards and milestones and users can withdraw their earnings in, <span class="hight-light">USDT/USDC</span>.',
+                ),
+              }}
+            />
+
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t(
+                  '<span class="hight-light">But</span>, in <span class="hight-light">XOX Dex V2</span> we are upgrading it by making it <span class="hight-light">Multi-Chain</span> and <span class="hight-light">Multi Token</span>. It\'s simple, just <span class="hight-light">Share Your Code</span> and <span class="hight-light">Earn</span> some <span class="hight-light">Free Cash</span> as <span class="hight-light">Passive Income</span>.',
+                ),
+              }}
+            />
+
+            <div>
+              <BtnLearMore />
+            </div>
+          </div>
+
+          <div>
+            <video
+              loop
+              playsInline
+              autoPlay
+              controls={false}
+              preload="auto"
+              style={{ pointerEvents: 'none' }}
+              controlsList="nodownload"
+              muted
+            >
+              <source src="/images/dex-v2/ref.webm" type="video/webm" />
+            </video>
+          </div>
+        </StyledReferralProgram>
+
+        <StyledRevenue>
+          <div>
+            <video
+              loop
+              playsInline
+              autoPlay
+              controls={false}
+              preload="auto"
+              style={{ pointerEvents: 'none' }}
+              controlsList="nodownload"
+              muted
+            >
+              <source src="/images/dex-v2/revenue.webm" type="video/webm" />
+            </video>
+          </div>
+
+          <div>
+            <h3 dangerouslySetInnerHTML={{ __html: t('<span class="hight-light">Revenue Sharing</span> Program') }} />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: t(
+                  'The key <span class="hight-light">Revenue Source</span> for <span class="hight-light">XOX Dex V2</span> is trading fees captured on every successful transaction performed in our protocol. Which is <span class="hight-light">automatically redistributed</span> among:',
+                ),
+              }}
+            />
+
+            <ul>
+              <li>{t('XOX Token stakers')}</li>
+              <li>{t('Liquidity providers')}</li>
+              <li>{t('Referrals')}</li>
+              <li>{t('Buyback and burn')}</li>
+              <li>{t('Development')}</li>
+              <li>{t('XOX Labs Treasury')}</li>
+            </ul>
+
+            <div>
+              <BtnLearMore />
+            </div>
+          </div>
+        </StyledRevenue>
+
+        <ReStyledTitle style={{ marginBottom: width < 1080 ? 30 : 48 }}>{t('Safe and Reliable.')}</ReStyledTitle>
+
+        <StyledSaleAndReliable>
+          {SAFERELIABLE.map((safe, i) => (
+            <CardSafeReliable safe={safe} key={String(i + safe.name)} />
+          ))}
+        </StyledSaleAndReliable>
+
+        <div
+          style={{
+            marginTop: width < 1080 ? 30 : 48,
+            marginBottom: width < 1080 ? 60 : 80,
+            display: 'flex',
+            justifyContent: 'center',
+          }}
+        >
+          <BtnLearMore />
         </div>
-      </div>
-    </StyledContainer>
+
+        <ReStyledTitle>{t('XOX Labs Ecosystem Products')}</ReStyledTitle>
+        <ReStyledSubtitle style={{ marginBottom: 48 }}>
+          {t('A true one Multi-chain stop for all your Defi Needs.')}
+        </ReStyledSubtitle>
+
+        <StyledSocial marginBottom={[60, null, null, 80]}>
+          {SOCIALS.map((social, i) => (
+            <CardSocial social={social} key={String(i + social.name)} />
+          ))}
+        </StyledSocial>
+
+        <Box marginBottom={[60, null, null, null]}>
+          <BackedBy />
+        </Box>
+
+        <ReStyledTitle style={{ marginBottom: 16 }}>{t('Join The Wait List Here.')}</ReStyledTitle>
+        <p className="subtitle">
+          {t('Unsubscribe at any time.')}{' '}
+          <a className="privacy-link" href="#">
+            {t('Privacy policy')}
+            <span className="up-icon" style={{ marginLeft: 6 }}>
+              <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2.5 8L7.5 3" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
+                <path d="M3.4375 3H7.5V7.0625" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
+              </svg>
+            </span>
+          </a>
+        </p>
+
+        <div className="subscription-form-container">
+          <div className="subscription-box">
+            <form action="#" method="post" className={`subscription-form ${emailBorderClass} ${emailErrorClass}`}>
+              <img src="/images/home/subscription/email.svg" alt="email" className="email-icon" />
+              <input
+                type="text"
+                id="email"
+                name="email"
+                placeholder={t('Your email')}
+                required
+                value={inputValue}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                onFocus={handleFocus}
+              />
+              <button
+                onClick={handleBtnSubmit}
+                disabled={!!textErrorClass || !inputValue}
+                type="button"
+                className={`btn-submit ${btnHoverClass}`}
+              >
+                <svg width="31" height="31" viewBox="0 0 31 31" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M6.75 15.3066H24.25"
+                    stroke="#515151"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                  <path
+                    d="M15.5 6.55664L24.25 15.3066L15.5 24.0566"
+                    stroke="#515151"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  />
+                </svg>
+              </button>
+            </form>
+            <span className={`hidden-text ${textErrorClass}`}>
+              <p>{t('Invalid email address')}</p>
+            </span>
+          </div>
+        </div>
+      </StyledContainer>
+    </>
   )
 }
 

@@ -846,7 +846,12 @@ function VestingPage() {
 
   const onModal = () => {
     const timeStamp = Date.now()
-    if (timeStamp <= handleGetOneHourAfterSale && timeStamp > infoRoundOne.startDate && !isUserInWhiteList) {
+    if (
+      timeStamp <= handleGetOneHourAfterSale &&
+      timeStamp > infoRoundOne.startDate &&
+      !isUserInWhiteList &&
+      currentRound === ROUND.ONE
+    ) {
       onModalWarning()
       return
     }

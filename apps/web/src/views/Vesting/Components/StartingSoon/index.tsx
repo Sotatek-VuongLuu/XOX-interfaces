@@ -200,10 +200,12 @@ function StartingSoon({
   const [timeNow, setTimeNow] = useState(timeStampOfNow)
 
   const isNotSetDataForAll = !infoRoundOne.endDate && !infoRoundTow.endDate && !infoRoundThree.endDate
+  const preVid = document.getElementById('presaleVideo') as any
 
   useEffect(() => {
-    ;(document.getElementById('presaleVideo') as any).play()
-  }, [])
+    if (!preVid) return
+    preVid.play()
+  }, [preVid])
 
   const handleReturnPercent = useMemo(() => {
     switch (currentRound) {
