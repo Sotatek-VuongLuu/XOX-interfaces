@@ -284,6 +284,7 @@ const Menu = (props) => {
             activeItem={menuLandingPath.includes(route.pathname) ? activeMenuItemLanding?.href : activeMenuItem?.href}
             activeSubItem={activeSubMenuItem?.href}
             setOpenHeader={setOpenHeader}
+            isLanding={menuLandingPath.includes(route.pathname)}
           />
         </CustomModalWrapper>
       </ModalV2Wrapper>

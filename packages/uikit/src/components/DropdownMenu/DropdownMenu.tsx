@@ -2,7 +2,6 @@
 import React, { useContext, useEffect, useState, useCallback, createElement } from "react";
 import { usePopper } from "react-popper";
 import styled from "styled-components";
-
 import { useOnClickOutside } from "../../hooks";
 import { MenuContext } from "../../widgets/Menu/context";
 import { Box, Flex } from "../Box";
@@ -175,16 +174,14 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                         disabled={disabled || isDisabled}
                         as={linkComponent}
                         href={href}
-                        onClick={() => {
-                          setIsOpen(false);
-                        }}
-                        {...itemProps}
+                        onClick={() => setIsOpen(false)}
                         className="submenu"
+                        {...itemProps}
                       >
                         {MenuItemContent}
                       </DropdownMenuItem>
                     </span>
-                    <span className="tooltiptext">{t('Under Development')}</span>
+                    <span className="tooltiptext">{t("Under Development")}</span>
                   </Tooltip>
                 ) : (
                   // <Tooltip title="Under Development" placement="right">
@@ -246,7 +243,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
           {...attributes.popper}
           $isBottomNav={isBottomNav}
           $isOpen={isMenuShow}
-          $isLanding={isLanding}
+          $isLanding={false}
           onMouseEnter={handleMouseEnter}
           onMouseLeave={handleMouseLeave}
           className="dropdown-menu"

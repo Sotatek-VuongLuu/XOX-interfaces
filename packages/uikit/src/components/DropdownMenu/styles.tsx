@@ -86,6 +86,12 @@ export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: b
 
   @media (max-width: 576px) {
     width: ${({ $isBottomNav, $isLanding }) => ($isBottomNav ? "100%" : $isLanding ? "515px" : "100%")};
+    grid-template-columns: ${({ $isLanding }) => ($isLanding ? "1fr auto" : "1fr")};
+    max-width: 100%;
+
+    & > div:nth-child(3) {
+      grid-column: 1 / 3;
+    }
   }
 
   ${({ $isOpen }) =>
