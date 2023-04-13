@@ -1259,8 +1259,6 @@ function DevV2() {
   const [textErrorClass, setTextErrorClass] = useState<string>('')
   const { toastSuccess, toastError } = useToast()
   const [timeRecall, setTimeRecall] = useState(7)
-  const [flow, setFlow] = useState('increase')
-  const [flowWwycd, setFlowWycd] = useState('increase')
   const { width } = useWindowSize()
 
   const SOCIALS: Array<ISocial> = [
@@ -1452,41 +1450,33 @@ function DevV2() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [inputValue])
 
+  //   function elmYPosition(eID) {
+  //     var elm = document.getElementById(eID);
+  //     var y = elm.offsetTop;
+  //     var node = elm;
+  //     while (node.offsetParent && node.offsetParent != document.body) {
+  //         node = node.offsetParent;
+  //         y += node.offsetTop;
+  //     } return y;
+  // }
+
   useEffect(() => {
     const myId = setTimeout(() => {
       if (timeRecall > 0) {
         setTimeRecall(timeRecall - 1)
         return
       }
-      if (flow === 'increase' && tabEcosystem < 3) {
-        const nextIndex = tabEcosystem + 1
-        if (nextIndex === 3) {
-          setFlow('decrease')
-        }
-        setTabEcosystem(nextIndex)
-      }
-      if (flow === 'decrease' && tabEcosystem > 0) {
-        const prevIndex = tabEcosystem - 1
-        if (prevIndex === 0) {
-          setFlow('increase')
-        }
-        setTabEcosystem(prevIndex)
-      }
-      if (flowWwycd === 'increase' && tabWHatYouCanDo < 4) {
-        const nextIndex = tabWHatYouCanDo + 1
-        if (nextIndex === 4) {
-          setFlowWycd('decrease')
-        }
-        setTabWHatYouCanDo(nextIndex)
-      }
-      if (flowWwycd === 'decrease' && tabWHatYouCanDo > 0) {
-        const prevIndex = tabWHatYouCanDo - 1
-        if (prevIndex === 0) {
-          setFlowWycd('increase')
-        }
-        setTabWHatYouCanDo(prevIndex)
-      }
-      setTimeRecall(7)
+      const tabEcosystemTemp = (tabEcosystem + 1) % 4
+      setTabEcosystem(tabEcosystemTemp)
+      document.getElementById('tab_ecosystem_wrapper').scrollTo({ left: 100 * tabEcosystemTemp, behavior: 'smooth' })
+
+      const tabWHatYouCanDoTemp = (tabWHatYouCanDo + 1) % 5
+      setTabWHatYouCanDo(tabWHatYouCanDoTemp)
+      document
+        .getElementById('tab_what_you_can_do_wrapper')
+        .scrollTo({ left: 100 * tabWHatYouCanDoTemp, behavior: 'smooth' })
+
+      setTimeRecall(1)
     }, 1000)
     return () => clearTimeout(myId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -1563,7 +1553,7 @@ function DevV2() {
           </p>
         </StyledEcosystem>
 
-        <StyledTabEcosystem>
+        <StyledTabEcosystem id="tab_ecosystem_wrapper">
           <div>
             {TABECOSYSTEM.map((item, i) => (
               <div
@@ -1572,6 +1562,9 @@ function DevV2() {
                     ? `tab_ecosystem_contain tab_ecosystem_contain_${i} contain_active`
                     : `tab_ecosystem_contain tab_ecosystem_contain_${i}`
                 }`}
+                key={`tabEcosystem_${i}`}
+                id={`tabEcosystem_${i}`}
+                tabIndex={0}
               >
                 <div
                   key={String(i + item)}
@@ -1621,7 +1614,7 @@ function DevV2() {
 
           <div>
             <h3>{t('What can you do.')}</h3>
-            <div className="tab_what_you_can_do_container">
+            <div className="tab_what_you_can_do_container" id="tab_what_you_can_do_wrapper">
               {TABWHATYOUCANDO.map((item, i) => (
                 <div
                   className={`${
@@ -1629,6 +1622,9 @@ function DevV2() {
                       ? `tab_wycd_contain tab_wycd_contain_${i} wycd_active`
                       : `tab_wycd_contain tab_wycd_contain_${i}`
                   }`}
+                  key={`tab_wycd_contain_${i}`}
+                  id={`tab_wycd_contain_${i}`}
+                  tabIndex={1}
                 >
                   <div
                     key={String(i + item)}

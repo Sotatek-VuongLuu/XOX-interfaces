@@ -8,7 +8,7 @@ import 'tippy.js/dist/tippy.css' // optional
 import { Box, Grid } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
 import axios from 'axios'
-import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
+import { formatAmountNumber, formatNumber } from '@pancakeswap/utils/formatBalance'
 // eslint-disable-next-line import/no-cycle
 interface ItemProps {
   item: CoinItem
@@ -192,7 +192,7 @@ const DataItemDisplay = ({ item }: DataItemProps) => {
               {item.description !== 'Total Users' && item.description !== 'XOXS Staked' && item.realData && (
                 <span className="icon_dolla">$</span>
               )}
-              {item.realData ? formatAmountNumber(Number(item.realData)) : item.dataEmpty}
+              {item.realData ? formatNumber(formatAmountNumber(Number(item.realData))) : item.dataEmpty}
             </Title>
             <Description>{t(item.description)}</Description>
           </div>
