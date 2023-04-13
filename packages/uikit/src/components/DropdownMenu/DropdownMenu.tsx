@@ -174,7 +174,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                         as={linkComponent}
                         href={href}
                         onClick={() => setIsOpen(false)}
-                        className="submenu"
+                        className={label === "XOX Dex V2" ? "text-gradient submenu" : "submenu"}
                         {...itemProps}
                       >
                         {MenuItemContent}
