@@ -76,6 +76,9 @@ const BodyWrapper = styled(Box)`
   max-width: 100vw;
   overflow-y: auto;
   overflow-x: hidden;
+  top: -100px;
+  padding-top: 100px;
+  background: #0a0a0a;
 
   ${({ theme }) => theme.mediaQueries.md} {
     overflow: unset;
