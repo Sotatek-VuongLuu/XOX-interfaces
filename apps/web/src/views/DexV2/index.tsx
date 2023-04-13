@@ -1476,7 +1476,7 @@ function DevV2() {
         .getElementById('tab_what_you_can_do_wrapper')
         .scrollTo({ left: 100 * tabWHatYouCanDoTemp, behavior: 'smooth' })
 
-      setTimeRecall(1)
+      setTimeRecall(7)
     }, 1000)
     return () => clearTimeout(myId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
