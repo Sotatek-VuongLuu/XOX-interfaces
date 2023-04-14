@@ -3,7 +3,6 @@ import { AtomBox } from "@pancakeswap/ui/components/AtomBox";
 import throttle from "lodash/throttle";
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
-import BottomNav from "../../components/BottomNav";
 import { Box } from "../../components/Box";
 import Flex from "../../components/Box/Flex";
 import Footer from "../../components/Footer";
@@ -76,9 +75,6 @@ const BodyWrapper = styled(Box)`
   max-width: 100vw;
   overflow-y: auto;
   overflow-x: hidden;
-  top: -100px;
-  padding-top: 100px;
-  background: #0a0a0a;
 
   ${({ theme }) => theme.mediaQueries.md} {
     overflow: unset;

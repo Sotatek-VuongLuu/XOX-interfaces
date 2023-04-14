@@ -45,7 +45,7 @@ class MyDocument extends Document {
           {/* <link rel="apple-touch-icon" href="/logo.png" /> */}
           <link rel="manifest" href="/manifest.json" />
         </Head>
-        <body>
+        <body style={{ background: '#0a0a0a' }}>
           <noscript>
             <iframe
               src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTAG}`}

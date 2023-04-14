@@ -11,7 +11,6 @@ import {
   StyledText,
   FooterMainContent,
   SubTitleStyle,
-  StyleStaticPage,
   ImagBGFooter,
   ImagBGFooterTow,
   Container,
