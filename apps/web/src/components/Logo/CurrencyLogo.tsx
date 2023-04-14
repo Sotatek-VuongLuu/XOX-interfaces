@@ -42,8 +42,7 @@ export default function CurrencyLogo({
       }
     }
 
-    if (chainId === 5 || chainId === 97) return
-
+    if (process.env.NEXT_PUBLIC_TEST_MODE !== '1' && (chainId === 5 || chainId === 97)) return
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/info`, {
         params: { address: token.address },
