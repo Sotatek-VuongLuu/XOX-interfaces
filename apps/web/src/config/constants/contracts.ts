@@ -192,8 +192,8 @@ export default {
     56: '',
   },
   farmingLP: {
-    97: '0x17dD53D4609c127408Bcb89703697169De2d5D5a',
-    5: '0x3Df129fDf4893b032967fce82c929F3399515298',
+    97: '0xDA56fbC7223E4F0b9F49a7707E654Ad61EbbcA1c',
+    5: '0xDf4391E9C41A1dfbdE6E03c7b233a8B98419526a',
     1: '', // TODO: change address
     56: '',
   },
