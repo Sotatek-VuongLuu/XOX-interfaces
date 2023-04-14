@@ -39,7 +39,7 @@ const BG = styled.div`
 `
 
 const StyledContainer = styled(StyledS)`
-  margin: 30px auto 100px auto;
+  margin: 0px auto 100px auto;
   .hight-light {
     color: rgba(255, 255, 255, 0.87) !important;
   }
@@ -204,29 +204,121 @@ const StyledContainer = styled(StyledS)`
   }
 `
 const StyledHeader = styled.div`
-  > h1 {
+  > div:nth-child(1) {
+    display: block;
+    position: relative;
     width: 1200px;
     max-width: 100%;
     margin: 0px auto 60px auto;
-    font-weight: 700;
-    font-size: 24px;
-    text-align: start;
-    color: rgba(255, 255, 255, 0.6);
-    line-height: 40px;
-  }
+    height: 160px;
+    > h1 {
+      width: 100%;
+      font-weight: 700;
+      font-size: 24px;
+      text-align: start;
+      color: rgba(255, 255, 255, 0.6);
+      line-height: 40px;
+      display: inline-block;
+      position: absolute;
+      top: 0px;
+      transform: rotateX(-90deg);
+      opacity: 0;
+      animation-timing-function: ease;
+    }
 
-  > div {
+    > h1:nth-child(1) {
+      animation: rollDown 20s forwards infinite;
+    }
+
+    > h1:nth-child(2) {
+      animation: rollDown2 20s forwards infinite;
+    }
+    > h1:nth-child(3) {
+      animation: rollDown3 20s forwards infinite;
+    }
+
+    @keyframes rollDown {
+      0% {
+        top: 0px;
+        transform: rotateX(-90deg);
+      }
+      11% {
+        top: 20px;
+        transform: rotateX(0deg);
+        opacity: 1;
+      }
+      22% {
+        top: 20px;
+        transform: rotateX(0deg);
+        opacity: 1;
+      }
+      33% {
+        top: 50px;
+        transform: rotateX(30deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes rollDown2 {
+      33% {
+        top: 0px;
+
+        transform: rotateX(-90deg);
+      }
+      44% {
+        top: 20px;
+        transform: rotateX(0deg);
+        opacity: 1;
+      }
+      55% {
+        top: 20px;
+        transform: rotateX(0deg);
+        opacity: 1;
+      }
+      66% {
+        top: 50px;
+        transform: rotateX(30deg);
+        opacity: 0;
+      }
+    }
+
+    @keyframes rollDown3 {
+      66% {
+        top: 0px;
+
+        transform: rotateX(-90deg);
+      }
+      77% {
+        top: 20px;
+        transform: rotateX(0deg);
+        opacity: 1;
+      }
+      88% {
+        top: 20px;
+        transform: rotateX(0deg);
+        opacity: 1;
+      }
+      99% {
+        top: 50px;
+        transform: rotateX(30deg);
+        opacity: 0;
+      }
+    }
+  }
+  > div:nth-child(2) {
     > img {
       display: block;
       margin: auto;
     }
   }
   ${({ theme }) => theme.mediaQueries.xl} {
-    > h1 {
-      font-size: 64px;
-      line-height: 88px;
-      text-align: center;
-      margin-bottom: 40px;
+    > div:nth-child(1) {
+      > h1 {
+        font-size: 64px;
+        line-height: 88px;
+        text-align: center;
+        margin-bottom: 40px;
+      }
     }
   }
 `
@@ -1492,11 +1584,22 @@ function DevV2() {
       <BG />
       <StyledContainer>
         <StyledHeader>
-          <h1
-            dangerouslySetInnerHTML={{
-              __html: t('Multi-Chain <span class="hight-light">Decentralized Trading Solution</span> Powering Web3.'),
-            }}
-          />
+          <div>
+            <h1
+              dangerouslySetInnerHTML={{
+                __html: t('Multi-Chain <span class="hight-light">Decentralized Trading Solution</span> Powering Web3.'),
+              }}
+            />
+
+            <h1>
+              Cross-Chain <span className="hight-light">Permissionless</span> Trading Protocol{' '}
+              <span className="hight-light">Scaling Web3.</span>
+            </h1>
+            <h1>
+              <span className="hight-light">One-Stop Non-Custodial Trading Ecosystem</span> Supporting Web3.
+            </h1>
+          </div>
+
           <div>
             <img src="/images/dex-v2/new_top.svg" alt="" />
           </div>

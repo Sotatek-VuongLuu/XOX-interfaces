@@ -563,6 +563,7 @@ export default function CompanyPage() {
               controlsList="nodownload"
               muted
             >
+              <source src="/images/company/company_page.mov" type='video/mp4; codecs="hvc1"' />
               <source src="/images/company/Coding_footage.webm" type="video/webm" />
             </video>
           </StyledPreviewVideo>
