@@ -610,6 +610,8 @@ const StyledWhatYouCanDo = styled.div`
 
   ${({ theme }) => theme.mediaQueries.xl} {
     flex-direction: row;
+    align-items: flex-start;
+
     > div:nth-child(1) {
       width: 500px;
     }
