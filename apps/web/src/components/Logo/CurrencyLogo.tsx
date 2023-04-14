@@ -7,6 +7,7 @@ import { useHttpLocations } from '@pancakeswap/hooks'
 import getTokenLogoURL from '../../utils/getTokenLogoURL'
 import Logo from './Logo'
 import axios from 'axios'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 
 const StyledLogo = styled(Logo)<{ size: string }>`
   width: ${({ size }) => size};
@@ -25,6 +26,7 @@ export default function CurrencyLogo({
 }) {
   const uriLocations = useHttpLocations(currency instanceof WrappedTokenInfo ? currency.logoURI : undefined)
   const [coinmarketcapId, setCoinmarketcapId] = useState<string>('')
+  const { chainId } = useActiveChainId()
 
   useEffect(() => {
     if (currency?.isNative) return
@@ -40,6 +42,7 @@ export default function CurrencyLogo({
       }
     }
 
+    if (process.env.NEXT_PUBLIC_TEST_MODE !== '1' && (chainId === 5 || chainId === 97)) return
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/info`, {
         params: { address: token.address },

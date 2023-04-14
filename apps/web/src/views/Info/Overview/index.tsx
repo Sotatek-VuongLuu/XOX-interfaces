@@ -246,6 +246,8 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
         return token
       })
       .filter((e) => e !== undefined)
+
+    if (process.env.NEXT_PUBLIC_TEST_MODE !== '1' && (chainId === 97 || chainId === 5)) return
     Promise.all(
       tokenListNotHaveIds.map(async (token: any) => {
         return axios
