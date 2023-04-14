@@ -76,8 +76,8 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
     height: 54px;
     line-height: 19px;
     color: rgba(255, 255, 255, 0.87);
-    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     border-radius: 0px 0px 20px 20px;
+    overflow: hidden;
 
     &::before {
       position: absolute;
@@ -104,6 +104,16 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
       align-items: center;
     }
 
+    .background-gradient {
+      background: ${({ percent }) =>
+        percent === 0 ? 'none' : 'linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%)'};
+      position: absolute;
+      left: 1px;
+      bottom: 1px;
+      width: calc(100% - 2px);
+      height: calc(100% - 2px);
+    }
+
     .background {
       position: absolute;
       left: 0;
@@ -111,10 +121,11 @@ const WrapperItem = styled(Box)<IPropsWrapperItem>`
       width: 100%;
       height: 100%;
       z-index: 5;
-      background: ${({ percent }) =>
-        percent !== 0
-          ? `linear-gradient(to right, transparent ${0}% ${percent}%, black ${percent + 4}%  ${104}%)`
-          : 'black'};
+      background: ${({ percent }) => {
+        return percent === 100
+          ? 'transparent'
+          : `linear-gradient(to right, rgba(16, 16, 16, 0) ${0}%, rgba(16, 16, 16) ${percent}%)`
+      }};
       backdrop-filter: blur(10px);
       border-radius: ${({ percent }) => (percent >= 100 ? '0px 0px 20px 20px' : '0px 0px 20px 20px')};
     }
@@ -458,6 +469,7 @@ const Item = ({ item }) => {
         </div>
       </Grid>
       <div className="sold">
+        <div className="background-gradient" />
         <div className="background" />
         <div className="value">
           <span>
