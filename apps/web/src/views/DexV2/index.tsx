@@ -1591,13 +1591,19 @@ function DevV2() {
               }}
             />
 
-            <h1>
-              Cross-Chain <span className="hight-light">Permissionless</span> Trading Protocol{' '}
-              <span className="hight-light">Scaling Web3.</span>
-            </h1>
-            <h1>
-              <span className="hight-light">One-Stop Non-Custodial Trading Ecosystem</span> Supporting Web3.
-            </h1>
+            <h1
+              dangerouslySetInnerHTML={{
+                __html: t(
+                  'Cross-Chain <span class="hight-light">Permissionless</span> Trading Protocol <span class="hight-light">Scaling Web3.</span>',
+                ),
+              }}
+            />
+
+            <h1
+              dangerouslySetInnerHTML={{
+                __html: t('<span class="hight-light">One-Stop Non-Custodial Trading Ecosystem</span> Supporting Web3.'),
+              }}
+            />
           </div>
 
           <div>

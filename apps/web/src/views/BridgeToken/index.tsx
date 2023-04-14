@@ -328,7 +328,7 @@ const Wrapper = styled(Flex)`
   z-index: 0;
   align-items: center;
   justify-content: center;
-  margin: 150px 0 100px;
+  margin: 50px 0 100px;
 `
 
 const MainBackground = styled.div`
