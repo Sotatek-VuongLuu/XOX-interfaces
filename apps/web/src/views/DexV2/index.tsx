@@ -1,3 +1,6 @@
+/* eslint-disable jsx-a11y/tabindex-no-positive */
+/* eslint-disable jsx-a11y/no-noninteractive-tabindex */
+/* eslint-disable react/no-array-index-key */
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { TranslateFunction, useTranslation } from '@pancakeswap/localization'
@@ -910,7 +913,7 @@ const StyledDexes = styled.div`
   margin-top: 32px;
   grid-template-columns: repeat(7, minmax(0, 1fr));
   grid-row-gap: 15px;
-  grid-column-gap: 15px;
+  grid-column-gap: 8px;
 
   > img {
     display: block;
@@ -1127,6 +1130,29 @@ const ReStyledTitle = styled(StyledTitle)`
   }
 `
 
+const Overlay = styled.div`
+  display: flex;
+  margin: auto;
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: inset 0px 0px 6px rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  padding: 9px;
+  img {
+    display: block;
+    margin: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 538px) {
+    width: 34px;
+    height: 34px;
+    padding: 5px;
+  }
+`
+
 const handleRange = (start: number, end: number, step = 1) => {
   const range = []
   const typeofStart = typeof start
@@ -1280,7 +1306,9 @@ const DexesComponent = () => {
       <StyleFixHeight>
         <StyledDexes>
           {handleRange(1, 149).map((item, i) => (
-            <img src={`/images/dex-v2/dexes/${item}.png`} key={String(i + item)} alt="dex" />
+            <Overlay>
+              <img src={`/images/dex-v2/dexes/${item}.png`} key={String(i + item)} alt="dex" />
+            </Overlay>
           ))}
         </StyledDexes>
       </StyleFixHeight>
@@ -1298,7 +1326,9 @@ const Aggregators = () => {
       <StyleFixHeight>
         <StyledAggregator name="aggregators">
           {handleRange(1, 30).map((item, i) => (
-            <img src={`/images/dex-v2/aggregators/${item}.png`} key={String(i + item)} alt="dex" />
+            <Overlay>
+              <img src={`/images/dex-v2/aggregators/${item}.png`} key={String(i + item)} alt="dex" />
+            </Overlay>
           ))}
         </StyledAggregator>
       </StyleFixHeight>
@@ -1314,9 +1344,12 @@ const BlockChains = () => {
     <>
       <StyleFixHeight>
         <StyledAggregator>
-          {handleRange(1, 70).map((item, i) => (
-            <img src={`/images/dex-v2/blockchains/${item}.png`} key={String(i + item)} alt="dex" />
+          {handleRange(1, 69).map((item, i) => (
+            <Overlay>
+              <img src={`/images/dex-v2/blockchains/${item}.png`} key={String(i + item)} alt="dex" />
+            </Overlay>
           ))}
+          <img src="/images/dex-v2/blockchains/70.png" alt="dex" />
         </StyledAggregator>
       </StyleFixHeight>
 
@@ -1333,7 +1366,9 @@ const Bridges = () => {
       <StyleFixHeight>
         <StyledAggregator name="bridges">
           {handleRange(1, 13).map((item, i) => (
-            <img src={`/images/dex-v2/bridges/${item}.png`} key={String(i + item)} alt="dex" />
+            <Overlay>
+              <img src={`/images/dex-v2/bridges/${item}.png`} key={String(i + item)} alt="dex" />
+            </Overlay>
           ))}
         </StyledAggregator>
       </StyleFixHeight>
@@ -1557,27 +1592,27 @@ function DevV2() {
   //     } return y;
   // }
 
-  useEffect(() => {
-    const myId = setTimeout(() => {
-      if (timeRecall > 0) {
-        setTimeRecall(timeRecall - 1)
-        return
-      }
-      const tabEcosystemTemp = (tabEcosystem + 1) % 4
-      setTabEcosystem(tabEcosystemTemp)
-      document.getElementById('tab_ecosystem_wrapper').scrollTo({ left: 100 * tabEcosystemTemp, behavior: 'smooth' })
+  // useEffect(() => {
+  //   const myId = setTimeout(() => {
+  //     if (timeRecall > 0) {
+  //       setTimeRecall(timeRecall - 1)
+  //       return
+  //     }
+  //     const tabEcosystemTemp = (tabEcosystem + 1) % 4
+  //     setTabEcosystem(tabEcosystemTemp)
+  //     document.getElementById('tab_ecosystem_wrapper').scrollTo({ left: 100 * tabEcosystemTemp, behavior: 'smooth' })
 
-      const tabWHatYouCanDoTemp = (tabWHatYouCanDo + 1) % 5
-      setTabWHatYouCanDo(tabWHatYouCanDoTemp)
-      document
-        .getElementById('tab_what_you_can_do_wrapper')
-        .scrollTo({ left: 100 * tabWHatYouCanDoTemp, behavior: 'smooth' })
+  //     const tabWHatYouCanDoTemp = (tabWHatYouCanDo + 1) % 5
+  //     setTabWHatYouCanDo(tabWHatYouCanDoTemp)
+  //     document
+  //       .getElementById('tab_what_you_can_do_wrapper')
+  //       .scrollTo({ left: 100 * tabWHatYouCanDoTemp, behavior: 'smooth' })
 
-      setTimeRecall(7)
-    }, 1000)
-    return () => clearTimeout(myId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeRecall])
+  //     setTimeRecall(7)
+  //   }, 1000)
+  //   return () => clearTimeout(myId)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [timeRecall])
 
   return (
     <>
@@ -1809,7 +1844,8 @@ function DevV2() {
               controlsList="nodownload"
               muted
             >
-              <source src="/images/dex-v2/revenue.webm" type="video/webm" />
+              <source src="/images/dex-v2/new_revenue.mov" type='video/mp4; codecs="hvc1"' />
+              <source src="/images/dex-v2/new_revenue.webm" type="video/webm" />
             </video>
           </div>
 
