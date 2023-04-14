@@ -68,6 +68,32 @@ const RightContent = styled.div`
     &:focus {
       outline: none;
     }
+    .overlay {
+      height: 500px;
+      width: 500px;
+      border-radius: 50%;
+      position: absolute;
+      top: 0px;
+      left: 99px;
+      z-index: -2;
+      background: radial-gradient(
+        50% 50% at 50% 50%,
+        rgba(249, 124, 29, 0.5) 0%,
+        rgba(246, 99, 42, 0.5) 0.01%,
+        rgba(249, 124, 29, 0) 100%
+      );
+      opacity: 0.5;
+      scale: 1.3;
+
+      @media screen and (max-width: 900px) {
+        width: 100%;
+        left: unset;
+      }
+
+      @media screen and (max-width: 576px) {
+        height: 260px;
+      }
+    }
   }
 
   .video-container video {
@@ -81,9 +107,9 @@ const RightContent = styled.div`
     border: none;
     max-height: 470px;
     max-width: 670px;
-    
+
     &:focus {
-        outline: none;
+      outline: none;
     }
 
     @media screen and (max-width: 900px) {
@@ -160,9 +186,12 @@ const Watch = styled.div`
 const FeaturePlant = () => {
   const { t } = useTranslation()
 
+  const dboxVideo = document.getElementById('3dboxVideo') as any
+
   useEffect(() => {
-    (document.getElementById('3dboxVideo') as any).play()
-  }, [])
+    if (!dboxVideo) return
+    dboxVideo.play()
+  }, [dboxVideo])
 
   return (
     <Box sx={{ flexGrow: 1, display: 'flex' }}>
@@ -215,6 +244,7 @@ const FeaturePlant = () => {
         <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
           <RightContent data-aos="fade-left">
             <div className="video-container">
+              <div className="overlay" />
               <video
                 autoPlay
                 loop

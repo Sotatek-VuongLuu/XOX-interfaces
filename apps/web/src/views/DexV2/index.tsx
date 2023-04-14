@@ -1376,15 +1376,15 @@ function DevV2() {
   const renderImageWhatYouCando = useMemo(() => {
     switch (tabWHatYouCanDo) {
       case 0:
-        return <img src="/images/dex-v2/new_swap.png" alt="swap" />
+        return <img src="/images/dex-v2/s1.png" alt="swap" />
       case 1:
-        return <img src="/images/dex-v2/new_limit_order.png" alt="limit_order" />
+        return <img src="/images/dex-v2/s2.png" alt="limit_order" />
       case 2:
-        return <img src="/images/dex-v2/new_earn.png" alt="earn" />
+        return <img src="/images/dex-v2/s3.png" alt="earn" />
       case 3:
-        return <img src="/images/dex-v2/new_liquidity.png" alt="liquidity" />
+        return <img src="/images/dex-v2/s4.png" alt="liquidity" />
       case 4:
-        return <img src="/images/dex-v2/new_API.png" alt="api" />
+        return <img src="/images/dex-v2/s5.png" alt="api" />
       default:
         break
     }
