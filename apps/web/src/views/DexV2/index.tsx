@@ -1516,7 +1516,7 @@ function DevV2() {
               </svg>
             </button>
             <button type="button" onClick={() => window.open('https://github.com/')} style={{ height: '100%' }}>
-              GitHub
+              Docs
             </button>
           </div>
         </StyledBtnStartTrading>
