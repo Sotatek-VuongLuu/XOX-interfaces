@@ -172,7 +172,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   return (
     <ProductionErrorBoundary>
       <MainBackground>
-        {['/company', '/tokenomics', '/dex-v2'].includes(route.pathname) ? (
+        {['/company', '/tokenomics', '/dex-v2', '/'].includes(route.pathname) ? (
           <></>
         ) : isMobile ? (
           <SwapMainBackgroundMobile />

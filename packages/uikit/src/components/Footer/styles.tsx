@@ -86,6 +86,16 @@ export const Wrapper = styled.div`
   justify-content: center;
   background: rgba(255, 255, 255, 0.05);
   padding: 24px;
+  position: relative;
+
+  .blur {
+    wiidth: 100%;
+    height: 200px;
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    left: 0;
+  }
 
   @media screen and (max-width: 560px) {
     flex-direction: column;
