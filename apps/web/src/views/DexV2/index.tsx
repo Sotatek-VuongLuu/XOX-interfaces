@@ -1496,6 +1496,7 @@ function DevV2() {
             dangerouslySetInnerHTML={{
               __html: t('Multi-Chain <span class="hight-light">Decentralized Trading Solution</span> Powering Web3.'),
             }}
+            style={{ width: 'unset' }}
           />
           <div>
             <img src="/images/dex-v2/new_top.svg" alt="" />
