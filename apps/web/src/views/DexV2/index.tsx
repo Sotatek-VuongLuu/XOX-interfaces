@@ -1493,7 +1493,7 @@ function DevV2() {
             }}
           />
           <div>
-            <img src="/images/dex-v2/new_top.png" alt="" />
+            <img src="/images/dex-v2/new_top.svg" alt="" />
           </div>
         </StyledHeader>
 
