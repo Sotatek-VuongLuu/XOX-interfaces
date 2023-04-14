@@ -5,6 +5,7 @@ import styled from 'styled-components'
 import getTokenLogoURL from '../../../../utils/getTokenLogoURL'
 import LogoLoader from './LogoLoader'
 import axios from 'axios'
+import { useActiveChainId } from 'hooks/useActiveChainId'
 
 const StyledLogo = styled(LogoLoader)<{ size: string }>`
   width: ${({ size }) => size};
@@ -23,6 +24,7 @@ export const CurrencyLogo: React.FC<
   }>
 > = ({ address, size = '24px', chainName = 'BSC', ...rest }) => {
   const [coinmarketcapId, setCoinmarketcapId] = useState<string>('')
+  const { chainId } = useActiveChainId()
 
   useEffect(() => {
     if (!address || !chainName) return
@@ -37,6 +39,7 @@ export const CurrencyLogo: React.FC<
       }
     }
 
+    if (chainId === 5 || chainId === 97) return
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/info`, {
         params: { address: address },
