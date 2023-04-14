@@ -39,6 +39,7 @@ const BG = styled.div`
 `
 
 const StyledContainer = styled(StyledS)`
+  margin: 30px auto 100px auto;
   .hight-light {
     color: rgba(255, 255, 255, 0.87) !important;
   }
@@ -204,11 +205,13 @@ const StyledContainer = styled(StyledS)`
 `
 const StyledHeader = styled.div`
   > h1 {
+    width: 1200px;
+    max-width: 100%;
+    margin: 0px auto 60px auto;
     font-weight: 700;
     font-size: 24px;
     text-align: start;
     color: rgba(255, 255, 255, 0.6);
-    margin-bottom: 60px;
     line-height: 40px;
   }
 
@@ -223,7 +226,7 @@ const StyledHeader = styled.div`
       font-size: 64px;
       line-height: 88px;
       text-align: center;
-      margin-bottom: 80px;
+      margin-bottom: 40px;
     }
   }
 `
@@ -843,7 +846,7 @@ const StyledAggregator = styled(StyledDexes)<IPropsStyledAggregator>`
 
 const StyledBtnStartTrading = styled.div`
   width: 100%;
-  margin-top: 80px;
+  margin-top: 40px;
   display: flex;
   justify-content: center;
 
