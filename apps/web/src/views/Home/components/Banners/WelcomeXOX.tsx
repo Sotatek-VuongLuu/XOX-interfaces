@@ -66,8 +66,8 @@ const Wrapper = styled.div`
     }
 
     .overlay {
-      height: 500px;
-      width: 500px;
+      height: 520px;
+      width: 650px;
       border-radius: 50%;
       position: absolute;
       top: 0px;

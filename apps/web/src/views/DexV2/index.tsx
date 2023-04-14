@@ -319,16 +319,16 @@ const StyledRevenue = styled.div`
     width: 100%;
 
     > video {
-      width: 600px;
+      width: 500px;
       max-width: 100%;
       transform: translateY(-30px);
     }
 
     ${({ theme }) => theme.mediaQueries.xl} {
-      min-width: 400px !important;
+      min-width: 500px !important;
 
       > video {
-        transform: translateY(-124px);
+        transform: translateY(-67px);
       }
     }
   }
@@ -446,7 +446,7 @@ const StyledBLock = styled.div`
 
     > video {
       margin: 0 auto;
-      width: 725px;
+      width: 100%;
       max-width: 100%;
     }
 
@@ -1604,7 +1604,8 @@ function DevV2() {
               controlsList="nodownload"
               muted
             >
-              <source src="/images/dex-v2/how_it_work.webm" type="video/webm" />
+              <source src="/images/dex-v2/new_aggregators.mov" type='video/mp4; codecs="hvc1"' />
+              <source src="/images/dex-v2/new_aggregators.webm" type="video/webm" />
             </video>
           </div>
         </StyledBLock>
@@ -1676,7 +1677,8 @@ function DevV2() {
               controlsList="nodownload"
               muted
             >
-              <source src="/images/dex-v2/ref.webm" type="video/webm" />
+              <source src="/images/dex-v2/new_ref.mov" type='video/mp4; codecs="hvc1"' />
+              <source src="/images/dex-v2/new_ref.webm" type="video/webm" />
             </video>
           </div>
         </StyledReferralProgram>
