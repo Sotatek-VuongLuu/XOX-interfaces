@@ -336,8 +336,6 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
       const currentProvider = chain.id === 1 || chain.id === 5 ? getDefaultProvider(chain.network) : provider
       let fetchedBalances
 
-      console.log(allTokens)
-
       while (!fetchedBalances) {
         fetchedBalances = await getBalancesForEthereumAddress({
           // erc20 tokens you want to query!
@@ -353,7 +351,6 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
           return undefined
         })
         if (fetchedBalances) setTokensBalance(fetchedBalances.tokens)
-        console.log(fetchedBalances, 'fetchedBalances')
       }
     }
 
