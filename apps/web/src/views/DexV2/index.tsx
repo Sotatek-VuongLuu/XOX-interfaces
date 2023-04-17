@@ -12,6 +12,7 @@ import { CardSocial, StyledS, StyledSubtitle } from 'views/Company'
 import { StyledTitle } from 'views/Tokenomics/styled'
 import BackedBy from 'views/Vesting/Components/BackedBy'
 import axios from 'axios'
+import anime from 'animejs'
 
 interface ISocial {
   icon: string
@@ -224,87 +225,10 @@ const StyledHeader = styled.div`
       display: inline-block;
       position: absolute;
       top: 0px;
-      transform: rotateX(-90deg);
-      opacity: 0;
       animation-timing-function: ease;
-    }
 
-    > h1:nth-child(1) {
-      animation: rollDown 20s forwards infinite;
-    }
-
-    > h1:nth-child(2) {
-      animation: rollDown2 20s forwards infinite;
-    }
-    > h1:nth-child(3) {
-      animation: rollDown3 20s forwards infinite;
-    }
-
-    @keyframes rollDown {
-      0% {
-        top: 0px;
-        transform: rotateX(-90deg);
-      }
-      11% {
-        top: 20px;
-        transform: rotateX(0deg);
-        opacity: 1;
-      }
-      22% {
-        top: 20px;
-        transform: rotateX(0deg);
-        opacity: 1;
-      }
-      33% {
-        top: 50px;
-        transform: rotateX(30deg);
-        opacity: 0;
-      }
-    }
-
-    @keyframes rollDown2 {
-      33% {
-        top: 0px;
-
-        transform: rotateX(-90deg);
-      }
-      44% {
-        top: 20px;
-        transform: rotateX(0deg);
-        opacity: 1;
-      }
-      55% {
-        top: 20px;
-        transform: rotateX(0deg);
-        opacity: 1;
-      }
-      66% {
-        top: 50px;
-        transform: rotateX(30deg);
-        opacity: 0;
-      }
-    }
-
-    @keyframes rollDown3 {
-      66% {
-        top: 0px;
-
-        transform: rotateX(-90deg);
-      }
-      77% {
-        top: 20px;
-        transform: rotateX(0deg);
-        opacity: 1;
-      }
-      88% {
-        top: 20px;
-        transform: rotateX(0deg);
-        opacity: 1;
-      }
-      99% {
-        top: 50px;
-        transform: rotateX(30deg);
-        opacity: 0;
+      div {
+        display: inline-block;
       }
     }
   }
@@ -1614,6 +1538,67 @@ function DevV2() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeRecall])
 
+  useEffect(() => {
+    const textHeaders = document.querySelectorAll('.text-header div')
+    textHeaders.forEach((e) => {
+      e.innerHTML = (e.textContent || '').replace(/\S/g, "<div class='letter'>$&</div>")
+    })
+
+    anime
+      .timeline({ loop: true })
+      .add({
+        targets: '.header-1 .letter',
+        translateX: [40, 0],
+        translateZ: 0,
+        opacity: [0, 1],
+        easing: 'easeOutExpo',
+        duration: 1200,
+        delay: (el, i) => 500 + 30 * i,
+      })
+      .add({
+        targets: '.header-1 .letter',
+        translateX: [0, -30],
+        opacity: [1, 0],
+        easing: 'easeInExpo',
+        duration: 1100,
+        delay: (el, i) => 100 + 30 * i,
+      })
+      .add({
+        targets: '.header-2 .letter',
+        translateX: [40, 0],
+        translateZ: 0,
+        opacity: [0, 1],
+        easing: 'easeOutExpo',
+        duration: 1200,
+        delay: (el, i) => 500 + 30 * i,
+      })
+      .add({
+        targets: '.header-2 .letter',
+        translateX: [0, -30],
+        opacity: [1, 0],
+        easing: 'easeInExpo',
+        duration: 1100,
+        delay: (el, i) => 100 + 30 * i,
+      })
+      .add({
+        targets: '.header-3 .letter',
+        translateX: [40, 0],
+        translateZ: 0,
+        opacity: [0, 1],
+        easing: 'easeOutExpo',
+        duration: 1200,
+        delay: (el, i) => 500 + 30 * i,
+      })
+      .add({
+        targets: '.header-3 .letter',
+        translateX: [0, -30],
+        opacity: [1, 0],
+        easing: 'easeInExpo',
+        duration: 1100,
+        delay: (el, i) => 100 + 30 * i,
+      })
+  }, [t])
+
   return (
     <>
       <BG />
@@ -1622,22 +1607,29 @@ function DevV2() {
           <div>
             <h1
               dangerouslySetInnerHTML={{
-                __html: t('Multi-Chain <span class="hight-light">Decentralized Trading Solution</span> Powering Web3.'),
+                __html: t(
+                  '<div>Multi-Chain</div> <div class="hight-light">Decentralized</div> <div class="hight-light">Trading</div> <div class="hight-light">Solution</div> <div>Powering</div> <div>Web3.</div>',
+                ),
               }}
+              className="text-header header-1"
             />
 
             <h1
               dangerouslySetInnerHTML={{
                 __html: t(
-                  'Cross-Chain <span class="hight-light">Permissionless</span> Trading Protocol <span class="hight-light">Scaling Web3.</span>',
+                  '<div>Cross-Chain</div> <div class="hight-light">Permissionless</div> <div>Trading</div> <div>Protocol</div> <div class="hight-light">Scaling</div> <div class="hight-light">Web3.</div>',
                 ),
               }}
+              className="text-header header-2"
             />
 
             <h1
               dangerouslySetInnerHTML={{
-                __html: t('<span class="hight-light">One-Stop Non-Custodial Trading Ecosystem</span> Supporting Web3.'),
+                __html: t(
+                  '<div class="hight-light">One-Stop</div> <div class="hight-light">Non-Custodial</div> <div class="hight-light">Trading</div> <div class="hight-light">Ecosystem</div> <div>Supporting</div> <div>Web3.</div>',
+                ),
               }}
+              className="text-header header-3"
             />
           </div>
 
