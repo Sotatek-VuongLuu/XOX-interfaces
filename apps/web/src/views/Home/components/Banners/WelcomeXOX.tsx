@@ -295,6 +295,9 @@ const LeftContent = styled.div`
         font-weight: 700;
         font-size: 18px;
         line-height: 22px;
+        -webkit-text-fill-color: transparent;
+        background: linear-gradient(95.32deg, rgb(184, 9, 181) -7.25%, rgb(237, 28, 81) 54.2%, rgb(255, 176, 0) 113.13%)
+          text;
 
         @media screen and (max-width: 400px) {
           font-size: 16px;
@@ -644,6 +647,7 @@ const WelcomeXOX = (): JSX.Element => {
   //   console.log(browser.version)
   //   console.log(browser.os)
   // }
+  useEffect(() => {}, [])
 
   return (
     <Wrapper>
