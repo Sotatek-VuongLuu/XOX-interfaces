@@ -129,10 +129,9 @@ export const formatAmountNumber2 = (number: number, decimals = 2) => {
   if (number < 1) {
     return number
   }
-  const balance = (parseInt((number * 10 ** decimals).toString()) / 10 ** decimals)?.toString()
-  const value = balance?.split('.')
+  const value = number.toString().split('.')
   const firstNumber = value[0]?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-  const lastNumber = value[1]
+  const lastNumber = (parseInt((Number(value[1] || '') * 10 ** decimals).toString()) / 10 ** decimals)?.toString()
 
   if (!lastNumber) {
     return firstNumber
