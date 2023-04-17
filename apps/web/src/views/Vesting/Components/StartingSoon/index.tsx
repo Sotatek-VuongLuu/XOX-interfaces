@@ -348,7 +348,7 @@ function StartingSoon({
     if (infoRoundThree.endDate && infoRoundThree.endDate <= time) {
       return (
         <>
-          <p className="title">{t('XOX Token pre-sale is Ended')}</p>
+          <p className="title">{t('XOX Token pre-sale has Ended')}</p>
           <div className="rocket_container">
             {/* <img src="/images/rocket_xox.png" alt="rocket_xox" /> */}
             <video

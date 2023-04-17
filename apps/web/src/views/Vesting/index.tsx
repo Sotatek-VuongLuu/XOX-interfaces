@@ -192,7 +192,7 @@ const initialTokenMetrics = [
   },
   {
     id: 8,
-    title: 'Seed Sale (10% release at TGE then 10% Unlock Weekly)',
+    title: 'Seed Sale (10% TGE - 20% Unlock Monthly - 10% Last Month)',
     tokenAllocationPercent: '2',
     tokenAllocation: '3600000',
     tge: '0.2',
@@ -202,7 +202,7 @@ const initialTokenMetrics = [
   },
   {
     id: 9,
-    title: 'Partners Sale (10% release at TGE then 5% release Monthly)',
+    title: 'Partners Sale (10% release at TGE then 10% release Monthly)',
     tokenAllocationPercent: '3',
     tokenAllocation: '5400000',
     tge: '0.2',

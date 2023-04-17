@@ -1592,27 +1592,27 @@ function DevV2() {
   //     } return y;
   // }
 
-  // useEffect(() => {
-  //   const myId = setTimeout(() => {
-  //     if (timeRecall > 0) {
-  //       setTimeRecall(timeRecall - 1)
-  //       return
-  //     }
-  //     const tabEcosystemTemp = (tabEcosystem + 1) % 4
-  //     setTabEcosystem(tabEcosystemTemp)
-  //     document.getElementById('tab_ecosystem_wrapper').scrollTo({ left: 100 * tabEcosystemTemp, behavior: 'smooth' })
+  useEffect(() => {
+    const myId = setTimeout(() => {
+      if (timeRecall > 0) {
+        setTimeRecall(timeRecall - 1)
+        return
+      }
+      const tabEcosystemTemp = (tabEcosystem + 1) % 4
+      setTabEcosystem(tabEcosystemTemp)
+      document.getElementById('tab_ecosystem_wrapper').scrollTo({ left: 100 * tabEcosystemTemp, behavior: 'smooth' })
 
-  //     const tabWHatYouCanDoTemp = (tabWHatYouCanDo + 1) % 5
-  //     setTabWHatYouCanDo(tabWHatYouCanDoTemp)
-  //     document
-  //       .getElementById('tab_what_you_can_do_wrapper')
-  //       .scrollTo({ left: 100 * tabWHatYouCanDoTemp, behavior: 'smooth' })
+      const tabWHatYouCanDoTemp = (tabWHatYouCanDo + 1) % 5
+      setTabWHatYouCanDo(tabWHatYouCanDoTemp)
+      document
+        .getElementById('tab_what_you_can_do_wrapper')
+        .scrollTo({ left: 100 * tabWHatYouCanDoTemp, behavior: 'smooth' })
 
-  //     setTimeRecall(7)
-  //   }, 1000)
-  //   return () => clearTimeout(myId)
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [timeRecall])
+      setTimeRecall(7)
+    }, 1000)
+    return () => clearTimeout(myId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeRecall])
 
   return (
     <>

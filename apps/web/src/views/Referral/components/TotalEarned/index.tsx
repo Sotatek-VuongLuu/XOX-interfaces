@@ -67,9 +67,10 @@ const Wrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: 596.82px;
-    height: 485px;
+    min-width: 300px;
+    height: 300px;
     z-index: 0;
+    background: radial-gradient(50% 50% at 50% 50%, rgba(251, 134, 24, 0.5) 60%, rgba(249, 125, 28, 0) 100%);
   }
 
   .ref_round {
@@ -118,7 +119,7 @@ const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
         ) : (
           <>
             <img src="/images/ref_xox.svg" alt="ref_xox" className="ref_xox" />
-            <img src="/images/ref_chart_bg.svg" alt="ref_chart_bg" className="ref_chart_bg" />
+            <div className="ref_chart_bg" />
           </>
         )}
       </div>
