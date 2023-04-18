@@ -4,7 +4,7 @@
 /* eslint-disable react/no-unescaped-entities */
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { TranslateFunction, useTranslation } from '@pancakeswap/localization'
-import { Box, useToast } from '@pancakeswap/uikit'
+import { Box, useMatchBreakpoints, useToast } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
 import { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
@@ -13,6 +13,7 @@ import { StyledTitle } from 'views/Tokenomics/styled'
 import BackedBy from 'views/Vesting/Components/BackedBy'
 import axios from 'axios'
 import anime from 'animejs'
+import NewTopIcon from 'components/Svg/NewTopIcon'
 
 interface ISocial {
   icon: string
@@ -236,6 +237,13 @@ const StyledHeader = styled.div`
     > img {
       display: block;
       margin: auto;
+    }
+    > svg {
+      display: block;
+      margin: auto;
+      width: 100%;
+      max-width: 1066px;
+      height: auto;
     }
   }
   ${({ theme }) => theme.mediaQueries.xl} {
@@ -1317,6 +1325,7 @@ function DevV2() {
   const { toastSuccess, toastError } = useToast()
   const [timeRecall, setTimeRecall] = useState(7)
   const { width } = useWindowSize()
+  const { isMobile } = useMatchBreakpoints()
 
   const SOCIALS: Array<ISocial> = [
     { icon: '/images/company/1.svg', name: t('XOX Dex V1'), link: t('Trade Now'), heft: '/swap' },
@@ -1635,7 +1644,7 @@ function DevV2() {
           </div>
 
           <div>
-            <img src="/images/dex-v2/new_top.svg" alt="" />
+            <NewTopIcon />
           </div>
         </StyledHeader>
 
