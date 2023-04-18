@@ -267,7 +267,7 @@ const initialTokenMetrics = [
     tokenAllocation: '',
     tge: '11',
     tokenAllocationatTge: '19800000',
-    initialMarketcap: '118800',
+    initialMarketcap: '1188000',
     fullyDilitedMc: '',
   },
 ]

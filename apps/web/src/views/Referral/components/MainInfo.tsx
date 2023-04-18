@@ -441,8 +441,10 @@ const WrapperRight = styled.div<IPropsContainer>`
     }
 
     .filter {
-      display: grid;
-      grid-template-columns: auto auto auto 1fr;
+      width: fit-content;
+      border-radius: 30px;
+      display: flex;
+      background: rgba(255, 255, 255, 0.03);
       gap: 8px;
       align-items: center;
       color: #ffffff;
@@ -452,8 +454,11 @@ const WrapperRight = styled.div<IPropsContainer>`
 
       .subTab_item.active {
         background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+        border-radius: 30px;
+
         &:hover {
           background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+          border-radius: 30px;
         }
       }
 
@@ -468,6 +473,7 @@ const WrapperRight = styled.div<IPropsContainer>`
         border-radius: 4px;
         &:hover {
           background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+          border-radius: 30px;
         }
       }
     }
