@@ -288,6 +288,7 @@ const StyledCardSafeReliable = styled.div`
 
   > img {
     max-width: 100%;
+    height: 150px;
     margin: auto;
     display: block;
   }
@@ -1337,38 +1338,38 @@ function DevV2() {
 
   const SAFERELIABLE: Array<any> = [
     {
-      icon: '/images/dex-v2/non-custodial.png',
+      icon: '/images/dex-v2/Non-cutodial.png',
       name: t('Non-custodial'),
       describe: t('XOX Dex V2 is a Permissionless and Non-custodial Decentralized Protocol.'),
     },
     {
-      icon: '/images/dex-v2/anonymus.png',
+      icon: '/images/dex-v2/Anonymous.png',
       name: t('Anonymous'),
       describe: t('No KYC or Sign Up required. Just connect your wallets and start trading.'),
     },
     {
-      icon: '/images/dex-v2/transparent.png',
+      icon: '/images/dex-v2/Transparent.png',
       name: t('Transparent'),
       describe: t(
         'Check every single transaction or smart contract before allowing it to access your funds, track the whole chain of events happening in every blockchain.',
       ),
     },
     {
-      icon: '/images/dex-v2/permission.png',
+      icon: '/images/dex-v2/Permissionless.png',
       name: t('Permissionless'),
       describe: t(
         'Every supported Blockchains is public and open for everyone to trade and own assets without the supervision of governments or financial institutions.',
       ),
     },
     {
-      icon: '/images/dex-v2/audited.png',
+      icon: '/images/dex-v2/Audited.png',
       name: t('Audited'),
       describe: t(
         `XOX Labs' smart contracts and platforms are fully audited by top-tier auditors to ensure the security of the users.`,
       ),
     },
     {
-      icon: '/images/dex-v2/tested.png',
+      icon: '/images/dex-v2/Tested-02.png',
       name: t('Tested'),
       describe: t(
         'Every new feature and protocol integration is heavily tested in every possible situation before making it accessible to the users to ensure performance and safety.',
