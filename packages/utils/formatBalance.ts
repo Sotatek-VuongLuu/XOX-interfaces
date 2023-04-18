@@ -131,7 +131,7 @@ export const formatAmountNumber2 = (number: number, decimals = 2) => {
   }
   const value = number.toString().split('.')
   const firstNumber = value[0]?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
-  const lastNumber = (parseInt((Number(value[1] || '') * 10 ** decimals).toString()) / 10 ** decimals)?.toString()
+  const lastNumber = value[1] ? value[1].slice(0, decimals) : undefined
 
   if (!lastNumber) {
     return firstNumber
