@@ -109,7 +109,7 @@ const DataRow = ({ item }) => {
       </Text>
       <Text className="text-token-metrics">{item.tge}%</Text>
       <Text className="text-token-metrics">
-        {item.tokenAllocationatTge ? Number(item.initialMarketcap).toLocaleString() : '-'}
+        {item.tokenAllocationatTge ? Number(item.tokenAllocationatTge).toLocaleString() : '-'}
       </Text>
       <Text className="text-token-metrics">
         {item.initialMarketcap ? Number(item.initialMarketcap).toLocaleString() : '-'}
