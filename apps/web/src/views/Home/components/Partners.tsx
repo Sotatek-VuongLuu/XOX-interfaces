@@ -41,7 +41,7 @@ const Wrapper = styled.div`
     text-align: center;
     font-weight: 400;
     font-size: 16px;
-    color: #FB8618;
+    color: #fb8618;
 
     margin-bottom: 48px;
 
@@ -106,7 +106,7 @@ const Wrapper = styled.div`
       height: 100%;
       width: 117px;
       left: -1px;
-      background: linear-gradient(90deg, #0A0A0A 0%, rgba(10, 10, 10, 0) 100%);
+      background: linear-gradient(90deg, #0a0a0a 0%, rgba(10, 10, 10, 0) 100%);
       z-index: 99;
     }
 
@@ -117,15 +117,26 @@ const Wrapper = styled.div`
       right: -1px;
       top: 0;
       width: 117px;
-      background: linear-gradient(90deg, #0A0A0A 0%, rgba(10, 10, 10, 0) 70.83%);
+      background: linear-gradient(90deg, #0a0a0a 0%, rgba(10, 10, 10, 0) 70.83%);
       transform: matrix(-1, 0, 0, 1, 0, 0);
       z-index: 99;
+    }
+
+    @media (max-width: 560px) {
+      &::before {
+        width: 70px;
+      }
+
+      &::after {
+        width: 70px;
+      }
     }
   }
 
   @media (max-width: 560px) {
     .slide_container {
       width: 100vw;
+      max-width: 100%;
       margin: -20px;
     }
   }
@@ -239,7 +250,7 @@ const SliderWrapper = styled.div`
 `
 
 const Partners = () => {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
   const [isShowMore, setIsShowMore] = useState(false)
   const [isHovering, setIsHovering] = useState(false)
 

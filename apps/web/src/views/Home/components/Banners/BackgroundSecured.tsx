@@ -12,7 +12,7 @@ const BGMobileLeft = styled.img`
   position: absolute;
   z-index: -1;
   left: 0;
-  top: 0.5%;
+  top: 454px;
   opacity: 0.8;
 `
 
