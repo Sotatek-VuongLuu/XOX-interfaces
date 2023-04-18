@@ -219,26 +219,48 @@ const Content = styled.div`
   }
 
   .item-tab-mechanism.active {
+    position: relative;
     background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     border-radius: 30px;
     color: #ffffff;
 
-    /* &:before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      bottom: 0;
-      border-radius: inherit;
-      padding: 1px;
-      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      -webkit-mask-composite: exclude;
-      mask-composite: exclude;
-    } */
+    @media screen and (max-width: 900px) {
+      &::before {
+        content: '';
+        position: absolute;
+        background-image: url(/images/dex-v2/prev-tab.png);
+        top: 12px;
+        left: -16px;
+        color: rgba(255, 255, 255, 0.38);
+        width: 8px;
+        height: 10px;
+      }
+
+      &::after {
+        content: '';
+        position: absolute;
+        background-image: url(/images/dex-v2/next-tab.png);
+        top: 12px;
+        right: -16px;
+        color: rgba(255, 255, 255, 0.38);
+        width: 8px;
+        height: 10px;
+      }
+    }
   }
+
+  .item-tab-mechanism_0.active {
+    &::before {
+      height: 0px;
+    }
+  }
+
+  .item-tab-mechanism_4.active {
+    &::after {
+      height: 0px;
+    }
+  }
+
   .tab-mechanism {
     display: flex;
     width: fit-content;
@@ -391,7 +413,7 @@ function SaleMechanism({
       <div className="corner2" />
       <div className="edge2" />
       <Content>
-        {width >= 900 && (
+        {
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
             <div className="tab-mechanism">
               {Array.from(tabSaleMechanism).map((item, index) => {
@@ -399,7 +421,11 @@ function SaleMechanism({
                   <div
                     // eslint-disable-next-line react/no-array-index-key
                     key={index}
-                    className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
+                    className={
+                      tabActiveMechansim === item
+                        ? `item-tab-mechanism item-tab-mechanism_${index} active`
+                        : `item-tab-mechanism item-tab-mechanism_${index}`
+                    }
                     onClick={() => setTabActiveMechansim(item)}
                     aria-hidden="true"
                   >
@@ -409,8 +435,8 @@ function SaleMechanism({
               })}
             </div>
           </div>
-        )}
-        {width < 900 && (
+        }
+        {/* {width < 900 && (
           <div style={{ marginBottom: '24px' }}>
             <Swiper
               slidesPerView="auto"
@@ -436,7 +462,7 @@ function SaleMechanism({
               })}
             </Swiper>
           </div>
-        )}
+        )} */}
 
         <div className="body">{renderBody}</div>
       </Content>
