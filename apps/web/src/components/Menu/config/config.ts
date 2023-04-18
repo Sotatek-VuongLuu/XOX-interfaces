@@ -164,11 +164,10 @@ export const configLanding: (
     },
     {
       label: t('Whitepaper'),
-      href: '/whitepaper',
+      href: '#',
       icon: WhitepaperIcon,
       fillIcon: SwapFillIcon,
       showItemsOnMobile: false,
-      disable: true,
       items: [],
     },
     {

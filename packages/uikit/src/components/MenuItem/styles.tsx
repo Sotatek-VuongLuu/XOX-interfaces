@@ -64,9 +64,6 @@ const StyledMenuItem = styled.a<StyledMenuItemProps>`
     padding: 12px 4px 12px 4px;
     height: 42px;
   `}
-  
-
-
   &:hover {
     background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
     -webkit-background-clip: text;

@@ -102,13 +102,13 @@ export default function ADDComponent() {
     },
     {
       title: t('Seed Sale'),
-      content: [`${new BigNumber(3600000).toFormat()} Tokens`, t('10% release at TGE then 10% Unlock Weekly')],
+      content: [`${new BigNumber(3600000).toFormat()} Tokens`, t('10% TGE - 20% Unlock Monthly - 10% Last Month')],
       color: '#FB8618',
       value: 3600000,
     },
     {
       title: t('Partners Sale'),
-      content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('10% release at TGE then 5% release Monthly')],
+      content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('10% release at TGE then 10% release Monthly')],
       color: '#FF5353',
       value: 5400000,
     },
