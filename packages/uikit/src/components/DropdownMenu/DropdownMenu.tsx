@@ -190,12 +190,12 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
                     $isActive={isActive}
                     disabled={disabled || isDisabled}
                     as={linkComponent}
+                    className={label === "XOX Dex V2" ? "text-gradient submenu" : "submenu"}
                     href={href}
                     onClick={() => {
                       setIsOpen(false);
                     }}
                     {...itemProps}
-                    className="submenu"
                   >
                     {MenuItemContent}
                   </DropdownMenuItem>

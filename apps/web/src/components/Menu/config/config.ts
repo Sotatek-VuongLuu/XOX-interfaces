@@ -164,10 +164,11 @@ export const configLanding: (
     },
     {
       label: t('Whitepaper'),
-      href: '#',
+      href: '/whitepaper',
       icon: WhitepaperIcon,
       fillIcon: SwapFillIcon,
       showItemsOnMobile: false,
+      disable: true,
       items: [],
     },
     {
@@ -182,7 +183,7 @@ export const configLanding: (
       label: t('Products'),
       icon: CompanyIcon,
       fillIcon: SwapFillIcon,
-      href: '#',
+      href: ['/swap', '/bridge-token'],
       items: [
         {
           label: t('Swap'),
@@ -233,8 +234,7 @@ export const configLanding: (
           label: t('XOX Dex V2'),
           icon: DexIcon,
           fillIcon: '',
-          href: '/#',
-          showTooltip: true,
+          href: '/dex-v2',
         },
         {
           label: t('Mobile App'),

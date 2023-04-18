@@ -204,6 +204,8 @@ const Menu = (props) => {
 
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname: route.pathname })
 
+  const activeSubMenuItemLanding = getActiveSubMenuItem({ menuItem: activeMenuItemLanding, pathname: route.pathname })
+
   const toggleTheme = useMemo(() => {
     return () => setTheme(isDark ? 'light' : 'dark')
   }, [setTheme, isDark])
@@ -282,7 +284,9 @@ const Menu = (props) => {
           <MenuItemsWrapper
             items={menuLandingPath.includes(route.pathname) ? menuItemsLanding : menuItems}
             activeItem={menuLandingPath.includes(route.pathname) ? activeMenuItemLanding?.href : activeMenuItem?.href}
-            activeSubItem={activeSubMenuItem?.href}
+            activeSubItem={
+              menuLandingPath.includes(route.pathname) ? activeSubMenuItemLanding?.href : activeSubMenuItem?.href
+            }
             setOpenHeader={setOpenHeader}
             isLanding={menuLandingPath.includes(route.pathname)}
           />
@@ -432,7 +436,9 @@ const Menu = (props) => {
         subLinks={activeMenuItem?.hideSubNav || activeSubMenuItem?.hideSubNav ? [] : []}
         footerLinks={getFooterLinks}
         activeItem={menuLandingPath.includes(route.pathname) ? activeMenuItemLanding?.href : activeMenuItem?.href}
-        activeSubItem={activeSubMenuItem?.href}
+        activeSubItem={
+          menuLandingPath.includes(route.pathname) ? activeSubMenuItemLanding?.href : activeSubMenuItem?.href
+        }
         buyCakeLabel={t('Buy CAKE')}
         isLanding={menuLandingPath.includes(route.pathname)}
         {...props}
