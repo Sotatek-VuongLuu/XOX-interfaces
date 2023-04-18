@@ -137,7 +137,6 @@ const Wrapper = styled.div`
     .slide_container {
       width: 100vw;
       max-width: 100%;
-      margin: -20px;
     }
   }
 `

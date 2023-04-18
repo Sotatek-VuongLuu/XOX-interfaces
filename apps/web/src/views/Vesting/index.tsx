@@ -422,7 +422,7 @@ export const decimal = 6
 
 function VestingPage() {
   const notSupport = [ChainId.BSC_TESTNET, ChainId.BSC]
-  const [tabActiveMechansim, setTabActiveMechansim] = useState<string>('Your Information')
+  const [tabActiveMechansim, setTabActiveMechansim] = useState<number>(0)
   const [referralError, setReferralError] = useState(null)
   const [dataWhitelist, setDataWhitelist] = useState<IDataWhitelist[]>([])
   const [dataForInfo, setDataForInfo] = useState<IYourInfo[]>(initialYourInfo)

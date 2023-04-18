@@ -3,9 +3,10 @@
 /* eslint-disable import/no-cycle */
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import useWindowSize from 'hooks/useWindowSize'
-import { useMemo, useRef, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import styled from 'styled-components'
 import { A11y, Navigation, Pagination } from 'swiper'
+import { useTranslation } from '@pancakeswap/localization'
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -16,12 +17,11 @@ import YourInfo from './MainInfoTab/YourInfo'
 import PrivateSale from './MechanismTab/PrivateSale'
 import ReferralProgram from './MechanismTab/ReferralProgram'
 import TokenMetrics from './MechanismTab/TokenMetrics'
-import { useTranslation } from '@pancakeswap/localization'
 
 interface IProps {
   tabSaleMechanism: string[]
-  tabActiveMechansim: string
-  setTabActiveMechansim: (tabActiveMechansim: string) => void
+  tabActiveMechansim: number
+  setTabActiveMechansim: (tabActiveMechansim: number) => void
   initialTokenMetrics: any[]
   dataInfo: any[]
   dataRefInfo: any
@@ -344,11 +344,11 @@ function SaleMechanism({
 
   const renderBody = useMemo(() => {
     switch (tabActiveMechansim) {
-      case 'Sale Referral Program':
+      case 2:
         return <ReferralProgram />
-      case 'Token Metrics':
+      case 3:
         return <TokenMetrics initialTokenMetrics={initialTokenMetrics} />
-      case 'Vesting Schedule':
+      case 4:
         return (
           <VestingSchedule
             dataVesting={dataVesting}
@@ -356,7 +356,7 @@ function SaleMechanism({
             handleGetDataVesting={handleGetDataVesting}
           />
         )
-      case 'Your Information':
+      case 0:
         return (
           <YourInfo
             dataInfo={dataInfo}
@@ -406,6 +406,13 @@ function SaleMechanism({
     )
   }, [width, isMore])
 
+  useEffect(() => {
+    const tabActiveMechansimTemp = tabActiveMechansim % 5
+    document
+      .getElementById('tab-mechanism-wrapper')
+      .scrollTo({ left: 170 * tabActiveMechansimTemp, behavior: 'smooth' })
+  }, [tabActiveMechansim])
+
   return (
     <Wrapper isMore={isMore}>
       <div className="corner1" />
@@ -415,18 +422,18 @@ function SaleMechanism({
       <Content>
         {
           <div style={{ display: 'flex', justifyContent: 'center', marginBottom: '24px' }}>
-            <div className="tab-mechanism">
+            <div className="tab-mechanism" id="tab-mechanism-wrapper">
               {Array.from(tabSaleMechanism).map((item, index) => {
                 return (
                   <div
                     // eslint-disable-next-line react/no-array-index-key
                     key={index}
                     className={
-                      tabActiveMechansim === item
+                      tabActiveMechansim === index
                         ? `item-tab-mechanism item-tab-mechanism_${index} active`
                         : `item-tab-mechanism item-tab-mechanism_${index}`
                     }
-                    onClick={() => setTabActiveMechansim(item)}
+                    onClick={() => setTabActiveMechansim(index)}
                     aria-hidden="true"
                   >
                     {t(item)}
@@ -436,39 +443,11 @@ function SaleMechanism({
             </div>
           </div>
         }
-        {/* {width < 900 && (
-          <div style={{ marginBottom: '24px' }}>
-            <Swiper
-              slidesPerView="auto"
-              modules={[Navigation, Pagination, A11y]}
-              navigation
-              scrollbar={{ draggable: true }}
-              ref={swiperRef}
-            >
-              {Array.from(tabSaleMechanism).map((item, index) => {
-                return (
-                  <SwiperSlide style={{ width: 'fit-content' }}>
-                    <div
-                      // eslint-disable-next-line react/no-array-index-key
-                      key={index}
-                      className={tabActiveMechansim === item ? `item-tab-mechanism active` : `item-tab-mechanism`}
-                      onClick={() => setTabActiveMechansim(item)}
-                      aria-hidden="true"
-                    >
-                      {t(item)}
-                    </div>
-                  </SwiperSlide>
-                )
-              })}
-            </Swiper>
-          </div>
-        )} */}
-
         <div className="body">{renderBody}</div>
       </Content>
-      {!account && (tabActiveMechansim === 'Vesting Schedule' || tabActiveMechansim === 'Your Information')
+      {!account && (tabActiveMechansim === 4 || tabActiveMechansim === 1)
         ? null
-        : tabActiveMechansim === 'Vesting Schedule' && dataVesting.length === 0
+        : tabActiveMechansim === 4 && dataVesting.length === 0
         ? null
         : renderRemore}
     </Wrapper>
