@@ -42,7 +42,7 @@ class MyDocument extends Document {
             rel="stylesheet"
           />
           <link rel="shortcut icon" href="/favicon.ico" />
-          {/* <link rel="apple-touch-icon" href="/logo.png" /> */}
+          <link rel="apple-touch-icon" href="/logo.png" />
           <link rel="manifest" href="/manifest.json" />
         </Head>
         <body style={{ background: '#0a0a0a' }}>
