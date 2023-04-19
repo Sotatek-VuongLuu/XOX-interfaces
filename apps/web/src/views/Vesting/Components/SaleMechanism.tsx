@@ -398,7 +398,7 @@ function SaleMechanism({
     const tabActiveMechansimTemp = tabActiveMechansim % 5
     document
       .getElementById('tab-mechanism-wrapper')
-      .scrollTo({ left: 160 * tabActiveMechansimTemp, behavior: 'smooth' })
+      .scrollTo({ left: 150 * tabActiveMechansimTemp, behavior: 'smooth' })
   }, [tabActiveMechansim])
 
   return (
