@@ -20,7 +20,7 @@ export const XOX_BSC_TESTNET = new ERC20Token(
 
 export const XOX_MAINNET = new ERC20Token(
   ChainId.ETHEREUM,
-  '0xe0852E63518beF3dAEB01194bf7B279d28F713E0',
+  '0xb57F3db85a2d61C0F7e9BB4F3e4145b2804d1758',
   18,
   'XOX',
   'XOX',
@@ -29,7 +29,7 @@ export const XOX_MAINNET = new ERC20Token(
 
 export const XOX_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xe0852E63518beF3dAEB01194bf7B279d28F713E0',
+  '0xb57F3db85a2d61C0F7e9BB4F3e4145b2804d1758',
   18,
   'XOX',
   'XOX',
@@ -47,7 +47,7 @@ export const XOX_BUSD_TESTNET = new ERC20Token(
 
 export const XOX_USDC_TESTNET = new ERC20Token(
   ChainId.GOERLI,
-  '0x0651979C3C13278607Ac4AEBFA2e17eFE0886c49',
+  '0xFee423935dBcf75eB5A0D025E9aE4d816c33a7E3',
   18,
   'XOX-USDC',
   'XOX-USDC',
@@ -124,7 +124,7 @@ export const USDC_RINKEBY = new ERC20Token(
 
 export const USDC_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xfcdD04b6a25E533d8F16210Cb552020D6d880749',
+  '0xD898D309dAb33130EA57E8F106238ae4b76329f4',
   6,
   'tUSDC',
   'test USD Coin',
@@ -296,7 +296,7 @@ export const ADA_BSC_TESTNET = new ERC20Token(
 
 export const USDT_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0x27B0A8Adf7d7BdB2933E6CE1846B93cf5fD02524',
+  '0x1b57aF4ab903fD70f96Ff033498dF44D7B61201C',
   6,
   'tUSDT',
   'test USD Tether',
@@ -327,7 +327,7 @@ export const USDC = {
 export const USDT = {
   [ChainId.BSC]: USDT_BSC,
   [ChainId.ETHEREUM]: USDT_ETH,
-  [ChainId.GOERLI]: '0x27B0A8Adf7d7BdB2933E6CE1846B93cf5fD02524',
+  [ChainId.GOERLI]: '0x1b57aF4ab903fD70f96Ff033498dF44D7B61201C',
   [ChainId.BSC_TESTNET]: '0x7A35Ab80fe9621146DA7CCbC2BCAddda843A69A5',
 }
 

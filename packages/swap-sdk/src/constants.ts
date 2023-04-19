@@ -23,7 +23,7 @@ export const FACTORY_ADDRESS_MAP: Record<number, string> = {
 export const PAIR_XOX_BUSD: Record<number, string> = {
   // [ChainId.ETHEREUM]: FACTORY_ADDRESS_ETH,
   // [ChainId.RINKEBY]: FACTORY_ADDRESS_ETH,
-  [ChainId.GOERLI]: '0x0651979C3C13278607Ac4AEBFA2e17eFE0886c49',
+  [ChainId.GOERLI]: '0xFee423935dBcf75eB5A0D025E9aE4d816c33a7E3',
   // [ChainId.BSC]: FACTORY_ADDRESS,
   [ChainId.BSC_TESTNET]: '0xf10642da580e459a941766af33a977086037f020',
 }
@@ -31,7 +31,7 @@ export const PAIR_XOX_BUSD: Record<number, string> = {
 export const XOX_ADDRESS: Record<number, string> = {
   // [ChainId.ETHEREUM]: '',
   // [ChainId.RINKEBY]: '',
-  [ChainId.GOERLI]: '0xe0852E63518beF3dAEB01194bf7B279d28F713E0',
+  [ChainId.GOERLI]: '0xb57F3db85a2d61C0F7e9BB4F3e4145b2804d1758',
   // [ChainId.BSC]: '',
   [ChainId.BSC_TESTNET]: '0x92e72A02719122aB0E5A0323Db6b3579586db8AD',
 }
@@ -39,7 +39,7 @@ export const XOX_ADDRESS: Record<number, string> = {
 export const USD_ADDRESS: Record<number, string> = {
   [ChainId.ETHEREUM]: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48',
   [ChainId.RINKEBY]: '',
-  [ChainId.GOERLI]: '0xfcdD04b6a25E533d8F16210Cb552020D6d880749',
+  [ChainId.GOERLI]: '0xD898D309dAb33130EA57E8F106238ae4b76329f4',
   [ChainId.BSC]: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
   [ChainId.BSC_TESTNET]: '0x7A35Ab80fe9621146DA7CCbC2BCAddda843A69A5',
 }
