@@ -1,14 +1,11 @@
 import {
   Box,
-  ButtonMenu,
-  ButtonMenuItem,
   Flex,
   UserMenu,
   UserMenuDivider,
   UserMenuItem,
   Button,
   Text,
-  NextLinkFromReactRouter,
   useMatchBreakpoints,
 } from '@pancakeswap/uikit'
 import { useCallback } from 'react'
@@ -16,16 +13,15 @@ import { ChainId } from '@pancakeswap/sdk'
 import { useTranslation } from '@pancakeswap/localization'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import Search from 'views/Info/components/InfoSearch'
-import { useMultiChainPath, useGetChainName } from 'state/info/hooks'
+import { useGetChainName } from 'state/info/hooks'
 import { multiChainId, multiChainPaths } from 'state/info/constant'
 import { chains } from 'utils/wagmi'
 import { ChainLogo } from 'components/Logo/ChainLogo'
-import { useAccount } from 'wagmi'
 import { bsc, mainnet } from '@pancakeswap/wagmi/chains'
 import { useActiveChainId } from 'hooks/useActiveChainId'
-import useNativeCurrency from 'hooks/useNativeCurrency'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import GalaxyIcon from './galaxy-desktop.svg'
+import GalaxyMobileIcon from './galaxy.svg'
 
 interface INavWrapper {
   hasPadding?: boolean
@@ -97,7 +93,7 @@ const MainContent = styled.div`
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
-  & > img {
+  & > svg {
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
@@ -171,7 +167,7 @@ const MainContent = styled.div`
     height: 200px;
     padding: 30px 40px;
 
-    & > img {
+    & > svg {
       position: absolute;
       transform: translate(0, -50%);
       top: 50%;
@@ -268,7 +264,7 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
         <div className="edge1" />
         <div className="corner2" />
         <div className="edge2" />
-        {isMobile ? <img alt="" src="/images/galaxy-mb.png" /> : <img alt="" src="/images/galaxy-pc.png" />}
+        {isMobile ? <GalaxyMobileIcon /> : <GalaxyIcon />}
 
         <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
           {t('Swap to get XOX & XOXS. Earn like a Pro')}
@@ -296,7 +292,7 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
               <div className="top-right"></div>
               <div className="bottom-left"></div>
               <div className="bottom-right"></div> */}
-              {t("Learn More")}
+              {t('Learn More')}
             </Button>
           </a>
         </Flex>
