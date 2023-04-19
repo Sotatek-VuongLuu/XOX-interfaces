@@ -292,6 +292,7 @@ export const WrapperRight = styled(Box)<IPropsWR>`
     width: 47px;
     right: 0px;
     @media screen and (max-width: 555px) {
+      background-size: cover;
       height: 40px;
       width: 40px;
     }
@@ -310,6 +311,7 @@ export const WrapperRight = styled(Box)<IPropsWR>`
     width: 47px;
     left: 0px;
     @media screen and (max-width: 555px) {
+      background-size: cover;
       height: 40px;
       width: 40px;
     }
