@@ -237,7 +237,7 @@ const listCommunity = [
   {
     icon: '/images/pc_twitter.svg',
     name: 'Twitter',
-    des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    des: 'Follow @Xox_Labs on Twitter for ecosystem news & updates. Stay informed.',
     iconMobile: '/images/twitter_mob.svg',
   },
   {
@@ -249,19 +249,19 @@ const listCommunity = [
   {
     icon: '/images/pc_tiktok.svg',
     name: 'Tiktok',
-    des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    des: 'Follow @xox_labs on TikTok for the latest ecosystem news. Stay connected!',
     iconMobile: '/images/tiktok_mb.svg',
   },
   {
     icon: '/images/pc_telegram.svg',
     name: 'Telegram Channel',
-    des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    des: 'Join our channel to stay up-to-date with every news and updates.',
     iconMobile: '/images/telegram_mb.svg',
   },
   {
     icon: '/images/pc_youtube.svg',
     name: 'Youtube',
-    des: 'Follow @xox to get the latest news and updates from across the ecosystem.',
+    des: 'Subscribe to @XoxLabs to stay in the loop and updated.',
     iconMobile: '/images/youtube_mb.svg',
   },
   {

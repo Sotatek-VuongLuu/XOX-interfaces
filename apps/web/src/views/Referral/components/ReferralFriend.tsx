@@ -283,7 +283,7 @@ export const WrapperRight = styled(Box)<IPropsWR>`
 
   .swiper-button-next {
     z-index: 999;
-    background-image: url(/images/next.svg);
+    background: url(/images/next.svg) no-repeat center;
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
@@ -292,9 +292,7 @@ export const WrapperRight = styled(Box)<IPropsWR>`
     width: 47px;
     right: 0px;
     @media screen and (max-width: 555px) {
-      background-size: cover;
-      height: 40px;
-      width: 40px;
+      background-size: contain;
     }
   }
 
@@ -303,7 +301,7 @@ export const WrapperRight = styled(Box)<IPropsWR>`
   }
 
   .swiper-button-prev {
-    background-image: url(/images/prev.svg);
+    background: url(/images/prev.svg) no-repeat center;
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
@@ -311,9 +309,7 @@ export const WrapperRight = styled(Box)<IPropsWR>`
     width: 47px;
     left: 0px;
     @media screen and (max-width: 555px) {
-      background-size: cover;
-      height: 40px;
-      width: 40px;
+      background-size: contain;
     }
   }
 

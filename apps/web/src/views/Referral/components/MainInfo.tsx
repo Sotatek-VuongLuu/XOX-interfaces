@@ -700,7 +700,7 @@ const FakeSwiper = styled.div`
 
   .swiper-button-next {
     z-index: 999;
-    background-image: url(/images/next.svg);
+    background: url(/images/next.svg) no-repeat center;
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
@@ -709,9 +709,7 @@ const FakeSwiper = styled.div`
     width: 47px;
     right: 0px;
     @media screen and (max-width: 555px) {
-      margin-right: -14px;
-      height: unset;
-      width: unset;
+      background-size: contain;
     }
   }
 
@@ -720,17 +718,16 @@ const FakeSwiper = styled.div`
   }
 
   .swiper-button-prev {
-    background-image: url(/images/prev.svg);
+    background: url(/images/prev.svg) no-repeat center;
     background-repeat: no-repeat;
     background-size: 100% auto;
-    background-position: center;
+    background-position: center center;
     height: 47px;
     width: 47px;
     left: 0px;
 
     @media screen and (max-width: 555px) {
-      height: unset;
-      width: unset;
+      background-size: contain;
     }
   }
 

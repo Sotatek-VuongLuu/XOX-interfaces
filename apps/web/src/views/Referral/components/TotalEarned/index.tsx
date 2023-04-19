@@ -71,6 +71,11 @@ const Wrapper = styled.div`
     height: 300px;
     z-index: 0;
     background: radial-gradient(50% 50% at 50% 50%, rgba(251, 134, 24, 0.5) 60%, rgba(249, 125, 28, 0) 100%);
+
+    @media screen and (max-width: 900px) {
+      min-width: 270px;
+      height: 270px;
+    }
   }
 
   .ref_round {
@@ -115,7 +120,10 @@ const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
       <div className="img_container">
         {/* ref_xox_mb */}
         {width <= 900 ? (
-          <img src="/images/ref_xox_mb.svg" alt="ref_xox" className="ref_xox" />
+          <>
+            <img src="/images/ref_xox_mb.svg" alt="ref_xox" className="ref_xox" />
+            <div className="ref_chart_bg" />
+          </>
         ) : (
           <>
             <img src="/images/ref_xox.svg" alt="ref_xox" className="ref_xox" />
