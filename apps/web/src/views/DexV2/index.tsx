@@ -1643,7 +1643,9 @@ function DevV2() {
             />
           </div>
 
-          <div>{/* <NewTopIcon /> */}</div>
+          <div>
+            <NewTopIcon />
+          </div>
         </StyledHeader>
 
         <StyledBtnStartTrading>

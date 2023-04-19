@@ -260,7 +260,7 @@ export const configLanding: (
     },
     {
       label: t('Dex V2'),
-      href: '/l-dex-v2',
+      href: '/dex-v2',
       icon: WhitepaperIcon,
       fillIcon: SwapFillIcon,
       showItemsOnMobile: false,
