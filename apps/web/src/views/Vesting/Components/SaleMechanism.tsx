@@ -195,26 +195,10 @@ const Content = styled.div`
     color: rgba(255, 255, 255, 0.6);
     border-radius: 8px;
     white-space: nowrap;
-    /* position: relative; */
     &:hover {
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       color: #ffffff;
       border-radius: 30px;
-      /* &:before {
-          content: '';
-          position: absolute;
-          top: 0;
-          left: 0;
-          right: 0;
-          bottom: 0;
-          border-radius: inherit;
-          padding: 1px;
-          background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          -webkit-mask-composite: xor;
-          -webkit-mask-composite: exclude;
-          mask-composite: exclude;
-        } */
     }
   }
 
@@ -230,7 +214,7 @@ const Content = styled.div`
         position: absolute;
         background-image: url(/images/dex-v2/prev-tab.png);
         top: 12px;
-        left: -16px;
+        left: -14px;
         color: rgba(255, 255, 255, 0.38);
         width: 8px;
         height: 10px;
@@ -241,7 +225,7 @@ const Content = styled.div`
         position: absolute;
         background-image: url(/images/dex-v2/next-tab.png);
         top: 12px;
-        right: -16px;
+        right: -14px;
         color: rgba(255, 255, 255, 0.38);
         width: 8px;
         height: 10px;
@@ -265,7 +249,6 @@ const Content = styled.div`
     display: flex;
     width: fit-content;
     cursor: pointer;
-    /* margin-bottom: 24px; */
     justify-content: center;
     background: #131313;
     border-radius: 30px;
@@ -276,10 +259,15 @@ const Content = styled.div`
 
     @media screen and (max-width: 1200px) {
       overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      > div:nth-child(even) {
+        margin: 0px 17px;
+      }
       &::-webkit-scrollbar {
         display: none;
       }
       .item-tab-mechanism {
+        scroll-snap-align: center;
         font-size: 12px;
         line-height: 15px;
       }
@@ -410,7 +398,7 @@ function SaleMechanism({
     const tabActiveMechansimTemp = tabActiveMechansim % 5
     document
       .getElementById('tab-mechanism-wrapper')
-      .scrollTo({ left: 170 * tabActiveMechansimTemp, behavior: 'smooth' })
+      .scrollTo({ left: 160 * tabActiveMechansimTemp, behavior: 'smooth' })
   }, [tabActiveMechansim])
 
   return (
