@@ -288,8 +288,12 @@ export const WrapperRight = styled(Box)<IPropsWR>`
     background-size: 100% auto;
     background-position: center;
     border-radius: 50%;
+    height: 47px;
+    width: 47px;
+    right: 0px;
     @media screen and (max-width: 555px) {
-      margin-right: -14px;
+      height: 40px;
+      width: 40px;
     }
   }
 
@@ -302,6 +306,13 @@ export const WrapperRight = styled(Box)<IPropsWR>`
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
+    height: 47px;
+    width: 47px;
+    left: 0px;
+    @media screen and (max-width: 555px) {
+      height: 40px;
+      width: 40px;
+    }
   }
 
   .swiper-button-prev::after {

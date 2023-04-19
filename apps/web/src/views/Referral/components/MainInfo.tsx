@@ -705,8 +705,13 @@ const FakeSwiper = styled.div`
     background-size: 100% auto;
     background-position: center;
     border-radius: 50%;
+    height: 47px;
+    width: 47px;
+    right: 0px;
     @media screen and (max-width: 555px) {
       margin-right: -14px;
+      height: unset;
+      width: unset;
     }
   }
 
@@ -719,6 +724,14 @@ const FakeSwiper = styled.div`
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
+    height: 47px;
+    width: 47px;
+    left: 0px;
+
+    @media screen and (max-width: 555px) {
+      height: unset;
+      width: unset;
+    }
   }
 
   .swiper-button-prev::after {
