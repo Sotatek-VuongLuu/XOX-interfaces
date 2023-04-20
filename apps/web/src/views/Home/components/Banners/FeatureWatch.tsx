@@ -59,7 +59,7 @@ const RightContent = styled.div`
     line-height: 32px;
     @media screen and (max-width: 900px) {
       margin-left: 0px;
-      font-size: 16px;
+      font-size: 15px;
       line-height: 19px;
     }
   }

@@ -38,7 +38,7 @@ function MenberMobile() {
     { avatar: '/images/company/Mei To.png', name: 'Mei To', position: t('Business Analyst') },
   ]
   const MEMBERS_TWO: Array<IMember> = [
-    { avatar: '/images/company/Marrie Vu.png', name: 'Marrie Vu', position: t('Marrie Vu') },
+    { avatar: '/images/company/Marrie Vu.png', name: 'Marrie Vu', position: t('Quality Control') },
   ]
 
   return (
