@@ -433,7 +433,7 @@ function SaleMechanism({
         }
         <div className="body">{renderBody}</div>
       </Content>
-      {!account && (tabActiveMechansim === 4 || tabActiveMechansim === 1)
+      {!account && (tabActiveMechansim === 4 || tabActiveMechansim === 0)
         ? null
         : tabActiveMechansim === 4 && dataVesting.length === 0
         ? null
