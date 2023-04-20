@@ -82,12 +82,12 @@ function Address({ addr, ...props }: { addr: IAddress }) {
       </div>
       {chainId ? (
         <a href={chainId ? `/swap?chainId=${chainId}` : null} target="_blank" rel="noreferrer">
-          {t('Get %symbol%', { symbol: 'XOX' })}
+          {t('Get %symbol_buy%', { symbol_buy: 'XOX' })}
         </a>
       ) : (
         <Tooltip title="Deployment Coming" placement="top">
           <a href={null} target="_blank" rel="noreferrer">
-            {t('Get %symbol%', { symbol: 'XOX' })}
+            {t('Get %symbol_buy%', { symbol_buy: 'XOX' })}
           </a>
         </Tooltip>
       )}
@@ -108,7 +108,7 @@ export default function TokenomicsPage() {
   const LAUNCH_APP_TIME = 1679850000 /// (seconds) can change
 
   useEffect(() => {
-    (document.getElementById('pieChart') as any).play()
+    ;(document.getElementById('pieChart') as any).play()
   }, [])
 
   const handleRenderXAxis = (): IDataOBJReturn[] => {
@@ -593,13 +593,15 @@ export default function TokenomicsPage() {
             <p className="center">{t('On any DEX or CEX (Decentralized or Centralized Exchanges)')}</p>
             <div className="divide" />
             <h2>10% {t('Buy Tax')}</h2>
-            <p className="center">
-              {t('In the XOX Dex V1. Only applicable for')} <span className="hl">XOX-USDT</span> {t('and')}{' '}
-              <span className="hl">XOX-USDC</span>{' '}
-              {t(
-                'pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.',
-              )}
-            </p>
+            <p
+              className="center"
+              dangerouslySetInnerHTML={{
+                __html: t(
+                  "In the XOX Dex V1. Only applicable for <span class='hl'>XOX-USDT</span> and <span class='hl'>XOX-USDC</span> pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.",
+                ),
+              }}
+            />
+
             <p className="center">
               <Dot /> {t('The Full')} <span className="hl">USDT</span> & <span className="hl">USDC</span>{' '}
               {t('collected from buytax is later given back to the stakers as Stable Coin (XOXS) Staking Rewards')}{' '}

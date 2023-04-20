@@ -2374,8 +2374,6 @@
   "Good Tokenomics are crucial to creating sustainability, and scalability to ensure the constant growth of the ecosystem in the long run.": "Good Tokenomics are crucial to creating sustainability, and scalability to ensure the constant growth of the ecosystem in the long run.",
   "Buy Tax": "Buy Tax",
   "On any DEX or CEX (Decentralized or Centralized Exchanges)": "On any DEX or CEX (Decentralized or Centralized Exchanges)",
-  "In the XOX Dex V1. Only applicable for": "In the XOX Dex V1. Only applicable for",
-  "pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.": "pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.",
   "The Full": "The Full",
   "collected from buytax is later given back to the stakers as Stable Coin (XOXS) Staking Rewards": "collected from buytax is later given back to the stakers as Stable Coin (XOXS) Staking Rewards",
   "Sell Tax": "Sell Tax",
@@ -2599,5 +2597,8 @@
   "Token Received": "Token Received",
   "Token Sent": "Token Sent",
   "Total value of the funds in this farm’s liquidity pair": "Total value of the funds in this farm’s liquidity pair",
-  "Get %sym%": "Get %sym%"
+  "Get %sym%": "Get %sym%",
+  "In the XOX Dex V1. Only applicable for <span class='hl'>XOX-USDT</span> and <span class='hl'>XOX-USDC</span> pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.": "In the XOX Dex V1. Only applicable for <span class='hl'>XOX-USDT</span> and <span class='hl'>XOX-USDC</span> pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.",
+  "Get %symbol_buy%": "Get %symbol_buy%"
+
 }
