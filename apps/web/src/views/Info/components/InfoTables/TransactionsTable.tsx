@@ -6,7 +6,7 @@ import truncateHash from '@pancakeswap/utils/truncateHash'
 import { Box, Flex, LinkExternal, Skeleton, Text, Button, Link, Select, Input } from '@pancakeswap/uikit'
 import { formatISO9075 } from 'date-fns'
 import React, { Fragment, useCallback, useEffect, useMemo, useState } from 'react'
-import { useGetChainName, useProtocolTransactionsSWR } from 'state/info/hooks'
+import { useProtocolTransactionsSWR } from 'state/info/hooks'
 import { Transaction, TransactionFrom, TransactionType } from 'state/info/types'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -176,16 +176,16 @@ const Wrapper = styled.div`
 
 const Table = styled.div`
   display: grid;
-  grid-gap: 16px 0;
+  grid-gap: 16px 10px;
   align-items: center;
   position: relative;
-  grid-template-columns: 0.15fr 1.4fr 1.1fr repeat(3, 0.7fr) 0.93fr 0.81fr;
+  grid-template-columns: 0.15fr 1.4fr 1.1fr repeat(3, 0.8fr) 0.93fr 0.81fr;
   .table-header {
     margin-bottom: 16px;
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
-    grid-gap: 24px 30px;
+    grid-gap: 24px 25px;
 
     .table-header {
       margin-bottom: 8px;
@@ -925,7 +925,7 @@ const TransactionsTable: React.FC = () => {
             color="rgba(255, 255, 255, 0.87)"
             className="table-header"
           >
-            {t('Token Amount')}
+            {t('Token Sent')}
           </Text>
           <Text
             fontSize={['14px', , '16px']}
@@ -936,7 +936,7 @@ const TransactionsTable: React.FC = () => {
             color="rgba(255, 255, 255, 0.87)"
             className="table-header"
           >
-            {t('Token Amount')}
+            {t('Token Received')}
           </Text>
           <ClickableColumnHeader
             fontSize={['14px', , '16px']}

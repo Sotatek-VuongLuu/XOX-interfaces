@@ -14,8 +14,6 @@ import { formatEther, formatUnits, parseEther } from '@ethersproject/units'
 import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS, XOX_LP } from 'config/constants/exchange'
 import { useConnect, useProvider } from 'wagmi'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
-import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import { getUserFarmingData } from 'services/pools'
 import { NETWORK_LINK } from 'views/BridgeToken/networks'
 import ModalBase from 'views/Referral/components/Modal/ModalBase'
@@ -42,6 +40,8 @@ import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
 import { Content } from './components/style'
 import ShowBalance from './components/ShowBalance'
+import GalaxyIcon from 'components/Svg/galaxy-desktop.svg'
+import GalaxyMobileIcon from 'components/Svg/galaxy.svg'
 
 const NavWrapper = styled(Flex)`
   padding: 28px 0px 24px;
@@ -59,9 +59,9 @@ const Banner = styled.div`
   margin-top: 20px;
   position: relative;
 
-  & > img {
+  & > svg {
     position: absolute;
-    transform: translateX(-50%);
+    transform: translateX(-40%);
     left: 50%;
     top: 0;
     width: 397px;
@@ -247,7 +247,7 @@ const Banner = styled.div`
     backdrop-filter: blur(10px);
     border-radius: 20px;
 
-    & > img {
+    & > svg {
       position: absolute;
       transform: translate(0, -50%);
       top: 50%;
@@ -1134,7 +1134,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         <div className="content">
           <NavWrapper>
             <Banner>
-              <img alt="" src={isMobile ? 'images/galaxy-mo.svg' : 'images/galaxy-dk.svg'} />
+              {isMobile ? <GalaxyMobileIcon /> : <GalaxyIcon />}
               <div className="corner1" />
               <div className="edge1" />
               <div className="corner2" />
@@ -1156,7 +1156,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     <div className="top-right"></div>
                     <div className="bottom-left"></div>
                     <div className="bottom-right"></div> */}
-                    {t('Get %symbol%', { symbol: 'LP Token' })}
+                    {t('Get %sym%', { sym: 'LP Token' })}
                   </Button>
                 </a>
                 <a href="/whitepaper" target="_blank" rel="noreferrer">
@@ -1260,7 +1260,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                               <>
                                 <ShowBalance balance={liquidity} name="liquidity" />
                                 <Tooltip
-                                  title="Total value of the funds in this farm’s liquidity pair"
+                                  title={t('Total value of the funds in this farm’s liquidity pair')}
                                   placement="top"
                                   PopperProps={{
                                     sx: (theme) => ({
@@ -1502,7 +1502,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           <div className="xox_loading" style={{ margin: '24px 0px' }}>
             <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
           </div>
-          <div className="noti_claim_pending_h1">{t("Waiting For Confirmation")}</div>
+          <div className="noti_claim_pending_h1">{t('Waiting For Confirmation')}</div>
           <div className="noti_claim_pending_h3"> {notiMess}</div>
           <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
           <img

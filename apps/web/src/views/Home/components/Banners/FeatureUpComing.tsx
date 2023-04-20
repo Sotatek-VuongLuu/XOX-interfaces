@@ -97,6 +97,7 @@ const WrapperItem = styled.div<IPropsWI>`
         font-weight: 700;
         font-size: 14px;
         line-height: 17px;
+        background-clip: text;
       }
     }
 

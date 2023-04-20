@@ -87,16 +87,16 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
         <meta
           name="description"
-          content="Cheaper and faster than Uniswap? Discover XOX, the leading DEX on BNB Smart Chain (BSC) with the best farms in DeFi and a lottery for CAKE."
+          content="Cheaper and faster than Uniswap? Discover XOX, the leading DEX on BNB Smart Chain (BSC) with the best farms in DeFi and a lottery for XOX."
         />
         <meta name="theme-color" content="#1FC7D4" />
         <meta name="twitter:image" content="https://xoxnet.io/images/hero.png" />
         <meta
           name="twitter:description"
-          content="The most popular AMM on BSC! Earn CAKE through yield farming or win it in the Lottery, then stake it in Syrup Pools to earn more tokens! Initial Farm Offerings (new token launch model pioneered by XOX), NFTs, and more, on a platform you can trust."
+          content="Earn XOX through yield farming or win it in the Lottery."
         />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="🥞 XOX - A next evolution DeFi exchange on BNB Smart Chain (BSC)" />
+        <meta name="twitter:title" content="XOX - A next evolution DeFi exchange on BNB Smart Chain (BSC)" />
         <meta name="theme-color" content="#000" />
 
         <title>XOX Labs</title>
