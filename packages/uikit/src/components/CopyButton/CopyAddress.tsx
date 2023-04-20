@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { CopyButton } from "./CopyButton";
 import { Box, Flex, FlexProps } from "../Box";
+import { useTranslation } from "@pancakeswap/localization";
 
 interface CopyAddressProps extends FlexProps {
   account: string;
@@ -55,13 +56,15 @@ export const CopyAddress: React.FC<React.PropsWithChildren<CopyAddressProps>> = 
   referralCode = false,
   ...props
 }) => {
+  const { t } = useTranslation();
+
   return (
     <Box position="relative" {...props}>
       <Wrapper>
         {account && (
           <Address title={account} style={{ color: referralCode ? "rgba(255, 255, 255, 0.87)" : "#FB8618" }}>
             {referralCode
-              ? `Referral Code: ${account}`
+              ? `${t("Referral Code")}: ${account}`
               : `${account.substring(0, 8)}...${account.substring(account.length - 4)}`}
             <input type="text" readOnly value={account} />
           </Address>

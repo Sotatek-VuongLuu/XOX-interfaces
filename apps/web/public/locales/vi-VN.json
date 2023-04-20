@@ -7,7 +7,7 @@
   "Connect Wallet": "Kết nối Ví",
   "Blog": "Tin tức",
   "Earn": "Kiếm lời",
-  "%asset% Earned": "Nhận được %asset%",
+  "%asset% Earned": "%asset% đã kiếm",
   "Coming Soon": "Sắp ra mắt",
   "APY": "Lãi",
   "Total Liquidity": "Tổng thanh khoản",
@@ -106,7 +106,7 @@
   "Join a Team": "Gia nhập một nhóm",
   "This name will be shown in team leaderboards and search results as long as your profile is active.": "Tên này sẽ được hiển thị trong bảng dẫn đầu của nhóm và trong kết quả tìm kiếm bao lâu mà hồ sơ của bạn còn hoạt động.",
   "Complete Profile": "Hoàn chỉnh hồ sơ",
-  "Oops!": "Úi!",
+  "Oops!": "Oops!",
   "ROI Calculator": "Máy tính ROI",
   "Calculated based on current rates.": "Được tính dựa trên lãi suất hiện tại.",
   "All figures are estimates provided for your convenience only, and by no means represent guaranteed returns.": "Lãi suất chỉ là ước tính và được cung cấp vì sự tiện lợi của bạn, chứ không có tính đảm bảo lợi nhuận.",
@@ -2045,7 +2045,7 @@
   "Your transaction will revert if it is left confirming for longer than this time": "Giao dịch sẽ bị hủy nếu chưa được xác nhận sau thời gian này",
   "Enter an valid slippage percentage": "Nhập một tỷ lệ trượt giá hợp lệ",
   "Tx deadline": "Thời hạn giao dịch",
-  "For each trade a %amount%% fee is paid": "Đối với mỗi giao dịch, phí là %amount%%",
+  "For each trade a %amount%% fee is paid": "Đối với mỗi giao dịch, phí là %amount%",
   "Clear All": "Xóa tất cả",
   "Approved %symbol%": "Đã phê duyệt %symbol%",
   "Optional": "Không bắt buộc",
@@ -2595,5 +2595,9 @@
   "Subscribe to @XoxLabs to stay in the loop and updated.": "Đăng kí kênh Youtube @XoxLabs để biết cập nhật nhưng thông tin mới nhất về  XOXLabs",
   "Join our channel to stay up-to-date with every news and updates.": "Hãy tham gia kênh Telegram của chúng tôi đển cập nhật những thông tin mới nhất",
   "Follow @xox_labs on TikTok for the latest ecosystem news. Stay connected!": "Theo dõi @Xox_Labs trên TikTok đển cập nhật những thông tin mới nhất về  hệ sinh thái của chúng tôi. Hãy giữ kết nối!",
-  "Follow @Xox_Labs on Twitter for ecosystem news & updates. Stay informed.": "Theo dõi @Xox_Labs trên Twitter để cập nhật những thông tin mới nhất. Hãy luôn cập nhật thông tin."
+  "Follow @Xox_Labs on Twitter for ecosystem news & updates. Stay informed.": "Theo dõi @Xox_Labs trên Twitter để cập nhật những thông tin mới nhất. Hãy luôn cập nhật thông tin.",
+  "Token Received": "Số token đã nhận",
+  "Token Sent": "Số token đã gửi",
+  "Total value of the funds in this farm’s liquidity pair": "Tổng giá trị của quỹ trong cặp thanh khoản sinh lời này",
+  "Get %sym%": "Lấy %sym%"
 }

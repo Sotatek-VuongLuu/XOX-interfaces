@@ -1156,7 +1156,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     <div className="top-right"></div>
                     <div className="bottom-left"></div>
                     <div className="bottom-right"></div> */}
-                    {t('Get %symbol%', { symbol: 'LP Token' })}
+                    {t('Get %sym%', { sym: 'LP Token' })}
                   </Button>
                 </a>
                 <a href="/whitepaper" target="_blank" rel="noreferrer">
@@ -1260,7 +1260,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                               <>
                                 <ShowBalance balance={liquidity} name="liquidity" />
                                 <Tooltip
-                                  title="Total value of the funds in this farm’s liquidity pair"
+                                  title={t('Total value of the funds in this farm’s liquidity pair')}
                                   placement="top"
                                   PopperProps={{
                                     sx: (theme) => ({

@@ -283,7 +283,7 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
               <div className="top-right"></div>
               <div className="bottom-left"></div>
               <div className="bottom-right"></div> */}
-              {t('Get %symbol%', { symbol: titleBtn1 })}
+              {t('Get %sym%', { sym: titleBtn1 })}
             </Button>
           </a>
           <a href="/whitepaper" target="_blank" rel="noreferrer">
