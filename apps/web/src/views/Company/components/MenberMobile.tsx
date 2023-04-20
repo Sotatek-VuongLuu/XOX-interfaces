@@ -7,9 +7,7 @@ const StyledMembersOne = styled(Box)`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 15px;
-  ${({ theme }) => theme.mediaQueries.md} {
-    gap: 24px;
-  }
+  margin-bottom: 15px;
 `
 
 const ReStyledMembers = styled(StyledMembersOne)`
@@ -45,7 +43,7 @@ function MenberMobile() {
 
   return (
     <>
-      <StyledMembersOne marginBottom={['15px', null, null, null]}>
+      <StyledMembersOne>
         {MEMBERS_ONE.map((member, i) => (
           <CardMember member={member} key={String(i + member.name)} />
         ))}
