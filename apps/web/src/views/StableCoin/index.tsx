@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/rules-of-hooks */
-import { useState, useEffect, useMemo } from 'react'
+import { useState, useEffect } from 'react'
 import { Flex, Button, Text, useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useAllTokens } from 'hooks/Tokens'
 import styled from 'styled-components'
@@ -7,18 +7,14 @@ import { useTreasuryXOX } from 'hooks/useContract'
 import { formatUnits } from '@ethersproject/units'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
-import { useStableCoinSWR, useMultiChainId } from 'state/info/hooks'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import Link from 'next/link'
-import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import InfoNav from '../Info/components/InfoNav'
 import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
 // eslint-disable-next-line import/no-cycle
 import Earned from './earned'
-import { useRouter } from 'next/router'
 import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 import { useTranslation } from '@pancakeswap/localization'
 
@@ -383,6 +379,8 @@ const FullWrapper = styled.div`
   align-items: center;
   height: 100%;
   width: 100%;
+  position: relative;
+  z-index: 0;
 `
 
 export const formatNumberDecimal = (n: any, decimal?: number) => {

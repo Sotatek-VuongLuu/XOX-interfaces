@@ -43,6 +43,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
       {...props}
       flexDirection="column"
       alignItems="center"
+      zIndex={0}
     >
       {windowSize > 900 ? (
         <ImagBGFooter src="/images/bg_footer.svg" alt="icon_bg" />

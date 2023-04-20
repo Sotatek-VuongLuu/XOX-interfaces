@@ -10,6 +10,7 @@ import {
   MessageText,
   useMatchBreakpoints,
   Text,
+  useTooltip,
 } from '@pancakeswap/uikit'
 import { useIsTransactionUnsupported } from 'hooks/Trades'
 import UnsupportedCurrencyFooter from 'components/UnsupportedCurrencyFooter'
@@ -22,6 +23,7 @@ import CurrencyInputPanel from 'components/CurrencyInputPanel'
 import { CommonBasesType } from 'components/SearchModal/types'
 import { AutoRow, RowBetween } from 'components/Layout/Row'
 import { AutoColumn } from 'components/Layout/Column'
+import { HelpIcon } from '@pancakeswap/uikit'
 
 import { useCurrency } from 'hooks/Tokens'
 import {
@@ -38,7 +40,6 @@ import { useExpertModeManager, useUserSlippageTolerance } from 'state/user/hooks
 import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
 import { currencyId } from 'utils/currencyId'
 import axios from 'axios'
-import { useAtomValue } from 'jotai'
 import CurrencyInputHeader from './CurrencyInputHeader'
 import SwapCommitButton from './SwapCommitButton'
 import useWarningImport from '../hooks/useWarningImport'
@@ -48,8 +49,6 @@ import AdvancedSwapDetailsDropdown from './AdvancedSwapDetailsDropdown'
 import { ArrowWrapper, Wrapper } from './styleds'
 import { useStableFarms } from '../StableSwap/hooks/useStableConfig'
 import { isAddress } from '../../../utils'
-import { SwapFeaturesContext } from '../SwapFeaturesContext'
-import { combinedTokenMapFromOfficialsUrlsAtom } from '../../../state/lists/hooks'
 
 const ReferralCode = styled.div`
   width: 100%;
@@ -115,6 +114,12 @@ export default function SwapForm() {
 
   // get custom setting values for user
   const [allowedSlippage] = useUserSlippageTolerance()
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    t(
+      'Enter the code to get XOXS rewards (for you and for referrer)',
+    ),
+    { placement: 'top' },
+  )
 
   // swap state & price data
   const {
@@ -423,6 +428,10 @@ export default function SwapForm() {
                 >
                   {t('Referral Code')}
                   <p>({t('Optional')})</p>
+                  {tooltipVisible && tooltip}
+                  <div ref={targetRef} style={{ display: 'flex', marginLeft: '8px' }}>
+                    <HelpIcon />
+                  </div>
                 </Text>
                 <ReferralInput
                   onChange={(e) => {
@@ -436,7 +445,7 @@ export default function SwapForm() {
             </>
           )}
         </AutoColumn>
-                  <Text mb="12px">{t('For each trade a %amount%% fee is paid', { amount: 100 })}</Text>
+        <Text mb="12px">{t('For each trade a %amount%% fee is paid', { amount: 100 })}</Text>
         {hasStableSwapAlternative && (
           <AutoColumn>
             <Message variant="warning" my="16px">

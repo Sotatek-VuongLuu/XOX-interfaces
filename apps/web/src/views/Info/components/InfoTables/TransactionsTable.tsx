@@ -554,6 +554,31 @@ const TransactionsTable: React.FC = () => {
     if (/^[\d]*$/.test(e.target.value)) setTempPage(e.target.value)
   }, [])
 
+  const pageOptions = useMemo(() => {
+    return [
+      {
+        value: 5,
+        label: t('%number%/Page', { number: 5 }),
+      },
+      {
+        value: 10,
+        label: t('%number%/Page', { number: 10 }),
+      },
+      {
+        value: 20,
+        label: t('%number%/Page', { number: 20 }),
+      },
+      {
+        value: 50,
+        label: t('%number%/Page', { number: 50 }),
+      },
+      {
+        value: 100,
+        label: t('%number%/Page', { number: 100 }),
+      },
+    ]
+  }, [])
+
   const handleFilter = useCallback(
     (newFilter: TransactionType) => {
       if (newFilter !== txFilter) {
@@ -695,6 +720,7 @@ const TransactionsTable: React.FC = () => {
     setTxFilter(undefined)
     setTransactionFrom(TransactionFrom.XOX)
     setCurrentTransactions([])
+    setPerPage(5)
   }, [chainId])
 
   useEffect(() => {
@@ -1141,30 +1167,10 @@ const TransactionsTable: React.FC = () => {
           </div>
           <div>
             <Select
-              options={[
-                {
-                  value: 5,
-                  label: t('%number%/Page', { number: 5 }),
-                },
-                {
-                  value: 10,
-                  label: t('%number%/Page', { number: 10 }),
-                },
-                {
-                  value: 20,
-                  label: t('%number%/Page', { number: 20 }),
-                },
-                {
-                  value: 50,
-                  label: t('%number%/Page', { number: 50 }),
-                },
-                {
-                  value: 100,
-                  label: t('%number%/Page', { number: 100 }),
-                },
-              ]}
+              options={pageOptions}
               onOptionChange={(option: any) => handleSelectPerPage(option.value)}
               className="select-page"
+              defaultOptionIndex={pageOptions.map(({ value }) => value).indexOf(perPage) + 1}
             />
             <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
               {t('Go to page')}
