@@ -2,6 +2,7 @@ import { Box, Grid } from '@mui/material'
 import useWindowSize from 'hooks/useWindowSize'
 import styled, { keyframes } from 'styled-components'
 import EconomyMobile from './EconomyMobile'
+import { useTranslation } from '@pancakeswap/localization'
 
 const floatingAnim = (x: string, y: string) => keyframes`
   from {
@@ -72,11 +73,11 @@ const Wrapper = styled(Box)`
   }
 `
 const WrapText = styled.div`
-  @media(min-width: 900px){
+  @media (min-width: 900px) {
     transform: translate(-430px);
     width: 500px;
   }
-  @media(min-width: 1400px){
+  @media (min-width: 1400px) {
     transform: translate(-610px);
     width: 700px;
   }
@@ -84,6 +85,7 @@ const WrapText = styled.div`
 
 const FeatureEconomy = () => {
   const { width } = useWindowSize()
+  const { t } = useTranslation()
   return (
     <>
       {width < 900 ? (
@@ -104,10 +106,11 @@ const FeatureEconomy = () => {
             </Grid>
             <Grid item xs={12} md={1}>
               <WrapText className="paragraph">
-                <p className="title">Built and Available on every leading blockchain.</p>
+                <p className="title">{t('Built and Available on every leading blockchain.')}</p>
                 <p className="description">
-                  Creating A Truly Decentralized Multichain Ecosystem with Unlimited possibilities. Supporting Defi and
-                  Web3 global adoption for a better future.
+                  {t(
+                    'Creating A Truly Decentralized Multichain Ecosystem with Unlimited possibilities. Supporting Defi and Web3 global adoption for a better future.',
+                  )}
                 </p>
               </WrapText>
             </Grid>
