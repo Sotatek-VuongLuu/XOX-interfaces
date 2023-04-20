@@ -20,8 +20,8 @@ import { ChainLogo } from 'components/Logo/ChainLogo'
 import { bsc, mainnet } from '@pancakeswap/wagmi/chains'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
-import GalaxyIcon from './galaxy-desktop.svg'
-import GalaxyMobileIcon from './galaxy.svg'
+import GalaxyIcon from 'components/Svg/galaxy-desktop.svg'
+import GalaxyMobileIcon from 'components/Svg/galaxy.svg'
 
 interface INavWrapper {
   hasPadding?: boolean
