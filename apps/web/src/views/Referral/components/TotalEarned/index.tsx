@@ -67,14 +67,19 @@ const Wrapper = styled.div`
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    min-width: 300px;
-    height: 300px;
+    min-width: 427px;
+    height: 427px;
     z-index: 0;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(251, 134, 24, 0.5) 60%, rgba(249, 125, 28, 0) 100%);
+    background: radial-gradient(
+      50% 50% at 50% 50%,
+      rgba(251, 134, 24, 0.4) 1.3%,
+      rgba(250, 130, 26, 0.24112) 10.37%,
+      rgba(249, 125, 28, 0) 98.27%
+    );
 
     @media screen and (max-width: 900px) {
-      min-width: 270px;
-      height: 270px;
+      min-width: 350px;
+      height: 350px;
     }
   }
 

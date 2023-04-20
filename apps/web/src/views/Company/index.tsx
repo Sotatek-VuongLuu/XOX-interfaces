@@ -1,8 +1,10 @@
 import { Tooltip } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
 import { Box } from '@pancakeswap/uikit'
-import ReactPlayer from 'react-player'
+import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
+import MenberMobile from './components/MenberMobile'
+import MenberPC from './components/MenberPC'
 
 export const StyledS = styled('div')`
   margin: 48px auto 100px auto;
@@ -115,21 +117,7 @@ const StyledHeader = styled('div')`
 
 const StyledPreviewVideo = styled('div')``
 
-const StyledMembers = styled(Box)`
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 15px;
-
-  ${({ theme }) => theme.mediaQueries.md} {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 24px;
-  }
-  ${({ theme }) => theme.mediaQueries.lg} {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
-  }
-`
-
-const StyledCard = styled('div')`
+export const StyledCard = styled('div')`
   position: relative;
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
@@ -147,30 +135,6 @@ const StyledCard = styled('div')`
     border-color: white;
     border-style: solid;
     mask: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.2) 100%);
-  }
-`
-
-const StyledCardMember = styled(StyledCard)`
-  text-align: center;
-  padding: 24px 28px;
-
-  > img {
-    margin-bottom: 24px;
-  }
-
-  > h4 {
-    margin-bottom: 10px;
-    font-weight: 700;
-    font-size: 16px;
-    line-height: 19px;
-    color: rgba(255, 255, 255, 0.87);
-  }
-
-  > p {
-    font-weight: 400;
-    font-size: 14px;
-    line-height: 17px;
-    color: rgba(255, 255, 255, 0.6);
   }
 `
 
@@ -400,60 +364,13 @@ const StyledBG = styled('div')`
     top: 0;
     left: 0;
   }
-
-  /* > div:nth-child(1) {
-    width: 414px;
-    height: 414px;
-    left: -60px;
-    top: 210px;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(237, 28, 81, 0.2) 0%, rgba(237, 28, 81, 0) 100%);
-  } */
-
-  /* > div:nth-child(2) {
-    width: 841px;
-    height: 841px;
-    top: 1510px;
-    left: -430px;
-    background: radial-gradient(50% 50% at 50% 50%, rgba(237, 28, 81, 0.2) 0%, rgba(237, 28, 81, 0) 100%);
-  } */
-
-  /* ${({ theme }) => theme.mediaQueries.lg} {
-    > div:nth-child(1) {
-      width: 607px;
-      height: 607px;
-      left: 860px;
-      top: initial;
-    }
-    > div:nth-child(2) {
-      width: 841px;
-      height: 841px;
-      top: 1510px;
-      left: -430px;
-    }
-  } */
 `
-
-interface IMember {
-  avatar: string
-  name: string
-  position: string
-}
 
 interface ISocial {
   icon: string
   name: string
   link: string
   heft: string
-}
-
-function CardMember({ member, ...props }: { member: IMember }) {
-  return (
-    <StyledCardMember {...props}>
-      <img src={member.avatar} alt="" draggable="false" loading="lazy" />
-      <h4>{member.name}</h4>
-      <p>{member.position}</p>
-    </StyledCardMember>
-  )
 }
 
 export function CardSocial({ social, ...props }: { social: ISocial }) {
@@ -513,19 +430,7 @@ export function BTNLearnMore() {
 
 export default function CompanyPage() {
   const { t } = useTranslation()
-
-  const MEMBERS: Array<IMember> = [
-    { avatar: '/images/company/Livan G.M.png', name: 'Livan G.M', position: t('Chief Operating Officer') },
-    { avatar: '/images/company/Zayn.png', name: 'Zayn', position: t('Chief Marketing Officer') },
-    { avatar: '/images/company/Marcos.png', name: 'Marcos', position: t('Chief Legal Officer') },
-    { avatar: '/images/company/Edward.png', name: 'Edward', position: t('Lead Designer') },
-    { avatar: '/images/company/Ralph Edwards.png', name: 'Ralph Edwards', position: t('SC Developer') },
-    { avatar: '/images/company/Floyd Miles.png', name: 'Floyd Miles', position: t('Front-end Developer') },
-    { avatar: '/images/company/Albert Flores.png', name: 'Albert Flores', position: t('Front-end Developer') },
-    { avatar: '/images/company/Eleanor Pena.png', name: 'Eleanor Pena', position: t('Back-end Developer') },
-    { avatar: '/images/company/Ronald Richards.png', name: 'Ronald Richards', position: t('Tester') },
-    { avatar: '/images/company/Courtney Henry.png', name: 'Courtney Henry', position: t('Project Manager') },
-  ]
+  const { width } = useWindowSize()
 
   const SOCIALS: Array<ISocial> = [
     { icon: '/images/company/1.svg', name: t('XOX Dex V1'), link: t('Trade Now'), heft: '/swap' },
@@ -595,11 +500,8 @@ export default function CompanyPage() {
           </p>
         </StyledSectionText>
 
-        <StyledMembers marginBottom={[64, null, null, 100]}>
-          {MEMBERS.map((member, i) => (
-            <CardMember member={member} key={String(i + member.name)} />
-          ))}
-        </StyledMembers>
+        {width < 968 && <MenberMobile />}
+        {!(width < 968) && <MenberPC />}
 
         <StyledTitle>{t('XOX Labs Ecosystem Products')}</StyledTitle>
         <StyledSubtitle style={{ marginBottom: 48 }}>

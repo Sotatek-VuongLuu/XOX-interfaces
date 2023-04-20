@@ -53,7 +53,7 @@ const RightContent = styled.div`
 
   .title_list_item {
     font-weight: 400;
-    font-size: 18px;
+    font-size: 16px;
     margin-left: 16px;
     color: rgba(255, 255, 255, 0.6);
     line-height: 32px;
