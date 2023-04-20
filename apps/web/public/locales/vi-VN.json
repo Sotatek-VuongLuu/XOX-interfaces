@@ -2601,5 +2601,8 @@
   "In the XOX Dex V1. Only applicable for <span class='hl'>XOX-USDT</span> and <span class='hl'>XOX-USDC</span> pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.": "Trong XOX DEX V1. Chỉ áp dụng cho cặp <span class='hl'>XOX-USDT</span> và <span class='hl'>XOX-USDC</span>. 10% được trả lại cho người mua dưới dạng XOXS - đồng tiền ổn định gửi lãi, vì vậy phí mua vẫn là 0% vì 1 XOXS = $ 1.",
   "Get %symbol_buy%": "Mua %symbol_buy%",
   "Business Analyst": "Chuyên viên phân tích nghiệp vụ",
-  "Quality Control": "Chuyên viên kiểm thử"
+  "Quality Control": "Chuyên viên kiểm thử",
+  "Lead BE Developer": "Trưởng nhóm phát triển BE",
+  "Lead FE Developer": "Trưởng nhóm phát triển giao diện người dùng",
+  "Operation Developer": "Lập trình viên hệ thống"
 }

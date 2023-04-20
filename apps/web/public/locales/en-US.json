@@ -2601,5 +2601,8 @@
   "In the XOX Dex V1. Only applicable for <span class='hl'>XOX-USDT</span> and <span class='hl'>XOX-USDC</span> pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.": "In the XOX Dex V1. Only applicable for <span class='hl'>XOX-USDT</span> and <span class='hl'>XOX-USDC</span> pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.",
   "Get %symbol_buy%": "Get %symbol_buy%",
   "Business Analyst": "Business Analyst",
-  "Quality Control": "Quality Control"
+  "Quality Control": "Quality Control",
+  "Lead FE Developer": "Lead FE Developer",
+  "Lead BE Developer": "Lead BE Developer",
+  "Operation Developer": "Operation Developer"
 }
