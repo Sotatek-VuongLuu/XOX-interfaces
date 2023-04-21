@@ -7,7 +7,6 @@ const Wrapper = styled.div`
   position: relative;
   width: 100%;
   height: 100%;
-  min-height: 500px;
 
   .buttons {
     display: flex;
@@ -123,6 +122,15 @@ const Wrapper = styled.div`
     @media screen and (max-width: 457px) {
       width: 314px;
     }
+  }
+
+  @media screen and (min-width: 560px) and (max-width: 900px) {
+    min-height: 500px;
+  }
+
+  @media screen and (max-width: 560px) {
+    min-height: 330px;
+    margin-top: 30px;
   }
 `
 
