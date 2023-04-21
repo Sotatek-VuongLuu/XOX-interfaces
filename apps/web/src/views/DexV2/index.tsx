@@ -1592,6 +1592,7 @@ function DevV2() {
   useEffect(() => {
     const textHeaders = document.querySelectorAll('.text-header div')
     textHeaders.forEach((e) => {
+      // eslint-disable-next-line no-param-reassign
       e.innerHTML = (e.textContent || '').replace(/\S/g, "<div class='letter'>$&</div>")
     })
 

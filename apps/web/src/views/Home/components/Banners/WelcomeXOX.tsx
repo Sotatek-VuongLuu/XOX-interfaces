@@ -647,7 +647,7 @@ const WelcomeXOX = (): JSX.Element => {
   //   console.log(browser.version)
   //   console.log(browser.os)
   // }
-  useEffect(() => {}, [])
+  // useEffect(() => {}, [])
 
   return (
     <Wrapper>
