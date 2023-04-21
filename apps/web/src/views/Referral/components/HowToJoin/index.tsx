@@ -63,6 +63,10 @@ const Wrapper = styled.div`
       color: #ffffff;
       margin-bottom: 8px;
       cursor: pointer;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
 
     button svg {
@@ -92,10 +96,9 @@ const Wrapper = styled.div`
 
     .react-player {
       border-radius: 10px;
+      border: 4px solid #ffffff;
       overflow: hidden;
       .react-player__preview {
-        border: 4px solid #ffffff;
-        border-radius: 10px;
         .react-player__shadow {
           background: #ffffff !important;
           .react-player__play-icon {
