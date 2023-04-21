@@ -204,7 +204,7 @@ const FeaturePlant = () => {
             </Title>
             <Paragraph style={{ margin: '24px 0' }}>
               {t(
-                "The XOX Multi-chain Dapp is designed to offer user-friendly solutions to our users and XOX holders and users. We are continuously working on enhancing our Dapp's functionalities to make it a comprehensive one-stop solution for crypto traders. Our current features include:",
+                "The XOX Multi-chain Dapp is designed to offer user-friendly solutions to our XOX holders and users. We are continuously working on enhancing our Dapp's functionalities to make it a comprehensive one-stop solution for crypto traders. Our current features include:",
               )}
             </Paragraph>
 
