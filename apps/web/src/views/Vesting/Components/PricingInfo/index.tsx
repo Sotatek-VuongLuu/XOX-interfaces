@@ -473,7 +473,7 @@ function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, set
           <Table>
             <Text className="table-header_col" />
             <Text className="table-header_col">{t('Round')}</Text>
-            <Text className="table-header_col">{t('XOX Coins')}</Text>
+            <Text className="table-header_col">{t('XOX Tokens')}</Text>
             <Text className="table-header_col">{t('Price')}</Text>
             {width > 900 && <Text className="table-header_col">{t('XOXS Bonus')}</Text>}
             {width <= 900 && <Text className="table-header_col"> {t('Bonus')}</Text>}
