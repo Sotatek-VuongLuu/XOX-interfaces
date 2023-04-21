@@ -445,7 +445,6 @@ export default function SwapForm() {
             </>
           )}
         </AutoColumn>
-        <Text mb="12px">{t('For each trade a %amount%% fee is paid', { amount: 100 })}</Text>
         {hasStableSwapAlternative && (
           <AutoColumn>
             <Message variant="warning" my="16px">
