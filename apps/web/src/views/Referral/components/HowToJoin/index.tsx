@@ -13,26 +13,19 @@ const Wrapper = styled.div`
     flex-direction: row;
     justify-content: space-evenly;
     align-items: flex-start;
-    position: relative;
     margin-top: 32px;
-
-    &:before {
-      content: '';
-      display: block;
-      width: 100%;
-      height: 2px;
-      background: #d9d9d9;
-      opacity: 0.3;
-      position: absolute;
-      top: 14px;
-      left: 0;
-    }
 
     & > div {
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 30%;
+      position: relative;
+      z-index: 1;
+    }
+
+    & > div.active {
+      z-index: 0;
     }
 
     span {
@@ -66,6 +59,33 @@ const Wrapper = styled.div`
       display: flex;
       justify-content: center;
       align-items: center;
+      position: relative;
+    }
+
+    & > div.active button:before {
+      content: '';
+      display: block;
+      width: 1920px;
+      height: 2px;
+      background: #d9d9d9;
+      opacity: 0.3;
+      position: absolute;
+      top: 14px;
+      right: calc(100% + 4px);
+      z-index: 1;
+    }
+
+    & > div.active button:after {
+      content: '';
+      display: block;
+      width: 1920px;
+      height: 2px;
+      background: #d9d9d9;
+      opacity: 0.3;
+      position: absolute;
+      top: 14px;
+      left: calc(100% + 4px);
+      z-index: 1;
     }
 
     button svg {
@@ -78,13 +98,12 @@ const Wrapper = styled.div`
 
   .container_video {
     margin: auto;
-    padding: 7px;
-    border-radius: 20px;
-    width: 660px;
+    width: fit-content;
     position: absolute;
     transform: translate(-50%, -50%);
     top: 50%;
     left: 50%;
+    overflow: hidden;
 
     .player-wrapper {
       position: relative;
@@ -231,15 +250,15 @@ const HowToJoin = (): JSX.Element => {
           </div>
         )}
         <div className="buttons">
-          <div>
+          <div className={currentVideo === 1 ? 'active' : 'inactive'}>
             <button onClick={() => setCurrentVideo(1)}>1{currentVideo === 1 && RoundIcon}</button>
             <span>Connect Wallet</span>
           </div>
-          <div>
+          <div className={currentVideo === 2 ? 'active' : 'inactive'}>
             <button onClick={() => setCurrentVideo(2)}>2{currentVideo === 2 && RoundIcon}</button>
             <span>Share Ref Code</span>
           </div>
-          <div>
+          <div className={currentVideo === 3 ? 'active' : 'inactive'}>
             <button onClick={() => setCurrentVideo(3)}>3{currentVideo === 3 && RoundIcon}</button>
             <span>Use Ref Code and Claim</span>
           </div>
