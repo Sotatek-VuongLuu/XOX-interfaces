@@ -32,16 +32,15 @@ import { XOXLP } from '@pancakeswap/tokens'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
-import Dots from 'components/Loader/Dots'
 import { linkTransaction } from 'views/BridgeToken'
 import BigNumber from 'bignumber.js'
+import GalaxyMobileIcon from 'components/Svg/galaxy.svg'
+import GalaxyIcon from 'components/Svg/galaxy-desktop.svg'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
 import { Content } from './components/style'
 import ShowBalance from './components/ShowBalance'
-import GalaxyIcon from 'components/Svg/galaxy-desktop.svg'
-import GalaxyMobileIcon from 'components/Svg/galaxy.svg'
 
 const NavWrapper = styled(Flex)`
   padding: 28px 0px 24px;
@@ -154,30 +153,6 @@ const Banner = styled.div`
     color: #000000;
     opacity: 1 !important;
   }
-      /* border-left: 1px solid #b809b5;
-    border-top: none;
-    border-right: 1px solid #ffb000;
-    border-bottom: none;
-    &:before {
-      content: '';
-      display: block;
-      width: calc(100% - 16px);
-      height: 1px;
-      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-      position: absolute;
-      top: 0;
-      left: 8px;
-    }
-    &:after {
-      content: '';
-      display: block;
-      width: calc(100% - 16px);
-      height: 1px;
-      background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-      position: absolute;
-      bottom: 0;
-      left: 8px;
-    } */
       .top-left {
       position: absolute;
       top: 0;
@@ -324,7 +299,11 @@ const Banner = styled.div`
   }
 `
 
-const Main = styled.div`
+interface IMain {
+  userStaked?: boolean
+}
+
+const Main = styled.div<IMain>`
   width: 100%;
   a:hover {
     text-decoration: underline;
@@ -641,9 +620,14 @@ const Main = styled.div`
       }
 
       .group_btn_stake {
+        ${({ userStaked }) =>
+          userStaked
+            ? `
         display: grid;
         grid-template-columns: 1fr 1fr;
         gap: 16px;
+        `
+            : ``}
         margin-top: 16px;
         width: 100%;
         .container_unstake_border {
@@ -796,12 +780,15 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const [loadOk, setLoadOk] = useState(false)
   const addressFarming = getContractFarmingLPAddress(chainId)
   const { nodeId } = useContext(Context)
-  const [approvalState, approveCallback] = useApproveCallback(
-    XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
-    getContractFarmingLPAddress(chainId),
-  )
   const { toastError, toastWarning, toastSuccess } = useToast()
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
+  const [approvalState, approveCallback] = useApproveCallback(
+    XOX_LP[chainId] && tryParseAmount(String(amount), XOXLP[chainId]),
+    getContractFarmingLPAddress(chainId),
+  )
+  const handleApprove = useCallback(async () => {
+    await approveCallback()
+  }, [approveCallback])
 
   const handleGetDataFarming = async () => {
     try {
@@ -1065,6 +1052,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       handleConfirm={handleConfirmDeposit}
       amount={amount}
       setAmount={setAmount}
+      approvalState={approvalState}
+      approvalSubmitted={approvalSubmitted}
+      handleApprove={handleApprove}
     />,
     true,
     true,
@@ -1084,10 +1074,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     true,
     'ModalUnStake',
   )
-
-  const handleApprove = useCallback(async () => {
-    await approveCallback()
-  }, [approveCallback])
 
   useEffect(() => {
     setAmount('')
@@ -1143,29 +1129,17 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   target="_blank"
                   rel="noreferrer"
                 >
-                  <Button className="get-xox">
-                    {/* <div className="top-left"></div>
-                    <div className="top-right"></div>
-                    <div className="bottom-left"></div>
-                    <div className="bottom-right"></div> */}
-                    {t('Get %sym%', { sym: 'LP Token' })}
-                  </Button>
+                  <Button className="get-xox">{t('Get %sym%', { sym: 'LP Token' })}</Button>
                 </a>
                 <a href="/whitepaper" target="_blank" rel="noreferrer">
-                  <Button className="learn-more">
-                    {/* <div className="top-left"></div>
-                    <div className="top-right"></div>
-                    <div className="bottom-left"></div>
-                    <div className="bottom-right"></div> */}
-                    {t('Learn More')}
-                  </Button>
+                  <Button className="learn-more">{t('Learn More')}</Button>
                 </a>
               </Flex>
             </Banner>
           </NavWrapper>
 
           <NavWrapper>
-            <Main>
+            <Main userStaked={Boolean(userStaked) && Boolean(account)}>
               <div className="content_container">
                 <div className="corner1" />
                 <div className="edge1" />
@@ -1343,44 +1317,31 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div>
                     <div className="rectangle enable_farm">
                       <p className="current_XOX_reward">
-                        {approvalState === ApprovalState.APPROVED
-                          ? userStaked
-                            ? t('%asset% Staked', {
-                                asset: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
-                              })
-                            : t('Stake %symbol%', {
-                                symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
-                              })
-                          : t('Enable Farm')}
+                        {userStaked && account
+                          ? t('%asset% Staked', {
+                              asset: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+                            })
+                          : t('Stake %symbol%', {
+                              symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+                            })}
                       </p>
-                      {approvalState === ApprovalState.APPROVED && userStaked && (
+                      {userStaked && account && (
                         <div style={{ width: '100%', marginTop: 16 }}>
                           <ShowBalance balance={userStaked} />
                         </div>
                       )}
-                      {approvalState !== ApprovalState.APPROVED ? (
-                        account ? (
-                          <CustomButton
-                            type="button"
-                            className="nable mt"
-                            onClick={handleApprove}
-                            disabled={approvalState !== ApprovalState.NOT_APPROVED || approvalSubmitted}
-                          >
-                            {approvalState === ApprovalState.PENDING || approvalSubmitted ? (
-                              <Dots>{t('Enabling')}</Dots>
-                            ) : (
-                              t('Enable')
-                            )}
-                          </CustomButton>
-                        ) : (
+
+                      {!account && (
+                        <div className="group_btn_stake">
                           <CustomButton type="button" className="nable mt" onClick={handleClick}>
                             {t('Connect Wallet')}
                           </CustomButton>
-                        )
-                      ) : approvalState === ApprovalState.APPROVED && userStaked ? (
+                        </div>
+                      )}
+
+                      {account && (
                         <div className="group_btn_stake">
-                          {approvalState === ApprovalState.APPROVED && userStaked && (
-                            // eslint-disable-next-line jsx-a11y/interactive-supports-focus, jsx-a11y/click-events-have-key-events
+                          {userStaked && (
                             <ButtonUnStake
                               className="container_unstake_border"
                               onClick={onModalUnStake}
@@ -1404,18 +1365,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             {t('Stake')}
                           </CustomButton>
                         </div>
-                      ) : (
-                        <CustomButton
-                          type="button"
-                          className="nable mt"
-                          onClick={() => {
-                            onModalStake()
-                            handleGetBalanceOfUser()
-                          }}
-                          disabled={!reserve || !totalSupplyLP}
-                        >
-                          {t('Stake')}
-                        </CustomButton>
                       )}
                     </div>
                   </div>

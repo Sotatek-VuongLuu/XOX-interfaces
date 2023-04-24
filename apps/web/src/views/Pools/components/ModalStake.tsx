@@ -13,6 +13,8 @@ import BigNumber from 'bignumber.js'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { NumericalInputStyled, ShowBalance } from './ModalUnStake'
 import { useTranslation } from '@pancakeswap/localization'
+import { ApprovalState } from 'hooks/useApproveCallback'
+import Dots from 'components/Loader/Dots'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -281,6 +283,9 @@ interface Props extends InjectedModalProps {
   handleConfirm?: any
   amount?: string
   setAmount?: any
+  approvalState?: any
+  approvalSubmitted?: any
+  handleApprove?: any
 }
 
 const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
@@ -291,6 +296,9 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   handleConfirm,
   amount,
   setAmount,
+  approvalState,
+  approvalSubmitted,
+  handleApprove,
 }) => {
   const { t } = useTranslation()
   const chainIdSupport = [97, 56]
@@ -300,6 +308,8 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   const [messageError, setMessageError] = useState('')
   const [amountUSD, setAmountUSD] = useState<any>()
   const [amountActive, setAmountActive] = useState<any>(null)
+  const isNotApproved = approvalState !== ApprovalState.APPROVED
+  const isNotAmountInput = amount === '' || Number(amount) === 0 || amount === '.'
 
   const handleButtonClick = () => {
     handleConfirm()
@@ -429,22 +439,32 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
               })}
             </div>
           </ContentStake>
-
           {messageError && <p className="mes_error">{messageError}</p>}
           <ButtonGroup>
             <button type="button" className="btn cancel" onClick={onDismiss}>
               {t('Cancel')}
             </button>
-            <CustomButton
-              type="button"
-              className="btn confirm"
-              disabled={
-                amount === '' || Number(amount) === 0 || amount === '.' || Number(balanceLP) === 0 || !!messageError
-              }
-              onClick={handleButtonClick}
-            >
-              {t('Confirm')}
-            </CustomButton>
+
+            {!isNotAmountInput && isNotApproved ? (
+              <CustomButton type="button" className="btn confirm" onClick={handleApprove} disabled={approvalSubmitted}>
+                {approvalState === ApprovalState.PENDING || approvalSubmitted ? (
+                  <Dots>{t('Enabling')}</Dots>
+                ) : (
+                  t('Enable')
+                )}
+              </CustomButton>
+            ) : (
+              <CustomButton
+                type="button"
+                className="btn confirm"
+                disabled={
+                  amount === '' || Number(amount) === 0 || amount === '.' || Number(balanceLP) === 0 || !!messageError
+                }
+                onClick={handleButtonClick}
+              >
+                {t('Confirm')}
+              </CustomButton>
+            )}
           </ButtonGroup>
           <GetLP className="get_lp">
             <a
