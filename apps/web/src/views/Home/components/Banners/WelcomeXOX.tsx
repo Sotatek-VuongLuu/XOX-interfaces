@@ -221,16 +221,25 @@ const LeftContent = styled.div`
     grid-column-gap: 26px;
     grid-row-gap: 0px;
 
+    .get_xox_link {
+      display: block;
+      height: 100%;
+    }
+
     .get_xox {
       border-radius: 12px;
       cursor: pointer;
+      height: 100%;
 
       .boxed-child {
         width: 100%;
         background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
-        padding: 17px 0px;
         border-radius: inherit;
         text-align: center;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
 
         span {
           -webkit-background-clip: text;
@@ -676,6 +685,7 @@ const WelcomeXOX = (): JSX.Element => {
                     href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
                     target="_blank"
                     rel="noreferrer"
+                    className="get_xox_link"
                   >
                     <div className="get_xox">
                       <div className="boxed-child">

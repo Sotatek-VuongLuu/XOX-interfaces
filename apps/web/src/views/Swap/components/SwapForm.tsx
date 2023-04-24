@@ -111,7 +111,6 @@ export default function SwapForm() {
   const [codeRef, setCodeRef] = useState('')
   // for expert mode
   const [isExpertMode] = useExpertModeManager()
-
   // get custom setting values for user
   const [allowedSlippage] = useUserSlippageTolerance()
   const { targetRef, tooltip, tooltipVisible } = useTooltip(

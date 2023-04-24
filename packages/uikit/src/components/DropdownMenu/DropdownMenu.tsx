@@ -148,7 +148,7 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
           const MenuItemContent = (
             <>
               {icon && createElement(icon as any)}
-              {label}
+              <span>{label}</span>
               {status && (
                 <LinkStatus textTransform="uppercase" color={status.color} fontSize="14px">
                   {status.text}
