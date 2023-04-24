@@ -1,4 +1,4 @@
-import { useCallback, useMemo, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import styled from 'styled-components'
 import { Contract } from '@ethersproject/contracts'
 import { TransactionResponse } from '@ethersproject/providers'
@@ -402,6 +402,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
   // txn values
   const deadline = useTransactionDeadline()
   const [allowedSlippage] = useUserSlippageTolerance()
+  const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
 
   const formattedAmounts = {
     [Field.LIQUIDITY_PERCENT]: parsedAmounts[Field.LIQUIDITY_PERCENT].equalTo('0')
@@ -839,6 +840,15 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     'removeLiquidityModal',
   )
 
+  useEffect(() => {
+    if (approval === ApprovalState.PENDING) {
+      setApprovalSubmitted(true)
+    }
+    if (approval === ApprovalState.APPROVED) {
+      setApprovalSubmitted(false)
+    }
+  }, [approval, approvalSubmitted])
+
   return (
     <Page>
       {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
@@ -1162,12 +1172,16 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                           : 'primary'
                       }
                       onClick={isZap ? approveCallback : onAttemptToApprove}
-                      disabled={approval !== ApprovalState.NOT_APPROVED || (!isZap && signatureData !== null)}
+                      disabled={
+                        approval !== ApprovalState.NOT_APPROVED ||
+                        (!isZap && signatureData !== null) ||
+                        approvalSubmitted
+                      }
                       width="100%"
                       mr={['0', , '0.5rem']}
                       style={{ fontWeight: 700 }}
                     >
-                      {approval === ApprovalState.PENDING ? (
+                      {approval === ApprovalState.PENDING || approvalSubmitted ? (
                         <Dots>{t('Approving')}</Dots>
                       ) : approval === ApprovalState.APPROVED || (!isZap && signatureData !== null) ? (
                         t('Approved')
