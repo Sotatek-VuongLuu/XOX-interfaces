@@ -388,8 +388,6 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
     }
   }
 
-  console.log(`approvalState`, approvalState)
-
   return (
     <>
       <StyledModalContainer>

@@ -787,8 +787,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     getContractFarmingLPAddress(chainId),
   )
 
-  console.log(`String(amount)`, String(amount))
-
   const handleApprove = useCallback(async () => {
     await approveCallback()
   }, [approveCallback])
@@ -1091,7 +1089,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    // if (loadOk) window.location.reload()
+    if (loadOk) window.location.reload()
     setLoadOk(true)
     const id = setInterval(() => {
       handleGetDataFarming()
