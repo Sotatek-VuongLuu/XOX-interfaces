@@ -110,7 +110,7 @@ function MenberPC() {
   const MEMBERS_ONE: Array<IMember> = [
     { avatar: '/images/company/Livan G.M.png', name: 'Livan G.M', position: t('Chief Executive Officer') },
     { avatar: '/images/company/Zayn.png', name: 'Zayn', position: t('Chief Marketing Officer') },
-    { avatar: '/images/company/Marcos.png', name: 'Marcos', position: t('Chief Legal Officer') },
+    { avatar: '/images/company/Marcos.png', name: 'Marcos N.', position: t('Chief Legal Officer') },
     { avatar: '/images/company/Edward.png', name: 'Edward', position: t('Lead Designer') },
     { avatar: '/images/company/Kane Nguyen.png', name: 'Kane Nguyen', position: t('Project Manager') },
   ]
