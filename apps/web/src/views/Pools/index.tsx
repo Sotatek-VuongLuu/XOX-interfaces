@@ -778,7 +778,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const [reserve, setReserve] = useState<any>()
   const { chainId } = useActiveChainId()
   const { account } = useActiveWeb3React()
-  const [enable, setEnable] = useState(false)
   const { width } = useWindowSize()
   const chainIdSupport = [97, 56]
   const contractFarmingLP = useContractFarmingLP()
@@ -796,14 +795,13 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const [notiMess, setNotiMess] = useState('')
   const [loadOk, setLoadOk] = useState(false)
   const addressFarming = getContractFarmingLPAddress(chainId)
-  const [pendingApprove, setPendingApprove] = useState(false)
   const { nodeId } = useContext(Context)
-  const [isLoadingApproval, setIsLoadingApproval] = useState(false)
   const [approvalState, approveCallback] = useApproveCallback(
     XOX_LP[chainId] && tryParseAmount('0.01', XOXLP[chainId]),
     getContractFarmingLPAddress(chainId),
   )
   const { toastError, toastWarning, toastSuccess } = useToast()
+  const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
 
   const handleGetDataFarming = async () => {
     try {
@@ -1012,7 +1010,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     try {
       setNotiMess(
         t('Stake %amount% %symbol%', {
-          amount: amount,
+          amount,
           symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
         }),
       )
@@ -1089,8 +1087,6 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleApprove = useCallback(async () => {
     await approveCallback()
-    setPendingApprove(true)
-    setIsLoadingApproval(true)
   }, [approveCallback])
 
   useEffect(() => {
@@ -1106,7 +1102,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   useEffect(() => {
     if (!account || !chainId) return
-    // if (loadOk) window.location.reload()
+    if (loadOk) window.location.reload()
     setLoadOk(true)
     const id = setInterval(() => {
       handleGetDataFarming()
@@ -1118,14 +1114,10 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   }, [chainId, account])
 
   useEffect(() => {
-    if (approvalState === ApprovalState.APPROVED) {
-      setPendingApprove(false)
-      setEnable(true)
-      setIsLoadingApproval(false)
-    } else {
-      setEnable(false)
+    if (approvalState === ApprovalState.PENDING) {
+      setApprovalSubmitted(true)
     }
-  }, [approvalState, account, chainId])
+  }, [approvalState, approvalSubmitted])
 
   return (
     <>
@@ -1351,7 +1343,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                   <div>
                     <div className="rectangle enable_farm">
                       <p className="current_XOX_reward">
-                        {enable
+                        {approvalState === ApprovalState.APPROVED
                           ? userStaked
                             ? t('%asset% Staked', {
                                 asset: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
@@ -1361,29 +1353,33 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                               })
                           : t('Enable Farm')}
                       </p>
-                      {enable && userStaked && (
+                      {approvalState === ApprovalState.APPROVED && userStaked && (
                         <div style={{ width: '100%', marginTop: 16 }}>
                           <ShowBalance balance={userStaked} />
                         </div>
                       )}
-                      {!enable ? (
+                      {approvalState !== ApprovalState.APPROVED ? (
                         account ? (
                           <CustomButton
                             type="button"
                             className="nable mt"
                             onClick={handleApprove}
-                            disabled={pendingApprove}
+                            disabled={approvalState !== ApprovalState.NOT_APPROVED || approvalSubmitted}
                           >
-                            {isLoadingApproval ? <Dots>{t('Enabling')}</Dots> : t('Enable')}
+                            {approvalState === ApprovalState.PENDING || approvalSubmitted ? (
+                              <Dots>{t('Enabling')}</Dots>
+                            ) : (
+                              t('Enable')
+                            )}
                           </CustomButton>
                         ) : (
                           <CustomButton type="button" className="nable mt" onClick={handleClick}>
                             {t('Connect Wallet')}
                           </CustomButton>
                         )
-                      ) : enable && userStaked ? (
+                      ) : approvalState === ApprovalState.APPROVED && userStaked ? (
                         <div className="group_btn_stake">
-                          {enable && userStaked && (
+                          {approvalState === ApprovalState.APPROVED && userStaked && (
                             // eslint-disable-next-line jsx-a11y/interactive-supports-focus, jsx-a11y/click-events-have-key-events
                             <ButtonUnStake
                               className="container_unstake_border"
