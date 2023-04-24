@@ -340,24 +340,24 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   const handlePercent = (item: string) => {
     switch (item) {
       case '25%':
-        setAmount(parseFloat(new BigNumber(balanceLP).multipliedBy(0.25).toFixed(14).toString()))
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.25).toFixed(14).toString())
         setAmountActive({
           ...amountActive,
-          '25%': parseFloat(new BigNumber(balanceLP).multipliedBy(0.25).toFixed(14).toString()),
+          '25%': new BigNumber(balanceLP).multipliedBy(0.25).toFixed(14).toString(),
         })
         break
       case '50%':
-        setAmount(parseFloat(new BigNumber(balanceLP).multipliedBy(0.5).toFixed(14).toString()))
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.5).toFixed(14).toString())
         setAmountActive({
           ...amountActive,
-          '50%': parseFloat(new BigNumber(balanceLP).multipliedBy(0.5).toFixed(14).toString()),
+          '50%': new BigNumber(balanceLP).multipliedBy(0.5).toFixed(14).toString(),
         })
         break
       case '75%':
-        setAmount(parseFloat(new BigNumber(balanceLP).multipliedBy(0.75).toFixed(14).toString()))
+        setAmount(new BigNumber(balanceLP).multipliedBy(0.75).toFixed(14).toString())
         setAmountActive({
           ...amountActive,
-          '75%': parseFloat(new BigNumber(balanceLP).multipliedBy(0.75).toFixed(14).toString()),
+          '75%': new BigNumber(balanceLP).multipliedBy(0.75).toFixed(14).toString(),
         })
         break
       case 'Max':
