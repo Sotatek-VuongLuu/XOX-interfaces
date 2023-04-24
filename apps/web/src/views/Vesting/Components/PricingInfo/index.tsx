@@ -11,54 +11,7 @@ const Wrapper = styled.div`
   width: 100%;
   position: relative;
   z-index: 1;
-
-  .corner1 {
-    position: absolute;
-    left: 0;
-    width: 40px;
-    height: 100%;
-    border-radius: 20px;
-    z-index: 99;
-    border-bottom: 1px solid #b809b5;
-    border-top: 1px solid #b809b5;
-    border-left: 1px solid #b809b5;
-    border-bottom-right-radius: unset;
-    border-top-right-radius: unset;
-  }
-
-  .edge1 {
-    position: absolute;
-    top: 0;
-    left: 40px;
-    z-index: 99;
-    height: 1px;
-    width: calc(100% - 80px);
-    background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
-  }
-
-  .corner2 {
-    position: absolute;
-    right: 0;
-    width: 40px;
-    height: 100%;
-    border-radius: 20px;
-    z-index: 99;
-    border-bottom: 1px solid #ffb000;
-    border-top: 1px solid #ffb000;
-    border-right: 1px solid #ffb000;
-    border-bottom-left-radius: unset;
-    border-top-left-radius: unset;
-  }
-
-  .edge2 {
-    position: absolute;
-    bottom: 0;
-    left: 40px;
-    z-index: 99;
-    height: 1px;
-    width: calc(100% - 80px);
-    background: linear-gradient(95.32deg, #b809b5, #ed1c51, #ffb000);
-  }
+  backdrop-filter: blur(10px);
 
   .btn_group {
     width: 100%;
@@ -147,6 +100,21 @@ const Content = styled.div`
   backdrop-filter: blur(10px);
   border-radius: 20px;
   padding: 28px 18px;
+
+  &:before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    z-index: -1;
+  }
 
   .title {
     text-align: center;
@@ -463,10 +431,6 @@ function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, set
 
   return (
     <Wrapper>
-      <div className="corner1" />
-      <div className="edge1" />
-      <div className="corner2" />
-      <div className="edge2" />
       <Content>
         <p className="title">{t('ROUNDS AND PRICING INFORMATION')}</p>
         <CustomTableWrapper>

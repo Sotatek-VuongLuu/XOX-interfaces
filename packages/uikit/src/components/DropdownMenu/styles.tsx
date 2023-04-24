@@ -42,6 +42,17 @@ export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $i
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
+    display: block;
+    height: 48px;
+    padding: 10px 16px;
+    position: relative;
+
+    svg {
+      width: 19px;
+      position: relative;
+      transform: translateY(-50%);
+      top: 50%;
+    }
   }
 
   svg {
