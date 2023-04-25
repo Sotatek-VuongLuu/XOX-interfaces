@@ -436,7 +436,7 @@ export default function CompanyPage() {
     { icon: '/images/company/1.svg', name: t('XOX Dex V1'), link: t('Trade Now'), heft: '/swap' },
     { icon: '/images/company/2.svg', name: t('Referral Program'), link: t('Earn Now'), heft: '/referral' },
     { icon: '/images/company/3.svg', name: t('Bridge'), link: t('Bridge Now'), heft: '/bridge-token' },
-    { icon: '/images/company/4.svg', name: t('Check Now'), link: t('Stake Now'), heft: '/stable-coin' },
+    { icon: '/images/company/4.svg', name: t('Stable Coin'), link: t('Stake Now'), heft: '/stable-coin' },
     { icon: '/images/company/5.svg', name: t('Liquidity Mining'), link: t('Earn Now'), heft: '/liquidity' },
     { icon: '/images/company/6.svg', name: t('Yield farming'), link: t('Earn Now'), heft: '/pools' },
     { icon: '/images/company/7.svg', name: t('Assets Manager'), link: t('Explore Now'), heft: '/info' },

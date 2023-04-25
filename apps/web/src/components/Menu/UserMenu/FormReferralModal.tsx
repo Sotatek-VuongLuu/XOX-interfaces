@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux'
 import { AppState, useAppDispatch } from 'state'
 import { updateOpenFormReferral, updateUserProfile, updateUserProfileEdit } from 'state/user/actions'
 import { useRouter } from 'next/router'
-import useAuth from 'hooks/useAuth'
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -203,7 +202,6 @@ const FormReferralModal = (_, ref) => {
   const { data: signer } = useSigner()
   const { address: account } = useAccount()
   const [isSaveable, setSaveable] = useState(false)
-  const { logout } = useAuth()
 
   const { toastSuccess } = useToast()
 

@@ -219,6 +219,16 @@ const StyledTable = styled.div`
         justify-content: space-between;
         width: 100%;
         padding: 8px 0;
+
+        .no-item {
+          color: rgba(255, 255, 255, 0.87);
+          font-size: 14px;
+          font-weight: 400;
+          font-family: 'Inter';
+          text-align: center;
+          width: 100%;
+        }
+
         /* .row-item:first-child {
           width: 40%;
         } */
@@ -243,6 +253,13 @@ const StyledTable = styled.div`
           }
         }
       }
+    }
+  }
+
+  @media screen and (max-width: 786px) {
+    .table .table-row .row .no-item {
+      text-align: left;
+      margin-left: 20px;
     }
   }
 `
@@ -410,42 +427,48 @@ const PlatformStat = (props: IPropsItem): JSX.Element => {
               <p style={{ width: '20%' }}>{t('Claimed Amount')}</p>
             </div>
             <div className="table-row">
-              {[...userClaimHistories].map((row, index) => (
-                <div className="row" key={`${row.name}_${index}`}>
-                  <div className="row-item" style={{ width: '5%' }}>
-                    <p className="point">{index + 1}</p>
-                  </div>
-                  <div className="row-item" style={{ width: '30%' }}>
-                    <Avatar
-                      alt="Remy Sharp"
-                      src={row.avatar}
-                      sx={{ marginRight: '8px', height: '24px', width: '24px' }}
-                    />
-                    <Tooltip title={row?.name}>
-                      <p className="name">
-                        {row.name?.length > 9
-                          ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
-                          : row.name}
-                      </p>
-                    </Tooltip>
-                  </div>
-                  <div className="row-item" style={{ width: '25%' }}>
-                    <p className="code">{row.time}</p>
-                  </div>
+              {userClaimHistories.length > 0 ? (
+                [...userClaimHistories].map((row, index) => (
+                  <div className="row" key={`${row.name}_${index}`}>
+                    <div className="row-item" style={{ width: '5%' }}>
+                      <p className="point">{index + 1}</p>
+                    </div>
+                    <div className="row-item" style={{ width: '30%' }}>
+                      <Avatar
+                        alt="Remy Sharp"
+                        src={row.avatar}
+                        sx={{ marginRight: '8px', height: '24px', width: '24px' }}
+                      />
+                      <Tooltip title={row?.name}>
+                        <p className="name">
+                          {row.name?.length > 9
+                            ? `${row.name.substring(0, 7)}...${row.name.substring(row.name.length - 2)}`
+                            : row.name}
+                        </p>
+                      </Tooltip>
+                    </div>
+                    <div className="row-item" style={{ width: '25%' }}>
+                      <p className="code">{row.time}</p>
+                    </div>
 
-                  <div className="row-item" style={{ width: '20%' }}>
-                    <p className="point">{t('%num% points', { num: formatAmountNumber2(Number(row.point)) })}</p>
+                    <div className="row-item" style={{ width: '20%' }}>
+                      <p className="point">{t('%num% points', { num: formatAmountNumber2(Number(row.point)) })}</p>
+                    </div>
+                    <div className="row-item" style={{ width: '20%' }}>
+                      <p className="point">
+                        $
+                        {formatAmountNumber2(
+                          Number(new BigNumber(row.claim).multipliedBy(100).div(99).toFixed(0, BigNumber.ROUND_DOWN)),
+                        )}
+                      </p>
+                    </div>
                   </div>
-                  <div className="row-item" style={{ width: '20%' }}>
-                    <p className="point">
-                      $
-                      {formatAmountNumber2(
-                        Number(new BigNumber(row.claim).multipliedBy(100).div(99).toFixed(0, BigNumber.ROUND_DOWN)),
-                      )}
-                    </p>
-                  </div>
+                ))
+              ) : (
+                <div className="row">
+                  <div className="no-item">{t('No Transactions')}</div>
                 </div>
-              ))}
+              )}
             </div>
           </div>
         </StyledTable>
