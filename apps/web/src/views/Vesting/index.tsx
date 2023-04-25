@@ -1105,8 +1105,6 @@ function VestingPage() {
     }
   }, [approvalState, approvalSubmitted])
 
-  console.log(`approvalState`, approvalState)
-
   useEffect(() => {
     handleGetTotalTokenInvested(currentRound)
     // eslint-disable-next-line react-hooks/exhaustive-deps

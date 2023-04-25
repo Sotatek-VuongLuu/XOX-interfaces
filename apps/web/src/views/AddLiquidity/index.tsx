@@ -390,12 +390,15 @@ export default function AddLiquidity({ currencyA, currencyB }) {
       ? ROUTER_ADDRESS[chainId]
       : ROUTER_XOX[chainId],
   )
+  const [approvalSubmittedA, setApprovalSubmittedA] = useState<boolean>(false)
+
   const [approvalB, approveBCallback] = useApproveCallback(
     parsedAmounts[Field.CURRENCY_B],
     currencies[Field.CURRENCY_A]?.symbol === native.symbol || currencies[Field.CURRENCY_B]?.symbol === native.symbol
       ? ROUTER_ADDRESS[chainId]
       : ROUTER_XOX[chainId],
   )
+  const [approvalSubmittedB, setApprovalSubmittedB] = useState<boolean>(false)
 
   const addTransaction = useTransactionAdder()
 
@@ -754,6 +757,24 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   const showZapIsAvailable = false
 
+  useEffect(() => {
+    if (approvalA === ApprovalState.PENDING) {
+      setApprovalSubmittedA(true)
+    }
+    if (approvalA === ApprovalState.APPROVED) {
+      setApprovalSubmittedA(false)
+    }
+  }, [approvalA, approvalSubmittedA])
+
+  useEffect(() => {
+    if (approvalB === ApprovalState.PENDING) {
+      setApprovalSubmittedB(true)
+    }
+    if (approvalB === ApprovalState.APPROVED) {
+      setApprovalSubmittedB(false)
+    }
+  }, [approvalB, approvalSubmittedB])
+
   return (
     <Page>
       {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
@@ -1051,12 +1072,12 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                           {showFieldAApproval && (
                             <Button
                               onClick={approveACallback}
-                              disabled={approvalA === ApprovalState.PENDING}
+                              disabled={approvalA !== ApprovalState.NOT_APPROVED || approvalSubmittedA}
                               width="100%"
                               height={43}
                               className="btn"
                             >
-                              {approvalA === ApprovalState.PENDING ? (
+                              {approvalA === ApprovalState.PENDING || approvalSubmittedA ? (
                                 <Dots>{t('Enabling %asset%', { asset: currencies[Field.CURRENCY_A]?.symbol })}</Dots>
                               ) : (
                                 t('Enable %asset%', { asset: currencies[Field.CURRENCY_A]?.symbol })
@@ -1066,12 +1087,12 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                           {showFieldBApproval && (
                             <Button
                               onClick={approveBCallback}
-                              disabled={approvalB === ApprovalState.PENDING}
+                              disabled={approvalB !== ApprovalState.NOT_APPROVED || approvalSubmittedB}
                               width="100%"
                               height={43}
                               className="btn"
                             >
-                              {approvalB === ApprovalState.PENDING ? (
+                              {approvalB === ApprovalState.PENDING || approvalSubmittedB ? (
                                 <Dots>{t('Enabling %asset%', { asset: currencies[Field.CURRENCY_B]?.symbol })}</Dots>
                               ) : (
                                 t('Enable %asset%', { asset: currencies[Field.CURRENCY_B]?.symbol })
