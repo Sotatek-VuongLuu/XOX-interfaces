@@ -24,6 +24,7 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
+import NotificationHandle from 'components/NotificationBannerHandler'
 import { Blocklist, Updaters } from '..'
 import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
@@ -91,10 +92,7 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
         />
         <meta name="theme-color" content="#1FC7D4" />
         <meta name="twitter:image" content="https://xoxnet.io/images/hero.png" />
-        <meta
-          name="twitter:description"
-          content="Earn XOX through yield farming or win it in the Lottery."
-        />
+        <meta name="twitter:description" content="Earn XOX through yield farming or win it in the Lottery." />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="XOX - A next evolution DeFi exchange on BNB Smart Chain (BSC)" />
         <meta name="theme-color" content="#000" />
