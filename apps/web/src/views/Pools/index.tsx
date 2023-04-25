@@ -398,16 +398,6 @@ const Main = styled.div<IMain>`
           font-size: 14px;
           line-height: 17px;
           color: rgba(255, 255, 255, 0.87);
-          /* text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          max-width: 100px; */
-        }
-        .liquidity {
-          /* text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          max-width: 100px; */
         }
         .flex_direction {
           flex-direction: column;
@@ -491,11 +481,6 @@ const Main = styled.div<IMain>`
           font-size: 20px;
           line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
-          /* margin-top: 16px; */
-          /* text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          max-width: 130px; */
           @media screen and (max-width: 576px) {
             font-size: 18px;
             line-height: 22px;
@@ -506,11 +491,6 @@ const Main = styled.div<IMain>`
           font-size: 20px;
           line-height: 24px;
           color: rgba(255, 255, 255, 0.87);
-          /* margin-top: 16px; */
-          /* text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          max-width: 100px; */
           @media screen and (max-width: 576px) {
             font-size: 18px;
             line-height: 22px;
@@ -603,10 +583,6 @@ const Main = styled.div<IMain>`
         font-size: 20px;
         line-height: 24px;
         color: rgba(255, 255, 255, 0.87);
-        /* text-overflow: ellipsis;
-        white-space: nowrap;
-        overflow: hidden;
-        max-width: 100px; */
       }
       .u_question {
         margin-left: 9px;
@@ -667,30 +643,12 @@ const Main = styled.div<IMain>`
           font-size: 14px;
           line-height: 17px;
           color: rgba(255, 255, 255, 0.87);
-          /* text-overflow: ellipsis;
-          white-space: nowrap;
-          overflow: hidden;
-          max-width: 100px; */
         }
       }
     }
     @media screen and (max-width: 576px) {
       width: 100%;
     }
-  }
-`
-
-const MainBackground = styled.div`
-  position: absolute;
-  z-index: -1;
-  top: -50px;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  svg {
-    width: 100vw;
-    /* height: auto; */
-    object-fit: cover;
   }
 `
 
@@ -1104,11 +1062,13 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     if (approvalState === ApprovalState.PENDING) {
       setApprovalSubmitted(true)
     }
+    if (approvalState === ApprovalState.APPROVED) {
+      setApprovalSubmitted(false)
+    }
   }, [approvalState, approvalSubmitted])
 
   return (
     <>
-      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <Container>
         <div className="content">
           <NavWrapper>

@@ -531,11 +531,15 @@ function ModalSaleExchange({
           paddingLeft={width <= 900 ? 0 : 19}
           marginTop={width <= 900 ? 16 : 48}
         >
-          {isSwap ? (
+          {Boolean(amount) && isSwap ? (
             <Button
               className="buy_xox"
               onClick={handleApprove}
-              disabled={approvalState !== ApprovalState.NOT_APPROVED || approvalSubmitted}
+              disabled={
+                approvalState !== ApprovalState.NOT_APPROVED ||
+                approvalSubmitted ||
+                massageErrorAmount === 'Insufficient balance'
+              }
             >
               {approvalState === ApprovalState.PENDING || approvalSubmitted ? (
                 <AutoRow justifyContent="center" gap="8px">
@@ -544,6 +548,8 @@ function ModalSaleExchange({
                 </AutoRow>
               ) : approvalState === ApprovalState.APPROVED ? (
                 t('Approved')
+              ) : massageErrorAmount === 'Insufficient balance' ? (
+                t('Buy XOX')
               ) : (
                 t('Approve %symbol%', { symbol: 'USDT' })
               )}

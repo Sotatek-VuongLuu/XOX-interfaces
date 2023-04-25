@@ -456,7 +456,7 @@ function VestingPage() {
   const [lanchTime, setLanchTime] = useState<number | null>(null)
 
   const [approvalState, approveCallback] = useApproveCallback(
-    USDT[ChainId.GOERLI] && tryParseAmount('0.01', USDT_GOERLI),
+    USDT[ChainId.GOERLI] && tryParseAmount(String(amount), USDT_GOERLI),
     getContractPreSaleAddress(5),
   )
   const [dataRef, setDataRef] = useState<IRefInfo[]>(initialRefInfo)
@@ -1100,7 +1100,12 @@ function VestingPage() {
     if (approvalState === ApprovalState.PENDING) {
       setApprovalSubmitted(true)
     }
+    if (approvalState === ApprovalState.APPROVED) {
+      setApprovalSubmitted(false)
+    }
   }, [approvalState, approvalSubmitted])
+
+  console.log(`approvalState`, approvalState)
 
   useEffect(() => {
     handleGetTotalTokenInvested(currentRound)

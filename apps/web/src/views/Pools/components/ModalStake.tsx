@@ -11,10 +11,10 @@ import { parseEther } from '@ethersproject/units'
 import { Tooltip } from '@mui/material'
 import BigNumber from 'bignumber.js'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
-import { NumericalInputStyled, ShowBalance } from './ModalUnStake'
 import { useTranslation } from '@pancakeswap/localization'
 import { ApprovalState } from 'hooks/useApproveCallback'
 import Dots from 'components/Loader/Dots'
+import { NumericalInputStyled, ShowBalance } from './ModalUnStake'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -334,7 +334,6 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
           balanceLP &&
           parseEther(Number(amount).toFixed(18)).gt(parseEther(Number(balanceLP).toFixed(18)))
         ) {
-          setMessageError(`Insuficient Your ${chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} Balance`)
           setMessageError(
             t('Insuficient Your %symbol% Balance', {
               symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC',
@@ -381,12 +380,16 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
         break
       case 'Max':
         setAmount(balanceLP)
-        setAmountActive({ ...amountActive, MAX: balanceLP })
+        setAmountActive({ ...amountActive, Max: balanceLP })
         break
       default:
         break
     }
   }
+
+  const isNotAllowApprove = messageError.includes('Insuficient') || messageError.includes('No tokens')
+
+  console.log(`amountActive`, amountActive)
 
   return (
     <>
@@ -446,9 +449,21 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
             </button>
 
             {!isNotAmountInput && isNotApproved ? (
-              <CustomButton type="button" className="btn confirm" onClick={handleApprove} disabled={approvalSubmitted}>
+              <CustomButton
+                type="button"
+                className="btn confirm"
+                onClick={handleApprove}
+                disabled={
+                  approvalState !== ApprovalState.NOT_APPROVED ||
+                  approvalSubmitted ||
+                  messageError.includes('Insuficient') ||
+                  messageError.includes('No tokens')
+                }
+              >
                 {approvalState === ApprovalState.PENDING || approvalSubmitted ? (
                   <Dots>{t('Enabling')}</Dots>
+                ) : isNotAllowApprove ? (
+                  t('Confirm')
                 ) : (
                   t('Enable')
                 )}

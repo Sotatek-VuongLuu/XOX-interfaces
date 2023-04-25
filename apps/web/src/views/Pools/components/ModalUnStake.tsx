@@ -362,7 +362,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
         break
       case 'Max':
         setAmount(balanceLP)
-        setAmountActive({ ...amountActive, MAX: balanceLP })
+        setAmountActive({ ...amountActive, Max: balanceLP })
         break
       default:
         break

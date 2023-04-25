@@ -506,7 +506,7 @@ function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, set
                 onModalExchangeSale()
                 setTypeBuyPrice(TYPE_BY.BY_ERC20)
               }}
-              disabled={!isInTimeRangeSale}
+              // disabled={!isInTimeRangeSale}
             >
               {t('Buy with USDT')}
             </CustomButton>
