@@ -55,8 +55,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     id: 1,
     name: '$20K in XOX Tokens Airdrop + 20K XOXS Giveaway is Live!',
     discription: 'Total Prize $40,000',
-    start: 0,
-    end: 0,
+    start: currentTimestamp(),
+    end: 1682508561,
   },
   { id: 2, name: 'How to invest in Pre-sale.', discription: 'Step-by-Step Tutorial.', start: 0, end: 0 },
   {
@@ -70,8 +70,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     id: 4,
     name: 'Pre-sale is Coming!',
     discription: '$130k Raised on Seed-sale. Min.entry: 50 USDT',
-    start: currentTimestamp(),
-    end: 1682422804,
+    start: 0,
+    end: 0,
   },
   {
     id: 5,

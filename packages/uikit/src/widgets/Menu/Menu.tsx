@@ -115,13 +115,13 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   children,
   isLanding = false,
 }) => {
-  const { isMobile } = useMatchBreakpoints();
+  const { isMobile, isTablet } = useMatchBreakpoints();
   const isMounted = useIsMounted();
   const [showMenu, setShowMenu] = useState(true);
   const [windowSize, setWindowSize] = useState(0);
   const refPrevOffset = useRef(typeof window === "undefined" ? 0 : window.pageYOffset);
 
-  const topBannerHeight = isMobile ? TOP_BANNER_HEIGHT_MOBILE : TOP_BANNER_HEIGHT;
+  const topBannerHeight = isMobile || isTablet ? TOP_BANNER_HEIGHT_MOBILE : TOP_BANNER_HEIGHT;
 
   const totalTopMenuHeight = isMounted && banner ? MENU_HEIGHT + topBannerHeight : MENU_HEIGHT;
 
