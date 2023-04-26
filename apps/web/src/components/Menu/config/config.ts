@@ -21,6 +21,8 @@ import DexIcon from 'components/Svg/DexIcon'
 import MobileIcon from 'components/Svg/MobileIcon'
 import LaunchpadIcon from 'components/Svg/LaunchpadIcon'
 import RankingIcon from 'components/Svg/RankingIcon'
+import EnglishIcon from 'components/Svg/EnglishIcon'
+import VietNamIcon from 'components/Svg/VietNamIcon'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean; showTooltip?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -168,7 +170,20 @@ export const configLanding: (
       icon: WhitepaperIcon,
       fillIcon: SwapFillIcon,
       showItemsOnMobile: false,
-      items: [],
+      items: [
+        {
+          label: t('English'),
+          href: '#',
+          icon: EnglishIcon,
+          fillIcon: EnglishIcon,
+        },
+        {
+          label: t('Vietnamese'),
+          icon: VietNamIcon,
+          fillIcon: VietNamIcon,
+          href: '#',
+        },
+      ].map((item) => addMenuItemSupported(item, chainId)),
     },
     {
       label: t('Company'),
@@ -228,6 +243,13 @@ export const configLanding: (
           icon: StableCoinIcon,
           fillIcon: StableCoinIcon,
           href: '/stable-coin',
+        },
+        {
+          label: t('Lottery Game'),
+          icon: MobileIcon,
+          fillIcon: '',
+          href: '#',
+          showTooltip: true,
         },
         {
           label: t('XOX Dex V2'),
