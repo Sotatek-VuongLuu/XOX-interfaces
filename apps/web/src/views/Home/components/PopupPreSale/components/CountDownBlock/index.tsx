@@ -202,29 +202,44 @@ function CountDownBlock({
   setisReachWhitelist,
 }: IProps) {
   const modalElement = document.getElementById('modal-root')
-  const [isOpenedModal, setOpenedModal] = useState(false)
+  const [isShowModal, setShowModal] = useState(false)
+  const [presaleStatus, setPresaleStatus] = useState({})
 
   const handleOnClose = () => {
-    setOpenedModal(true)
-    localStorage.setItem(
-      'opened-popup-presale',
-      JSON.stringify({
-        round1: true,
-        round2: true,
-        round3: true,
-      }),
-    )
+    setShowModal(false)
+    const temp = {
+      roundOneClickedCloseBtn: currentRound >= 1 ? true : false,
+      roundTwoClickedCloseBtn: currentRound >= 2 ? true : false,
+      roundThreeClickedCloseBtn: currentRound >= 3 ? true : false,
+    }
+    localStorage.setItem('popup-presale-status', JSON.stringify(temp))
   }
 
   useEffect(() => {
-    const opened = localStorage.getItem('opened-popup-presale')
-    if (!opened) {
-      setOpenedModal(true)
+    const temp = localStorage.getItem('popup-presale-status')
+    if (!temp) return setShowModal(true)
+
+    const status = JSON.parse(temp) || {
+      roundOneClickedCloseBtn: currentRound === 1 && isInTimeRangeSale ? false : true,
+      roundTwoClickedCloseBtn: currentRound === 2 && isInTimeRangeSale ? false : true,
+      roundThreeClickedCloseBtn: currentRound === 3 && isInTimeRangeSale ? false : true,
     }
-  }, [])
+    setPresaleStatus(status)
+    switch (currentRound) {
+      case 1:
+        if (!status.roundOneClickedCloseBtn && isInTimeRangeSale) return setShowModal(true)
+        return setShowModal(false)
+      case 2:
+        if (!status.roundTwoClickedCloseBtn && isInTimeRangeSale) return setShowModal(true)
+        return setShowModal(false)
+      default:
+        if (!status.roundThreeClickedCloseBtn && isInTimeRangeSale) return setShowModal(true)
+        return setShowModal(false)
+    }
+  }, [isInTimeRangeSale])
 
   return createPortal(
-    isOpenedModal ? null : (
+    isShowModal ? (
       <ModalStyle>
         <div className="layout-blur" onClick={() => handleOnClose()} />
         <BorderWrapper>
@@ -236,30 +251,16 @@ function CountDownBlock({
             <BackgroundImageMobile className="mobile" />
 
             <Content>
-              <PricingInfo currentRound={1} isInTimeRangeSale={true} typeBuyPrice={typeBuyPrice} />
+              <PricingInfo
+                currentRound={currentRound}
+                isInTimeRangeSale={isInTimeRangeSale}
+                typeBuyPrice={typeBuyPrice}
+              />
               <StartingSoon
-                currentRound={1}
-                infoRoundOne={{
-                  totalDistribution: 10_000_000,
-                  startDate: 1682399206816,
-                  endDate: 1682499206816,
-                  bonusPercentage: 10,
-                  exchangeRate: 1.0,
-                }}
-                infoRoundTow={{
-                  totalDistribution: 10_000_000,
-                  startDate: 1682599206816,
-                  endDate: 1682699206816,
-                  bonusPercentage: 10,
-                  exchangeRate: 1.0,
-                }}
-                infoRoundThree={{
-                  totalDistribution: 10_000_000,
-                  startDate: 1682799206816,
-                  endDate: 1682899206816,
-                  bonusPercentage: 10,
-                  exchangeRate: 1.0,
-                }}
+                currentRound={currentRound}
+                infoRoundOne={infoRoundOne}
+                infoRoundTow={infoRoundTow}
+                infoRoundThree={infoRoundThree}
                 totalXOXTokenInRound={totalXOXTokenInRound}
                 isInTimeRangeSale={isInTimeRangeSale}
                 reacheZero={reacheZero}
@@ -271,7 +272,7 @@ function CountDownBlock({
           </Wrapper>
         </BorderWrapper>
       </ModalStyle>
-    ),
+    ) : null,
     modalElement,
   )
 }

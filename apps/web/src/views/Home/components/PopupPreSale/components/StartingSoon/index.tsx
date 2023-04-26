@@ -162,10 +162,10 @@ function StartingSoon({
         return (
           <>
             <p className="percent_sale">
-              {`${Number(0.55).toFixed(2)}%`} {t('SOLD')}
+              {`${Number(percent).toFixed(2)}%`} {t('SOLD')}
             </p>
             <div className="processing">
-              <div className="processing_child" style={{ width: `${Number(55.55).toFixed(2)}%` }} />
+              <div className="processing_child" style={{ width: `${Number(percent).toFixed(2)}%` }} />
             </div>
           </>
         )

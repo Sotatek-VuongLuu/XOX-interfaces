@@ -268,7 +268,7 @@ const listItem = [
     link: linkWhitepaper,
   },
   {
-    title: 'XOX Multi-chain Launchpad',
+    title: 'XOX Multi-Chain Launchpad',
     describe: "XOX Labs is committed to developing the best web3 multi-chain launchpad in the market. With extensive research on over 50 launchpads, we'll provide seamless and secure access to profitable ICOs, fair launches, and pre-sales. Setting the industry standard and maximizing returns for investors.",
     link: linkWhitepaper,
   },
