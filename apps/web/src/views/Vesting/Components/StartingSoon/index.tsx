@@ -58,6 +58,7 @@ const Wrapper = styled.div`
     background: transparent;
     box-shadow: 0px 4px 20px rgba(255, 112, 31, 0.5);
     border-radius: 20px;
+    overflow: hidden;
   }
 
   .processing_child {

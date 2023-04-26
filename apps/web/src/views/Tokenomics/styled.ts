@@ -483,9 +483,8 @@ export const StyledAddress = styled('div')`
   }
 
   > a {
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    text-align: center;
+    padding: 10px 0;
     position: relative;
     min-width: 86px;
 
