@@ -203,28 +203,25 @@ function CountDownBlock({
 }: IProps) {
   const modalElement = document.getElementById('modal-root')
   const [isShowModal, setShowModal] = useState(false)
-  const [presaleStatus, setPresaleStatus] = useState({})
 
   const handleOnClose = () => {
     setShowModal(false)
-    const temp = {
+    const presaleStatus = {
       roundOneClickedCloseBtn: currentRound >= 1 ? true : false,
       roundTwoClickedCloseBtn: currentRound >= 2 ? true : false,
       roundThreeClickedCloseBtn: currentRound >= 3 ? true : false,
     }
-    localStorage.setItem('popup-presale-status', JSON.stringify(temp))
+    localStorage.setItem('popup-presale-status', JSON.stringify(presaleStatus))
   }
 
   useEffect(() => {
     const temp = localStorage.getItem('popup-presale-status')
-    if (!temp) return setShowModal(true)
-
     const status = JSON.parse(temp) || {
       roundOneClickedCloseBtn: currentRound === 1 && isInTimeRangeSale ? false : true,
       roundTwoClickedCloseBtn: currentRound === 2 && isInTimeRangeSale ? false : true,
       roundThreeClickedCloseBtn: currentRound === 3 && isInTimeRangeSale ? false : true,
     }
-    setPresaleStatus(status)
+
     switch (currentRound) {
       case 1:
         if (!status.roundOneClickedCloseBtn && isInTimeRangeSale) return setShowModal(true)
