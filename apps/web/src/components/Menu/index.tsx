@@ -29,6 +29,9 @@ import { useMenuItems } from './hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { configLanding } from './config/config'
+import { useSelector } from 'react-redux'
+import { AppState } from 'state'
+import { useAirdropBannerManager } from 'state/user/hooks'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;

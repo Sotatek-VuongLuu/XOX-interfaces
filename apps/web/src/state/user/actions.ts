@@ -13,8 +13,8 @@ export interface UserProfile {
   telegram?: string | null
   avatar?: string | null
   referralCode?: string
-  createdAt?: string;
-  updatedAt?: string;
+  createdAt?: string
+  updatedAt?: string
 }
 
 export enum FarmStakedOnly {
@@ -80,9 +80,11 @@ export const updateGasPrice = createAction<{ gasPrice: string }>('user/updateGas
 
 export const addWatchlistToken = createAction<{ address: string }>('user/addWatchlistToken')
 export const addWatchlistPool = createAction<{ address: string }>('user/addWatchlistPool')
-
 export const hidePhishingWarningBanner = createAction<void>('user/hidePhishingWarningBanner')
-
+export const showBannerAirdrop = createAction<void>('user/showBannerAirdrop')
+export const hideBannerAirdrop = createAction<void>('user/hideBannerAirdrop')
+export const showBannerChains = createAction<void>('user/showBannerChains')
+export const hideBannerChains = createAction<void>('user/hideBannerChains')
 export const setIsExchangeChartDisplayed = createAction<boolean>('user/toggleIsExchangeChartDisplayed')
 export const setChartViewMode = createAction<ChartViewMode>('user/setChartViewMode')
 export const setZapDisabled = createAction<boolean>('user/setZapDisabled')
