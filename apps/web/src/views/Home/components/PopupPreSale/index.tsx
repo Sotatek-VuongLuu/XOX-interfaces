@@ -426,7 +426,7 @@ function VestingPage() {
   const [referralError, setReferralError] = useState(null)
   const [dataWhitelist, setDataWhitelist] = useState<IDataWhitelist[]>([])
   const [dataForInfo, setDataForInfo] = useState<IYourInfo[]>(initialYourInfo)
-  const { account, chainId } = useActiveWeb3React()
+  const { account } = useActiveWeb3React()
   const [typeBuyPrice, setTypeBuyPrice] = useState<number | null>(null)
   const [amount, setAmount] = useState<string>('')
   const [currentRound, setCurrentRound] = useState<number | null>(0)
@@ -440,6 +440,8 @@ function VestingPage() {
   const { toastSuccess, toastError } = useToast()
   const [totalXOXTokenInRound, setTotalXOXTokenInRound] = useState<number | string | null>(0)
   const { nodeId } = useContext(Context)
+
+  const chainId = process.env.NEXT_PUBLIC_TEST_MODE === '1' ? 5 : 1
 
   const contractPreSale = !account
     ? process.env.NODE_ENV === 'production'
@@ -506,7 +508,6 @@ function VestingPage() {
   const [availableXOXForSale, setAvailableXOXForSale] = useState<number>(XOXMAXSALE1)
 
   const handleGetTotalXOXOfUserInRound = async (acc: string, curRound: number) => {
-    if (chainId === 97 || chainId === 56) return
     try {
       const result = await contractPreSale.userInvestedAmount(acc, curRound)
       const formatNumber = new BigNumber(formatEther(result._hex)).toNumber()
@@ -532,7 +533,6 @@ function VestingPage() {
 
   const handleGetInfoRound = async () => {
     try {
-      if (chainId === 97 || chainId === 56) return
       const [dataROne, dataRTwo, dataRThree, launchTime] = await Promise.all([
         contractPreSale.saleRound(ROUND.ONE),
         contractPreSale.saleRound(ROUND.TWO),
@@ -572,8 +572,6 @@ function VestingPage() {
 
   const handleGetCurrentRound = async (time: any) => {
     try {
-      if (chainId === 97 || chainId === 56) return
-
       if (infoRoundOne.startDate && infoRoundOne.startDate <= time) {
         setCurrentRound(1)
       }
@@ -759,7 +757,6 @@ function VestingPage() {
   }
 
   const handleGetDataVesting = async () => {
-    if (chainId === 97 || chainId === 56) return
     const dataClone: IVestingTime[] = [...vestingTiming]
     const round = [1, 2, 3]
 
@@ -792,7 +789,6 @@ function VestingPage() {
   }
 
   const handleGetTotalTokenInvested = async (round: number) => {
-    if (chainId === 97 || chainId === 56) return
     try {
       const data = await contractPreSale.totalRoundInvested(round)
       if (data) {

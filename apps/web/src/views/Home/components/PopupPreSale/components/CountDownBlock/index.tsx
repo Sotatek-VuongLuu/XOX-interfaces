@@ -222,6 +222,7 @@ function CountDownBlock({
       roundThreeClickedCloseBtn: currentRound === 3 && isInTimeRangeSale ? false : true,
     }
 
+    console.log(currentRound, status, isInTimeRangeSale, 'currentRound')
     switch (currentRound) {
       case 1:
         if (!status.roundOneClickedCloseBtn && isInTimeRangeSale) return setShowModal(true)
