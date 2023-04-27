@@ -34,6 +34,7 @@ export const DropdownMenuItem = styled.button<StyledDropdownMenuItemProps & { $i
 
   &.submenu {
     color: rgba(255, 255, 255, 0.87);
+    width: 170px;
   }
 
   &.text-gradient {
@@ -84,7 +85,8 @@ export const StyledDropdownMenu = styled.div<{ $isOpen: boolean; $isBottomNav: b
   border-radius: 6px;
   pointer-events: auto;
   margin-bottom: 0;
-  width: ${({ $isBottomNav, $isLanding }) => ($isBottomNav ? "100%" : $isLanding ? "515px" : "160px")};
+  width: fit-content;
+  /* width: ${({ $isBottomNav, $isLanding }) => ($isBottomNav ? "100%" : $isLanding ? "515px" : "160px")}; */
   visibility: visible;
   z-index: 1001;
   display: grid;

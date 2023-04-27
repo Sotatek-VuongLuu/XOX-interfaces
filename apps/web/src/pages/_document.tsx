@@ -58,6 +58,7 @@ class MyDocument extends Document {
           <NextScript />
           <div id="portal-root" />
           <div id="modal-root" />
+          <div id="modal-popup-presale" />
         </body>
       </Html>
     )

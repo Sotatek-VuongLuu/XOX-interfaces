@@ -26,6 +26,7 @@ import BGBlockchain from './components/Banners/BackgroundBlockchain'
 import FeatureSquare from './components/Banners/FeatureSquare'
 import Subscription from './components/Banners/Subscription'
 import SupportedBlockchains from './components/Banners/SupportedBlockchains'
+import PopupPreSale from './components/PopupPreSale'
 
 export const StyledSection = styled(PageSection)`
   padding-top: 16px;
@@ -129,6 +130,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
           <Subscription />
         </div>
       </StyledSection>
+      <PopupPreSale />
     </>
   )
 }

@@ -2596,7 +2596,7 @@
   "Follow @Xox_Labs on Twitter for ecosystem news & updates. Stay informed.": "Follow @Xox_Labs on Twitter for ecosystem news & updates. Stay informed.",
   "Token Received": "Token Received",
   "Token Sent": "Token Sent",
-  "Total value of the funds in this farm’s liquidity pair": "Total value of the funds in this farm’s liquidity pair",
+"Total value of the funds in this farm’s liquidity pair": "Total value of the funds in this farm’s liquidity pair",
   "Get %sym%": "Get %sym%",
   "In the XOX Dex V1. Only applicable for <span class='hl'>XOX-USDT</span> and <span class='hl'>XOX-USDC</span> pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.": "In the XOX Dex V1. Only applicable for <span class='hl'>XOX-USDT</span> and <span class='hl'>XOX-USDC</span> pairs. The 10% is given back to the buyers in the form of XOXS which is the staking currency, so it is still a 0% Buy Tax since 1 XOXS = $1.",
   "Get %symbol_buy%": "Get %symbol_buy%",
@@ -2605,5 +2605,8 @@
   "Lead FE Developer": "Lead FE Developer",
   "Lead BE Developer": "Lead BE Developer",
   "Operation Developer": "Operation Developer",
-  "Enter the code to get XOXS rewards (for you and for referrer)": "Enter the code to get XOXS rewards (for you and for referrer)"
+  "Enter the code to get XOXS rewards (for you and for referrer)": "Enter the code to get XOXS rewards (for you and for referrer)",
+  "XOX Token Pre-Sale <br/> is Live.": "XOX Token Pre-Sale <br/> is Live.",
+  "Get Involved!": "Get Involved!",
+  "Certik": "Certik"
 }

@@ -2260,7 +2260,7 @@
   "Assets/Portfolio Tracker": "Tài sản/Trình theo dõi danh mục đầu tư",
   "Liquidity Farming": "Thanh khoản",
   "Gamified Referral Program": "Chương trình giới thiệu được trò chơi hóa",
-  "The XOX Gamified Referral Program is a unique incentive system that rewards both referees and referrers with USDT/USDC points for successful referrals. The program is designed to boost community engagement through gamification, with different levels and milestones that unlock greater rewards. By participating in our referral program, users can earn passive income while supporting the growth of the XOX Labs ecosystem.": "Chương trình Giới thiệu tích hợp trò chơi với kiếm lời của XOX là một hệ thống độc đáo, thưởng USDT/USDC cho cả người giới thiệu và người được giới thiệu với những lượt giới thiệu thành công. Chương trình được thiết kế để tăng cường tương tác cộng đồng thông qua các trò chơi ứng dụng hóa, với các cấp độ và mốc thời gian khác nhau để mở khóa phần thưởng lớn hơn. Bằng cách tham gia chương trình giới thiệu của chúng tôi, người dùng có thể kiếm thu nhập thụ động trong khi hỗ trợ sự phát triển của hệ sinh thái XOX Labs.",
+  "The XOX Gamified Referral Program is a unique incentive system that rewards both referees and referrers with USDT/USDC points for successful referrals. The program is designed to boost community engagement through gamification, with different levels and milestones that unlock greater rewards. By participating in our referral program, users can earn passive income while supporting the growth of the XOX Labs ecosystem.": "Chương trình Giới thiệu tích hợp trò chơi với kiếm lời của XOX là một hệ thống độc đáo, thưởng USDT/USDC cho cả người giới thiệu và người được giới thiệu với những lượt giới thiệu thành công. Chương trình được thiết kế để tăng cường tương tác cộng đồng thông qua các trò chơi ứng dụng hóa, với các cấp độ và mốc thời gian khác nhau để mở khóa phần thưởng lớn hơn. Bằng cách tham gia chương trình giới thiệu của chúng tôi, người dùng có thể kiếm thu nhập thụ động đồng thời hỗ trợ sự phát triển của hệ sinh thái XOX Labs.",
   "Refer": "Tham khảo",
   "Earn Points": "Kiếm điểm",
   "Level Up": "Tăng cấp",
@@ -2454,7 +2454,7 @@
   "Total Volume": "Tổng khối lượng",
   "ROUNDS AND PRICING INFORMATION": "THÔNG TIN GIÁ CẢ VÀ CÁC ĐỢT BÁN",
   "XOX Tokens": "Đồng XOX",
-  "XOXS Bonus": "Phần thưởng XOXS",
+  "XOXS Bonus": "Thưởng XOXS",
   "Pre-sale is coming soon": "Đợt mở bán trước sắp bắt đầu",
   "Daily Raise": "Doanh thu bán XOX hàng ngày",
   "Incoming": "Sắp bắt đầu",
@@ -2591,8 +2591,8 @@
   "Launchpad": "Launchpad",
   "Coin Listing": "Coin niêm yết",
   "Subscribe to @XoxLabs to stay in the loop and updated.": "Đăng kí kênh Youtube @XoxLabs để biết cập nhật nhưng thông tin mới nhất về  XOXLabs",
-  "Join our channel to stay up-to-date with every news and updates.": "Hãy tham gia kênh Telegram của chúng tôi đển cập nhật những thông tin mới nhất",
-  "Follow @xox_labs on TikTok for the latest ecosystem news. Stay connected!": "Theo dõi @Xox_Labs trên TikTok đển cập nhật những thông tin mới nhất về  hệ sinh thái của chúng tôi. Hãy giữ kết nối!",
+  "Join our channel to stay up-to-date with every news and updates.": "Hãy tham gia kênh Telegram của chúng tôi để cập nhật những thông tin mới nhất",
+  "Follow @xox_labs on TikTok for the latest ecosystem news. Stay connected!": "Theo dõi @Xox_Labs trên TikTok để cập nhật những thông tin mới nhất về  hệ sinh thái của chúng tôi. Hãy giữ kết nối!",
   "Follow @Xox_Labs on Twitter for ecosystem news & updates. Stay informed.": "Theo dõi @Xox_Labs trên Twitter để cập nhật những thông tin mới nhất. Hãy luôn cập nhật thông tin.",
   "Token Received": "Số token đã nhận",
   "Token Sent": "Số token đã gửi",
@@ -2605,5 +2605,8 @@
   "Lead BE Developer": "Trưởng nhóm phát triển BE",
   "Lead FE Developer": "Trưởng nhóm phát triển giao diện người dùng",
   "Operation Developer": "Lập trình viên hệ thống",
-  "Enter the code to get XOXS rewards (for you and for referrer)": "Hãy nhập mã giới thiệu để nhận thưởng thêm XOXS (cho bạn và người giới thiệu)"
+  "Enter the code to get XOXS rewards (for you and for referrer)": "Hãy nhập mã giới thiệu để nhận thưởng thêm XOXS (cho bạn và người giới thiệu)",
+  "XOX Token Pre-Sale <br/> is Live.": "Đợt bán trước Token XOX <br/> đang diễn ra.",
+  "Get Involved!": "Hãy tham gia!",
+  "Certik": "Chứng nhận"
 }
