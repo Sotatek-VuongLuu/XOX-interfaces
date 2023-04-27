@@ -1,3 +1,4 @@
+import useWindowSize from 'hooks/useWindowSize'
 import { useAppDispatch } from 'state'
 import { hideBannerAirdrop } from 'state/user/actions'
 import styled from 'styled-components'
@@ -11,7 +12,11 @@ const Container = styled.div`
   right: 0;
   background: #000000;
   z-index: 100;
-
+  background-image: url(/images/AirdropBackgroundMobile.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   .line {
     height: 4px;
     width: 100%;
@@ -37,6 +42,9 @@ const Container = styled.div`
       }
     }
   }
+  ${({ theme }) => theme.mediaQueries.lg} {
+    background-image: url(/images/bannerBGAirdrop.png);
+  }
 `
 
 const InterOuter = styled.div`
@@ -46,8 +54,7 @@ const InterOuter = styled.div`
   > div:nth-child(2) {
     text-align: center;
     margin-bottom: 30px;
-    > h5,
-    h6 {
+    > h5 {
       font-weight: 700;
       font-size: 20px;
       line-height: 24px;
@@ -56,6 +63,10 @@ const InterOuter = styled.div`
     }
     > h6 {
       font-weight: 400 !important;
+      font-size: 14px;
+      line-height: 17px;
+      text-align: center;
+      color: #ffffff;
     }
     > p:nth-child(3) {
       margin-top: 17px;
@@ -107,6 +118,17 @@ const InterOuter = styled.div`
 
   ${({ theme }) => theme.mediaQueries.lg} {
     grid-template-columns: 1fr 1fr 1fr;
+
+    > div:nth-child(1) {
+      position: relative;
+      .airdrop {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -51%);
+      }
+    }
+
     > div:nth-child(2) {
       margin-bottom: 0px;
       > h5,
@@ -138,6 +160,7 @@ const InterOuter = styled.div`
 
 function NotificationBannerAirdrop() {
   const dispatch = useAppDispatch()
+  const { width } = useWindowSize()
 
   const hideBanner = () => {
     dispatch(hideBannerAirdrop())
@@ -148,7 +171,13 @@ function NotificationBannerAirdrop() {
         <div className="line" />
         <div className="outer">
           <InterOuter>
-            <div />
+            {width < 968 ? (
+              <div />
+            ) : (
+              <div>
+                <img src="/images/airdrop.png" alt="airdrop" className="airdrop" />
+              </div>
+            )}
             <div>
               <h5>$20K in XOX Tokens Airdrop + 20K XOXS Giveaway is Live!</h5>
               <h6>Total Prize $40,000</h6>

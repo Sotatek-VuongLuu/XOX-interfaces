@@ -10,6 +10,11 @@ const Container = styled.div`
   left: 0;
   right: 0;
   background: #000000;
+  background-image: url(/images/BlockchainsBGMobile.png);
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
   z-index: 100;
   .line {
     height: 4px;
@@ -73,6 +78,7 @@ const Container = styled.div`
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
+    background-image: url(/images/BGBannerChain.png);
     .outer {
       > p {
         font-size: 24px;
