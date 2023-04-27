@@ -1,4 +1,4 @@
-FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-loopx-base/node-16:latest
+FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16:latest
 RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
 
