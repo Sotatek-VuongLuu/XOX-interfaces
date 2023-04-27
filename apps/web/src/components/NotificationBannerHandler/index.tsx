@@ -11,6 +11,8 @@ interface ITimeLineArr {
   start: number
   end: number
   show?: boolean
+  btnText: string
+  href?: string
 }
 
 export function useNotificationHandle() {
@@ -43,7 +45,16 @@ export function useNotificationHandle() {
 
   if (bannerAllowed.length) {
     return bannerAllowed.map((item) => {
-      return <NotificationBanner title={item.name} description={item.discription} onRemove={onRemove} id={item.id} />
+      return (
+        <NotificationBanner
+          title={item.name}
+          description={item.discription}
+          onRemove={onRemove}
+          id={item.id}
+          btnText={item.btnText}
+          href={item.href}
+        />
+      )
     })
   }
 
@@ -55,14 +66,26 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     id: 1,
     name: '$20K in XOX Tokens Airdrop + 20K XOXS Giveaway is Live!',
     discription: 'Total Prize $40,000',
+    btnText: 'Participate Now',
+    href: '/#',
     start: currentTimestamp(),
     end: 1682508561,
   },
-  { id: 2, name: 'How to invest in Pre-sale.', discription: 'Step-by-Step Tutorial.', start: 0, end: 0 },
+  {
+    id: 2,
+    name: 'How to invest in Pre-sale.',
+    discription: 'Step-by-Step Tutorial.',
+    btnText: 'Watch Now',
+    href: '/#',
+    start: 0,
+    end: 0,
+  },
   {
     id: 3,
     name: 'Partners Sale is Live!',
     discription: '$130k Raised on Seed-sale. Min.entry: 20,000 USDT - 10% XOXS Bonus.',
+    btnText: 'Participate',
+    href: '/#',
     start: 0,
     end: 0,
   },
@@ -70,6 +93,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     id: 4,
     name: 'Pre-sale is Coming!',
     discription: '$130k Raised on Seed-sale. Min.entry: 50 USDT',
+    btnText: 'Learn More',
+    href: '/#',
     start: 0,
     end: 0,
   },
@@ -77,6 +102,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     id: 5,
     name: 'Pre-sale Round 1 is live',
     discription: '$130k Raised on Seed-sale. Min.entry: 50 USDT - 8% XOXS Bonus',
+    btnText: 'Participate',
+    href: '/vesting',
     start: 0,
     end: 0,
   },
@@ -84,6 +111,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     id: 6,
     name: 'Pre-sale Round 2 is live',
     discription: '$118k Raised on Round 1. Min.entry: 50 USDT - 6% XOXS Bonus',
+    btnText: 'Participate',
+    href: '/vesting',
     start: 0,
     end: 0,
   },
@@ -91,14 +120,26 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     id: 7,
     name: 'Pre-sale Round 3 is live',
     discription: '$162k Raised on Round 2. Min.entry: 50 USDT - 4% XOXS Bonus',
+    btnText: 'Participate',
+    href: '/vesting',
     start: 0,
     end: 0,
   },
-  { id: 8, name: 'Public ICO is Live!', discription: '$487k Raised on Pre-sales.', start: 0, end: 0 },
+  {
+    id: 8,
+    name: 'Public ICO is Live!',
+    discription: '$487k Raised on Pre-sales.',
+    btnText: 'Participate',
+    href: '/#',
+    start: 0,
+    end: 0,
+  },
   {
     id: 9,
     name: 'Public Launch Incoming!',
     discription: '$1,693,800 Already Raised. Launching on 6 chains (ETH,BSC,ARB,POLYGON,OPT,SOL)',
+    btnText: 'Learn More',
+    href: '/#',
     start: 0,
     end: 0,
   },
