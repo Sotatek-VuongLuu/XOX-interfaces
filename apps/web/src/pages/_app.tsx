@@ -211,7 +211,9 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
           <Component {...pageProps} />
         </Layout>
       </ShowMenu>
-      {true && ['/company', '/tokenomics', '/dex-v2', '/'].includes(route.pathname) && <NotificationBannerAirdrop />}
+      {isShowBannerAirdrop && ['/company', '/tokenomics', '/dex-v2', '/'].includes(route.pathname) && (
+        <NotificationBannerAirdrop />
+      )}
       {isShowBannerChains && ['/company', '/tokenomics', '/dex-v2', '/'].includes(route.pathname) && (
         <NotificationBannerChains />
       )}
