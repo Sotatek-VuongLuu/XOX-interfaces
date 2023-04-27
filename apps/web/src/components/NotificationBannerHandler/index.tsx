@@ -131,8 +131,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: '$487k Raised on Pre-sales.',
     btnText: 'Participate',
     href: '/#',
-    start: 1682569805,
-    end: 1682570045,
+    start: 1682578833,
+    end: 1682580033,
   },
   {
     id: 9,
