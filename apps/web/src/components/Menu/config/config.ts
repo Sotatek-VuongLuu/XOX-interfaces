@@ -23,6 +23,7 @@ import LaunchpadIcon from 'components/Svg/LaunchpadIcon'
 import RankingIcon from 'components/Svg/RankingIcon'
 import EnglishIcon from 'components/Svg/EnglishIcon'
 import VietNamIcon from 'components/Svg/VietNamIcon'
+import LotteryGame from 'components/Svg/LotteryGameIcon'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean; showTooltip?: boolean }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -246,7 +247,7 @@ export const configLanding: (
         },
         {
           label: t('Lottery Game'),
-          icon: MobileIcon,
+          icon: LotteryGame,
           fillIcon: '',
           href: '#',
           showTooltip: true,
