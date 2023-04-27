@@ -121,7 +121,9 @@ const InterOuter = styled.div`
 
     > div:nth-child(1) {
       position: relative;
-      .airdrop {
+      video {
+        width: 570px;
+        max-width: 570px;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -175,7 +177,20 @@ function NotificationBannerAirdrop() {
               <div />
             ) : (
               <div>
-                <img src="/images/airdrop.png" alt="airdrop" className="airdrop" />
+                <video
+                  autoPlay
+                  loop
+                  muted
+                  playsInline
+                  id="laptopVideo"
+                  controls={false}
+                  preload="yes"
+                  className=""
+                  style={{ pointerEvents: 'none' }}
+                >
+                  <source src="/videos/airdropPopup/PopupAir.mov" type='video/mp4; codecs="hvc1"' />
+                  <source src="/videos/airdropPopup/PopupAir.webm" type="video/webm" />
+                </video>
               </div>
             )}
             <div>
