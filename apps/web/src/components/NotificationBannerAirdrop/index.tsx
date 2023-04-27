@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
 import { useAppDispatch } from 'state'
 import { hideBannerAirdrop } from 'state/user/actions'
@@ -163,6 +164,7 @@ const InterOuter = styled.div`
 function NotificationBannerAirdrop() {
   const dispatch = useAppDispatch()
   const { width } = useWindowSize()
+  const { t } = useTranslation()
 
   const hideBanner = () => {
     dispatch(hideBannerAirdrop())
@@ -171,6 +173,7 @@ function NotificationBannerAirdrop() {
     <>
       <Container>
         <div className="line" />
+
         <div className="outer">
           <InterOuter>
             {width < 968 ? (
@@ -194,18 +197,18 @@ function NotificationBannerAirdrop() {
               </div>
             )}
             <div>
-              <h5>$20K in XOX Tokens Airdrop + 20K XOXS Giveaway is Live!</h5>
-              <h6>Total Prize $40,000</h6>
+              <h5>{t('$20K in XOX Tokens Airdrop + 20K XOXS Giveaway is Live!')}</h5>
+              <h6>{t('Total Prize $40,000')}</h6>
               <p>
-                <span>XOX Token will be launching on ETH-BSC-ARB-POLY-SOL-OPT.&nbsp;</span>
-                <span>Soon</span>
+                <span>{t('XOX Token will be launching on ETH-BSC-ARB-POLY-SOL-OPT.')}&nbsp;</span>
+                <span>{t('Soon')}</span>
               </p>
               <a href="/#">
-                <span>Participate Now!</span>
+                <span>{t('Participate Now')}!</span>
               </a>
             </div>
             <div>
-              <p>Airdrop ending in:</p>
+              <p>{t('Airdrop ending in')}:</p>
               <CountDown startTime={1682508561000} />
             </div>
           </InterOuter>

@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import XClose from 'components/NotificationBannerAirdrop/components/XClose'
 import { useAppDispatch } from 'state'
 import { hideBannerChains } from 'state/user/actions'
@@ -102,6 +103,7 @@ const Container = styled.div`
 `
 function NotificationBannerChains() {
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
 
   const hideBanner = () => {
     dispatch(hideBannerChains())
@@ -112,8 +114,8 @@ function NotificationBannerChains() {
     <Container>
       <div className="line" />
       <div className="outer">
-        <p>XOX Token is currently trading on the following chains!</p>
-        <p>Trade & Bridge XOX across multiple networks with ease.</p>
+        <p>{t('XOX Token is currently trading on the following chains!')}</p>
+        <p>{t('Trade & Bridge XOX across multiple networks with ease.')}</p>
         <div className="dif">
           <div className="btn-group">
             {CHAINS.map((item) => {

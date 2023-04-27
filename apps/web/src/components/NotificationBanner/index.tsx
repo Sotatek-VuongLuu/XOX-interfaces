@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import styled from 'styled-components'
 import BannerCloseX from './components/BannerCloseX'
 
@@ -98,12 +99,14 @@ interface INotiBanner {
 }
 
 function NotificationBanner({ title, description, btnText = 'Participate', href = '#', onRemove, id }: INotiBanner) {
+  const { t } = useTranslation()
+
   return (
     <Container>
       <InnerContainer>
-        <span>{title}&nbsp;</span>
-        <span>{description}</span>
-        <a href={href}>{btnText}</a>
+        <span>{t(title)}&nbsp;</span>
+        <span>{t(description)}</span>
+        <a href={href}>{t(btnText)}</a>
       </InnerContainer>
       <span aria-hidden="true" onClick={() => onRemove(id)} className="svg">
         <BannerCloseX />

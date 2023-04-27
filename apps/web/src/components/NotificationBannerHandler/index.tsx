@@ -68,8 +68,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: 'Total Prize $40,000',
     btnText: 'Participate Now',
     href: '/#',
-    start: 1682564405,
-    end: 1682565005,
+    start: 1682578833,
+    end: 1682580636,
   },
   {
     id: 2,
@@ -131,8 +131,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: '$487k Raised on Pre-sales.',
     btnText: 'Participate',
     href: '/#',
-    start: 1682578833,
-    end: 1682580033,
+    start: 0,
+    end: 0,
   },
   {
     id: 9,
