@@ -209,7 +209,7 @@ function NotificationBannerAirdrop() {
             </div>
             <div>
               <p>{t('Airdrop ending in')}:</p>
-              <CountDown startTime={1682508561000} />
+              <CountDown startTime={1683166694000} />
             </div>
           </InterOuter>
           <span className="svg" onClick={hideBanner} aria-hidden="true">

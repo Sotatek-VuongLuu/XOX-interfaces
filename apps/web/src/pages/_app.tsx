@@ -211,12 +211,8 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
           <Component {...pageProps} />
         </Layout>
       </ShowMenu>
-      {isShowBannerAirdrop && ['/company', '/tokenomics', '/dex-v2', '/'].includes(route.pathname) && (
-        <NotificationBannerAirdrop />
-      )}
-      {isShowBannerChains && ['/company', '/tokenomics', '/dex-v2', '/'].includes(route.pathname) && (
-        <NotificationBannerChains />
-      )}
+      {Number(route.query?.id) === 1 && ['/company'].includes(route.pathname) && <NotificationBannerAirdrop />}
+      {Number(route.query?.id) === 2 && ['/company'].includes(route.pathname) && <NotificationBannerChains />}
       <EasterEgg iterations={2} />
       <ToastListener />
       <FixedSubgraphHealthIndicator />

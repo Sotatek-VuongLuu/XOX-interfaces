@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import NotificationBanner from 'components/NotificationBanner'
+import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
 const currentTimestamp = () => Math.round(new Date().getTime() / 1000)
@@ -17,6 +18,9 @@ interface ITimeLineArr {
 
 export function useNotificationHandle() {
   const [bannerAllowed, setBannerAllowed] = useState<ITimeLineArr[]>([])
+  const route = useRouter()
+
+  console.log(`route`, route)
 
   const bannerTimeLineArr = () => {
     const checkTimeAllow: ITimeLineArr[] = TIMELINEARRAY.map((item) => {
@@ -43,6 +47,19 @@ export function useNotificationHandle() {
     bannerTimeLineArr()
   }, [])
 
+  if (typeof route.query?.id !== 'undefined') {
+    const id = Number(route.query?.id)
+    return (
+      <NotificationBanner
+        title={TIMELINEARRAY[id - 1].name}
+        description={TIMELINEARRAY[id - 1].discription}
+        id={TIMELINEARRAY[id - 1].id}
+        btnText={TIMELINEARRAY[id - 1].btnText}
+        href={TIMELINEARRAY[id - 1].href}
+      />
+    )
+  }
+
   if (bannerAllowed.length) {
     return bannerAllowed.map((item) => {
       return (
@@ -68,8 +85,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: 'Total Prize $40,000',
     btnText: 'Participate Now',
     href: '/#',
-    start: 1682669700,
-    end: 1682670000,
+    start: 0,
+    end: 0,
   },
   {
     id: 2,
@@ -77,8 +94,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: 'Step-by-Step Tutorial.',
     btnText: 'Watch Now',
     href: '/#',
-    start: 1682670300,
-    end: 1682670600,
+    start: 0,
+    end: 0,
   },
   {
     id: 3,
@@ -86,8 +103,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: '$130k Raised on Seed-sale. Min.entry: 20,000 USDT - 10% XOXS Bonus.',
     btnText: 'Participate',
     href: '/#',
-    start: 1682670900,
-    end: 1682671200,
+    start: 0,
+    end: 0,
   },
   {
     id: 4,
@@ -95,8 +112,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: '$130k Raised on Seed-sale. Min.entry: 50 USDT',
     btnText: 'Learn More',
     href: '/#',
-    start: 1682671500,
-    end: 1682671800,
+    start: 0,
+    end: 0,
   },
   {
     id: 5,
@@ -104,8 +121,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: '$130k Raised on Seed-sale. Min.entry: 50 USDT - 8% XOXS Bonus',
     btnText: 'Participate',
     href: '/vesting',
-    start: 1682672100,
-    end: 1682672400,
+    start: 0,
+    end: 0,
   },
   {
     id: 6,
@@ -113,8 +130,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: '$118k Raised on Round 1. Min.entry: 50 USDT - 6% XOXS Bonus',
     btnText: 'Participate',
     href: '/vesting',
-    start: 1682672700,
-    end: 1682673000,
+    start: 0,
+    end: 0,
   },
   {
     id: 7,
@@ -122,8 +139,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: '$162k Raised on Round 2. Min.entry: 50 USDT - 4% XOXS Bonus',
     btnText: 'Participate',
     href: '/vesting',
-    start: 1682673300,
-    end: 1682673600,
+    start: 0,
+    end: 0,
   },
   {
     id: 8,
@@ -131,8 +148,8 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: '$487k Raised on Pre-sales.',
     btnText: 'Participate',
     href: '/#',
-    start: 1682673900,
-    end: 1682674200,
+    start: 0,
+    end: 0,
   },
   {
     id: 9,
@@ -140,7 +157,7 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: '$1,693,800 Already Raised. Launching on 6 chains (ETH,BSC,ARB,POLYGON,OPT,zkSync)',
     btnText: 'Learn More',
     href: '/#',
-    start: 1682674500,
-    end: 1682674800,
+    start: 0,
+    end: 0,
   },
 ]

@@ -428,7 +428,7 @@ const Menu = (props) => {
             </>
           )
         }
-        banner={menuLandingPath.includes(route.pathname) ? bannerTop : null}
+        banner={['/company'].includes(route.pathname) ? bannerTop : null}
         isDark={isDark}
         toggleTheme={toggleTheme}
         currentLang={currentLanguage.code}

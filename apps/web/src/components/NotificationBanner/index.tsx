@@ -100,7 +100,7 @@ interface INotiBanner {
   description?: string
   btnText?: string
   href?: string
-  onRemove: (id: number) => void
+  onRemove?: (id: number) => void
   id: number
 }
 
@@ -114,7 +114,7 @@ function NotificationBanner({ title, description, btnText = 'Participate', href 
         <span>{t(description)}</span>
         <a href={href}>{t(btnText)}</a>
       </InnerContainer>
-      <span aria-hidden="true" onClick={() => onRemove(id)} className="svg">
+      <span aria-hidden="true" onClick={() => onRemove && onRemove(id)} className="svg">
         <BannerCloseX />
       </span>
     </Container>
