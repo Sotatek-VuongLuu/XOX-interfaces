@@ -117,7 +117,7 @@ function NotificationBannerChains() {
   const hideBanner = () => {
     dispatch(hideBannerChains())
   }
-  const CHAINS = ['ETH', 'BSC', 'Arbitrum', 'Solana', 'Polygon', 'Optimism']
+  const CHAINS = ['ETH', 'BSC', 'Arbitrum', 'zkSync', 'Polygon', 'Optimism']
 
   return (
     <Container>
