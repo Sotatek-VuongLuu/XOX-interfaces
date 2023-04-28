@@ -1,5 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import NotificationBanner from 'components/NotificationBanner'
+import { log } from 'console'
 import { useRouter } from 'next/router'
 import { useEffect, useState } from 'react'
 
@@ -45,7 +46,7 @@ export function useNotificationHandle() {
     bannerTimeLineArr()
   }, [])
 
-  if (route.query?.id) {
+  if (route.query?.id && Number(route.query?.id) !== 0) {
     const id = Number(route.query?.id) < 10 ? Number(route.query?.id) : 9
     return (
       <NotificationBanner
