@@ -416,6 +416,12 @@ export const StyledAddress = styled('div')`
   flex-direction: row;
   gap: 8px;
 
+  .zkSync-logo {
+    background: #fff;
+    border-radius: 50%;
+    padding: 2px;
+  }
+
   > div {
     display: flex;
     flex-direction: row;

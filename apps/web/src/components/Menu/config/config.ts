@@ -51,7 +51,7 @@ const config: (
 ) => ConfigMenuItemsType[] = (t, isDark, languageCode, chainId) =>
   [
     {
-      label: t('Asset'),
+      label: t('Assets'),
       href: '/info',
       icon: EarnIcon,
       fillIcon: EarnFillIcon,
@@ -233,7 +233,7 @@ export const configLanding: (
           image: '/images/decorations/pe2.png',
         },
         {
-          label: t('Asset'),
+          label: t('Assets'),
           href: '/info',
           icon: AssetIcon,
           fillIcon: AssetIcon,

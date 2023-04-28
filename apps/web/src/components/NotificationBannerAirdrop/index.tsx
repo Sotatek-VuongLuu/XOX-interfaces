@@ -200,7 +200,7 @@ function NotificationBannerAirdrop() {
               <h5>{t('$20K in XOX Tokens Airdrop + 20K XOXS Giveaway is Live!')}</h5>
               <h6>{t('Total Prize $40,000')}</h6>
               <p>
-                <span>{t('XOX Token will be launching on ETH-BSC-ARB-POLY-SOL-OPT.')}&nbsp;</span>
+                <span>{t('XOX Token will be launching on ETH-BSC-ARB-POLY-zkSync-OPT.')}&nbsp;</span>
                 <span>{t('Soon')}</span>
               </p>
               <a href="/#">

@@ -548,6 +548,13 @@ const CustomDropdown = styled.div`
       padding: 8px 12px 8px 12px;
       gap: 8px;
 
+      img.zkSync-logo {
+        background: #f3f6ff;
+        border-radius: 50%;
+        height: 22px;
+        padding: 2px;
+      }
+
       .coin-data {
         justify-content: center;
         display: flex;
@@ -614,9 +621,9 @@ const networks = [
     image: '/images/Polygon.svg',
   },
   {
-    title: 'Solana',
-    address: XOX_ADDRESS[1399811149],
-    image: '/images/Solana.svg',
+    title: 'zkSync',
+    address: XOX_ADDRESS[324],
+    image: '/images/zkSync.svg',
   },
   {
     title: 'Optimism',
@@ -827,7 +834,7 @@ const WelcomeXOX = (): JSX.Element => {
                                   alt="bsc"
                                   width={22}
                                   height={22}
-                                  style={{ maxWidth: '22px', maxHeight: '22px' }}
+                                  className={network.title === 'zkSync' && 'zkSync-logo'}
                                 />
                                 <div className="coin-data">
                                   <p className="title">{network.title}</p>

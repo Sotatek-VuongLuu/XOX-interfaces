@@ -31,7 +31,7 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
         product: true,
       },
       {
-        label: t('Asset'),
+        label: t('Assets'),
         href: '/info',
         product: true,
       },
