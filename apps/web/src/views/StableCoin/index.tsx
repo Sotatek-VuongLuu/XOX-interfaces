@@ -9,14 +9,14 @@ import { USD_DECIMALS } from 'config/constants/exchange'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
+import { useTranslation } from '@pancakeswap/localization'
 import Link from 'next/link'
 import InfoNav from '../Info/components/InfoNav'
 import HistoryTable, { TYPE_HISTORY } from './historyTable'
 import TransactionTable from './transactionTable'
 // eslint-disable-next-line import/no-cycle
 import Earned from './earned'
-import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
-import { useTranslation } from '@pancakeswap/localization'
 
 const TYPE = {
   default: 'DEFAULT',
