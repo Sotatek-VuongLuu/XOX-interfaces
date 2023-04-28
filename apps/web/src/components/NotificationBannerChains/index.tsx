@@ -67,6 +67,15 @@ const Container = styled.div`
         .svg {
           margin-left: 10px;
         }
+
+        &:hover {
+          background: #000;
+          color: #fff;
+        }
+
+        &:hover .svg svg path {
+          fill: #ffffff;
+        }
       }
       > .btn-group {
         width: fit-content;

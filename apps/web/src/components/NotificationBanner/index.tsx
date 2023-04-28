@@ -69,6 +69,12 @@ const InnerContainer = styled.div`
     border: 1px solid #ffffff;
     border-radius: 8px;
     margin-left: 0px;
+
+    &:hover {
+      background: #ffffff;
+      color: #000000;
+      border: 1px solid #000000;
+    }
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {

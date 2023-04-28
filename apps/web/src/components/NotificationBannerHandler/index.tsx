@@ -69,7 +69,7 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     btnText: 'Participate Now',
     href: '/#',
     start: 1682584296,
-    end: 1682584416,
+    end: 1682680130,
   },
   {
     id: 2,
