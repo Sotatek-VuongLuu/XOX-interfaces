@@ -20,8 +20,6 @@ export function useNotificationHandle() {
   const [bannerAllowed, setBannerAllowed] = useState<ITimeLineArr[]>([])
   const route = useRouter()
 
-  console.log(`route`, route)
-
   const bannerTimeLineArr = () => {
     const checkTimeAllow: ITimeLineArr[] = TIMELINEARRAY.map((item) => {
       if (item.start <= currentTimestamp() && currentTimestamp() <= item.end) {
