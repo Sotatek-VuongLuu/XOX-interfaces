@@ -137,7 +137,7 @@ const TIMELINEARRAY: ITimeLineArr[] = [
   {
     id: 9,
     name: 'Public Launch Incoming!',
-    discription: '$1,693,800 Already Raised. Launching on 6 chains (ETH,BSC,ARB,POLYGON,OPT,SOL)',
+    discription: '$1,693,800 Already Raised. Launching on 6 chains (ETH,BSC,ARB,POLYGON,OPT,zkSync)',
     btnText: 'Learn More',
     href: '/#',
     start: 1682586156,

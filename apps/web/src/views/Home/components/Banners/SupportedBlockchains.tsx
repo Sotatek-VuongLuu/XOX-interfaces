@@ -211,7 +211,7 @@ const CoinItemDisplay = ({ item }: ItemProps) => {
     <WrapperI className="item list-coin">
       <div className="main_container">
         <Icon>
-          <img src={item.icon} alt="icon" />
+          <img src={item.icon} alt="icon" style={{ width: item.icon.includes('zkSync') ? '36px' : 'auto' }} />
         </Icon>
       </div>
     </WrapperI>
@@ -400,7 +400,7 @@ const listCoin = [
     icon: '/images/home/coins/3_arbitrum.svg',
   },
   {
-    icon: '/images/home/coins/4_solana.svg',
+    icon: '/images/home/coins/4_zkSync.svg',
   },
   {
     icon: '/images/home/coins/5_polygon.svg',

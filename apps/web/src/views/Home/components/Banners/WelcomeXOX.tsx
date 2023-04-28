@@ -548,6 +548,12 @@ const CustomDropdown = styled.div`
       padding: 8px 12px 8px 12px;
       gap: 8px;
 
+      img {
+        background: #F3F6FF;
+        border-radius: 50%;
+        height: 22px;
+      }
+
       .coin-data {
         justify-content: center;
         display: flex;
@@ -614,9 +620,9 @@ const networks = [
     image: '/images/Polygon.svg',
   },
   {
-    title: 'Solana',
-    address: XOX_ADDRESS[1399811149],
-    image: '/images/Solana.svg',
+    title: 'zkSync',
+    address: XOX_ADDRESS[324],
+    image: '/images/zkSync.svg',
   },
   {
     title: 'Optimism',
