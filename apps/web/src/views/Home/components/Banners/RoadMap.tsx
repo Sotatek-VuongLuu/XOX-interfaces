@@ -173,7 +173,7 @@ export const listRoadMap = [
   },
   {
     year: 'Under Development',
-    describe: ['XOX Multi-Chain Launchpad', 'XOX Coin Listing/Ranking Site (Early Stage)', 'XOX Super DEX 2.0'],
+    describe: ['XOX Multi-Chain Launchpad', 'XOX Coin Listing/Ranking Site (Early Stage)', 'XOX DEX V2'],
     status: 'todo',
   },
   {

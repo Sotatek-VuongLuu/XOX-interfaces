@@ -548,10 +548,11 @@ const CustomDropdown = styled.div`
       padding: 8px 12px 8px 12px;
       gap: 8px;
 
-      img {
-        background: #F3F6FF;
+      img.zkSync-logo {
+        background: #f3f6ff;
         border-radius: 50%;
         height: 22px;
+        padding: 2px;
       }
 
       .coin-data {
@@ -833,7 +834,7 @@ const WelcomeXOX = (): JSX.Element => {
                                   alt="bsc"
                                   width={22}
                                   height={22}
-                                  style={{ maxWidth: '22px', maxHeight: '22px' }}
+                                  className={network.title === 'zkSync' && 'zkSync-logo'}
                                 />
                                 <div className="coin-data">
                                   <p className="title">{network.title}</p>
