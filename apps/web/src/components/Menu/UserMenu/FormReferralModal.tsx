@@ -299,16 +299,17 @@ const FormReferralModal = (_, ref) => {
       return
     }
     let avataURL = ''
-
+    
     if (avatar) {
-      const result: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/upload/signed-url`).catch((error) => {
+      const params = { filename: String(avatar.name) }
+      const result: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/upload/signed-url/${params.filename}`).catch((error) => {
         console.warn(error)
       })
       const data = result?.data
       if (data) {
-        avataURL = data.signedUrl.split(/[?]+/)[0]
+        avataURL = data.split(/[?]+/)[0]
         await axios
-          .put(data.signedUrl, avatar, {
+          .put(data, avatar, {
             headers: {
               'Content-Type': avatar.type,
             },
