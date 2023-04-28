@@ -47,7 +47,7 @@ export function useNotificationHandle() {
     bannerTimeLineArr()
   }, [])
 
-  if (typeof route.query?.id !== 'undefined') {
+  if (route.query?.id) {
     const id = Number(route.query?.id)
     return (
       <NotificationBanner
