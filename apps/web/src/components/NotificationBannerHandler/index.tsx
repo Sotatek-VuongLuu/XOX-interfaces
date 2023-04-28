@@ -46,7 +46,7 @@ export function useNotificationHandle() {
   }, [])
 
   if (route.query?.id) {
-    const id = Number(route.query?.id)
+    const id = Number(route.query?.id) < 10 ? Number(route.query?.id) : 9
     return (
       <NotificationBanner
         title={TIMELINEARRAY[id - 1].name}
