@@ -12,6 +12,9 @@ import {
   ModalContainer,
   ModalHeader,
   ModalTitle,
+  HelpIcon,
+  TooltipText,
+  useTooltip,
   NumericalInput,
   Text,
 } from '@pancakeswap/uikit'
@@ -333,6 +336,14 @@ function ModalSaleExchange({
   const { width } = useWindowSize()
   const isSwap = approvalState !== ApprovalState.APPROVED && typeBuyPrice === TYPE_BY.BY_ERC20
 
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    t('Please select the Default option in MetaMask for approval since you are only able to approve USDT once'),
+    {
+      placement: 'top',
+      ...(width < 900 && { hideTimeout: 1500 }),
+    },
+  )
+
   const handleRenderXOXAmount = (typeBuy: number, round: number, amountToken: any) => {
     const totalDolla =
       typeBuy === TYPE_BY.BY_ETH
@@ -405,6 +416,10 @@ function ModalSaleExchange({
                   <>
                     <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
                     <span>USDT</span>
+                    <TooltipText ref={targetRef} style={{height: '24px'}}>
+                      <HelpIcon width="20px" height="20px" />
+                    </TooltipText>
+                    {tooltipVisible && tooltip}
                   </>
                 )}
                 {typeBuyPrice === TYPE_BY.BY_ETH && (
@@ -433,6 +448,10 @@ function ModalSaleExchange({
                   <>
                     <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
                     <span>USDT</span>
+                    <TooltipText ref={targetRef} style={{height: '24px'}}>
+                      <HelpIcon width="20px" height="20px" />
+                    </TooltipText>
+                    {tooltipVisible && tooltip}
                   </>
                 )}
                 {typeBuyPrice === TYPE_BY.BY_ETH && (
