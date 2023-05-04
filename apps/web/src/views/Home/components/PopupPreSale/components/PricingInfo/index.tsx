@@ -2,6 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { Button, Flex, Text } from '@pancakeswap/uikit'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { useRouter } from 'next/router'
 
 const Wrapper = styled.div`
   width: fit-content;
@@ -309,6 +310,7 @@ interface IProps {
 function PricingInfo({ currentRound, isInTimeRangeSale }: IProps) {
   const [arrDataRound, setArrDataRound] = useState<dataRoundPricing[]>(dataPricing)
   const { t } = useTranslation()
+  const { router } = useRouter()
 
   const handleCheckRound = (num: number) => {
     const dataUpdate = Array.from(dataPricing).map((item: dataRoundPricing) => {
@@ -382,7 +384,7 @@ function PricingInfo({ currentRound, isInTimeRangeSale }: IProps) {
           })}
         </CustomTableWrapper>
         <div className="buttons">
-          <ButtonGetInvolved onClick={() => {}}>{t('Get Involved!')}</ButtonGetInvolved>
+          <ButtonGetInvolved onClick={() => router.push('/vesting')}>{t('Get Involved!')}</ButtonGetInvolved>
 
           <ButtonCertik className="btn_get_eth" onClick={() => {}} aria-hidden="true">
             {t('Certik')}
