@@ -24,6 +24,7 @@ const Wrapper = styled.div`
 
 const StyledNav = styled.nav`
   display: flex;
+  margin: 0px auto;
   justify-content: space-between;
   align-items: center;
   width: 100%;
@@ -58,7 +59,7 @@ const FixedContainer = styled.div<{ showMenu: boolean; height: number; isLanding
   z-index: 20;
   background-color: ${({ theme, isLanding }) => (isLanding ? "#101010" : "#101010")};
   /* ${({ theme, isLanding }) => !isLanding && ` border-bottom: 1px solid ${theme.colors.cardBorder}`}; */
-  display: flex;
+  /* display: flex; */
   justify-content: center;
 `;
 
@@ -114,13 +115,13 @@ const Menu: React.FC<React.PropsWithChildren<NavProps>> = ({
   children,
   isLanding = false,
 }) => {
-  const { isMobile } = useMatchBreakpoints();
+  const { isMobile, isTablet } = useMatchBreakpoints();
   const isMounted = useIsMounted();
   const [showMenu, setShowMenu] = useState(true);
   const [windowSize, setWindowSize] = useState(0);
   const refPrevOffset = useRef(typeof window === "undefined" ? 0 : window.pageYOffset);
 
-  const topBannerHeight = isMobile ? TOP_BANNER_HEIGHT_MOBILE : TOP_BANNER_HEIGHT;
+  const topBannerHeight = isMobile || isTablet ? TOP_BANNER_HEIGHT_MOBILE : TOP_BANNER_HEIGHT;
 
   const totalTopMenuHeight = isMounted && banner ? MENU_HEIGHT + topBannerHeight : MENU_HEIGHT;
 

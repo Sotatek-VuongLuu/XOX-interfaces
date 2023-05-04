@@ -57,7 +57,7 @@ function Address({ addr, ...props }: { addr: IAddress }) {
   return (
     <StyledAddress {...props}>
       <div>
-        <img src={logo} alt="" draggable="false" loading="lazy" />
+        <img src={logo} alt="" draggable="false" loading="lazy" className={name === 'zkSync' && 'zkSync-logo'} />
         <div>
           <p>{asset}:</p>
           <p>{name}:</p>
@@ -85,7 +85,7 @@ function Address({ addr, ...props }: { addr: IAddress }) {
           {t('Get %symbol_buy%', { symbol_buy: 'XOX' })}
         </a>
       ) : (
-        <Tooltip title="Deployment Coming" placement="top">
+        <Tooltip title={t('Deployment Coming')} placement="top">
           <a href={null} target="_blank" rel="noreferrer">
             {t('Get %symbol_buy%', { symbol_buy: 'XOX' })}
           </a>
@@ -333,9 +333,9 @@ export default function TokenomicsPage() {
       logo: '/images/tokenomics/MATIC.png',
     },
     {
-      asset: 'SOL',
-      name: 'Solana',
-      logo: '/images/tokenomics/SOL.png',
+      asset: 'zkSync',
+      name: 'zkSync',
+      logo: '/images/zkSync.svg',
       text: t('Deployment Coming'),
     },
     {
@@ -534,7 +534,7 @@ export default function TokenomicsPage() {
             </h1>
             <p>
               {t(
-                'XOX is the native token that powers the XOX Labs Cross-Chain Defi Ecosystem. XOX is built on Ethereum but XOX Labs is a multi-chain Protocol so XOX Token can be acquired in other chains like (BSC, Solana, Polygon, Arbitrum, Optimism...) through liquidity pools created by XOX Labs.',
+                'XOX is the native token that powers the XOX Labs Cross-Chain Defi Ecosystem. XOX is built on Ethereum but XOX Labs is a multi-chain Protocol so XOX Token can be acquired in other chains like (BSC, zkSync, Polygon, Arbitrum, Optimism...) through liquidity pools created by XOX Labs.',
               )}
             </p>
           </div>
@@ -575,7 +575,7 @@ export default function TokenomicsPage() {
           </StyledCard1>
           <StyledCard1>
             <h1>{t('Networks')}</h1>
-            <p>ETH - BSC - ARB - Polygon - SOL - OP</p>
+            <p>ETH - BSC - ARB - Polygon - zkSync - OP</p>
           </StyledCard1>
         </StyledF>
 

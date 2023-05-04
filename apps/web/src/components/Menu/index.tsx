@@ -22,6 +22,7 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import styled from 'styled-components'
 import MenuItems from '@pancakeswap/uikit/src/components/MenuItems/MenuItems'
 import { useAccount } from 'wagmi'
+import { useNotificationHandle } from 'components/NotificationBannerHandler'
 import UserMenu from './UserMenu'
 import { useMenuItems } from './hooks/useMenuItems'
 // import GlobalSettings from './GlobalSettings'
@@ -205,6 +206,8 @@ const Menu = (props) => {
   const activeSubMenuItem = getActiveSubMenuItem({ menuItem: activeMenuItem, pathname: route.pathname })
 
   const activeSubMenuItemLanding = getActiveSubMenuItem({ menuItem: activeMenuItemLanding, pathname: route.pathname })
+
+  const bannerTop = useNotificationHandle()
 
   const toggleTheme = useMemo(() => {
     return () => setTheme(isDark ? 'light' : 'dark')
@@ -425,7 +428,7 @@ const Menu = (props) => {
             </>
           )
         }
-        // banner={showPhishingWarningBanner && typeof window !== 'undefined' && <PhishingWarningBanner />}
+        banner={['/company'].includes(route.pathname) ? bannerTop : null}
         isDark={isDark}
         toggleTheme={toggleTheme}
         currentLang={currentLanguage.code}

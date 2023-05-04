@@ -85,6 +85,13 @@ const Wrapper = styled.div`
       }
     }
 
+    .timeline-item-5 {
+      .line_status {
+        width: calc(100% + 20px);
+        top: 0;
+      }
+    }
+
     .timeline-item-3 .line_status {
       background: linear-gradient(90deg, rgba(155,243,203,1) 0%, rgba(62,192,166,1) 100%);
     }
@@ -166,7 +173,7 @@ export const listRoadMap = [
   },
   {
     year: 'Under Development',
-    describe: ['XOX Multi-Chain Launchpad', 'XOX Coin Listing/Ranking Site (Early Stage)', 'XOX Super DEX 2.0'],
+    describe: ['XOX Multi-Chain Launchpad', 'XOX Coin Listing/Ranking Site (Early Stage)', 'XOX DEX V2'],
     status: 'todo',
   },
   {

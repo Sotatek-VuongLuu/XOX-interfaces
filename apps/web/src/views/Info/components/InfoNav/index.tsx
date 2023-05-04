@@ -105,6 +105,9 @@ const MainContent = styled.div`
     object-fit: cover;
   }
 
+  .flex_container {
+    display: block;
+  }
   .get-xox {
     font-weight: 700;
     font-size: 14px;
@@ -118,6 +121,7 @@ const MainContent = styled.div`
     color: #ffffff;
     background: #ffffff;
     color: #000000;
+    width: calc(50% - 8px);
     :hover {
       border: 1px solid #ffffff;
       color: #ffffff;
@@ -138,6 +142,7 @@ const MainContent = styled.div`
     padding: 10px 20px;
     box-shadow: none;
     position: relative;
+    width: calc(50% - 8px);
   }
 
   .learn-more:hover {
@@ -145,22 +150,31 @@ const MainContent = styled.div`
     color: #000000;
     opacity: 1 !important;
   }
+  .text_third {
+    position: relative;
+    border-radius: 10px;
+    padding: 12px 20px;
+    text-align: center;
+    margin-top: 16px;
 
-  .title {
-    font-weight: 500;
-    font-size: 12px;
-    line-height: 15px;
-    letter-spacing: 0.075em;
-    color: rgba(255, 255, 255, 0.6);
-  }
+    > span {
+      font-weight: 400;
+      font-size: 14px;
+      line-height: 17px;
+      color: #ffffff;
+    }
 
-  .subtitle {
-    font-weight: 600;
-    font-size: 18px;
-    line-height: 32px;
-    letter-spacing: 0.075em;
-    text-transform: uppercase;
-    color: rgba(255, 255, 255, 0.87);
+    &::before {
+      content: '';
+      position: absolute;
+      inset: 0px;
+      border-radius: inherit;
+      padding: 1px;
+      background: linear-gradient(95.32deg, rgb(184, 9, 181) -7.25%, rgb(237, 28, 81) 54.2%, rgb(255, 176, 0) 113.13%);
+      -webkit-mask: linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px) content-box content-box,
+        linear-gradient(rgb(255, 255, 255) 0px, rgb(255, 255, 255) 0px);
+      -webkit-mask-composite: xor;
+    }
   }
 
   ${({ theme }) => theme.mediaQueries.md} {
@@ -214,6 +228,9 @@ const MainContent = styled.div`
       color: rgba(255, 255, 255, 0.87);
     }
 
+    .flex_container {
+      display: flex;
+    }
     .get-xox {
       font-weight: 700;
       font-size: 16px;
@@ -238,20 +255,31 @@ const MainContent = styled.div`
       font-size: 16px;
       line-height: 19px;
       color: #ffffff;
+      width: 149px;
       height: 43px;
       border: 1px solid #ffffff;
       border-radius: 10px;
-      margin-left: 16px;
+      margin: 0px 16px;
       background: transparent;
       box-shadow: none;
+    }
+
+    .text_third {
+      margin-top: 0px;
+
+      > span {
+        font-size: 16px;
+        line-height: 19px;
+      }
     }
   }
 `
 
-const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBtn1?: string }> = ({
+const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBtn1?: string; textThird?: string }> = ({
   textContentBanner,
   hasPadding = true,
   titleBtn1 = 'XOXS',
+  textThird = '',
 }) => {
   const { t } = useTranslation()
   const { chainId } = useActiveChainId()
@@ -272,50 +300,29 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
         <Text className="subtitle" mb={['16px', , '24px']}>
           {textContentBanner || t('Stake XOXS automatically to earn more')}
         </Text>
-        <Flex>
+        <div className="flex_container">
           <a
             href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
             target="_blank"
             rel="noreferrer"
           >
-            <Button className="get-xox">
-              {/* <div className="top-left"></div>
-              <div className="top-right"></div>
-              <div className="bottom-left"></div>
-              <div className="bottom-right"></div> */}
-              {t('Get %sym%', { sym: titleBtn1 })}
-            </Button>
+            <Button className="get-xox">{t('Get %sym%', { sym: titleBtn1 })}</Button>
           </a>
           <a href="/whitepaper" target="_blank" rel="noreferrer">
-            <Button className="learn-more">
-              {/* <div className="top-left"></div>
-              <div className="top-right"></div>
-              <div className="bottom-left"></div>
-              <div className="bottom-right"></div> */}
-              {t('Learn More')}
-            </Button>
+            <Button className="learn-more">{t('Learn More')}</Button>
           </a>
-        </Flex>
+          {textThird && !isMobile && (
+            <div className="text_third">
+              <span>{textThird}</span>
+            </div>
+          )}
+        </div>
+        {textThird && isMobile && (
+          <div className="text_third">
+            <span>{textThird}</span>
+          </div>
+        )}
       </MainContent>
-      {/* <Flex>
-        <Box>
-          <ButtonMenu activeIndex={activeIndex} scale="sm" variant="subtle">
-            <ButtonMenuItem as={NextLinkFromReactRouter} to={`/info${chainPath}${stableSwapQuery}`}>
-              {t('Overview')}
-            </ButtonMenuItem>
-            <ButtonMenuItem as={NextLinkFromReactRouter} to={`/info${chainPath}/pairs${stableSwapQuery}`}>
-              {t('Pairs')}
-            </ButtonMenuItem>
-            <ButtonMenuItem as={NextLinkFromReactRouter} to={`/info${chainPath}/tokens${stableSwapQuery}`}>
-              {t('Tokens')}
-            </ButtonMenuItem>
-          </ButtonMenu>
-        </Box>
-        {!account && <NetworkSwitcher activeIndex={activeIndex} />}
-      </Flex>
-      <Box width={['100%', '100%', '250px']}>
-        <Search />
-      </Box> */}
     </NavWrapper>
   )
 }

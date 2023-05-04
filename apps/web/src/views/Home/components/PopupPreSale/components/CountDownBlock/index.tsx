@@ -163,15 +163,6 @@ const ModalStyle = styled.div`
   place-content: center;
   background-color: rgba(0, 0, 0, 0.8);
   z-index: 9998;
-
-  .layout-blur {
-    width: 100vw;
-    height: 100vh;
-    position: absolute;
-    z-index: -1;
-    top: 0;
-    left: 0;
-  }
 `
 
 interface IProps {
@@ -180,7 +171,6 @@ interface IProps {
   infoRoundTow: RoundInfo
   infoRoundThree: RoundInfo
   isInTimeRangeSale: boolean
-  typeBuyPrice: number
   totalXOXTokenInRound: number | string
   reacheZero: boolean
   setReachZero: (isReach: boolean) => void
@@ -194,7 +184,6 @@ function CountDownBlock({
   infoRoundTow,
   infoRoundThree,
   isInTimeRangeSale,
-  typeBuyPrice,
   totalXOXTokenInRound,
   reacheZero,
   setReachZero,
@@ -239,7 +228,6 @@ function CountDownBlock({
   return createPortal(
     isShowModal ? (
       <ModalStyle>
-        <div className="layout-blur" onClick={() => handleOnClose()} />
         <BorderWrapper>
           <Wrapper>
             <div className="close-icon" onClick={() => handleOnClose()}>
@@ -252,7 +240,6 @@ function CountDownBlock({
               <PricingInfo
                 currentRound={currentRound}
                 isInTimeRangeSale={isInTimeRangeSale}
-                typeBuyPrice={typeBuyPrice}
               />
               <StartingSoon
                 currentRound={currentRound}

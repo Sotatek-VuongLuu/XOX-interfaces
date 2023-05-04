@@ -281,8 +281,8 @@ const DropdownMenu: React.FC<React.PropsWithChildren<DropdownMenuProps>> = ({
           className="dropdown-menu"
         >
           {items.slice(0, 4).length > 0 && <div>{renderItems(items.slice(0, 4))}</div>}
-          {items.slice(4, 7).length > 0 && <div>{renderItems(items.slice(4, 7))}</div>}
-          {items.slice(7, 11).length > 0 && <div>{renderItems(items.slice(7, 11))}</div>}
+          {items.slice(4, 8).length > 0 && <div>{renderItems(items.slice(4, 8))}</div>}
+          {items.slice(8, 12).length > 0 && <div>{renderItems(items.slice(8, 12))}</div>}
         </StyledDropdownMenu>
       )}
     </StyledBoxContainer>

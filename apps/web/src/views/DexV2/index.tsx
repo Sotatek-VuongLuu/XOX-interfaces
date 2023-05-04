@@ -1758,7 +1758,6 @@ function DevV2() {
                 }`}
                 key={`tabEcosystem_${i}`}
                 id={`tabEcosystem_${i}`}
-                tabIndex={0}
               >
                 <div
                   key={String(i + item)}
@@ -1819,7 +1818,6 @@ function DevV2() {
                   }`}
                   key={`tab_wycd_contain_${i}`}
                   id={`tab_wycd_contain_${i}`}
-                  tabIndex={1}
                 >
                   <div
                     key={String(i + item)}

@@ -1,6 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
 import { Button, Flex, Text } from '@pancakeswap/uikit'
-import useWindowSize from 'hooks/useWindowSize'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
@@ -305,12 +304,10 @@ const dataPricing: dataRoundPricing[] = [
 interface IProps {
   currentRound: number
   isInTimeRangeSale: boolean
-  typeBuyPrice: number
 }
 
 function PricingInfo({ currentRound, isInTimeRangeSale }: IProps) {
   const [arrDataRound, setArrDataRound] = useState<dataRoundPricing[]>(dataPricing)
-  const { width } = useWindowSize()
   const { t } = useTranslation()
 
   const handleCheckRound = (num: number) => {

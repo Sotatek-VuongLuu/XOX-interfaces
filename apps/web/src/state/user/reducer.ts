@@ -40,6 +40,10 @@ import {
   updateUserProfile,
   updateUserProfileEdit,
   UserProfile,
+  showBannerAirdrop,
+  hideBannerAirdrop,
+  showBannerChains,
+  hideBannerChains,
 } from './actions'
 import { GAS_PRICE_GWEI } from '../types'
 
@@ -95,6 +99,8 @@ export interface UserState {
   hideTimestampPhishingWarningBanner: number
   userProfile: UserProfile
   userProfileEdit: UserProfile
+  isShowBannerAirdrop: boolean
+  isShowBannerChains: boolean
 }
 
 function pairKey(token0Address: string, token1Address: string) {
@@ -130,6 +136,8 @@ export const initialState: UserState = {
   hideTimestampPhishingWarningBanner: null,
   userProfile: undefined,
   userProfileEdit: undefined,
+  isShowBannerAirdrop: false,
+  isShowBannerChains: false,
 }
 
 export default createReducer(initialState, (builder) =>
@@ -280,5 +288,17 @@ export default createReducer(initialState, (builder) =>
     })
     .addCase(setSubgraphHealthIndicatorDisplayed, (state, { payload }) => {
       state.isSubgraphHealthIndicatorDisplayed = payload
+    })
+    .addCase(showBannerAirdrop, (state) => {
+      state.isShowBannerAirdrop = true
+    })
+    .addCase(hideBannerAirdrop, (state) => {
+      state.isShowBannerAirdrop = false
+    })
+    .addCase(showBannerChains, (state) => {
+      state.isShowBannerChains = true
+    })
+    .addCase(hideBannerChains, (state) => {
+      state.isShowBannerChains = false
     }),
 )

@@ -14,9 +14,9 @@ import { NextPage } from 'next'
 import type { AppProps } from 'next/app'
 import dynamic from 'next/dynamic'
 import Head from 'next/head'
-import { Fragment, useRef } from 'react'
+import { Fragment, useEffect, useRef } from 'react'
 import { PersistGate } from 'redux-persist/integration/react'
-import { persistor, useStore } from 'state'
+import { AppState, persistor, useAppDispatch, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
 import TransactionsDetailModal from 'components/TransactionDetailModal'
 import FormReferralModal from 'components/Menu/UserMenu/FormReferralModal'
@@ -24,6 +24,10 @@ import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
+import NotificationBannerAirdrop from 'components/NotificationBannerAirdrop'
+import { showBannerAirdrop, hideBannerAirdrop, showBannerChains, hideBannerChains } from 'state/user/actions'
+import NotificationBannerChains from 'components/NotificationBannerChains'
+import { useSelector } from 'react-redux'
 import { Blocklist, Updaters } from '..'
 import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
@@ -91,10 +95,7 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
         />
         <meta name="theme-color" content="#1FC7D4" />
         <meta name="twitter:image" content="https://xoxnet.io/images/hero.png" />
-        <meta
-          name="twitter:description"
-          content="Earn XOX through yield farming or win it in the Lottery."
-        />
+        <meta name="twitter:description" content="Earn XOX through yield farming or win it in the Lottery." />
         <meta name="twitter:card" content="summary_large_image" />
         <meta name="twitter:title" content="XOX - A next evolution DeFi exchange on BNB Smart Chain (BSC)" />
         <meta name="theme-color" content="#000" />
@@ -156,18 +157,43 @@ const ProductionErrorBoundary = Fragment
 
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const modal = useRef(null)
+  const dispatch = useAppDispatch()
   const { isMobile } = useMatchBreakpoints()
-
   const route = useRouter()
-
-  if (Component.pure) {
-    return <Component {...pageProps} />
-  }
-
+  const currentTimestamp = () => Math.round(new Date().getTime() / 1000)
+  const timeLineBannerAirdrop = { start: 1682669700, end: 1682670000 }
+  const timeLineBannerChain = { start: 1682670300, end: 1682670600 }
   // Use the layout defined at the page level, if available
   const Layout = Component.Layout || Fragment
   const ShowMenu = Component.mp ? Fragment : Menu
   const isShowScrollToTopButton = Component.isShowScrollToTopButton || true
+
+  const isShowBannerAirdrop = useSelector<AppState, AppState['user']['isShowBannerAirdrop']>(
+    (state) => state.user.isShowBannerAirdrop,
+  )
+  const isShowBannerChains = useSelector<AppState, AppState['user']['isShowBannerChains']>(
+    (state) => state.user.isShowBannerChains,
+  )
+
+  useEffect(() => {
+    if (timeLineBannerAirdrop.start <= currentTimestamp() && currentTimestamp() <= timeLineBannerAirdrop.end) {
+      dispatch(showBannerAirdrop())
+    } else {
+      dispatch(hideBannerAirdrop())
+    }
+
+    if (timeLineBannerChain.start <= currentTimestamp() && currentTimestamp() <= timeLineBannerChain.end) {
+      dispatch(showBannerChains())
+    } else {
+      dispatch(hideBannerChains())
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  if (Component.pure) {
+    return <Component {...pageProps} />
+  }
 
   return (
     <ProductionErrorBoundary>
@@ -185,6 +211,8 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
           <Component {...pageProps} />
         </Layout>
       </ShowMenu>
+      {Number(route.query?.id) === 1 && ['/company'].includes(route.pathname) && <NotificationBannerAirdrop />}
+      {Number(route.query?.id) === 2 && ['/company'].includes(route.pathname) && <NotificationBannerChains />}
       <EasterEgg iterations={2} />
       <ToastListener />
       <FixedSubgraphHealthIndicator />

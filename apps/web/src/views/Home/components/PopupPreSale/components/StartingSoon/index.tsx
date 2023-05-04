@@ -58,12 +58,17 @@ const Wrapper = styled.div`
     background: #d9d9d9;
     border-radius: 20px;
     margin-bottom: 17px;
+    position: relative;
+    border: 1px solid #d9d9d9;
+    overflow: hidden;
   }
 
   .processing_child {
+    position: absolute;
+    transform: translateY(-50%);
+    top: 50%;
     height: 100%;
     background: #131313;
-    border: 1px solid #d9d9d9;
     border-radius: 20px;
   }
 
@@ -265,7 +270,7 @@ function StartingSoon({
 
   return (
     <Wrapper>
-      {!isInTimeRangeSale && handleReturnPercent}
+      {handleReturnPercent}
       {!isNotSetDataForAll && handleRenderCountdown(timeNow)}
     </Wrapper>
   )
