@@ -310,7 +310,7 @@ interface IProps {
 function PricingInfo({ currentRound, isInTimeRangeSale }: IProps) {
   const [arrDataRound, setArrDataRound] = useState<dataRoundPricing[]>(dataPricing)
   const { t } = useTranslation()
-  const { router } = useRouter()
+  const  router  = useRouter()
 
   const handleCheckRound = (num: number) => {
     const dataUpdate = Array.from(dataPricing).map((item: dataRoundPricing) => {
