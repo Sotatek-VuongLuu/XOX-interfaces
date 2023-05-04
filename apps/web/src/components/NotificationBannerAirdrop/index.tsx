@@ -61,6 +61,8 @@ const InterOuter = styled.div`
       line-height: 24px;
       text-align: center;
       color: #ffffff;
+      margin-top: 0px;
+      
     }
     > h6 {
       font-weight: 400 !important;
@@ -103,6 +105,7 @@ const InterOuter = styled.div`
       color: #ffffff;
       padding: 12px 0px;
       margin-top: 20px;
+      margin-bottom: 0px;
     }
   }
 
@@ -123,8 +126,8 @@ const InterOuter = styled.div`
     > div:nth-child(1) {
       position: relative;
       video {
-        width: 570px;
-        max-width: 570px;
+        width: 535px;
+        max-width: 535px;
         position: absolute;
         top: 50%;
         left: 50%;
@@ -140,6 +143,9 @@ const InterOuter = styled.div`
         font-size: 17px;
         line-height: 21px;
       }
+      > h5  {
+        margin-top:10px;
+      }
       > p {
         margin-top: 10px;
       }
@@ -149,6 +155,7 @@ const InterOuter = styled.div`
         height: 43px;
         padding: 12px 142px;
         margin-top: 13px;
+        margin-bottom: 15px;
       }
     }
 
@@ -173,7 +180,6 @@ function NotificationBannerAirdrop() {
     <>
       <Container>
         <div className="line" />
-
         <div className="outer">
           <InterOuter>
             {width < 968 ? (
