@@ -4,6 +4,7 @@ WORKDIR /home/node/app
 COPY . .
 COPY .env /home/node/app/apps/web/.env.production
 RUN yarn && yarn build
+LABEL base="false"
 
 FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16-slim:latest
 RUN mkdir -p /home/node/app
