@@ -3,7 +3,7 @@ RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
 COPY . .
 COPY .env /home/node/app/apps/web/.env.production
-RUN yarn install && yarn build
+RUN rm -rf node_modules && rm -rf yarn.lock && yarn && yarn build
 
 FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16-slim:latest
 RUN mkdir -p /home/node/app
