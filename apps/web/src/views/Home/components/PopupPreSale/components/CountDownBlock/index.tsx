@@ -9,7 +9,7 @@ import BackgroundImage from './bg.svg'
 import BackgroundImageMobile from './bg-mobile.svg'
 import CloseIcon from './close.svg'
 
-const BorderWrapper = styled.div`
+const BorderWrapper = styled.div<{ isMac: boolean }>`
   margin-top: 36px;
   margin-bottom: 24px;
   width: 960px;
@@ -28,32 +28,26 @@ const BorderWrapper = styled.div`
     padding: 6px;
     left: -4px;
     top: -4px;
-    background-size: 300% 300%;
-    background-position-x: 0%;
-    animation: animatedgradient 5s linear infinite alternate-reverse;
+    ${({ isMac }) => (isMac ? '' : 'background-size: 300% 300%;')}
+    ${({ isMac }) => (isMac ? '' : 'background-position-x: 0%;')}
+    ${({ isMac }) => (isMac ? '' : 'animation: animatedgradient 5s linear infinite alternate-reverse;')}
     border-radius: 24px;
   }
 
   &:after {
     content: '';
     position: absolute;
-    left: 0;
-    top: 0;
-    width: calc(100% + 8px);
-    height: calc(100% + 8px);
     background: linear-gradient(90deg, #9bf3cb, #3ec0a6, #f44234, #9f3a83);
     padding: 6px;
     border-radius: 32px;
-    left: -4px;
-    top: -4px;
     background-size: 300% 300%;
     background-position-x: 0%;
     animation: animatedgradient 5s linear infinite alternate-reverse;
-    width: calc(100% + 16px);
-    height: calc(100% + 16px);
-    left: -8px;
-    top: -8px;
-    filter: blur(24px);
+    width: calc(100% - 8px);
+    height: calc(100% - 8px);
+    left: 4px;
+    top: 4px;
+    filter: blur(48px);
   }
 
   @media screen and (max-width: 1200px) {
@@ -193,6 +187,8 @@ function CountDownBlock({
   const modalElement = document.getElementById('modal-root')
   const [isShowModal, setShowModal] = useState(false)
 
+  const isMac = typeof window !== 'undefined' ? navigator.platform.toUpperCase().indexOf('MAC') >= 0 : false
+
   const handleOnClose = () => {
     setShowModal(false)
     const presaleStatus = {
@@ -228,7 +224,7 @@ function CountDownBlock({
   return createPortal(
     isShowModal ? (
       <ModalStyle>
-        <BorderWrapper>
+        <BorderWrapper isMac={isMac}>
           <Wrapper>
             <div className="close-icon" onClick={() => handleOnClose()}>
               <CloseIcon />
@@ -237,10 +233,7 @@ function CountDownBlock({
             <BackgroundImageMobile className="mobile" />
 
             <Content>
-              <PricingInfo
-                currentRound={currentRound}
-                isInTimeRangeSale={isInTimeRangeSale}
-              />
+              <PricingInfo currentRound={currentRound} isInTimeRangeSale={isInTimeRangeSale} />
               <StartingSoon
                 currentRound={currentRound}
                 infoRoundOne={infoRoundOne}
