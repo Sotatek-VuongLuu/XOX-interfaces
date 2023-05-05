@@ -589,6 +589,15 @@ export default function Refferal() {
   }
 
   useEffect(() => {
+    const tempLevel = {
+      General: tabChainLeaderBoard === 'General' ? defaultIMappingFormat : rankOfUser.General,
+      Ethereum: tabChainLeaderBoard === 'Ethereum' ? defaultIMappingFormat : rankOfUser.Ethereum,
+      BSC: tabChainLeaderBoard === 'BSC' ? defaultIMappingFormat : rankOfUser.BSC,
+    }
+    setRankOfUser(tempLevel)
+  }, [tabLeaderBoard])
+
+  useEffect(() => {
     handleGetUserRanks(
       'General',
       'All Time',

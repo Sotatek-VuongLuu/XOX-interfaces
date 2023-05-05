@@ -1,3 +1,4 @@
+import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
 import { useMemo, useState } from 'react'
 import ReactPlayer from 'react-player'
@@ -156,6 +157,7 @@ const Wrapper = styled.div`
 const HowToJoin = (): JSX.Element => {
   const { width } = useWindowSize()
   const [currentVideo, setCurrentVideo] = useState(1)
+  const { t } = useTranslation()
 
   const controlSize = useMemo(() => {
     let w = 646
@@ -252,15 +254,15 @@ const HowToJoin = (): JSX.Element => {
         <div className="buttons">
           <div className={currentVideo === 1 ? 'active' : 'inactive'}>
             <button onClick={() => setCurrentVideo(1)}>1{currentVideo === 1 && RoundIcon}</button>
-            <span>Connect Wallet</span>
+            <span>{t('Connect Wallet')}</span>
           </div>
           <div className={currentVideo === 2 ? 'active' : 'inactive'}>
             <button onClick={() => setCurrentVideo(2)}>2{currentVideo === 2 && RoundIcon}</button>
-            <span>Share Ref Code</span>
+            <span>{t('Share Ref Code')}</span>
           </div>
           <div className={currentVideo === 3 ? 'active' : 'inactive'}>
             <button onClick={() => setCurrentVideo(3)}>3{currentVideo === 3 && RoundIcon}</button>
-            <span>Use Ref Code and Claim</span>
+            <span>{t('Use Ref Code and Claim')}</span>
           </div>
         </div>
       </div>
