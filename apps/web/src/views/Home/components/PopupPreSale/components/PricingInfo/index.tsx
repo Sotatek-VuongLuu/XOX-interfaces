@@ -120,16 +120,16 @@ export const CustomTableWrapper = styled(Flex)`
     white-space: nowrap;
   }
 
-  .upper {
-    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 20%, rgba(255, 255, 255, 0.7) 70%);
+  .upper .table-header {
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0) 0%, rgba(255, 255, 255, 0.7) 100%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-fill-color: transparent;
   }
 
-  .under {
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 30%, rgba(0, 0, 0, 0) 80%);
+  .under .table-header {
+    background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 20%, rgba(0, 0, 0, 0) 90%);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-clip: text;
@@ -310,7 +310,7 @@ interface IProps {
 function PricingInfo({ currentRound, isInTimeRangeSale }: IProps) {
   const [arrDataRound, setArrDataRound] = useState<dataRoundPricing[]>(dataPricing)
   const { t } = useTranslation()
-  const  router  = useRouter()
+  const router = useRouter()
 
   const handleCheckRound = (num: number) => {
     const dataUpdate = Array.from(dataPricing).map((item: dataRoundPricing) => {

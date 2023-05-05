@@ -40,7 +40,7 @@ export const CELER_API = 'https://api.celerscan.com/scan'
 export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
   [ChainId.BSC]: '',
   [ChainId.ETHEREUM]: '',
-  [ChainId.BSC_TESTNET]: 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/staging',
+  [ChainId.BSC_TESTNET]: 'https://subgraph.xoxlabs.io/subgraphs/name/subgraph2',
   [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/43777/dev-xox-subgraph/v0.0.6',
 }
 

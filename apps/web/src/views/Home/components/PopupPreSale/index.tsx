@@ -231,9 +231,9 @@ function VestingPage() {
         setTotalXOXTokenInRound(new BigNumber(formatEther(data._hex)).toNumber())
       }
     } catch (error: any) {
-      if (error?.code !== 4001) {
-        toastError('Error', t('Transaction failed'))
-      }
+      // if (error?.code !== 4001) {
+      //   toastError('Error', t('Transaction failed'))
+      // }
     }
   }
 

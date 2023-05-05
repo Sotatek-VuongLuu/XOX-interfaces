@@ -8,6 +8,7 @@ import { useSelector } from 'react-redux'
 import { AppState, useAppDispatch } from 'state'
 import { updateOpenFormReferral, updateUserProfile, updateUserProfileEdit } from 'state/user/actions'
 import { useRouter } from 'next/router'
+import { useTranslation } from '@pancakeswap/localization'
 
 const ModalStyle = styled.div`
   position: fixed;
@@ -202,6 +203,7 @@ const FormReferralModal = (_, ref) => {
   const { data: signer } = useSigner()
   const { address: account } = useAccount()
   const [isSaveable, setSaveable] = useState(false)
+  const { t } = useTranslation()
 
   const { toastSuccess } = useToast()
 
@@ -243,8 +245,9 @@ const FormReferralModal = (_, ref) => {
         (img.size / 1024 / 1024 > 5 ||
           (img.type !== 'image/jpeg' && img.type !== 'image/jpg' && img.type !== 'image/png'))
       ) {
-        error.avatar =
-          'Error: Your image could not be uploaded. Images should be less than or equal to 5 MB and saved as PNG, JPG, JPEG files.'
+        error.avatar = t(
+          'Error: Your image could not be uploaded. Images should be less than or equal to 5 MB and saved as PNG, JPG, JPEG files.',
+        )
       }
       setErrorMessages(error)
     },
@@ -277,14 +280,14 @@ const FormReferralModal = (_, ref) => {
 
   const isValid = useCallback(() => {
     const error: any = {}
-    if (errorMessages.username === 'This username already exists.') error.username = errorMessages.username
+    if (errorMessages.username === t('This username already exists.')) error.username = errorMessages.username
     if (errorMessages.avatar) error.avatar = errorMessages.avatar
     setUsername(username?.trim())
 
-    if (!username.replaceAll(' ', '')) error.username = 'This field is required.'
+    if (!username.replaceAll(' ', '')) error.username = t('This field is required.')
 
     if (!validateEmail()) {
-      error.email = 'Invalid email address.'
+      error.email = t('Invalid email address.')
     }
 
     setErrorMessages(error)
@@ -301,14 +304,17 @@ const FormReferralModal = (_, ref) => {
     let avataURL = ''
 
     if (avatar) {
-      const result: any = await axios.get(`${process.env.NEXT_PUBLIC_API}/upload/signed-url`).catch((error) => {
-        console.warn(error)
-      })
+      const params = { filename: String(avatar.name) }
+      const result: any = await axios
+        .get(`${process.env.NEXT_PUBLIC_API}/upload/signed-url/${params.filename}`)
+        .catch((error) => {
+          console.warn(error)
+        })
       const data = result?.data
       if (data) {
-        avataURL = data.signedUrl.split(/[?]+/)[0]
+        avataURL = data.split(/[?]+/)[0]
         await axios
-          .put(data.signedUrl, avatar, {
+          .put(data, avatar, {
             headers: {
               'Content-Type': avatar.type,
             },
@@ -349,7 +355,7 @@ const FormReferralModal = (_, ref) => {
               setAvata(undefined)
               // setProfileSuccess(true)
               setOpenFormReferral(false)
-              toastSuccess('Success.', 'You have set your profile successfully.')
+              toastSuccess(t('Success'), t('You have set your profile successfully.'))
             })
             .catch((error) => {
               console.warn(error)
@@ -407,7 +413,7 @@ const FormReferralModal = (_, ref) => {
         .then((response) => {
           const error = { ...errorMessages }
           if (username && username !== userProfile?.username && response.data) {
-            error.username = 'This username already exists.'
+            error.username = t('This username already exists.')
           } else {
             delete error.username
           }
@@ -475,7 +481,7 @@ const FormReferralModal = (_, ref) => {
               textAlign="center"
               marginBottom="8px!important"
             >
-              Success
+              {t('Success')}
             </Text>
             <Text
               fontSize="16px"
@@ -488,7 +494,7 @@ const FormReferralModal = (_, ref) => {
               margin="0 auto 24px!important"
               width="240px"
             >
-              You have set your profile successfully.
+              {t('You have set your profile successfully.')}
             </Text>
             <img src="/images/image45.png" style={{ margin: 'auto', display: 'block', cursor: 'pointer' }} alt="" />
             <button onClick={onCloseBtnClicked} type="button">
@@ -529,7 +535,7 @@ const FormReferralModal = (_, ref) => {
               textAlign="center"
               marginBottom="8px!important"
             >
-              Profile
+              {t('Profile')}
             </Text>
             <Text
               fontSize={['14px', , '16px']}
@@ -542,7 +548,7 @@ const FormReferralModal = (_, ref) => {
               margin="0 auto 24px!important"
               width="240px"
             >
-              Set up your profile by filling in all the fields below.
+              {t('Set up your profile by filling in all the fields below.')}
             </Text>
             {/* {!userProfile && (
               <button
@@ -624,34 +630,35 @@ const FormReferralModal = (_, ref) => {
             </div>
             <div>
               <FormLabel>
-                Username<span>*</span>
+                {t('Username')}
+                <span>*</span>
               </FormLabel>
               <FormInput
                 value={username}
                 onChange={handleUsername}
                 maxLength={20}
                 className={errorMessages.username ? 'error' : ''}
-                placeholder="Enter username"
+                placeholder={t('Enter username')}
               />
               {errorMessages.username && <span className="form__error-message">{errorMessages.username}</span>}
             </div>
             <div>
-              <FormLabel>Email (Optional)</FormLabel>
+              <FormLabel>{t('Email (Optional)')}</FormLabel>
               <FormInput
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className={errorMessages.email ? 'error' : ''}
-                placeholder="Enter email address"
+                placeholder={t('Enter email address')}
               />
               {errorMessages.email && <span className="form__error-message">{errorMessages.email}</span>}
             </div>
             <div>
-              <FormLabel>Tele ID (Optional)</FormLabel>
+              <FormLabel>{t('Tele ID (Optional)')}</FormLabel>
               <FormInput
                 value={telegram}
                 onChange={(e) => setTelegram(e.target.value)}
                 className={errorMessages.telegram ? 'error' : ''}
-                placeholder="Enter telegram ID"
+                placeholder={t('Enter telegram ID')}
               />
               {errorMessages.telegram && <span className="form__error-message">{errorMessages.telegram}</span>}
             </div>
@@ -670,7 +677,7 @@ const FormReferralModal = (_, ref) => {
                 }}
                 style={{ background: '#313131', height: '43px' }}
               >
-                Cancel
+                {t('Cancel')}
               </Button>
               <Button
                 width="100%"
@@ -679,7 +686,7 @@ const FormReferralModal = (_, ref) => {
                 style={{ height: '43px' }}
                 disabled={!isSaveable || isSubmiting}
               >
-                Save
+                {t('Save')}
               </Button>
             </div>
           </FormWrapper>
