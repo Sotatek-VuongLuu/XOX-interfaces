@@ -3,10 +3,8 @@ RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
 COPY . .
 COPY .env /home/node/app/apps/web/.env.production
-RUN rm -rf node_modules
-RUN rm -rf yarn.lock
-RUN yarn cache clean
-RUN yarn && yarn build
+RUN rm -rf node_modules yarn.lock
+RUN npm install && npm run build
 # LABEL base="false"
 
 # FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16-slim:latest
@@ -15,4 +13,4 @@ RUN yarn && yarn build
 # COPY --from=builder /home/node/app /home/node/app 
 EXPOSE 3001
 LABEL base="false"
-CMD ["yarn", "run" , "start"]
+CMD ["npm", "run" , "start"]
