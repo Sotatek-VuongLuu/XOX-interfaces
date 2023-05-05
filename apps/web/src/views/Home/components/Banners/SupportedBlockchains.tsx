@@ -282,7 +282,7 @@ const Wrapper = styled.div`
 
       @media screen and (min-width: 500px) and (max-width: 576px) {
         grid-template-columns: repeat(7, 1fr);
-        grid-template-rows: repeat(14, 0.4fr);
+        grid-template-rows: repeat(8, 0.4fr);
         width: 100%;
 
         img {
@@ -294,7 +294,7 @@ const Wrapper = styled.div`
 
       @media screen and (max-width: 499px) {
         grid-template-columns: repeat(7, 1fr);
-        grid-template-rows: repeat(14, 0.4fr);
+        grid-template-rows: repeat(8, 0.4fr);
         width: 105%;
 
         img {
@@ -302,6 +302,49 @@ const Wrapper = styled.div`
           height: auto;
           object-fit: contain;
         }
+      }
+    }
+  }
+
+  .instruction-video {
+    width: 100%;
+    margin-bottom: 0px;
+    > p:nth-child(1) {
+      font-weight: 700;
+      font-size: 36px;
+      line-height: 32px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.87);
+      margin-top: 100px;
+    }
+
+    > p:nth-child(2) {
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 32px;
+      text-align: center;
+      color: rgba(255, 255, 255, 0.67);
+      margin-top: 20px;
+    }
+    > div {
+      width: 100%;
+      > video {
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    @media screen and (max-width: 682px) {
+      margin-bottom: 64px;
+      > p:nth-child(1) {
+        font-size: 20px;
+        line-height: 32px;
+        margin-top: 40px;
+      }
+      > p:nth-child(2) {
+        font-size: 14px;
+        line-height: 24px;
+        margin-top: 8px;
       }
     }
   }
@@ -385,6 +428,26 @@ const SupportedBlockchains = () => {
           </div>
         </div>
       </Box>
+
+      <div className="instruction-video">
+        <p>Earn & Trade like a Pro</p>
+        <p>Unlocking DeFi for millions of users.</p>
+        <div>
+          <video
+            autoPlay
+            loop
+            muted
+            playsInline
+            id="laptopVideo"
+            controls={false}
+            preload="yes"
+            style={{ pointerEvents: 'none' }}
+          >
+            <source src="/videos/home/DappPromo.mov" type='video/mp4; codecs="hvc1"' />
+            <source src="/videos/home/DappPromo.webm" type="video/webm" />
+          </video>
+        </div>
+      </div>
     </Wrapper>
   )
 }
