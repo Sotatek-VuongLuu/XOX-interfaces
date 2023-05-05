@@ -430,8 +430,8 @@ const SupportedBlockchains = () => {
       </Box>
 
       <div className="instruction-video">
-        <p>Earn & Trade like a Pro</p>
-        <p>Unlocking DeFi for millions of users.</p>
+        <p data-aos="fade-up">{t('Earn & Trade like a Pro')}</p>
+        <p data-aos="fade-up">{t('Unlocking DeFi for millions of users.')}</p>
         <div>
           <video
             autoPlay
