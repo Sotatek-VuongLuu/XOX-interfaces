@@ -187,7 +187,14 @@ function CountDownBlock({
   const modalElement = document.getElementById('modal-root')
   const [isShowModal, setShowModal] = useState(false)
 
-  const isMac = typeof window !== 'undefined' ? navigator.platform.toUpperCase().indexOf('MAC') >= 0 : false
+  const isMac =
+    typeof window !== 'undefined'
+      ? ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod', 'MAC'].includes(
+          navigator.platform,
+        ) ||
+        // iPad on iOS 13 detection
+        (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
+      : false
 
   const handleOnClose = () => {
     setShowModal(false)
