@@ -61,9 +61,9 @@ export default function ADDComponent() {
     },
     {
       title: t('Company Reserve'),
-      content: [`${new BigNumber(27000000).toFormat()} Tokens`, t('0% at TGE & 4 years vesting 25% Yearly')],
+      content: [`${new BigNumber(18000000).toFormat()} Tokens`, t('0% at TGE & 4 years vesting 25% Yearly')],
       color: '#969696',
-      value: 27000000,
+      value: 18000000,
     },
     {
       title: t('Strategic Partnership'),
@@ -73,9 +73,9 @@ export default function ADDComponent() {
     },
     {
       title: t('Ecosystem Growth'),
-      content: [`${new BigNumber(36000000).toFormat()} Tokens`, t('0% at TGE & 4 years vesting 25% Yearly')],
+      content: [`${new BigNumber(27000000).toFormat()} Tokens`, t('0% at TGE & 4 years vesting 25% Yearly')],
       color: '#86B6FF',
-      value: 36000000,
+      value: 27000000,
     },
     {
       title: t('Community Rewards'),
@@ -113,16 +113,16 @@ export default function ADDComponent() {
       value: 5400000,
     },
     {
-      title: t('Private Sale'),
+      title: t('Pre Sale'),
       content: [`${new BigNumber(10800000).toFormat()} Tokens`, t('10% release at TGE then 10% release Monthly')],
       color: '#C20DA3',
       value: 10800000,
     },
     {
       title: t('Public Sale'),
-      content: [`${new BigNumber(18000000).toFormat()} Tokens`, t('40% realease at TGE then 10% Monthly')],
+      content: [`${new BigNumber(36000000).toFormat()} Tokens`, t('40% realease at TGE then 10% Monthly')],
       color: '#A964C9',
-      value: 18000000,
+      value: 36000000,
     },
     {
       title: t('Liquidity Pools DEX'),
