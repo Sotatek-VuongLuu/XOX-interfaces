@@ -107,6 +107,7 @@ const Wrapper = styled.div`
     overflow: hidden;
 
     .player-wrapper {
+      margin: auto;
       position: relative;
       border-radius: 10px;
       width: fit-content;
