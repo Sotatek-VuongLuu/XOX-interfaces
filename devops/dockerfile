@@ -3,7 +3,6 @@ RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
 COPY . .
 COPY .env /home/node/app/apps/web/.env.production
-RUN yarn cache clean && yarn clean
 RUN yarn install --network-timeout 600000 && yarn build
 # LABEL base="false"
 
