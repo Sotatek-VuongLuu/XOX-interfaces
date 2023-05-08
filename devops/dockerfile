@@ -1,11 +1,9 @@
-FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16-slim:latest
+FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16:latest
 RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
 COPY . .
 COPY .env /home/node/app/apps/web/.env.production
-RUN yarn -v
-RUN node -v 
-RUN yarn install --network-timeout 600000 && yarn build
+RUN yarn install && yarn build
 # LABEL base="false"
 
 # FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16-slim:latest
