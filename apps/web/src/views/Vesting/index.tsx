@@ -212,7 +212,7 @@ const initialTokenMetrics = [
   },
   {
     id: 10,
-    title: 'Private Sale (10% release at TGE then 10% release Monthly)',
+    title: 'Pre Sale (10% release at TGE then 10% release Monthly)',
     tokenAllocationPercent: '6',
     tokenAllocation: '10800000',
     tge: '0.6',
@@ -223,11 +223,11 @@ const initialTokenMetrics = [
   {
     id: 11,
     title: 'Public Sale (40% realease at TGE then 10% Monthly)',
-    tokenAllocationPercent: '10',
-    tokenAllocation: '18000000',
-    tge: '4',
-    tokenAllocationatTge: '7200000',
-    initialMarketcap: '432000',
+    tokenAllocationPercent: '20',
+    tokenAllocation: '36000000',
+    tge: '8',
+    tokenAllocationatTge: '14400000',
+    initialMarketcap: '864000',
     fullyDilitedMc: '',
   },
   {
