@@ -79,7 +79,7 @@ export default function ADDComponent() {
     },
     {
       title: t('Community Rewards'),
-      content: [`${new BigNumber(1800000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
+      content: [`${new BigNumber(1800000).toFormat()} Tokens`, t('25% at TGE & 3 years vesting 25% Yearly')],
       color: '#50817C',
       value: 1800000,
     },
