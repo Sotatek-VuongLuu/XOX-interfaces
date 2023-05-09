@@ -140,7 +140,7 @@ export default function ADDComponent() {
   const AAD_TOTAL = [...AAD_DATA_L, ...AAD_DATA_R].map((aad) => aad.value).reduce((a, b) => a + b, 0)
   const AAD_DATA_TOTAL: IAAD = {
     title: t('XOX Token Metrics'),
-    content: [` TGE (19%) - 34,200,000 Tokens`],
+    content: [`TGE (23.35%) - 42,030,000 Tokens`],
     highLight: true,
     value: AAD_TOTAL,
   }
