@@ -998,8 +998,8 @@ const WelcomeXOX = (): JSX.Element => {
                 preload="yes"
                 style={{ pointerEvents: 'none' }}
               >
-                <source src="/videos/home/laptop.mov" type='video/mp4; codecs="hvc1"' />
-                <source src="/videos/home/laptop.webm" type="video/webm" />
+                <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/laptop.mov`} type='video/mp4; codecs="hvc1"' />
+                <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/laptop.webm`} type="video/webm" />
               </video>
             </div>
           </Grid>

@@ -362,8 +362,8 @@ function StartingSoon({
               preload="yes"
               style={{ pointerEvents: 'none' }}
             >
-              <source src="/videos/presale/presale.mov" type='video/mp4; codecs="hvc1"' />
-              <source src="/videos/presale/presale.webm" type="video/webm" />
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/presale/presale.mov`} type='video/mp4; codecs="hvc1"' />
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/presale/presale.webm`} type="video/webm" />
             </video>
           </div>
         </>
@@ -383,8 +383,8 @@ function StartingSoon({
           preload="yes"
           style={{ pointerEvents: 'none' }}
         >
-          <source src="/videos/presale/presale.mov" type='video/mp4; codecs="hvc1"' />
-          <source src="/videos/presale/presale.webm" type="video/webm" />
+          <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/presale/presale.mov`} type='video/mp4; codecs="hvc1"' />
+          <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/presale/presale.webm`} type="video/webm" />
         </video>
       </div>
     )
@@ -445,8 +445,8 @@ function StartingSoon({
             preload="yes"
             style={{ pointerEvents: 'none' }}
           >
-            <source src="/videos/presale/presale.mov" type='video/mp4; codecs="hvc1"' />
-            <source src="/videos/presale/presale.webm" type="video/webm" />
+            <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/presale/presale.mov`} type='video/mp4; codecs="hvc1"' />
+            <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/presale/presale.webm`} type="video/webm" />
           </video>
         </div>
       ) : (

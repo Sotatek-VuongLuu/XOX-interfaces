@@ -62,7 +62,6 @@ const InterOuter = styled.div`
       text-align: center;
       color: #ffffff;
       margin-top: 0px;
-      
     }
     > h6 {
       font-weight: 400 !important;
@@ -143,8 +142,8 @@ const InterOuter = styled.div`
         font-size: 17px;
         line-height: 21px;
       }
-      > h5  {
-        margin-top:10px;
+      > h5 {
+        margin-top: 10px;
       }
       > p {
         margin-top: 10px;
@@ -197,8 +196,8 @@ function NotificationBannerAirdrop() {
                   className=""
                   style={{ pointerEvents: 'none' }}
                 >
-                  <source src="/videos/airdropPopup/PopupAir.mov" type='video/mp4; codecs="hvc1"' />
-                  <source src="/videos/airdropPopup/PopupAir.webm" type="video/webm" />
+                  <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/airdropPopup/PopupAir.mov`} type='video/mp4; codecs="hvc1"' />
+                  <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/airdropPopup/PopupAir.webm`} type="video/webm" />
                 </video>
               </div>
             )}

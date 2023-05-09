@@ -443,8 +443,8 @@ const SupportedBlockchains = () => {
             preload="yes"
             style={{ pointerEvents: 'none' }}
           >
-            <source src="/videos/home/DappPromo.mov" type='video/mp4; codecs="hvc1"' />
-            <source src="/videos/home/DappPromo.webm" type="video/webm" />
+            <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/DappPromo.mov`} type='video/mp4; codecs="hvc1"' />
+            <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/DappPromo.webm`} type="video/webm" />
           </video>
         </div>
       </div>

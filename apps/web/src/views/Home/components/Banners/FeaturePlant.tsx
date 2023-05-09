@@ -255,8 +255,8 @@ const FeaturePlant = () => {
                 preload="yes"
                 style={{ pointerEvents: 'none' }}
               >
-                <source src="/videos/home/3d_xox.mov" type='video/mp4; codecs="hvc1"' />
-                <source src="/videos/home/3d_xox.webm" type="video/webm" />
+                <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/3d_xox.mov`} type='video/mp4; codecs="hvc1"' />
+                <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/3d_xox.webm`} type="video/webm" />
               </video>
             </div>
           </RightContent>

@@ -550,8 +550,8 @@ export default function TokenomicsPage() {
               preload="yes"
               style={{ pointerEvents: 'none' }}
             >
-              <source src="/videos/tokenomics/pie_chart.mov" type='video/mp4; codecs="hvc1"' />
-              <source src="/videos/tokenomics/pie_chart.webm" type="video/webm" />
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/tokenomics/pie_chart.mov`} type='video/mp4; codecs="hvc1"' />
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/tokenomics/pie_chart.webm`} type="video/webm" />
             </video>
             {/* <img src="/images/tokenomics/Untitled@5-1397x721 1.png" alt="" draggable="false" loading="lazy" /> */}
           </div>

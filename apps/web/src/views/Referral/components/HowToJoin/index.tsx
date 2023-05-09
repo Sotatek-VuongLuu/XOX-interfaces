@@ -217,7 +217,7 @@ const HowToJoin = (): JSX.Element => {
           <div className="player-wrapper">
             <ReactPlayer
               className="react-player"
-              url="videos/referrals/video1.mp4"
+              url={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video1.mp4`}
               playing
               controls
               light
@@ -230,7 +230,7 @@ const HowToJoin = (): JSX.Element => {
           <div className="player-wrapper">
             <ReactPlayer
               className="react-player"
-              url="videos/referrals/video2.mp4"
+              url={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video2.mp4`}
               playing
               controls
               light
@@ -243,7 +243,7 @@ const HowToJoin = (): JSX.Element => {
           <div className="player-wrapper">
             <ReactPlayer
               className="react-player"
-              url="videos/referrals/video3.mp4"
+              url={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video3.mp4`}
               playing
               controls
               light
