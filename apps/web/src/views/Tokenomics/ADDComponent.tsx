@@ -79,7 +79,7 @@ export default function ADDComponent() {
     },
     {
       title: t('Community Rewards'),
-      content: [`${new BigNumber(1800000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
+      content: [`${new BigNumber(1800000).toFormat()} Tokens`, t('25% at TGE & 3 years vesting 25% Yearly')],
       color: '#50817C',
       value: 1800000,
     },
@@ -108,7 +108,7 @@ export default function ADDComponent() {
     },
     {
       title: t('Partners Sale'),
-      content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('10% release at TGE then 10% release Monthly')],
+      content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('10% release at TGE then 5% release Monthly')],
       color: '#FF5353',
       value: 5400000,
     },
@@ -140,7 +140,7 @@ export default function ADDComponent() {
   const AAD_TOTAL = [...AAD_DATA_L, ...AAD_DATA_R].map((aad) => aad.value).reduce((a, b) => a + b, 0)
   const AAD_DATA_TOTAL: IAAD = {
     title: t('XOX Token Metrics'),
-    content: [` TGE (19%) - 34,200,000 Tokens`],
+    content: [`TGE (23.35%) - 42,030,000 Tokens`],
     highLight: true,
     value: AAD_TOTAL,
   }
