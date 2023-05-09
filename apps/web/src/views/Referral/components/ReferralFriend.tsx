@@ -851,7 +851,7 @@ const ReferralFriend = ({
                                   tooltipMessage={t('Copied')}
                                   button={
                                     <img
-                                      src="/images/copy_referral.svg"
+                                      src={`/images/copy_referral.svg`}
                                       alt="copy_purple"
                                       style={{ marginBottom: '-2px', marginLeft: '8px' }}
                                     />
@@ -894,10 +894,10 @@ const ReferralFriend = ({
                           <div className="main-img">
                             <img
                               className="first-img"
-                              src={item.isReach ? '/images/current_item.svg' : 'images/item.svg'}
+                              src={item.isReach ? `/images/current_item.svg` : `/images/item.svg`}
                               alt="images"
                             />
-                            <img className="sec-img" src="/images/current_item.svg" alt="images" />
+                            <img className="sec-img" src={`/images/current_item.svg`} alt="images" />
                           </div>
                           <div className="inner-text">
                             <img src={item.icon} alt="icons" className="jewellery" />
@@ -1066,10 +1066,10 @@ const ReferralFriend = ({
             </span>
           </div>
           <div className="noti_claim_success">
-            <img src="/images/success_claim.png" alt="success_claim" />
+            <img src={`/images/success_claim.png`} alt="success_claim" />
           </div>
           <img
-            src="/images/close-one.svg"
+            src={`/images/close-one.svg`}
             alt="close-one"
             className="x-close-icon"
             aria-hidden="true"
@@ -1090,7 +1090,7 @@ const ReferralFriend = ({
           <div className="noti_claim_pending_h1">{t('Waiting For Confirmation')}</div>
           <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
           <img
-            src="/images/close-one.svg"
+            src={`/images/close-one.svg`}
             alt="close-one"
             className="x-close-icon"
             aria-hidden="true"
@@ -1101,7 +1101,7 @@ const ReferralFriend = ({
       <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Confirm Claim">
         <Content>
           <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
-            <img src="/images/reject_xox.png" alt="reject_xox" />
+            <img src={`/images/reject_xox.png`} alt="reject_xox" />
           </div>
           <div className="noti_claim_pending_h2">{t('Transaction rejected.')}</div>
           <div className="btn_dismiss_container">
@@ -1110,7 +1110,7 @@ const ReferralFriend = ({
             </button>
           </div>
           <img
-            src="/images/close-one.svg"
+            src={`/images/close-one.svg`}
             alt="close-one"
             className="x-close-icon"
             aria-hidden="true"
@@ -1126,63 +1126,63 @@ export default ReferralFriend
 
 export const listLever: IItemLevel[] = [
   {
-    icon: '/images/lever_1.svg',
+    icon: `/images/lever_1.svg`,
     point: 100,
     dollar: 10,
     lever: 1,
     isReach: false,
   },
   {
-    icon: '/images/lever_2.svg',
+    icon: `/images/lever_2.svg`,
     point: 500,
     dollar: 50,
     lever: 2,
     isReach: false,
   },
   {
-    icon: '/images/lever_3.svg',
+    icon: `/images/lever_3.svg`,
     point: 1000,
     dollar: 100,
     lever: 3,
     isReach: false,
   },
   {
-    icon: '/images/lever_4.svg',
+    icon: `/images/lever_4.svg`,
     point: 5000,
     dollar: 300,
     lever: 4,
     isReach: false,
   },
   {
-    icon: '/images/lever_5.svg',
+    icon: `/images/lever_5.svg`,
     point: 10000,
     dollar: 500,
     lever: 5,
     isReach: false,
   },
   {
-    icon: '/images/lever_6.svg',
+    icon: `/images/lever_6.svg`,
     point: 50000,
     dollar: 2000,
     lever: 6,
     isReach: false,
   },
   {
-    icon: '/images/lever_7.svg',
+    icon: `/images/lever_7.svg`,
     point: 100000,
     dollar: 5000,
     lever: 7,
     isReach: false,
   },
   {
-    icon: '/images/lever_8.svg',
+    icon: `/images/lever_8.svg`,
     point: 500000,
     dollar: 10000,
     lever: 8,
     isReach: false,
   },
   {
-    icon: '/images/lever_9.svg',
+    icon: `/images/lever_9.svg`,
     point: 1000000,
     dollar: 20000,
     lever: 9,

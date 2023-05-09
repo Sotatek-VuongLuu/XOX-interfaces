@@ -374,7 +374,7 @@ function SaleMechanism({
         {width <= 900 && isMore && (
           <div className="container_learnless">
             <div>
-              <img src="/images/fi_chevrons-down.png" alt="fi_chevrons-down" className="fi_chevrons-up" />
+              <img src={`/images/fi_chevrons-down.png`} alt="fi_chevrons-down" className="fi_chevrons-up" />
               <button type="button" className="btn_learnless" onMouseDown={() => setIsMore(false)}>
                 {t('Learn Less')}
               </button>
@@ -387,7 +387,7 @@ function SaleMechanism({
             <button type="button" className="btn_learnmore" onClick={() => setIsMore(true)}>
               {t('Learn More')}
             </button>
-            <img src="/images/fi_chevrons-down.svg" alt="fi_chevrons-down" className="fi_chevrons-down" />
+            <img src={`/images/fi_chevrons-down.svg`} alt="fi_chevrons-down" className="fi_chevrons-down" />
           </div>
         )}
       </>

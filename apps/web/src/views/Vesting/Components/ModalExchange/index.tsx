@@ -414,7 +414,7 @@ function ModalSaleExchange({
               <Text className="coin">
                 {typeBuyPrice === TYPE_BY.BY_ERC20 && (
                   <>
-                    <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
+                    <img src={`/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg`} alt="logo" />
                     <span>USDT</span>
                     <TooltipText ref={targetRef} style={{height: '24px'}}>
                       <HelpIcon width="20px" height="20px" />
@@ -424,7 +424,7 @@ function ModalSaleExchange({
                 )}
                 {typeBuyPrice === TYPE_BY.BY_ETH && (
                   <>
-                    <img src="/images/1/tokens/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2.svg" alt="logo" />
+                    <img src={`/images/1/tokens/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2.svg`} alt="logo" />
                     <span>ETH</span>
                   </>
                 )}
@@ -446,7 +446,7 @@ function ModalSaleExchange({
               <Text className="coin">
                 {typeBuyPrice === TYPE_BY.BY_ERC20 && (
                   <>
-                    <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg" alt="logo" />
+                    <img src={`/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg`} alt="logo" />
                     <span>USDT</span>
                     <TooltipText ref={targetRef} style={{height: '24px'}}>
                       <HelpIcon width="20px" height="20px" />
@@ -456,7 +456,7 @@ function ModalSaleExchange({
                 )}
                 {typeBuyPrice === TYPE_BY.BY_ETH && (
                   <>
-                    <img src="/images/1/tokens/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2.svg" alt="logo" />
+                    <img src={`/images/1/tokens/0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2.svg`} alt="logo" />
                     <span>ETH</span>
                   </>
                 )}

@@ -53,7 +53,7 @@ export function PageNetworkSupportModal() {
 
         {image && (
           <BoxContainer mx="auto" my="8px" width="100%" minHeight="250px">
-            <img src="/images/ref_xox_mb.svg" alt="ref_xox" className="ref_xox" />
+            <img src={`/images/ref_xox_mb.svg`} alt="ref_xox" className="ref_xox" />
           </BoxContainer>
         )}
         {canSwitch ? (

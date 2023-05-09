@@ -95,13 +95,13 @@ const FeatureEconomy = () => {
           <Grid container spacing={2}>
             <Grid item xs={12} md={11}>
               <div className="main_card_content">
-                <img src="/images/chain_4.svg" alt="token-card" className="chain_4" />
+                <img src={`/images/chain_4.svg`} alt="token-card" className="chain_4" />
 
                 <div className="card_container">
-                  <img src="/images/chain_3.svg" alt="token-card" className="chain_3" />
-                  <img src="/images/chain_2.svg" alt="token-card" className="chain_2" />
+                  <img src={`/images/chain_3.svg`} alt="token-card" className="chain_3" />
+                  <img src={`/images/chain_2.svg`} alt="token-card" className="chain_2" />
                 </div>
-                <img src="/images/chain_1.svg" alt="token-card" className="chain_1" />
+                <img src={`/images/chain_1.svg`} alt="token-card" className="chain_1" />
               </div>
             </Grid>
             <Grid item xs={12} md={1}>

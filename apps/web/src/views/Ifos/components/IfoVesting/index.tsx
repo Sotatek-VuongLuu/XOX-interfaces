@@ -45,17 +45,17 @@ const IfoVestingStatus = {
   [VestingStatus.NOT_TOKENS_CLAIM]: {
     status: VestingStatus.NOT_TOKENS_CLAIM,
     text: <Trans>You have no tokens available for claiming</Trans>,
-    imgUrl: '/images/ifos/vesting/not-tokens.svg',
+    imgUrl: `/images/ifos/vesting/not-tokens.svg`,
   },
   [VestingStatus.HAS_TOKENS_CLAIM]: {
     status: VestingStatus.HAS_TOKENS_CLAIM,
     text: <Trans>You have tokens available for claiming now!</Trans>,
-    imgUrl: '/images/ifos/vesting/in-vesting-period.svg',
+    imgUrl: `/images/ifos/vesting/in-vesting-period.svg`,
   },
   [VestingStatus.ENDED]: {
     status: VestingStatus.ENDED,
     text: <Trans>No vesting token to claim.</Trans>,
-    imgUrl: '/images/ifos/vesting/in-vesting-end.svg',
+    imgUrl: `/images/ifos/vesting/in-vesting-end.svg`,
   },
 }
 

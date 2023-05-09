@@ -52,15 +52,15 @@ const BGXOXDapp = () => {
     <>
       {width > 900 ? (
         <>
-          <BGLeft src="/images/home/bg-cubes/xoxdapp_left.svg" />
-          <BGCubeLeft src="/images/home/bg-cubes/xoxdapp_cube_left.svg" />
-          <BGRight src="/images/home/bg-cubes/xoxdapp_right.svg" />
-          <BGCubeRight src="/images/home/bg-cubes/xoxdapp_cube_right.svg" />
+          <BGLeft src={`/images/home/bg-cubes/xoxdapp_left.svg`} />
+          <BGCubeLeft src={`/images/home/bg-cubes/xoxdapp_cube_left.svg`} />
+          <BGRight src={`/images/home/bg-cubes/xoxdapp_right.svg`} />
+          <BGCubeRight src={`/images/home/bg-cubes/xoxdapp_cube_right.svg`} />
         </>
       ) : (
         <>
-          <BGMobileRight src="/images/home/bg-cubes/xoxdapp_mobile_right_cube.svg" />
-          <BGMobileCubeRight src="/images/home/bg-cubes/xoxdapp_mobile_cube_right.svg" />
+          <BGMobileRight src={`/images/home/bg-cubes/xoxdapp_mobile_right_cube.svg`} />
+          <BGMobileCubeRight src={`/images/home/bg-cubes/xoxdapp_mobile_cube_right.svg`} />
         </>
       )}
     </>

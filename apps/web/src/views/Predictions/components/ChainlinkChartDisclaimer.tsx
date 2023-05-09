@@ -38,7 +38,7 @@ const ChartDisclaimer: FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDi
     <ModalContainer $minWidth="320px">
       <ModalBody p="24px" maxWidth="400px">
         <Flex justifyContent="center" mb="32px">
-          <Image src="/images/predictions/chartwarning2.svg" width={190} height={118} />
+          <Image src={`/images/predictions/chartwarning2.svg`} width={190} height={118} />
         </Flex>
         <Heading as="h3" size="sm">
           {t('Currently showing charts from Chainlink oracle')}

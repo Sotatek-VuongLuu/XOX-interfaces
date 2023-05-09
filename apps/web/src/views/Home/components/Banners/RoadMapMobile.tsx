@@ -145,14 +145,14 @@ const RoadMapMobile = () => {
             >
               <div className="line_milestone">
                 {item.status === 'done' ? (
-                  <img src="/images/done_mobile.svg" alt="milestone" />
+                  <img src={`/images/done_mobile.svg`} alt="milestone" />
                 ) : item.status === 'processing' ? (
-                  <img src="/images/now_done_mobile.svg" alt="milestone" />
+                  <img src={`/images/now_done_mobile.svg`} alt="milestone" />
                 ) : (
-                  <img src="/images/not_done_mobile.svg" alt="milestone" />
+                  <img src={`/images/not_done_mobile.svg`} alt="milestone" />
                 )}
 
-                {item.status === 'done' ? <img src="/images/line_dash.svg" alt="milestone" /> : <LineNotDash className='line_status_mb'/>}
+                {item.status === 'done' ? <img src={`/images/line_dash.svg`} alt="milestone" /> : <LineNotDash className='line_status_mb'/>}
               </div>
 
               <div className="title_content">
@@ -163,7 +163,7 @@ const RoadMapMobile = () => {
                     return (
                       <div className="entry" key={entry}>
                         <div>
-                          <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+                          <img src={`/images/icon-stone.svg`} alt="icon-stone" className="icon_stone" />
                         </div>
                         <div className="describe">{entry}</div>
                       </div>

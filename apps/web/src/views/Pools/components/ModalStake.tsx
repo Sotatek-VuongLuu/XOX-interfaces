@@ -492,7 +492,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
                   {t('Get %symbol%', { symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP' })}
                 </span>
                 <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center' }}>
-                  <img src="/images/external-icon.svg" alt="external-icon" />
+                  <img src={`/images/external-icon.svg`} alt="external-icon" />
                 </span>
               </p>
             </a>

@@ -749,7 +749,7 @@ export default function BridgeToken() {
             >
               <Content>
                 <div className="noti_claim_success">
-                  <img src="/images/success_claim.png" alt="success_claim" />
+                  <img src={`/images/success_claim.png`} alt="success_claim" />
                 </div>
                 <div className="submitted">{t('Transaction Submitted')}</div>
                 <LinkExternal
@@ -779,7 +779,7 @@ export default function BridgeToken() {
             <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title={t('Confirm Bridge')}>
               <Content>
                 <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
-                  <img src="/images/reject_xox.png" alt="reject_xox" />
+                  <img src={`/images/reject_xox.png`} alt="reject_xox" />
                 </div>
                 <div className="noti_claim_pending_h4">{t('Transaction rejected.')}</div>
                 <div className="btn_dismiss_container">
@@ -788,7 +788,7 @@ export default function BridgeToken() {
                   </button>
                 </div>
                 <img
-                  src="/images/close-one.svg"
+                  src={`/images/close-one.svg`}
                   alt="close-one"
                   className="x-close-icon"
                   aria-hidden="true"
@@ -814,7 +814,7 @@ export default function BridgeToken() {
                 </div>
                 <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
                 <img
-                  src="/images/close-one.svg"
+                  src={`/images/close-one.svg`}
                   alt="close-one"
                   className="x-close-icon"
                   aria-hidden="true"

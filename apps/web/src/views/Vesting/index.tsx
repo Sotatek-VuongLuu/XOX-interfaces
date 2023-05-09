@@ -1240,7 +1240,7 @@ function VestingPage() {
           <div className="noti_claim_pending_h3">{messageConfirm}</div>
           <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
           <img
-            src="/images/close-one.svg"
+            src={`/images/close-one.svg`}
             alt="close-one"
             className="x-close-icon"
             aria-hidden="true"

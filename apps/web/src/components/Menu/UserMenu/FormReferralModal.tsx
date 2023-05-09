@@ -496,7 +496,7 @@ const FormReferralModal = (_, ref) => {
             >
               {t('You have set your profile successfully.')}
             </Text>
-            <img src="/images/image45.png" style={{ margin: 'auto', display: 'block', cursor: 'pointer' }} alt="" />
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/image45.png`} style={{ margin: 'auto', display: 'block', cursor: 'pointer' }} alt="" />
             <button onClick={onCloseBtnClicked} type="button">
               <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
                 <path

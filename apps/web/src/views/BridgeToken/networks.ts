@@ -1,9 +1,9 @@
 import { ChainId } from '@pancakeswap/sdk'
 
-const Bsc = '/images/networks/bsc-network.png'
-const Goerli = '/images/networks/goerli-network.jpg'
-const Polygon = '/images/networks/eth-network.png'
-const Rinkeby = '/images/networks/eth-network.png'
+const Bsc = `/images/networks/bsc-network.png`
+const Goerli = `/images/networks/goerli-network.jpg`
+const Polygon = `/images/networks/eth-network.png`
+const Rinkeby = `/images/networks/eth-network.png`
 
 export const NETWORK_ICON = {
   [ChainId.BSC]: Bsc,

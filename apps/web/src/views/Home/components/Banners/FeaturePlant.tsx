@@ -213,7 +213,7 @@ const FeaturePlant = () => {
                 return (
                   <p key={title}>
                     <span>
-                      <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+                      <img src={`/images/icon-stone.svg`} alt="icon-stone" className="icon_stone" />
                     </span>
                     <span className="title_list_item">{t(title)}</span>
                   </p>
@@ -227,15 +227,15 @@ const FeaturePlant = () => {
             <Watch>
               {width > 900 ? (
                 <>
-                  <img src="/images/x3.svg" alt="x3" className="x3" />
-                  <img src="/images/x2.svg" alt="x2" className="x2" />
-                  <img src="/images/x1.svg" alt="x1" className="x1" />
+                  <img src={`/images/x3.svg`} alt="x3" className="x3" />
+                  <img src={`/images/x2.svg`} alt="x2" className="x2" />
+                  <img src={`/images/x1.svg`} alt="x1" className="x1" />
                 </>
               ) : (
                 <>
-                  <img src="/images/xox_plant_mobile_2.svg" alt="x3" className="x3" />
-                  <img src="/images/xox_plant_mobile_3.svg" alt="x2" className="x2" />
-                  <img src="/images/xox_plant_mobile_1.svg" alt="x1" className="x1" />
+                  <img src={`/images/xox_plant_mobile_2.svg`} alt="x3" className="x3" />
+                  <img src={`/images/xox_plant_mobile_3.svg`} alt="x2" className="x2" />
+                  <img src={`/images/xox_plant_mobile_1.svg`} alt="x1" className="x1" />
                 </>
               )}
             </Watch>

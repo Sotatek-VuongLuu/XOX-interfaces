@@ -113,11 +113,11 @@ const RoadMapItem = ({ item, index }: Iprops) => {
       <ContainerItem className={index === 1 ? 'left' : ''}>
         {item.status === 'done' ? <LineDash className="line_status" /> : <LineNotDone className="line_status" />}
         {item.status === 'done' ? (
-          <img src="/images/mile_stone_done.svg" alt="milestone" className="milestone" />
+          <img src={`/images/mile_stone_done.svg`} alt="milestone" className="milestone" />
         ) : item.status === 'processing' ? (
-          <img src="/images/mile_stone_now.svg" alt="milestone" className="milestone" />
+          <img src={`/images/mile_stone_now.svg`} alt="milestone" className="milestone" />
         ) : (
-          <img src="/images/milestone.svg" alt="milestone" className="milestone" />
+          <img src={`/images/milestone.svg`} alt="milestone" className="milestone" />
         )}
         <Line className="line" />
         <div className="item__main-content">
@@ -128,7 +128,7 @@ const RoadMapItem = ({ item, index }: Iprops) => {
               return (
                 <div className="entry" key={`${entry}_container`}>
                   <div>
-                    <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+                    <img src={`/images/icon-stone.svg`} alt="icon-stone" className="icon_stone" />
                   </div>
                   <div className="describe">{t(entry)}</div>
                 </div>

@@ -70,7 +70,7 @@ const ProfileHeader: React.FC<React.PropsWithChildren<HeaderProps>> = ({
       : '-'
     : null
 
-  const avatarImage = profile?.nft?.image?.thumbnail || '/images/nfts/no-profile-md.png'
+  const avatarImage = profile?.nft?.image?.thumbnail || `/images/nfts/no-profile-md.png`
   const profileTeamId = profile?.teamId
   const profileUsername = isConnectedAccount ? usernameWithVisibility : profile?.username
   const hasProfile = !!profile
@@ -82,7 +82,7 @@ const ProfileHeader: React.FC<React.PropsWithChildren<HeaderProps>> = ({
   const Icon = userUsernameVisibility ? VisibilityOff : VisibilityOn
 
   const bannerImage = useMemo(() => {
-    const imagePath = '/images/teams'
+    const imagePath = `/images/teams`
     switch (profileTeamId) {
       case 1:
         return `${imagePath}/storm-banner.png`

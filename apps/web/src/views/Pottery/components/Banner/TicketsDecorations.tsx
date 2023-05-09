@@ -152,13 +152,13 @@ const Container = styled(Box)`
 const TicketsDecorations: React.FC<React.PropsWithChildren> = () => {
   return (
     <Container>
-      <img src="/images/pottery/banner-ticket/left1.png" alt="" />
-      <img src="/images/pottery/banner-ticket/left2.png" alt="" />
-      <img src="/images/pottery/banner-ticket/left3.png" alt="" />
-      <img src="/images/pottery/banner-ticket/left4.png" alt="" />
-      <img src="/images/pottery/banner-ticket/right1.png" alt="" />
-      <img src="/images/pottery/banner-ticket/right2.png" alt="" />
-      <img src="/images/pottery/banner-ticket/right3.png" alt="" />
+      <img src="/image-removed/pottery/banner-ticket/left1.png" alt="" />
+      <img src="/image-removed/pottery/banner-ticket/left2.png" alt="" />
+      <img src="/image-removed/pottery/banner-ticket/left3.png" alt="" />
+      <img src="/image-removed/pottery/banner-ticket/left4.png" alt="" />
+      <img src="/image-removed/pottery/banner-ticket/right1.png" alt="" />
+      <img src="/image-removed/pottery/banner-ticket/right2.png" alt="" />
+      <img src="/image-removed/pottery/banner-ticket/right3.png" alt="" />
     </Container>
   )
 }

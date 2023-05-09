@@ -79,7 +79,7 @@ const StarsWrapper = styled.div`
 `
 
 const starsImage: CompositeImageProps = {
-  path: '/images/home/lunar-bunny/',
+  path: '/image-removed/home/lunar-bunny/',
   attributes: [
     { src: 'star-l', alt: '3D Star' },
     { src: 'star-r', alt: '3D Star' },

@@ -68,17 +68,17 @@ const BGPartner = () => {
     <>
       {width > 900 ? (
         <>
-          <BGLeft src="/images/pl.svg" />
-          <DevelopmentMapBG src="/images/home/bg-cubes/development_map_left.svg" />
-          <BGRight src="/images/pr.svg" />
-          <BGXOX src="/images/xoxs_secured.svg" />
+          <BGLeft src={`/images/pl.svg`} />
+          <DevelopmentMapBG src={`/images/home/bg-cubes/development_map_left.svg`} />
+          <BGRight src={`/images/pr.svg`} />
+          <BGXOX src={`/images/xoxs_secured.svg`} />
         </>
       ) : (
         <>
-          <BGMobile src="/images/bg_mobile.svg" alt="bg_mobile" />
-          <BGXOXMobile src="/images/xox_mobile_change.svg" alt="xox_mobile" />
-          <BGMobileTow src="/images/bg_mobile_2.svg" alt="bg_mobile" />
-          <BGMobileCube src="/images/bg_cube_mobile_2.svg" alt="bg_mobile" />
+          <BGMobile src={`/images/bg_mobile.svg" alt="bg_mobile`} />
+          <BGXOXMobile src={`/images/xox_mobile_change.svg" alt="xox_mobile`} />
+          <BGMobileTow src={`/images/bg_mobile_2.svg" alt="bg_mobile`} />
+          <BGMobileCube src={`/images/bg_cube_mobile_2.svg" alt="bg_mobile`} />
         </>
       )}
     </>
