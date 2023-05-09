@@ -210,7 +210,7 @@ const Desktop: React.FC<React.PropsWithChildren> = () => {
             }}
           >
             <PowerLinkStyle>
-              <img src="/images/powered-by-chainlink.png" alt="Powered by ChainLink" width="170px" height="48px" />
+              <img src={`/images/powered-by-chainlink.png`} alt="Powered by ChainLink" width="170px" height="48px" />
             </PowerLinkStyle>
             <ExpandButtonGroup>
               <TabToggle

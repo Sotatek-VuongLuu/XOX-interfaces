@@ -273,7 +273,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
     <StyledModalContainer>
       <StyledModalHeader>{t('Bridge Token History')}</StyledModalHeader>
       <img
-        src="/images/close-one.svg"
+        src={`/images/close-one.svg`}
         alt="close-one"
         className="x-close-icon"
         onClick={onDismiss}
@@ -360,7 +360,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                         <div className="row-item" style={{ width: '15%' }}>
                           <span>{NETWORK_LABEL[row.chainId]}</span>
                           <span style={{ margin: '5px 10px 0px 10px' }}>
-                            <img src="/images/bridge/arrow_bridge.svg" alt="bridge" />
+                            <img src={`/images/bridge/arrow_bridge.svg`} alt="bridge" />
                           </span>
                           <span>{NETWORK_LABEL[getChainIdToByChainId(row.chainId)]}</span>
                         </div>
@@ -372,7 +372,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
             ) : (
               <NoData>
                 <div style={{ width: '100%', display: 'flex', justifyContent: 'center' }}>
-                  <img src="/images/nodata_history.png" alt="nodata" />
+                  <img src={`/images/nodata_history.png`} alt="nodata" />
                 </div>
                 <p
                   style={{

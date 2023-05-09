@@ -20,7 +20,7 @@ export const vaultPoolConfig = {
     gasLimit: 380000,
     tokenImage: {
       primarySrc: `/images/tokens/${bscTokens.cake.address}.svg`,
-      secondarySrc: '/images/tokens/autorenew.svg',
+      secondarySrc: `/images/tokens/autorenew.svg`,
     },
   },
   [VaultKey.CakeVault]: {
@@ -30,7 +30,7 @@ export const vaultPoolConfig = {
     gasLimit: 600000,
     tokenImage: {
       primarySrc: `/images/tokens/${bscTokens.cake.address}.svg`,
-      secondarySrc: '/images/tokens/autorenew.svg',
+      secondarySrc: `/images/tokens/autorenew.svg`,
     },
   },
   [VaultKey.CakeFlexibleSideVault]: {
@@ -40,7 +40,7 @@ export const vaultPoolConfig = {
     gasLimit: 500000,
     tokenImage: {
       primarySrc: `/images/tokens/${bscTokens.cake.address}.svg`,
-      secondarySrc: '/images/tokens/autorenew.svg',
+      secondarySrc: `/images/tokens/autorenew.svg`,
     },
   },
   [VaultKey.IfoPool]: {

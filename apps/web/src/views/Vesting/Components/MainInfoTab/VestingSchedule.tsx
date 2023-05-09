@@ -247,7 +247,7 @@ const SaleItem = ({
           <div className="item_wrap">
             <p>
               <Img
-                src="/images/1/tokens/xox_new_overlay.svg"
+                src={`/images/1/tokens/xox_new_overlay.svg`}
                 alt="icon"
                 height={30}
                 width={30}
@@ -263,7 +263,7 @@ const SaleItem = ({
         <div className="sale-schedule-item">
           <div className="item_wrap">
             <p>
-              <Img src="/images/1/tokens/xox_new.svg" alt="icon" height={30} width={30} className="token_first" />
+              <Img src={`/images/1/tokens/xox_new.svg`} alt="icon" height={30} width={30} className="token_first" />
             </p>
             <div>
               <p className="amount_vested">{Number(itemVesting.amountVested).toLocaleString()}</p>
@@ -274,7 +274,7 @@ const SaleItem = ({
         <div className="sale-schedule-item">
           <div className="item_wrap">
             <p>
-              <Img src="/images/1/tokens/xox_new.svg" alt="icon" height={30} width={30} className="token_first" />
+              <Img src={`/images/1/tokens/xox_new.svg`} alt="icon" height={30} width={30} className="token_first" />
             </p>
             <div>
               <p className="amount_vested">{Number(itemVesting.yourCurrentXOX).toLocaleString()}</p>

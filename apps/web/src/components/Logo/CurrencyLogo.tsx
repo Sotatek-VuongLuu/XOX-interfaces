@@ -76,7 +76,14 @@ export default function CurrencyLogo({
     if (currency.chainId === ChainId.BSC) {
       return <BinanceIcon width={size} style={style} />
     }
-    return <StyledLogo size={size} srcs={[`/images/chains/${currency.chainId}.svg`]} width={size} style={style} />
+    return (
+      <StyledLogo
+        size={size}
+        srcs={[`${process.env.NEXT_PUBLIC_ASSETS_URI}/chains/${currency.chainId}.svg`]}
+        width={size}
+        style={style}
+      />
+    )
   }
   return <StyledLogo size={size} srcs={srcs} alt={`${currency?.symbol ?? 'token'} logo`} style={style} />
 }

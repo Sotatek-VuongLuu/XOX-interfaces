@@ -101,28 +101,28 @@ const TeamMenber = (): JSX.Element => {
 
 const listMember = [
   {
-    avatar: '/images/m3.svg',
+    avatar: `/images/m3.svg`,
     name: 'Cameron Williamson',
     major: 'CEO & Co-Founder',
     describe:
       'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
   },
   {
-    avatar: '/images/m2.svg',
+    avatar: `/images/m2.svg`,
     name: 'Cameron Williamson',
     major: 'Art Director',
     describe:
       'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
   },
   {
-    avatar: '/images/m1.svg',
+    avatar: `/images/m1.svg`,
     name: 'Cameron Williamson',
     major: 'CTO',
     describe:
       'Lorem ipsum dolor sit amet consectetur. Elit massa erat vitae non semper quis. Morbi sed aliquet donec  facilisis. Senectus eget. Lorem ipsum dolor sit amet consectetur.',
   },
   {
-    avatar: '/images/m1.svg',
+    avatar: `/images/m1.svg`,
     name: 'Cameron Williamson',
     major: 'CTO',
     describe:

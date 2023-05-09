@@ -86,13 +86,13 @@ const EconomyMobile = () => {
       <div className="chain_container" data-aos="fade-right">
         <div className="main">
           <div className="couple mt">
-            <img src="/images/ethers_chain.svg" alt="eth_mobile" className="eth" />
-            <img src="/images/polygon_chain.svg" alt="poly_mobile" className="poly" />
+            <img src={`/images/ethers_chain.svg`} alt="eth_mobile" className="eth" />
+            <img src={`/images/polygon_chain.svg`} alt="poly_mobile" className="poly" />
           </div>
 
           <div className="couple">
-            <img src="/images/bsc_mobile.svg" alt="poly_mobile" className="bsc" />
-            <img src="/images/solana_chain.svg" alt="poly_mobile" className="sol" />
+            <img src={`/images/bsc_mobile.svg`} alt="poly_mobile" className="bsc" />
+            <img src={`/images/solana_chain.svg`} alt="poly_mobile" className="sol" />
           </div>
         </div>
       </div>

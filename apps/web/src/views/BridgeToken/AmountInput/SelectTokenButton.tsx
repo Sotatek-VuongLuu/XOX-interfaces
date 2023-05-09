@@ -176,7 +176,7 @@ const SelectTokenButton: React.FC<Props> = ({
           <div className="flex nested" style={{ zIndex: 8 }}>
               <img
                 className="rounded-full"
-                src="/images/logo_xox_bridge.svg"
+                src={`/images/logo_xox_bridge.svg`}
                 alt="XOX Logo"
                 width={24}
                 height={24}
@@ -208,7 +208,7 @@ const SelectTokenButton: React.FC<Props> = ({
                       handleShowDrop();
                     }}
                   >
-                    <Image src="/images/xox_planet.svg"  width={72} height={72} />
+                    <Image src={`/images/xox_planet.svg`}  width={72} height={72} />
                     <div className="title-token flex items-center">
                       {token.symbol}
                     </div>

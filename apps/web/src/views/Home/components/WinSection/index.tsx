@@ -69,7 +69,7 @@ const LotteryCardData: IconCardData = {
 }
 
 const bottomLeftImage = {
-  path: '/images/home/prediction-cards/',
+  path: `/images/home/prediction-cards/`,
   attributes: [
     { src: 'bottom-left', alt: 'CAKE card' },
     { src: 'green', alt: 'Green CAKE card with up arrow' },
@@ -79,7 +79,7 @@ const bottomLeftImage = {
 }
 
 const topRightImage = {
-  path: '/images/home/lottery-balls/',
+  path: `/images/home/lottery-balls/`,
   attributes: [
     { src: '2', alt: 'Lottery ball number 2' },
     { src: '4', alt: 'Lottery ball number 4' },

@@ -454,238 +454,238 @@ const SupportedBlockchains = () => {
 
 const listCoin = [
   {
-    icon: '/images/home/coins/1_eth.svg',
+    icon: `/images/home/coins/1_eth.svg`,
   },
   {
-    icon: '/images/home/coins/2_bsc.svg',
+    icon: `/images/home/coins/2_bsc.svg`,
   },
   {
-    icon: '/images/home/coins/3_arbitrum.svg',
+    icon: `/images/home/coins/3_arbitrum.svg`,
   },
   {
-    icon: '/images/home/coins/4_zkSync.svg',
+    icon: `/images/home/coins/4_zkSync.svg`,
   },
   {
-    icon: '/images/home/coins/5_polygon.svg',
+    icon: `/images/home/coins/5_polygon.svg`,
   },
   {
-    icon: '/images/home/coins/6_optimism.svg',
+    icon: `/images/home/coins/6_optimism.svg`,
   },
   {
-    icon: '/images/home/coins/7_avalanche.svg',
+    icon: `/images/home/coins/7_avalanche.svg`,
   },
   {
-    icon: '/images/home/coins/8_fantom.svg',
+    icon: `/images/home/coins/8_fantom.svg`,
   },
   {
-    icon: '/images/home/coins/9_cronos.svg',
+    icon: `/images/home/coins/9_cronos.svg`,
   },
   {
-    icon: '/images/home/coins/10_ethereumPOW.svg',
+    icon: `/images/home/coins/10_ethereumPOW.svg`,
   },
   {
-    icon: '/images/home/coins/11_kava.svg',
+    icon: `/images/home/coins/11_kava.svg`,
   },
   {
-    icon: '/images/home/coins/12_algorand.svg',
+    icon: `/images/home/coins/12_algorand.svg`,
   },
   {
-    icon: '/images/home/coins/13_klaytn.svg',
+    icon: `/images/home/coins/13_klaytn.svg`,
   },
   {
-    icon: '/images/home/coins/14_bitgert.svg',
+    icon: `/images/home/coins/14_bitgert.svg`,
   },
   {
-    icon: '/images/home/coins/15_aptos.svg',
+    icon: `/images/home/coins/15_aptos.svg`,
   },
   {
-    icon: '/images/home/coins/16_acala.svg',
+    icon: `/images/home/coins/16_acala.svg`,
   },
   {
-    icon: '/images/home/coins/17_canto.svg',
+    icon: `/images/home/coins/17_canto.svg`,
   },
   {
-    icon: '/images/home/coins/18_osmosis.svg',
+    icon: `/images/home/coins/18_osmosis.svg`,
   },
   {
-    icon: '/images/home/coins/19_hedera.svg',
+    icon: `/images/home/coins/19_hedera.svg`,
   },
   {
-    icon: '/images/home/coins/20_near.svg',
+    icon: `/images/home/coins/20_near.svg`,
   },
   {
-    icon: '/images/home/coins/21_thorchain.svg',
+    icon: `/images/home/coins/21_thorchain.svg`,
   },
   {
-    icon: '/images/home/coins/22_bittorent.svg',
+    icon: `/images/home/coins/22_bittorent.svg`,
   },
   {
-    icon: '/images/home/coins/23_wave.svg',
+    icon: `/images/home/coins/23_wave.svg`,
   },
   {
-    icon: '/images/home/coins/24_aurora.svg',
+    icon: `/images/home/coins/24_aurora.svg`,
   },
   {
-    icon: '/images/home/coins/25_celo.svg',
+    icon: `/images/home/coins/25_celo.svg`,
   },
   {
-    icon: '/images/home/coins/26_bitcoin.svg',
+    icon: `/images/home/coins/26_bitcoin.svg`,
   },
   {
-    icon: '/images/home/coins/27_gnosis.svg',
+    icon: `/images/home/coins/27_gnosis.svg`,
   },
   {
-    icon: '/images/home/coins/28_moonbeam.svg',
+    icon: `/images/home/coins/28_moonbeam.svg`,
   },
   {
-    icon: '/images/home/coins/29_eos.svg',
+    icon: `/images/home/coins/29_eos.svg`,
   },
   {
-    icon: '/images/home/coins/30_cardano.svg',
+    icon: `/images/home/coins/30_cardano.svg`,
   },
   {
-    icon: '/images/home/coins/31_elrond.svg',
+    icon: `/images/home/coins/31_elrond.svg`,
   },
   {
-    icon: '/images/home/coins/32_heco.svg',
+    icon: `/images/home/coins/32_heco.svg`,
   },
   {
-    icon: '/images/home/coins/33_neo.svg',
+    icon: `/images/home/coins/33_neo.svg`,
   },
   {
-    icon: '/images/home/coins/34_astar.svg',
+    icon: `/images/home/coins/34_astar.svg`,
   },
   {
-    icon: '/images/home/coins/35_kucoin.svg',
+    icon: `/images/home/coins/35_kucoin.svg`,
   },
   {
-    icon: '/images/home/coins/36_OKExchain.svg',
+    icon: `/images/home/coins/36_OKExchain.svg`,
   },
   {
-    icon: '/images/home/coins/37_Metis.svg',
+    icon: `/images/home/coins/37_Metis.svg`,
   },
   {
-    icon: '/images/home/coins/38_Tezos.svg',
+    icon: `/images/home/coins/38_Tezos.svg`,
   },
   {
-    icon: '/images/home/coins/39_stella.svg',
+    icon: `/images/home/coins/39_stella.svg`,
   },
   {
-    icon: '/images/home/coins/40_velas.svg',
+    icon: `/images/home/coins/40_velas.svg`,
   },
   {
-    icon: '/images/home/coins/41.svg',
+    icon: `/images/home/coins/41.svg`,
   },
   {
-    icon: '/images/home/coins/42_fusion.svg',
+    icon: `/images/home/coins/42_fusion.svg`,
   },
   {
-    icon: '/images/home/coins/43_terra2.svg',
+    icon: `/images/home/coins/43_terra2.svg`,
   },
   {
-    icon: '/images/home/coins/44_cosmos.svg',
+    icon: `/images/home/coins/44_cosmos.svg`,
   },
   {
-    icon: '/images/home/coins/45_kadena.svg',
+    icon: `/images/home/coins/45_kadena.svg`,
   },
   {
-    icon: '/images/home/coins/46_telos.svg',
+    icon: `/images/home/coins/46_telos.svg`,
   },
   {
-    icon: '/images/home/coins/47_vechain.svg',
+    icon: `/images/home/coins/47_vechain.svg`,
   },
   {
-    icon: '/images/home/coins/48.svg',
+    icon: `/images/home/coins/48.svg`,
   },
   {
-    icon: '/images/home/coins/49_ronin.svg',
+    icon: `/images/home/coins/49_ronin.svg`,
   },
   {
-    icon: '/images/home/coins/50_icon.svg',
+    icon: `/images/home/coins/50_icon.svg`,
   },
   {
-    icon: '/images/home/coins/51_moonriver.svg',
+    icon: `/images/home/coins/51_moonriver.svg`,
   },
   {
-    icon: '/images/home/coins/52_iotex.svg',
+    icon: `/images/home/coins/52_iotex.svg`,
   },
   {
-    icon: '/images/home/coins/53.svg',
+    icon: `/images/home/coins/53.svg`,
   },
   {
-    icon: '/images/home/coins/54_ontology.svg',
+    icon: `/images/home/coins/54_ontology.svg`,
   },
   {
-    icon: '/images/home/coins/55_boba.svg',
+    icon: `/images/home/coins/55_boba.svg`,
   },
   {
-    icon: '/images/home/coins/56_polkadot.svg',
+    icon: `/images/home/coins/56_polkadot.svg`,
   },
   {
-    icon: '/images/home/coins/57_ICP.svg',
+    icon: `/images/home/coins/57_ICP.svg`,
   },
   {
-    icon: '/images/home/coins/58_tomochain.svg',
+    icon: `/images/home/coins/58_tomochain.svg`,
   },
   {
-    icon: '/images/home/coins/59_shiden.svg',
+    icon: `/images/home/coins/59_shiden.svg`,
   },
   {
-    icon: '/images/home/coins/60_evmos.svg',
+    icon: `/images/home/coins/60_evmos.svg`,
   },
   {
-    icon: '/images/home/coins/61_mixin.svg',
+    icon: `/images/home/coins/61_mixin.svg`,
   },
   {
-    icon: '/images/home/coins/62_DefiChain.svg',
+    icon: `/images/home/coins/62_DefiChain.svg`,
   },
   {
-    icon: '/images/home/coins/63_subtract.svg',
+    icon: `/images/home/coins/63_subtract.svg`,
   },
   {
-    icon: '/images/home/coins/64_Vision.svg',
+    icon: `/images/home/coins/64_Vision.svg`,
   },
   {
-    icon: '/images/home/coins/65_TLchain.svg',
+    icon: `/images/home/coins/65_TLchain.svg`,
   },
   {
-    icon: '/images/home/coins/66_conflux.svg',
+    icon: `/images/home/coins/66_conflux.svg`,
   },
   {
-    icon: '/images/home/coins/67_everscale.svg',
+    icon: `/images/home/coins/67_everscale.svg`,
   },
   {
-    icon: '/images/home/coins/68_zilliqa.svg',
+    icon: `/images/home/coins/68_zilliqa.svg`,
   },
   {
-    icon: '/images/home/coins/69_rootstock.svg',
+    icon: `/images/home/coins/69_rootstock.svg`,
   },
   {
-    icon: '/images/home/coins/plus.svg',
+    icon: `/images/home/coins/plus.svg`,
   },
 ]
 
 const dataCollected = [
   {
-    currency: '/images/home/coins/1_eth.svg',
+    currency: `/images/home/coins/1_eth.svg`,
     dataEmpty: '-',
     description: 'Market Cap',
     field: 'marketCap',
   },
   {
-    currency: '/images/home/coins/1_eth.svg',
+    currency: `/images/home/coins/1_eth.svg`,
     dataEmpty: '-',
     description: 'Total Volume',
     field: 'volumn',
   },
   {
-    currency: '/images/home/coins/1_eth.svg',
+    currency: `/images/home/coins/1_eth.svg`,
     dataEmpty: '-',
     description: 'Total Users',
     field: 'totalUsers',
   },
   {
-    currency: '/images/home/coins/1_eth.svg',
+    currency: `/images/home/coins/1_eth.svg`,
     dataEmpty: '-',
     description: 'XOXS Staked',
     field: 'stakedXOXS',

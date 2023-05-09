@@ -84,7 +84,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         index={3}
         hasCurvedDivider={false}
       >
-        {/* <BallPurple src="/images/bg-pur.svg" /> */}
+        {/* <BallPurple src={`/images/bg-pur.svg`} /> */}
         <div>
           <WelcomeXOX />
         </div>

@@ -351,7 +351,7 @@ function StartingSoon({
         <>
           <p className="title">{t('XOX Token pre-sale has Ended')}</p>
           <div className="rocket_container">
-            {/* <img src="/images/rocket_xox.png" alt="rocket_xox" /> */}
+            {/* <img src="/image-?/rocket_xox.png" alt="rocket_xox" /> */}
             <video
               autoPlay
               loop
@@ -372,7 +372,7 @@ function StartingSoon({
 
     return (
       <div className="rocket_container">
-        {/* <img src="/images/rocket_xox.png" alt="rocket_xox" /> */}
+        {/* <img src="/image-?/rocket_xox.png" alt="rocket_xox" /> */}
         <video
           autoPlay
           loop
@@ -434,7 +434,7 @@ function StartingSoon({
       {handleRenderTitle}
       {isNotSetDataForAll ? (
         <div className="rocket_container">
-          {/* <img src="/images/rocket_xox.png" alt="rocket_xox" /> */}
+          {/* <img src="/image-?/rocket_xox.png" alt="rocket_xox" /> */}
           <video
             autoPlay
             loop

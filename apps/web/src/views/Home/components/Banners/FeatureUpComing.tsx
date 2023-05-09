@@ -179,13 +179,13 @@ const UpComingItem = ({ title, describe, link }) => {
         {width <= 900 ? (
           isShowReadMore ? (
             <img
-              src="/images/up_coming.svg"
+              src={`/images/up_coming.svg`}
               alt="down_coming"
               className="up_coming"
               onClick={() => setIsShow(!isShowReadMore)}
             />
           ) : (
-            <img src="/images/down_coming.svg" alt="down_coming" onClick={() => setIsShow(!isShowReadMore)} />
+            <img src={`/images/down_coming.svg`} alt="down_coming" onClick={() => setIsShow(!isShowReadMore)} />
           )
         ) : null}
       </div>

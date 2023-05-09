@@ -1404,7 +1404,7 @@ const MainInfo = ({
                                     tooltipMessage={t('Copied')}
                                     button={
                                       <img
-                                        src="/images/copy_referral.svg"
+                                        src={`/images/copy_referral.svg`}
                                         alt="copy_purple"
                                         style={{ marginBottom: '-2px', marginLeft: '8px' }}
                                       />
@@ -1482,10 +1482,10 @@ const MainInfo = ({
                         <div className="main-img">
                           <img
                             className="first-img"
-                            src={item.lever === currentLevelReach ? '/images/current_item.svg' : 'images/item.svg'}
+                            src={item.lever === currentLevelReach ? `/images/current_item.svg` : `/images/item.svg`}
                             alt="images"
                           />
-                          <img className="sec-img" src="/images/current_item.svg" alt="images" />
+                          <img className="sec-img" src={`/images/current_item.svg`} alt="images" />
                         </div>
                         <div className="inner-text">
                           <img src={item.icon} alt="icons" className="jewellery" />

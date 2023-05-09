@@ -26,7 +26,7 @@ const FinishedCompetitions: React.FC<React.PropsWithChildren> = () => {
         />
         <FinishedCompetitionBanner
           title={t('Easter Trading Competition')}
-          imgSrc="/images/tc-easter-bunnies.png"
+          imgSrc="/image-removed/tc-easter-bunnies.png"
           background="radial-gradient(77.72% 89.66% at 79.76% 65.74%, #FEDC90 0%, #FFA514 74.5%)"
           to="/competition/finished/easter"
         />

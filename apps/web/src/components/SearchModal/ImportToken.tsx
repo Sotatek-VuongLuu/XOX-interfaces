@@ -106,7 +106,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
                 color="#FB8618"
                 style={{ display: 'flex', alignItems: 'center' }}
               >
-                <img src="/images/coinmaketcap.png" alt="" style={{ marginRight: '8px' }} />
+                <img src={`/images/coinmaketcap.png`} alt="" style={{ marginRight: '8px' }} />
                 {t('Via')} {list.name}
               </Text>
             ) : (

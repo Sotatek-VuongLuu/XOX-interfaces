@@ -1111,7 +1111,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                     <div className="flex">
                       {chainIdSupport.includes(chainId) ? (
                         <PairToken
-                          linkTokenSecond="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png"
+                          linkTokenSecond={`/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png`}
                           symbolTokenSecond="USDT"
                         />
                       ) : (
@@ -1156,7 +1156,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                                   }}
                                 >
                                   <span className="u_question" style={{ cursor: 'pointer' }}>
-                                    <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                                    <img src={`/images/u_question-circle.svg`} alt="u_question-circle" />
                                   </span>
                                 </Tooltip>
                               </>
@@ -1203,7 +1203,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                                   }}
                                 >
                                   <span className="u_question" style={{ cursor: 'pointer' }}>
-                                    <img src="/images/u_question-circle.svg" alt="u_question-circle" />
+                                    <img src={`/images/u_question-circle.svg`} alt="u_question-circle" />
                                   </span>
                                 </Tooltip>
                               </>
@@ -1233,7 +1233,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                               })}{' '}
                             </span>
                             <span style={{ marginLeft: 8 }}>
-                              <img src="/images/external-icon.svg" alt="external-icon" />
+                              <img src={`/images/external-icon.svg`} alt="external-icon" />
                             </span>
                           </p>
                         </a>
@@ -1245,7 +1245,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                           <p className="_flex">
                             <span>{t('View Contract')}</span>
                             <span style={{ marginLeft: 8 }}>
-                              <img src="/images/external-icon.svg" alt="external-icon" />
+                              <img src={`/images/external-icon.svg`} alt="external-icon" />
                             </span>
                           </p>
                         </a>
@@ -1345,7 +1345,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                                 })}
                               </span>
                               <span style={{ marginLeft: 8 }}>
-                                <img src="/images/external-icon.svg" alt="external-icon" />
+                                <img src={`/images/external-icon.svg`} alt="external-icon" />
                               </span>
                             </p>
                           </a>
@@ -1357,7 +1357,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             <p className="_flex">
                               <span>{t('View Contract')}</span>
                               <span style={{ marginLeft: 8 }}>
-                                <img src="/images/external-icon.svg" alt="external-icon" />
+                                <img src={`/images/external-icon.svg`} alt="external-icon" />
                               </span>
                             </p>
                           </a>
@@ -1378,7 +1378,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       >
         <Content>
           <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
-            <img src="/images/reject_xox.png" alt="reject_xox" />
+            <img src={`/images/reject_xox.png`} alt="reject_xox" />
           </div>
           <div className="noti_claim_pending_h4">{modalReject.message}</div>
           <div className="btn_dismiss_container">
@@ -1391,7 +1391,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
             </button>
           </div>
           <img
-            src="/images/close-one.svg"
+            src={`/images/close-one.svg`}
             alt="close-one"
             className="x-close-icon"
             aria-hidden="true"
@@ -1412,7 +1412,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           <div className="noti_claim_pending_h3"> {notiMess}</div>
           <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
           <img
-            src="/images/close-one.svg"
+            src={`/images/close-one.svg`}
             alt="close-one"
             className="x-close-icon"
             aria-hidden="true"
@@ -1427,7 +1427,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
       >
         <Content>
           <div className="noti_claim_success">
-            <img src="/images/success_claim.png" alt="success_claim" />
+            <img src={`/images/success_claim.png`} alt="success_claim" />
           </div>
           <div className="submitted">{t('Transaction Submitted')}</div>
           <p style={{ textAlign: 'center', display: 'flex', justifyContent: 'center' }}>

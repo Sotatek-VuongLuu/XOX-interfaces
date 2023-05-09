@@ -46,9 +46,9 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
       zIndex={0}
     >
       {windowSize > 900 ? (
-        <ImagBGFooter src="/images/bg_footer.svg" alt="icon_bg" />
+        <ImagBGFooter src={`/images/bg_footer.svg`} alt="icon_bg" />
       ) : (
-        <ImagBGFooterTow src="/images/xox_footer_mobile.svg" alt="icon_bg" />
+        <ImagBGFooterTow src={`/images/xox_footer_mobile.svg`} alt="icon_bg" />
       )}
       <FooterMainContent>
         <Container>

@@ -608,27 +608,27 @@ const networks = [
   {
     title: 'BNB Chain',
     address: XOX_ADDRESS[56],
-    image: '/images/home/hero/bsc.svg',
+    image: `/images/home/hero/bsc.svg`,
   },
   {
     title: 'Arbitrum',
     address: XOX_ADDRESS[200],
-    image: '/images/Arbitrum.svg',
+    image: `/images/Arbitrum.svg`,
   },
   {
     title: 'Polygon',
     address: XOX_ADDRESS[137],
-    image: '/images/Polygon.svg',
+    image: `/images/Polygon.svg`,
   },
   {
     title: 'zkSync',
     address: XOX_ADDRESS[324],
-    image: '/images/zkSync.svg',
+    image: `/images/zkSync.svg`,
   },
   {
     title: 'Optimism',
     address: XOX_ADDRESS[10],
-    image: '/images/Optimism.svg',
+    image: `/images/Optimism.svg`,
   },
 ]
 
@@ -703,19 +703,19 @@ const WelcomeXOX = (): JSX.Element => {
                 </div>
                 <div className="icon-box">
                   <div className="single-icon">
-                    <img src="/images/home/hero/twitter.svg" alt="social_media" />
+                    <img src={`/images/home/hero/twitter.svg`} alt="social_media" />
                   </div>
                   <div className="single-icon">
-                    <img src="/images/home/hero/speaker.svg" alt="social_media" />
+                    <img src={`/images/home/hero/speaker.svg`} alt="social_media" />
                   </div>
                   <div className="single-icon">
-                    <img src="/images/home/hero/telegram.svg" alt="social_media" />
+                    <img src={`/images/home/hero/telegram.svg`} alt="social_media" />
                   </div>
                   <div className="single-icon">
-                    <img src="/images/home/hero/discord.svg" alt="social_media" />
+                    <img src={`/images/home/hero/discord.svg`} alt="social_media" />
                   </div>
                   <div className="single-icon">
-                    <img src="/images/home/hero/youtube.svg" alt="social_media" />
+                    <img src={`/images/home/hero/youtube.svg`} alt="social_media" />
                   </div>
                 </div>
 
@@ -731,7 +731,7 @@ const WelcomeXOX = (): JSX.Element => {
 
                 <div className="">
                   <div className="eth-box">
-                    <img src="/images/home/hero/eth.svg" alt="email" className="email-icon" />
+                    <img src={`/images/home/hero/eth.svg`} alt="email" className="email-icon" />
                     {(isMobile || isTablet) && (
                       <>
                         <span>ETH:</span>
@@ -766,7 +766,7 @@ const WelcomeXOX = (): JSX.Element => {
                     <CopyButton
                       text={XOX_ADDRESS[chainId === 5 ? chainId : 1]}
                       tooltipMessage={t('Copied')}
-                      button={<img src="/images/home/hero/copy.svg" alt="copy" style={{ marginTop: '3px' }} />}
+                      button={<img src={`/images/home/hero/copy.svg`} alt="copy" style={{ marginTop: '3px' }} />}
                     />
                     <button
                       style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
@@ -785,7 +785,7 @@ const WelcomeXOX = (): JSX.Element => {
                         })
                       }}
                     >
-                      <img src="/images/shield.svg" alt="shield" />
+                      <img src={`/images/shield.svg`} alt="shield" />
                     </button>
                     <button
                       style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
@@ -804,22 +804,22 @@ const WelcomeXOX = (): JSX.Element => {
                         })
                       }}
                     >
-                      <img src="/images/metamask-no-bg.svg" alt="wolf" />
+                      <img src={`/images/metamask-no-bg.svg`} alt="wolf" />
                     </button>
                   </div>
                 </div>
                 {/* <div className="more-btn">
                   <div className="bg-btn" aria-describedby={id} variant='contained' onClick={handleClick}>
-                    <img src="/images/home/hero/checklist.svg" alt="checklist" />
+                    <img src={`/images/home/hero/checklist.svg`} alt="checklist" />
                     <p>More</p>
-                    <img src="/images/home/hero/down.svg" alt="down" />
+                    <img src={`/images/home/hero/down.svg`} alt="down" />
                   </div>
                 </div> */}
                 <div className="more-btn" style={{ position: 'relative' }}>
                   <Button aria-describedby={id} onClick={handleClick} className="bg-btn">
-                    <img src="/images/home/hero/checklist.svg" alt="checklist" />
+                    <img src={`/images/home/hero/checklist.svg`} alt="checklist" />
                     {t('More')}
-                    <img src="/images/home/hero/down.svg" alt="down" />
+                    <img src={`/images/home/hero/down.svg`} alt="down" />
                   </Button>
                   {openDropdown && (
                     <CustomDropdown tabIndex={0} id="dropdown-networks">
@@ -852,7 +852,7 @@ const WelcomeXOX = (): JSX.Element => {
                                   text={network.address || ''}
                                   tooltipMessage={t('Copied')}
                                   button={
-                                    <img src="/images/home/hero/copy.svg" alt="copy" style={{ marginTop: '7px' }} />
+                                    <img src={`/images/home/hero/copy.svg`} alt="copy" style={{ marginTop: '7px' }} />
                                   }
                                 />
                                 <button
@@ -872,7 +872,7 @@ const WelcomeXOX = (): JSX.Element => {
                                     })
                                   }}
                                 >
-                                  <img src="/images/shield-icon.svg" alt="shield" />
+                                  <img src={`/images/shield-icon.svg`} alt="shield" />
                                 </button>
                                 <button
                                   style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
@@ -891,7 +891,7 @@ const WelcomeXOX = (): JSX.Element => {
                                     })
                                   }}
                                 >
-                                  <img src="/images/metamask-icon.svg" alt="wolf" />
+                                  <img src={`/images/metamask-icon.svg`} alt="wolf" />
                                 </button>
                               </div>
                             </div>
@@ -937,7 +937,7 @@ const WelcomeXOX = (): JSX.Element => {
                           <CopyButton
                             text={network.address || ''}
                             tooltipMessage={t('Copied')}
-                            button={<img src="/images/home/hero/copy.svg" alt="copy" style={{ marginTop: '7px' }} />}
+                            button={<img src={`/images/home/hero/copy.svg`} alt="copy" style={{ marginTop: '7px' }} />}
                           />
                           <button
                             style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
@@ -956,7 +956,7 @@ const WelcomeXOX = (): JSX.Element => {
                               })
                             }}
                           >
-                            <img src="/images/shield.svg" alt="shield" />
+                            <img src={`/images/shield.svg`} alt="shield" />
                           </button>
                           <button
                             style={{ border: 'none', background: 'none', padding: 0, cursor: 'pointer' }}
@@ -975,7 +975,7 @@ const WelcomeXOX = (): JSX.Element => {
                               })
                             }}
                           >
-                            <img src="/images/metamask-no-bg.svg" alt="wolf" />
+                            <img src={`/images/metamask-no-bg.svg`} alt="wolf" />
                           </button>
                         </div>
                       </div>

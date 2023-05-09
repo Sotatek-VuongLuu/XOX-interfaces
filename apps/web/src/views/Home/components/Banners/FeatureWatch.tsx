@@ -207,15 +207,15 @@ const FeatureWatch = () => {
             <Watch>
               {width > 900 ? (
                 <>
-                  <img src="/images/home/meet-xoxs/x3.svg" alt="x3" className="x3" />
-                  <img src="/images/home/meet-xoxs/x2.svg" alt="x2" className="x2" />
-                  <img src="/images/home/meet-xoxs/x1.svg" alt="x1" className="x1" />
+                  <img src={`/images/home/meet-xoxs/x3.svg`} alt="x3" className="x3" />
+                  <img src={`/images/home/meet-xoxs/x2.svg`} alt="x2" className="x2" />
+                  <img src={`/images/home/meet-xoxs/x1.svg`} alt="x1" className="x1" />
                 </>
               ) : (
                 <>
-                  <img src="/images/home/meet-xoxs/mobile_x2.svg" alt="x3" className="x3" />
-                  <img src="/images/home/meet-xoxs/mobile_x3.svg" alt="x2" className="x2" />
-                  <img src="/images/home/meet-xoxs/mobile_x1.svg" alt="x1" className="x1" />
+                  <img src={`/images/home/meet-xoxs/mobile_x2.svg`} alt="x3" className="x3" />
+                  <img src={`/images/home/meet-xoxs/mobile_x3.svg`} alt="x2" className="x2" />
+                  <img src={`/images/home/meet-xoxs/mobile_x1.svg`} alt="x1" className="x1" />
                 </>
               )}
             </Watch>
@@ -239,7 +239,7 @@ const FeatureWatch = () => {
                 return (
                   <div className="main_content" key={title}>
                     <div className="img-container">
-                      <img src="/images/icon-stone.svg" alt="icon-stone" className="icon_stone" />
+                      <img src={`/images/icon-stone.svg`} alt="icon-stone" className="icon_stone" />
                     </div>
                     <span className="title_list_item" style={{ lineHeight: '24px' }}>
                       {t(title)}

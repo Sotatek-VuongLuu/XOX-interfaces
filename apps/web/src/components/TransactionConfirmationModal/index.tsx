@@ -137,7 +137,7 @@ export function TransactionSubmittedContent({
       <Section>
         <ConfirmedIcon>
           <ConfirmImg>
-            <img src="/images/swap/transaction-submited.png" alt="" />
+            <img src={`/images/swap/transaction-submited.png`} alt="" />
           </ConfirmImg>
         </ConfirmedIcon>
         <AutoColumn gap="8px" justify="center">
@@ -204,7 +204,7 @@ export function TransactionErrorContent({
     <Wrapper style={{ maxWidth: '800px' }}>
       <AutoColumn justify="center" style={{ width: '300px', maxWidth: '100%' }}>
         {/* <ErrorIcon color="failure" width="64px" /> */}
-        <img alt="" src="/images/swap/icon-swap-error.svg" style={{ padding: '10px 0' }} />
+        <img alt="" src={`/images/swap/icon-swap-error.svg`} style={{ padding: '10px 0' }} />
         <Text
           color="failure"
           style={{ textAlign: 'center', width: '85%', wordBreak: 'break-word', color: 'rgba(255, 255, 255, 0.6)' }}
@@ -234,7 +234,7 @@ export function TransactionSwapErrorContent({
   return (
     <Wrapper>
       <AutoColumn justify="center">
-        <img src="/images/swap/icon-swap-error.svg" alt="" />
+        <img src={`/images/swap/icon-swap-error.svg`} alt="" />
         <Text
           color="failure"
           style={{ textAlign: 'center', width: '85%', marginTop: '24px', color: '#FFFFFF99', wordBreak: 'break-word' }}

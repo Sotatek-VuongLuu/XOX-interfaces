@@ -334,7 +334,7 @@ const Subscription = () => {
             method="post"
             className={'subscription-form ' + emailBorderClassHover + emailBorderClass + emailErrorClass}
           >
-            <img src="/images/home/subscription/email.svg" alt="email" className="email-icon" />
+            <img src={`/images/home/subscription/email.svg`} alt="email" className="email-icon" />
             <input
               type="text"
               id="email"
