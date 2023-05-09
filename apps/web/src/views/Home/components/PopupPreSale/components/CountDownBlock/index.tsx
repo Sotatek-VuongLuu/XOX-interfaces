@@ -192,6 +192,7 @@ function CountDownBlock({
       ? ['iPad Simulator', 'iPhone Simulator', 'iPod Simulator', 'iPad', 'iPhone', 'iPod', 'MAC'].includes(
           navigator.platform,
         ) ||
+        navigator.platform.includes('Mac') ||
         // iPad on iOS 13 detection
         (navigator.userAgent.includes('Mac') && 'ontouchend' in document)
       : false
