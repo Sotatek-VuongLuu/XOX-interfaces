@@ -1,7 +1,6 @@
 import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
 import { useMemo, useState } from 'react'
-import ReactPlayer from 'react-player'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -215,41 +214,35 @@ const HowToJoin = (): JSX.Element => {
       <div className="container_video">
         {currentVideo === 1 && (
           <div className="player-wrapper">
-            <ReactPlayer
+            <video
               className="react-player"
-              url={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video1.mp4`}
-              playing
               controls
-              light
-              height={controlSize.h}
-              width={controlSize.w}
-            />
+              style={{ height: `${controlSize.h}px`, width: `${controlSize.w}px` }}
+            >
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video1.mp4`} type="video/mp4" />
+            </video>
           </div>
         )}
         {currentVideo === 2 && (
           <div className="player-wrapper">
-            <ReactPlayer
+            <video
               className="react-player"
-              url={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video2.mp4`}
-              playing
               controls
-              light
-              height={controlSize.h}
-              width={controlSize.w}
-            />
+              style={{ height: `${controlSize.h}px`, width: `${controlSize.w}px` }}
+            >
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video2.mp4`} type="video/mp4" />
+            </video>
           </div>
         )}
         {currentVideo === 3 && (
           <div className="player-wrapper">
-            <ReactPlayer
+            <video
               className="react-player"
-              url={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video3.mp4`}
-              playing
               controls
-              light
-              height={controlSize.h}
-              width={controlSize.w}
-            />
+              style={{ height: `${controlSize.h}px`, width: `${controlSize.w}px` }}
+            >
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video3.mp4`} type="video/mp4" />
+            </video>
           </div>
         )}
         <div className="buttons">
