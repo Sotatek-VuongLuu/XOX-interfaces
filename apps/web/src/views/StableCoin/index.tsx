@@ -484,7 +484,7 @@ export default function StableCoin() {
                           </Button>
                         </Link>
                       </WrapText>
-                      <img src={`/images/1/tokens/XOX.svg`} alt="icon" />
+                      <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/XOX.svg`} alt="icon" />
                     </Flex>
                   </Box>
                 </WrapperBorder>
@@ -513,7 +513,7 @@ export default function StableCoin() {
                           </Button>
                         </Link>
                       </WrapText>
-                      <img src={`/images/1/tokens/XOX.svg`} alt="icon" />
+                      <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/XOX.svg`} alt="icon" />
                     </Flex>
                   </Box>
                 </WrapperBorder>

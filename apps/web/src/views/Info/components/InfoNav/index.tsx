@@ -348,7 +348,7 @@ export const NetworkSwitcher: React.FC<{ activeIndex: number }> = ({ activeIndex
     <UserMenu
       alignItems="top"
       ml="8px"
-      avatarSrc={`/images/chains/${multiChainId[chainName]}.svg`}
+      avatarSrc={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/chains/${multiChainId[chainName]}.svg`}
       text={
         foundChain ? (
           <>

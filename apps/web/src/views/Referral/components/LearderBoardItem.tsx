@@ -138,9 +138,9 @@ const LeaderBoardItem = (props: IProps): JSX.Element => {
         return (
           <div className="ranking_top">
             {width <= 900 ? (
-              <img src={`/images/r_mb_${rank}.svg`} alt="ranking" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/r_mb_${rank}.svg`} alt="ranking" />
             ) : (
-              <img src={`/images/rank_ref_pc_${rank}.svg`} alt="ranking" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/rank_ref_pc_${rank}.svg`} alt="ranking" />
             )}
           </div>
         )

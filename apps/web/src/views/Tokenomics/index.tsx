@@ -77,7 +77,9 @@ function Address({ addr, ...props }: { addr: IAddress }) {
           className="copied_btn"
           text={address || ''}
           tooltipMessage={t('Copied')}
-          button={<img src={`/images/tokenomics/CopySimple.svg`} alt="CopySimple" />}
+          button={
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/CopySimple.svg`} alt="CopySimple" />
+          }
         />
       </div>
       {chainId ? (
@@ -310,38 +312,38 @@ export default function TokenomicsPage() {
       asset: 'ETH',
       name: 'Ethereum',
       address: '0xa2dD817c2fDc3a2996f1A5174CF8f1AaED466E82',
-      logo: `/images/tokenomics/ETH.png`,
+      logo: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/ETH.png`,
       chainId: 5,
     },
     {
       asset: 'BSC',
       name: 'BSC',
       address: '0xa2dD817c2fDc3a2996f1A5174CF8f1AaED466E82',
-      logo: `/images/tokenomics/BSC.png`,
+      logo: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/BSC.png`,
       chainId: 97,
     },
     {
       asset: 'ARB',
       name: 'Arbitrum',
       address: '0xa2dD817c2fDc3a2996f1A5174CF8f1AaED466E82',
-      logo: `/images/tokenomics/ARB.png`,
+      logo: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/ARB.png`,
     },
     {
       asset: 'MATIC',
       name: 'Polygon',
       address: '0xa2dD817c2fDc3a2996f1A5174CF8f1AaED466E82',
-      logo: `/images/tokenomics/MATIC.png`,
+      logo: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/MATIC.png`,
     },
     {
       asset: 'zkSync',
       name: 'zkSync',
-      logo: `/images/zkSync.svg`,
+      logo: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/zkSync.svg`,
       text: t('Deployment Coming'),
     },
     {
       asset: 'OP',
       name: 'Optimism',
-      logo: `/images/tokenomics/OP.png`,
+      logo: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/OP.png`,
       text: t('Deployment Coming'),
     },
   ]
@@ -550,8 +552,14 @@ export default function TokenomicsPage() {
               preload="yes"
               style={{ pointerEvents: 'none' }}
             >
-              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/tokenomics/pie_chart.mov`} type='video/mp4; codecs="hvc1"' />
-              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/tokenomics/pie_chart.webm`} type="video/webm" />
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/tokenomics/pie_chart.mov`}
+                type='video/mp4; codecs="hvc1"'
+              />
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/tokenomics/pie_chart.webm`}
+                type="video/webm"
+              />
             </video>
             {/* <img src="/image-?/tokenomics/Untitled@5-1397x721 1.png" alt="" draggable="false" loading="lazy" /> */}
           </div>
@@ -639,9 +647,24 @@ export default function TokenomicsPage() {
         </ContainnerStyledF2>
 
         <StyledCertik>
-          <img src={`/images/tokenomics/certik.svg`} alt="" draggable="false" loading="lazy" />
-          <img src={`/images/tokenomics/certik.svg`} alt="" draggable="false" loading="lazy" />
-          <img src={`/images/tokenomics/certik.svg`} alt="" draggable="false" loading="lazy" />
+          <img
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/certik.svg`}
+            alt=""
+            draggable="false"
+            loading="lazy"
+          />
+          <img
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/certik.svg`}
+            alt=""
+            draggable="false"
+            loading="lazy"
+          />
+          <img
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/certik.svg`}
+            alt=""
+            draggable="false"
+            loading="lazy"
+          />
         </StyledCertik>
 
         <ADDComponent />
@@ -649,16 +672,7 @@ export default function TokenomicsPage() {
         <StyledTitle>{t('XOX Token Vesting Schedule')}</StyledTitle>
 
         <StyledTVS>
-          {/* <div> */}
           <ReactECharts option={TVS_CHART_OPTION} />
-          {/* </div> */}
-          {/* <div>
-            {(TVS_CHART_OPTION.series as Array<any>).map((tvs, i) => (
-              <div key={String(i + 0)} style={{ '--color': tvs.areaStyle.color } as any}>
-                {tvs.name}
-              </div>
-            ))}
-          </div> */}
         </StyledTVS>
 
         <BTNLearnMore />
