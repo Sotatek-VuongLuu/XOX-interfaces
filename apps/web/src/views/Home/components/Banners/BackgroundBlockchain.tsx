@@ -34,13 +34,13 @@ const BGBlockchain = () => {
     <>
       {width > 900 ? (
         <>
-          <BGLeft src={`/images/home/bg-cubes/xoxdapp_left.svg`} />
-          <BGRight src={`/images/home/bg-cubes/xoxdapp_right.svg`} />
+          <BGLeft src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/bg-cubes/xoxdapp_left.svg`} />
+          <BGRight src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/bg-cubes/xoxdapp_right.svg`} />
         </>
       ) : (
         <>
-          <BGMobileLeft src={`/images/home/bg-cubes/xoxdapp_mobile_left.svg`} />
-          <BGMobileRight src={`/images/home/bg-cubes/xoxdapp_mobile_right.svg`} />
+          <BGMobileLeft src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/bg-cubes/xoxdapp_mobile_left.svg`} />
+          <BGMobileRight src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/bg-cubes/xoxdapp_mobile_right.svg`} />
         </>
       )}
     </>

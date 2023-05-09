@@ -570,7 +570,11 @@ const FeatureReferal = () => {
                 return (
                   <p key={title}>
                     <span>
-                      <img src={`/images/icon-stone.svg`} alt="icon-stone" className="icon_stone" />
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/icon-stone.svg`}
+                        alt="icon-stone"
+                        className="icon_stone"
+                      />
                     </span>
                     <span className="title_list_item">{t(title)}</span>
                   </p>

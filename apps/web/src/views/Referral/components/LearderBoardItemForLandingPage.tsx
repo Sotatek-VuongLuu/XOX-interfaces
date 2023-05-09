@@ -114,7 +114,7 @@ const Wrapper = styled(Box)`
         font-size: 20px;
         line-height: 24px;
         text-align: right;
-        background: linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%);
+        background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
@@ -153,9 +153,9 @@ const LeaderBoardItemLP = (props: IProps): JSX.Element => {
         return (
           <div className="ranking_top">
             {width <= 900 ? (
-              <img src={`/images/r_mb_${rank}.svg`} alt="ranking" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/r_mb_${rank}.svg`} alt="ranking" />
             ) : (
-              <img src={`/images/r${rank}.svg`} alt="ranking" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/r${rank}.svg`} alt="ranking" />
             )}
           </div>
         )

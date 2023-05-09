@@ -22,11 +22,11 @@ const BGSecured = () => {
     <>
       {width > 900 ? (
         <>
-          <BGLeft src={`/images/home/bg-cubes/secured_left.svg`} />
+          <BGLeft src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/bg-cubes/secured_left.svg`} />
         </>
       ) : (
         <>
-          <BGMobileLeft src={`/images/home/bg-cubes/secured_mobile_left.svg`} />
+          <BGMobileLeft src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/bg-cubes/secured_mobile_left.svg`} />
         </>
       )}
     </>

@@ -26,7 +26,7 @@ const Wrapper = styled.div`
 const LeftContent = styled.div`
   .list {
     display: grid;
-    grid-template-columns: 370px 241px;
+    grid-template-columns: 370px 250px;
     column-gap: 40px;
     row-gap: 16px;
 
@@ -213,7 +213,11 @@ const FeaturePlant = () => {
                 return (
                   <p key={title}>
                     <span>
-                      <img src={`/images/icon-stone.svg`} alt="icon-stone" className="icon_stone" />
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/icon-stone.svg`}
+                        alt="icon-stone"
+                        className="icon_stone"
+                      />
                     </span>
                     <span className="title_list_item">{t(title)}</span>
                   </p>
@@ -222,25 +226,6 @@ const FeaturePlant = () => {
             </div>
           </LeftContent>
         </Grid>
-        {/* <Grid item xs={12} md={5} style={{ height: 300 }}>
-          <RightContent data-aos="fade-left">
-            <Watch>
-              {width > 900 ? (
-                <>
-                  <img src={`/images/x3.svg`} alt="x3" className="x3" />
-                  <img src={`/images/x2.svg`} alt="x2" className="x2" />
-                  <img src={`/images/x1.svg`} alt="x1" className="x1" />
-                </>
-              ) : (
-                <>
-                  <img src={`/images/xox_plant_mobile_2.svg`} alt="x3" className="x3" />
-                  <img src={`/images/xox_plant_mobile_3.svg`} alt="x2" className="x2" />
-                  <img src={`/images/xox_plant_mobile_1.svg`} alt="x1" className="x1" />
-                </>
-              )}
-            </Watch>
-          </RightContent>
-        </Grid> */}
         <Grid item xs={12} md={5} sx={{ height: '300px', minHeight: '300px', overflow: 'visible' }}>
           <RightContent data-aos="fade-left">
             <div className="video-container">
@@ -255,7 +240,10 @@ const FeaturePlant = () => {
                 preload="yes"
                 style={{ pointerEvents: 'none' }}
               >
-                <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/3d_xox.mov`} type='video/mp4; codecs="hvc1"' />
+                <source
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/3d_xox.mov`}
+                  type='video/mp4; codecs="hvc1"'
+                />
                 <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/3d_xox.webm`} type="video/webm" />
               </video>
             </div>
