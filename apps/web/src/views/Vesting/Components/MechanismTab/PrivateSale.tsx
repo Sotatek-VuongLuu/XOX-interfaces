@@ -191,7 +191,7 @@ function PrivateSale() {
           </p>
           <p>
             {t(
-              '- Initially Launching with Cross-chain liquidity on 6 of the most popular blockchains (ETH, BSC, Polygon, zkSync, Arbitrum, Optimism) XOX Labs is already a miles ahead of 90% of its competitors when it comes to accessibility and multi-chain capabilities. But thats just the start, XOX Labs will soon launch the most capable Cross-Chain DEX Aggregator on Defi (XOX Dex V2), natively integrating 100+ DEXes and 60+ Blockchains, which will be selected by community voting, popularity, capabilities, volume and scalability potential. Learn More in our Docs',
+              '- Initially Launching with Cross-chain liquidity on 6 of the most popular blockchains (ETH, BSC, Polygon, zkSync, Arbitrum, Optimism) XOX Labs is already miles ahead of 90% of its competitors when it comes to accessibility and multi-chain capabilities. But that is just the start, XOX Labs will soon launch the most capable Cross-Chain DEX Aggregator on Defi (XOX Dex V2), natively integrating 100+ DEXes and 60+ Blockchains, which will be selected by community voting, popularity, capabilities, volume, and scalability potential. Learn More in our Docs',
             )}
           </p>
           <p className="high-light">{t('XOX Token Pre-Sales')}</p>
