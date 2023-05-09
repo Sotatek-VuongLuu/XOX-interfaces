@@ -312,7 +312,7 @@ const UserMenu = () => {
           >
             {/* <ChainLogo chainId={ChainId.BSC} /> */}
             <Flex width="24px" height="24px">
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/chains/${chainId}.svg`} alt="BNB" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/chains/${chainId}.svg`} alt="BNB" />
             </Flex>
             <Text color="white" ml="4px" fontSize="12px" lineHeight="15px">
               {chainName() === 'BNB' ? `${chainName()} Smart Chain` : chainName()}

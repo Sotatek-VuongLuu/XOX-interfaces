@@ -79,7 +79,7 @@ export default function CurrencyLogo({
     return (
       <StyledLogo
         size={size}
-        srcs={[`${process.env.NEXT_PUBLIC_ASSETS_URI}/chains/${currency.chainId}.svg`]}
+        srcs={[`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/chains/${currency.chainId}.svg`]}
         width={size}
         style={style}
       />

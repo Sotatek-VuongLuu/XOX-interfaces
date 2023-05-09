@@ -136,7 +136,7 @@ export const NetworkSwitcher = (props: any) => {
         mr="16px"
         placement="bottom"
         variant={isLoading ? 'pending' : isWrongNetwork ? 'danger' : 'default'}
-        avatarSrc={`${process.env.NEXT_PUBLIC_ASSETS_URI}/chains/${chainId}.svg`}
+        avatarSrc={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/chains/${chainId}.svg`}
         disabled={cannotChangeNetwork}
         text={
           isLoading ? (

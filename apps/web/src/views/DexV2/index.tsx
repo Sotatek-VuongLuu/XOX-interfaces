@@ -1474,7 +1474,7 @@ function DevV2() {
       describe: t('No KYC or Sign Up required. Just connect your wallets and start trading.'),
     },
     {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Transparent.png`,
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/transparent.png`,
       name: t('Transparent'),
       describe: t(
         'Check every single transaction or smart contract before allowing it to access your funds, track the whole chain of events happening in every blockchain.',
@@ -1488,7 +1488,7 @@ function DevV2() {
       ),
     },
     {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Audited.png`,
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audited.png`,
       name: t('Audited'),
       describe: t(
         `XOX Labs' smart contracts and platforms are fully audited by top-tier auditors to ensure the security of the users.`,
