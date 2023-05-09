@@ -77,7 +77,7 @@ interface IProps extends InjectedModalProps {
 }
 
 function ModalWarning({ onDismiss, timeWhitelist }: IProps) {
-  const {t} = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <StyledModalContainer>
@@ -95,7 +95,7 @@ function ModalWarning({ onDismiss, timeWhitelist }: IProps) {
       </StyledModalHeader>
       <StyledModalBody>
         <Flex alignItems="center" marginBottom="26px" className="xox_amount" justifyContent="center">
-          <img src="/images/waring_presale.png" alt="" />
+          <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/waring_presale.png`} alt="" />
         </Flex>
 
         <Flex alignItems="center" marginBottom="26px" padding="0px 24px" className="xox_amount" justifyContent="center">

@@ -571,7 +571,7 @@ const StyledWhatYouCanDo = styled.div`
         &::before {
           content: '';
           position: absolute;
-          background-image: url(/images/dex-v2/prev-tab.png);
+          background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/prev-tab.png);
           top: 10px;
           left: -16px;
           color: rgba(255, 255, 255, 0.38);
@@ -581,7 +581,7 @@ const StyledWhatYouCanDo = styled.div`
         &::after {
           content: '';
           position: absolute;
-          background-image: url(/images/dex-v2/next-tab.png);
+          background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/next-tab.png);
           top: 10px;
           right: -16px;
           color: rgba(255, 255, 255, 0.38);
@@ -743,7 +743,7 @@ const StyledTabEcosystem = styled.div`
       &::before {
         content: '';
         position: absolute;
-        background-image: url(/images/dex-v2/prev-tab.png);
+        background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/prev-tab.png);
         top: 10px;
         left: -16px;
         color: rgba(255, 255, 255, 0.38);
@@ -753,7 +753,7 @@ const StyledTabEcosystem = styled.div`
       &::after {
         content: '';
         position: absolute;
-        background-image: url(/images/dex-v2/next-tab.png);
+        background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/next-tab.png);
         top: 10px;
         right: -16px;
         color: rgba(255, 255, 255, 0.38);
@@ -1177,7 +1177,7 @@ const BtnLearMore = ({ href }: { href?: string }) => {
       <StyledLearMore>
         <div>
           <span>{t('Learn more')}</span>
-          <img src="/images/dex-v2/ArrowUpRight.png" alt="ArrowUpRight" />
+          <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/ArrowUpRight.png`} alt="ArrowUpRight" />
         </div>
       </StyledLearMore>
     </a>
@@ -1281,7 +1281,11 @@ const DexesComponent = () => {
         <StyledDexes>
           {handleRange(1, 149).map((item, i) => (
             <Overlay>
-              <img src={`/images/dex-v2/dexes/${item}.png`} key={String(i + item)} alt="dex" />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/dexes/${item}.png`}
+                key={String(i + item)}
+                alt="dex"
+              />
             </Overlay>
           ))}
         </StyledDexes>
@@ -1301,7 +1305,11 @@ const Aggregators = () => {
         <StyledAggregator name="aggregators">
           {handleRange(1, 30).map((item, i) => (
             <Overlay>
-              <img src={`/images/dex-v2/aggregators/${item}.png`} key={String(i + item)} alt="dex" />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/aggregators/${item}.png`}
+                key={String(i + item)}
+                alt="dex"
+              />
             </Overlay>
           ))}
         </StyledAggregator>
@@ -1320,10 +1328,14 @@ const BlockChains = () => {
         <StyledAggregator>
           {handleRange(1, 69).map((item, i) => (
             <Overlay>
-              <img src={`/images/dex-v2/blockchains/${item}.png`} key={String(i + item)} alt="dex" />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/blockchains/${item}.png`}
+                key={String(i + item)}
+                alt="dex"
+              />
             </Overlay>
           ))}
-          <img src="/images/dex-v2/blockchains/70.png" alt="dex" />
+          <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/blockchains/70.png`} alt="dex" />
         </StyledAggregator>
       </StyleFixHeight>
 
@@ -1341,7 +1353,11 @@ const Bridges = () => {
         <StyledAggregator name="bridges">
           {handleRange(1, 13).map((item, i) => (
             <Overlay>
-              <img src={`/images/dex-v2/bridges/${item}.png`} key={String(i + item)} alt="dex" />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/bridges/${item}.png`}
+                key={String(i + item)}
+                alt="dex"
+              />
             </Overlay>
           ))}
         </StyledAggregator>
@@ -1369,18 +1385,78 @@ function DevV2() {
   const { isMobile } = useMatchBreakpoints()
 
   const SOCIALS: Array<ISocial> = [
-    { icon: '/images/company/1.svg', name: t('XOX Dex V1'), link: t('Trade Now'), heft: '/swap' },
-    { icon: '/images/company/2.svg', name: t('Referral Program'), link: t('Earn Now'), heft: '/referral' },
-    { icon: '/images/company/3.svg', name: t('Bridge'), link: t('Bridge Now'), heft: '/bridge-token' },
-    { icon: '/images/company/4.svg', name: t('Stable Coin'), link: t('Stake Now'), heft: '/stable-coin' },
-    { icon: '/images/company/5.svg', name: t('Liquidity Mining'), link: t('Earn Now'), heft: '/liquidity' },
-    { icon: '/images/company/6.svg', name: t('Yield farming'), link: t('Earn Now'), heft: '/pools' },
-    { icon: '/images/company/7.svg', name: t('Assets Manager'), link: t('Explore Now'), heft: '/info' },
-    { icon: '/images/company/1.svg', name: t('XOX Dex V2'), link: t('Best Rates on DeFi'), heft: '/dex-v2' },
-    { icon: '/images/company/8.svg', name: t('XOX Mobile App'), link: t('Your Defi Key'), heft: '#' },
-    { icon: '/images/company/9.svg', name: t('XOX Launchpad'), link: t('Invest Now'), heft: '#' },
-    { icon: '/images/company/10.svg', name: t('Coin Listing Site'), link: t('Don’t Miss Out'), heft: '#' },
-    { icon: '/images/company/11.svg', name: t('Lottery Game'), link: t('Risk Small - Earn Big'), heft: '#' },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/1.svg`,
+      name: t('XOX Dex V1'),
+      link: t('Trade Now'),
+      heft: '/swap',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/2.svg`,
+      name: t('Referral Program'),
+      link: t('Earn Now'),
+      heft: '/referral',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/3.svg`,
+      name: t('Bridge'),
+      link: t('Bridge Now'),
+      heft: '/bridge-token',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/4.svg`,
+      name: t('Stable Coin'),
+      link: t('Stake Now'),
+      heft: '/stable-coin',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/5.svg`,
+      name: t('Liquidity Mining'),
+      link: t('Earn Now'),
+      heft: '/liquidity',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/6.svg`,
+      name: t('Yield farming'),
+      link: t('Earn Now'),
+      heft: '/pools',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/7.svg`,
+      name: t('Assets Manager'),
+      link: t('Explore Now'),
+      heft: '/info',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/1.svg`,
+      name: t('XOX Dex V2'),
+      link: t('Best Rates on DeFi'),
+      heft: '/dex-v2',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/8.svg`,
+      name: t('XOX Mobile App'),
+      link: t('Your Defi Key'),
+      heft: '#',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/9.svg`,
+      name: t('XOX Launchpad'),
+      link: t('Invest Now'),
+      heft: '#',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/10.svg`,
+      name: t('Coin Listing Site'),
+      link: t('Don’t Miss Out'),
+      heft: '#',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/11.svg`,
+      name: t('Lottery Game'),
+      link: t('Risk Small - Earn Big'),
+      heft: '#',
+    },
   ]
 
   const TABECOSYSTEM: Array<string> = ['DEXes', 'Aggregators', 'Blockchains', 'Bridges']
@@ -1388,38 +1464,38 @@ function DevV2() {
 
   const SAFERELIABLE: Array<any> = [
     {
-      icon: '/images/dex-v2/Non-cutodial.png',
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Non-cutodial.png`,
       name: t('Non-custodial'),
       describe: t('XOX Dex V2 is a Permissionless and Non-custodial Decentralized Protocol.'),
     },
     {
-      icon: '/images/dex-v2/Anonymous.png',
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Anonymous.png`,
       name: t('Anonymous'),
       describe: t('No KYC or Sign Up required. Just connect your wallets and start trading.'),
     },
     {
-      icon: '/images/dex-v2/Transparent.png',
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Transparent.png`,
       name: t('Transparent'),
       describe: t(
         'Check every single transaction or smart contract before allowing it to access your funds, track the whole chain of events happening in every blockchain.',
       ),
     },
     {
-      icon: '/images/dex-v2/Permissionless.png',
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Permissionless.png`,
       name: t('Permissionless'),
       describe: t(
         'Every supported Blockchains is public and open for everyone to trade and own assets without the supervision of governments or financial institutions.',
       ),
     },
     {
-      icon: '/images/dex-v2/Audited.png',
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Audited.png`,
       name: t('Audited'),
       describe: t(
         `XOX Labs' smart contracts and platforms are fully audited by top-tier auditors to ensure the security of the users.`,
       ),
     },
     {
-      icon: '/images/dex-v2/Tested-02.png',
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Tested-02.png`,
       name: t('Tested'),
       describe: t(
         'Every new feature and protocol integration is heavily tested in every possible situation before making it accessible to the users to ensure performance and safety.',
@@ -1483,15 +1559,15 @@ function DevV2() {
   const renderImageWhatYouCando = useMemo(() => {
     switch (tabWHatYouCanDo) {
       case 0:
-        return <img src="/images/dex-v2/s1.png" alt="swap" />
+        return <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/s1.png`} alt="swap" />
       case 1:
-        return <img src="/images/dex-v2/s2.png" alt="limit_order" />
+        return <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/s2.png`} alt="limit_order" />
       case 2:
-        return <img src="/images/dex-v2/s3.png" alt="earn" />
+        return <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/s3.png`} alt="earn" />
       case 3:
-        return <img src="/images/dex-v2/s4.png" alt="liquidity" />
+        return <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/s4.png`} alt="liquidity" />
       case 4:
-        return <img src="/images/dex-v2/s5.png" alt="api" />
+        return <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/s5.png`} alt="api" />
       default:
         break
     }
@@ -1797,8 +1873,14 @@ function DevV2() {
               controlsList="nodownload"
               muted
             >
-              <source src="/images/dex-v2/new_aggregators.mov" type='video/mp4; codecs="hvc1"' />
-              <source src="/images/dex-v2/new_aggregators.webm" type="video/webm" />
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_aggregators.mov`}
+                type='video/mp4; codecs="hvc1"'
+              />
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_aggregators.webm`}
+                type="video/webm"
+              />
             </video>
           </div>
         </StyledBLock>
@@ -1869,8 +1951,11 @@ function DevV2() {
               controlsList="nodownload"
               muted
             >
-              <source src="/images/dex-v2/new_ref.mov" type='video/mp4; codecs="hvc1"' />
-              <source src="/images/dex-v2/new_ref.webm" type="video/webm" />
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_ref.mov`}
+                type='video/mp4; codecs="hvc1"'
+              />
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_ref.webm`} type="video/webm" />
             </video>
           </div>
         </StyledReferralProgram>
@@ -1887,8 +1972,11 @@ function DevV2() {
               controlsList="nodownload"
               muted
             >
-              <source src="/images/dex-v2/new_revenue.mov" type='video/mp4; codecs="hvc1"' />
-              <source src="/images/dex-v2/new_revenue.webm" type="video/webm" />
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_revenue.mov`}
+                type='video/mp4; codecs="hvc1"'
+              />
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_revenue.webm`} type="video/webm" />
             </video>
           </div>
 
@@ -1968,7 +2056,11 @@ function DevV2() {
         <div className="subscription-form-container">
           <div className="subscription-box">
             <form action="#" method="post" className={`subscription-form ${emailBorderClass} ${emailErrorClass}`}>
-              <img src="/images/home/subscription/email.svg" alt="email" className="email-icon" />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/subscription/email.svg`}
+                alt="email"
+                className="email-icon"
+              />
               <input
                 type="text"
                 id="email"

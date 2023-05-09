@@ -31,7 +31,7 @@ function ConfirmationPendingContent({ trade }: { trade: Trade<Currency, Currency
       <ConfirmedIcon>
         {/* <Spinner /> */}
         <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
-        {/* <img src='/images/swap/confirm-loading.svg' alt='' /> */}
+        {/* <img src='/image-?/swap/confirm-loading.svg' alt='' /> */}
       </ConfirmedIcon>
 
       <AutoColumn gap="12px" justify="center">

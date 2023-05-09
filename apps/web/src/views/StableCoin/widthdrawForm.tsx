@@ -362,9 +362,15 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         <BoxRight>
           <InputFill className="no-border">
             {isUSDT ? (
-              <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png" alt="icon" />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png`}
+                alt="icon"
+              />
             ) : (
-              <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt="icon" />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg`}
+                alt="icon"
+              />
             )}
             {isUSDT ? 'USDT' : 'USDC'}
           </InputFill>

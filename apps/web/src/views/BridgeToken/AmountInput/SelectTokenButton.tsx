@@ -1,18 +1,34 @@
-import React, { useState, useEffect } from "react";
-import styled from "styled-components";
-import Image from "next/image";
-import { TOKENS_SUPPORT } from "../tokensSupport";
+import React, { useState, useEffect } from 'react'
+import styled from 'styled-components'
+import Image from 'next/image'
+import { TOKENS_SUPPORT } from '../tokensSupport'
 
 // images
-export const TokenStandLogo = "/icons/tokenstand_circle_logo.png";
+export const TokenStandLogo = '/icons/tokenstand_circle_logo.png'
 
-const ChevronDownIcon:any = <svg viewBox="0 0 24 24" color="text" width="20px" xmlns="http://www.w3.org/2000/svg" className="Svg-sc-4ba21b47-0 GjBIu">
-  <path d="M8.11997 9.29006L12 13.1701L15.88 9.29006C16.27 8.90006 16.9 8.90006 17.29 9.29006C17.68 9.68006 17.68 10.3101 17.29 10.7001L12.7 15.2901C12.31 15.6801 11.68 15.6801 11.29 15.2901L6.69997 10.7001C6.30997 10.3101 6.30997 9.68006 6.69997 9.29006C7.08997 8.91006 7.72997 8.90006 8.11997 9.29006Z" />
-</svg>
+const ChevronDownIcon: any = (
+  <svg
+    viewBox="0 0 24 24"
+    color="text"
+    width="20px"
+    xmlns="http://www.w3.org/2000/svg"
+    className="Svg-sc-4ba21b47-0 GjBIu"
+  >
+    <path d="M8.11997 9.29006L12 13.1701L15.88 9.29006C16.27 8.90006 16.9 8.90006 17.29 9.29006C17.68 9.68006 17.68 10.3101 17.29 10.7001L12.7 15.2901C12.31 15.6801 11.68 15.6801 11.29 15.2901L6.69997 10.7001C6.30997 10.3101 6.30997 9.68006 6.69997 9.29006C7.08997 8.91006 7.72997 8.90006 8.11997 9.29006Z" />
+  </svg>
+)
 
-const ChevronUpIcon: any = <svg viewBox="0 0 24 24" color="text" width="20px" xmlns="http://www.w3.org/2000/svg" className="Svg-sc-4ba21b47-0 GjBIu">
-  <path d="M8.11997 9.29006L12 13.1701L15.88 9.29006C16.27 8.90006 16.9 8.90006 17.29 9.29006C17.68 9.68006 17.68 10.3101 17.29 10.7001L12.7 15.2901C12.31 15.6801 11.68 15.6801 11.29 15.2901L6.69997 10.7001C6.30997 10.3101 6.30997 9.68006 6.69997 9.29006C7.08997 8.91006 7.72997 8.90006 8.11997 9.29006Z" />
-</svg>
+const ChevronUpIcon: any = (
+  <svg
+    viewBox="0 0 24 24"
+    color="text"
+    width="20px"
+    xmlns="http://www.w3.org/2000/svg"
+    className="Svg-sc-4ba21b47-0 GjBIu"
+  >
+    <path d="M8.11997 9.29006L12 13.1701L15.88 9.29006C16.27 8.90006 16.9 8.90006 17.29 9.29006C17.68 9.68006 17.68 10.3101 17.29 10.7001L12.7 15.2901C12.31 15.6801 11.68 15.6801 11.29 15.2901L6.69997 10.7001C6.30997 10.3101 6.30997 9.68006 6.69997 9.29006C7.08997 8.91006 7.72997 8.90006 8.11997 9.29006Z" />
+  </svg>
+)
 
 const FullyContainer = styled.div`
   width: 93px;
@@ -25,7 +41,7 @@ const FullyContainer = styled.div`
     bottom: 0;
     left: 0;
   }
-`;
+`
 
 const Wrapper = styled.div`
   display: flex;
@@ -40,7 +56,7 @@ const Wrapper = styled.div`
   border: 1px solid ${theme.colors.hr}`};
   width: 100%;
   color: ${({ theme }) => theme.colors.textSubTitle};
-  .flex{
+  .flex {
     display: flex;
   }
   .nested {
@@ -53,16 +69,16 @@ const Wrapper = styled.div`
     white-space: nowrap;
     margin-left: 8px;
   }
-  @media(max-width: 576px){
+  @media (max-width: 576px) {
     font-size: 14px;
-    img{
+    img {
       width: 20px;
     }
-    .nested{
+    .nested {
       padding: 8px 12px;
     }
   }
-`;
+`
 
 const ImageWrapper = styled.div`
   position: relative;
@@ -77,7 +93,7 @@ const ImageWrapper = styled.div`
   img {
     border-radius: 50%;
   }
-`;
+`
 const ChevronDownIconStyled = styled.div`
   stroke: #ccc;
   width: 16px;
@@ -88,7 +104,7 @@ const ChevronDownIconStyled = styled.div`
     width: 18px;
     height: 18px;
   }
-`;
+`
 const ChevronUpIconStyled = styled.div`
   stroke: #ccc;
   width: 16px;
@@ -99,7 +115,7 @@ const ChevronUpIconStyled = styled.div`
     width: 18px;
     height: 18px;
   }
-`;
+`
 const Select = styled.div`
   width: 100%;
   background: #0b0b0d;
@@ -140,20 +156,20 @@ const Select = styled.div`
     border-bottom-left-radius: 8px;
     border-bottom-right-radius: 8px;
   }
-`;
+`
 
 const Option = styled.div`
   padding: 10px 0px;
   cursor: pointer;
-`;
+`
 type Props = {
-  tokenSymbol?: any;
-  switchToken?: any;
-  isTokenFrom?: any;
-  inputChainId?: any;
-  isShowDrop?: any;
-  handleShowDrop?: any;
-};
+  tokenSymbol?: any
+  switchToken?: any
+  isTokenFrom?: any
+  inputChainId?: any
+  isShowDrop?: any
+  handleShowDrop?: any
+}
 
 const SelectTokenButton: React.FC<Props> = ({
   tokenSymbol,
@@ -163,24 +179,24 @@ const SelectTokenButton: React.FC<Props> = ({
   isShowDrop,
   handleShowDrop,
 }) => {
-  const [listTokens, setListTokens] = useState(TOKENS_SUPPORT[inputChainId]);
+  const [listTokens, setListTokens] = useState(TOKENS_SUPPORT[inputChainId])
 
   useEffect(() => {
-    setListTokens(TOKENS_SUPPORT[inputChainId]);
-  }, [inputChainId]);
+    setListTokens(TOKENS_SUPPORT[inputChainId])
+  }, [inputChainId])
 
   return (
     <>
       <FullyContainer>
         <Wrapper onClick={() => handleShowDrop()}>
           <div className="flex nested" style={{ zIndex: 8 }}>
-              <img
-                className="rounded-full"
-                src="/images/logo_xox_bridge.svg"
-                alt="XOX Logo"
-                width={24}
-                height={24}
-              />
+            <img
+              className="rounded-full"
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/logo_xox_bridge.svg`}
+              alt="XOX Logo"
+              width={24}
+              height={24}
+            />
             <span>XOX</span>
             {/* {isShowDrop ? <ChevronUpIconStyled /> : <ChevronDownIconStyled />} */}
           </div>
@@ -208,7 +224,7 @@ const SelectTokenButton: React.FC<Props> = ({
                       handleShowDrop();
                     }}
                   >
-                    <Image src="/images/xox_planet.svg"  width={72} height={72} />
+                    <Image src={`/images/xox_planet.svg`}  width={72} height={72} />
                     <div className="title-token flex items-center">
                       {token.symbol}
                     </div>
@@ -220,7 +236,7 @@ const SelectTokenButton: React.FC<Props> = ({
         )} */}
       </FullyContainer>
     </>
-  );
-};
+  )
+}
 
-export default SelectTokenButton;
+export default SelectTokenButton

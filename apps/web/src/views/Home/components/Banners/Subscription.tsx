@@ -177,17 +177,6 @@ const Wrapper = styled.div`
             font-size: 16px;
             line-height: 22px;
           }
-      
-          // button {
-          //   width: 32px;
-          //   height: 32px;
-          //   img {
-          //     width: 28px;
-          //   }
-
-          //   margin-right: 6px;
-          // }
-      
           .email-icon {
             width: 19px;
             margin-left: 6px;
@@ -208,19 +197,6 @@ const Wrapper = styled.div`
             padding: 7.5px 8px 7.5px 8px;
             font-size: 16px;
           }
-      
-          // button {
-          //   border: 0;
-          //   width: 32px;
-          //   height: 32px;
-          //   cursor: pointer;
-          //   background: #1D1C1C;
-      
-          //   img {
-          //     width: 32px;
-          //   }
-          // }
-      
           .email-icon {
             width: 16px;
             margin-left: 4px;
@@ -334,7 +310,11 @@ const Subscription = () => {
             method="post"
             className={'subscription-form ' + emailBorderClassHover + emailBorderClass + emailErrorClass}
           >
-            <img src="/images/home/subscription/email.svg" alt="email" className="email-icon" />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/subscription/email.svg`}
+              alt="email"
+              className="email-icon"
+            />
             <input
               type="text"
               id="email"

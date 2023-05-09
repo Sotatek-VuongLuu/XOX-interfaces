@@ -123,7 +123,7 @@ const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> =
             </>
           ) : (
             <NoTransaction>
-              <img src="/images/swap/no-recent-transaction.png" alt="" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/swap/no-recent-transaction.png`} alt="" />
               <NoTransactionText>{t('No recent transactions')}</NoTransactionText>
             </NoTransaction>
           )}

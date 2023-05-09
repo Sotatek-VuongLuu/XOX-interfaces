@@ -78,7 +78,7 @@ const EventStepsSection: React.FC<React.PropsWithChildren<EventStepsProps>> = ({
       </LandingBodyWrapper>
       <StyledWaveContainer bottom="-3px">
         <Flex justifyContent="center">
-          <StyledBunniesSquadImg src="/images/pancakeSquad/squadRow.png" alt="pancake bunnies squad" />
+          <StyledBunniesSquadImg src="/image-removed/pancakeSquad/squadRow.png" alt="pancake bunnies squad" />
         </Flex>
         <EventStepsBottomWave isDark={isDark} />
       </StyledWaveContainer>

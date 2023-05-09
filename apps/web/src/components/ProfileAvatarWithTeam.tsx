@@ -46,7 +46,7 @@ const ProfileAvatarWithTeam: React.FC<React.PropsWithChildren<ProfileAvatarProps
   return (
     <AvatarWrapper bg={profile.nft?.image.thumbnail}>
       {!profile.isActive && <AvatarInactive />}
-      {profile.team && <TeamAvatar src={`/images/teams/${profile.team.images.alt}`} alt={profile.team.name} />}
+      {profile.team && <TeamAvatar src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/teams/${profile.team.images.alt}`} alt={profile.team.name} />}
     </AvatarWrapper>
   )
 }

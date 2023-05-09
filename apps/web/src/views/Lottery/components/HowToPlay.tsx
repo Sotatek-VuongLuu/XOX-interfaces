@@ -345,7 +345,7 @@ const HowToPlay: React.FC<React.PropsWithChildren> = () => {
       </GappedFlex>
       <Divider />
       <Flex justifyContent="center" alignItems="center" flexDirection={['column', 'column', 'row']}>
-        <Image width={240} height={172} src="/images/lottery/tombola.png" alt="tombola bunny" mr="8px" mb="16px" />
+        <Image width={240} height={172} src="/image-removed/lottery/tombola.png" alt="tombola bunny" mr="8px" mb="16px" />
         <Flex maxWidth="300px" flexDirection="column">
           <Heading mb="16px" scale="md">
             {t('Still got questions?')}

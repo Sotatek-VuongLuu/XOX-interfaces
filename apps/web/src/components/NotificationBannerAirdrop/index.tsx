@@ -13,7 +13,7 @@ const Container = styled.div`
   right: 0;
   background: #000000;
   z-index: 100;
-  background-image: url(/images/AirdropBackgroundMobile.png);
+  background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/AirdropBackgroundMobile.png);
   background-size: contain;
   background-position: center;
   background-repeat: no-repeat;
@@ -44,7 +44,7 @@ const Container = styled.div`
     }
   }
   ${({ theme }) => theme.mediaQueries.lg} {
-    background-image: url(/images/bannerBGAirdrop.png);
+    background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bannerBGAirdrop.png);
   }
 `
 
@@ -196,8 +196,14 @@ function NotificationBannerAirdrop() {
                   className=""
                   style={{ pointerEvents: 'none' }}
                 >
-                  <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/airdropPopup/PopupAir.mov`} type='video/mp4; codecs="hvc1"' />
-                  <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/airdropPopup/PopupAir.webm`} type="video/webm" />
+                  <source
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/airdropPopup/PopupAir.mov`}
+                    type='video/mp4; codecs="hvc1"'
+                  />
+                  <source
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/airdropPopup/PopupAir.webm`}
+                    type="video/webm"
+                  />
                 </video>
               </div>
             )}

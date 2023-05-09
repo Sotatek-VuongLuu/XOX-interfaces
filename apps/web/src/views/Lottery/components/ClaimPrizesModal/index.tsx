@@ -68,7 +68,7 @@ const ClaimPrizesModal: React.FC<React.PropsWithChildren<ClaimPrizesModalModalPr
   return (
     <StyledModal $minWidth="280px">
       <BunnyDecoration>
-        <img src="/images/decorations/prize-bunny.png" alt="bunny decoration" height="124px" width="168px" />
+        <img src="/image-removed/decorations/prize-bunny.png" alt="bunny decoration" height="124px" width="168px" />
       </BunnyDecoration>
       <StyledModalHeader>
         <ModalTitle>
