@@ -421,7 +421,7 @@ const DataRow: React.FC<
           {transaction?.avatar ? (
             <img src={transaction?.avatar} alt="avatar" onError={onImageError} />
           ) : (
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/default_avatar.jpg`} alt="imagess" />
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/default_avatar.jpg`} alt="images" />
           )}
           {transaction?.username}
         </Text>
