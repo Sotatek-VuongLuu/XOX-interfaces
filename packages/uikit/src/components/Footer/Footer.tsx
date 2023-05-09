@@ -46,9 +46,9 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
       zIndex={0}
     >
       {windowSize > 900 ? (
-        <ImagBGFooter src={`/images/bg_footer.svg`} alt="icon_bg" />
+        <ImagBGFooter src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_footer.svg`} alt="icon_bg" />
       ) : (
-        <ImagBGFooterTow src={`/images/xox_footer_mobile.svg`} alt="icon_bg" />
+        <ImagBGFooterTow src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/xox_footer_mobile.svg`} alt="icon_bg" />
       )}
       <FooterMainContent>
         <Container>
@@ -149,13 +149,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
         </Container>
       </FooterMainContent>
 
-      <Flex
-        // order={[2, null, 1]}
-        // flexDirection={["column", null, "row"]}
-        justifyContent="center"
-        width="100%"
-        background="#1c1c1c"
-      >
+      <Flex justifyContent="center" width="100%" background="#1c1c1c">
         <Wrapper>
           <Text
             fontSize="14px"

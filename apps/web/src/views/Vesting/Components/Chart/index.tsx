@@ -16,7 +16,7 @@ const Wrapper = styled.div`
   margin-bottom: 40px;
   padding: 28px 64px;
 
-  background-image: url('/images/ngu.png');
+  background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/ngu.png);
   background-repeat: no-repeat;
   height: 276px;
   background-size: contain;
@@ -62,7 +62,7 @@ const Wrapper = styled.div`
     padding: 15px 22px 24px;
     height: 270px;
     margin-bottom: 20px;
-    background-image: url('/images/char_bg_image.png');
+    background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/char_bg_image.png);
     background-size: 100% 253px;
 
     .title {

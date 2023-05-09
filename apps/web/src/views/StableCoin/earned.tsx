@@ -64,14 +64,20 @@ const Earned = ({ address }: { address?: string }) => {
           <p>{t('%asset% Earned', { asset: 'USDT' })}</p>
           <p className="number">{priceUSDT ? formatAmountNumber2(Number(priceUSDT), 3) : 0}</p>
         </WrapText>
-        <img src={`/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg`} alt="icon" />
+        <img
+          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.svg`}
+          alt="icon"
+        />
       </Flex>
       <Flex justifyContent="space-between" alignItems="center" width="100%">
         <WrapText>
           <p>{t('%asset% Earned', { asset: 'USDC' })}</p>
           <p className="number">{priceUSDC ? formatAmountNumber2(Number(priceUSDC), 3) : 0}</p>
         </WrapText>
-        <img src={`/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg`} alt="icon" />
+        <img
+          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg`}
+          alt="icon"
+        />
       </Flex>
     </>
   )

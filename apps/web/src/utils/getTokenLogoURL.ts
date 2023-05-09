@@ -11,25 +11,25 @@ const mapping = {
 
 const getTokenLogoURL = (token?: Token, coinmarketcapId?: string) => {
   if (token && token.symbol.toLocaleUpperCase() === 'XOX') {
-    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`
+    return `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokens/xox-icon.svg`
   }
   if (token && token.address.toLowerCase() === XOX_ADDRESS[token.chainId].toLowerCase()) {
-    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`
+    return `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokens/xox-icon.svg`
   }
   if (token && token.symbol.toLocaleUpperCase() === 'XOXS') {
-    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xoxs-icon.svg`
+    return `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokens/xoxs-icon.svg`
   }
   if (token && token.chainId === 97 && token.symbol.toLocaleUpperCase() === 'USDT') {
-    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png`
+    return `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png`
   }
   if (token && token.chainId === 5 && token.symbol.toLocaleUpperCase() === 'TUSDC') {
-    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg`
+    return `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg`
   }
   if (token && token.symbol.toLocaleUpperCase() === 'TBNB') {
-    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/tbnb.png`
+    return `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokens/tbnb.png`
   }
   if (token && token.symbol.toLocaleUpperCase() === 'GOR') {
-    return `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/gor.png`
+    return `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokens/gor.png`
   }
   if (coinmarketcapId !== '') return `https://s2.coinmarketcap.com/static/img/coins/64x64/${coinmarketcapId}.png`
   if (token && token.address && mapping[token.chainId]) {

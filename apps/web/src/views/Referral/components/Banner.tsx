@@ -229,7 +229,9 @@ const Banner = () => {
                         width="24px"
                         text={userProfile?.referralCode}
                         tooltipMessage={t('Copied')}
-                        button={<img src={`/images/CopySimple.svg`} alt="CopySimple" />}
+                        button={
+                          <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/CopySimple.svg`} alt="CopySimple" />
+                        }
                       />
                     </span>
                   </>

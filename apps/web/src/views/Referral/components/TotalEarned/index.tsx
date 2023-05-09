@@ -126,12 +126,20 @@ const TotalEarned = ({ volumnTotalEarn }: IProps): JSX.Element => {
         {/* ref_xox_mb */}
         {width <= 900 ? (
           <>
-            <img src={`/images/Group33047.png`} alt="ref_xox" className="ref_xox" />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Group33047.png`}
+              alt="ref_xox"
+              className="ref_xox"
+            />
             <div className="ref_chart_bg" />
           </>
         ) : (
           <>
-            <img src={`/images/Group33047.png`} alt="ref_xox" className="ref_xox" />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Group33047.png`}
+              alt="ref_xox"
+              className="ref_xox"
+            />
             <div className="ref_chart_bg" />
           </>
         )}
