@@ -202,7 +202,7 @@ const initialTokenMetrics = [
   },
   {
     id: 9,
-    title: 'Partners Sale (10% release at TGE then 10% release Monthly)',
+    title: 'Partners Sale (10% release at TGE then 5% release Monthly)',
     tokenAllocationPercent: '3',
     tokenAllocation: '5400000',
     tge: '0.3',

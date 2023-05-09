@@ -108,7 +108,7 @@ export default function ADDComponent() {
     },
     {
       title: t('Partners Sale'),
-      content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('10% release at TGE then 10% release Monthly')],
+      content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('10% release at TGE then 5% release Monthly')],
       color: '#FF5353',
       value: 5400000,
     },
