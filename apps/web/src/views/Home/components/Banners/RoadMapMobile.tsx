@@ -68,7 +68,7 @@ const Wrapper = styled.div`
       content: '';
       height: 2px;
       width: 36px;
-      background: linear-gradient(0deg, #000000 0%, #FB8618 100%);
+      background: linear-gradient(0deg, #000000 0%, #fb8618 100%);
       position: absolute;
       left: 6%;
       top: 4%;
@@ -103,7 +103,7 @@ const Wrapper = styled.div`
       border-left: unset;
       border-width: 2.7px;
       border-style: solid;
-      border-image: linear-gradient(to bottom, rgba(155,243,203,1) 0%, rgba(62,192,166,1) 100%) 1;
+      border-image: linear-gradient(to bottom, rgba(155, 243, 203, 1) 0%, rgba(62, 192, 166, 1) 100%) 1;
     }
   }
 
@@ -113,7 +113,7 @@ const Wrapper = styled.div`
       border-left: unset;
       border-width: 2.7px;
       border-style: solid;
-      border-image: linear-gradient(to bottom, rgba(62,192,166,1) 0%, rgba(244,66,52,1) 100%) 1;
+      border-image: linear-gradient(to bottom, rgba(62, 192, 166, 1) 0%, rgba(244, 66, 52, 1) 100%) 1;
     }
   }
   .child_5_th {
@@ -122,7 +122,7 @@ const Wrapper = styled.div`
       border-left: unset;
       border-width: 2.7px;
       border-style: solid;
-      border-image: linear-gradient(to bottom, rgba(244,66,52,1) 0%, rgba(159,58,131,1) 100%) 1;
+      border-image: linear-gradient(to bottom, rgba(244, 66, 52, 1) 0%, rgba(159, 58, 131, 1) 100%) 1;
     }
   }
 `
@@ -145,14 +145,18 @@ const RoadMapMobile = () => {
             >
               <div className="line_milestone">
                 {item.status === 'done' ? (
-                  <img src={`/images/done_mobile.svg`} alt="milestone" />
+                  <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/done_mobile.svg`} alt="milestone" />
                 ) : item.status === 'processing' ? (
-                  <img src={`/images/now_done_mobile.svg`} alt="milestone" />
+                  <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/now_done_mobile.svg`} alt="milestone" />
                 ) : (
-                  <img src={`/images/not_done_mobile.svg`} alt="milestone" />
+                  <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/not_done_mobile.svg`} alt="milestone" />
                 )}
 
-                {item.status === 'done' ? <img src={`/images/line_dash.svg`} alt="milestone" /> : <LineNotDash className='line_status_mb'/>}
+                {item.status === 'done' ? (
+                  <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/line_dash.svg`} alt="milestone" />
+                ) : (
+                  <LineNotDash className="line_status_mb" />
+                )}
               </div>
 
               <div className="title_content">
@@ -163,7 +167,11 @@ const RoadMapMobile = () => {
                     return (
                       <div className="entry" key={entry}>
                         <div>
-                          <img src={`/images/icon-stone.svg`} alt="icon-stone" className="icon_stone" />
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/icon-stone.svg`}
+                            alt="icon-stone"
+                            className="icon_stone"
+                          />
                         </div>
                         <div className="describe">{entry}</div>
                       </div>

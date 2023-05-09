@@ -50,12 +50,12 @@ const BackGroundRight = styled.img`
 const BackgroudWatch = (): JSX.Element => {
   return (
     <>
-      <XOXECO src={`/images/xox_economy.svg`} alt="xox_economy" />
-      <BallBackECO src={`/images/background_economy.svg`} alt="ball_left" />
-      <BallLeft src={`/images/bg_meet_xox.svg`} alt="ball_left" />
-      <BallRight src={`/images/xox_economy_right.svg`} alt="ball_left" />
-      <BackGroundLeft src={`/images/xox_eco_left_2.svg`} alt="ball_left" />
-      <BackGroundRight src={`/images/ref_bg_eco.svg`} alt="ball_left" />
+      <XOXECO src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/xox_economy.svg`} alt="xox_economy" />
+      <BallBackECO src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/background_economy.svg`} alt="ball_left" />
+      <BallLeft src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_meet_xox.svg`} alt="ball_left" />
+      <BallRight src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/xox_economy_right.svg`} alt="ball_left" />
+      <BackGroundLeft src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/xox_eco_left_2.svg`} alt="ball_left" />
+      <BackGroundRight src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/ref_bg_eco.svg`} alt="ball_left" />
     </>
   )
 }
