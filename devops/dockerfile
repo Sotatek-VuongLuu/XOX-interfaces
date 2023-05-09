@@ -1,15 +1,15 @@
-FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16:latest as builder
+FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16:latest
 RUN mkdir -p /home/node/app
 WORKDIR /home/node/app
 COPY . .
 COPY .env /home/node/app/apps/web/.env.production
 RUN yarn install --network-timeout 600 && yarn build
-LABEL base="false"
+# LABEL base="false"
 
-FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16-slim:latest
-RUN mkdir -p /home/node/app
-WORKDIR /home/node/app
-COPY --from=builder /home/node/app /home/node/app
+# FROM us-west2-docker.pkg.dev/practical-yew-383010/staging-xox-base/node-16-slim:latest
+# RUN mkdir -p /home/node/app
+# WORKDIR /home/node/app
+# COPY --from=builder /home/node/app /home/node/app 
 EXPOSE 3001
 LABEL base="false"
 CMD ["yarn", "run" , "start"]
