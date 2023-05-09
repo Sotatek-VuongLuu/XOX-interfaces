@@ -393,7 +393,7 @@ const HoverTextAirBnb = () => {
       <div className="popup-info">
         <div className="top">
           <div className="coin-info">
-            <img src={`/images/home/secure-by/xox.svg`} alt="xox" />
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/secure-by/xox.svg`} alt="xox" />
             <p>XOX</p>
           </div>
           <div className="status">
@@ -476,7 +476,7 @@ const HoverTextHubspot = () => {
       <div className="popup-info">
         <div className="top">
           <div className="coin-info">
-            <img src={`/images/home/secure-by/xox.svg`} alt="xox" />
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/secure-by/xox.svg`} alt="xox" />
             <p>XOX</p>
           </div>
           <div className="status">
@@ -554,7 +554,7 @@ const HoverTextGoogle = () => {
       <div className="popup-info">
         <div className="top">
           <div className="coin-info">
-            <img src={`/images/home/secure-by/xox.svg`} alt="xox" />
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/secure-by/xox.svg`} alt="xox" />
             <p>XOX</p>
           </div>
           <div className="status">
@@ -667,31 +667,9 @@ const SecuredBy = () => {
       </p>
 
       <p className="img">
-        {/* {width < 900 ? (
-          <>
-            <div>
-              <img src={`/images/airbnb.svg`} alt="airbnb" data-aos="fade-right" onMouseOver={handleMouseOverAirBnb} onMouseOut={handleMouseOutAirBnb}/>
-              {isHoveringAirBnb && <HoverTextAirBnb />}
-            </div>
-            <div>
-              <img src={`/images/hubspot.svg`} alt="hubspot" data-aos="fade-down" onMouseOver={handleMouseOverHubspot} onMouseOut={handleMouseOutHubspot}/>
-              {isHoveringHubspot && <HoverTextHubspot />}
-            </div>
-            <div>
-              <img src={`/images/google.svg`} alt="google" data-aos="fade-left" onMouseOver={handleMouseOverGoogle} onMouseOut={handleMouseOutGoogle}/>
-              {isHoveringGoogle && <HoverTextGoogle />}
-            </div>
-          </>
-        ) : (
-          <>
-            <img src={`/images/airbnb.svg`} alt="airbnb" data-aos="fade-right" onMouseOver={handleMouseOverAirBnb} onMouseOut={handleMouseOutAirBnb}/>
-            <img src={`/images/hubspot.svg`} alt="hubspot" data-aos="fade-down" onMouseOver={handleMouseOverHubspot} onMouseOut={handleMouseOutHubspot}/>
-            <img src={`/images/google.svg`} alt="google" data-aos="fade-left" onMouseOver={handleMouseOverGoogle} onMouseOut={handleMouseOutGoogle}/>
-          </>
-        )} */}
         <div className="airbnb-box">
           <img
-            src={`/images/airbnb.svg`}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/airbnb.svg`}
             alt="airbnb"
             data-aos="fade-right"
             onMouseOver={handleMouseOverAirBnb}
@@ -701,7 +679,7 @@ const SecuredBy = () => {
         </div>
         <div className="hubspot-box">
           <img
-            src={`/images/hubspot.svg`}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/hubspot.svg`}
             alt="hubspot"
             data-aos="fade-down"
             onMouseOver={handleMouseOverHubspot}
@@ -711,7 +689,7 @@ const SecuredBy = () => {
         </div>
         <div className="google-box">
           <img
-            src={`/images/google.svg`}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/google.svg`}
             alt="google"
             data-aos="fade-left"
             onMouseOver={handleMouseOverGoogle}

@@ -179,13 +179,17 @@ const UpComingItem = ({ title, describe, link }) => {
         {width <= 900 ? (
           isShowReadMore ? (
             <img
-              src={`/images/up_coming.svg`}
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/up_coming.svg`}
               alt="down_coming"
               className="up_coming"
               onClick={() => setIsShow(!isShowReadMore)}
             />
           ) : (
-            <img src={`/images/down_coming.svg`} alt="down_coming" onClick={() => setIsShow(!isShowReadMore)} />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/down_coming.svg`}
+              alt="down_coming"
+              onClick={() => setIsShow(!isShowReadMore)}
+            />
           )
         ) : null}
       </div>
@@ -264,17 +268,20 @@ const linkWhitepaper = '#'
 const listItem = [
   {
     title: 'XOX Dex V2',
-    describe: 'Why trade in a single Dex when you can Trade in all DEXs at Once. XOX Dex V2 finds you the best prices across 60+ Chains & 150+ DEXs and combines them into a single trade, all while giving you many other trade options to choose from, Ranking them by lowest fees, best rates and higher liquidity.',
+    describe:
+      'Why trade in a single Dex when you can Trade in all DEXs at Once. XOX Dex V2 finds you the best prices across 60+ Chains & 150+ DEXs and combines them into a single trade, all while giving you many other trade options to choose from, Ranking them by lowest fees, best rates and higher liquidity.',
     link: linkWhitepaper,
   },
   {
     title: 'XOX Multi-Chain Launchpad',
-    describe: "XOX Labs is committed to developing the best web3 multi-chain launchpad in the market. With extensive research on over 50 launchpads, we'll provide seamless and secure access to profitable ICOs, fair launches, and pre-sales. Setting the industry standard and maximizing returns for investors.",
+    describe:
+      "XOX Labs is committed to developing the best web3 multi-chain launchpad in the market. With extensive research on over 50 launchpads, we'll provide seamless and secure access to profitable ICOs, fair launches, and pre-sales. Setting the industry standard and maximizing returns for investors.",
     link: linkWhitepaper,
   },
   {
     title: 'XOX Mobile App/Wallet',
-    describe: 'In light of recent events, decentralized wallets such as Trust Wallet and Metamask have become increasingly important for investors who value the security of their assets. Our XOX Decentralized Wallet offers advanced multi-chain capabilities to users while ensuring the safety of their funds. With top-of-the-line security features and seamless chain management, our wallet provides a convenient and secure solution for navigating the complex world of cryptocurrency.',
+    describe:
+      'In light of recent events, decentralized wallets such as Trust Wallet and Metamask have become increasingly important for investors who value the security of their assets. Our XOX Decentralized Wallet offers advanced multi-chain capabilities to users while ensuring the safety of their funds. With top-of-the-line security features and seamless chain management, our wallet provides a convenient and secure solution for navigating the complex world of cryptocurrency.',
     link: linkWhitepaper,
   },
   {
