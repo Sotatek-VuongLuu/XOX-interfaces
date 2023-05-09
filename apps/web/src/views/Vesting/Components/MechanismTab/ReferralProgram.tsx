@@ -144,7 +144,7 @@ function ReferralProgram() {
         <p className="high_light">{t('Referral Program Mechanism for Pre-Sales')}</p>
         <p className="nomal">
           {t(
-            `Apart from earning XOXS as a bonus by investing in the Pre-Sales, users and investors (BOTH) can also earn more XOXS by referring others to invest. Each user will get a custom Code after connecting their wallet to the XOX Labs dapp, users and influencers only need to share the their code with other investors and communities then when they invest using the codes the XOXS earned by both (the person that owns the code and the person that is using the code) will be automatically added to the respective wallets.`,
+            `Apart from earning XOXS as a bonus by investing in the Pre-Sales, users, and investors (BOTH) can also earn more XOXS by referring others to invest. Each user will get a custom Code after connecting their wallet to the XOX Labs dapp, users and influencers only need to share their code with other investors and communities and when they invest using the codes the XOXS earned by both (the person that owns the code and the person that is using the code) will be automatically added to the respective wallets.`,
           )}
         </p>
 
