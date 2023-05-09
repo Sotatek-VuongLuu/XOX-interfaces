@@ -133,8 +133,8 @@ const initialTokenMetrics = [
   {
     id: 2,
     title: 'Company Reserve (0% at TGE & 4 years vesting 25% Yearly)',
-    tokenAllocationPercent: '15',
-    tokenAllocation: '27000000',
+    tokenAllocationPercent: '10',
+    tokenAllocation: '18000000',
     tge: '0',
     tokenAllocationatTge: '',
     initialMarketcap: '',
@@ -153,8 +153,8 @@ const initialTokenMetrics = [
   {
     id: 4,
     title: 'Ecosystem Growth (0% at TGE & 4 years vesting 25% Yearly)',
-    tokenAllocationPercent: '20',
-    tokenAllocation: '36000000',
+    tokenAllocationPercent: '15',
+    tokenAllocation: '27000000',
     tge: '0',
     tokenAllocationatTge: '',
     initialMarketcap: '',
