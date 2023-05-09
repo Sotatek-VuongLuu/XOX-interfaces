@@ -106,7 +106,11 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
                 color="#FB8618"
                 style={{ display: 'flex', alignItems: 'center' }}
               >
-                <img src={`/images/coinmaketcap.png`} alt="" style={{ marginRight: '8px' }} />
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/coinmaketcap.png`}
+                  alt=""
+                  style={{ marginRight: '8px' }}
+                />
                 {t('Via')} {list.name}
               </Text>
             ) : (
@@ -178,7 +182,7 @@ function ImportToken({ tokens, handleCurrencySelect }: ImportProps) {
                 <LinkExternal
                   href={getBlockExploreLink(token.address, 'address', token.chainId)}
                   external
-                  color='#FB8618'
+                  color="#FB8618"
                 >
                   <Text
                     fontSize={['14px', , '16px']}

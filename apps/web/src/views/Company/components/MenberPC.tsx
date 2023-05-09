@@ -108,22 +108,66 @@ function MenberPC() {
   const { t } = useTranslation()
 
   const MEMBERS_ONE: Array<IMember> = [
-    { avatar: `/images/company/Livan G.M.png`, name: 'Livan G.M', position: t('Chief Executive Officer') },
-    { avatar: `/images/company/Zayn.png`, name: 'Zayn', position: t('Chief Marketing Officer') },
-    { avatar: `/images/company/Marcos.png`, name: 'Marcos N.', position: t('Chief Legal Officer') },
-    { avatar: `/images/company/Edward.png`, name: 'Edward', position: t('Lead Designer') },
-    { avatar: `/images/company/Kane Nguyen.png`, name: 'Kane Nguyen', position: t('Project Manager') },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Livan G.M.png`,
+      name: 'Livan G.M',
+      position: t('Chief Executive Officer'),
+    },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Zayn.png`,
+      name: 'Zayn',
+      position: t('Chief Marketing Officer'),
+    },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Marcos.png`,
+      name: 'Marcos N.',
+      position: t('Chief Legal Officer'),
+    },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Edward.png`,
+      name: 'Edward',
+      position: t('Lead Designer'),
+    },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Kane Nguyen.png`,
+      name: 'Kane Nguyen',
+      position: t('Project Manager'),
+    },
   ]
   const MEMBERS_TWO: Array<IMember> = [
-    { avatar: `/images/company/Victor Luu.png`, name: 'Victor Luu', position: t('SC Developer') },
-    { avatar: `/images/company/Thomas Nguyen.png`, name: 'Thomas Nguyen', position: t('Lead FE Developer') },
-    { avatar: `/images/company/Warren Vu.png`, name: 'Warren Vu', position: t('Lead BE Developer') },
-    { avatar: `/images/company/Son Lee.png`, name: 'Son Lee', position: t('Operation Developer') },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Victor Luu.png`,
+      name: 'Victor Luu',
+      position: t('SC Developer'),
+    },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Thomas Nguyen.png`,
+      name: 'Thomas Nguyen',
+      position: t('Lead FE Developer'),
+    },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Warren Vu.png`,
+      name: 'Warren Vu',
+      position: t('Lead BE Developer'),
+    },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Son Lee.png`,
+      name: 'Son Lee',
+      position: t('Operation Developer'),
+    },
   ]
 
   const MEMBERS_THREE: Array<IMember> = [
-    { avatar: `/images/company/Mei To.png`, name: 'Mei To', position: t('Business Analyst') },
-    { avatar: `/images/company/Marrie Vu.png`, name: 'Marrie Vu', position: t('Quality Control') },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Mei To.png`,
+      name: 'Mei To',
+      position: t('Business Analyst'),
+    },
+    {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Marrie Vu.png`,
+      name: 'Marrie Vu',
+      position: t('Quality Control'),
+    },
   ]
   return (
     <>
