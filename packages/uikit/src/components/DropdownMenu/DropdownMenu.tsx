@@ -30,12 +30,13 @@ const Tooltip = styled.div`
 
   & .tooltiptext {
     visibility: hidden;
-    width: 100%;
+    width: fit-content;
     background-color: #555;
     color: #fff;
     text-align: center;
     padding: 5px;
     border-radius: 6px;
+    white-space: nowrap;
 
     position: absolute;
     z-index: 1;
@@ -62,6 +63,13 @@ const Tooltip = styled.div`
   &:hover .tooltiptext {
     visibility: visible;
     opacity: 1;
+  }
+
+  @media screen and (max-width: 560px) {
+    & .tooltiptext {
+      left: 20%;
+    }
+  
   }
 `;
 
