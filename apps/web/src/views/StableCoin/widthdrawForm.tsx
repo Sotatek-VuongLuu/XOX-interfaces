@@ -347,8 +347,6 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
     }
   }
 
-  console.log(amount)
-
   return (
     <WrapForm>
       <Flex justifyContent="space-between" alignItems="center">
@@ -410,7 +408,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
 
           <ButtonRight
             height={27}
-            disabled={!Number(amount)}
+            disabled={!Number(priceState)}
             style={{ fontSize: 12, padding: '0 16px' }}
             onClick={() => {
               setAmount(formatE(priceState))
