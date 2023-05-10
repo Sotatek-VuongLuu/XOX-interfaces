@@ -198,42 +198,8 @@ const SelectTokenButton: React.FC<Props> = ({
               height={24}
             />
             <span>XOX</span>
-            {/* {isShowDrop ? <ChevronUpIconStyled /> : <ChevronDownIconStyled />} */}
           </div>
         </Wrapper>
-
-        {/* {isShowDrop && (
-          <>
-            <div
-              className="overlay "
-              style={{ zIndex: 7 }}
-              onClick={() => {
-                handleShowDrop();
-              }}
-              aria-hidden="true"
-             />
-            <Select className="option" style={{ zIndex: 9 }}>
-              {listTokens.map((token, index:any) => {
-                return (
-                  <Option
-                    className={`flex ${
-                      tokenSymbol === token.symbol && "active"
-                    } `}
-                    onClick={() => {
-                      switchToken(index);
-                      handleShowDrop();
-                    }}
-                  >
-                    <Image src={`/images/xox_planet.svg`}  width={72} height={72} />
-                    <div className="title-token flex items-center">
-                      {token.symbol}
-                    </div>
-                  </Option>
-                );
-              })}
-            </Select>
-          </>
-        )} */}
       </FullyContainer>
     </>
   )

@@ -659,28 +659,6 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
             </ConnectButton>
           </Flex>
         )}
-        {/* {tokensBalance &&
-          tokensBalance?.map((tokenBalance) => {
-            const value = (tokenBalance as any)?.value
-            const symbol = (tokenBalance as any)?.symbol
-            const address = (tokenBalance as any)?.contractAddress
-            return (
-              <Flex>
-                <Image
-                  width={30}
-                  height={30}
-                  src={`/images/tokens/${address}.png`}
-                  alt={`${address}.png`}
-                />
-                <Flex>
-                  <>
-                    {value} {symbol}
-                    <Text color="rgba(255, 255, 255, 0.87)">{value && formatBigNumber(value, 6)}</Text>
-                  </>
-                </Flex>
-              </Flex>
-            )
-          })} */}
       </TableWrapper>
     </Wrapper>
   )
