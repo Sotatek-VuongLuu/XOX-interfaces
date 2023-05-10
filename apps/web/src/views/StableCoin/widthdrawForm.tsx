@@ -435,7 +435,12 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         </BoxRight>
       </Flex>
       <Flex justifyContent="end">
-        <Button width={140} height={43} disabled={error || !amount || decimalError} onClick={handleWidthdraw}>
+        <Button
+          width={140}
+          height={43}
+          disabled={error || !amount || decimalError || Number(amount) === 0}
+          onClick={handleWidthdraw}
+        >
           {t('Withdraw')}
         </Button>
       </Flex>
