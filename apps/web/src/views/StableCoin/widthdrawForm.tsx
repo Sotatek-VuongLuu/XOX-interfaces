@@ -410,6 +410,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
 
           <ButtonRight
             height={27}
+            disabled={!Number(amount)}
             style={{ fontSize: 12, padding: '0 16px' }}
             onClick={() => {
               setAmount(formatE(priceState))

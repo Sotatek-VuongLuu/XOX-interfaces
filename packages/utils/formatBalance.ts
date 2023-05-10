@@ -129,7 +129,24 @@ export const formatAmountNumber2 = (number: number, decimals = 2) => {
   if (number < 1) {
     return number
   }
-  const value = number.toString().split('.')
+  const convest = new BigNumber(number).toString()
+  const value = convest.toString().split('.')
+  const firstNumber = value[0]?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
+  const lastNumber = value[1] ? value[1].slice(0, decimals) : undefined
+
+  if (!lastNumber) {
+    return firstNumber
+  }
+  return `${firstNumber}.${lastNumber}`
+}
+
+
+export const formatAmountStable = (number: number, decimals = 2) => {
+  if (number > 0 && number <= 0.000001) {
+    return `< 0.01`
+  }
+  const convest = new BigNumber(number).toString()
+  const value = convest.toString().split('.')
   const firstNumber = value[0]?.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,')
   const lastNumber = value[1] ? value[1].slice(0, decimals) : undefined
 
