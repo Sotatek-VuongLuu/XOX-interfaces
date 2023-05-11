@@ -235,40 +235,40 @@ const SupportedBlockchains = () => {
 
 const listCommunity = [
   {
-    icon: '/images/pc_twitter.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pc_twitter.svg`,
     name: 'Twitter',
     des: 'Follow @Xox_Labs on Twitter for ecosystem news & updates. Stay informed.',
-    iconMobile: '/images/twitter_mob.svg',
+    iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/twitter_mob.svg`,
   },
   {
-    icon: '/images/group_tele_pc.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/group_tele_pc.svg`,
     name: 'Telegram Group',
     des: 'Ask general questions and chat with the worldwide community on Telegram.',
-    iconMobile: '/images/group_tele_mb.svg',
+    iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/group_tele_mb.svg`,
   },
   {
-    icon: '/images/pc_tiktok.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pc_tiktok.svg`,
     name: 'Tiktok',
     des: 'Follow @xox_labs on TikTok for the latest ecosystem news. Stay connected!',
-    iconMobile: '/images/tiktok_mb.svg',
+    iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tiktok_mb.svg`,
   },
   {
-    icon: '/images/pc_telegram.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pc_telegram.svg`,
     name: 'Telegram Channel',
     des: 'Join our channel to stay up-to-date with every news and updates.',
-    iconMobile: '/images/telegram_mb.svg',
+    iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/telegram_mb.svg`,
   },
   {
-    icon: '/images/pc_youtube.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pc_youtube.svg`,
     name: 'Youtube',
     des: 'Subscribe to @XoxLabs to stay in the loop and updated.',
-    iconMobile: '/images/youtube_mb.svg',
+    iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/youtube_mb.svg`,
   },
   {
-    icon: '/images/pc_discord.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pc_discord.svg`,
     name: 'Discord',
     des: 'Ask general questions and chat with the worldwide community on Discord.',
-    iconMobile: '/images/discord_mb.svg',
+    iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/discord_mb.svg`,
   },
 ]
 

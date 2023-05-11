@@ -15,8 +15,8 @@ const BackgroundPurple = styled.img`
 const NestedBall = (): JSX.Element => {
   return (
     <>
-      <BackgroundPurple src="/images/bg-purple.svg" alt="bg-purple" />
-      <MoonBall src="/images/moon-ball.svg" alt="moon-ball" />
+      <BackgroundPurple src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg-purple.svg`} alt="bg-purple" />
+      <MoonBall src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/moon-ball.svg`} alt="moon-ball" />
     </>
   )
 }

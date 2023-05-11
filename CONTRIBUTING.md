@@ -45,7 +45,7 @@ Guidelines for bug reports:
 3. **Isolate the problem** &mdash; create a [reduced test
    case](http://css-tricks.com/reduced-test-cases/) and a live example.
 
-4. **Add attachments** &mdash; add photos or videos
+4. **Add attachments** &mdash; add images or videos
 
 A good bug report shouldn't leave others needing to chase you up for more
 information. Please try to be as detailed as possible in your report. What is

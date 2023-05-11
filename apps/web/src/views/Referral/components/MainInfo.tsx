@@ -604,7 +604,6 @@ const FakeSwiper = styled.div`
     background-position: center;
     height: auto;
     width: 100%;
-    /* background: url(/images/item.svg); */
     box-shadow: 0px 0px 16px rgba(0, 0, 0, 0.5);
     margin: auto;
     &:hover {
@@ -700,7 +699,7 @@ const FakeSwiper = styled.div`
 
   .swiper-button-next {
     z-index: 999;
-    background: url(/images/next.svg) no-repeat center;
+    background: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/next.svg) no-repeat center;
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
@@ -718,7 +717,7 @@ const FakeSwiper = styled.div`
   }
 
   .swiper-button-prev {
-    background: url(/images/prev.svg) no-repeat center;
+    background: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/prev.svg) no-repeat center;
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center center;
@@ -1404,7 +1403,7 @@ const MainInfo = ({
                                     tooltipMessage={t('Copied')}
                                     button={
                                       <img
-                                        src="/images/copy_referral.svg"
+                                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/copy_referral.svg`}
                                         alt="copy_purple"
                                         style={{ marginBottom: '-2px', marginLeft: '8px' }}
                                       />
@@ -1482,10 +1481,18 @@ const MainInfo = ({
                         <div className="main-img">
                           <img
                             className="first-img"
-                            src={item.lever === currentLevelReach ? '/images/current_item.svg' : 'images/item.svg'}
-                            alt="images"
+                            src={
+                              item.lever === currentLevelReach
+                                ? `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/current_item.svg`
+                                : `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/item.svg`
+                            }
+                            alt="imgcur"
                           />
-                          <img className="sec-img" src="/images/current_item.svg" alt="images" />
+                          <img
+                            className="sec-img"
+                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/current_item.svg`}
+                            alt="ima"
+                          />
                         </div>
                         <div className="inner-text">
                           <img src={item.icon} alt="icons" className="jewellery" />

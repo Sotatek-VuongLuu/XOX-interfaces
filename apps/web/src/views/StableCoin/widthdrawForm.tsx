@@ -347,8 +347,6 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
     }
   }
 
-  console.log(amount)
-
   return (
     <WrapForm>
       <Flex justifyContent="space-between" alignItems="center">
@@ -362,9 +360,15 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         <BoxRight>
           <InputFill className="no-border">
             {isUSDT ? (
-              <img src="/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png" alt="icon" />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png`}
+                alt="icon"
+              />
             ) : (
-              <img src="/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg" alt="icon" />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg`}
+                alt="icon"
+              />
             )}
             {isUSDT ? 'USDT' : 'USDC'}
           </InputFill>
@@ -404,6 +408,7 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
 
           <ButtonRight
             height={27}
+            disabled={!Number(priceState)}
             style={{ fontSize: 12, padding: '0 16px' }}
             onClick={() => {
               setAmount(formatE(priceState))
@@ -430,7 +435,12 @@ const WidthdrawForm = ({ priceAvailable, onSuccess }: { priceAvailable?: any; on
         </BoxRight>
       </Flex>
       <Flex justifyContent="end">
-        <Button width={140} height={43} disabled={error || !amount || decimalError} onClick={handleWidthdraw}>
+        <Button
+          width={140}
+          height={43}
+          disabled={error || !amount || decimalError || Number(amount) === 0}
+          onClick={handleWidthdraw}
+        >
           {t('Withdraw')}
         </Button>
       </Flex>

@@ -372,7 +372,7 @@ const DataRow: React.FC<
 
   const onImageError = (e: any) => {
     // eslint-disable-next-line no-param-reassign
-    e.target.src = 'images/default_avatar.jpg'
+    e.target.src = `${process.env.NEXT_PUBLIC_ASSETS_URI}images/default_avatar.jpg`
   }
 
   return (
@@ -421,7 +421,7 @@ const DataRow: React.FC<
           {transaction?.avatar ? (
             <img src={transaction?.avatar} alt="avatar" onError={onImageError} />
           ) : (
-            <img src="images/default_avatar.jpg" alt="imagess" />
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/default_avatar.jpg`} alt="images" />
           )}
           {transaction?.username}
         </Text>
@@ -731,7 +731,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
           height="24px"
         >
           {typePage === TYPE_HISTORY.stake && t('Stake History')}
-          {(typePage === TYPE_HISTORY.widthDraw || typePage === TYPE_HISTORY.myWidthDraw) && t("Withdraw History")}
+          {(typePage === TYPE_HISTORY.widthDraw || typePage === TYPE_HISTORY.myWidthDraw) && t('Withdraw History')}
         </Text>
       </Flex>
       <CustomTableWrapper className="history-table">
@@ -782,7 +782,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
             color="rgba(255, 255, 255, 0.6)"
             className="table-header"
           >
-            {t("Time")}
+            {t('Time')}
           </Text>
           <ClickableColumnHeader
             fontSize="16px"
@@ -978,7 +978,7 @@ const HistoryTable = ({ typePage }: { typePage?: string }) => {
               className="select-page"
             />
             <Text className="go-page" style={{ whiteSpace: 'nowrap' }}>
-              {t("Go to page")}
+              {t('Go to page')}
             </Text>
             <Input
               className="footer_input"

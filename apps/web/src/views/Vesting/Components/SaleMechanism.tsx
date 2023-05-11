@@ -212,7 +212,7 @@ const Content = styled.div`
       &::before {
         content: '';
         position: absolute;
-        background-image: url(/images/dex-v2/prev-tab.png);
+        background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/prev-tab.png);
         top: 12px;
         left: -14px;
         color: rgba(255, 255, 255, 0.38);
@@ -223,7 +223,7 @@ const Content = styled.div`
       &::after {
         content: '';
         position: absolute;
-        background-image: url(/images/dex-v2/next-tab.png);
+        background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/next-tab.png);
         top: 12px;
         right: -14px;
         color: rgba(255, 255, 255, 0.38);
@@ -288,7 +288,7 @@ const Content = styled.div`
 
   .swiper-button-next {
     z-index: 999;
-    background-image: url(/images/new_next.svg);
+    background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/new_next.svg);
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
@@ -300,7 +300,7 @@ const Content = styled.div`
   }
 
   .swiper-button-prev {
-    background-image: url(/images/new_prev.svg);
+    background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/new_prev.svg);
     background-repeat: no-repeat;
     background-size: 100% auto;
     background-position: center;
@@ -374,7 +374,11 @@ function SaleMechanism({
         {width <= 900 && isMore && (
           <div className="container_learnless">
             <div>
-              <img src="/images/fi_chevrons-down.png" alt="fi_chevrons-down" className="fi_chevrons-up" />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/fi_chevrons-down.png`}
+                alt="fi_chevrons-down"
+                className="fi_chevrons-up"
+              />
               <button type="button" className="btn_learnless" onMouseDown={() => setIsMore(false)}>
                 {t('Learn Less')}
               </button>
@@ -387,7 +391,11 @@ function SaleMechanism({
             <button type="button" className="btn_learnmore" onClick={() => setIsMore(true)}>
               {t('Learn More')}
             </button>
-            <img src="/images/fi_chevrons-down.svg" alt="fi_chevrons-down" className="fi_chevrons-down" />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/fi_chevrons-down.svg`}
+              alt="fi_chevrons-down"
+              className="fi_chevrons-down"
+            />
           </div>
         )}
       </>

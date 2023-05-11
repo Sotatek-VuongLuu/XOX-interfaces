@@ -248,7 +248,6 @@ export default function ADDComponent() {
               </p>
             </div>
           </div>
-          {/* <img src="/images/tokenomics/Group 48098890.png" alt="" draggable="false" loading="lazy" /> */}
         </div>
         <div className="r">
           {AAD_DATA_R.map((item, i) => (

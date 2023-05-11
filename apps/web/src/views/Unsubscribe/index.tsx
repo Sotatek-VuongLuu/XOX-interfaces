@@ -39,7 +39,7 @@ const UnsubscribePage = () => {
     } catch (error) {
       setData({
         state: 0,
-        msg: 'You have unsubscribed !',
+        msg: 'You have unsubscribed!',
       })
     }
   }
@@ -52,7 +52,7 @@ const UnsubscribePage = () => {
       {data.state === 1 && (
         <DivWrapper>
           <div className="main_container">
-            <img src="images/unsubscribe/success.png" alt="" />
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/unsubscribe/success.png`} alt="success" />
             <p>{data.msg}</p>
           </div>
         </DivWrapper>
@@ -60,7 +60,7 @@ const UnsubscribePage = () => {
       {data.state === 0 && (
         <DivWrapper>
           <div className="main_container">
-            <img src="images/unsubscribe/success.png" alt="" />
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/unsubscribe/fail.png`} alt="fail" />
             <p>{data.msg}</p>
           </div>
         </DivWrapper>

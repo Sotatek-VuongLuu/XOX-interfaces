@@ -143,14 +143,14 @@ const SecuredByItem = ({ item }) => {
         {width >= 900 && (
           <>
             <div>
-              <img src="/images/dex-v2/AirbnbLogo.svg" alt="AirbnbLogo" />
-              <img src="/images/dex-v2/HubspotLogo.svg" alt="HubspotLogo" />
-              <img src="/images/dex-v2/GoogleLogo.svg" alt="GoogleLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/AirbnbLogo.svg`} alt="AirbnbLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/HubspotLogo.svg`} alt="HubspotLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/GoogleLogo.svg`} alt="GoogleLogo" />
             </div>
             <div>
-              <img src="/images/dex-v2/MicrosoftLogo.svg" alt="MicrosoftLogo" />
-              <img src="/images/dex-v2/WalmartLogo.svg" alt="WalmartLogo" />
-              <img src="/images/dex-v2/FedExLogo.svg" alt="FedExLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/MicrosoftLogo.svg`} alt="MicrosoftLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/WalmartLogo.svg`} alt="WalmartLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/FedExLogo.svg`} alt="FedExLogo" />
             </div>
           </>
         )}
@@ -158,16 +158,16 @@ const SecuredByItem = ({ item }) => {
         {width < 900 && (
           <>
             <div>
-              <img src="/images/dex-v2/AirbnbLogo.svg" alt="AirbnbLogo" />
-              <img src="/images/dex-v2/HubspotLogo.svg" alt="HubspotLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/AirbnbLogo.svg`} alt="AirbnbLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/HubspotLogo.svg`} alt="HubspotLogo" />
             </div>
             <div>
-              <img src="/images/dex-v2/GoogleLogo.svg" alt="GoogleLogo" />
-              <img src="/images/dex-v2/MicrosoftLogo.svg" alt="MicrosoftLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/GoogleLogo.svg`} alt="GoogleLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/MicrosoftLogo.svg`} alt="MicrosoftLogo" />
             </div>
             <div>
-              <img src="/images/dex-v2/WalmartLogo.svg" alt="WalmartLogo" />
-              <img src="/images/dex-v2/FedExLogo.svg" alt="FedExLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/WalmartLogo.svg`} alt="WalmartLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/FedExLogo.svg`} alt="FedExLogo" />
             </div>
           </>
         )}

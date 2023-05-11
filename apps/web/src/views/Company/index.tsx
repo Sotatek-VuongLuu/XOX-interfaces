@@ -391,7 +391,13 @@ export function CardSocial({ social, ...props }: { social: ISocial }) {
               <h4 className="social_name">{social.name}</h4>
               <p style={{ whiteSpace: 'nowrap' }}>
                 <span>•</span>
-                {social.link} <img src="/images/company/ArrowUpRight.svg" alt="" draggable="false" loading="lazy" />
+                {social.link}{' '}
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/ArrowUpRight.svg`}
+                  alt=""
+                  draggable="false"
+                  loading="lazy"
+                />
               </p>
             </div>
           </StyledCardSocial>
@@ -405,7 +411,13 @@ export function CardSocial({ social, ...props }: { social: ISocial }) {
             <h4 className="social_name">{social.name}</h4>
             <p style={{ whiteSpace: 'nowrap' }}>
               <span>•</span>
-              {social.link} <img src="/images/company/ArrowUpRight.svg" alt="" draggable="false" loading="lazy" />
+              {social.link}{' '}
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/ArrowUpRight.svg`}
+                alt=""
+                draggable="false"
+                loading="lazy"
+              />
             </p>
           </div>
         </StyledCardSocial>
@@ -433,18 +445,78 @@ export default function CompanyPage() {
   const { width } = useWindowSize()
 
   const SOCIALS: Array<ISocial> = [
-    { icon: '/images/company/1.svg', name: t('XOX Dex V1'), link: t('Trade Now'), heft: '/swap' },
-    { icon: '/images/company/2.svg', name: t('Referral Program'), link: t('Earn Now'), heft: '/referral' },
-    { icon: '/images/company/3.svg', name: t('Bridge'), link: t('Bridge Now'), heft: '/bridge-token' },
-    { icon: '/images/company/4.svg', name: t('Stable Coin'), link: t('Stake Now'), heft: '/stable-coin' },
-    { icon: '/images/company/5.svg', name: t('Liquidity Mining'), link: t('Earn Now'), heft: '/liquidity' },
-    { icon: '/images/company/6.svg', name: t('Yield farming'), link: t('Earn Now'), heft: '/pools' },
-    { icon: '/images/company/7.svg', name: t('Assets Manager'), link: t('Explore Now'), heft: '/info' },
-    { icon: '/images/company/1.svg', name: t('XOX Dex V2'), link: t('Best Rates on DeFi'), heft: '/dex-v2' },
-    { icon: '/images/company/8.svg', name: t('XOX Mobile App'), link: t('Your Defi Key'), heft: '#' },
-    { icon: '/images/company/9.svg', name: t('XOX Launchpad'), link: t('Invest Now'), heft: '#' },
-    { icon: '/images/company/10.svg', name: t('Coin Listing Site'), link: t('Don’t Miss Out'), heft: '#' },
-    { icon: '/images/company/11.svg', name: t('Lottery Game'), link: t('Risk Small - Earn Big'), heft: '#' },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/1.svg`,
+      name: t('XOX Dex V1'),
+      link: t('Trade Now'),
+      heft: '/swap',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/2.svg`,
+      name: t('Referral Program'),
+      link: t('Earn Now'),
+      heft: '/referral',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/3.svg`,
+      name: t('Bridge'),
+      link: t('Bridge Now'),
+      heft: '/bridge-token',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/4.svg`,
+      name: t('Stable Coin'),
+      link: t('Stake Now'),
+      heft: '/stable-coin',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/5.svg`,
+      name: t('Liquidity Mining'),
+      link: t('Earn Now'),
+      heft: '/liquidity',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/6.svg`,
+      name: t('Yield farming'),
+      link: t('Earn Now'),
+      heft: '/pools',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/7.svg`,
+      name: t('Assets Manager'),
+      link: t('Explore Now'),
+      heft: '/info',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/1.svg`,
+      name: t('XOX Dex V2'),
+      link: t('Best Rates on DeFi'),
+      heft: '/dex-v2',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/8.svg`,
+      name: t('XOX Mobile App'),
+      link: t('Your Defi Key'),
+      heft: '#',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/9.svg`,
+      name: t('XOX Launchpad'),
+      link: t('Invest Now'),
+      heft: '#',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/10.svg`,
+      name: t('Coin Listing Site'),
+      link: t('Don’t Miss Out'),
+      heft: '#',
+    },
+    {
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/11.svg`,
+      name: t('Lottery Game'),
+      link: t('Risk Small - Earn Big'),
+      heft: '#',
+    },
   ]
 
   return (
@@ -468,13 +540,25 @@ export default function CompanyPage() {
               controlsList="nodownload"
               muted
             >
-              <source src="/images/company/company_page.mov" type='video/mp4; codecs="hvc1"' />
-              <source src="/images/company/Coding_footage.webm" type="video/webm" />
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/company_page.mov`}
+                type='video/mp4; codecs="hvc1"'
+              />
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Coding_footage.webm`}
+                type="video/webm"
+              />
             </video>
           </StyledPreviewVideo>
 
           <div>
-            <img src="/images/company/bg-header.png" alt="" draggable="false" loading="lazy" className="bg-header" />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/bg-header.png`}
+              alt=""
+              draggable="false"
+              loading="lazy"
+              className="bg-header"
+            />
           </div>
         </StyledHeader>
 
@@ -488,7 +572,13 @@ export default function CompanyPage() {
         </StyledSectionText>
 
         <Box marginBottom={[64, null, null, 100]}>
-          <img src="/images/company/bg-team.png" alt="" draggable="false" loading="lazy" style={{ width: '100%' }} />
+          <img
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/bg-team.png`}
+            alt=""
+            draggable="false"
+            loading="lazy"
+            style={{ width: '100%' }}
+          />
         </Box>
 
         <StyledSectionText style={{ marginBottom: 40 }}>

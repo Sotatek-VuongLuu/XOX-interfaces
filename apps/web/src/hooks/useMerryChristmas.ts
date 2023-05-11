@@ -21,7 +21,7 @@ const disableWhenNotChristmas = () => {
 const useMerryChristmas = () => {
   const { pathname } = useRouter()
   const { initialize, teardown } = useParticleBurst({
-    imgSrc: '/images/bunny-santa.svg',
+    imgSrc: '/image-removed/bunny-santa.svg',
     disableWhen: disableWhenNotChristmas,
     debounceDuration: 1000,
   })

@@ -445,34 +445,34 @@ const Partners = () => {
 
 const listPartners = [
   {
-    icon: '/images/partners/airbnb_partner.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/airbnb_partner.svg`,
   },
   {
-    icon: '/images/partners/microsoft_partner.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/microsoft_partner.svg`,
   },
   {
-    icon: '/images/partners/walmart_partner.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/walmart_partner.svg`,
   },
   {
-    icon: '/images/partners/hubspot_partner.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/hubspot_partner.svg`,
   },
   {
-    icon: '/images/partners/google_partner.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/google_partner.svg`,
   },
   {
-    icon: '/images/partners/fedex_partner.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/fedex_partner.svg`,
   },
   {
-    icon: '/images/partners/airbnb_partner.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/airbnb_partner.svg`,
   },
   {
-    icon: '/images/partners/google_partner.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/google_partner.svg`,
   },
   {
-    icon: '/images/partners/microsoft_partner.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/microsoft_partner.svg`,
   },
   {
-    icon: '/images/partners/hubspot_partner.svg',
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/hubspot_partner.svg`,
   },
 ]
 

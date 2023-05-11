@@ -45,7 +45,7 @@ const ClaimNftModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ 
     <Modal title={t('Congratulations!')} onDismiss={onDismiss}>
       <Flex flexDirection="column" alignItems="center" justifyContent="center" maxWidth="320px">
         <img
-          src="/images/nfts/christmas-2021.png"
+          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/nfts/christmas-2021.png`}
           height="128px"
           width="128px"
           alt="nft"

@@ -8,7 +8,7 @@ const Wrapper = styled.div`
   border-radius: 20px;
   margin-bottom: 24px;
 
-  background-image: url('/images/ngu.png');
+  background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/ngu.png);
   background-repeat: no-repeat;
   height: 276px;
   background-size: contain;
@@ -129,7 +129,7 @@ const Wrapper = styled.div`
 
   @media screen and (max-width: 1200px) {
     height: 470px;
-    background-image: url('/images/dadsad.png');
+    background-image: url(${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dadsad.png);
     background-size: 100% 470px;
 
     .title {

@@ -13,7 +13,7 @@ const BGRight = styled.img`
   z-index: -1;
   right: 0;
   top: 600px;
-  background: radial-gradient(50% 50% at 50% 50%, rgba(249, 124, 29, 0.2) 0.01%, rgba(249, 124, 29, 0) 100%)
+  background: radial-gradient(50% 50% at 50% 50%, rgba(249, 124, 29, 0.2) 0.01%, rgba(249, 124, 29, 0) 100%);
 `
 
 const BGXOX = styled.img`
@@ -68,17 +68,19 @@ const BGPartner = () => {
     <>
       {width > 900 ? (
         <>
-          <BGLeft src="/images/pl.svg" />
-          <DevelopmentMapBG src="/images/home/bg-cubes/development_map_left.svg" />
-          <BGRight src="/images/pr.svg" />
-          <BGXOX src="/images/xoxs_secured.svg" />
+          <BGLeft src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pl.svg`} />
+          <DevelopmentMapBG
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/bg-cubes/development_map_left.svg`}
+          />
+          <BGRight src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pr.svg`} />
+          <BGXOX src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/xoxs_secured.svg`} />
         </>
       ) : (
         <>
-          <BGMobile src="/images/bg_mobile.svg" alt="bg_mobile" />
-          <BGXOXMobile src="/images/xox_mobile_change.svg" alt="xox_mobile" />
-          <BGMobileTow src="/images/bg_mobile_2.svg" alt="bg_mobile" />
-          <BGMobileCube src="/images/bg_cube_mobile_2.svg" alt="bg_mobile" />
+          <BGMobile src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_mobile.svg" alt="bg_mobile`} />
+          <BGXOXMobile src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/xox_mobile_change.svg" alt="xox_mobile`} />
+          <BGMobileTow src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_mobile_2.svg" alt="bg_mobile`} />
+          <BGMobileCube src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_cube_mobile_2.svg" alt="bg_mobile`} />
         </>
       )}
     </>

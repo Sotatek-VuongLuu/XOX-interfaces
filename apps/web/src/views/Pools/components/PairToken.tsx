@@ -57,14 +57,17 @@ const PairToken = ({
     <Wrapper>
       <ContainerPair>
         <Img
-          src={linkTokenFirst || '/images/1/tokens/xox_token_pair.svg'}
+          src={linkTokenFirst || `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/xox_token_pair.svg`}
           alt="icon"
           height={height}
           width={width}
           className="token_first"
         />
         <Img
-          src={linkTokenSecond || '/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg'}
+          src={
+            linkTokenSecond ||
+            `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48.svg`
+          }
           alt="icon"
           height={height}
           width={width}

@@ -46,14 +46,14 @@ const Backgroud = (): JSX.Element => {
     <>
       {width > 900 ? (
         <>
-          <BallLeft src="/images/ball_left.svg" alt="ball_left" />
-          <BallRight src="/images/ball_right.svg" alt="ball_left" />
-          <BallMoon src="/images/comunity_xox_2.svg" alt="ball_left" />
+          <BallLeft src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/ball_left.svg`} alt="ball_left" />
+          <BallRight src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/ball_right.svg`} alt="ball_left" />
+          <BallMoon src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/comunity_xox_2.svg`} alt="ball_left" />
         </>
       ) : (
         <>
-          <BGMobile src="/images/economy_bg.svg" alt="ball_left" />
-          <XOXMobile src="/images/economy_xox.svg" alt="ball_left" />
+          <BGMobile src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/economy_bg.svg`} alt="ball_left" />
+          <XOXMobile src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/economy_xox.svg`} alt="ball_left" />
         </>
       )}
     </>
