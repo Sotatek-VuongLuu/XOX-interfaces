@@ -20,6 +20,12 @@ export const Content = styled.div`
         font-weight: 700;
       }
     }
+    @media screen and (max-width: 682px) {
+      .value {
+        font-size: 14px;
+        line-height: 17px;
+      }
+    }
   }
 
   .btn-group {
@@ -41,6 +47,13 @@ export const Content = styled.div`
     }
     & > .confirm {
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+    }
+
+    @media screen and (max-width: 682px) {
+      button {
+        font-size: 14px;
+        line-height: 17px;
+      }
     }
   }
 

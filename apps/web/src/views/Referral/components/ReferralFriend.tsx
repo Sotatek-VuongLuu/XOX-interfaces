@@ -949,7 +949,7 @@ const ReferralFriend = ({
                   <button
                     type="button"
                     onClick={() => {
-                      setDataClaim({ ...dataClaim, point: 0, dollar: 1000 })
+                      setDataClaim({ ...dataClaim, point: 0, dollar: Number(totalUnClaimed) })
                       setTypeOfClaim(TYPE_OF_CLAIM.CLAIM_ALL)
                     }}
                     disabled={!account || isClaimAll}
