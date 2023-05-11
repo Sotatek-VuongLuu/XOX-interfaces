@@ -1,5 +1,9 @@
-import styled from "styled-components";
+import { ModalContainer, ModalHeader } from '@pancakeswap/uikit'
+import styled from 'styled-components'
 
+interface IModalContainer {
+  isStepAction?: boolean
+}
 
 export const Content = styled.div`
   .discription {
@@ -108,5 +112,30 @@ export const Content = styled.div`
       border: none;
       cursor: pointer;
     }
+  }
+`
+
+export const StyledModalContainer = styled(ModalContainer)<IModalContainer>`
+  width: ${({ isStepAction }) => (isStepAction ? 'auto' : '327px')};
+  padding: 24px;
+  ${({ theme }) => theme.mediaQueries.md} {
+    padding: 32px 24px;
+    width: ${({ isStepAction }) => (isStepAction ? 'auto' : '464px')};
+  }
+`
+
+export const StyledModalHeader = styled(ModalHeader)`
+  padding: 0;
+  > p {
+    width: 100%;
+    font-weight: 700;
+    font-size: 20px;
+    line-height: 24px;
+    color: rgba(255, 255, 255, 0.87);
+    text-align: center;
+  }
+  ${({ theme }) => theme.mediaQueries.md} {
+    font-size: 20px;
+    line-height: 24px;
   }
 `

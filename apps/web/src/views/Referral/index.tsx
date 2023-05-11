@@ -607,8 +607,8 @@ export default function Refferal() {
       functionList['All Time'][3],
     )
     if (!chainId || !account) return
-    if (loadOk) window.location.reload()
-    setLoadOk(true)
+    // if (loadOk) window.location.reload()
+    // setLoadOk(true)
     getListPointConfig()
     getUserPoint()
     getPointDataDays()
