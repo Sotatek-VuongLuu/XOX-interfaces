@@ -7,6 +7,7 @@ interface IItemListCommunity {
   name: string
   des: string
   iconMobile?: string
+  href: string
 }
 
 interface Iprops {
@@ -185,28 +186,30 @@ const CommunityItem = ({ item }: Iprops) => {
   const { width } = useWindowSize()
 
   return (
-    <div className="item_container" data-aos="fade-up">
-      <div className="wrapper_mobile">
-        <div className="icon-container_moblie">
-          <div className="icon-container">
-            <div className="icon">
-              <div className="overlay">
-                <img src={width < 900 ? item.iconMobile : item.icon} alt="icon" />
+    <a href={item.href} target="_blank">
+      <div className="item_container" data-aos="fade-up">
+        <div className="wrapper_mobile">
+          <div className="icon-container_moblie">
+            <div className="icon-container">
+              <div className="icon">
+                <div className="overlay">
+                  <img src={width < 900 ? item.iconMobile : item.icon} alt="icon" />
+                </div>
               </div>
             </div>
           </div>
+          {width < 900 && <div className="name_mobile">{t(item.name)}</div>}
         </div>
-        {width < 900 && <div className="name_mobile">{t(item.name)}</div>}
+        {width > 900 && (
+          <div style={{ marginLeft: 24 }}>
+            <p className="name">{t(item.name)}</p>
+            <ul>
+              <li className="des">{t(item.des)}</li>
+            </ul>
+          </div>
+        )}
       </div>
-      {width > 900 && (
-        <div style={{ marginLeft: 24 }}>
-          <p className="name">{t(item.name)}</p>
-          <ul>
-            <li className="des">{t(item.des)}</li>
-          </ul>
-        </div>
-      )}
-    </div>
+    </a>
   )
 }
 
@@ -239,36 +242,42 @@ const listCommunity = [
     name: 'Twitter',
     des: 'Follow @Xox_Labs on Twitter for ecosystem news & updates. Stay informed.',
     iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/twitter_mob.svg`,
+    href: 'https://twitter.com/Xox_Labs',
   },
   {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/group_tele_pc.svg`,
     name: 'Telegram Group',
     des: 'Ask general questions and chat with the worldwide community on Telegram.',
     iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/group_tele_mb.svg`,
+    href: 'https://t.me/xoxlabsofficial',
   },
   {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pc_tiktok.svg`,
     name: 'Tiktok',
     des: 'Follow @xox_labs on TikTok for the latest ecosystem news. Stay connected!',
     iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tiktok_mb.svg`,
+    href: 'https://www.tiktok.com/@xox_labs',
   },
   {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pc_telegram.svg`,
     name: 'Telegram Channel',
     des: 'Join our channel to stay up-to-date with every news and updates.',
     iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/telegram_mb.svg`,
+    href: 'https://t.me/xoxlabsofficialchannel',
   },
   {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pc_youtube.svg`,
     name: 'Youtube',
     des: 'Subscribe to @XoxLabs to stay in the loop and updated.',
     iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/youtube_mb.svg`,
+    href: 'https://www.youtube.com/@XoxLabs',
   },
   {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pc_discord.svg`,
     name: 'Discord',
     des: 'Ask general questions and chat with the worldwide community on Discord.',
     iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/discord_mb.svg`,
+    href: 'https://discord.gg/xoxlabs',
   },
 ]
 

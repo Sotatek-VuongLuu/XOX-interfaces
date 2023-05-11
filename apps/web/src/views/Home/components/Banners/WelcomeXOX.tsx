@@ -692,34 +692,43 @@ const WelcomeXOX = (): JSX.Element => {
                 </div>
                 <div className="icon-box">
                   <div className="single-icon">
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/twitter.svg`}
-                      alt="social_media"
-                    />
+                    <a href="https://twitter.com/Xox_Labs" target="_blank">
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/twitter.svg`}
+                        alt="social_media"
+                      />
+                    </a>
                   </div>
                   <div className="single-icon">
+                    <a href=""></a>
                     <img
                       src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/speaker.svg`}
                       alt="social_media"
                     />
                   </div>
                   <div className="single-icon">
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/telegram.svg`}
-                      alt="social_media"
-                    />
+                    <a href="https://t.me/xoxlabsofficialchannel" target="_blank">
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/telegram.svg`}
+                        alt="social_media"
+                      />
+                    </a>
                   </div>
                   <div className="single-icon">
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/discord.svg`}
-                      alt="social_media"
-                    />
+                    <a href="https://discord.gg/xoxlabs" target="_blank">
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/discord.svg`}
+                        alt="social_media"
+                      />
+                    </a>
                   </div>
                   <div className="single-icon">
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/youtube.svg`}
-                      alt="social_media"
-                    />
+                    <a href="https://www.youtube.com/@XoxLabs" target="_blank">
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/youtube.svg`}
+                        alt="social_media"
+                      />
+                    </a>
                   </div>
                 </div>
 
