@@ -220,6 +220,7 @@ const HowToJoin = (): JSX.Element => {
               style={{ height: `${controlSize.h}px`, width: `${controlSize.w}px` }}
             >
               <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video1.mp4`} type="video/mp4" />
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video1.webm`} type="video/webm" />
             </video>
           </div>
         )}
@@ -231,6 +232,7 @@ const HowToJoin = (): JSX.Element => {
               style={{ height: `${controlSize.h}px`, width: `${controlSize.w}px` }}
             >
               <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video2.mp4`} type="video/mp4" />
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video2.webm`} type="video/webm" />
             </video>
           </div>
         )}
@@ -242,6 +244,7 @@ const HowToJoin = (): JSX.Element => {
               style={{ height: `${controlSize.h}px`, width: `${controlSize.w}px` }}
             >
               <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video3.mp4`} type="video/mp4" />
+              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video3.webm`} type="video/webm" />
             </video>
           </div>
         )}
