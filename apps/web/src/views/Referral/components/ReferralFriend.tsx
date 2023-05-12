@@ -27,12 +27,14 @@ import { getUserFriend } from 'services/referral'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { formatAmountNumber, formatAmountNumber2, roundingAmountNumber } from '@pancakeswap/utils/formatBalance'
 import axios from 'axios'
-import { CopyButton, useToast } from '@pancakeswap/uikit'
+import { CopyButton, useModal, useToast } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { GridLoader } from 'react-spinners'
 import ModalConfirmClaim from './Modal/ModalComfirmClaim'
 import ModalBase from './Modal/ModalBase'
 import { ToastDescriptionWithTx } from 'components/Toast'
+import ModalNotification from './Modal/ModalNotification'
+import { number } from 'echarts'
 
 const floatingAnim = (x: string, y: string) => keyframes`
   from {
@@ -70,7 +72,7 @@ interface IProps {
   totalUnClaimed: string | number
 }
 
-enum TYPE_OF_CLAIM {
+export enum TYPE_OF_CLAIM {
   CLAIM_ALL,
   CLAIM_BY_LEVEL,
 }
@@ -135,16 +137,6 @@ const WrapperLeft = styled(Box)`
     z-index: -1;
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
-  /* &::before {
-    content: '';
-    display: inline-block;
-    width: 7px;
-    height: 7px;
-    background: #242424;
-    position: absolute;
-    right: 23px;
-    bottom: 23px;
-  } */
   .title {
     font-weight: 700;
     font-size: 20px;
@@ -361,30 +353,11 @@ export const WrapperRight = styled(Box)<IPropsWR>`
     }
 
     .unclaim_reward_container {
-      /* background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-      padding: 2px;
-      border-radius: 4px;
-      margin-right: 16px; */
-
       .unclaim_reward {
-        /* width: 100%;
-        height: 100%;
-        background: black;
-        border-radius: 4px; */
         div {
           color: rgba(255, 255, 255, 0.6);
           font-weight: 700;
           font-size: 14px;
-
-          /* font-weight: 700;
-          font-size: 14px;
-          line-height: 17px;
-          padding: 8px 20px;
-          background: linear-gradient(100.7deg, #6473ff 0%, #a35aff 100%);
-          -webkit-background-clip: text;
-          -webkit-text-fill-color: transparent;
-          background-clip: text; */
-          /* text-fill-color: transparent; */
         }
       }
     }
@@ -609,6 +582,11 @@ const StyledTable = styled.div`
   }
 `
 
+export enum STEP_CONFIRM {
+  NOTI,
+  ACTION,
+}
+
 const ReferralFriend = ({
   listLevelMustReach,
   isClaimAll,
@@ -622,21 +600,16 @@ const ReferralFriend = ({
   const { width } = useWindowSize()
   const { account, chainId } = useActiveWeb3React()
   const contractTreasuryXOX = useTreasuryXOX()
-  const [isShowModalConfirmClaimByLevel, setIsShowModalConfirmClaimByLevel] = useState<boolean>(false)
-  const [isShowModalConfirmClaimAll, setIsShowModalConfirmClaimAll] = useState<boolean>(false)
-  const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
-  const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
-  const [modalReject, setModalReject] = useState<boolean>(false)
   const [dataClaim, setDataClaim] = useState<IDataClaim>({
     point: 0,
     dollar: 0,
   })
-  const [level, setLevel] = useState<number | null>(null)
+  const [level, setLevel] = useState<number>(0)
+  const [stepConfirm, setStepConfirm] = useState<number>(STEP_CONFIRM.NOTI)
   const [typeOfClaim, setTypeOfClaim] = useState<number | null>(null)
   const [listFriends, setListFriends] = useState([])
   const { t } = useTranslation()
   const { toastError, toastSuccess, toastWarning } = useToast()
-  const [cacheAmountUnClaimOfUser, setCacheAmountUnClaimOfUser] = useState<null | number>(null)
 
   const swiperRef = useRef(null)
 
@@ -647,11 +620,8 @@ const ReferralFriend = ({
 
   const handleClaimAll = async () => {
     try {
-      setIsShowModalConfirmClaimAll(false)
-      setIsOpenLoadingClaimModal(true)
-      setTypeOfClaim(TYPE_OF_CLAIM.CLAIM_ALL)
+      setStepConfirm(STEP_CONFIRM.ACTION)
       const txPendingReward = await contractTreasuryXOX.pendingRewardAll(account)
-      setCacheAmountUnClaimOfUser(Number(formatUnits(txPendingReward._hex, USD_DECIMALS[chainId])))
       const params = []
       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralAll(...params)
       const txClaimAll = await contractTreasuryXOX.claimReferralAll(...params, {
@@ -659,11 +629,12 @@ const ReferralFriend = ({
       })
       const tx = await txClaimAll.wait(1)
       if (tx?.transactionHash) {
+        setStepConfirm(STEP_CONFIRM.NOTI)
+        setTypeOfClaim(null)
+        onDismiss()
         getUserPoint()
         handleCheckReachLevel()
         handleCheckPendingRewardAll(account)
-        setIsOpenLoadingClaimModal(false)
-        // setIsOpenSuccessModal(true)
         toastSuccess(
           t('Success'),
           t('You have received %amount%', {
@@ -672,9 +643,10 @@ const ReferralFriend = ({
         )
       }
     } catch (error: any) {
-      // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
-      setIsOpenLoadingClaimModal(false)
+      setStepConfirm(STEP_CONFIRM.NOTI)
+      setTypeOfClaim(null)
+      onDismiss()
       if (error && error?.code === 'ACTION_REJECTED') {
         toastWarning(t('Confirm Claim'), t('Transaction rejected.'))
       }
@@ -687,31 +659,30 @@ const ReferralFriend = ({
   const handleClaimLevel = async (_level: number) => {
     try {
       if (!_level) return
-      setTypeOfClaim(TYPE_OF_CLAIM.CLAIM_BY_LEVEL)
-      setIsShowModalConfirmClaimByLevel(false)
-      setIsOpenLoadingClaimModal(true)
+      setStepConfirm(STEP_CONFIRM.ACTION)
       const gasLimit = await contractTreasuryXOX.estimateGas.claimReferralByLevel(_level)
       const txClaimByLevel = await contractTreasuryXOX.claimReferralByLevel(_level, {
         gasLimit,
       })
       const tx = await txClaimByLevel.wait(1)
       if (tx?.transactionHash) {
+        setStepConfirm(STEP_CONFIRM.NOTI)
+        setTypeOfClaim(null)
+        onDismiss()
         getUserPoint()
         handleCheckReachLevel()
         handleCheckPendingRewardAll(account)
-        setIsOpenLoadingClaimModal(false)
-        // setIsOpenSuccessModal(true)
         toastSuccess(
           t('Success'),
           t('You have received %amount%', { amount: (dataClaim.dollar * 0.99).toLocaleString() }),
         )
       }
     } catch (error: any) {
-      // eslint-disable-next-line no-console
       console.log(`error>>>>>`, error)
-      setIsOpenLoadingClaimModal(false)
+      setStepConfirm(STEP_CONFIRM.NOTI)
+      setTypeOfClaim(null)
+      onDismiss()
       if (error && error?.code === 'ACTION_REJECTED') {
-        // setModalReject(true)
         toastWarning(t('Confirm Claim'), t('Transaction rejected.'))
       }
 
@@ -720,6 +691,23 @@ const ReferralFriend = ({
       }
     }
   }
+
+  const [onModal, onDismiss] = useModal(
+    <ModalNotification
+      dataClaim={dataClaim}
+      totalUnClaimed={totalUnClaimed}
+      typeOfClaim={typeOfClaim}
+      setTypeOfClaim={setTypeOfClaim}
+      level={level}
+      handleClaimLevel={handleClaimLevel}
+      handleClaimAll={handleClaimAll}
+      stepConfirm={stepConfirm}
+      setStepConfirm={setStepConfirm}
+    />,
+    false,
+    true,
+    'modalclaim',
+  )
 
   const controlWidth = useMemo(() => {
     let slidesPerView = 5
@@ -757,7 +745,6 @@ const ReferralFriend = ({
       const sortByPoints = userInfos[0]?.friends?.sort(function (a: any, b: any) {
         return Number(b.amount) - Number(a.amount)
       })
-      // console.log('sortByPoints', sortByPoints)
       if (Array.from(userInfos).length !== 0) {
         const dataUserFormatAmount = sortByPoints.map((item: any) => {
           return {
@@ -797,6 +784,10 @@ const ReferralFriend = ({
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chainId, account])
+
+  useEffect(() => {
+    if (typeOfClaim !== null) onModal()
+  }, [typeOfClaim, stepConfirm])
 
   return (
     <>
@@ -928,8 +919,8 @@ const ReferralFriend = ({
                                 disabled={!item.isReach || item?.isClaimed}
                                 onClick={() => {
                                   setDataClaim({ ...dataClaim, point: item.point, dollar: item.dollar })
-                                  setIsShowModalConfirmClaimByLevel(true)
                                   setLevel(item.lever)
+                                  setTypeOfClaim(TYPE_OF_CLAIM.CLAIM_BY_LEVEL)
                                 }}
                               >
                                 {item?.isClaimed ? (
@@ -949,19 +940,18 @@ const ReferralFriend = ({
                 </Swiper>
                 <div className="claim_total">
                   {account && (
-                    // <div className="unclaim_reward_container">
-                    //   <div className="unclaim_reward">
                     <p className="total_un_claimed">
                       {t('$%amount% Unclaimed Rewards', {
                         amount: Number(totalUnClaimed) <= 0 ? 0 : formatAmountNumber2(Number(totalUnClaimed)),
                       })}
                     </p>
-                    //   </div>
-                    // </div>
                   )}
                   <button
                     type="button"
-                    onClick={() => setIsShowModalConfirmClaimAll(true)}
+                    onClick={() => {
+                      setDataClaim({ ...dataClaim, point: 0, dollar: Number(totalUnClaimed) })
+                      setTypeOfClaim(TYPE_OF_CLAIM.CLAIM_ALL)
+                    }}
                     disabled={!account || isClaimAll}
                   >
                     <span>{t('Claim All')}</span>
@@ -972,159 +962,6 @@ const ReferralFriend = ({
           </Grid>
         </Grid>
       </Box>
-
-      <ModalConfirmClaim
-        open={isShowModalConfirmClaimByLevel}
-        handleClose={() => setIsShowModalConfirmClaimByLevel(false)}
-        title={t('Claim')}
-      >
-        <Content>
-          <div className="discription">
-            <p className="value">
-              {t('Withdraw Amount')} <span>${roundingAmountNumber(Number(dataClaim.dollar))}</span>
-            </p>
-            <p className="value">
-              {t('You will receive:')}{' '}
-              <span>
-                ${roundingAmountNumber(Number(dataClaim.dollar) * 0.99)} $
-                {chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'}
-              </span>
-            </p>
-            <p className="value">
-              {t('Platform Fee:')}{' '}
-              <span>
-                ${roundingAmountNumber(Number(dataClaim.dollar) - Number(dataClaim.dollar) * 0.99)} $
-                {chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'}
-              </span>{' '}
-            </p>
-          </div>
-          <div className="btn-group">
-            <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimByLevel(false)}>
-              {t('Cancel')}
-            </button>
-            <button
-              className="confirm"
-              type="button"
-              onClick={() => {
-                handleClaimLevel(level)
-              }}
-            >
-              {t('Confirm')}
-            </button>
-          </div>
-        </Content>
-      </ModalConfirmClaim>
-
-      <ModalBase
-        open={isShowModalConfirmClaimAll}
-        handleClose={() => setIsShowModalConfirmClaimAll(false)}
-        title="Claim"
-        width="464px"
-      >
-        <Content>
-          <div className="discription">
-            <p className="value">
-              {' '}
-              {t('Withdraw Amount')} <span>${Number(totalUnClaimed)?.toLocaleString()}</span>{' '}
-            </p>
-            <p className="value">
-              {t('You will receive:')}{' '}
-              <span>
-                {`${roundingAmountNumber(Number(totalUnClaimed) * 0.99)} ${
-                  chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
-                }`}
-              </span>
-            </p>
-            <p className="value">
-              {t('Platform Fee:')}{' '}
-              <span>
-                {`${roundingAmountNumber(Number(totalUnClaimed) - Number(totalUnClaimed) * 0.99)} ${
-                  chainId === 5 || chainId === 1 ? 'USDC' : 'USDT'
-                }`}
-              </span>
-            </p>
-          </div>
-          <div className="btn-group">
-            <button className="cancel" type="button" onClick={() => setIsShowModalConfirmClaimAll(false)}>
-              {t('Cancel')}
-            </button>
-            <button
-              className="confirm"
-              type="button"
-              onClick={() => {
-                handleClaimAll()
-              }}
-            >
-              {t('Confirm')}
-            </button>
-          </div>
-        </Content>
-      </ModalBase>
-
-      <ModalBase open={isOpenSuccessModal} handleClose={() => setIsOpenSuccessModal(false)} title="Success">
-        <Content>
-          <div className="noti">
-            {t('You have got')}{' '}
-            <span>
-              {typeOfClaim === TYPE_OF_CLAIM.CLAIM_BY_LEVEL
-                ? (dataClaim.dollar * 0.99).toLocaleString()
-                : (Number(cacheAmountUnClaimOfUser) * 0.99).toLocaleString()}
-              $.
-            </span>
-          </div>
-          <div className="noti_claim_success">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/success_claim.png`} alt="success_claim" />
-          </div>
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/close-one.svg`}
-            alt="close-one"
-            className="x-close-icon"
-            aria-hidden="true"
-            onClick={() => setIsOpenSuccessModal(false)}
-          />
-        </Content>
-      </ModalBase>
-
-      <ModalBase
-        open={isOpenLoadingClaimModal}
-        handleClose={() => setIsOpenLoadingClaimModal(false)}
-        title={t('Confirm Claim')}
-      >
-        <Content>
-          <div className="xox_loading" style={{ margin: '24px 0px' }}>
-            <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
-          </div>
-          <div className="noti_claim_pending_h1">{t('Waiting For Confirmation')}</div>
-          <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/close-one.svg`}
-            alt="close-one"
-            className="x-close-icon"
-            aria-hidden="true"
-            onClick={() => setIsOpenLoadingClaimModal(false)}
-          />
-        </Content>
-      </ModalBase>
-      <ModalBase open={modalReject} handleClose={() => setModalReject(false)} title="Confirm Claim">
-        <Content>
-          <div className="noti_claim_pending_h1 xox_loading reject_xox" style={{ marginTop: '16px' }}>
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/reject_xox.png`} alt="reject_xox" />
-          </div>
-          <div className="noti_claim_pending_h2">{t('Transaction rejected.')}</div>
-          <div className="btn_dismiss_container">
-            <button className="btn_dismiss" type="button" onClick={() => setModalReject(false)}>
-              {t('Dismiss')}
-            </button>
-          </div>
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/close-one.svg`}
-            alt="close-one"
-            className="x-close-icon"
-            aria-hidden="true"
-            onClick={() => setModalReject(false)}
-          />
-        </Content>
-      </ModalBase>
     </>
   )
 }

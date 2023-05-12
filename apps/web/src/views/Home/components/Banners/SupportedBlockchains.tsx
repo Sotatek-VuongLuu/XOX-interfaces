@@ -508,7 +508,7 @@ const listCoin = [
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/21_thorchain.svg`,
   },
   {
-    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/22_bittorent.svg`,
+    icon: `/images/home/coins/sui.svg`,
   },
   {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/23_wave.svg`,
@@ -583,10 +583,10 @@ const listCoin = [
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/46_telos.svg`,
   },
   {
-    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/47_vechain.svg`,
+    icon: `/images/home/coins/loopnetwork.svg`,
   },
   {
-    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/48.svg`,
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/47_vechain.svg`,
   },
   {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/49_ronin.svg`,

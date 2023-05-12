@@ -77,10 +77,10 @@ const BGPartner = () => {
         </>
       ) : (
         <>
-          <BGMobile src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_mobile.svg" alt="bg_mobile`} />
-          <BGXOXMobile src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/xox_mobile_change.svg" alt="xox_mobile`} />
-          <BGMobileTow src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_mobile_2.svg" alt="bg_mobile`} />
-          <BGMobileCube src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_cube_mobile_2.svg" alt="bg_mobile`} />
+          <BGMobile src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_mobile.svg`} alt="bg_mobile" />
+          <BGXOXMobile src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/xox_mobile_change.svg`} alt="xox_mobile" />
+          <BGMobileTow src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_mobile_2.svg`} alt="bg_mobile" />
+          <BGMobileCube src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/bg_cube_mobile_2.svg`} alt="bg_mobile" />
         </>
       )}
     </>

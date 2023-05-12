@@ -80,31 +80,32 @@ export const socials = [
   {
     label: "Twitter",
     icon: TwitterIcon,
-    href: "https://twitter.com",
+    href: "https://twitter.com/Xox_Labs",
   },
   {
     label: "Telegram Group",
     icon: TelegramGroup,
-    href: "https://reddit.com/r/",
+    href: "https://t.me/xoxlabsofficial",
   },
   {
     label: "Telegram",
     icon: TelegramIcon,
+    href: "https://t.me/xoxlabsofficialchannel",
   },
   {
     label: "Discord",
     icon: DiscordIcon,
-    href: "https://discord.gg/",
+    href: "https://discord.gg/xoxlabs",
   },
   {
     label: "Youtube",
     icon: YoutubeIcon,
-    href: "https://discord.gg/",
+    href: "https://www.youtube.com/@XoxLabs",
   },
   {
     label: "Tiktok",
     icon: TiktokIcon,
-    href: "https://discord.gg/",
+    href: "https://www.tiktok.com/@xox_labs",
   },
 ];
 
