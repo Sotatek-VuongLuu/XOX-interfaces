@@ -7,7 +7,6 @@ import { FixedSubgraphHealthIndicator } from 'components/SubgraphHealthIndicator
 import { useAccountEventListener } from 'hooks/useAccountEventListener'
 import useEagerConnect from 'hooks/useEagerConnect'
 import useEagerConnectMP from 'hooks/useEagerConnect.bmp'
-import useSentryUser from 'hooks/useSentryUser'
 import useThemeCookie from 'hooks/useThemeCookie'
 import useUserAgent from 'hooks/useUserAgent'
 import { NextPage } from 'next'
@@ -29,7 +28,6 @@ import { showBannerAirdrop, hideBannerAirdrop, showBannerChains, hideBannerChain
 import NotificationBannerChains from 'components/NotificationBannerChains'
 import { useSelector } from 'react-redux'
 import { Blocklist, Updaters } from '..'
-import { SentryErrorBoundary } from '../components/ErrorBoundary'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
@@ -62,7 +60,6 @@ function GlobalHooks() {
   useEagerConnect()
   useUserAgent()
   useAccountEventListener()
-  useSentryUser()
   useThemeCookie()
   return null
 }
@@ -72,7 +69,6 @@ function MPGlobalHooks() {
   useEagerConnectMP()
   useUserAgent()
   useAccountEventListener()
-  useSentryUser()
   return null
 }
 
@@ -153,8 +149,6 @@ type AppPropsWithLayout = AppProps & {
   Component: NextPageWithLayout
 }
 
-const ProductionErrorBoundary = Fragment
-
 const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const modal = useRef(null)
   const dispatch = useAppDispatch()
@@ -196,7 +190,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   }
 
   return (
-    <ProductionErrorBoundary>
+    <>
       <MainBackground>
         {['/company', '/tokenomics', '/dex-v2', '/'].includes(route.pathname) ? (
           <></>
@@ -220,7 +214,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
       <TransactionsDetailModal />
       {isShowScrollToTopButton && <ScrollToTopButtonV2 />}
       {route.pathname !== '/' && <FormReferralModal ref={modal} />}
-    </ProductionErrorBoundary>
+    </>
   )
 }
 

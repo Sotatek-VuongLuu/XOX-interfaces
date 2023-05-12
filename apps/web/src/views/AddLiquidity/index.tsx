@@ -16,7 +16,6 @@ import {
   Flex,
   useToast,
 } from '@pancakeswap/uikit'
-import { logError } from 'utils/sentry'
 import styled from 'styled-components'
 import { useIsTransactionUnsupported, useIsTransactionWarning } from 'hooks/Trades'
 import { useTranslation } from '@pancakeswap/localization'
@@ -495,7 +494,6 @@ export default function AddLiquidity({ currencyA, currencyB }) {
           toastWarning(t('Confirm add liquidity'), t('Transaction rejected.'))
         }
         if (err && err.code !== 4001) {
-          logError(err)
           console.error(t('Add Liquidity failed'), err, args, value)
         }
         onDismissModal()
@@ -660,7 +658,6 @@ export default function AddLiquidity({ currencyA, currencyB }) {
       })
       .catch((err) => {
         if (err && err.code !== 4001) {
-          logError(err)
           console.error(`Add Liquidity failed`, err, args, value)
         }
         setLiquidityState({
