@@ -269,6 +269,15 @@ const LeftContent = styled.div`
       justify-content: space-around;
       padding: 10.5px 0px;
       margin-top: 22px;
+      align-items: center;
+
+      @media screen and (max-width: 682px) {
+        & > .single-icon {
+          img {
+            max-width: 34px;
+          }
+        }
+      }
     }
 
     .chart {
@@ -700,11 +709,12 @@ const WelcomeXOX = (): JSX.Element => {
                     </a>
                   </div>
                   <div className="single-icon">
-                    <a href=""></a>
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/speaker.svg`}
-                      alt="social_media"
-                    />
+                    <a href="https://t.me/xoxlabsofficial" target="_blank">
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/speaker.svg`}
+                        alt="social_media"
+                      />
+                    </a>
                   </div>
                   <div className="single-icon">
                     <a href="https://t.me/xoxlabsofficialchannel" target="_blank">
