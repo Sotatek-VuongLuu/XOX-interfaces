@@ -1328,11 +1328,7 @@ const BlockChains = () => {
         <StyledAggregator>
           {handleRange(1, 69).map((item, i) => (
             <Overlay>
-              <img
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/blockchains/${item}.png`}
-                key={String(i + item)}
-                alt="dex"
-              />
+              <img src={`/images/dex-v2/blockchains/${item}.png`} key={String(i + item)} alt="dex" />
             </Overlay>
           ))}
           <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/blockchains/70.png`} alt="dex" />
