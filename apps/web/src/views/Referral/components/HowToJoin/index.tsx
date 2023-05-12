@@ -219,7 +219,10 @@ const HowToJoin = (): JSX.Element => {
               controls
               style={{ height: `${controlSize.h}px`, width: `${controlSize.w}px` }}
             >
-              {/* <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video1.mp4`} type="video/mp4" /> */}
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video1.mov`}
+                type='video/mp4; codecs="hvc1"'
+              />
               <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video1.webm`} type="video/webm" />
             </video>
           </div>
@@ -231,7 +234,10 @@ const HowToJoin = (): JSX.Element => {
               controls
               style={{ height: `${controlSize.h}px`, width: `${controlSize.w}px` }}
             >
-              {/* <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video2.mp4`} type="video/mp4" /> */}
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video2.mov`}
+                type='video/mp4; codecs="hvc1"'
+              />
               <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video2.webm`} type="video/webm" />
             </video>
           </div>
@@ -243,7 +249,10 @@ const HowToJoin = (): JSX.Element => {
               controls
               style={{ height: `${controlSize.h}px`, width: `${controlSize.w}px` }}
             >
-              {/* <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video3.mp4`} type="video/mp4" /> */}
+              <source
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video3.mov`}
+                type='video/mp4; codecs="hvc1"'
+              />
               <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/referrals/video3.webm`} type="video/webm" />
             </video>
           </div>
