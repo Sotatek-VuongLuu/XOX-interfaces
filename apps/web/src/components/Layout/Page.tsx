@@ -33,7 +33,7 @@ export const PageMeta: React.FC<React.PropsWithChildren<{ symbol?: string }>> = 
 
   return (
     <Head>
-      <title>{title}</title>
+      <title>XOX Labs</title>
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
