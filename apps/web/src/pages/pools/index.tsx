@@ -4,7 +4,6 @@ import Pools from 'views/Pools'
 const PoolsPage = () => {
   return (
     <>
-      <PageMeta />
       <Pools />
     </>
   )

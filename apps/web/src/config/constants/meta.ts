@@ -6,7 +6,7 @@ export const DEFAULT_META: PageMeta = {
   title: 'Building Decentralized Protocols for the masses. Earn & Trade like a Pro',
   description:
     'Wide range of apps, utilities, and solutions powering the protocol creating a True One-Stop Ecosystem for all your DeFi needs.',
-  image: '/images/seo/SEO-Dapp.png',
+  image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Dapp.png`,
 }
 
 interface PathList {
@@ -23,7 +23,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
         ),
         description:
           "Start your Defi Journey Now on XOX Labs, the world's leading one-stop decentralized multi-chain ecosystem. Trade and Earn Like a Pro.",
-        image: '/images/seo/SEO-Landing.png',
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Landing.png`,
       },
       '/company': {
         title: t(
@@ -31,7 +31,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
         ),
         description:
           "Start your Defi Journey Now on XOX Labs, the world's leading one-stop decentralized multi-chain ecosystem. Trade and Earn Like a Pro.",
-        image: '/images/seo/SEO-Landing.png',
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Landing.png`,
       },
       '/tokenomics': {
         title: t(
@@ -39,7 +39,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
         ),
         description:
           "Start your Defi Journey Now on XOX Labs, the world's leading one-stop decentralized multi-chain ecosystem. Trade and Earn Like a Pro.",
-        image: '/images/seo/SEO-Landing.png',
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Landing.png`,
       },
       '/dex-v2': {
         title: t(
@@ -48,7 +48,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
         basePath: true,
         description:
           'Why trade in a single Dex when you can Trade in all DEXs at Once? XOX Dex V2 finds you the best prices across 60+ Chains & 150+ DEXes and combines them into a single trade, all while giving you many other trades options to choose from, Ranking them by Lowest Fees, Best Rates, and Higher Liquidity.',
-        image: '/images/seo/SEO-DexV2.png',
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-DexV2.png`,
       },
       '/vesting': {
         title: t(
@@ -56,7 +56,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
         ),
         description:
           'Launching with Cross-chain liquidity on 6 of the most popular blockchains (ETH, BSC, Polygon, zkSync, Arbitrum, Optimism) XOX Labs is already miles ahead of 90% of its competitors when it comes to accessibility and multi-chain capabilities.',
-        image: '/images/seo/SEO-Pre-sale.png',
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Pre-sale.png`,
       },
     },
     defaultTitleSuffix: t('XOX'),

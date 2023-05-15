@@ -4,7 +4,6 @@ import DevV2 from 'views/DexV2'
 function DexV2Page() {
   return (
     <>
-      <PageMeta />
       <DevV2 />
     </>
   )

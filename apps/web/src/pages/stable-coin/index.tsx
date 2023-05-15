@@ -5,7 +5,6 @@ import { PageMeta } from 'components/Layout/Page'
 const PageStableCoin = () => {
   return (
     <>
-      <PageMeta />
       <StableCoin />
     </>
   )

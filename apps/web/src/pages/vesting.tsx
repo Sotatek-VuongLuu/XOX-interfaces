@@ -4,7 +4,6 @@ import VestingPage from 'views/Vesting'
 function Vesting() {
   return (
     <>
-      <PageMeta />
       <VestingPage />
     </>
   )

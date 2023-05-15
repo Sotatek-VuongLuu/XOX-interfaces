@@ -6,7 +6,6 @@ import { PageMeta } from 'components/Layout/Page'
 const BridgeTokenPage = () => {
   return (
     <>
-      <PageMeta />
       <SwapFeaturesProvider>
         <BridgeToken />
       </SwapFeaturesProvider>

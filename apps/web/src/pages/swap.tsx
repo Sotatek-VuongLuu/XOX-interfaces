@@ -6,7 +6,6 @@ import { PageMeta } from 'components/Layout/Page'
 const SwapPage = () => {
   return (
     <>
-      <PageMeta />
       <SwapFeaturesProvider>
         <Swap />
       </SwapFeaturesProvider>

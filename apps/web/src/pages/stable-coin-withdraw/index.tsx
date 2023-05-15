@@ -5,7 +5,6 @@ import { PageMeta } from 'components/Layout/Page'
 const PageWithdraw = () => {
   return (
     <>
-      <PageMeta />
       <WithDrawLayout />
     </>
   )

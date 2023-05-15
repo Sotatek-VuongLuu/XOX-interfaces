@@ -5,7 +5,6 @@ import { PageMeta } from 'components/Layout/Page'
 const IndexPage = ({ totalTx30Days, addressCount30Days, tvl }) => {
   return (
     <>
-      <PageMeta />
       <SWRConfig
         value={{
           fallback: {

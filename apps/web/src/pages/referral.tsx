@@ -4,7 +4,6 @@ import Referral from 'views/Referral'
 const ReferralPage = () => {
   return (
     <>
-      <PageMeta />
       <Referral />
     </>
   )

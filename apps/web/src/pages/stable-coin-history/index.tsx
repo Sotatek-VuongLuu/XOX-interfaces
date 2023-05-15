@@ -5,7 +5,6 @@ import { PageMeta } from 'components/Layout/Page'
 const PageHistory = () => {
   return (
     <>
-      <PageMeta />
       <LayoutHistory />
     </>
   )

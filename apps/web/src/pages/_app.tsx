@@ -31,6 +31,7 @@ import { Blocklist, Updaters } from '..'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
+import { PageMeta } from 'components/Layout/Page'
 
 const MainBackground = styled.div`
   position: fixed;
@@ -85,18 +86,19 @@ function MyApp(props: AppProps<{ initialReduxState: any }>) {
           content="width=device-width, initial-scale=1, maximum-scale=5, minimum-scale=1, viewport-fit=cover"
         />
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-        <meta
+        {/* <meta
           name="description"
           content="Cheaper and faster than Uniswap? Discover XOX, the leading DEX on BNB Smart Chain (BSC) with the best farms in DeFi and a lottery for XOX."
-        />
-        <meta name="theme-color" content="#1FC7D4" />
-        <meta name="twitter:image" content="https://xoxnet.io/images/hero.png" />
-        <meta name="twitter:description" content="Earn XOX through yield farming or win it in the Lottery." />
+        /> */}
+        {/* <meta name="theme-color" content="#1FC7D4" />
+        <meta name="twitter:image" content="https://xoxnet.io/images/hero.png" /> */}
+        {/* <meta name="twitter:description" content="Earn XOX through yield farming or win it in the Lottery." />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content="XOX - A next evolution DeFi exchange on BNB Smart Chain (BSC)" />
-        <meta name="theme-color" content="#000" />
+        <meta name="twitter:title" content="XOX - A next evolution DeFi exchange on BNB Smart Chain (BSC)" /> */}
+        {/* <meta name="theme-color" content="#000" /> */}
       </Head>
       <Providers store={store}>
+        <PageMeta />
         <Blocklist>
           {(Component as NextPageWithLayout).mp ? <MPGlobalHooks /> : <GlobalHooks />}
           <ResetCSS />

@@ -50,7 +50,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
   }, [])
   return (
     <>
-      <PageMeta />
+      {/* <PageMeta /> */}
       {/* eslint-disable-next-line react/no-unknown-property */}
       <style jsx global>{`
         #home .page-bg {
