@@ -1,3 +1,4 @@
+import { PageMeta } from 'components/Layout/Page'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useCurrency } from 'hooks/Tokens'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -42,11 +43,15 @@ const RemoveLiquidityPage = () => {
   }
 
   return stableConfig.stableSwapConfig && router.query.stable === '1' ? (
-    <StableConfigContext.Provider value={stableConfig}>
-      <RemoveStableLiquidity {...props} />
-    </StableConfigContext.Provider>
+    <>
+      <StableConfigContext.Provider value={stableConfig}>
+        <RemoveStableLiquidity {...props} />
+      </StableConfigContext.Provider>
+    </>
   ) : (
-    <RemoveLiquidity {...props} />
+    <>
+      <RemoveLiquidity {...props} />
+    </>
   )
 }
 

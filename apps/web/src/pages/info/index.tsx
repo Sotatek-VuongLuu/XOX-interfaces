@@ -1,8 +1,14 @@
+import { PageMeta } from 'components/Layout/Page'
 import { InfoPageLayout } from 'views/Info'
 import Overview from 'views/Info/Overview'
 
 const InfoPage = () => {
-  return <Overview />
+  return (
+    <>
+      <PageMeta />
+      <Overview />
+    </>
+  )
 }
 
 InfoPage.Layout = InfoPageLayout

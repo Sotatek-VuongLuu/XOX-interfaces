@@ -1,7 +1,13 @@
+import { PageMeta } from 'components/Layout/Page'
 import VestingPage from 'views/Vesting'
 
 function Vesting() {
-  return <VestingPage />
+  return (
+    <>
+      <PageMeta />
+      <VestingPage />
+    </>
+  )
 }
 
 export default Vesting
