@@ -374,6 +374,7 @@ interface ISocial {
 }
 
 export function CardSocial({ social, ...props }: { social: ISocial }) {
+  const { t } = useTranslation()
   return (
     <a
       href={social.heft === '#' ? null : social.heft}
@@ -382,7 +383,7 @@ export function CardSocial({ social, ...props }: { social: ISocial }) {
       style={{ display: 'inline-block', cursor: 'pointer' }}
     >
       {social.heft === '#' ? (
-        <Tooltip title="Under Development" placement="top">
+        <Tooltip title={t('Under Development')} placement="top">
           <StyledCardSocial {...props}>
             <div>
               <img src={social.icon} alt="" draggable="false" loading="lazy" />
