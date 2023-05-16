@@ -3,47 +3,61 @@ import { ContextApi } from '@pancakeswap/localization'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
-  title: 'PancakeSwap',
+  title: 'Building Decentralized Protocols for the masses. Earn & Trade like a Pro',
   description:
-    'The most popular AMM on BSC by user count! Earn CAKE through yield farming or win it in the Lottery, then stake it in Syrup Pools to earn more tokens! Initial Farm Offerings (new token launch model pioneered by PancakeSwap), NFTs, and more, on a platform you can trust.',
-  image: 'https://xoxnet.io/images/hero.png',
+    'Wide range of apps, utilities, and solutions powering the protocol creating a True One-Stop Ecosystem for all your DeFi needs.',
+  image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Dapp.png`,
 }
 
 interface PathList {
-  paths: { [path: string]: { title: string; basePath?: boolean; description?: string } }
+  paths: { [path: string]: { title: string; basePath?: boolean; description?: string; image?: string } }
   defaultTitleSuffix: string
 }
 
 const getPathList = (t: ContextApi['t']): PathList => {
   return {
     paths: {
-      '/': { title: t('Home') },
-      '/swap': { basePath: true, title: t('Exchange') },
-      // '/limit-orders': { basePath: true, title: t('Limit Orders') },
-      '/add': { basePath: true, title: t('Add Liquidity') },
-      '/remove': { basePath: true, title: t('Remove Liquidity') },
-      '/liquidity': { title: t('Liquidity') },
-      // '/find': { title: t('Import Pool') },
-      // '/competition': { title: t('Trading Battle') },
-      // '/prediction': { title: t('Prediction') },
-      // '/prediction/leaderboard': { title: t('Leaderboard') },
-      // '/farms': { title: t('Farms') },
-      // '/farms/auction': { title: t('Farm Auctions') },
-      '/pools': { title: t('Pools') },
-      // '/lottery': { title: t('Lottery') },
-      // '/ifo': { title: t('Initial Farm Offering') },
-      // '/teams': { basePath: true, title: t('Leaderboard') },
-      // '/voting': { basePath: true, title: t('Voting') },
-      // '/voting/proposal': { title: t('Proposals') },
-      // '/voting/proposal/create': { title: t('Make a Proposal') },
-      '/info': { title: t('Overview'), description: 'View statistics for XOX exchanges.' },
-      // '/info/pairs': { title: t('Pairs'), description: 'View statistics for Pancakeswap exchanges.' },
-      // '/info/tokens': { title: t('Tokens'), description: 'View statistics for Pancakeswap exchanges.' },
-      // '/nfts/collections': { basePath: true, title: t('Collections') },
-      // '/nfts/activity': { title: t('Activity') },
-      // '/profile': { basePath: true, title: t('Profile') },
-      // '/pancake-squad': { basePath: true, title: t('Pancake Squad') },
-      // '/pottery': { basePath: true, title: t('Pottery') },
+      '/': {
+        title: t(
+          'Swap, stake, store, bridge, refer, invest and earn with ease on the leading Decentralized Blockchain Ecosystem.',
+        ),
+        description:
+          "Start your Defi Journey Now on XOX Labs, the world's leading one-stop decentralized multi-chain ecosystem. Trade and Earn Like a Pro.",
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Landing.png`,
+      },
+      '/company': {
+        title: t(
+          'Swap, stake, store, bridge, refer, invest and earn with ease on the leading Decentralized Blockchain Ecosystem.',
+        ),
+        description:
+          "Start your Defi Journey Now on XOX Labs, the world's leading one-stop decentralized multi-chain ecosystem. Trade and Earn Like a Pro.",
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Landing.png`,
+      },
+      '/tokenomics': {
+        title: t(
+          'Swap, stake, store, bridge, refer, invest and earn with ease on the leading Decentralized Blockchain Ecosystem.',
+        ),
+        description:
+          "Start your Defi Journey Now on XOX Labs, the world's leading one-stop decentralized multi-chain ecosystem. Trade and Earn Like a Pro.",
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Landing.png`,
+      },
+      '/dex-v2': {
+        title: t(
+          'XOX Dex V2 - The aggregator of aggregators. Save time and money by trading with the lowest rates and fastest transactions in the space.',
+        ),
+        basePath: true,
+        description:
+          'Why trade in a single Dex when you can Trade in all DEXs at Once? XOX Dex V2 finds you the best prices across 60+ Chains & 150+ DEXes and combines them into a single trade, all while giving you many other trades options to choose from, Ranking them by Lowest Fees, Best Rates, and Higher Liquidity.',
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-DexV2.png`,
+      },
+      '/vesting': {
+        title: t(
+          'XOX Token Pre-Sale - Get XOX Tokens at the best prizes while earning up to 10% XOXS Stable Coin as a bonus for free. Get Involved!',
+        ),
+        description:
+          'Launching with Cross-chain liquidity on 6 of the most popular blockchains (ETH, BSC, Polygon, zkSync, Arbitrum, Optimism) XOX Labs is already miles ahead of 90% of its competitors when it comes to accessibility and multi-chain capabilities.',
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Pre-sale.png`,
+      },
     },
     defaultTitleSuffix: t('XOX'),
   }
@@ -58,8 +72,9 @@ export const getCustomMeta = memoize(
 
     if (pathMetadata) {
       return {
-        title: `XOX`,
+        title: pathMetadata.title,
         ...(pathMetadata.description && { description: pathMetadata.description }),
+        ...(pathMetadata.image && { image: pathMetadata.image }),
       }
     }
     return null

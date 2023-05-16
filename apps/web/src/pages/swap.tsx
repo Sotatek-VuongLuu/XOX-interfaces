@@ -1,12 +1,15 @@
 import { CHAIN_IDS } from 'utils/wagmi'
 import Swap from '../views/Swap'
 import { SwapFeaturesProvider } from '../views/Swap/SwapFeaturesContext'
+import { PageMeta } from 'components/Layout/Page'
 
 const SwapPage = () => {
   return (
-    <SwapFeaturesProvider>
-      <Swap />
-    </SwapFeaturesProvider>
+    <>
+      <SwapFeaturesProvider>
+        <Swap />
+      </SwapFeaturesProvider>
+    </>
   )
 }
 
