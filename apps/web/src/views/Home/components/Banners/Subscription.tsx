@@ -284,7 +284,7 @@ const Subscription = () => {
 
         toastError(t('System error'))
       })
-  }, [inputValue])
+  }, [inputValue, t])
 
   return (
     <Wrapper>

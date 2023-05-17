@@ -1627,7 +1627,7 @@ function DevV2() {
         toastError(t('System error'))
       })
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [inputValue])
+  }, [inputValue, t])
 
   //   function elmYPosition(eID) {
   //     var elm = document.getElementById(eID);
