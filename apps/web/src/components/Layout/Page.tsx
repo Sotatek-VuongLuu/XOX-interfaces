@@ -37,6 +37,12 @@ export const PageMeta: React.FC<React.PropsWithChildren<{ symbol?: string }>> = 
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta name="twitter:image" content={image} />
+      <meta name="twitter:description" content={description} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:site" content="@Xox_Labs" />
+      <meta name="twitter:creator" content="@Xox_Labs" />
     </Head>
   )
 }
