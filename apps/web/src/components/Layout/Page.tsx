@@ -34,7 +34,6 @@ export const PageMeta: React.FC<React.PropsWithChildren<{ symbol?: string }>> = 
   return (
     <Head>
       <title>XOX Labs</title>
-      <meta prefix="og: http://ogp.me/ns#" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />

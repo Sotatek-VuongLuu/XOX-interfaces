@@ -56,7 +56,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
         ),
         description:
           'Launching with Cross-chain liquidity on 6 of the most popular blockchains (ETH, BSC, Polygon, zkSync, Arbitrum, Optimism) XOX Labs is already miles ahead of 90% of its competitors when it comes to accessibility and multi-chain capabilities.',
-        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Pre-sale.png`,
+        image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Pre-sale.jpg`,
       },
     },
     defaultTitleSuffix: t('XOX'),
