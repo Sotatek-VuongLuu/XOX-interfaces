@@ -27,17 +27,24 @@ export const PageMeta: React.FC<React.PropsWithChildren<{ symbol?: string }>> = 
     t,
     currentLanguage: { locale },
   } = useTranslation()
-  const { pathname } = useRouter()
+  const { pathname, asPath } = useRouter()
   const pageMeta = getCustomMeta(pathname, t, locale) || {}
   const { title, description, image } = { ...DEFAULT_META, ...pageMeta }
 
   return (
     <Head>
       <title>XOX Labs</title>
-      <meta prefix="og: http://ogp.me/ns#" />
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:alt" content={title} />
+      <meta name="twitter:image" content={image} />
+      <meta name="twitter:description" content={description} />
+      <meta property="og:url" content={`${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}${asPath}`} />
+      <meta name="twitter:card" content="summary_large_image" />
+      <meta name="twitter:title" content={title} />
+      <meta name="twitter:site" content="@Xox_Labs" />
+      <meta name="twitter:creator" content="@Xox_Labs" />
     </Head>
   )
 }
