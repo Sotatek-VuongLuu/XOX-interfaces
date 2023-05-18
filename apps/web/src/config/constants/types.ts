@@ -4,7 +4,7 @@ import type { SerializedFarmConfig, FarmConfigBaseProps } from '@pancakeswap/far
 
 // a list of tokens by chain
 export type ChainMap<T> = {
-  readonly [chainId in ChainId]: T
+  readonly [chainId in ChainId]?: T
 }
 
 export type ChainTokenList = ChainMap<Token[]>
@@ -12,7 +12,7 @@ export type ChainTokenList = ChainMap<Token[]>
 export type TranslatableText =
   | string
   | {
-      key: string
+      key?: string
       data?: {
         [key: string]: string | number
       }

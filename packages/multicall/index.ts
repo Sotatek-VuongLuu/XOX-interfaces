@@ -11,6 +11,15 @@ export const multicallAddresses = {
   5: '0xcA11bde05977b3631167028862bE2a173976CA11',
   56: '0xcA11bde05977b3631167028862bE2a173976CA11',
   97: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  96: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  42161: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  421613: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  137: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  80001: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  324: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  280: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  10: '0xcA11bde05977b3631167028862bE2a173976CA11',
+  420: '0xcA11bde05977b3631167028862bE2a173976CA11',
 }
 
 export const getMulticallContract = (chainId: ChainId, provider: Provider) => {
@@ -37,7 +46,7 @@ export interface MulticallOptions extends CallOverrides {
  * 2. The return includes a boolean whether the call was successful e.g. [wasSuccessful, callResult]
  */
 interface MulticallV2Params {
-  abi: any[]
+abi: any[]
   calls: Call[]
   chainId?: ChainId
   options?: MulticallOptions
