@@ -520,7 +520,6 @@ export default function BridgeToken() {
         parseUnits(tokenFromAmount, tokenFrom.decimals),
         chainIdTo,
       )
-      console.log(12)
       const burnBridge = await xoxTokenContract.burnBridge(
         addressTo,
         parseUnits(tokenFromAmount, tokenFrom.decimals),
@@ -529,7 +528,6 @@ export default function BridgeToken() {
           gasLimit: gasFee,
         },
       )
-      console.log(13)
       const tx = await burnBridge.wait(1)
       setMessageTx(t('Swap %amount% %symbol%', { amount: tokenFromAmount, symbol: tokenFrom.symbol }))
       if (tx?.transactionHash) {
