@@ -37,6 +37,7 @@ export const PageMeta: React.FC<React.PropsWithChildren<{ symbol?: string }>> = 
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />
+      <meta property="og:image:alt" content={title} />
       <meta name="twitter:image" content={image} />
       <meta name="twitter:description" content={description} />
       <meta property="og:url" content={`${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}${asPath}`} />
