@@ -1,4 +1,3 @@
-import { PageMeta } from 'components/Layout/Page'
 import VestingPage from 'views/Vesting'
 
 function Vesting() {

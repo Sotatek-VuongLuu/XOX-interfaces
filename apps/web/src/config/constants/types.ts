@@ -101,6 +101,7 @@ export type Campaign = {
 }
 
 export type PageMeta = {
+  siteName?: string;
   title: string
   description?: string
   image?: string

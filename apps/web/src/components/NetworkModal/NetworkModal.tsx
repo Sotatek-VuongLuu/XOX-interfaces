@@ -29,7 +29,7 @@ export const NetworkModal = ({ pageSupportedChains = SUPPORT_ONLY_ETH }: { pageS
     [chainId, pageSupportedChains],
   )
 
-  if (isPageNotSupported && router.pathname === '/vesting') {
+  if (isPageNotSupported && router.pathname === '/pre-sales') {
     return (
       <ModalV2 isOpen closeOnOverlayClick={false}>
         <PageNetworkSupportModal />

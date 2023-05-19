@@ -183,7 +183,7 @@ function BackedBy() {
       describe: 'XOX has Industry Leading Security. Protected By The Best.',
     },
     {
-      title: 'Back By',
+      title: 'Backed By',
       describe: 'The Best to Deliver the Best.',
     },
   ]

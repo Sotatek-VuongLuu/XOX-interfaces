@@ -384,7 +384,7 @@ function PricingInfo({ currentRound, isInTimeRangeSale }: IProps) {
           })}
         </CustomTableWrapper>
         <div className="buttons">
-          <ButtonGetInvolved onClick={() => router.push('/vesting')}>{t('Get Involved!')}</ButtonGetInvolved>
+          <ButtonGetInvolved onClick={() => router.push('/pre-sales')}>{t('Get Involved!')}</ButtonGetInvolved>
 
           <ButtonCertik className="btn_get_eth" onClick={() => {}} aria-hidden="true">
             {t('Certik')}

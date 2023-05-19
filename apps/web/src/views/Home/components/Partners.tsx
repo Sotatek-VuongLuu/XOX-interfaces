@@ -270,10 +270,10 @@ const Partners = () => {
   return (
     <Wrapper>
       <div className="title" data-aos="fade-up">
-        {t('Strategic Partners')}
+        {t('Powered By')}
       </div>
       <p className="decoration" data-aos="fade-up" data-aos-duration="2300">
-        {t('Backed by the Best to Deliver the Best.')}
+        {t('Powered by the Best to Deliver The Best.')}
       </p>
 
       <div className="slide_container">

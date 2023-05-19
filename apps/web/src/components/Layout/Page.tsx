@@ -29,11 +29,12 @@ export const PageMeta: React.FC<React.PropsWithChildren<{ symbol?: string }>> = 
   } = useTranslation()
   const { pathname, asPath } = useRouter()
   const pageMeta = getCustomMeta(pathname, t, locale) || {}
-  const { title, description, image } = { ...DEFAULT_META, ...pageMeta }
+  const { siteName, title, description, image } = { ...DEFAULT_META, ...pageMeta }
 
   return (
     <Head>
       <title>XOX Labs</title>
+      <meta property="og:site_name" content={siteName}></meta>
       <meta property="og:title" content={title} />
       <meta property="og:description" content={description} />
       <meta property="og:image" content={image} />

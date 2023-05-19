@@ -3,6 +3,7 @@ import { ContextApi } from '@pancakeswap/localization'
 import { PageMeta } from './types'
 
 export const DEFAULT_META: PageMeta = {
+  siteName: "XOX Labs Swap",
   title: 'Building Decentralized Protocols for the masses. Earn & Trade like a Pro',
   description:
     'Wide range of apps, utilities, and solutions powering the protocol creating a True One-Stop Ecosystem for all your DeFi needs.',
@@ -10,7 +11,7 @@ export const DEFAULT_META: PageMeta = {
 }
 
 interface PathList {
-  paths: { [path: string]: { title: string; basePath?: boolean; description?: string; image?: string } }
+  paths: { [path: string]: { siteName?: string; title: string; basePath?: boolean; description?: string; image?: string } }
   defaultTitleSuffix: string
 }
 
@@ -18,6 +19,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
   return {
     paths: {
       '/': {
+        siteName: "XOX Labs Protocol",
         title: t(
           'Swap, stake, store, bridge, refer, invest and earn with ease on the leading Decentralized Blockchain Ecosystem.',
         ),
@@ -26,6 +28,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
         image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Landing.png`,
       },
       '/company': {
+        siteName: "XOX Labs Protocol",
         title: t(
           'Swap, stake, store, bridge, refer, invest and earn with ease on the leading Decentralized Blockchain Ecosystem.',
         ),
@@ -34,6 +37,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
         image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Landing.png`,
       },
       '/tokenomics': {
+        siteName: "XOX Labs Protocol",
         title: t(
           'Swap, stake, store, bridge, refer, invest and earn with ease on the leading Decentralized Blockchain Ecosystem.',
         ),
@@ -42,6 +46,7 @@ const getPathList = (t: ContextApi['t']): PathList => {
         image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-Landing.png`,
       },
       '/dex-v2': {
+        siteName: "XOX Dex V2",
         title: t(
           'XOX Dex V2 - The aggregator of aggregators. Save time and money by trading with the lowest rates and fastest transactions in the space.',
         ),
@@ -50,7 +55,8 @@ const getPathList = (t: ContextApi['t']): PathList => {
           'Why trade in a single Dex when you can Trade in all DEXs at Once? XOX Dex V2 finds you the best prices across 60+ Chains & 150+ DEXes and combines them into a single trade, all while giving you many other trades options to choose from, Ranking them by Lowest Fees, Best Rates, and Higher Liquidity.',
         image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/seo/SEO-DexV2.png`,
       },
-      '/vesting': {
+      '/pre-sales': {
+        siteName: "XOX Token Pre-Sales",
         title: t(
           'XOX Token Pre-Sale - Get XOX Tokens at the best prizes while earning up to 10% XOXS Stable Coin as a bonus for free. Get Involved!',
         ),
@@ -73,6 +79,7 @@ export const getCustomMeta = memoize(
     if (pathMetadata) {
       return {
         title: pathMetadata.title,
+        siteName: pathMetadata.siteName,
         ...(pathMetadata.description && { description: pathMetadata.description }),
         ...(pathMetadata.image && { image: pathMetadata.image }),
       }

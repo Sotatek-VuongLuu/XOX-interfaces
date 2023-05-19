@@ -142,7 +142,7 @@ const config: (
     },
     {
       label: t('Pre-sales'),
-      href: '/vesting',
+      href: '/pre-sales',
       icon: EarnIcon,
       fillIcon: EarnFillIcon,
       image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/decorations/pe2.png`,
