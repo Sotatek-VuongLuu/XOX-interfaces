@@ -171,7 +171,7 @@ const AmountInput: React.FC<Props> = ({
     <Wrapper>
       <TextRow isMobile={isMobile}>
         <span className="label">{getInputLabel()}</span>
-        {currentBalance !== '-' && (
+        {isTokenFrom && currentBalance !== '-' && (
           <span
             aria-hidden="true"
             className="balance_container"
