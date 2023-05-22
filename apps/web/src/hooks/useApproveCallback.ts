@@ -145,17 +145,17 @@ export function useRouterNormal(
 ): boolean {
   if (
     inputCurrency?.isToken &&
-    String(inputCurrency?.address).toLowerCase() === XOX_ADDRESS[chainId].toLowerCase() &&
+    String(inputCurrency?.address).toLowerCase() === XOX_ADDRESS[chainId]?.toLowerCase() &&
     outputCurrency?.isToken &&
-    String(outputCurrency?.address).toLowerCase() === USD_ADDRESS[chainId].toLowerCase()
+    String(outputCurrency?.address).toLowerCase() === USD_ADDRESS[chainId]?.toLowerCase()
   )
     return false
 
   if (
     outputCurrency?.isToken &&
-    outputCurrency?.address.toLowerCase() === XOX_ADDRESS[chainId].toLowerCase() &&
+    outputCurrency?.address.toLowerCase() === XOX_ADDRESS[chainId]?.toLowerCase() &&
     inputCurrency?.isToken &&
-    inputCurrency?.address.toLowerCase() === USD_ADDRESS[chainId].toLowerCase()
+    inputCurrency?.address.toLowerCase() === USD_ADDRESS[chainId]?.toLowerCase()
   )
     return false
 
@@ -169,9 +169,9 @@ export function useShowReferralCode(
 ): boolean {
   if (
     outputCurrency?.isToken &&
-    outputCurrency?.address.toLowerCase() === XOX_ADDRESS[chainId].toLowerCase() &&
+    outputCurrency?.address.toLowerCase() === XOX_ADDRESS[chainId]?.toLowerCase() &&
     inputCurrency?.isToken &&
-    inputCurrency?.address.toLowerCase() === USD_ADDRESS[chainId].toLowerCase()
+    inputCurrency?.address.toLowerCase() === USD_ADDRESS[chainId]?.toLowerCase()
   )
     return true
 

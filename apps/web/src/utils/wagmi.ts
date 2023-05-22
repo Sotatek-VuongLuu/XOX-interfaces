@@ -22,6 +22,7 @@ import { MetaMaskConnector } from 'wagmi/connectors/metaMask'
 import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi'
+import { DAPP_CHAINS, MAINNET_CHAINS, TESTNET_CHAINS } from 'views/BridgeToken/networks'
 
 const CHAINS = [
   bsc,
@@ -145,5 +146,8 @@ export const client = createClient({
 
 export const CHAIN_IDS = chains.map((c) => c.id)
 
-export const isChainSupported = memoize((chainId: number) => CHAIN_IDS.includes(chainId))
+export const isChainSupported = memoize((chainId: number) => DAPP_CHAINS.includes(chainId))
 export const isChainTestnet = memoize((chainId: number) => chains.find((c) => c.id === chainId)?.testnet)
+export const isBridgeChainSupported = memoize((chainId: number) =>
+  [...MAINNET_CHAINS, ...TESTNET_CHAINS].includes(chainId),
+)

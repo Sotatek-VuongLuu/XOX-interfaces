@@ -23,6 +23,13 @@ export const NETWORK_ICON = {
   [ChainId.OPTIMISM_TESTNET]: Optimism,
 }
 
+export const DAPP_CHAINS = [
+  ChainId.BSC,
+  ChainId.ETHEREUM,
+  ChainId.BSC_TESTNET,
+  ChainId.GOERLI,
+]
+
 export const MAINNET_CHAINS = [
   ChainId.BSC,
   ChainId.ETHEREUM,
@@ -31,6 +38,7 @@ export const MAINNET_CHAINS = [
   ChainId.ZKSYNC,
   ChainId.OPTIMISM,
 ]
+
 export const TESTNET_CHAINS = [
   ChainId.BSC_TESTNET,
   ChainId.GOERLI,

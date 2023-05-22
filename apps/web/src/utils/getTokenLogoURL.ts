@@ -13,7 +13,7 @@ const getTokenLogoURL = (token?: Token, coinmarketcapId?: string) => {
   if (token && token.symbol.toLocaleUpperCase() === 'XOX') {
     return `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokens/xox-icon.svg`
   }
-  if (token && token.address.toLowerCase() === XOX_ADDRESS[token.chainId].toLowerCase()) {
+  if (token && token.address.toLowerCase() === XOX_ADDRESS[token.chainId]?.toLowerCase()) {
     return `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokens/xox-icon.svg`
   }
   if (token && token.symbol.toLocaleUpperCase() === 'XOXS') {

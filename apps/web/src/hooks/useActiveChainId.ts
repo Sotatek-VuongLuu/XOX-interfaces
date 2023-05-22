@@ -1,13 +1,14 @@
 import { ChainId } from '@pancakeswap/sdk'
 import { atom, useAtomValue } from 'jotai'
 import { useRouter } from 'next/router'
-import { useDeferredValue } from 'react'
-import { isChainSupported } from 'utils/wagmi'
+import { useDeferredValue, useEffect } from 'react'
+import { isBridgeChainSupported, isChainSupported } from 'utils/wagmi'
 import { useNetwork } from 'wagmi'
 import { useSessionChainId } from './useSessionChainId'
 import { MAINNET_CHAINS, TESTNET_CHAINS } from 'views/BridgeToken/networks'
 
 const queryChainIdAtom = atom(-1) // -1 unload, 0 no chainId on query
+const WEB_LINK = ['/', '/company', '/tokenomics', '/white-paper', '/dex-v2']
 
 queryChainIdAtom.onMount = (set) => {
   const params = new URL(window.location.href).searchParams
@@ -24,11 +25,14 @@ export function useLocalNetworkChain() {
   // useRouter is kind of slow, we only get this query chainId once
   const queryChainId = useAtomValue(queryChainIdAtom)
 
-  const { query } = useRouter()
+  const { query, pathname } = useRouter()
 
   const chainId = +(sessionChainId || query.chainId || queryChainId)
 
-  if (isChainSupported(chainId)) {
+  if (
+    (pathname !== '/bridge-token' && isChainSupported(chainId)) ||
+    (pathname === '/bridge-token' && isBridgeChainSupported(chainId))
+  ) {
     return chainId
   }
 
@@ -57,7 +61,10 @@ export const useActiveChainId = () => {
 
   return {
     chainId,
-    isWrongNetwork: (chain?.unsupported ?? false) || isNotMatched || !activeChains.includes(chainId),
+    isWrongNetwork:
+      (chain?.unsupported ?? false) ||
+      isNotMatched ||
+      (!activeChains.includes(chainId) && !WEB_LINK.includes(router.pathname)),
     isNotMatched,
   }
 }

@@ -8,8 +8,10 @@ import { useSwitchNetwork } from 'hooks/useSwitchNetwork'
 import Image from 'next/future/image'
 import { Chain, useAccount, useNetwork } from 'wagmi'
 import Dots from '../Loader/Dots'
-import { BRIDGE_CHAINS_ONLY, MAINNET_CHAINS } from 'views/BridgeToken/networks'
+import { BRIDGE_CHAINS_ONLY, DAPP_CHAINS, MAINNET_CHAINS } from 'views/BridgeToken/networks'
 import { useRouter } from 'next/router'
+import { NETWORK_LABEL } from 'views/BridgeToken/networks'
+import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
 
 // Where page network is not equal to wallet network
 export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: Chain; onDismiss: () => void }) {
@@ -47,43 +49,77 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
           <>
             <Text textAlign="center">
               {t('This page is located for %network%.', {
-                network: BRIDGE_CHAINS_ONLY.includes(chainId) ? `Ethereum or Binance Smart Chain` : currentChain.name,
+                network: !MAINNET_CHAINS.includes(chainId) ? `Ethereum or Binance Smart Chain` : currentChain.name,
               })}
             </Text>
-            {canSwitch ? (
+            {!DAPP_CHAINS.includes(chainId) && DAPP_CHAINS.includes(chain?.id) ? (
               <Button
-                isLoading={isLoading}
-                onClick={() => switchNetworkAsync(BRIDGE_CHAINS_ONLY.includes(chainId) ? 1 : chainId)}
+                onClick={() => {
+                  // router.push(router.pathname, {
+                  //   chainId: chain?.id,
+                  // })
+                  setSessionChainId(chain?.id)
+                }}
                 height={43}
               >
-                {isLoading ? (
-                  <Dots>
-                    {BRIDGE_CHAINS_ONLY.includes(chainId)
-                      ? t('Switch to %network%', { network: 'Ethereum' })
-                      : switchText}
-                  </Dots>
-                ) : (
-                  <>
-                    {BRIDGE_CHAINS_ONLY.includes(chainId)
-                      ? t('Switch to %network%', { network: 'Ethereum' })
-                      : switchText}
-                  </>
-                )}
+                {t('Switch to %network%', { network: chain?.name })}
+              </Button>
+            ) : DAPP_CHAINS.includes(chainId) && !DAPP_CHAINS.includes(chain?.id) ? (
+              <Button
+                onClick={() => {
+                  switchNetworkAsync(chainId)
+                }}
+                height={43}
+              >
+                {t('Switch to %network%', { network: NETWORK_LABEL[chainId] })}
               </Button>
             ) : (
-              <Message variant="danger">
-                <MessageText>{t('Unable to switch network. Please try it on your wallet')}</MessageText>
-              </Message>
+              <>
+                {canSwitch ? (
+                  <Button
+                    isLoading={isLoading}
+                    onClick={() => switchNetworkAsync(BRIDGE_CHAINS_ONLY.includes(chainId) ? 1 : chainId)}
+                    height={43}
+                  >
+                    {isLoading ? (
+                      <Dots>
+                        {BRIDGE_CHAINS_ONLY.includes(chainId)
+                          ? t('Switch to %network%', { network: 'Ethereum' })
+                          : switchText}
+                      </Dots>
+                    ) : (
+                      <>
+                        {BRIDGE_CHAINS_ONLY.includes(chainId)
+                          ? t('Switch to %network%', { network: 'Ethereum' })
+                          : switchText}
+                      </>
+                    )}
+                  </Button>
+                ) : (
+                  <Message variant="danger">
+                    <MessageText>{t('Unable to switch network. Please try it on your wallet')}</MessageText>
+                  </Message>
+                )}
+                {!DAPP_CHAINS.includes(chainId) && !DAPP_CHAINS.includes(chain?.id) ? (
+                  <Button
+                    onClick={() => switchNetworkAsync(BRIDGE_CHAINS_ONLY.includes(chainId) ? 56 : chainId)}
+                    height={43}
+                  >
+                    {t('Switch to %network%', { network: 'BNB Smart Chain' })}
+                  </Button>
+                ) : (
+                  <Button
+                    onClick={() => {
+                      setSessionChainId(chain?.id)
+                      replaceBrowserHistory('chainId', chain?.id)
+                    }}
+                    height={43}
+                  >
+                    {t('Switch to %network%', { network: chain?.name })}
+                  </Button>
+                )}
+              </>
             )}
-
-            <Button
-              onClick={() => setSessionChainId(BRIDGE_CHAINS_ONLY.includes(chainId) ? 56 : chain?.id)}
-              height={43}
-            >
-              {BRIDGE_CHAINS_ONLY.includes(chain?.id)
-                ? t('Switch to %network%', { network: 'BNB Smart Chain' })
-                : chain?.name}
-            </Button>
           </>
         )}
 
