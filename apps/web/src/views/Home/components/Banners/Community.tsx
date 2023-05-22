@@ -245,7 +245,7 @@ const listCommunity = [
     href: 'https://twitter.com/Xox_Labs',
   },
   {
-    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/group_tele_pc.svg`,
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/group_telegram.svg`,
     name: 'Telegram Group',
     des: 'Ask general questions and chat with the worldwide community on Telegram.',
     iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/group_tele_mb.svg`,
@@ -259,7 +259,7 @@ const listCommunity = [
     href: 'https://www.tiktok.com/@xox_labs',
   },
   {
-    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/pc_telegram.svg`,
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/telegram_channel.svg`,
     name: 'Telegram Channel',
     des: 'Join our channel to stay up-to-date with every news and updates.',
     iconMobile: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/telegram_mb.svg`,

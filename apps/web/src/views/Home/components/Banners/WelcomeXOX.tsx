@@ -711,7 +711,7 @@ const WelcomeXOX = (): JSX.Element => {
                   <div className="single-icon">
                     <a href="https://t.me/xoxlabsofficial" target="_blank">
                       <img
-                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/speaker.svg`}
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/telegram_2.svg`}
                         alt="social_media"
                       />
                     </a>
@@ -719,7 +719,7 @@ const WelcomeXOX = (): JSX.Element => {
                   <div className="single-icon">
                     <a href="https://t.me/xoxlabsofficialchannel" target="_blank">
                       <img
-                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/telegram.svg`}
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/telegram_channel.svg`}
                         alt="social_media"
                       />
                     </a>
