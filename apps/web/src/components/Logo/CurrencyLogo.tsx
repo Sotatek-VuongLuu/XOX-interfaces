@@ -35,7 +35,7 @@ export default function CurrencyLogo({
     const coinmarketcapIdsJSON = localStorage.getItem('coinmarketcapIds')
     if (coinmarketcapIdsJSON) {
       coinmarketcapIds = JSON.parse(coinmarketcapIdsJSON)
-      const id = coinmarketcapIds?.[token.chainId]?.[token.address.toUpperCase()]
+      const id = coinmarketcapIds?.[token?.chainId]?.[token.address.toUpperCase()]
       if (id) {
         setCoinmarketcapId(id)
         return
@@ -45,7 +45,7 @@ export default function CurrencyLogo({
     if (process.env.NEXT_PUBLIC_TEST_MODE !== '1' && (chainId === 5 || chainId === 97)) return
     axios
       .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/info`, {
-        params: { address: token.address },
+        params: { address: token?.address },
       })
       .then((response) => {
         const tokenInfos = response.data.data

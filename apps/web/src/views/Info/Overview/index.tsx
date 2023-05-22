@@ -252,7 +252,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       tokenListNotHaveIds.map(async (token: any) => {
         return axios
           .get(`${process.env.NEXT_PUBLIC_API}/coin-market-cap/pro/coins/info`, {
-            params: { address: token.address },
+            params: { address: token?.address },
           })
           .then((response) => {
             const tokenInfos = response.data.data

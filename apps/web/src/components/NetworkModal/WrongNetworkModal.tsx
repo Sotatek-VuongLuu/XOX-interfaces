@@ -12,6 +12,7 @@ import { BRIDGE_CHAINS_ONLY, DAPP_CHAINS, MAINNET_CHAINS } from 'views/BridgeTok
 import { useRouter } from 'next/router'
 import { NETWORK_LABEL } from 'views/BridgeToken/networks'
 import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
+import { useEffect, useState } from 'react'
 
 // Where page network is not equal to wallet network
 export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: Chain; onDismiss: () => void }) {
@@ -23,8 +24,17 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
   const chainId = currentChain.id || ChainId.BSC
   const { t } = useTranslation()
   const router = useRouter()
+  const [isLoadingA, setLoadingA] = useState(false)
+  const [isLoadingB, setLoadingB] = useState(false)
 
   const switchText = t('Switch to %network%', { network: currentChain.name })
+
+  useEffect(() => {
+    if (isLoading) return
+
+    setLoadingA(false)
+    setLoadingB(false)
+  }, [isLoading])
 
   return (
     <Modal title={t('You are in wrong network')} headerBackground="gradientCardHeader" onDismiss={onDismiss}>
@@ -33,8 +43,15 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
           <>
             <Text textAlign="center">{t('This page is located for %network%.', { network: currentChain.name })}</Text>
             {canSwitch ? (
-              <Button isLoading={isLoading} onClick={() => switchNetworkAsync(chainId)} height={43}>
-                {isLoading ? <Dots>{switchText}</Dots> : switchText}
+              <Button
+                isLoading={isLoading && isLoadingA}
+                onClick={() => {
+                  switchNetworkAsync(chainId)
+                  setLoadingA(true)
+                }}
+                height={43}
+              >
+                {isLoading && isLoadingA ? <Dots>{switchText}</Dots> : switchText}
               </Button>
             ) : (
               <Message variant="danger">
@@ -71,17 +88,24 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
                 }}
                 height={43}
               >
-                {t('Switch to %network%', { network: NETWORK_LABEL[chainId] })}
+                {isLoading ? (
+                  <Dots>{t('Switch to %network%', { network: NETWORK_LABEL[chainId] })}</Dots>
+                ) : (
+                  t('Switch to %network%', { network: NETWORK_LABEL[chainId] })
+                )}
               </Button>
             ) : (
               <>
                 {canSwitch ? (
                   <Button
-                    isLoading={isLoading}
-                    onClick={() => switchNetworkAsync(BRIDGE_CHAINS_ONLY.includes(chainId) ? 1 : chainId)}
+                    isLoading={isLoading && isLoadingA}
+                    onClick={() => {
+                      switchNetworkAsync(BRIDGE_CHAINS_ONLY.includes(chainId) ? 1 : chainId)
+                      setLoadingA(true)
+                    }}
                     height={43}
                   >
-                    {isLoading ? (
+                    {isLoading && isLoadingA ? (
                       <Dots>
                         {BRIDGE_CHAINS_ONLY.includes(chainId)
                           ? t('Switch to %network%', { network: 'Ethereum' })
@@ -102,10 +126,18 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
                 )}
                 {!DAPP_CHAINS.includes(chainId) && !DAPP_CHAINS.includes(chain?.id) ? (
                   <Button
-                    onClick={() => switchNetworkAsync(BRIDGE_CHAINS_ONLY.includes(chainId) ? 56 : chainId)}
+                    isLoading={isLoading && isLoadingB}
+                    onClick={() => {
+                      switchNetworkAsync(BRIDGE_CHAINS_ONLY.includes(chainId) ? 56 : chainId)
+                      setLoadingB(true)
+                    }}
                     height={43}
                   >
-                    {t('Switch to %network%', { network: 'BNB Smart Chain' })}
+                    {isLoading && isLoadingB ? (
+                      <Dots>{t('Switch to %network%', { network: 'BNB Smart Chain' })}</Dots>
+                    ) : (
+                      t('Switch to %network%', { network: 'BNB Smart Chain' })
+                    )}
                   </Button>
                 ) : (
                   <Button

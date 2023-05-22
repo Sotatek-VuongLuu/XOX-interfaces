@@ -99,7 +99,7 @@ function CurrencyRow({
     >
       <CurrencyLogo currency={currency} size="30px" />
       <Column>
-        <Text bold>{currency.symbol}</Text>
+        <Text bold>{currency?.symbol}</Text>
       </Column>
     </MenuItem>
   )

@@ -1197,13 +1197,7 @@ const MainInfo = ({
       dataFriend(account)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, account])
-
-  useEffect(() => {
-    if (isWrongNetwork === undefined) return
-    if (loadNetWork) window.location.reload()
-    setLoadNetWork(true)
-  }, [isWrongNetwork])
+  }, [chainId, account])  
 
   return (
     <Box sx={{ marginTop: '16px' }}>

@@ -54,9 +54,10 @@ export function PageNetworkSupportModal() {
         {image && (
           <BoxContainer mx="auto" my="8px" width="100%" minHeight="250px">
             <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/ref_xox_mb.svg`}
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Group33047.png`}
               alt="ref_xox"
               className="ref_xox"
+              style={{ width: '200px', height: '200px', marginTop: '25px' }}
             />
           </BoxContainer>
         )}
