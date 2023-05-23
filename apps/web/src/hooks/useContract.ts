@@ -93,21 +93,6 @@ import { useActiveChainId } from './useActiveChainId'
  * Helper hooks to get specific contracts (by ABI)
  */
 
-export const getChainIdToByChainId = (chainId: any) => {
-  switch (chainId) {
-    case ChainId.GOERLI:
-      return ChainId.BSC_TESTNET
-    case ChainId.BSC_TESTNET:
-      return ChainId.GOERLI
-    case ChainId.ETHEREUM:
-      return ChainId.BSC
-    case ChainId.BSC:
-      return ChainId.ETHEREUM
-    default:
-      return chainId
-  }
-}
-
 export const useIfoV1Contract = (address: string) => {
   const { data: signer } = useSigner()
   return useMemo(() => getIfoV1Contract(address, signer as any), [address, signer])

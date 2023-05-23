@@ -9,7 +9,6 @@ import { useEffect, useState } from 'react'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { NETWORK_LABEL, NETWORK_LINK } from './networks'
 // eslint-disable-next-line import/no-cycle
-import { getChainIdToByChainId } from '.'
 import { useTranslation } from '@pancakeswap/localization'
 
 const StyledModalContainer = styled(ModalContainer)`
@@ -326,7 +325,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                           <TxHash
                             href={
                               row.txSwapHash &&
-                              `${linkTransaction(getChainIdToByChainId(row.chainId))}${row.txSwapHash}`
+                              `${linkTransaction(row.toChainId)}${row.txSwapHash}`
                             }
                             target="blank"
                           >
@@ -365,7 +364,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                               alt="bridge"
                             />
                           </span>
-                          <span>{NETWORK_LABEL[getChainIdToByChainId(row.chainId)]}</span>
+                          <span>{NETWORK_LABEL[row.toChainId]}</span>
                         </div>
                       </div>
                     ))}

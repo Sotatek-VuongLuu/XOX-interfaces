@@ -364,21 +364,6 @@ export const defaultChainIdTo = (chainId: any) => {
   }
 }
 
-export const getChainIdToByChainId = (chainId: any) => {
-  switch (chainId) {
-    case ChainId.GOERLI:
-      return ChainId.BSC_TESTNET
-    case ChainId.BSC_TESTNET:
-      return ChainId.GOERLI
-    case ChainId.ETHEREUM:
-      return ChainId.BSC
-    case ChainId.BSC:
-      return ChainId.ETHEREUM
-    default:
-      return chainId
-  }
-}
-
 export const linkTransaction = (chainId) => {
   return `${NETWORK_LINK[chainId]}/tx/`
 }
@@ -449,7 +434,7 @@ export default function BridgeToken() {
       })
       return
     }
-    
+
     if (chainIdTo === cid) {
       switchNetworkAsync(cid).then((response) => {
         if (!response) return
