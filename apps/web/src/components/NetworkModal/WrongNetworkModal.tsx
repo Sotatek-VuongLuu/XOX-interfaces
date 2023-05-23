@@ -70,24 +70,11 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
               })}
             </Text>
             {!DAPP_CHAINS.includes(chainId) && DAPP_CHAINS.includes(chain?.id) ? (
-              <Button
-                onClick={() => {
-                  // router.push(router.pathname, {
-                  //   chainId: chain?.id,
-                  // })
-                  setSessionChainId(chain?.id)
-                }}
-                height={43}
-              >
+              <Button onClick={() => setSessionChainId(chain?.id)} height={43}>
                 {t('Switch to %network%', { network: chain?.name })}
               </Button>
             ) : DAPP_CHAINS.includes(chainId) && !DAPP_CHAINS.includes(chain?.id) ? (
-              <Button
-                onClick={() => {
-                  switchNetworkAsync(chainId)
-                }}
-                height={43}
-              >
+              <Button onClick={() => switchNetworkAsync(chainId)} height={43}>
                 {isLoading ? (
                   <Dots>{t('Switch to %network%', { network: NETWORK_LABEL[chainId] })}</Dots>
                 ) : (

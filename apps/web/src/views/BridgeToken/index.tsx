@@ -436,7 +436,21 @@ export default function BridgeToken() {
 
   const handleChangeNetwork = (currentChainId: ChainId, cid: ChainId) => {
     if (!account) return
-    if (chainIdFrom === cid || chainIdTo === cid) {
+
+    if (chainIdFrom === cid) {
+      switchNetworkAsync(currentChainId).then((response) => {
+        if (!response) return
+        setTokenFromAmount('')
+        setTokenFrom(XOX[currentChainId])
+
+        setChainIdTo(cid)
+        setTokenToAmount('')
+        setTokenTo(XOX[chainIdFrom])
+      })
+      return
+    }
+    
+    if (chainIdTo === cid) {
       switchNetworkAsync(cid).then((response) => {
         if (!response) return
         setTokenFromAmount('')
