@@ -169,39 +169,39 @@ export default {
     [ChainId.BSC]: '',
   },
   contractXOXToken: {
-    [ChainId.BSC_TESTNET]: '0x2a84dA8571BDdE8135639AFABd9D9A90AA3A5E9d',
-    [ChainId.GOERLI]: '0xcbBC1F107f189e6070C01973Ca5ac2771a928646',
+    [ChainId.BSC_TESTNET]: '0xc74d382c5c5e1922a856877D0Fd3e7F886Ac3828',
+    [ChainId.GOERLI]: '0xd8a6dd164F6823dacdEcaa040a7AEa19304f9fB5',
     [ChainId.ETHEREUM]: '', // TODO: change address
     [ChainId.BSC]: '',
-    [ChainId.ARBITRUM]: '0xdbB76E719C324c9b3BB7168FA229215926061E7e', // TODO: change address
-    [ChainId.ARBITRUM_TESTNET]: '0xdbB76E719C324c9b3BB7168FA229215926061E7e', // TODO: change address
-    [ChainId.POLYGON]: '0xdbB76E719C324c9b3BB7168FA229215926061E7e', // TODO: change address
-    [ChainId.POLYGON_TESTNET]: '0xdbB76E719C324c9b3BB7168FA229215926061E7e', // TODO: change address
-    [ChainId.ZKSYNC]: '0xAC54e32F931a513fd52871010dA7491042d2Ea73', // TODO: change address
-    [ChainId.ZKSYNC_TESTNET]: '0xAC54e32F931a513fd52871010dA7491042d2Ea73', // TODO: change address
-    [ChainId.OPTIMISM]: '0xdbB76E719C324c9b3BB7168FA229215926061E7e', // TODO: change address
-    [ChainId.OPTIMISM_TESTNET]: '0xdbB76E719C324c9b3BB7168FA229215926061E7e', // TODO: change address
+    [ChainId.ARBITRUM]: '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF', // TODO: change address
+    [ChainId.ARBITRUM_TESTNET]: '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF', // TODO: change address
+    [ChainId.POLYGON]: '0x9b8AAb91ea36857763e9552916874ceA18F35b56', // TODO: change address
+    [ChainId.POLYGON_TESTNET]: '0x9b8AAb91ea36857763e9552916874ceA18F35b56', // TODO: change address
+    [ChainId.ZKSYNC]: '0x31d7d8630279F65D5054cE9c5Fcfd146eeffdd66', // TODO: change address
+    [ChainId.ZKSYNC_TESTNET]: '0x31d7d8630279F65D5054cE9c5Fcfd146eeffdd66', // TODO: change address
+    [ChainId.OPTIMISM]: '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF', // TODO: change address
+    [ChainId.OPTIMISM_TESTNET]: '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF', // TODO: change address
   },
   contractXOXPool: {
     [ChainId.BSC_TESTNET]: '0xf10642da580e459a941766af33a977086037f020',
   },
   contractBridgeToken: {
-    [ChainId.ETHEREUM]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.GOERLI]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.BSC]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.BSC_TESTNET]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.ARBITRUM]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.ARBITRUM_TESTNET]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.POLYGON]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.POLYGON_TESTNET]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.ZKSYNC]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.ZKSYNC_TESTNET]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.OPTIMISM]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
-    [ChainId.OPTIMISM_TESTNET]: '0xB8e38b2f4E2c3AB290610A049741cb4278aDc966', // TODO: change address
+    [ChainId.ETHEREUM]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.GOERLI]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.BSC]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.BSC_TESTNET]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.ARBITRUM]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.ARBITRUM_TESTNET]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.POLYGON]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.POLYGON_TESTNET]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.ZKSYNC]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.ZKSYNC_TESTNET]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.OPTIMISM]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
+    [ChainId.OPTIMISM_TESTNET]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
   },
   xoxToken: {
-    [ChainId.BSC_TESTNET]: '0x2a84dA8571BDdE8135639AFABd9D9A90AA3A5E9d',
-    [ChainId.GOERLI]: '0xcbBC1F107f189e6070C01973Ca5ac2771a928646',
+    [ChainId.BSC_TESTNET]: '0xc74d382c5c5e1922a856877D0Fd3e7F886Ac3828',
+    [ChainId.GOERLI]: '0xd8a6dd164F6823dacdEcaa040a7AEa19304f9fB5',
     [ChainId.ETHEREUM]: '', // TODO: change address
     [ChainId.BSC]: '',
   },

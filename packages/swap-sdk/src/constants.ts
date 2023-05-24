@@ -39,9 +39,9 @@ export const PAIR_XOX_BUSD: Record<number, string> = {
 export const XOX_ADDRESS: Record<number, string> = {
   // [ChainId.ETHEREUM]: '',
   // [ChainId.RINKEBY]: '',
-  [ChainId.GOERLI]: '0xcbBC1F107f189e6070C01973Ca5ac2771a928646',
+  [ChainId.GOERLI]: '0xd8a6dd164F6823dacdEcaa040a7AEa19304f9fB5',
   // [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0x2a84dA8571BDdE8135639AFABd9D9A90AA3A5E9d',
+  [ChainId.BSC_TESTNET]: '0xc74d382c5c5e1922a856877D0Fd3e7F886Ac3828',
   // [ChainId.BSC]: '',
   [ChainId.ARBITRUM_TESTNET]: '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
   // [ChainId.BSC]: '',

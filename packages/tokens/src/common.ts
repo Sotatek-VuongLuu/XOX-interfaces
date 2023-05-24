@@ -2,7 +2,7 @@ import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 
 export const XOX_BSC_MAINNET = new ERC20Token(
   ChainId.BSC,
-  '0x2a84dA8571BDdE8135639AFABd9D9A90AA3A5E9d',
+  '0xc74d382c5c5e1922a856877D0Fd3e7F886Ac3828',
   18,
   'XOX',
   'XOX',
@@ -11,7 +11,7 @@ export const XOX_BSC_MAINNET = new ERC20Token(
 
 export const XOX_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x2a84dA8571BDdE8135639AFABd9D9A90AA3A5E9d',
+  '0xc74d382c5c5e1922a856877D0Fd3e7F886Ac3828',
   18,
   'XOX',
   'XOX',
@@ -20,7 +20,7 @@ export const XOX_BSC_TESTNET = new ERC20Token(
 
 export const XOX_MAINNET = new ERC20Token(
   ChainId.ETHEREUM,
-  '0xcbBC1F107f189e6070C01973Ca5ac2771a928646',
+  '0xd8a6dd164F6823dacdEcaa040a7AEa19304f9fB5',
   18,
   'XOX',
   'XOX',
@@ -29,7 +29,7 @@ export const XOX_MAINNET = new ERC20Token(
 
 export const XOX_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xcbBC1F107f189e6070C01973Ca5ac2771a928646',
+  '0xd8a6dd164F6823dacdEcaa040a7AEa19304f9fB5',
   18,
   'XOX',
   'XOX',
@@ -38,7 +38,7 @@ export const XOX_GOERLI = new ERC20Token(
 
 export const XOX_ARBITRUM_MAINNET = new ERC20Token(
   ChainId.ARBITRUM,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
+  '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF',
   18,
   'XOX',
   'XOX',
@@ -47,7 +47,7 @@ export const XOX_ARBITRUM_MAINNET = new ERC20Token(
 
 export const XOX_ARBITRUM_TESTNET = new ERC20Token(
   ChainId.ARBITRUM_TESTNET,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
+  '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF',
   18,
   'XOX',
   'XOX',
@@ -56,7 +56,7 @@ export const XOX_ARBITRUM_TESTNET = new ERC20Token(
 
 export const XOX_POLYGON_MAINNET = new ERC20Token(
   ChainId.POLYGON,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
+  '0x9b8AAb91ea36857763e9552916874ceA18F35b56',
   18,
   'XOX',
   'XOX',
@@ -65,7 +65,7 @@ export const XOX_POLYGON_MAINNET = new ERC20Token(
 
 export const XOX_POLYGON_TESTNET = new ERC20Token(
   ChainId.POLYGON_TESTNET,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
+  '0x9b8AAb91ea36857763e9552916874ceA18F35b56',
   18,
   'XOX',
   'XOX',
@@ -74,7 +74,7 @@ export const XOX_POLYGON_TESTNET = new ERC20Token(
 
 export const XOX_ZKSYNC_MAINNET = new ERC20Token(
   ChainId.ZKSYNC,
-  '0xAC54e32F931a513fd52871010dA7491042d2Ea73',
+  '0x31d7d8630279F65D5054cE9c5Fcfd146eeffdd66',
   18,
   'XOX',
   'XOX',
@@ -83,7 +83,7 @@ export const XOX_ZKSYNC_MAINNET = new ERC20Token(
 
 export const XOX_ZKSYNC_TESTNET = new ERC20Token(
   ChainId.ZKSYNC_TESTNET,
-  '0xAC54e32F931a513fd52871010dA7491042d2Ea73',
+  '0x31d7d8630279F65D5054cE9c5Fcfd146eeffdd66',
   18,
   'XOX',
   'XOX',
@@ -92,7 +92,7 @@ export const XOX_ZKSYNC_TESTNET = new ERC20Token(
 
 export const XOX_OPTIMISM_MAINNET = new ERC20Token(
   ChainId.OPTIMISM,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
+  '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF',
   18,
   'XOX',
   'XOX',
@@ -101,7 +101,7 @@ export const XOX_OPTIMISM_MAINNET = new ERC20Token(
 
 export const XOX_OPTIMISM_TESTNET = new ERC20Token(
   ChainId.OPTIMISM_TESTNET,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
+  '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF',
   18,
   'XOX',
   'XOX',
