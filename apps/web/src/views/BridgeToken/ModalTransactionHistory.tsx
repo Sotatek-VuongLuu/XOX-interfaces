@@ -300,7 +300,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                     <p style={{ width: '11%' }} className="center">
                       {t('Status')}
                     </p>
-                    <p style={{ width: '15%' }} />
+                    <p style={{ width: '20%' }} />
                   </div>
                   <div className="table-row">
                     {[...historyData].map((row, index) => (
@@ -356,7 +356,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                               : capitalizeFirstLetter(row.status === 'completed' ? t('Success') : t(row.status))}
                           </div>
                         </div>
-                        <div className="row-item" style={{ width: '15%' }}>
+                        <div className="row-item" style={{ width: '20%' }}>
                           <span>{NETWORK_LABEL[row.chainId]}</span>
                           <span style={{ margin: '5px 10px 0px 10px' }}>
                             <img

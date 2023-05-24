@@ -66,13 +66,13 @@ export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
   [ChainId.ETHEREUM]: 'Ethereum',
   [ChainId.GOERLI]: 'Goerli',
   [ChainId.ARBITRUM]: 'Arbitrum',
-  [ChainId.ARBITRUM_TESTNET]: 'Arbitrum Testnet',
+  [ChainId.ARBITRUM_TESTNET]: 'ArbitrumTest',
   [ChainId.POLYGON]: 'Polygon',
-  [ChainId.POLYGON_TESTNET]: 'Polygon Testnet',
+  [ChainId.POLYGON_TESTNET]: 'PolygonTest',
   [ChainId.ZKSYNC]: 'zkSync',
-  [ChainId.ZKSYNC_TESTNET]: 'zkSync Testnet',
+  [ChainId.ZKSYNC_TESTNET]: 'zkSyncTest',
   [ChainId.OPTIMISM]: 'Optimism',
-  [ChainId.OPTIMISM_TESTNET]: 'Optimism Testnet',
+  [ChainId.OPTIMISM_TESTNET]: 'OptimismTest',
 }
 
 export const NETWORK_LINK: { [chainId in ChainId]?: any } = {
