@@ -218,7 +218,7 @@ export const poligon_testnet: Chain = {
     default: 'https://rpc-mumbai.maticvigil.com',
   },
   blockExplorers: {
-    default: { name: 'Arbitrum', url: 'https://mumbai.polygonscan.com/' },
+    default: { name: 'Polygon', url: 'https://mumbai.polygonscan.com/' },
   },
 }
 

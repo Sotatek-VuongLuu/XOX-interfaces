@@ -81,13 +81,13 @@ export const NETWORK_LINK: { [chainId in ChainId]?: any } = {
   [ChainId.BSC]: 'https://bscscan.com',
   [ChainId.BSC_TESTNET]: 'https://testnet.bscscan.com',
   [ChainId.ARBITRUM]: 'https://arbiscan.io',
-  [ChainId.ARBITRUM_TESTNET]: 'https://arbiscan.io',
+  [ChainId.ARBITRUM_TESTNET]: 'https://goerli-rollup-explorer.arbitrum.io',
   [ChainId.POLYGON]: 'https://polygonscan.com',
-  [ChainId.POLYGON_TESTNET]: 'https://polygonscan.com',
+  [ChainId.POLYGON_TESTNET]: 'https://mumbai.polygonscan.com',
   [ChainId.ZKSYNC]: 'https://zkscan.io',
-  [ChainId.ZKSYNC_TESTNET]: 'https://zkscan.io',
+  [ChainId.ZKSYNC_TESTNET]: 'https://goerli.explorer.zksync.io',
   [ChainId.OPTIMISM]: 'https://optimistic.etherscan.io',
-  [ChainId.OPTIMISM_TESTNET]: 'https://optimistic.etherscan.io',
+  [ChainId.OPTIMISM_TESTNET]: 'https://optimism.io',
 }
 
 export const CONTRACT_BRIDGE_POOL = {
