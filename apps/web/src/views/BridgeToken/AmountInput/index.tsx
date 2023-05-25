@@ -145,6 +145,7 @@ type Props = {
   currentToken: ERC20Token
   remainingToken: ERC20Token
   currentBalance: any
+  zkSyncBalance?: string
   currentAmount: any
   handleChangeNetwork?: (currentChainId: ChainId, cid: ChainId) => void
   handleUserInput?: (str: string) => void
@@ -156,6 +157,7 @@ const AmountInput: React.FC<Props> = ({
   currentToken,
   remainingToken,
   currentBalance,
+  zkSyncBalance,
   currentAmount,
   handleChangeNetwork,
   handleUserInput,
@@ -175,11 +177,15 @@ const AmountInput: React.FC<Props> = ({
           <span
             aria-hidden="true"
             className="balance_container"
-            onClick={() => currentBalance !== '-' && handleBalanceMax(currentBalance?.toSignificant(6))}
+            onClick={() =>
+              currentBalance !== '-' && handleBalanceMax(zkSyncBalance || currentBalance?.toSignificant(6))
+            }
           >
             {t('Balance')}
             {isMobile ? '' : ':'}
-            <span className="balance">&nbsp;{formatAmountNumber2(currentBalance?.toSignificant(6), 6)}</span>
+            <span className="balance">
+              &nbsp;{zkSyncBalance || formatAmountNumber2(currentBalance?.toSignificant(6), 6)}
+            </span>
           </span>
         )}
       </TextRow>
@@ -197,10 +203,7 @@ const AmountInput: React.FC<Props> = ({
 
         <div className="buttons-group">
           <SelectTokenButton />
-          <SelectNetworkButton
-            currentToken={currentToken}
-            handleChangeNetwork={handleChangeNetwork}
-          />
+          <SelectNetworkButton currentToken={currentToken} handleChangeNetwork={handleChangeNetwork} />
         </div>
       </AmountRow>
     </Wrapper>

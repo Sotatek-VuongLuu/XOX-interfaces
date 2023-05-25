@@ -21,9 +21,8 @@ import AmountInput from './AmountInput'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useAccount, useConnect } from 'wagmi'
-import { ChainId, ERC20Token } from '@pancakeswap/sdk'
+import { ChainId } from '@pancakeswap/sdk'
 import AddressInput from './AddressInput'
-import { getAddress } from '@ethersproject/address'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { XOX_ADDRESS } from 'config/constants/exchange'
@@ -42,7 +41,7 @@ import { useActiveHandle } from 'hooks/useEagerConnect.bmp'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import useAuth from 'hooks/useAuth'
-import { CONTRACT_BRIDGE_POOL, NETWORK_LABEL, NETWORK_LINK } from './networks'
+import { NETWORK_LABEL, NETWORK_LINK } from './networks'
 import { GridLoader } from 'react-spinners'
 import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
@@ -388,6 +387,7 @@ export default function BridgeToken() {
   const [tokenToAmount, setTokenToAmount] = useState<any>('')
   const tokenFromBalance = useCurrencyBalance(account ?? undefined, XOX[chainIdFrom])
   const tokenToBalance = useCurrencyBalance(account ?? undefined, XOX[chainIdTo])
+  const [zkSyncBalance, setZkSyncBalance] = useState<string>('0')
 
   const contractXOX = useXOXTokenContractPoolBridge(false, chainIdFrom)
   const [defaultToken, setDefaultToken] = useState(XOX_ADDRESS[chainIdFrom])
@@ -482,7 +482,10 @@ export default function BridgeToken() {
 
   // handle click button Swap, approve or swap
   const handleSwapButtonClick = () => {
-    if (approvalState === ApprovalState.NOT_APPROVED || approvalState === ApprovalState.UNKNOWN) {
+    if (
+      (approvalState === ApprovalState.NOT_APPROVED || approvalState === ApprovalState.UNKNOWN) &&
+      (chainIdFrom === 1 || chainIdFrom === 5)
+    ) {
       approveCallback() //.finally(() => setPendingApprove(true))
       return
     }
@@ -570,10 +573,9 @@ export default function BridgeToken() {
   }, [account, chainIdFrom])
 
   useEffect(() => {
-    console.log(approvalState, 'approvalState')
     if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
       setMessageButton(t('Approve %symbol%', { symbol: tokenFrom.symbol }))
-      if (pendingApprove) {
+      if (pendingApprove || (chainIdFrom != 1 && chainIdFrom != 5)) {
         setMessageButton(t('Bridge'))
       } else {
         setMessageButton(t('Approve %symbol%', { symbol: tokenFrom.symbol }))
@@ -586,18 +588,23 @@ export default function BridgeToken() {
   }, [approvalState, tokenToAmount])
 
   useEffect(() => {
+    // console.log(tokenFromBalance)
+    const bal =
+      chainIdFrom === ChainId.ZKSYNC || chainIdFrom === ChainId.ZKSYNC_TESTNET
+        ? zkSyncBalance
+        : tokenFromBalance?.toExact()
     if (tokenFromAmount === '' || Number(tokenFromAmount) === 0 || tokenFromAmount === '.') {
       setMessageButton(t('Enter an amount'))
     } else if (
       account &&
-      tokenFromBalance &&
+      bal &&
       // parseEther(amountInput).gt(parseEther(tokenFromAmount?.toExact())) &&
-      parseUnits(tokenFromAmount, tokenFrom.decimals).gt(parseUnits(tokenFromBalance?.toExact(), tokenFrom.decimals))
+      parseUnits(tokenFromAmount, tokenFrom.decimals).gt(parseUnits(bal, tokenFrom.decimals))
     ) {
       setMessageButton(t('Insufficient Your %symbol% Balance', { symbol: tokenFrom.symbol }))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokenFromAmount, tokenFromBalance, tokenToAmount])
+  }, [tokenFromAmount, tokenFromBalance])
 
   useEffect(() => {
     setMessageAddress('')
@@ -611,6 +618,17 @@ export default function BridgeToken() {
 
     setPendingApprove(false)
   }, [account, chainIdFrom, approvalState])
+
+  useEffect(() => {
+    if (!account || !xoxTokenContract) return
+
+    xoxTokenContract
+      .balanceOf(account)
+      .then((b) => {
+        setZkSyncBalance(formatEther(b))
+      })
+      .catch((e) => console.log(e))
+  }, [account, xoxTokenContract])
 
   return (
     <Page>
@@ -677,6 +695,9 @@ export default function BridgeToken() {
                   currentToken={tokenFrom}
                   remainingToken={tokenTo}
                   currentBalance={tokenFromBalance}
+                  zkSyncBalance={
+                    chainIdFrom === ChainId.ZKSYNC || chainIdFrom === ChainId.ZKSYNC_TESTNET ? zkSyncBalance : undefined
+                  }
                   currentAmount={tokenFromAmount}
                   handleChangeNetwork={handleChangeNetwork}
                   handleUserInput={handleUserInputFrom}
