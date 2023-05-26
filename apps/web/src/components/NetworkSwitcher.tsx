@@ -23,9 +23,21 @@ import { useMemo } from 'react'
 import { chains } from 'utils/wagmi'
 
 import { ChainLogo } from './Logo/ChainLogo'
+import { useRouter } from 'next/router'
+import { MAINNET_CHAINS, TESTNET_CHAINS } from 'views/BridgeToken/networks'
 
 const NetworkSelect = ({ switchNetwork, chainId, removeTxtHeader }) => {
   const { t } = useTranslation()
+  const router = useRouter()
+
+  const activeChains =
+    process.env.NEXT_PUBLIC_TEST_MODE === '1'
+      ? router.pathname === '/bridge-token'
+        ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
+        : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
+      : router.pathname === '/bridge-token'
+      ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
+      : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
 
   return (
     <>
@@ -37,26 +49,39 @@ const NetworkSelect = ({ switchNetwork, chainId, removeTxtHeader }) => {
           <UserMenuDivider />
         </>
       )}
-      {chains.map((chain) => (
-        <UserMenuItem key={chain.id} style={{ justifyContent: 'flex-start' }} onClick={() => switchNetwork(chain.id)}>
-          <ChainLogo chainId={chain.id} />
-          <Text color={chain.id === chainId ? '#FB8618' : 'text'} bold={chain.id === chainId} pl="12px">
-            {chain.name}
-          </Text>
-        </UserMenuItem>
-      ))}
+      {chains.map((chain) => {
+        return activeChains.includes(chain.id) ? (
+          <UserMenuItem key={chain.id} style={{ justifyContent: 'flex-start' }} onClick={() => switchNetwork(chain.id)}>
+            <ChainLogo chainId={chain.id} />
+            <Text color={chain.id === chainId ? '#FB8618' : 'text'} bold={chain.id === chainId} pl="12px">
+              {chain.name}
+            </Text>
+          </UserMenuItem>
+        ) : null
+      })}
     </>
   )
 }
 
 const WrongNetworkSelect = ({ switchNetwork, chainId }) => {
   const { t } = useTranslation()
+  const router = useRouter()
+
+  const activeChains =
+    process.env.NEXT_PUBLIC_TEST_MODE === '1'
+      ? router.pathname === '/bridge-token'
+        ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
+        : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
+      : router.pathname === '/bridge-token'
+      ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
+      : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
+
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     t(
       'The URL you are accessing (Chain id: %chainId%) belongs to %network%; mismatching your wallet’s network. Please switch the network to continue.',
       {
         chainId,
-        network: chains.find((c) => c.id === chainId)?.name ?? 'Unknown network',
+        network: chains.find((c) => activeChains.includes(chainId) && c.id === chainId)?.name ?? 'Unknown network',
       },
     ),
     {

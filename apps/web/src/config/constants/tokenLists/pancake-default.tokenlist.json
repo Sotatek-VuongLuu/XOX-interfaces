@@ -77,7 +77,7 @@
 
     {
       "name": "XOX",
-      "address": "0x92e72A02719122aB0E5A0323Db6b3579586db8AD",
+      "address": "0x2a84dA8571BDdE8135639AFABd9D9A90AA3A5E9d",
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 97,
@@ -215,7 +215,7 @@
 
     {
       "name": "XOX",
-      "address": "0xb57F3db85a2d61C0F7e9BB4F3e4145b2804d1758",
+      "address": "0xcbBC1F107f189e6070C01973Ca5ac2771a928646",
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 5,

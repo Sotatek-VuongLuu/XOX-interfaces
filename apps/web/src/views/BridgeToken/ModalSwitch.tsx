@@ -1,4 +1,4 @@
-import { ChainId } from '@pancakeswap/sdk'
+import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 import styled from 'styled-components'
 import { isMobile } from 'react-device-detect'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -115,17 +115,37 @@ const ListNetWork = styled.div`
   }
 `
 
-export default function SwitchNetworkModal(props: any): JSX.Element {
-  const { t } = useTranslation()
-  const { switchNetwork, currentChainId, onDismiss } = props
-  const { chainId } = useActiveChainId()
-  if (!chainId) return null
-  const arrNetwork = [ChainId.GOERLI, ChainId.BSC_TESTNET]
+type Props = {
+  currentToken: ERC20Token
+  handleChangeNetwork: (currentChainId: ChainId, cid: ChainId) => void
+  onDismiss?: any
+}
 
-  const handleSwitchNetwork = (key) => {
-    switchNetwork(key)
+export default function SwitchNetworkModal(props: Props): JSX.Element {
+  const { currentToken, handleChangeNetwork, onDismiss } = props
+  const { t } = useTranslation()
+  const { chainId: activedChainId } = useActiveChainId()
+
+  const arrNetwork =
+    process.env.NEXT_PUBLIC_TEST_MODE === '1'
+      ? [
+          ChainId.GOERLI,
+          ChainId.BSC_TESTNET,
+          ChainId.ARBITRUM_TESTNET,
+          ChainId.POLYGON_TESTNET,
+          ChainId.ZKSYNC_TESTNET,
+          ChainId.OPTIMISM_TESTNET,
+        ]
+      : [ChainId.ETHEREUM, ChainId.BSC, ChainId.ARBITRUM, ChainId.POLYGON, ChainId.ZKSYNC, ChainId.OPTIMISM]
+
+  const handleOnSelectNetwork = (cid: ChainId) => {
+    if (cid === currentToken.chainId) return
+
+    handleChangeNetwork(currentToken.chainId, cid)
     onDismiss()
   }
+
+  if (!activedChainId) return null
 
   return (
     <StyledModalContainer>
@@ -138,23 +158,18 @@ export default function SwitchNetworkModal(props: any): JSX.Element {
           isMobile ? 'gap-4' : 'gap-6'
         } grid grid-flow-row-dense grid-cols-1 overflow-y-auto md:grid-cols-1 magin`}
       >
-        {arrNetwork.map((key: ChainId, i: number) => {
+        {arrNetwork.map((cid: ChainId) => {
           return (
-            // eslint-disable-next-line react/button-has-type
             <button
-              onClick={() => {
-                // eslint-disable-next-line no-unused-expressions
-                currentChainId !== Number(key) && handleSwitchNetwork(currentChainId !== chainId ? currentChainId : key)
-              }}
+              onClick={() => handleOnSelectNetwork(cid)}
               style={isMobile ? { height: '60px' } : { height: '60px' }}
-              className={`${currentChainId === Number(key) && 'active'}`}
-              // eslint-disable-next-line react/no-array-index-key
-              key={i}
+              className={`${currentToken.chainId === cid && 'active'}`}
+              key={cid}
             >
-              <div className="title-network">{NETWORK_LABEL[key] === 'BSC' ? 'BNB Chain' : NETWORK_LABEL[key]}</div>
+              <div className="title-network">{NETWORK_LABEL[cid] === 'BSC' ? 'BNB Chain' : NETWORK_LABEL[cid]}</div>
               <div className="image-network">
                 <img
-                  src={NETWORK_ICON[key]}
+                  src={NETWORK_ICON[cid]}
                   alt="Network Icon"
                   className=""
                   width={isMobile ? '32px' : '36px'}

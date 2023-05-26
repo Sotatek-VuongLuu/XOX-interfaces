@@ -21,7 +21,7 @@ import AmountInput from './AmountInput'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCurrencyBalance } from 'state/wallet/hooks'
 import { useAccount, useConnect } from 'wagmi'
-import { ChainId } from '@pancakeswap/sdk'
+import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 import AddressInput from './AddressInput'
 import { getAddress } from '@ethersproject/address'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
@@ -50,6 +50,8 @@ import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
 import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
+import { isAddress } from 'utils'
+import { useXOXTokenContract } from '../../hooks/useContract'
 
 const SwapButton = styled(PancakeButton)`
   background: ${({ disabled }) =>
@@ -345,6 +347,23 @@ const MainBackground = styled.div`
   }
 `
 
+export const defaultChainIdTo = (chainId: any) => {
+  switch (chainId) {
+    case ChainId.GOERLI:
+      return ChainId.BSC_TESTNET
+    case ChainId.BSC_TESTNET:
+    case ChainId.ARBITRUM_TESTNET:
+    case ChainId.POLYGON_TESTNET:
+    case ChainId.ZKSYNC_TESTNET:
+    case ChainId.OPTIMISM_TESTNET:
+      return ChainId.GOERLI
+    case ChainId.ETHEREUM:
+      return ChainId.BSC
+    default:
+      return ChainId.ETHEREUM
+  }
+}
+
 export const getChainIdToByChainId = (chainId: any) => {
   switch (chainId) {
     case ChainId.GOERLI:
@@ -365,132 +384,96 @@ export const linkTransaction = (chainId) => {
 }
 
 export default function BridgeToken() {
-  const { chainId } = useActiveChainId()
-  const { switchNetworkAsync } = useSwitchNetwork()
-  const [amountInput, setAmountInput] = useState('')
-  const [defaultToken, setDefaultToken] = useState(XOX_ADDRESS[chainId])
-  const [isShowDropFrom, setIsShowDropFrom] = useState(false)
-  const [isShowDropTo, setIsShowDropTo] = useState(false)
-  const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
-  const [minAmount, setMinAmount] = useState<number>(0)
-  const [_, setMaxAmount] = useState<number>(0)
-  const [messageAddress, setMessageAddress] = useState('')
   const {
     t,
     currentLanguage: { code },
   } = useTranslation()
-  const [addressTokenInput, setAddressTokenInput] = useState(XOX[chainId])
-  const [amountTo, setAmountTo] = useState<string>('')
-  const [tokenB, setTokenB] = useState(XOX[getChainIdToByChainId(chainId)])
-  const bridgeTokenContract = useBridgeTokenContract(chainId)
   const { address: account } = useAccount()
-  const contractXOX = useXOXTokenContractPoolBridge(false, getChainIdToByChainId(chainId))
-  const balanceInput = useCurrencyBalance(account ?? undefined, XOX[chainId])
-  const [balancePool, setBalancePool] = useState('')
-  const [chainIdSupport, setChainIdSupport] = useState(chainId)
+  const { isMobile } = useMatchBreakpoints()
+  const { toastWarning, toastError, toastSuccess } = useToast()
+  const { switchNetworkAsync } = useSwitchNetwork()
+  const { login } = useAuth()
+  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
+  const { chainId: chainIdFrom } = useActiveChainId()
+
+  const [chainIdTo, setChainIdTo] = useState<ChainId>(defaultChainIdTo(chainIdFrom))
+  const [tokenFrom, setTokenFrom] = useState(XOX[chainIdFrom])
+  const [tokenTo, setTokenTo] = useState(XOX[chainIdTo])
+  const [tokenFromAmount, setTokenFromAmount] = useState<any>('')
+  const [tokenToAmount, setTokenToAmount] = useState<any>('')
+  const tokenFromBalance = useCurrencyBalance(account ?? undefined, XOX[chainIdFrom])
+  const tokenToBalance = useCurrencyBalance(account ?? undefined, XOX[chainIdTo])
+
+  const contractXOX = useXOXTokenContractPoolBridge(false, chainIdFrom)
+  const [defaultToken, setDefaultToken] = useState(XOX_ADDRESS[chainIdFrom])
+  const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
+  const [messageAddress, setMessageAddress] = useState('')
+  const bridgeTokenContract = useBridgeTokenContract(chainIdFrom)
+  const xoxTokenContract = useXOXTokenContract()
   const [addressTo, setAddressTo] = useState(account)
   const [pendingApprove, setPendingApprove] = useState(false)
   const [messageButton, setMessageButton] = useState(t('Enter an amount'))
   const [messageTx, setMessageTx] = useState('')
   const [loading, setLoading] = useState(false)
-  const [approvalState, approveCallback] = useApproveCallback(
-    XOX_ADDRESS[chainId] && tryParseAmount(amountInput, XOX[chainId]),
-    getBridgeTokenAddress(chainId),
-  )
-
   const [modalReject, setModalReject] = useState<boolean>(false)
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')
-  const { isMobile } = useMatchBreakpoints()
 
-  const { toastWarning, toastError, toastSuccess } = useToast()
+  const [approvalState, approveCallback] = useApproveCallback(
+    XOX_ADDRESS[chainIdFrom] && tryParseAmount(tokenToAmount, XOX[chainIdFrom]),
+    chainIdFrom === 1 || chainIdFrom === 5 ? getBridgeTokenAddress(chainIdFrom) : tokenFrom.address,
+  )
 
-  const handleGetBalancePool = async () => {
-    try {
-      setBalancePool('')
-      const amountPool = await contractXOX.balanceOf(CONTRACT_BRIDGE_POOL[getChainIdToByChainId(chainId)])
-      setBalancePool(formatEther(amountPool))
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('error>>>', error)
+  const [minAmount, setMinAmount] = useState<number>(0)
+  const [_, setMaxAmount] = useState<number>(0)
+  const handleActive = useActiveHandle()
+  const { connectAsync } = useConnect()
+  const [open, setOpen] = useState(false)
+  const docLink = useMemo(() => getDocLink(code), [code])
+  const wallets = useMemo(() => createWallets(chainIdFrom, connectAsync), [chainIdFrom, connectAsync])
+
+  const [onHistoryTransactionsModal] = useModal(<ModalTransactionHistory />)
+
+  const handleChangeNetwork = (currentChainId: ChainId, cid: ChainId) => {
+    if (!account) return
+    if (chainIdFrom === cid || chainIdTo === cid) {
+      switchNetworkAsync(cid).then((response) => {
+        if (!response) return
+        setTokenFromAmount('')
+        setTokenFrom(XOX[cid])
+
+        setChainIdTo(currentChainId)
+        setTokenToAmount('')
+        setTokenTo(XOX[chainIdFrom])
+      })
+      return
     }
+
+    if (currentChainId === chainIdFrom) {
+      switchNetworkAsync(cid).then((response) => {
+        if (!response) return
+        setTokenFromAmount('')
+      })
+      setTokenFrom(XOX[cid])
+      return
+    }
+
+    setChainIdTo(cid)
+    setTokenTo(XOX[cid])
   }
-
-  useEffect(() => {
-    setAddressTo(account)
-    if (chainId) {
-      setTokenB(XOX[getChainIdToByChainId(chainId)])
-      setDefaultToken(XOX_ADDRESS[chainId])
-      setChainIdSupport(chainId)
-      setAddressTokenInput(XOX[chainId])
-    }
-  }, [account, chainId])
-
-  useEffect(() => {
-    if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
-      setMessageButton(t('Approve %symbol%', { symbol: addressTokenInput.symbol }))
-      if (pendingApprove) {
-        setMessageButton(t('Bridge'))
-      } else {
-        setMessageButton(t('Approve %symbol%', { symbol: addressTokenInput.symbol }))
-      }
-    } else if (approvalState === ApprovalState.PENDING) {
-      setMessageButton(t('Approving...'))
-    } else if (amountTo === '0') {
-      setMessageButton(t('Input Amount Not Allowed'))
-    } else setMessageButton(t('Bridge'))
-  }, [approvalState, amountTo])
-
-  useEffect(() => {
-    if (amountInput === '' || Number(amountInput) === 0 || amountInput === '.') {
-      setMessageButton(t('Enter an amount'))
-    } else if (
-      account &&
-      balanceInput &&
-      // parseEther(amountInput).gt(parseEther(balanceInput?.toExact())) &&
-      parseUnits(amountInput, addressTokenInput.decimals).gt(
-        parseUnits(balanceInput?.toExact(), addressTokenInput.decimals),
-      )
-    ) {
-      setMessageButton(t('Insufficient Your %symbol% Balance', { symbol: addressTokenInput.symbol }))
-    } else if (
-      balancePool !== '-' &&
-      balancePool &&
-      amountTo &&
-      parseEther(Number(amountTo).toFixed(18)).gt(parseEther(balancePool))
-    ) {
-      setMessageButton(t('Insufficient Pool Balance'))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amountInput, balanceInput, amountTo, balancePool])
 
   // handle user type input
-  const handleUserInput = (value) => {
-    const decimalRegExp = new RegExp('^[+-]?([0-9]{0,20}([.][0-9]{0,18})?|[.][0-9]{0,18})$')
-    if (!value || decimalRegExp.test(value) || amountInput.length > value.length) {
-      setAmountInput(value)
-    }
-  }
+  const handleUserInputFrom = useCallback(
+    (value: string) => {
+      const decimalRegExp = new RegExp('^[+-]?([0-9]{0,20}([.][0-9]{0,18})?|[.][0-9]{0,18})$')
+      if (!value || decimalRegExp.test(value) || tokenFromAmount.length > value.length) {
+        setTokenFromAmount(value)
+      }
+    },
+    [tokenFromAmount],
+  )
 
-  const handleShowDropFrom = () => {
-    setIsShowDropFrom(!isShowDropFrom)
-    setIsShowDropTo(false)
-  }
-
-  const handleShowDropTo = () => {
-    setIsShowDropTo(!isShowDropTo)
-    setIsShowDropFrom(false)
-  }
-
-  const isAddress = (value: any) => {
-    try {
-      return getAddress(value)
-    } catch {
-      return false
-    }
-  }
-
-  const handleAddressTo = (value) => {
+  const handleAddressTo = (value: string) => {
     setAddressTo(value)
     const validAdress = isAddress(value)
     if (!validAdress) {
@@ -498,31 +481,13 @@ export default function BridgeToken() {
     } else setMessageAddress('')
   }
 
-  // handle approve STAND to contract
-  const handleApprove = useCallback(async () => {
-    await approveCallback()
-    setPendingApprove(true)
-  }, [approveCallback])
-
-  const [onHistoryTransactionsModal] = useModal(<ModalTransactionHistory />)
-
   // handle click button Swap, approve or swap
   const handleSwapButtonClick = () => {
     if (approvalState === ApprovalState.NOT_APPROVED || approvalState === ApprovalState.UNKNOWN) {
-      handleApprove()
+      approveCallback() //.finally(() => setPendingApprove(true))
       return
     }
     hanleConfirmSwap()
-  }
-
-  // handle switch network
-  const switchNetwork = () => {
-    if (account) {
-      switchNetworkAsync(getChainIdToByChainId(chainId))
-      setAmountInput('')
-      setAmountTo('')
-    }
-    return null
   }
 
   // handle deposit STAND to contract
@@ -530,19 +495,49 @@ export default function BridgeToken() {
     setLoading(true)
     setIsOpenLoadingClaimModal(true)
     try {
-      const params = [addressTo, parseUnits(amountInput, addressTokenInput.decimals)]
-      const gasFee = await bridgeTokenContract.estimateGas.deposit(...params)
-      const deposit = await bridgeTokenContract.deposit(...params, {
-        gasLimit: gasFee,
-      })
-      const tx = await deposit.wait(1)
-      setMessageTx(t('Swap %amount% %symbol%', { amount: amountInput, symbol: addressTokenInput.symbol }))
+      if (chainIdFrom === 1 || chainIdFrom === 5) {
+        const params = [addressTo, parseEther(tokenFromAmount), chainIdTo.toString()]
+        const gasFee = await bridgeTokenContract.estimateGas.deposit(...params)
+        const deposit = await bridgeTokenContract.deposit(...params, {
+          gasLimit: gasFee,
+        })
+        const tx = await deposit.wait(1)
+        setMessageTx(t('Swap %amount% %symbol%', { amount: tokenFromAmount, symbol: tokenFrom.symbol }))
+        if (tx?.transactionHash) {
+          setIsOpenSuccessModal(true)
+          setIsOpenLoadingClaimModal(false)
+          setTxHash(tx?.transactionHash)
+          setLoading(false)
+          setTokenFromAmount('')
+          toastSuccess(t('Transaction receipt'), <ToastDescriptionWithTx txHash={tx.transactionHash} />)
+        }
+        setLoading(false)
+        return
+      }
+
+      const gasFee = await xoxTokenContract.estimateGas.burnBridge(
+        addressTo,
+        parseUnits(tokenFromAmount, tokenFrom.decimals),
+        chainIdTo,
+      )
+      console.log(12)
+      const burnBridge = await xoxTokenContract.burnBridge(
+        addressTo,
+        parseUnits(tokenFromAmount, tokenFrom.decimals),
+        chainIdTo,
+        {
+          gasLimit: gasFee,
+        },
+      )
+      console.log(13)
+      const tx = await burnBridge.wait(1)
+      setMessageTx(t('Swap %amount% %symbol%', { amount: tokenFromAmount, symbol: tokenFrom.symbol }))
       if (tx?.transactionHash) {
         setIsOpenSuccessModal(true)
         setIsOpenLoadingClaimModal(false)
         setTxHash(tx?.transactionHash)
         setLoading(false)
-        setAmountInput('')
+        setTokenFromAmount('')
         toastSuccess(t('Transaction receipt'), <ToastDescriptionWithTx txHash={tx.transactionHash} />)
       }
       setLoading(false)
@@ -558,13 +553,6 @@ export default function BridgeToken() {
     }
   }
 
-  const handleActive = useActiveHandle()
-  const { connectAsync } = useConnect()
-  const [open, setOpen] = useState(false)
-  const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
-  const { login } = useAuth()
-  const docLink = useMemo(() => getDocLink(code), [code])
-
   const handleClick = () => {
     if (typeof __NEZHA_BRIDGE__ !== 'undefined') {
       handleActive()
@@ -574,26 +562,58 @@ export default function BridgeToken() {
   }
 
   useEffect(() => {
-    setMessageAddress('')
-    if (account && !userProfile) {
-      setOpen(false)
-    }
-  }, [account, userProfile])
+    if (!account) return
 
-  const wallets = useMemo(() => createWallets(chainId, connectAsync), [chainId, connectAsync])
+    setAddressTo(account)
+    setTokenFrom(XOX[chainIdFrom])
+    if (chainIdFrom === chainIdTo) {
+      setChainIdTo(defaultChainIdTo(chainIdFrom))
+      setTokenTo(XOX[chainIdTo])
+    }
+  }, [account, chainIdFrom])
 
   useEffect(() => {
-    if (chainId && account) {
-      handleGetBalancePool()
+    console.log(approvalState, 'approvalState')
+    if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
+      setMessageButton(t('Approve %symbol%', { symbol: tokenFrom.symbol }))
+      if (pendingApprove) {
+        setMessageButton(t('Bridge'))
+      } else {
+        setMessageButton(t('Approve %symbol%', { symbol: tokenFrom.symbol }))
+      }
+    } else if (approvalState === ApprovalState.PENDING) {
+      setMessageButton(t('Approving...'))
+    } else if (tokenToAmount === '0') {
+      setMessageButton(t('Input Amount Not Allowed'))
+    } else setMessageButton(t('Bridge'))
+  }, [approvalState, tokenToAmount])
+
+  useEffect(() => {
+    if (tokenFromAmount === '' || Number(tokenFromAmount) === 0 || tokenFromAmount === '.') {
+      setMessageButton(t('Enter an amount'))
+    } else if (
+      account &&
+      tokenFromBalance &&
+      // parseEther(amountInput).gt(parseEther(tokenFromAmount?.toExact())) &&
+      parseUnits(tokenFromAmount, tokenFrom.decimals).gt(parseUnits(tokenFromBalance?.toExact(), tokenFrom.decimals))
+    ) {
+      setMessageButton(t('Insufficient Your %symbol% Balance', { symbol: tokenFrom.symbol }))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, account])
+  }, [tokenFromAmount, tokenFromBalance, tokenToAmount])
 
   useEffect(() => {
-    if (approvalState === ApprovalState.APPROVED) {
-      setPendingApprove(false)
-    }
-  }, [account, chainId, approvalState])
+    setMessageAddress('')
+    if (!account || userProfile) return
+
+    setOpen(false)
+  }, [account, userProfile])
+
+  useEffect(() => {
+    if (approvalState !== ApprovalState.APPROVED) return
+
+    setPendingApprove(false)
+  }, [account, chainIdFrom, approvalState])
 
   return (
     <Page>
@@ -657,15 +677,13 @@ export default function BridgeToken() {
                 </StyledHeader>
                 <AmountInput
                   isTokenFrom
-                  inputChainId={chainIdSupport}
-                  balance={balanceInput ? balanceInput?.toExact() : '-'}
-                  amount={amountInput}
-                  handleUserInput={handleUserInput}
-                  handleBalanceMax={(balance) => setAmountInput(balance)}
-                  switchNetwork={switchNetwork}
-                  tokenSymbol={defaultToken?.symbol}
-                  isShowDrop={isShowDropFrom}
-                  handleShowDrop={handleShowDropFrom}
+                  currentToken={tokenFrom}
+                  remainingToken={tokenTo}
+                  currentBalance={tokenFromBalance}
+                  currentAmount={tokenFromAmount}
+                  handleChangeNetwork={handleChangeNetwork}
+                  handleUserInput={handleUserInputFrom}
+                  handleBalanceMax={(balance: string) => setTokenFromAmount(balance)}
                 />
                 <Divider>
                   <div>
@@ -675,7 +693,7 @@ export default function BridgeToken() {
                       viewBox="0 0 31 30"
                       fill="none"
                       xmlns="http://www.w3.org/2000/svg"
-                      onClick={switchNetwork}
+                      onClick={() => handleChangeNetwork(chainIdFrom, chainIdTo)}
                       aria-hidden="true"
                       style={{ cursor: 'pointer' }}
                     >
@@ -699,13 +717,11 @@ export default function BridgeToken() {
                 </Divider>
                 <AmountInput
                   isTokenFrom={false}
-                  inputChainId={getChainIdToByChainId(chainIdSupport)}
-                  amount={amountTo}
-                  balance={balancePool}
-                  switchNetwork={switchNetwork}
-                  tokenSymbol={tokenB?.symbol}
-                  isShowDrop={isShowDropTo}
-                  handleShowDrop={handleShowDropTo}
+                  currentToken={tokenTo}
+                  remainingToken={tokenFrom}
+                  currentBalance={tokenToBalance}
+                  currentAmount={tokenToAmount}
+                  handleChangeNetwork={handleChangeNetwork}
                 />
                 {account && (
                   <AddressInput address={addressTo} handleAddressTo={handleAddressTo} messageAddress={messageAddress} />
@@ -716,9 +732,9 @@ export default function BridgeToken() {
                   <SwapButton
                     disabled={
                       (messageButton !== t('Bridge') &&
-                        messageButton !== t('Approve %symbol%', { symbol: addressTokenInput.symbol })) ||
+                        messageButton !== t('Approve %symbol%', { symbol: tokenFrom.symbol })) ||
                       messageAddress !== '' ||
-                      amountTo === '' ||
+                      tokenToAmount === '' ||
                       loading ||
                       pendingApprove
                     }
@@ -729,16 +745,16 @@ export default function BridgeToken() {
                   </SwapButton>
                 )}
                 <Reminder
-                  chainId={chainId}
-                  tokenInput={defaultToken}
-                  tokenOutput={tokenB}
-                  amount={amountInput}
+                  chainId={chainIdFrom}
+                  tokenInput={tokenFrom}
+                  tokenOutput={tokenTo}
+                  amount={tokenFromAmount}
                   // eslint-disable-next-line @typescript-eslint/no-shadow
                   onBridgeTokenFeeChange={(minAmount, maxAmount) => {
                     setMinAmount(Number(minAmount))
                     setMaxAmount(Number(maxAmount))
                   }}
-                  setAmountTo={setAmountTo}
+                  setAmountTo={setTokenToAmount}
                 />
               </StyledInputCurrencyWrapper>
             </StyledSwapContainer>
@@ -753,7 +769,7 @@ export default function BridgeToken() {
                 </div>
                 <div className="submitted">{t('Transaction Submitted')}</div>
                 <LinkExternal
-                  href={`${linkTransaction(chainId)}${txHash}`}
+                  href={`${linkTransaction(chainIdFrom)}${txHash}`}
                   target="_blank"
                   rel="noreferrer"
                   color="#FB8618"
@@ -761,7 +777,7 @@ export default function BridgeToken() {
                   hiddenIcon
                   style={{ margin: '0 auto 24px' }}
                 >
-                  {t('View on %site%', { site: chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan' })}
+                  {t('View on %site%', { site: chainIdFrom === 1 || chainIdFrom === 5 ? 'Etherscan' : 'Bscscan' })}
                 </LinkExternal>
                 <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)}>
                   {t('Close')}
@@ -807,10 +823,10 @@ export default function BridgeToken() {
                 </div>
                 <div className="noti_claim_pending_h1">{t('Waiting For Confirmation')}</div>
                 <div className="noti_claim_pending_h3">
-                  {t('Bridging %number% XOX', { number: formatAmountNumber2(Number(amountInput), 6) })} <span>(</span>{' '}
-                  {NETWORK_LABEL[chainId]} <span>)</span>{' '}
-                  {t('to %number% XOX', { number: formatAmountNumber2(Number(amountTo), 6) })} <span>(</span>{' '}
-                  {NETWORK_LABEL[getChainIdToByChainId(chainId)]} <span>)</span>
+                  {t('Bridging %number% XOX', { number: formatAmountNumber2(Number(tokenFromAmount), 6) })}{' '}
+                  <span>(</span> {NETWORK_LABEL[chainIdFrom]} <span>)</span>{' '}
+                  {t('to %number% XOX', { number: formatAmountNumber2(Number(tokenToAmount), 6) })} <span>(</span>{' '}
+                  {NETWORK_LABEL[chainIdTo]} <span>)</span>
                 </div>
                 <div className="noti_claim_pending_h2">{t('Confirm this transaction in your wallet.')}</div>
                 <img

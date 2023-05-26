@@ -126,6 +126,8 @@ export const formatAmountString = (number: any, decimals = 2) => {
 }
 
 export const formatAmountNumber2 = (number: number, decimals = 2) => {
+  if (!number) return 0
+
   if (number < 1) {
     return number
   }

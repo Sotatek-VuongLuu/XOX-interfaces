@@ -149,3 +149,147 @@ export const goerli: Chain = {
   },
   testnet: true,
 }
+
+export const arbitrum: Chain = {
+  id: 42161,
+  name: 'Arbitrum One',
+  network: 'arbitrum',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Etherium',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: 'https://arb1.arbitrum.io/rpc',
+    default: 'https://arb1.arbitrum.io/rpc',
+  },
+  blockExplorers: {
+    default: { name: 'Arbitrum', url: 'https://arbiscan.io/' },
+  },
+}
+
+export const arbitrum_testnet: Chain = {
+  id: 421613,
+  name: 'Arbitrum Goerli',
+  network: 'arbitrum-goerli',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Etherium',
+    symbol: 'AGOR',
+  },
+  rpcUrls: {
+    public: 'https://endpoints.omniatech.io/v1/arbitrum/goerli/public',
+    default: 'https://endpoints.omniatech.io/v1/arbitrum/goerli/public',
+  },
+  blockExplorers: {
+    default: { name: 'Arbitrum', url: 'https://goerli-rollup-explorer.arbitrum.io/' },
+  },
+}
+
+export const polygon: Chain = {
+  id: 137,
+  name: 'Polygon Mainnet',
+  network: 'polygon',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'MATIC',
+    symbol: 'MATIC',
+  },
+  rpcUrls: {
+    public: 'https://polygon.llamarpc.com',
+    default: 'https://polygon.llamarpc.com',
+  },
+  blockExplorers: {
+    default: { name: 'Polygon', url: 'https://polygonscan.com/' },
+  },
+}
+
+export const poligon_testnet: Chain = {
+  id: 80001,
+  name: 'Mumbai Testnet',
+  network: 'mumbai-testnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'MATIC',
+    symbol: 'MATIC',
+  },
+  rpcUrls: {
+    public: 'https://rpc-mumbai.maticvigil.com',
+    default: 'https://rpc-mumbai.maticvigil.com',
+  },
+  blockExplorers: {
+    default: { name: 'Arbitrum', url: 'https://mumbai.polygonscan.com/' },
+  },
+}
+
+export const zksync: Chain = {
+  id: 324,
+  name: 'zkSync Era Mainnet',
+  network: 'zksync',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ethereum',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: 'https://mainnet.era.zksync.io',
+    default: 'https://mainnet.era.zksync.io',
+  },
+  blockExplorers: {
+    default: { name: 'zkSync', url: 'https://explorer.zksync.io/' },
+  },
+}
+
+export const zksync_testnet: Chain = {
+  id: 280,
+  name: 'zkSync Era Testnet',
+  network: 'zksync-testnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ethereum',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: 'https://testnet.era.zksync.dev',
+    default: 'https://testnet.era.zksync.dev',
+  },
+  blockExplorers: {
+    default: { name: 'zkSync', url: 'https://goerli.explorer.zksync.io/' },
+  },
+}
+
+export const optimism: Chain = {
+  id: 10,
+  name: 'Optimism',
+  network: 'optimism',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ethereum',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: 'https://mainnet.optimism.io',
+    default: 'https://mainnet.optimism.io',
+  },
+  blockExplorers: {
+    default: { name: 'Optimism', url: 'https://optimistic.etherscan.io/' },
+  },
+}
+
+export const optimism_testnet: Chain = {
+  id: 420,
+  name: 'Optimism Goerli Testnet',
+  network: 'optimism-testnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ethereum',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: 'https://endpoints.omniatech.io/v1/op/goerli/public',
+    default: 'https://endpoints.omniatech.io/v1/op/goerli/public',
+  },
+  blockExplorers: {
+    default: { name: 'Optimism', url: 'https://optimism.io/' },
+  },
+}
