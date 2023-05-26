@@ -163,7 +163,7 @@ const SliderWrapper = styled.div`
     display: flex;
     justify-content: center;
     width: 100%;
-    height: 150px;
+    height: 160px;
 
     @media (max-width: 560px) {
       height: 100px;
@@ -224,7 +224,7 @@ const SliderWrapper = styled.div`
 
     img.icon-short {
       opacity: 1;
-      height: 100px;
+      height: 80px;
       position: absolute;
       transform: translate(-50%, -50%);
       left: 50%;
@@ -238,10 +238,13 @@ const SliderWrapper = styled.div`
     
     img.icon-short + img {
       opacity: 0;
-      height: 150px;
+      height: 160px;
     }
     
     img.icon-short:hover + img {
+      background: rgba(255, 255, 255, 0.05);
+      border-radius: 10px;
+      padding: 10px;
       opacity: 1;
     }
 
@@ -254,19 +257,19 @@ const SliderWrapper = styled.div`
     // }
   }
   #infinite.infinitetl div.highway-barrier ul.highway-lane li.highway-car {
-    width: 150px;
+    width: 160px;
     animation: translateinfinitetl 23s linear infinite;
   }
   #infinite.infinitetr div.highway-barrier ul.highway-lane li.highway-car {
-    width: 150px;
+    width: 160px;
     animation: translateinfinitetr 23s linear infinite;
   }
   #infinite.infinitetl.speed-20 div.highway-barrier ul.highway-lane li.highway-car {
-    width: 150px;
+    width: 160px;
     animation: translateinfinitetl 23s linear infinite;
   }
   #infinite.infinitetr.speed-20 div.highway-barrier ul.highway-lane li.highway-car {
-    width: 150px;
+    width: 160px;
     animation: translateinfinitetr 23s linear infinite;
   }
 `
