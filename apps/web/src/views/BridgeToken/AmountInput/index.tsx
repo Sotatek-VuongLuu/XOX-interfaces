@@ -178,13 +178,13 @@ const AmountInput: React.FC<Props> = ({
             aria-hidden="true"
             className="balance_container"
             onClick={() =>
-              currentBalance !== '-' && handleBalanceMax(zkSyncBalance || currentBalance?.toSignificant(6))
+              currentBalance !== '-' && handleBalanceMax((zkSyncBalance && formatAmountNumber(Number(zkSyncBalance))) || currentBalance?.toSignificant(6))
             }
           >
             {t('Balance')}
             {isMobile ? '' : ':'}
             <span className="balance">
-              &nbsp;{zkSyncBalance || formatAmountNumber2(currentBalance?.toSignificant(6), 6)}
+              &nbsp;{(zkSyncBalance && formatAmountNumber(Number(zkSyncBalance))) || formatAmountNumber2(currentBalance?.toSignificant(6), 6)}
             </span>
           </span>
         )}

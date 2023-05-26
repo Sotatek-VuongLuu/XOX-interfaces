@@ -58,7 +58,13 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
                 <MessageText>{t('Unable to switch network. Please try it on your wallet')}</MessageText>
               </Message>
             )}
-            <Button onClick={() => setSessionChainId(chain?.id)} height={43}>
+            <Button
+              onClick={() => {
+                setSessionChainId(chain?.id)
+                replaceBrowserHistory('chainId', chain?.id)
+              }}
+              height={43}
+            >
               Switch to {chain?.name}
             </Button>
           </>
@@ -70,7 +76,13 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
               })}
             </Text>
             {!DAPP_CHAINS.includes(chainId) && DAPP_CHAINS.includes(chain?.id) ? (
-              <Button onClick={() => setSessionChainId(chain?.id)} height={43}>
+              <Button
+                onClick={() => {
+                  setSessionChainId(chain?.id)
+                  replaceBrowserHistory('chainId', chain?.id)
+                }}
+                height={43}
+              >
                 {t('Switch to %network%', { network: chain?.name })}
               </Button>
             ) : DAPP_CHAINS.includes(chainId) && !DAPP_CHAINS.includes(chain?.id) ? (

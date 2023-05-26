@@ -380,6 +380,7 @@ export default function BridgeToken() {
   const userProfile = useSelector<AppState, AppState['user']['userProfile']>((state) => state.user.userProfile)
   const { chainId: chainIdFrom } = useActiveChainId()
 
+  const [resetChainId, setResetChainId] = useState<boolean>(true)
   const [chainIdTo, setChainIdTo] = useState<ChainId>(defaultChainIdTo(chainIdFrom))
   const [tokenFrom, setTokenFrom] = useState(XOX[chainIdFrom])
   const [tokenTo, setTokenTo] = useState(XOX[chainIdTo])
@@ -432,6 +433,7 @@ export default function BridgeToken() {
         setTokenToAmount('')
         setTokenTo(XOX[chainIdFrom])
       })
+      setResetChainId(false)
       return
     }
 
@@ -445,6 +447,7 @@ export default function BridgeToken() {
         setTokenToAmount('')
         setTokenTo(XOX[chainIdFrom])
       })
+      setResetChainId(false)
       return
     }
 
@@ -454,6 +457,7 @@ export default function BridgeToken() {
         setTokenFromAmount('')
       })
       setTokenFrom(XOX[cid])
+      setResetChainId(false)
       return
     }
 
@@ -539,6 +543,14 @@ export default function BridgeToken() {
         setLoading(false)
         setTokenFromAmount('')
         toastSuccess(t('Transaction receipt'), <ToastDescriptionWithTx txHash={tx.transactionHash} />)
+        if (chainIdFrom === ChainId.ZKSYNC || chainIdFrom === ChainId.ZKSYNC_TESTNET) {
+          xoxTokenContract
+            .balanceOf(account)
+            .then((b) => {
+              setZkSyncBalance(formatEther(b))
+            })
+            .catch((e) => console.log(e))
+        }
       }
       setLoading(false)
     } catch (error: any) {
@@ -605,6 +617,13 @@ export default function BridgeToken() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [tokenFromAmount, tokenFromBalance])
+
+  useEffect(() => {
+    if(!resetChainId) return
+
+    setChainIdTo(defaultChainIdTo(chainIdFrom))
+    setResetChainId(true)
+  }, [chainIdFrom])
 
   useEffect(() => {
     setMessageAddress('')
