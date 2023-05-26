@@ -166,7 +166,7 @@ const SliderWrapper = styled.div`
     height: 160px;
 
     @media (max-width: 560px) {
-      height: 100px;
+      height: 120px;
     }
   }
   div.highway-slider div.highway-barrier {
@@ -189,12 +189,12 @@ const SliderWrapper = styled.div`
   
   @keyframes translateinfinitetl {
     100% {
-      transform: translateX(calc(-160px * 10));
+      transform: translateX(calc(-160px * 7));
     }
   }
   @keyframes translateinfinitetr {
     0% {
-      transform: translateX(calc(-160px * 10));
+      transform: translateX(calc(-160px * 7));
     }
     100% {
       transform: translateX(0);
@@ -239,6 +239,13 @@ const SliderWrapper = styled.div`
     img.icon-short + img {
       opacity: 0;
       height: 160px;
+    }
+
+    @media (max-width: 560px) {
+      img.icon-short + img {
+        opacity: 0;
+        height: 120px;
+      }
     }
     
     img.icon-short:hover + img {
