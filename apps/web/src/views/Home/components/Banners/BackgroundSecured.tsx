@@ -5,14 +5,14 @@ const BGLeft = styled.img`
   position: absolute;
   z-index: -1;
   left: 0;
-  top: 15%;
+  top: 21%;
   opacity: 0.3;
 `
 const BGMobileLeft = styled.img`
   position: absolute;
   z-index: -1;
   left: 0;
-  top: 454px;
+  top: 504px;
   opacity: 0.8;
 `
 

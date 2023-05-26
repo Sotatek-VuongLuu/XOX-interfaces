@@ -12,7 +12,7 @@ const BGRight = styled.img`
   position: absolute;
   z-index: -1;
   right: 0;
-  top: 600px;
+  top: 800px;
   background: radial-gradient(50% 50% at 50% 50%, rgba(249, 124, 29, 0.2) 0.01%, rgba(249, 124, 29, 0) 100%);
 `
 
