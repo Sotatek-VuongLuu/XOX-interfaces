@@ -76,37 +76,7 @@ const WrapperItem = styled(Flex)`
     margin-top: 35px;
   }
 
-  &.secured .logos {
-    > div {
-      position: relative;
-      display: inline-block;
-    }
-
-    > div > img {
-      cursor: pointer;
-      width: 120px;
-
-      &.icon-short {
-        position: absolute;
-        z-index: 2;
-      }
-
-      &.icon-full {
-        opacity: 0;
-      }
-    }
-
-    > div:hover {
-      img.icon-short {
-        visibility: hidden;
-      }
-
-      img.icon-short + img {
-        opacity: 1;
-      }
-    }
-  }
-  &.backed > div {
+  > div {
     > div:nth-child(1) {
       margin-bottom: 32px;
       padding: 0px 40px;
@@ -138,7 +108,7 @@ const WrapperItem = styled(Flex)`
       margin-top: 10px;
     }
 
-    &.backed > div {
+    > div {
       > div {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -156,59 +126,11 @@ const WrapperItem = styled(Flex)`
 `
 
 const SecuredByItem = ({ item }) => {
-  const { t } = useTranslation()
-  return (
-    <WrapperItem
-      className="container secured"
-      flexDirection="column"
-      justifyContent="center"
-      alignItems="center"
-      position="relative"
-    >
-      <p className="title">{t(item.title)}</p>
-      <p className="describe">{t(item.describe)}</p>
-
-      <div className="logos">
-        <div>
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-short.svg`}
-            className="icon-short"
-            alt="CertikLogo"
-          />
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-full.svg`}
-            className="icon-full"
-            alt="CertikLogo"
-          />
-        </div>
-        <div>
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-short.svg`}
-            className="icon-short"
-            alt="HackenLogo"
-          />
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-full.svg`}
-            className="icon-full"
-            alt="HackenLogo"
-          />
-        </div>
-        {/* <div>
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/MicrosoftLogo.svg`} alt="MicrosoftLogo" />
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/WalmartLogo.svg`} alt="WalmartLogo" />
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/FedExLogo.svg`} alt="FedExLogo" />
-            </div> */}
-      </div>
-    </WrapperItem>
-  )
-}
-
-const BackedByItem = ({ item }) => {
   const { width } = useWindowSize()
   const { t } = useTranslation()
   return (
     <WrapperItem
-      className="container backed"
+      className="container"
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
@@ -255,21 +177,23 @@ const BackedByItem = ({ item }) => {
 }
 
 function BackedBy() {
+  const arrBackedBy = [
+    {
+      title: 'Secured By',
+      describe: 'XOX has Industry Leading Security. Protected By The Best.',
+    },
+    {
+      title: 'Backed By',
+      describe: 'The Best to Deliver the Best.',
+    },
+  ]
   return (
     <Wrapper>
       <Content>
-        <SecuredByItem
-          item={{
-            title: 'Secured By',
-            describe: 'XOX has Industry Leading Security. Protected By The Best.',
-          }}
-        />
-        <BackedByItem
-          item={{
-            title: 'Back By',
-            describe: 'The Best to Deliver the Best.',
-          }}
-        />
+        {arrBackedBy.map((item, index) => {
+          // eslint-disable-next-line react/no-array-index-key
+          return <SecuredByItem item={item} key={index} />
+        })}
       </Content>
     </Wrapper>
   )

@@ -2,7 +2,7 @@ import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 
 export const XOX_BSC_MAINNET = new ERC20Token(
   ChainId.BSC,
-  '0x2a84dA8571BDdE8135639AFABd9D9A90AA3A5E9d',
+  '0x92e72A02719122aB0E5A0323Db6b3579586db8AD',
   18,
   'XOX',
   'XOX',
@@ -11,7 +11,7 @@ export const XOX_BSC_MAINNET = new ERC20Token(
 
 export const XOX_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x2a84dA8571BDdE8135639AFABd9D9A90AA3A5E9d',
+  '0x92e72A02719122aB0E5A0323Db6b3579586db8AD',
   18,
   'XOX',
   'XOX',
@@ -20,7 +20,7 @@ export const XOX_BSC_TESTNET = new ERC20Token(
 
 export const XOX_MAINNET = new ERC20Token(
   ChainId.ETHEREUM,
-  '0xcbBC1F107f189e6070C01973Ca5ac2771a928646',
+  '0xb57F3db85a2d61C0F7e9BB4F3e4145b2804d1758',
   18,
   'XOX',
   'XOX',
@@ -29,83 +29,11 @@ export const XOX_MAINNET = new ERC20Token(
 
 export const XOX_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xcbBC1F107f189e6070C01973Ca5ac2771a928646',
+  '0xb57F3db85a2d61C0F7e9BB4F3e4145b2804d1758',
   18,
   'XOX',
   'XOX',
   'http://localhost:3001/swap?chainId=5',
-)
-
-export const XOX_ARBITRUM_MAINNET = new ERC20Token(
-  ChainId.ARBITRUM,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
-  18,
-  'XOX',
-  'XOX',
-  'http://localhost:3001/swap?chainId=42161',
-)
-
-export const XOX_ARBITRUM_TESTNET = new ERC20Token(
-  ChainId.ARBITRUM_TESTNET,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
-  18,
-  'XOX',
-  'XOX',
-  'http://localhost:3001/swap?chainId=421613',
-)
-
-export const XOX_POLYGON_MAINNET = new ERC20Token(
-  ChainId.POLYGON,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
-  18,
-  'XOX',
-  'XOX',
-  'http://localhost:3001/swap?chainId=137',
-)
-
-export const XOX_POLYGON_TESTNET = new ERC20Token(
-  ChainId.POLYGON_TESTNET,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
-  18,
-  'XOX',
-  'XOX',
-  'http://localhost:3001/swap?chainId=80001',
-)
-
-export const XOX_ZKSYNC_MAINNET = new ERC20Token(
-  ChainId.ZKSYNC,
-  '0xAC54e32F931a513fd52871010dA7491042d2Ea73',
-  18,
-  'XOX',
-  'XOX',
-  'http://localhost:3001/swap?chainId=324',
-)
-
-export const XOX_ZKSYNC_TESTNET = new ERC20Token(
-  ChainId.ZKSYNC_TESTNET,
-  '0xAC54e32F931a513fd52871010dA7491042d2Ea73',
-  18,
-  'XOX',
-  'XOX',
-  'http://localhost:3001/swap?chainId=280',
-)
-
-export const XOX_OPTIMISM_MAINNET = new ERC20Token(
-  ChainId.OPTIMISM,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
-  18,
-  'XOX',
-  'XOX',
-  'http://localhost:3001/swap?chainId=10',
-)
-
-export const XOX_OPTIMISM_TESTNET = new ERC20Token(
-  ChainId.OPTIMISM_TESTNET,
-  '0xdbB76E719C324c9b3BB7168FA229215926061E7e',
-  18,
-  'XOX',
-  'XOX',
-  'http://localhost:3001/swap?chainId=420',
 )
 
 export const XOX_BUSD_TESTNET = new ERC20Token(
@@ -132,14 +60,6 @@ export const XOX: Record<ChainId, ERC20Token> = {
   [ChainId.GOERLI]: XOX_GOERLI,
   [ChainId.BSC]: XOX_BSC_MAINNET,
   [ChainId.BSC_TESTNET]: XOX_BSC_TESTNET,
-  [ChainId.ARBITRUM]: XOX_BSC_MAINNET,
-  [ChainId.ARBITRUM_TESTNET]: XOX_ARBITRUM_TESTNET,
-  [ChainId.POLYGON]: XOX_BSC_MAINNET,
-  [ChainId.POLYGON_TESTNET]: XOX_POLYGON_TESTNET,
-  [ChainId.ZKSYNC]: XOX_BSC_MAINNET,
-  [ChainId.ZKSYNC_TESTNET]: XOX_ZKSYNC_TESTNET,
-  [ChainId.OPTIMISM]: XOX_BSC_MAINNET,
-  [ChainId.OPTIMISM_TESTNET]: XOX_OPTIMISM_TESTNET,
 }
 
 export const XOXLP: Record<ChainId, ERC20Token> = {
@@ -148,14 +68,6 @@ export const XOXLP: Record<ChainId, ERC20Token> = {
   [ChainId.GOERLI]: XOX_USDC_TESTNET,
   [ChainId.BSC]: XOX_BUSD_TESTNET,
   [ChainId.BSC_TESTNET]: XOX_BUSD_TESTNET,
-  [ChainId.ARBITRUM]: undefined,
-  [ChainId.ARBITRUM_TESTNET]: undefined,
-  [ChainId.POLYGON]: undefined,
-  [ChainId.POLYGON_TESTNET]: undefined,
-  [ChainId.ZKSYNC]: undefined,
-  [ChainId.ZKSYNC_TESTNET]: undefined,
-  [ChainId.OPTIMISM]: undefined,
-  [ChainId.OPTIMISM_TESTNET]: undefined,
 }
 
 export const CAKE_MAINNET = new ERC20Token(
@@ -397,14 +309,6 @@ export const BUSD: Record<ChainId, ERC20Token> = {
   [ChainId.GOERLI]: BUSD_GOERLI,
   [ChainId.BSC]: BUSD_BSC,
   [ChainId.BSC_TESTNET]: BUSD_TESTNET,
-  [ChainId.ARBITRUM]: undefined,
-  [ChainId.ARBITRUM_TESTNET]: undefined,
-  [ChainId.POLYGON]: undefined,
-  [ChainId.POLYGON_TESTNET]: undefined,
-  [ChainId.ZKSYNC]: undefined,
-  [ChainId.ZKSYNC_TESTNET]: undefined,
-  [ChainId.OPTIMISM]: undefined,
-  [ChainId.OPTIMISM_TESTNET]: undefined,
 }
 
 export const CAKE = {

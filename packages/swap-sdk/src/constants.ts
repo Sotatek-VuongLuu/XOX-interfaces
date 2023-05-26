@@ -6,14 +6,6 @@ export enum ChainId {
   GOERLI = 5,
   BSC = 56,
   BSC_TESTNET = 97,
-  ARBITRUM = 42161,
-  ARBITRUM_TESTNET = 421613,
-  POLYGON = 137,
-  POLYGON_TESTNET = 80001,
-  ZKSYNC = 324,
-  ZKSYNC_TESTNET = 280,
-  OPTIMISM = 10,
-  OPTIMISM_TESTNET = 420,
 }
 
 export const FACTORY_ADDRESS = '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73'
@@ -39,17 +31,9 @@ export const PAIR_XOX_BUSD: Record<number, string> = {
 export const XOX_ADDRESS: Record<number, string> = {
   // [ChainId.ETHEREUM]: '',
   // [ChainId.RINKEBY]: '',
-  [ChainId.GOERLI]: '0xcbBC1F107f189e6070C01973Ca5ac2771a928646',
+  [ChainId.GOERLI]: '0xb57F3db85a2d61C0F7e9BB4F3e4145b2804d1758',
   // [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0x2a84dA8571BDdE8135639AFABd9D9A90AA3A5E9d',
-  // [ChainId.BSC]: '',
-  [ChainId.ARBITRUM_TESTNET]: '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
-  // [ChainId.BSC]: '',
-  [ChainId.POLYGON_TESTNET]: '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
-  // [ChainId.BSC]: '',
-  [ChainId.ZKSYNC_TESTNET]: '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
-  // [ChainId.BSC]: '',
-  [ChainId.OPTIMISM_TESTNET]: '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
+  [ChainId.BSC_TESTNET]: '0x92e72A02719122aB0E5A0323Db6b3579586db8AD',
 }
 
 export const USD_ADDRESS: Record<number, string> = {

@@ -1,10 +1,17 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import Image from 'next/image'
-import { ChainId, ERC20Token } from '@pancakeswap/sdk'
+import { ChainId } from '@pancakeswap/sdk'
 import { useModal } from '@pancakeswap/uikit'
 import { NETWORK_ICON, NETWORK_LABEL } from '../networks'
 import SwitchNetworkModal from '../ModalSwitch'
+
+const NETWORK_LABEL_BRIDGE: { [chainId in ChainId]?: string } = {
+  [ChainId.GOERLI]: 'Ethereum',
+  [ChainId.ETHEREUM]: 'Ethereum',
+  [ChainId.BSC_TESTNET]: 'BSC',
+  [ChainId.BSC]: 'BSC',
+}
 
 const Wrapper = styled.button`
   padding: 7px 6px;
@@ -44,33 +51,24 @@ const IconDown = styled.span`
 `
 
 type Props = {
-  currentToken: ERC20Token
-  handleChangeNetwork: (currentChainId: ChainId, cid: ChainId) => void
+  inputChainId: ChainId
+  switchNetwork: any
 }
 
-const SelectNetworkButton: React.FC<Props> = ({ currentToken, handleChangeNetwork }) => {
+const SelectNetworkButton: React.FC<Props> = ({ inputChainId, switchNetwork }) => {
+  const [isOpen, setIsOpen] = useState(false)
+
   const [onModalSwitch] = useModal(
-    <SwitchNetworkModal
-      currentToken={currentToken}
-      handleChangeNetwork={handleChangeNetwork}
-    />,
+    <SwitchNetworkModal switchNetwork={switchNetwork} currentChainId={inputChainId} />,
     true,
     true,
-    `selectCurrencyModal${currentToken.chainId}`,
+    `selectCurrencyModal${inputChainId}`,
   )
 
   return (
     <Wrapper onClick={() => onModalSwitch()}>
-      <img
-        src={NETWORK_ICON[currentToken.chainId]}
-        alt={`${NETWORK_LABEL[currentToken.chainId]} Logo`}
-        width={24}
-      />
-      <span>
-        {NETWORK_LABEL[currentToken.chainId] === 'BSC'
-          ? 'BNB Chain'
-          : NETWORK_LABEL[currentToken.chainId]}
-      </span>
+      <img src={NETWORK_ICON[inputChainId]} alt={`${NETWORK_LABEL_BRIDGE[inputChainId]} Logo`} width={24} />
+      <span>{NETWORK_LABEL_BRIDGE[inputChainId] === 'BSC' ? 'BNB Chain' : NETWORK_LABEL_BRIDGE[inputChainId]}</span>
       <IconDown>
         <svg width="12" height="8" viewBox="0 0 12 8" fill="none" xmlns="http://www.w3.org/2000/svg">
           <path

@@ -188,8 +188,7 @@ const SelectTokenButton: React.FC<Props> = ({
   return (
     <>
       <FullyContainer>
-        {/* <Wrapper onClick={() => handleShowDrop()}> */}
-        <Wrapper>
+        <Wrapper onClick={() => handleShowDrop()}>
           <div className="flex nested" style={{ zIndex: 8 }}>
             <img
               className="rounded-full"

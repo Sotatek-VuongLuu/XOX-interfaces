@@ -5,7 +5,6 @@ import { useDeferredValue } from 'react'
 import { isChainSupported } from 'utils/wagmi'
 import { useNetwork } from 'wagmi'
 import { useSessionChainId } from './useSessionChainId'
-import { MAINNET_CHAINS, TESTNET_CHAINS } from 'views/BridgeToken/networks'
 
 const queryChainIdAtom = atom(-1) // -1 unload, 0 no chainId on query
 
@@ -36,17 +35,6 @@ export function useLocalNetworkChain() {
 }
 
 export const useActiveChainId = () => {
-  const router = useRouter()
-
-  const activeChains =
-    process.env.NEXT_PUBLIC_TEST_MODE === '1'
-      ? router.pathname === '/bridge-token'
-        ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
-        : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
-      : router.pathname === '/bridge-token'
-      ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
-      : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
-
   const localChainId = useLocalNetworkChain()
   const queryChainId = useAtomValue(queryChainIdAtom)
 
@@ -57,7 +45,7 @@ export const useActiveChainId = () => {
 
   return {
     chainId,
-    isWrongNetwork: (chain?.unsupported ?? false) || isNotMatched || !activeChains.includes(chainId),
+    isWrongNetwork: (chain?.unsupported ?? false) || isNotMatched,
     isNotMatched,
   }
 }

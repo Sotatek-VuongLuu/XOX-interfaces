@@ -1,19 +1,6 @@
 import { BinanceWalletConnector } from '@pancakeswap/wagmi/connectors/binanceWallet'
 import { BloctoConnector } from '@pancakeswap/wagmi/connectors/blocto'
-import {
-  bsc,
-  bscTest,
-  goerli,
-  mainnet,
-  arbitrum,
-  arbitrum_testnet,
-  polygon,
-  poligon_testnet,
-  zksync,
-  zksync_testnet,
-  optimism,
-  optimism_testnet,
-} from '@pancakeswap/wagmi/chains'
+import { bsc, bscTest, goerli, mainnet } from '@pancakeswap/wagmi/chains'
 import { configureChains, createClient } from 'wagmi'
 import memoize from 'lodash/memoize'
 import { CoinbaseWalletConnector } from 'wagmi/connectors/coinbaseWallet'
@@ -23,20 +10,7 @@ import { WalletConnectConnector } from 'wagmi/connectors/walletConnect'
 import { jsonRpcProvider } from 'wagmi/providers/jsonRpc'
 import { SafeConnector } from '@gnosis.pm/safe-apps-wagmi'
 
-const CHAINS = [
-  bsc,
-  mainnet,
-  bscTest,
-  goerli,
-  arbitrum,
-  arbitrum_testnet,
-  polygon,
-  poligon_testnet,
-  zksync,
-  zksync_testnet,
-  optimism,
-  optimism_testnet,
-]
+const CHAINS = [bsc, mainnet, bscTest, goerli]
 
 const getNodeRealUrl = (networkName: string) => {
   let host = null

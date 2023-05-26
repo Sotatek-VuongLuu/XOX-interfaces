@@ -47,7 +47,7 @@ const Wrapper = styled.div`
     }
   }
 
-  .imgs {
+  .img {
     display: flex;
     justify-content: center;
     flex-direction: row;
@@ -55,36 +55,12 @@ const Wrapper = styled.div`
     padding: 0px;
     gap: 70px;
     margin-bottom: 100px;
-    
-    @media screen and (max-width: 900px) {
-      margin-bottom: 40px;
-    }
 
-    .box {
-      position: relative;
-    }
-
-    .box > img {
+    img {
       cursor: pointer;
-      width: 120px;
-
-      &.icon-short {
-        position: absolute;
-        z-index: 2;
-      }
-
-      &.icon-full {
-        opacity: 0;
-      }
-    }
-
-    .box:hover {
-      img.icon-short {
-        visibility: hidden;
-      }
-
-      img.icon-short + img {
-        opacity: 1;
+      @media screen and (max-width: 900px) {
+        max-height: 27px;
+        width: auto;
       }
     }
 
@@ -690,26 +666,18 @@ const SecuredBy = () => {
         {t('XOX has Industry Leading Security. Protected By The Best.')}
       </p>
 
-      <div className="imgs">
-        <div className="box airbnb-box">
+      <p className="img">
+        <div className="airbnb-box">
           <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-short.svg`}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/airbnb.svg`}
             alt="airbnb"
-            className="icon-short"
             data-aos="fade-right"
-            onMouseOver={handleMouseOverAirBnb}
-            onMouseOut={handleMouseOutAirBnb}
-          />
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-full.svg`}
-            alt="airbnb"
-            className="icon-full"
             onMouseOver={handleMouseOverAirBnb}
             onMouseOut={handleMouseOutAirBnb}
           />
           {isHoveringAirBnb && <HoverTextAirBnb />}
         </div>
-        {/* <div className="hubspot-box">
+        <div className="hubspot-box">
           <img
             src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/hubspot.svg`}
             alt="hubspot"
@@ -718,26 +686,18 @@ const SecuredBy = () => {
             onMouseOut={handleMouseOutHubspot}
           />
           {isHoveringHubspot && <HoverTextAirBnb />}
-        </div> */}
-        <div className="box google-box">
+        </div>
+        <div className="google-box">
           <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-short.svg`}
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/google.svg`}
             alt="google"
-            className="icon-short"
             data-aos="fade-left"
-            onMouseOver={handleMouseOverGoogle}
-            onMouseOut={handleMouseOutGoogle}
-          />
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-full.svg`}
-            alt="google"
-            className="icon-full"
             onMouseOver={handleMouseOverGoogle}
             onMouseOut={handleMouseOutGoogle}
           />
           {isHoveringGoogle && <HoverTextAirBnb />}
         </div>
-      </div>
+      </p>
     </Wrapper>
   )
 }

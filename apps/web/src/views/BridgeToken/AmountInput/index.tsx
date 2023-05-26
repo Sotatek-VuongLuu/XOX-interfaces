@@ -1,12 +1,13 @@
 /* eslint-disable import/no-cycle */
 import React, { useState } from 'react'
-import { ChainId, ERC20Token } from '@pancakeswap/sdk'
+import { ChainId } from '@pancakeswap/sdk'
 import styled from 'styled-components'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { NumericalInput, useMatchBreakpoints } from '@pancakeswap/uikit'
 import SelectNetworkButton from './SelectNetworkButton'
 import SelectTokenButton from './SelectTokenButton'
 import { NETWORK_LABEL } from '../networks'
+import { getChainIdToByChainId } from '..'
 import { formatAmountNumber, formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 import { useTranslation } from '@pancakeswap/localization'
 
@@ -142,26 +143,33 @@ const NumericalInputStyled = styled(NumericalInput)`
 
 type Props = {
   isTokenFrom: boolean
-  currentToken: ERC20Token
-  remainingToken: ERC20Token
-  currentBalance: any
-  currentAmount: any
-  handleChangeNetwork?: (currentChainId: ChainId, cid: ChainId) => void
-  handleUserInput?: (str: string) => void
+  inputChainId: ChainId
+  balance?: any
+  amount: any
+  handleUserInput?: any
   handleBalanceMax?: any
+  switchNetwork?: any
+  tokenSymbol?: string
+  switchToken?: any
+  isShowDrop?: any
+  handleShowDrop?: any
 }
 
 const AmountInput: React.FC<Props> = ({
   isTokenFrom,
-  currentToken,
-  remainingToken,
-  currentBalance,
-  currentAmount,
-  handleChangeNetwork,
+  inputChainId,
+  balance,
+  amount,
   handleUserInput,
   handleBalanceMax,
+  switchNetwork,
+  tokenSymbol,
+  switchToken,
+  isShowDrop,
+  handleShowDrop,
 }) => {
   const { t } = useTranslation()
+  const { chainId } = useActiveChainId()
   const getInputLabel = () => {
     return (isTokenFrom && t('From')) || t('To (estimated)')
   }
@@ -171,15 +179,23 @@ const AmountInput: React.FC<Props> = ({
     <Wrapper>
       <TextRow isMobile={isMobile}>
         <span className="label">{getInputLabel()}</span>
-        {currentBalance !== '-' && (
+        {isTokenFrom && balance !== '-' && (
           <span
             aria-hidden="true"
             className="balance_container"
-            onClick={() => currentBalance !== '-' && handleBalanceMax(currentBalance?.toSignificant(6))}
+            onClick={() => balance !== '-' && handleBalanceMax(balance)}
           >
             {t('Balance')}
             {isMobile ? '' : ':'}
-            <span className="balance">&nbsp;{formatAmountNumber2(currentBalance?.toSignificant(6), 6)}</span>
+            <span className="balance">&nbsp;{formatAmountNumber2(balance, 6)}</span>
+          </span>
+        )}
+
+        {!isTokenFrom && (
+          <span aria-hidden="true" className="balance_pool_container">
+            {t('%chainname% Pool balance', { chainname: NETWORK_LABEL[getChainIdToByChainId(chainId)] })}
+            {isMobile ? '' : ':'}
+            <span className="balance_pool">&nbsp;{formatAmountNumber2(balance, 6)}</span>
           </span>
         )}
       </TextRow>
@@ -187,20 +203,24 @@ const AmountInput: React.FC<Props> = ({
       <AmountRow>
         {isTokenFrom ? (
           <NumericalInputStyled
-            value={currentAmount}
+            value={amount}
             disabled={!isTokenFrom}
             onUserInput={(value) => handleUserInput(value)}
           />
         ) : (
-          <div className="tooltip">{currentAmount || <span className="holer">0.0</span>}</div>
+          <div className="tooltip">{amount || <span className="holer">0.0</span>}</div>
         )}
 
         <div className="buttons-group">
-          <SelectTokenButton />
-          <SelectNetworkButton
-            currentToken={currentToken}
-            handleChangeNetwork={handleChangeNetwork}
+          <SelectTokenButton
+            tokenSymbol={tokenSymbol}
+            switchToken={switchToken}
+            isTokenFrom={isTokenFrom}
+            inputChainId={inputChainId}
+            isShowDrop={isShowDrop}
+            handleShowDrop={handleShowDrop}
           />
+          <SelectNetworkButton inputChainId={inputChainId} switchNetwork={switchNetwork} />
         </div>
       </AmountRow>
     </Wrapper>

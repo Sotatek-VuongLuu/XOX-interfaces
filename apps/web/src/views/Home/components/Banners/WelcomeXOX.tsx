@@ -8,7 +8,6 @@ import React, { useEffect, useState } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
-import { ChainId } from '@pancakeswap/sdk'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -617,27 +616,27 @@ const CustomDropdown = styled.div`
 const networks = [
   {
     title: 'BNB Chain',
-    address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.BSC_TESTNET : ChainId.BSC],
+    address: XOX_ADDRESS[56],
     image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/bsc.svg`,
   },
   {
     title: 'Arbitrum',
-    address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.ARBITRUM_TESTNET : ChainId.ARBITRUM],
+    address: XOX_ADDRESS[200],
     image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Arbitrum.svg`,
   },
   {
     title: 'Polygon',
-    address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.POLYGON_TESTNET : ChainId.POLYGON],
+    address: XOX_ADDRESS[137],
     image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Polygon.svg`,
   },
   {
     title: 'zkSync',
-    address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.ZKSYNC_TESTNET : ChainId.ZKSYNC],
+    address: XOX_ADDRESS[324],
     image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/zkSync.svg`,
   },
   {
     title: 'Optimism',
-    address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.OPTIMISM_TESTNET : ChainId.OPTIMISM],
+    address: XOX_ADDRESS[10],
     image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Optimism.svg`,
   },
 ]

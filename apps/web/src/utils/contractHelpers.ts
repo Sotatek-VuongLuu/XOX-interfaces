@@ -179,12 +179,8 @@ export const getContract = ({
   chainId?: ChainId
   signer?: Signer | Provider
 }) => {
-  try {
-    const signerOrProvider = signer ?? provider({ chainId })
-    return new Contract(address, abi, signerOrProvider)
-  } catch (error) {
-    return undefined
-  }
+  const signerOrProvider = signer ?? provider({ chainId })
+  return new Contract(address, abi, signerOrProvider)
 }
 
 export const getBep20Contract = (address: string, signer?: Signer | Provider) => {

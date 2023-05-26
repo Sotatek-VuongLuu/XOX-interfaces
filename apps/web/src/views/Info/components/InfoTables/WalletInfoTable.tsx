@@ -313,7 +313,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
   )
 
   const getXOXPrice = () => {
-    Promise.all([contractUSD?.balanceOf(PAIR_XOX_BUSD[chainId]), contractXOX?.balanceOf(PAIR_XOX_BUSD[chainId])])
+    Promise.all([contractUSD.balanceOf(PAIR_XOX_BUSD[chainId]), contractXOX.balanceOf(PAIR_XOX_BUSD[chainId])])
       .then((balances) => {
         const baseTokenPrice = parseFloat(formatBigNumber(balances[0], 2, USD_DECIMALS[chainId]))
         const XoxPrice = parseFloat(formatBigNumber(balances[1]))
