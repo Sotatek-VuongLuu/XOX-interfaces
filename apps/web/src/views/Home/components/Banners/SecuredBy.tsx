@@ -6,6 +6,7 @@ import styled from 'styled-components'
 import React, { useState } from 'react'
 import { Button, Popover } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
+import { useTooltip } from '@pancakeswap/uikit'
 
 interface SecureProps {
   item: SecureItem
@@ -55,7 +56,7 @@ const Wrapper = styled.div`
     padding: 0px;
     gap: 70px;
     margin-bottom: 100px;
-    
+
     @media screen and (max-width: 900px) {
       margin-bottom: 40px;
     }
@@ -656,6 +657,9 @@ const SecuredBy = () => {
   const [isHoveringAirBnb, setIsHoveringAirBnb] = useState(false)
   const [isHoveringHubspot, setIsHoveringHubspot] = useState(false)
   const [isHoveringGoogle, setIsHoveringGoogle] = useState(false)
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(t('Coming Soon'), {
+    placement: 'top',
+  })
 
   const handleMouseOverAirBnb = () => {
     if (width > 900) setIsHoveringAirBnb(true)
@@ -719,21 +723,22 @@ const SecuredBy = () => {
           />
           {isHoveringHubspot && <HoverTextAirBnb />}
         </div> */}
-        <div className="box google-box">
+        {tooltipVisible && tooltip}
+        <div className="box google-box" ref={targetRef}>
           <img
             src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-short.svg`}
             alt="google"
             className="icon-short"
             data-aos="fade-left"
-            onMouseOver={handleMouseOverGoogle}
-            onMouseOut={handleMouseOutGoogle}
+            // onMouseOver={handleMouseOverGoogle}
+            // onMouseOut={handleMouseOutGoogle}
           />
           <img
             src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-full.svg`}
             alt="google"
             className="icon-full"
-            onMouseOver={handleMouseOverGoogle}
-            onMouseOut={handleMouseOutGoogle}
+            // onMouseOver={handleMouseOverGoogle}
+            // onMouseOut={handleMouseOutGoogle}
           />
           {isHoveringGoogle && <HoverTextAirBnb />}
         </div>

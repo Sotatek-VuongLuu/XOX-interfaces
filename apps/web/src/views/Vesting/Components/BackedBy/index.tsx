@@ -1,5 +1,5 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Flex, Grid } from '@pancakeswap/uikit'
+import { Flex, Grid, useTooltip } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 
@@ -157,6 +157,11 @@ const WrapperItem = styled(Flex)`
 
 const SecuredByItem = ({ item }) => {
   const { t } = useTranslation()
+
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(t('Coming Soon'), {
+    placement: 'top',
+  })
+
   return (
     <WrapperItem
       className="container secured"
@@ -181,7 +186,9 @@ const SecuredByItem = ({ item }) => {
             alt="CertikLogo"
           />
         </div>
-        <div>
+
+        {tooltipVisible && tooltip}
+        <div ref={targetRef}>
           <img
             src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-short.svg`}
             className="icon-short"
