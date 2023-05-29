@@ -20,7 +20,7 @@ import { StyledInputCurrencyWrapper, StyledSwapContainer, StyledHeader, StyledHe
 import AmountInput from './AmountInput'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCurrencyBalance } from 'state/wallet/hooks'
-import { useAccount, useConnect } from 'wagmi'
+import { chainId, useAccount, useConnect } from 'wagmi'
 import { ChainId } from '@pancakeswap/sdk'
 import AddressInput from './AddressInput'
 import { ApprovalState, useApproveCallback } from '../../hooks/useApproveCallback'
@@ -41,7 +41,7 @@ import { useActiveHandle } from 'hooks/useEagerConnect.bmp'
 import { useSelector } from 'react-redux'
 import { AppState } from 'state'
 import useAuth from 'hooks/useAuth'
-import { NETWORK_LABEL, NETWORK_LINK } from './networks'
+import { NETWORK_LABEL, NETWORK_LINK, SITE_NAME } from './networks'
 import { GridLoader } from 'react-spinners'
 import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
@@ -814,7 +814,7 @@ export default function BridgeToken() {
                   hiddenIcon
                   style={{ margin: '0 auto 24px' }}
                 >
-                  {t('View on %site%', { site: chainIdFrom === 1 || chainIdFrom === 5 ? 'Etherscan' : 'Bscscan' })}
+                  {t('View on %site%', { site: SITE_NAME[chainIdFrom] })}
                 </LinkExternal>
                 <div className="btn_close" onClick={() => setIsOpenSuccessModal(false)}>
                   {t('Close')}

@@ -90,6 +90,21 @@ export const NETWORK_LINK: { [chainId in ChainId]?: any } = {
   [ChainId.OPTIMISM_TESTNET]: 'https://optimism.io',
 }
 
+export const SITE_NAME: { [chainId in ChainId]?: any } = {
+  [ChainId.RINKEBY]: 'Etherscan',
+  [ChainId.GOERLI]: 'Etherscan',
+  [ChainId.BSC]: 'Bscscan',
+  [ChainId.BSC_TESTNET]: 'Bscscan',
+  [ChainId.ARBITRUM]: 'Arbiscan',
+  [ChainId.ARBITRUM_TESTNET]: 'Arbiscan',
+  [ChainId.POLYGON]: 'Polygonscan',
+  [ChainId.POLYGON_TESTNET]: 'Polygonscan',
+  [ChainId.ZKSYNC]: 'Zkscan',
+  [ChainId.ZKSYNC_TESTNET]: 'Zkscan',
+  [ChainId.OPTIMISM]: 'Optimismscan',
+  [ChainId.OPTIMISM_TESTNET]: 'Optimismscan',
+}
+
 export const CONTRACT_BRIDGE_POOL = {
   [ChainId.GOERLI]: '0x9CD56295c4CFCDEA7062c1348b464c75E9Afa5b8',
 }
