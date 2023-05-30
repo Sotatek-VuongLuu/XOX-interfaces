@@ -431,9 +431,9 @@ export default function BridgeToken() {
 
         setChainIdTo(cid)
         setTokenToAmount('')
-        setTokenTo(XOX[chainIdFrom])
+        setTokenTo(XOX[cid])
+        setResetChainId(false)
       })
-      setResetChainId(false)
       return
     }
 
@@ -445,9 +445,9 @@ export default function BridgeToken() {
 
         setChainIdTo(currentChainId)
         setTokenToAmount('')
-        setTokenTo(XOX[chainIdFrom])
+        setTokenTo(XOX[currentChainId])
+        setResetChainId(false)
       })
-      setResetChainId(false)
       return
     }
 
@@ -455,9 +455,9 @@ export default function BridgeToken() {
       switchNetworkAsync(cid).then((response) => {
         if (!response) return
         setTokenFromAmount('')
+        setResetChainId(false)
       })
       setTokenFrom(XOX[cid])
-      setResetChainId(false)
       return
     }
 
@@ -600,7 +600,6 @@ export default function BridgeToken() {
   }, [approvalState, tokenToAmount])
 
   useEffect(() => {
-    // console.log(tokenFromBalance)
     const bal =
       chainIdFrom === ChainId.ZKSYNC || chainIdFrom === ChainId.ZKSYNC_TESTNET
         ? zkSyncBalance
@@ -619,10 +618,13 @@ export default function BridgeToken() {
   }, [tokenFromAmount, tokenFromBalance])
 
   useEffect(() => {
-    if(!resetChainId) return
+    if (!resetChainId) {
+      setResetChainId(true)
+      return
+    }
 
     setChainIdTo(defaultChainIdTo(chainIdFrom))
-    setResetChainId(true)
+    setTokenTo(XOX[defaultChainIdTo(chainIdFrom)])
   }, [chainIdFrom])
 
   useEffect(() => {
@@ -639,7 +641,8 @@ export default function BridgeToken() {
   }, [account, chainIdFrom, approvalState])
 
   useEffect(() => {
-    if (!account || !xoxTokenContract) return
+    if (!account || !xoxTokenContract || (chainIdFrom !== ChainId.ZKSYNC && chainIdFrom !== ChainId.ZKSYNC_TESTNET))
+      return
 
     xoxTokenContract
       .balanceOf(account)
