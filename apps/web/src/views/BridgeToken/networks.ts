@@ -1,7 +1,7 @@
 import { ChainId } from '@pancakeswap/sdk'
 
-const Bsc = `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/networks/bsc-network.png`
-const Ethereum = `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/networks/eth-network.png`
+const Bsc = `/images/chains/56.svg`
+const Ethereum = `/images/chains/1.svg`
 const Arbitrum = `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Arbitrum.svg`
 const Polygon = `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Polygon.svg`
 const zkSync = `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/zkSync.svg`
