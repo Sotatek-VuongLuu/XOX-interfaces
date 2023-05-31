@@ -72,7 +72,9 @@ const StyledModalHeader = styled(ModalHeader)`
 
 const ListNetWork = styled.div`
   padding: 0 20px;
-  display: flex;
+  max-height: 500px;
+  overflow-y: auto;
+  display: grid;
   gap: 15px;
   margin-top: 20px;
   flex-direction: column;
@@ -126,17 +128,20 @@ export default function SwitchNetworkModal(props: Props): JSX.Element {
   const { t } = useTranslation()
   const { chainId: activedChainId } = useActiveChainId()
 
-  const arrNetwork =
-    process.env.NEXT_PUBLIC_TEST_MODE === '1'
-      ? [
-          ChainId.GOERLI,
-          ChainId.BSC_TESTNET,
-          ChainId.ARBITRUM_TESTNET,
-          ChainId.POLYGON_TESTNET,
-          ChainId.ZKSYNC_TESTNET,
-          ChainId.OPTIMISM_TESTNET,
-        ]
-      : [ChainId.ETHEREUM, ChainId.BSC, ChainId.ARBITRUM, ChainId.POLYGON, ChainId.ZKSYNC, ChainId.OPTIMISM]
+  const arrNetwork = [
+    ChainId.ETHEREUM,
+    ChainId.GOERLI,
+    ChainId.BSC,
+    ChainId.BSC_TESTNET,
+    ChainId.ARBITRUM,
+    ChainId.ARBITRUM_TESTNET,
+    ChainId.POLYGON,
+    ChainId.POLYGON_TESTNET,
+    ChainId.ZKSYNC,
+    ChainId.ZKSYNC_TESTNET,
+    ChainId.OPTIMISM,
+    ChainId.OPTIMISM_TESTNET,
+  ]
 
   const handleOnSelectNetwork = (cid: ChainId) => {
     if (cid === currentToken.chainId) return

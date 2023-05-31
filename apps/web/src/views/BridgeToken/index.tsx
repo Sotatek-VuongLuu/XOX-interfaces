@@ -425,6 +425,7 @@ export default function BridgeToken() {
 
     if (chainIdFrom === cid) {
       switchNetworkAsync(currentChainId).then((response) => {
+        console.log(response)
         if (!response) return
         setTokenFromAmount('')
         setTokenFrom(XOX[currentChainId])
@@ -439,6 +440,7 @@ export default function BridgeToken() {
 
     if (chainIdTo === cid) {
       switchNetworkAsync(cid).then((response) => {
+        console.log(response)
         if (!response) return
         setTokenFromAmount('')
         setTokenFrom(XOX[cid])
@@ -454,10 +456,11 @@ export default function BridgeToken() {
     if (currentChainId === chainIdFrom) {
       switchNetworkAsync(cid).then((response) => {
         if (!response) return
+        console.log(response)
         setTokenFromAmount('')
+        setTokenFrom(XOX[cid])
         setResetChainId(false)
       })
-      setTokenFrom(XOX[cid])
       return
     }
 
@@ -575,14 +578,19 @@ export default function BridgeToken() {
 
   useEffect(() => {
     if (!account) return
-
     setAddressTo(account)
+  }, [account])
+
+  useEffect(() => {
+    if(!chainIdFrom) return
+    console.log(chainIdFrom, XOX[chainIdFrom], 'x')
     setTokenFrom(XOX[chainIdFrom])
     if (chainIdFrom === chainIdTo) {
-      setChainIdTo(defaultChainIdTo(chainIdFrom))
-      setTokenTo(XOX[chainIdTo])
+      const chainTo = defaultChainIdTo(chainIdFrom)
+      setChainIdTo(chainTo)
+      setTokenTo(XOX[chainTo])
     }
-  }, [account, chainIdFrom])
+  }, [chainIdFrom])
 
   useEffect(() => {
     if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
