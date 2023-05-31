@@ -153,4 +153,12 @@ export const NATIVE: Record<
     symbol: 'tBNB',
     decimals: 18,
   },
+  [ChainId.ARBITRUM]: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  [ChainId.ARBITRUM_TESTNET]: { name: 'AGOR', symbol: 'AGOR', decimals: 18 },
+  [ChainId.POLYGON]: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
+  [ChainId.POLYGON_TESTNET]: { name: 'MATIC', symbol: 'MATIC', decimals: 18 },
+  [ChainId.ZKSYNC]: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  [ChainId.ZKSYNC_TESTNET]: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  [ChainId.OPTIMISM]: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  [ChainId.OPTIMISM_TESTNET]: { name: 'Ether', symbol: 'ETH', decimals: 18 },
 }

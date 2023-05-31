@@ -31,6 +31,8 @@ import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-mul
 import { Tooltip } from '@mui/material'
 import axios from 'axios'
 import { useRouter } from 'next/router'
+import { ChainId } from '@pancakeswap/sdk'
+import { NETWORK_LABEL } from 'views/BridgeToken/networks'
 
 export const LOW_NATIVE_BALANCE = parseUnits('0.002', 'ether')
 
@@ -97,12 +99,10 @@ const MenuItemsStyle = styled.div`
 `
 
 const UserMenu = () => {
-  const router = useRouter()
   const dispatch = useAppDispatch()
   const { t } = useTranslation()
   const { address: account } = useAccount()
   const { chainId, isWrongNetwork } = useActiveChainId()
-  const { chain } = useNetwork()
   const { logout } = useAuth()
   const { profile } = useProfile()
   const avatarSrc = profile?.nft?.image?.thumbnail
@@ -177,19 +177,6 @@ const UserMenu = () => {
         console.log(error)
       })
   }
-
-  const chainName = useCallback(() => {
-    switch (chainId) {
-      case 1:
-        return 'ETH'
-      case 5:
-        return 'Goerli'
-      case 56:
-        return 'BNB'
-      default:
-        return 'BNB Testnet'
-    }
-  }, [chainId])
 
   const renderAvataImage = () => {
     if (userProfile?.avatar) {
@@ -315,7 +302,8 @@ const UserMenu = () => {
               <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/chains/${chainId}.svg`} alt="BNB" />
             </Flex>
             <Text color="white" ml="4px" fontSize="12px" lineHeight="15px">
-              {chainName() === 'BNB' ? `${chainName()} Smart Chain` : chainName()}
+              {chainId !== 56 ? NETWORK_LABEL[chainId] : 'BNB Smart Chain'}
+              {/* {chainName() === 'BNB' ? `${chainName()} Smart Chain` : chainName()} */}
             </Text>
           </Flex>
           <LinkExternal href={getBlockExploreLink(account, 'address', chainId)} className="link-bnb">

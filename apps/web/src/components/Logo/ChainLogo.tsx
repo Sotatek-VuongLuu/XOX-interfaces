@@ -1,4 +1,4 @@
-import Image from 'next/future/image'
+import Image from 'next/image'
 import { HelpIcon } from '@pancakeswap/uikit'
 import { isBridgeChainSupported, isChainSupported } from 'utils/wagmi'
 import { memo } from 'react'
@@ -10,7 +10,7 @@ export const ChainLogo = memo(
         <Image
           alt={`chain-${chainId}`}
           style={{ maxHeight: `${height}px` }}
-          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/chains/${chainId}.svg`}
+          src={`/images/chains/${chainId}.svg`}
           width={width}
           height={height}
           unoptimized

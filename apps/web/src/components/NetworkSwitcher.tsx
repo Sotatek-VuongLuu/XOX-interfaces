@@ -25,6 +25,7 @@ import { chains } from 'utils/wagmi'
 import { ChainLogo } from './Logo/ChainLogo'
 import { useRouter } from 'next/router'
 import { MAINNET_CHAINS, TESTNET_CHAINS } from 'views/BridgeToken/networks'
+import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
 
 const NetworkSelect = ({ switchNetwork, chainId, removeTxtHeader }) => {
   const { t } = useTranslation()
@@ -51,7 +52,13 @@ const NetworkSelect = ({ switchNetwork, chainId, removeTxtHeader }) => {
       )}
       {chains.map((chain) => {
         return activeChains.includes(chain.id) ? (
-          <UserMenuItem key={chain.id} style={{ justifyContent: 'flex-start' }} onClick={() => switchNetwork(chain.id)}>
+          <UserMenuItem key={chain.id} style={{ justifyContent: 'flex-start' }} onClick={() => {
+            switchNetwork(chain.id).then(response => {
+              if(!response) return 
+              
+              replaceBrowserHistory('chainId', chain.id)
+            })
+          }}>
             <ChainLogo chainId={chain.id} />
             <Text color={chain.id === chainId ? '#FB8618' : 'text'} bold={chain.id === chainId} pl="12px">
               {chain.name}
@@ -161,7 +168,7 @@ export const NetworkSwitcher = (props: any) => {
         mr="16px"
         placement="bottom"
         variant={isLoading ? 'pending' : isWrongNetwork ? 'danger' : 'default'}
-        avatarSrc={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/chains/${chainId}.svg`}
+        avatarSrc={`/images/chains/${chainId}.svg`}
         disabled={cannotChangeNetwork}
         text={
           isLoading ? (

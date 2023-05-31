@@ -20,6 +20,10 @@ const ProfileIcon = styled(Image)`
   & > img {
     border-radius: 50%;
   }
+
+  :after {
+    content: none;
+  }
 `;
 
 export const NoProfileMenuIcon: React.FC<React.PropsWithChildren> = () => <WalletFilledIcon width="24px" />;
