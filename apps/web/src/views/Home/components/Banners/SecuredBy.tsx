@@ -657,7 +657,8 @@ const SecuredBy = () => {
   const [isHoveringAirBnb, setIsHoveringAirBnb] = useState(false)
   const [isHoveringHubspot, setIsHoveringHubspot] = useState(false)
   const [isHoveringGoogle, setIsHoveringGoogle] = useState(false)
-  const { targetRef, tooltip, tooltipVisible } = useTooltip(t('Coming Soon'), {
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    <span style={{whiteSpace: 'nowrap'}}>{t('Coming Soon')}</span>, {
     placement: 'top',
   })
 
