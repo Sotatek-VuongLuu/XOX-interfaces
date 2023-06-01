@@ -72,7 +72,7 @@ const StyledModalHeader = styled(ModalHeader)`
 
 const ListNetWork = styled.div`
   padding: 0 20px;
-  max-height: 500px;
+  max-height: 400px;
   overflow-y: auto;
   display: grid;
   gap: 15px;
