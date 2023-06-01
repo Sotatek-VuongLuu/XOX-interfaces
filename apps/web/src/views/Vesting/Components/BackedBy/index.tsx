@@ -162,6 +162,14 @@ const SecuredByItem = ({ item }) => {
     placement: 'top',
   })
 
+  const {
+    targetRef: zellicRef,
+    tooltip: zellicTooltip,
+    tooltipVisible: zellicTooltipVisible,
+  } = useTooltip(t('Coming Soon'), {
+    placement: 'top',
+  })
+
   return (
     <WrapperItem
       className="container secured"
@@ -184,6 +192,20 @@ const SecuredByItem = ({ item }) => {
             src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-full.svg`}
             className="icon-full"
             alt="CertikLogo"
+          />
+        </div>
+
+        {zellicTooltipVisible && zellicTooltip}
+        <div ref={zellicRef}>
+          <img
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-short.svg`}
+            className="icon-short"
+            alt="ZellicLogo"
+          />
+          <img
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-full.svg`}
+            className="icon-full"
+            alt="ZellicLogo"
           />
         </div>
 

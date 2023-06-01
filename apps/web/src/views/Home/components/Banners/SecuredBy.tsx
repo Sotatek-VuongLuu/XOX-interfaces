@@ -658,7 +658,17 @@ const SecuredBy = () => {
   const [isHoveringHubspot, setIsHoveringHubspot] = useState(false)
   const [isHoveringGoogle, setIsHoveringGoogle] = useState(false)
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    <span style={{whiteSpace: 'nowrap'}}>{t('Coming Soon')}</span>, {
+    <span style={{ whiteSpace: 'nowrap' }}>{t('Coming Soon')}</span>,
+    {
+      placement: 'top',
+    },
+  )
+
+  const {
+    targetRef: zellicRef,
+    tooltip: zellicTooltip,
+    tooltipVisible: zellicTooltipVisible,
+  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Coming Soon')}</span>, {
     placement: 'top',
   })
 
@@ -702,8 +712,6 @@ const SecuredBy = () => {
             alt="airbnb"
             className="icon-short"
             data-aos="fade-right"
-            onMouseOver={handleMouseOverAirBnb}
-            onMouseOut={handleMouseOutAirBnb}
           />
           <img
             src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-full.svg`}
@@ -724,6 +732,27 @@ const SecuredBy = () => {
           />
           {isHoveringHubspot && <HoverTextAirBnb />}
         </div> */}
+
+        {zellicTooltipVisible && zellicTooltip}
+        <div className="box zellic-box" ref={zellicRef}>
+          <img
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-short.svg`}
+            alt="zellic"
+            className="icon-short"
+            data-aos="fade-up"
+            // onMouseOver={handleMouseOverAirBnb}
+            // onMouseOut={handleMouseOutAirBnb}
+          />
+          <img
+            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-full.svg`}
+            alt="zellic"
+            className="icon-full"
+            // onMouseOver={handleMouseOverAirBnb}
+            // onMouseOut={handleMouseOutAirBnb}
+          />
+          {/* {isHoveringAirBnb && <HoverTextAirBnb />} */}
+        </div>
+
         {tooltipVisible && tooltip}
         <div className="box google-box" ref={targetRef}>
           <img
