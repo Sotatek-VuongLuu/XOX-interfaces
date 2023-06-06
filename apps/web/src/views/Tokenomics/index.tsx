@@ -611,8 +611,8 @@ export default function TokenomicsPage() {
             />
 
             <p className="center">
-              <Dot /> {t('The Full')} <span className="hl">USDT</span> & <span className="hl">USDC</span>{' '}
-              {t('collected from buytax is later given back to the stakers as Stable Coin (XOXS) Staking Rewards')}{' '}
+              <Dot /> {t('The')} <span className="hl">USDT</span> & <span className="hl">USDC</span>{' '}
+              {t('collected from buy tax in our DEX is later given back to the holders as Stable Coin (XOXS) Staking Rewards and Referral Program Earnings')}{' '}
               <Dot />
             </p>
           </StyledCard2>

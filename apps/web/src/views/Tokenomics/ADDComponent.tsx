@@ -73,7 +73,7 @@ export default function ADDComponent() {
     },
     {
       title: t('Ecosystem Growth'),
-      content: [`${new BigNumber(27000000).toFormat()} Tokens`, t('0% at TGE & 4 years vesting 25% Yearly')],
+      content: [`${new BigNumber(27000000).toFormat()} Tokens`, t('33.33% at TGE & 4 years vesting 16.67% Yearly')],
       color: '#86B6FF',
       value: 27000000,
     },
@@ -140,7 +140,7 @@ export default function ADDComponent() {
   const AAD_TOTAL = [...AAD_DATA_L, ...AAD_DATA_R].map((aad) => aad.value).reduce((a, b) => a + b, 0)
   const AAD_DATA_TOTAL: IAAD = {
     title: t('XOX Token Metrics'),
-    content: [`TGE (23.35%) - 42,030,000 Tokens`],
+    content: [`TGE (28.35%) - 51,030,000 Tokens`],
     highLight: true,
     value: AAD_TOTAL,
   }
