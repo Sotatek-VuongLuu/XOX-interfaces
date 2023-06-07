@@ -323,7 +323,7 @@ function BackedBy() {
         <BackedByItem
           item={{
             title: 'Ecosystem Partners',
-            describe: 'The Best to Deliver the Best.',
+            describe: 'Partnered with the Best to deliver the Best.',
           }}
         />
       </Content>
