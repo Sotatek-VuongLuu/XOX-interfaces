@@ -293,7 +293,7 @@ const Subscription = () => {
       </div>
       <p className="subtitle" data-aos="fade-up" data-aos-duration="2300">
         {t('Unsubscribe at any time.')}{' '}
-        <a className="privacy-link" href="javascript:void(0)">
+        <a className="privacy-link" href="https://docs.xoxlabs.io/company/xox-labs-privacy-policy">
           {t('Privacy policy')}
           <span className="up-icon" style={{ marginLeft: 6 }}>
             <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">

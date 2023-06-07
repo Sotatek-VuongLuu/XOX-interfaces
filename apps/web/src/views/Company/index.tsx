@@ -434,7 +434,7 @@ export function BTNLearnMore() {
       <h1>{t('Learn More about the XOX labs Multi-chain Ecosystem.')}</h1>
 
       {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
-      <a href="#" target="_blank" rel="noreferrer">
+      <a href="docs.xoxlabs.io" target="_blank" rel="noreferrer">
         {t('Learn More')}
       </a>
     </StyledLearnMore>

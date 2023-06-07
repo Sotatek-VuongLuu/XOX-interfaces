@@ -82,7 +82,11 @@ const WrapperItem = styled(Flex)`
       display: inline-block;
     }
 
-    > div > img {
+    > div a {
+      display: block;
+    }
+
+    > div img {
       cursor: pointer;
       width: 120px;
 
@@ -183,44 +187,50 @@ const SecuredByItem = ({ item }) => {
 
       <div className="logos">
         <div>
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-short.svg`}
-            className="icon-short"
-            alt="CertikLogo"
-          />
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-full.svg`}
-            className="icon-full"
-            alt="CertikLogo"
-          />
+          <a href="https://www.certik.com/" target="_blank">
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-short.svg`}
+              className="icon-short"
+              alt="CertikLogo"
+            />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-full.svg`}
+              className="icon-full"
+              alt="CertikLogo"
+            />
+          </a>
         </div>
 
         {zellicTooltipVisible && zellicTooltip}
         <div ref={zellicRef}>
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-short.svg`}
-            className="icon-short"
-            alt="ZellicLogo"
-          />
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-full.svg`}
-            className="icon-full"
-            alt="ZellicLogo"
-          />
+          <a href="https://www.zellic.io/" target="_blank">
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-short.svg`}
+              className="icon-short"
+              alt="ZellicLogo"
+            />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-full.svg`}
+              className="icon-full"
+              alt="ZellicLogo"
+            />
+          </a>
         </div>
 
         {tooltipVisible && tooltip}
         <div ref={targetRef}>
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-short.svg`}
-            className="icon-short"
-            alt="HackenLogo"
-          />
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-full.svg`}
-            className="icon-full"
-            alt="HackenLogo"
-          />
+          <a href="https://hacken.io/" target="_blank">
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-short.svg`}
+              className="icon-short"
+              alt="HackenLogo"
+            />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-full.svg`}
+              className="icon-full"
+              alt="HackenLogo"
+            />
+          </a>
         </div>
         {/* <div>
               <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/MicrosoftLogo.svg`} alt="MicrosoftLogo" />
@@ -237,7 +247,7 @@ const BackedByItem = ({ item }) => {
   const { t } = useTranslation()
   return (
     <WrapperItem
-      className="container backed"
+      className="container secured"
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
@@ -246,38 +256,49 @@ const BackedByItem = ({ item }) => {
       <p className="title">{t(item.title)}</p>
       <p className="describe">{t(item.describe)}</p>
 
-      <div>
-        {width >= 900 && (
-          <>
-            <div>
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/AirbnbLogo.svg`} alt="AirbnbLogo" />
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/HubspotLogo.svg`} alt="HubspotLogo" />
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/GoogleLogo.svg`} alt="GoogleLogo" />
-            </div>
-            <div>
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/MicrosoftLogo.svg`} alt="MicrosoftLogo" />
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/WalmartLogo.svg`} alt="WalmartLogo" />
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/FedExLogo.svg`} alt="FedExLogo" />
-            </div>
-          </>
-        )}
-
-        {width < 900 && (
-          <>
-            <div>
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/AirbnbLogo.svg`} alt="AirbnbLogo" />
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/HubspotLogo.svg`} alt="HubspotLogo" />
-            </div>
-            <div>
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/GoogleLogo.svg`} alt="GoogleLogo" />
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/MicrosoftLogo.svg`} alt="MicrosoftLogo" />
-            </div>
-            <div>
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/WalmartLogo.svg`} alt="WalmartLogo" />
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/FedExLogo.svg`} alt="FedExLogo" />
-            </div>
-          </>
-        )}
+      <div className="logos">
+        <div>
+          <a href="https://kyberswap.com/" target="_blank">
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-short-01.svg`}
+              className="icon-short"
+              alt="KyberLogo"
+            />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full-horizontal.svg`}
+              className="icon-full"
+              alt="KyberLogo"
+            />
+          </a>
+        </div>
+        <div>
+          <a href="https://bitgert.com/" target="_blank">
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-short-01.svg`}
+              className="icon-short"
+              alt="Bitgert Logo"
+            />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full-horizontal.svg`}
+              className="icon-full"
+              alt="Bitgert Logo"
+            />
+          </a>
+        </div>
+        <div>
+          <a href="https://coin98.com/" target="_blank">
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-short-01.svg`}
+              className="icon-short"
+              alt="Coin98Logo"
+            />
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full-horizontal.svg`}
+              className="icon-full"
+              alt="Coin98Logo"
+            />
+          </a>
+        </div>
       </div>
     </WrapperItem>
   )
