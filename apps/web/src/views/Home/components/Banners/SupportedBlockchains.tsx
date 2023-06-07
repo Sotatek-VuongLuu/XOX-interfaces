@@ -192,11 +192,12 @@ const DataItemDisplay = ({ item }: DataItemProps) => {
               {item.description !== 'Total Users' && item.description !== 'XOXS Staked' && item.realData && (
                 <span className="icon_dolla">$</span>
               )}
-              {item.realData
+              -
+              {/* {item.realData
                 ? item.description == 'Total Users'
                   ? item.realData
                   : formatNumber(formatAmountNumber(Number(item.realData)))
-                : item.dataEmpty}
+                : item.dataEmpty} */}
             </Title>
             <Description>{t(item.description)}</Description>
           </div>

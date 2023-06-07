@@ -39,7 +39,7 @@ const WrapperItem = styled(Flex)`
     font-size: 16px;
     line-height: 19px;
     text-align: center;
-    color: #fb8618;
+    color: #fb8618!important;
     margin-top: 16px;
     margin-bottom: 38px;
   }
@@ -140,6 +140,7 @@ const WrapperItem = styled(Flex)`
       font-size: 14px;
       line-height: 24px;
       margin-top: 10px;
+      color: #FB8618!important;
     }
 
     &.backed > div {

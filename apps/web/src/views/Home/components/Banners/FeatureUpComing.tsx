@@ -268,7 +268,7 @@ const listItem = [
     title: 'XOX Dex V2',
     describe:
       'Why trade in a single Dex when you can Trade in all DEXs at Once. XOX Dex V2 finds you the best prices across 60+ Chains & 150+ DEXs and combines them into a single trade, all while giving you many other trade options to choose from, Ranking them by lowest fees, best rates and higher liquidity.',
-    link: 'https://xoxlabs.io/dex-v2',
+    link: '/dex-v2',
   },
   {
     title: 'XOX Multi-Chain Launchpad',

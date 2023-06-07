@@ -95,46 +95,54 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
                   <StyledListItem key={label}>
                     {icon && <div className="iconx" dangerouslySetInnerHTML={{ __html: icon }} />}
                     {href ? (
+                      <Link
+                        data-theme="dark"
+                        href={href}
+                        target="_blank"
+                        rel="noreferrer noopener"
+                        color={isHighlighted ? vars.colors.warning : "text"}
+                        bold={false}
+                      >
+                        {`${t(label)} `}
+                        {label2 && !href2 && (
+                          <>
+                            <br />
+                            {label2}
+                          </>
+                        )}
+                        {product && (
+                          <StyledIconArrow>
+                            <svg
+                              width="10"
+                              height="11"
+                              viewBox="0 0 10 11"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path d="M2.5 8L7.5 3" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
+                              <path
+                                d="M3.4375 3H7.5V7.0625"
+                                stroke="white"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                              />
+                            </svg>
+                          </StyledIconArrow>
+                        )}
+                      </Link>
+                    ) : (
                       <div>
-                        <Link
-                          data-theme="dark"
-                          href={href}
-                          target="_blank"
-                          rel="noreferrer noopener"
-                          color={isHighlighted ? vars.colors.warning : "text"}
-                          bold={false}
-                        >
-                          {`${t(label)} `}
-                          {label2 && !href2 && (
-                            <>
-                              <br />
-                              {label2}
-                            </>
-                          )}
-                          {product && (
-                            <StyledIconArrow>
-                              <svg
-                                width="10"
-                                height="11"
-                                viewBox="0 0 10 11"
-                                fill="none"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path d="M2.5 8L7.5 3" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
-                                <path
-                                  d="M3.4375 3H7.5V7.0625"
-                                  stroke="white"
-                                  strokeLinecap="round"
-                                  strokeLinejoin="round"
-                                />
-                              </svg>
-                            </StyledIconArrow>
-                          )}
-                        </Link>
-                        {href2 && (
+                        <StyledText>{`${t(label)} `}</StyledText>
+                        {label2 && !href2 && (
+                          <StyledText>
+                            <br />
+                            {label2}
+                          </StyledText>
+                        )}
+                        {label2 && href2 && (
                           <Link
                             data-theme="dark"
-                            href={href}
+                            href={href2}
                             target="_blank"
                             rel="noreferrer noopener"
                             color={isHighlighted ? vars.colors.warning : "text"}
@@ -144,16 +152,6 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
                           </Link>
                         )}
                       </div>
-                    ) : (
-                      <>
-                        <StyledText>{`${t(label)} `}</StyledText>
-                        {label2 && (
-                          <StyledText>
-                            <br />
-                            {label2}
-                          </StyledText>
-                        )}
-                      </>
                     )}
                   </StyledListItem>
                 ))}
