@@ -791,7 +791,7 @@ const WelcomeXOX = (): JSX.Element => {
                           value={
                             ETH_ADDRESS
                               ? `${ETH_ADDRESS.substring(0, 8)}...${ETH_ADDRESS.substring(ETH_ADDRESS.length - 4)}`
-                              : '--'
+                              : t('Deployment Coming')
                           }
                           className={ETH_ADDRESS && 'active'}
                           required
@@ -810,7 +810,7 @@ const WelcomeXOX = (): JSX.Element => {
                           value={
                             ETH_ADDRESS
                               ? `${ETH_ADDRESS.substring(0, 8)}...${ETH_ADDRESS.substring(ETH_ADDRESS.length - 4)}`
-                              : '--'
+                              : t('Deployment Coming')
                           }
                           className={ETH_ADDRESS && 'active'}
                           required
@@ -898,7 +898,7 @@ const WelcomeXOX = (): JSX.Element => {
                                       8,
                                     )}...${network.address.substring(network.address.length - 4)}`}</p>
                                   ) : (
-                                    <p>--</p>
+                                    <p style={{ whiteSpace: 'nowrap' }}>{t('Deployment Coming')}</p>
                                   )}
                                 </div>
                               </div>

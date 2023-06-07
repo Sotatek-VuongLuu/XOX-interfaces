@@ -31,6 +31,8 @@ import PopupPreSale from './components/PopupPreSale'
 export const StyledSection = styled(PageSection)`
   padding-top: 16px;
   padding: 0px 21px;
+  padding-left: 0;
+  padding-right: 0;
 
   ${({ theme }) => theme.mediaQueries.lg} {
     padding: 0px 50px;
