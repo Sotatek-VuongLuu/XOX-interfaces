@@ -189,9 +189,9 @@ const DataItemDisplay = ({ item }: DataItemProps) => {
         <div className="data-item">
           <div className="data-box">
             <Title>
-              {item.description !== 'Total Users' && item.description !== 'XOXS Staked' && item.realData && (
+              {/* {item.description !== 'Total Users' && item.description !== 'XOXS Staked' && item.realData && (
                 <span className="icon_dolla">$</span>
-              )}
+              )} */}
               -
               {/* {item.realData
                 ? item.description == 'Total Users'
