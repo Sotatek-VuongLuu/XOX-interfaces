@@ -682,13 +682,14 @@ const WelcomeXOX = (): JSX.Element => {
               </Description>
               <div className="grid-button">
                 <div>
-                  <Button className="btn_read_doc" onClick={() => window.open('/whitepaper')}>
+                  <Button className="btn_read_doc" onClick={() => window.open('https://docs.xoxlabs.io')}>
                     {t('Read Documentation')}
                   </Button>
                 </div>
                 <div>
                   <a
-                    href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
+                    // href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
+                    href="#"
                     target="_blank"
                     rel="noreferrer"
                     className="get_xox_link"
@@ -744,7 +745,8 @@ const WelcomeXOX = (): JSX.Element => {
                 </div>
 
                 <div>
-                  <a href="/info" target="_blank">
+                  {/* <a href="/info" target="_blank"> */}
+                  <a href="#" target="_blank">
                     <div className="chart">
                       <div className="bg-button">
                         <p>{t('Chart')}</p>
@@ -753,7 +755,7 @@ const WelcomeXOX = (): JSX.Element => {
                   </a>
                 </div>
 
-                <div className="">
+                {/* <div className="">
                   <div className="eth-box">
                     <img
                       src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/eth.svg`}
@@ -938,7 +940,7 @@ const WelcomeXOX = (): JSX.Element => {
                       })}
                     </CustomDropdown>
                   )}
-                </div>
+                </div> */}
               </div>
             </LeftContent>
           </GridLeft>

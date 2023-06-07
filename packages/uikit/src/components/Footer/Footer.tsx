@@ -91,45 +91,59 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             >
               <SubTitleStyle>{t(item.label)}</SubTitleStyle>
               <StyledList key={item.label}>
-                {item.items?.map(({ label, href, isHighlighted = false, label2, icon, product }) => (
+                {item.items?.map(({ label, href, isHighlighted = false, label2, href2, icon, product }) => (
                   <StyledListItem key={label}>
                     {icon && <div className="iconx" dangerouslySetInnerHTML={{ __html: icon }} />}
                     {href ? (
-                      <Link
-                        data-theme="dark"
-                        href={href}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        color={isHighlighted ? vars.colors.warning : "text"}
-                        bold={false}
-                      >
-                        {`${t(label)} `}
-                        {label2 && (
-                          <>
-                            <br />
+                      <div>
+                        <Link
+                          data-theme="dark"
+                          href={href}
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          color={isHighlighted ? vars.colors.warning : "text"}
+                          bold={false}
+                        >
+                          {`${t(label)} `}
+                          {label2 && !href2 && (
+                            <>
+                              <br />
+                              {label2}
+                            </>
+                          )}
+                          {product && (
+                            <StyledIconArrow>
+                              <svg
+                                width="10"
+                                height="11"
+                                viewBox="0 0 10 11"
+                                fill="none"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <path d="M2.5 8L7.5 3" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
+                                <path
+                                  d="M3.4375 3H7.5V7.0625"
+                                  stroke="white"
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                />
+                              </svg>
+                            </StyledIconArrow>
+                          )}
+                        </Link>
+                        {href2 && (
+                          <Link
+                            data-theme="dark"
+                            href={href}
+                            target="_blank"
+                            rel="noreferrer noopener"
+                            color={isHighlighted ? vars.colors.warning : "text"}
+                            bold={false}
+                          >
                             {label2}
-                          </>
+                          </Link>
                         )}
-                        {product && (
-                          <StyledIconArrow>
-                            <svg
-                              width="10"
-                              height="11"
-                              viewBox="0 0 10 11"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M2.5 8L7.5 3" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
-                              <path
-                                d="M3.4375 3H7.5V7.0625"
-                                stroke="white"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </StyledIconArrow>
-                        )}
-                      </Link>
+                      </div>
                     ) : (
                       <>
                         <StyledText>{`${t(label)} `}</StyledText>

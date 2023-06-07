@@ -56,6 +56,8 @@ export const Container = styled.div`
   grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
   gap: 123px;
   width: 1400px;
+  position: relative;
+  z-index: 2;
 
   @media screen and (max-width: 1200px) {
     grid-template-columns: 1fr 1fr;
