@@ -61,7 +61,8 @@ function Address({ addr, ...props }: { addr: IAddress }) {
         <div>
           <p>{asset}:</p>
           <p>{name}:</p>
-          {!text && !address && <p>...</p>}
+          {t('Deployment Coming')}
+          {/* {!text && !address && <p>...</p>}
           {text && !address && <p>{text}</p>}
           {!text && address && (
             <div style={{ textDecoration: 'underline' }}>
@@ -69,7 +70,7 @@ function Address({ addr, ...props }: { addr: IAddress }) {
               <p>...</p>
               {width < 490 ? <p>{suffixAddressMobile}</p> : <p>{suffixAddress}</p>}
             </div>
-          )}
+          )} */}
         </div>
         <CopyButton
           width="19px"
