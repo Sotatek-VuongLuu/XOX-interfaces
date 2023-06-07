@@ -403,6 +403,9 @@ const LeftContent = styled.div`
         color: rgba(255, 255, 255, 0.87);
         font-weight: 400;
         max-width: 150px;
+      }
+
+      input.active {
         text-decoration: underline;
       }
 
@@ -580,11 +583,14 @@ const CustomDropdown = styled.div`
           white-space: nowrap;
         }
 
-        .description {
+        p {
           font-weight: 400;
           font-size: 12px;
           line-height: 15px;
           color: rgba(255, 255, 255, 0.87);
+        }
+
+        .description {
           text-decoration: underline;
         }
       }
@@ -617,30 +623,38 @@ const CustomDropdown = styled.div`
 const networks = [
   {
     title: 'BNB Chain',
-    address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.BSC_TESTNET : ChainId.BSC],
+    address: '',
+    // address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.BSC_TESTNET : ChainId.BSC],
     image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/bsc.svg`,
   },
   {
     title: 'Arbitrum',
-    address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.ARBITRUM_TESTNET : ChainId.ARBITRUM],
+    address: '',
+    // address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.ARBITRUM_TESTNET : ChainId.ARBITRUM],
     image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Arbitrum.svg`,
   },
   {
     title: 'Polygon',
-    address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.POLYGON_TESTNET : ChainId.POLYGON],
+    address: '',
+    // address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.POLYGON_TESTNET : ChainId.POLYGON],
     image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Polygon.svg`,
   },
   {
     title: 'zkSync',
-    address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.ZKSYNC_TESTNET : ChainId.ZKSYNC],
+    address: '',
+    // address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.ZKSYNC_TESTNET : ChainId.ZKSYNC],
     image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/zkSync.svg`,
   },
   {
     title: 'Optimism',
-    address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.OPTIMISM_TESTNET : ChainId.OPTIMISM],
+    address: '',
+    // address: XOX_ADDRESS[process.env.NEXT_PUBLIC_TEST_MODE === '1' ? ChainId.OPTIMISM_TESTNET : ChainId.OPTIMISM],
     image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/Optimism.svg`,
   },
 ]
+
+// const ETH_ADDRESS = ETH_ADDRESS
+const ETH_ADDRESS = '' as string
 
 const WelcomeXOX = (): JSX.Element => {
   const { t } = useTranslation()
@@ -755,7 +769,7 @@ const WelcomeXOX = (): JSX.Element => {
                   </a>
                 </div>
 
-                {/* <div className="">
+                <div className="">
                   <div className="eth-box">
                     <img
                       src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/eth.svg`}
@@ -770,9 +784,12 @@ const WelcomeXOX = (): JSX.Element => {
                           id="email"
                           name="email"
                           placeholder=""
-                          value={`${XOX_ADDRESS[chainId === 5 ? chainId : 1].substring(0, 8)}...${XOX_ADDRESS[
-                            chainId === 5 ? chainId : 1
-                          ].substring(XOX_ADDRESS[chainId === 5 ? chainId : 1].length - 4)}`}
+                          value={
+                            ETH_ADDRESS
+                              ? `${ETH_ADDRESS.substring(0, 8)}...${ETH_ADDRESS.substring(ETH_ADDRESS.length - 4)}`
+                              : '--'
+                          }
+                          className={ETH_ADDRESS && 'active'}
                           required
                         />
                       </>
@@ -783,18 +800,21 @@ const WelcomeXOX = (): JSX.Element => {
                         <span style={{ display: 'flex', alignItems: 'center' }}>ETH:</span>
                         <input
                           type="text"
-                          id="email"
-                          name="email"
+                          id=""
+                          name=""
                           placeholder=""
-                          value={`${XOX_ADDRESS[chainId === 5 ? chainId : 1].substring(0, 8)}...${XOX_ADDRESS[
-                            chainId === 5 ? chainId : 1
-                          ].substring(XOX_ADDRESS[chainId === 5 ? chainId : 1].length - 4)}`}
+                          value={
+                            ETH_ADDRESS
+                              ? `${ETH_ADDRESS.substring(0, 8)}...${ETH_ADDRESS.substring(ETH_ADDRESS.length - 4)}`
+                              : '--'
+                          }
+                          className={ETH_ADDRESS && 'active'}
                           required
                         />
                       </>
                     )}
                     <CopyButton
-                      text={XOX_ADDRESS[chainId === 5 ? chainId : 1]}
+                      text={ETH_ADDRESS}
                       tooltipMessage={t('Copied')}
                       button={
                         <img
@@ -812,7 +832,7 @@ const WelcomeXOX = (): JSX.Element => {
                           params: {
                             type: 'ERC20',
                             options: {
-                              address: XOX_ADDRESS[chainId === 5 ? chainId : 1],
+                              address: ETH_ADDRESS,
                               symbol: 'XOX',
                               decimals: 18,
                               image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
@@ -831,7 +851,7 @@ const WelcomeXOX = (): JSX.Element => {
                           params: {
                             type: 'ERC20',
                             options: {
-                              address: XOX_ADDRESS[chainId === 5 ? chainId : 1],
+                              address: ETH_ADDRESS,
                               symbol: 'XOX',
                               decimals: 18,
                               image: `${process.env.NEXT_PUBLIC_FULL_SITE_DOMAIN}/images/tokens/xox-icon.svg`,
@@ -868,13 +888,14 @@ const WelcomeXOX = (): JSX.Element => {
                                 />
                                 <div className="coin-data">
                                   <p className="title">{network.title}</p>
-                                  <p className="description">
-                                    {network.address
-                                      ? `${network.address.substring(0, 8)}...${network.address.substring(
-                                          network.address.length - 4,
-                                        )}`
-                                      : '--'}
-                                  </p>
+                                  {network.address ? (
+                                    <p className="description">{`${network.address.substring(
+                                      0,
+                                      8,
+                                    )}...${network.address.substring(network.address.length - 4)}`}</p>
+                                  ) : (
+                                    <p>--</p>
+                                  )}
                                 </div>
                               </div>
                               <div className="coin-buttons">
@@ -940,7 +961,7 @@ const WelcomeXOX = (): JSX.Element => {
                       })}
                     </CustomDropdown>
                   )}
-                </div> */}
+                </div>
               </div>
             </LeftContent>
           </GridLeft>

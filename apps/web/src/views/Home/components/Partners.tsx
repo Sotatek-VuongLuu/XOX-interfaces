@@ -312,34 +312,38 @@ const Partners = () => {
             <div className="container highway-barrier">
               <ul className="highway-lane">
                 {[1, 2, 3].map(() =>
-                  listPartners1.map(({ iconName }) => {
+                  listPartners1.map(({ iconName, href }) => {
                     return (
                       <li className="highway-car" key={iconName}>
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
-                          alt={iconName}
-                          className="partner icon-short"
-                        />
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-full.svg`}
-                          alt={iconName}
-                          className="partner icon-full"
-                        />
+                        <a href={href} target="_blank">
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
+                            alt={iconName}
+                            className="partner icon-short"
+                          />
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-full.svg`}
+                            alt={iconName}
+                            className="partner icon-full"
+                          />
+                        </a>
                       </li>
                     )
                   }),
                 )}
                 {isMobile &&
-                  listPartners1.map(({ iconName }) => {
+                  listPartners1.map(({ iconName, href }) => {
                     return (
                       <li className="highway-car" key={iconName}>
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
-                          alt={iconName}
-                          className={isHovering ? 'partner' : ''}
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        />
+                        <a href={href} target="_blank">
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
+                            alt={iconName}
+                            className={isHovering ? 'partner' : ''}
+                            onMouseOver={handleMouseOver}
+                            onMouseOut={handleMouseOut}
+                          />
+                        </a>
                       </li>
                     )
                   })}
@@ -353,19 +357,21 @@ const Partners = () => {
             <div className="container highway-barrier">
               <ul className="highway-lane">
                 {[1, 2, 3].map(() =>
-                  listPartners2.map(({ iconName }) => {
+                  listPartners2.map(({ iconName, href }) => {
                     return (
                       <li className="highway-car" key={iconName}>
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
-                          alt={iconName}
-                          className="partner icon-short"
-                        />
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-full.svg`}
-                          alt={iconName}
-                          className="partner icon-full"
-                        />
+                        <a href={href} target="_blank">
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
+                            alt={iconName}
+                            className="partner icon-short"
+                          />
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-full.svg`}
+                            alt={iconName}
+                            className="partner icon-full"
+                          />
+                        </a>
                       </li>
                     )
                   }),
@@ -380,19 +386,21 @@ const Partners = () => {
             <div className="container highway-barrier">
               <ul className="highway-lane">
                 {[1, 2, 3].map(() =>
-                  listPartners3.map(({ iconName }) => {
+                  listPartners3.map(({ iconName, href }) => {
                     return (
                       <li className="highway-car" key={iconName}>
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
-                          alt={iconName}
-                          className="partner icon-short"
-                        />
-                        <img
-                          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-full.svg`}
-                          alt={iconName}
-                          className="partner icon-full"
-                        />
+                        <a href={href} target="_blank">
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
+                            alt={iconName}
+                            className="partner icon-short"
+                          />
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-full.svg`}
+                            alt={iconName}
+                            className="partner icon-full"
+                          />
+                        </a>
                       </li>
                     )
                   }),
@@ -450,33 +458,33 @@ const Partners = () => {
 }
 
 const listPartners1 = [
-  { iconName: 'Ethereum' },
-  { iconName: 'Solidity' },
-  { iconName: 'BNB' },
-  { iconName: 'Arbitrum' },
-  { iconName: 'Uniswap' },
-  { iconName: 'Optimism' },
-  { iconName: 'zksync' },
+  { iconName: 'Ethereum', href: 'https://ethereum.org/' },
+  { iconName: 'Solidity', href: 'https://soliditylang.org/' },
+  { iconName: 'BNB', href: 'https://bnbchain.org/en' },
+  { iconName: 'Arbitrum', href: 'https://arbitrum.io/' },
+  { iconName: 'Uniswap', href: 'https://uniswap.org/' },
+  { iconName: 'Optimism', href: 'https://www.optimism.io/' },
+  { iconName: 'zksync', href: 'https://zksync.io/' },
 ]
 
 const listPartners2 = [
-  { iconName: 'Polygon' },
-  { iconName: 'Pancakeswap' },
-  { iconName: 'GoogleCloud' },
-  { iconName: 'DaoMaker' },
-  { iconName: 'Kingpad' },
-  { iconName: 'Chainlink' },
-  { iconName: 'Tether' },
+  { iconName: 'Polygon', href: 'https://polygon.technology/home' },
+  { iconName: 'Pancakeswap', href: 'https://pancakeswap.finance/' },
+  { iconName: 'GoogleCloud', href: 'https://cloud.google.com/' },
+  { iconName: 'DaoMaker', href: 'https://daomaker.com/' },
+  { iconName: 'Kingpad', href: 'https://kingpad.finance/' },
+  { iconName: 'Chainlink', href: 'https://chain.link/' },
+  { iconName: 'Tether', href: 'https://tether.to/' },
 ]
 
 const listPartners3 = [
-  { iconName: 'Circle' },
-  { iconName: 'CoinmarketcapAPI' },
-  { iconName: 'Metamask' },
-  { iconName: 'TrustWallet' },
-  { iconName: 'Maverick' },
-  { iconName: 'Coingecko' },
-  { iconName: 'DefiLlama' },
+  { iconName: 'Circle', href: 'https://www.circle.com/en/usdc' },
+  { iconName: 'CoinmarketcapAPI', href: 'https://coinmarketcap.com/api/' },
+  { iconName: 'Metamask', href: 'https://metamask.io/' },
+  { iconName: 'TrustWallet', href: 'https://trustwallet.com/' },
+  { iconName: 'Maverick', href: 'https://www.mav.xyz/' },
+  { iconName: 'Coingecko', href: 'https://www.coingecko.com/' },
+  { iconName: 'DefiLlama', href: 'https://defillama.com/' },
 ]
 
 export default Partners

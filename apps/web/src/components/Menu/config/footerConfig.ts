@@ -51,15 +51,15 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
       },
       {
         label: 'Audits',
-        href: '#',
+        href: 'https://docs.xoxlabs.io/security/xox-token-certik-audit',
       },
       {
         label: 'Partners',
-        href: '#',
+        href: 'https://docs.xoxlabs.io/strategic-partners-and-backers/ecosystem-partners',
       },
       {
         label: 'Smart Contracts',
-        href: '#',
+        href: 'https://docs.xoxlabs.io/powering-the-ecosystem/xox-native-utility-token',
       },
       {
         label: 'CoinMarketCap',
@@ -80,11 +80,11 @@ export const footerLinks: (t: ContextApi['t']) => FooterLinkType[] = (t) => [
       },
       {
         label: t('Terms of Service'),
-        href: '#',
+        href: 'https://docs.xoxlabs.io/company/xox-labs-terms-of-service',
       },
       {
         label: t('Privacy Policies'),
-        href: '#',
+        href: 'https://docs.xoxlabs.io/company/xox-labs-privacy-policy',
       },
     ],
   },

@@ -1932,7 +1932,7 @@ function DevV2() {
             />
 
             <div>
-              <BtnLearMore />
+              <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2/protocols-unique-features" />
             </div>
           </div>
 
@@ -1996,7 +1996,7 @@ function DevV2() {
             </ul>
 
             <div>
-              <BtnLearMore />
+              <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2/platform-revenue-sources-and-estimations" />
             </div>
           </div>
         </StyledRevenue>
@@ -2017,7 +2017,7 @@ function DevV2() {
             justifyContent: 'center',
           }}
         >
-          <BtnLearMore />
+          <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2/security-and-audits" />
         </div>
 
         <ReStyledTitle>{t('XOX Labs Ecosystem Products')}</ReStyledTitle>
@@ -2038,7 +2038,7 @@ function DevV2() {
         <ReStyledTitle style={{ marginBottom: 16 }}>{t('Join The Waitlist Here.')}</ReStyledTitle>
         <p className="subtitle">
           {t('Unsubscribe at any time.')}{' '}
-          <a className="privacy-link" href="#">
+          <a className="privacy-link" href="https://docs.xoxlabs.io/company/xox-labs-privacy-policy">
             {t('Privacy policy')}
             <span className="up-icon" style={{ marginLeft: 6 }}>
               <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">
