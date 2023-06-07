@@ -1196,7 +1196,7 @@ const Swap = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore />
+        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
       </div>
     </>
   )
@@ -1214,7 +1214,7 @@ const LimitOrder = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore />
+        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
       </div>
     </>
   )
@@ -1232,7 +1232,7 @@ const Earn = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore />
+        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
       </div>
     </>
   )
@@ -1250,7 +1250,7 @@ const Liquidity = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore />
+        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
       </div>
     </>
   )
@@ -1268,7 +1268,7 @@ const API = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore />
+        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
       </div>
     </>
   )
@@ -1292,7 +1292,7 @@ const DexesComponent = () => {
       </StyleFixHeight>
 
       <div className="btn_learn_more_ecosystem">
-        <BtnLearMore />
+        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
       </div>
     </>
   )
@@ -1316,7 +1316,7 @@ const Aggregators = () => {
       </StyleFixHeight>
 
       <div className="btn_learn_more_ecosystem">
-        <BtnLearMore />
+        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
       </div>
     </>
   )
@@ -1336,7 +1336,7 @@ const BlockChains = () => {
       </StyleFixHeight>
 
       <div className="btn_learn_more_ecosystem">
-        <BtnLearMore />
+        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
       </div>
     </>
   )
@@ -1360,7 +1360,7 @@ const Bridges = () => {
       </StyleFixHeight>
 
       <div className="btn_learn_more_ecosystem">
-        <BtnLearMore />
+        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
       </div>
     </>
   )
@@ -1776,7 +1776,7 @@ function DevV2() {
               </button>
               <span className="tooltiptext">{t('Under Development')}</span>
             </Tooltip>
-            <button type="button" onClick={() => window.open('https://github.com/')} style={{ height: '100%' }}>
+            <button type="button" onClick={() => window.open('https://docs.xoxlabs.io')} style={{ height: '100%' }}>
               Docs
             </button>
           </div>
@@ -2038,7 +2038,7 @@ function DevV2() {
         <ReStyledTitle style={{ marginBottom: 16 }}>{t('Join The Waitlist Here.')}</ReStyledTitle>
         <p className="subtitle">
           {t('Unsubscribe at any time.')}{' '}
-          <a className="privacy-link" href="https://docs.xoxlabs.io/company/xox-labs-privacy-policy">
+          <a className="privacy-link" href="https://docs.xoxlabs.io/company/xox-labs-privacy-policy" target="_blank">
             {t('Privacy policy')}
             <span className="up-icon" style={{ marginLeft: 6 }}>
               <svg width="10" height="11" viewBox="0 0 10 11" fill="none" xmlns="http://www.w3.org/2000/svg">

@@ -561,6 +561,10 @@ const CustomDropdown = styled.div`
       padding: 8px 12px 8px 12px;
       gap: 8px;
 
+      img {
+        min-width: 22px;
+      }
+
       img.zkSync-logo {
         background: #f3f6ff;
         border-radius: 50%;
