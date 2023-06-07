@@ -384,7 +384,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
     const balanceXOX = tokensBalance.find(
       (token: any) => token.contractAddress.toLowerCase() === XOX_ADDRESS[chainId].toLowerCase(),
     )
-    const xoxBalance = balanceXOX ? formatAmountNumber(balanceXOX.balance * rateXOX) : 0
+    const xoxBalance = (balanceXOX ? formatAmountNumber(balanceXOX.balance * rateXOX) : 0) || 0
     const result = [
       { name: native.symbol, value: nativeBalance },
       { name: 'XOX', value: xoxBalance },
