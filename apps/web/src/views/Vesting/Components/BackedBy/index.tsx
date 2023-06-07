@@ -158,6 +158,11 @@ const WrapperItem = styled(Flex)`
       }
     }
   }
+  @media screen and (max-width: 560px) {
+    &.secured .logos div img {
+      max-width: 80px;
+    }
+  }
 `
 
 const SecuredByItem = ({ item }) => {
