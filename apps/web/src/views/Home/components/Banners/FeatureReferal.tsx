@@ -582,7 +582,7 @@ const FeatureReferal = () => {
               })}
             </div>
 
-            <a href="/referral" target="_blank">
+            <a href="javascript:void(0)" target="_blank">
               <button className="btn_join">{t('Join Now')}</button>
             </a>
           </div>
