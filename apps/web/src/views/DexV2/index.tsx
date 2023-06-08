@@ -1285,6 +1285,7 @@ const DexesComponent = () => {
                 src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/dexes/${item}.png`}
                 key={String(i + item)}
                 alt="dex"
+                loading="lazy"
               />
             </Overlay>
           ))}
@@ -1309,6 +1310,7 @@ const Aggregators = () => {
                 src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/aggregators/${item}.png`}
                 key={String(i + item)}
                 alt="dex"
+                loading="lazy"
               />
             </Overlay>
           ))}
@@ -1328,7 +1330,7 @@ const BlockChains = () => {
         <StyledAggregator>
           {handleRange(1, 69).map((item, i) => (
             <Overlay>
-              <img src={`/images/dex-v2/blockchains/${item}.png`} key={String(i + item)} alt="dex" />
+              <img src={`/images/dex-v2/blockchains/${item}.png`} key={String(i + item)} alt="dex" loading="lazy" />
             </Overlay>
           ))}
           <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/blockchains/70.png`} alt="dex" />
@@ -1353,6 +1355,7 @@ const Bridges = () => {
                 src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/bridges/${item}.png`}
                 key={String(i + item)}
                 alt="dex"
+                loading="lazy"
               />
             </Overlay>
           ))}
