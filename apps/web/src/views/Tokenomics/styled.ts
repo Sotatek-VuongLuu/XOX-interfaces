@@ -550,6 +550,10 @@ export const StyledCertik = styled('div')`
     color: rgba(255, 255, 255, 0.1);
   }
 
+  img {
+    width: 240px;
+  }
+
   ${({ theme }) => theme.mediaQueries.md} {
     flex-direction: row;
     margin-top: 130px;
