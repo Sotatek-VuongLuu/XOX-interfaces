@@ -47,6 +47,11 @@ function MenberMobile() {
       position: t('Lead Designer'),
     },
     {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/BOM.png`,
+      name: 'Tran Huu Hung',
+      position: t('BDM at Kyber Network - Strategic advisor for XOX Labs'),
+    },
+    {
       avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Kane Nguyen.png`,
       name: 'Kane Nguyen',
       position: t('Project Manager'),
@@ -76,15 +81,13 @@ function MenberMobile() {
       name: 'Mei To',
       position: t('Business Analyst'),
     },
-  ]
-  const MEMBERS_TWO: Array<IMember> = [
     {
       avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Marrie Vu.png`,
       name: 'Marrie Vu',
       position: t('Quality Control'),
     },
   ]
-
+  
   return (
     <>
       <StyledMembersOne>
@@ -95,9 +98,9 @@ function MenberMobile() {
 
       <Box>
         <ReStyledMembers marginBottom={['64px', null, null, null]}>
-          {MEMBERS_TWO.map((member, i) => (
+          {/* {MEMBERS_TWO.map((member, i) => (
             <CardMember member={member} key={String(i + member.name)} />
-          ))}
+          ))} */}
         </ReStyledMembers>
       </Box>
     </>

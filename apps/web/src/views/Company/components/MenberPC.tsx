@@ -69,7 +69,7 @@ const StyledMembers = styled(Box)`
 
 const ReStyledMembersTwo = styled(StyledMembers)`
   margin: auto;
-  width: 1116px;
+  // width: 1116px;
   max-width: 100%;
   gap: 15px;
 
@@ -78,7 +78,7 @@ const ReStyledMembersTwo = styled(StyledMembers)`
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 1fr));
   }
 `
 
@@ -129,12 +129,17 @@ function MenberPC() {
       position: t('Lead Designer'),
     },
     {
+      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/BOM.png`,
+      name: 'Tran Huu Hung',
+      position: t('BDM at Kyber Network - Strategic advisor for XOX Labs'),
+    },
+  ]
+  const MEMBERS_TWO: Array<IMember> = [
+    {
       avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Kane Nguyen.png`,
       name: 'Kane Nguyen',
       position: t('Project Manager'),
     },
-  ]
-  const MEMBERS_TWO: Array<IMember> = [
     {
       avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Victor Luu.png`,
       name: 'Victor Luu',

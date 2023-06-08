@@ -527,6 +527,7 @@ export const StyledAddress = styled('div')`
 
 export const StyledCertik = styled('div')`
   position: relative;
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -561,8 +562,9 @@ export const StyledCertik = styled('div')`
       line-height: 157px;
     }
 
-    > img {
+    img {
       width: 240px;
+      cursor: pointer;
     }
   }
 `

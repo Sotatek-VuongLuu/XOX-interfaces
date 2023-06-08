@@ -613,7 +613,9 @@ export default function TokenomicsPage() {
 
             <p className="center">
               <Dot /> {t('The')} <span className="hl">USDT</span> & <span className="hl">USDC</span>{' '}
-              {t('collected from buy tax in our DEX is later given back to the holders as Stable Coin (XOXS) Staking Rewards and Referral Program Earnings')}{' '}
+              {t(
+                'collected from buy tax in our DEX is later given back to the holders as Stable Coin (XOXS) Staking Rewards and Referral Program Earnings',
+              )}{' '}
               <Dot />
             </p>
           </StyledCard2>
@@ -648,24 +650,30 @@ export default function TokenomicsPage() {
         </ContainnerStyledF2>
 
         <StyledCertik>
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/certik.svg`}
-            alt=""
-            draggable="false"
-            loading="lazy"
-          />
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/certik.svg`}
-            alt=""
-            draggable="false"
-            loading="lazy"
-          />
-          <img
-            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/certik.svg`}
-            alt=""
-            draggable="false"
-            loading="lazy"
-          />
+          <a href="https://www.certik.com/" target="_blank">
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Certik.svg`}
+              alt=""
+              draggable="false"
+              loading="lazy"
+            />
+          </a>
+          <a href="#" target="_blank">
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Hacken.svg`}
+              alt=""
+              draggable="false"
+              loading="lazy"
+            />
+          </a>
+          <a href="#" target="_blank">
+            <img
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Zellic.svg`}
+              alt=""
+              draggable="false"
+              loading="lazy"
+            />
+          </a>
         </StyledCertik>
 
         <ADDComponent />

@@ -112,18 +112,15 @@ const WrapperItem = styled(Flex)`
   }
   &.backed > div {
     > div:nth-child(1) {
-      margin-bottom: 32px;
-      padding: 0px 40px;
-    }
-    > div:nth-child(2) {
-      padding-left: 20px;
+      padding: 0px;
     }
     > div {
       display: grid;
       grid-template-columns: repeat(3, minmax(0, 1fr));
-      grid-column-gap: 64px;
+      grid-column-gap: 24px;
       img {
         max-width: 100%;
+        width: 100px;
         cursor: pointer !important;
       }
     }
@@ -154,7 +151,11 @@ const WrapperItem = styled(Flex)`
       }
       > div:nth-child(2) {
         padding-left: 0px;
-        margin: 32px 0px;
+        margin: 0px;
+      }
+
+      img {
+        width: 100px;
       }
     }
   }
@@ -253,7 +254,7 @@ const BackedByItem = ({ item }) => {
   const { t } = useTranslation()
   return (
     <WrapperItem
-      className="container secured"
+      className="container backed"
       flexDirection="column"
       justifyContent="center"
       alignItems="center"
@@ -262,49 +263,38 @@ const BackedByItem = ({ item }) => {
       <p className="title">{t(item.title)}</p>
       <p className="describe">{t(item.describe)}</p>
 
-      <div className="logos">
-        <div>
-          <a href="https://kyberswap.com/" target="_blank">
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-short-01.svg`}
-              className="icon-short"
-              alt="KyberLogo"
-            />
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full-horizontal.svg`}
-              className="icon-full"
-              alt="KyberLogo"
-            />
-          </a>
-        </div>
-        <div>
-          <a href="https://bitgert.com/" target="_blank">
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-short-01.svg`}
-              className="icon-short"
-              alt="Bitgert Logo"
-            />
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full-horizontal.svg`}
-              className="icon-full"
-              alt="Bitgert Logo"
-            />
-          </a>
-        </div>
-        <div>
-          <a href="https://coin98.com/" target="_blank">
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-short-01.svg`}
-              className="icon-short"
-              alt="Coin98Logo"
-            />
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full-horizontal.svg`}
-              className="icon-full"
-              alt="Coin98Logo"
-            />
-          </a>
-        </div>
+      <div>
+        {width >= 900 && (
+          <>
+            <div>
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`} alt="KyberNetwork-full" />
+            </div>
+            <div>
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
+              {/* <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/WalmartLogo.svg`} alt="WalmartLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/FedExLogo.svg`} alt="FedExLogo" /> */}
+            </div>
+          </>
+        )}
+
+        {width < 900 && (
+          <>
+            <div>
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
+            </div>
+            <div>
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`} alt="KyberNetwork-full" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
+            </div>
+            {/* <div>
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/WalmartLogo.svg`} alt="WalmartLogo" />
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/FedExLogo.svg`} alt="FedExLogo" />
+            </div> */}
+          </>
+        )}
       </div>
     </WrapperItem>
   )
