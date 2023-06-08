@@ -658,7 +658,7 @@ export default function TokenomicsPage() {
               loading="lazy"
             />
           </a>
-          <a href="#" target="_blank">
+          <a href="javascript:void(0)">
             <img
               src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Hacken.svg`}
               alt=""
@@ -666,7 +666,7 @@ export default function TokenomicsPage() {
               loading="lazy"
             />
           </a>
-          <a href="#" target="_blank">
+          <a href="javascript:void(0)">
             <img
               src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Zellic.svg`}
               alt=""
