@@ -251,9 +251,9 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
 
   // eslint-disable-next-line consistent-return
   const handleType = (from: string, to: string, chainIdSender: number) => {
-    const fromAddress = from.toLowerCase()
-    const toAddress = to.toLowerCase()
-    const accountReal = account.toLowerCase()
+    const fromAddress = from?.toLowerCase()
+    const toAddress = to?.toLowerCase()
+    const accountReal = account?.toLowerCase()
     if (fromAddress === accountReal && chainId === chainIdSender) {
       return t('Sender')
       // eslint-disable-next-line no-else-return
