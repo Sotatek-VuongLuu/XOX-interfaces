@@ -706,8 +706,7 @@ const WelcomeXOX = (): JSX.Element => {
                 </div>
                 <div>
                   <a
-                    // href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
-                    href="#"
+                    href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
                     target="_blank"
                     rel="noreferrer"
                     className="get_xox_link"
@@ -763,8 +762,7 @@ const WelcomeXOX = (): JSX.Element => {
                 </div>
 
                 <div>
-                  {/* <a href="/info" target="_blank"> */}
-                  <a href="#" target="_blank">
+                  <a href="/info" target="_blank">
                     <div className="chart">
                       <div className="bg-button">
                         <p>{t('Chart')}</p>

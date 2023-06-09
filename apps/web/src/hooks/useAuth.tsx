@@ -2,7 +2,7 @@ import { useTranslation } from '@pancakeswap/localization'
 import { WalletConnectorNotFoundError, WalletSwitchChainError } from '@pancakeswap/ui-wallets'
 import replaceBrowserHistory from '@pancakeswap/utils/replaceBrowserHistory'
 import { ConnectorNames } from 'config/wallet'
-import { useCallback } from 'react'
+import { useCallback, useState } from 'react'
 import { useAppDispatch } from 'state'
 import {
   ConnectorNotFoundError,
@@ -24,6 +24,7 @@ const useAuth = () => {
   const { chainId } = useActiveChainId()
   const [, setSessionChainId] = useSessionChainId()
   const { t } = useTranslation()
+  const [forceReloadPage, setForceReloadPage] = useState(false)
 
   const login = useCallback(
     async (connectorID: ConnectorNames) => {
@@ -50,6 +51,7 @@ const useAuth = () => {
 
   const logout = useCallback(async () => {
     try {
+      setForceReloadPage(false)
       await disconnectAsync()
     } catch (error) {
       console.error(error)
@@ -58,7 +60,7 @@ const useAuth = () => {
     }
   }, [disconnectAsync, dispatch, chain?.id])
 
-  return { login, logout }
+  return { login, logout, forceReloadPage, setForceReloadPage }
 }
 
 export default useAuth

@@ -583,7 +583,6 @@ export default function BridgeToken() {
 
   useEffect(() => {
     if(!chainIdFrom) return
-    console.log(chainIdFrom, XOX[chainIdFrom], 'x')
     setTokenFrom(XOX[chainIdFrom])
     if (chainIdFrom === chainIdTo) {
       const chainTo = defaultChainIdTo(chainIdFrom)

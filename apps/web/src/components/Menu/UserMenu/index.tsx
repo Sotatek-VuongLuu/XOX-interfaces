@@ -103,7 +103,7 @@ const UserMenu = () => {
   const { t } = useTranslation()
   const { address: account } = useAccount()
   const { chainId, isWrongNetwork } = useActiveChainId()
-  const { logout } = useAuth()
+  const { logout, forceReloadPage, setForceReloadPage } = useAuth()
   const { profile } = useProfile()
   const avatarSrc = profile?.nft?.image?.thumbnail
   const native = useNativeCurrency()
@@ -200,6 +200,14 @@ const UserMenu = () => {
       </svg>
     )
   }
+
+  useEffect(() => {
+    if (account) {
+      setForceReloadPage(true)
+    } else if (!account && forceReloadPage) {
+      window.location.reload()
+    }
+  }, [account])
 
   const UserMenuItems = ({ setOpen }) => {
     return (
