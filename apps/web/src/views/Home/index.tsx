@@ -27,6 +27,7 @@ import FeatureSquare from './components/Banners/FeatureSquare'
 import Subscription from './components/Banners/Subscription'
 import SupportedBlockchains from './components/Banners/SupportedBlockchains'
 import PopupPreSale from './components/PopupPreSale'
+import EcosystemPartners from './components/EcosystemPartners'
 
 export const StyledSection = styled(PageSection)`
   padding-top: 16px;
@@ -103,6 +104,7 @@ const Home: React.FC<React.PropsWithChildren> = () => {
         <BGXOXDapp />
         <div style={{ width: widthResize }}>
           <SupportedBlockchains />
+          <EcosystemPartners />
           <FeatureSquare />
           <FeatureWatch />
           <FeaturePlant />

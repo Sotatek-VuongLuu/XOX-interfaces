@@ -264,8 +264,8 @@ const BackedByItem = ({ item }) => {
               <a href="https://bitgert.com/" target="_blank">
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
               </a>
-              <a href="https://coin98.com/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
+              <a href="https://kingpad.co/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
               </a>
               <a href="https://kyberswap.com/" target="_blank">
                 <img
@@ -278,6 +278,12 @@ const BackedByItem = ({ item }) => {
               <a href="https://www.xo-dex.com" target="_blank">
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
               </a>
+              <a href="https://app.velocore.xyz/swap" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`} alt="Velocore-full" />
+              </a>
+              {/* <a href="https://coin98.com/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
+              </a> */}
               {/* <a href="" target="_blank"><img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/WalmartLogo.svg`} alt="WalmartLogo" /></a>
               <a href="" target="_blank"><img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/FedExLogo.svg`} alt="FedExLogo" /></a> */}
             </div>
@@ -290,8 +296,8 @@ const BackedByItem = ({ item }) => {
               <a href="https://bitgert.com/" target="_blank">
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
               </a>
-              <a href="https://coin98.com/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
+              <a href="https://kingpad.co/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
               </a>
             </div>
             <div>
@@ -305,10 +311,16 @@ const BackedByItem = ({ item }) => {
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
               </a>
             </div>
-            {/* <div>
-              <a href="" target="_blank"><img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/WalmartLogo.svg`} alt="WalmartLogo" /></a>
-              <a href="" target="_blank"><img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/FedExLogo.svg`} alt="FedExLogo" /></a>
-            </div> */}
+            <div>
+              <a href="https://app.velocore.xyz/swap" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`} alt="Velocore-full" />
+              </a>
+              {/* <a href="https://coin98.com/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
+              </a> */}
+              {/* <a href="" target="_blank"><img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/WalmartLogo.svg`} alt="WalmartLogo" /></a>
+              <a href="" target="_blank"><img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/FedExLogo.svg`} alt="FedExLogo" /></a> */}
+            </div>
           </>
         )}
       </div>
