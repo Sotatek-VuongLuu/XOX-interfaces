@@ -616,6 +616,7 @@ export default function BridgeToken() {
     } else if (
       account &&
       bal &&
+      tokenFromAmount && 
       // parseEther(amountInput).gt(parseEther(tokenFromAmount?.toExact())) &&
       parseUnits(tokenFromAmount, tokenFrom.decimals).gt(parseUnits(bal, tokenFrom.decimals))
     ) {
