@@ -65,7 +65,7 @@ export const XOX_ADDRESS: ChainMap<string> = {
   [ChainId.ZKSYNC]: '',
   [ChainId.ZKSYNC_TESTNET]: '0x34a12190B65b684A5CC1ec27a6f8d924D1a317be',
   [ChainId.OPTIMISM]: '',
-  [ChainId.OPTIMISM_TESTNET]: '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
+  [ChainId.OPTIMISM_TESTNET]: '0xce221120f145b456ba41b370f11d5e536ecd2bcb',
 }
 
 export const XOX_LP: ChainMap<string> = {

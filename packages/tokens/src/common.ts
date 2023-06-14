@@ -74,7 +74,7 @@ export const XOX_POLYGON_TESTNET = new ERC20Token(
 
 export const XOX_ZKSYNC_MAINNET = new ERC20Token(
   ChainId.ZKSYNC,
-  '0x31d7d8630279F65D5054cE9c5Fcfd146eeffdd66',
+  '0x34a12190B65b684A5CC1ec27a6f8d924D1a317be',
   18,
   'XOX',
   'XOX',
@@ -83,7 +83,7 @@ export const XOX_ZKSYNC_MAINNET = new ERC20Token(
 
 export const XOX_ZKSYNC_TESTNET = new ERC20Token(
   ChainId.ZKSYNC_TESTNET,
-  '0x31d7d8630279F65D5054cE9c5Fcfd146eeffdd66',
+  '0x34a12190B65b684A5CC1ec27a6f8d924D1a317be',
   18,
   'XOX',
   'XOX',
@@ -92,7 +92,7 @@ export const XOX_ZKSYNC_TESTNET = new ERC20Token(
 
 export const XOX_OPTIMISM_MAINNET = new ERC20Token(
   ChainId.OPTIMISM,
-  '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
+  '0xce221120f145b456ba41b370f11d5e536ecd2bcb',
   18,
   'XOX',
   'XOX',
@@ -101,7 +101,7 @@ export const XOX_OPTIMISM_MAINNET = new ERC20Token(
 
 export const XOX_OPTIMISM_TESTNET = new ERC20Token(
   ChainId.OPTIMISM_TESTNET,
-  '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
+  '0xce221120f145b456ba41b370f11d5e536ecd2bcb',
   18,
   'XOX',
   'XOX',

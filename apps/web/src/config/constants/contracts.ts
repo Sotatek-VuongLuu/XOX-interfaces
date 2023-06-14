@@ -177,10 +177,10 @@ export default {
     [ChainId.ARBITRUM_TESTNET]: '0x90fded525b5E613c9dc0fE600d9b52a648386e2E', // TODO: change address
     [ChainId.POLYGON]: '0x47869A5dcECd2593F02d27f65cB4A5278DE16CD2', // TODO: change address
     [ChainId.POLYGON_TESTNET]: '0x47869A5dcECd2593F02d27f65cB4A5278DE16CD2', // TODO: change address
-    [ChainId.ZKSYNC]: '0x31d7d8630279F65D5054cE9c5Fcfd146eeffdd66', // TODO: change address
-    [ChainId.ZKSYNC_TESTNET]: '0x31d7d8630279F65D5054cE9c5Fcfd146eeffdd66', // TODO: change address
-    [ChainId.OPTIMISM]: '0x90fded525b5E613c9dc0fE600d9b52a648386e2E', // TODO: change address
-    [ChainId.OPTIMISM_TESTNET]: '0x90fded525b5E613c9dc0fE600d9b52a648386e2E', // TODO: change address
+    [ChainId.ZKSYNC]: '0x34a12190B65b684A5CC1ec27a6f8d924D1a317be', // TODO: change address
+    [ChainId.ZKSYNC_TESTNET]: '0x34a12190B65b684A5CC1ec27a6f8d924D1a317be', // TODO: change address
+    [ChainId.OPTIMISM]: '0xce221120f145b456ba41b370f11d5e536ecd2bcb', // TODO: change address
+    [ChainId.OPTIMISM_TESTNET]: '0xce221120f145b456ba41b370f11d5e536ecd2bcb', // TODO: change address
   },
   contractXOXPool: {
     [ChainId.BSC_TESTNET]: '0x1cee830b7f20cefb4dcff3b3e9e7859923827248',
