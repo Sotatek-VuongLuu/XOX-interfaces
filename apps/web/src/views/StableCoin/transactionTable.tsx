@@ -350,7 +350,7 @@ const DataRow: React.FC<
       ? `${formatAmount(transaction.amountUSD / 10)} Stable coin`
       : '--'
 
-  return (
+  return inputTokenSymbol === 'XOX' ? null : (
     <>
       <Text
         fontSize="16px"

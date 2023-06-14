@@ -184,6 +184,7 @@ export default {
   },
   contractXOXPool: {
     [ChainId.BSC_TESTNET]: '0x1cee830b7f20cefb4dcff3b3e9e7859923827248',
+    [ChainId.GOERLI]: '0xE8D6f48CE1beCeCa40a848bEb177BcD17C25303B',
   },
   contractBridgeToken: {
     [ChainId.ETHEREUM]: '0x0f52De2107CfC387112dfE1B5800BB30CAf02d10', // TODO: change address
