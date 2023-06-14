@@ -350,7 +350,7 @@ const DataRow: React.FC<
       ? `${formatAmount(transaction.amountUSD / 10)} Stable coin`
       : '--'
 
-  return inputTokenSymbol === 'XOX' ? null : (
+  return (
     <>
       <Text
         fontSize="16px"
@@ -444,7 +444,11 @@ const TransactionsTable: React.FC = () => {
       ? currentTransactions
           .slice(0, 300)
           .filter((x) => {
-            return txFilter === undefined || x.type === txFilter
+            const symbolToken0 = x.token0Symbol === 'xox' ? 'XOX' : x.token0Symbol
+            const symbolToken1 = x.token1Symbol === 'xox' ? 'XOX' : x.token1Symbol
+            const inputTokenSymbol = x.amountToken1 < 0 ? symbolToken0 : symbolToken1
+
+            return (txFilter === undefined || x.type === txFilter) && inputTokenSymbol !== 'XOX'
           })
           .map((item: any) => {
             const outputTokenSymbol = item.amountToken0 < 0 ? item.token0Symbol : item.token1Symbol
@@ -475,7 +479,11 @@ const TransactionsTable: React.FC = () => {
     if (currentTransactions) {
       const filteredTransactions = currentTransactions
         .filter((tx) => {
-          return txFilter === undefined || tx.type === txFilter
+          const symbolToken0 = tx.token0Symbol === 'xox' ? 'XOX' : tx.token0Symbol
+          const symbolToken1 = tx.token1Symbol === 'xox' ? 'XOX' : tx.token1Symbol
+          const inputTokenSymbol = tx.amountToken1 < 0 ? symbolToken0 : symbolToken1
+
+          return (txFilter === undefined || tx.type === txFilter) && inputTokenSymbol !== 'XOX'
         })
         .slice(0, 300)
       if (filteredTransactions.length % perPage === 0) {
