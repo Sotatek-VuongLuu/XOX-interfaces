@@ -285,6 +285,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
           </ConfirmedIcon>
         ) : (
           <>
+          {historyData.length}
             {historyData && historyData.length !== 0 ? (
               <StyledTable>
                 <div className="table">
