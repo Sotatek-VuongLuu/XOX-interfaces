@@ -106,5 +106,5 @@ export const SITE_NAME: { [chainId in ChainId]?: any } = {
 }
 
 export const CONTRACT_BRIDGE_POOL = {
-  [ChainId.GOERLI]: '0x9CD56295c4CFCDEA7062c1348b464c75E9Afa5b8',
+  [ChainId.GOERLI]: '0x27D2ec949C4D93D6246E538eBCACf1A76d7A899E',
 }

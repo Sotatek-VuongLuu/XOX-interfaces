@@ -77,7 +77,7 @@
 
     {
       "name": "XOX",
-      "address": "0xc74d382c5c5e1922a856877D0Fd3e7F886Ac3828",
+      "address": "0xC82f6DF626787D0FD686Ed211A232Fe8Cd1EF42d",
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 97,
@@ -102,7 +102,7 @@
     {
       "name": "Tether USD",
       "symbol": "USDT",
-      "address": "0x7A35Ab80fe9621146DA7CCbC2BCAddda843A69A5",
+      "address": "0xc60a52351918c13eF3B27F72e5E71877ca3cB13A",
       "chainId": 97,
       "decimals": 18,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/825.png"
@@ -215,7 +215,7 @@
 
     {
       "name": "XOX",
-      "address": "0xd8a6dd164F6823dacdEcaa040a7AEa19304f9fB5",
+      "address": "0x92b3d85b4589bBEE8e3a04114C217Aa497B44aDD",
       "symbol": "XOX",
       "decimals": 18,
       "chainId": 5,
@@ -239,7 +239,7 @@
     },
     {
       "name": "USD Coin",
-      "address": "0xD898D309dAb33130EA57E8F106238ae4b76329f4",
+      "address": "0x8E96c0aC1ABd86ba1652D843CA024FD0939b3760",
       "symbol": "USDC",
       "decimals": 6,
       "chainId": 5,

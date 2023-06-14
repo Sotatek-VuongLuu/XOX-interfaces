@@ -2,7 +2,7 @@ import { ChainId, ERC20Token } from '@pancakeswap/sdk'
 
 export const XOX_BSC_MAINNET = new ERC20Token(
   ChainId.BSC,
-  '0xc74d382c5c5e1922a856877D0Fd3e7F886Ac3828',
+  '0xC82f6DF626787D0FD686Ed211A232Fe8Cd1EF42d',
   18,
   'XOX',
   'XOX',
@@ -11,7 +11,7 @@ export const XOX_BSC_MAINNET = new ERC20Token(
 
 export const XOX_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0xc74d382c5c5e1922a856877D0Fd3e7F886Ac3828',
+  '0xC82f6DF626787D0FD686Ed211A232Fe8Cd1EF42d',
   18,
   'XOX',
   'XOX',
@@ -20,7 +20,7 @@ export const XOX_BSC_TESTNET = new ERC20Token(
 
 export const XOX_MAINNET = new ERC20Token(
   ChainId.ETHEREUM,
-  '0xd8a6dd164F6823dacdEcaa040a7AEa19304f9fB5',
+  '0x92b3d85b4589bBEE8e3a04114C217Aa497B44aDD',
   18,
   'XOX',
   'XOX',
@@ -29,7 +29,7 @@ export const XOX_MAINNET = new ERC20Token(
 
 export const XOX_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xd8a6dd164F6823dacdEcaa040a7AEa19304f9fB5',
+  '0x92b3d85b4589bBEE8e3a04114C217Aa497B44aDD',
   18,
   'XOX',
   'XOX',
@@ -38,7 +38,7 @@ export const XOX_GOERLI = new ERC20Token(
 
 export const XOX_ARBITRUM_MAINNET = new ERC20Token(
   ChainId.ARBITRUM,
-  '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF',
+  '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
   18,
   'XOX',
   'XOX',
@@ -47,7 +47,7 @@ export const XOX_ARBITRUM_MAINNET = new ERC20Token(
 
 export const XOX_ARBITRUM_TESTNET = new ERC20Token(
   ChainId.ARBITRUM_TESTNET,
-  '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF',
+  '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
   18,
   'XOX',
   'XOX',
@@ -56,7 +56,7 @@ export const XOX_ARBITRUM_TESTNET = new ERC20Token(
 
 export const XOX_POLYGON_MAINNET = new ERC20Token(
   ChainId.POLYGON,
-  '0x9b8AAb91ea36857763e9552916874ceA18F35b56',
+  '0x47869A5dcECd2593F02d27f65cB4A5278DE16CD2',
   18,
   'XOX',
   'XOX',
@@ -65,7 +65,7 @@ export const XOX_POLYGON_MAINNET = new ERC20Token(
 
 export const XOX_POLYGON_TESTNET = new ERC20Token(
   ChainId.POLYGON_TESTNET,
-  '0x9b8AAb91ea36857763e9552916874ceA18F35b56',
+  '0x47869A5dcECd2593F02d27f65cB4A5278DE16CD2',
   18,
   'XOX',
   'XOX',
@@ -92,7 +92,7 @@ export const XOX_ZKSYNC_TESTNET = new ERC20Token(
 
 export const XOX_OPTIMISM_MAINNET = new ERC20Token(
   ChainId.OPTIMISM,
-  '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF',
+  '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
   18,
   'XOX',
   'XOX',
@@ -101,7 +101,7 @@ export const XOX_OPTIMISM_MAINNET = new ERC20Token(
 
 export const XOX_OPTIMISM_TESTNET = new ERC20Token(
   ChainId.OPTIMISM_TESTNET,
-  '0x56B09E39168b141E43c49eeF261ed9A5f105A6DF',
+  '0x90fded525b5E613c9dc0fE600d9b52a648386e2E',
   18,
   'XOX',
   'XOX',
@@ -110,7 +110,7 @@ export const XOX_OPTIMISM_TESTNET = new ERC20Token(
 
 export const XOX_BUSD_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0xf10642da580e459a941766af33a977086037f020',
+  '0x1cee830b7f20cefb4dcff3b3e9e7859923827248',
   18,
   'XOX-BUSD',
   'XOX-BUSD',
@@ -119,7 +119,7 @@ export const XOX_BUSD_TESTNET = new ERC20Token(
 
 export const XOX_USDC_TESTNET = new ERC20Token(
   ChainId.GOERLI,
-  '0xFee423935dBcf75eB5A0D025E9aE4d816c33a7E3',
+  '0xE8D6f48CE1beCeCa40a848bEb177BcD17C25303B',
   18,
   'XOX-USDC',
   'XOX-USDC',
@@ -212,7 +212,7 @@ export const USDC_RINKEBY = new ERC20Token(
 
 export const USDC_GOERLI = new ERC20Token(
   ChainId.GOERLI,
-  '0xD898D309dAb33130EA57E8F106238ae4b76329f4',
+  '0x8E96c0aC1ABd86ba1652D843CA024FD0939b3760',
   6,
   'tUSDC',
   'test USD Coin',
@@ -256,7 +256,7 @@ export const BUSD_TESTNET = new ERC20Token(
 
 export const USDT_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x7A35Ab80fe9621146DA7CCbC2BCAddda843A69A5',
+  '0xc60a52351918c13eF3B27F72e5E71877ca3cB13A',
   18,
   'USDT',
   'Tether USD',
@@ -347,7 +347,7 @@ export const ETH_BSC_TESTNET = new ERC20Token(
 )
 export const USDT_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x7A35Ab80fe9621146DA7CCbC2BCAddda843A69A5',
+  '0xc60a52351918c13eF3B27F72e5E71877ca3cB13A',
   18,
   'USDT',
 )
@@ -424,7 +424,7 @@ export const USDT = {
   [ChainId.BSC]: USDT_BSC,
   [ChainId.ETHEREUM]: USDT_ETH,
   [ChainId.GOERLI]: '0x1b57aF4ab903fD70f96Ff033498dF44D7B61201C',
-  [ChainId.BSC_TESTNET]: '0x7A35Ab80fe9621146DA7CCbC2BCAddda843A69A5',
+  [ChainId.BSC_TESTNET]: '0xc60a52351918c13eF3B27F72e5E71877ca3cB13A',
 }
 
 export const USD = {
