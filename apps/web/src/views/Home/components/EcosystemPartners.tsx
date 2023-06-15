@@ -106,11 +106,11 @@ const EcosystemPartners = () => {
 
       <div className="imgs">
         <div className="box box-4">
-          <a href="https://syncswap.xyz/" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`} alt="Syncswap-full" />
-          </a>
           <a href="https://www.bnbchain.org/en" target="_blank">
             <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`} alt="BNBChain-full" />
+          </a>
+          <a href="https://syncswap.xyz/" target="_blank">
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`} alt="Syncswap-full" />
           </a>
           <a href="https://bitgert.com/" target="_blank">
             <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
