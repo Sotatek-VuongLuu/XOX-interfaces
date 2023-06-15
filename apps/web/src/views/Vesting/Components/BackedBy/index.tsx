@@ -21,7 +21,7 @@ const Content = styled(Grid)`
 
 const WrapperItem = styled(Flex)`
   position: relative;
-  padding: 24px 109px;
+  padding: 24px;
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
   border-radius: 20px;
@@ -116,8 +116,17 @@ const WrapperItem = styled(Flex)`
     }
     > div {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-template-columns: repeat(3, minmax(0, 100px));
       grid-column-gap: 24px;
+      place-content: center;
+      img {
+        max-width: 100%;
+        width: 100px;
+        cursor: pointer !important;
+      }
+    }
+    > .second-line {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       img {
         max-width: 100%;
         width: 100px;
@@ -264,6 +273,29 @@ const BackedByItem = ({ item }) => {
               <a href="https://bitgert.com/" target="_blank">
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
               </a>
+              <a href="https://syncswap.xyz/" target="_blank">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`}
+                  alt="Syncswap-full"
+                />
+              </a>
+              <a href="https://www.bnbchain.org/en" target="_blank">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`}
+                  alt="BNBChain-full"
+                />
+              </a>
+            </div>
+            <div className='second-line'>
+              <a href="https://www.xo-dex.com" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
+              </a>
+              <a href="https://app.velocore.xyz/swap" target="_blank">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`}
+                  alt="Velocore-full"
+                />
+              </a>
               <a href="https://kingpad.co/" target="_blank">
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
               </a>
@@ -272,14 +304,6 @@ const BackedByItem = ({ item }) => {
                   src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
                   alt="KyberNetwork-full"
                 />
-              </a>
-            </div>
-            <div>
-              <a href="https://www.xo-dex.com" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
-              </a>
-              <a href="https://app.velocore.xyz/swap" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`} alt="Velocore-full" />
               </a>
               {/* <a href="https://coin98.com/" target="_blank">
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
@@ -301,6 +325,14 @@ const BackedByItem = ({ item }) => {
               </a>
             </div>
             <div>
+              <a href="https://syncswap.xyz/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`} alt="Syncswap-full" />
+              </a>
+              <a href="https://www.bnbchain.org/en" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`} alt="BNBChain-full" />
+              </a>
+            </div>
+            <div>
               <a href="https://kyberswap.com/" target="_blank">
                 <img
                   src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
@@ -313,7 +345,10 @@ const BackedByItem = ({ item }) => {
             </div>
             <div>
               <a href="https://app.velocore.xyz/swap" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`} alt="Velocore-full" />
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`}
+                  alt="Velocore-full"
+                />
               </a>
               {/* <a href="https://coin98.com/" target="_blank">
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
