@@ -308,7 +308,7 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
           >
             <Button className="get-xox">{t('Get %sym%', { sym: titleBtn1 })}</Button>
           </a>
-          <a href="/whitepaper" target="_blank" rel="noreferrer">
+          <a href="https://docs.xoxlabs.io/" target="_blank" rel="noreferrer">
             <Button className="learn-more">{t('Learn More')}</Button>
           </a>
           {textThird && !isMobile && (

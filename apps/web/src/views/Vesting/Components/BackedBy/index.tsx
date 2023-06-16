@@ -276,34 +276,34 @@ const BackedByItem = ({ item }) => {
                   alt="BNBChain-full"
                 />
               </a>
-              <a href="https://syncswap.xyz/" target="_blank">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`}
-                  alt="Syncswap-full"
-                />
-              </a>
-              <a href="https://bitgert.com/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
-              </a>
-            </div>
-            <div className='second-line'>
-              <a href="https://kingpad.co/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
-              </a>
               <a href="https://kyberswap.com/" target="_blank">
                 <img
                   src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
                   alt="KyberNetwork-full"
                 />
               </a>
-              <a href="https://www.xo-dex.com" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
+              <a href="https://syncswap.xyz/" target="_blank">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`}
+                  alt="Syncswap-full"
+                />
+              </a>
+            </div>
+            <div className="second-line">
+              <a href="https://bitgert.com/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
               </a>
               <a href="https://app.velocore.xyz/swap" target="_blank">
                 <img
                   src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`}
                   alt="Velocore-full"
                 />
+              </a>
+              <a href="https://kingpad.co/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
+              </a>
+              <a href="https://www.xo-dex.com" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
               </a>
               {/* <a href="https://coin98.com/" target="_blank">
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
@@ -318,10 +318,16 @@ const BackedByItem = ({ item }) => {
           <>
             <div>
               <a href="https://www.bnbchain.org/en" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`} alt="BNBChain-full" />
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`}
+                  alt="BNBChain-full"
+                />
               </a>
               <a href="https://syncswap.xyz/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`} alt="Syncswap-full" />
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`}
+                  alt="Syncswap-full"
+                />
               </a>
             </div>
             <div>

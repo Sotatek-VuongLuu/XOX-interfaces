@@ -1092,7 +1092,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                 >
                   <Button className="get-xox">{t('Get %sym%', { sym: 'LP Token' })}</Button>
                 </a>
-                <a href="/whitepaper" target="_blank" rel="noreferrer">
+                <a href="https://docs.xoxlabs.io/" target="_blank" rel="noreferrer">
                   <Button className="learn-more">{t('Learn More')}</Button>
                 </a>
               </Flex>
