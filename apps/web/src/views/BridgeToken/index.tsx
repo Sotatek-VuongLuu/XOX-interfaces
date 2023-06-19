@@ -592,6 +592,23 @@ export default function BridgeToken() {
   }, [chainIdFrom])
 
   useEffect(() => {
+    const bal =
+      chainIdFrom === ChainId.ZKSYNC || chainIdFrom === ChainId.ZKSYNC_TESTNET
+        ? zkSyncBalance
+        : tokenFromBalance?.toExact()
+    if (tokenFromAmount === '' || Number(tokenFromAmount) === 0 || tokenFromAmount === '.') {
+      setMessageButton(t('Enter an amount'))
+      return
+    } else if (
+      account &&
+      bal &&
+      tokenFromAmount && 
+      // parseEther(amountInput).gt(parseEther(tokenFromAmount?.toExact())) &&
+      parseUnits(tokenFromAmount, tokenFrom.decimals).gt(parseUnits(bal, tokenFrom.decimals))
+    ) {
+      setMessageButton(t('Insufficient Your %symbol% Balance', { symbol: tokenFrom.symbol }))
+      return
+    }
     if (approvalState === ApprovalState.UNKNOWN || approvalState === ApprovalState.NOT_APPROVED) {
       setMessageButton(t('Approve %symbol%', { symbol: tokenFrom.symbol }))
       if (pendingApprove || (chainIdFrom != 1 && chainIdFrom != 5)) {
@@ -604,26 +621,7 @@ export default function BridgeToken() {
     } else if (tokenToAmount === '0') {
       setMessageButton(t('Input Amount Not Allowed'))
     } else setMessageButton(t('Bridge'))
-  }, [approvalState, tokenToAmount, t])
-
-  useEffect(() => {
-    const bal =
-      chainIdFrom === ChainId.ZKSYNC || chainIdFrom === ChainId.ZKSYNC_TESTNET
-        ? zkSyncBalance
-        : tokenFromBalance?.toExact()
-    if (tokenFromAmount === '' || Number(tokenFromAmount) === 0 || tokenFromAmount === '.') {
-      setMessageButton(t('Enter an amount'))
-    } else if (
-      account &&
-      bal &&
-      tokenFromAmount && 
-      // parseEther(amountInput).gt(parseEther(tokenFromAmount?.toExact())) &&
-      parseUnits(tokenFromAmount, tokenFrom.decimals).gt(parseUnits(bal, tokenFrom.decimals))
-    ) {
-      setMessageButton(t('Insufficient Your %symbol% Balance', { symbol: tokenFrom.symbol }))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokenFromAmount, tokenFromBalance, t])
+  }, [approvalState, tokenToAmount, chainIdFrom, tokenFrom, tokenFromAmount, tokenFromBalance, t])
 
   useEffect(() => {
     if (!resetChainId) {

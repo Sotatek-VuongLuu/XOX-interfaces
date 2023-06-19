@@ -106,7 +106,7 @@ const Reminder: React.FC<Props> = ({
           ...prev,
           ...bridgeTokenFeeCurrent,
         }))
-        const amountTo = await getAmountTo(
+        const amountTo = getAmountTo(
           bridgeTokenFeeCurrent.gasFee,
           bridgeTokenFeeCurrent.minCrossChainFee,
           bridgeTokenFeeCurrent.minAmount,
@@ -131,7 +131,7 @@ const Reminder: React.FC<Props> = ({
     })
   }
 
-  const getAmountTo = async (gasFee: string, crosschainFee: string, minAmount: string, amountBri: any) => {
+  const getAmountTo = (gasFee: string, crosschainFee: string, minAmount: string, amountBri: any) => {
     if (
       amountBri &&
       amountBri !== ('.' || '') &&
