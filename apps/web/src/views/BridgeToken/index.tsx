@@ -604,7 +604,7 @@ export default function BridgeToken() {
     } else if (tokenToAmount === '0') {
       setMessageButton(t('Input Amount Not Allowed'))
     } else setMessageButton(t('Bridge'))
-  }, [approvalState, tokenToAmount])
+  }, [approvalState, tokenToAmount, t])
 
   useEffect(() => {
     const bal =
@@ -623,7 +623,7 @@ export default function BridgeToken() {
       setMessageButton(t('Insufficient Your %symbol% Balance', { symbol: tokenFrom.symbol }))
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [tokenFromAmount, tokenFromBalance])
+  }, [tokenFromAmount, tokenFromBalance, t])
 
   useEffect(() => {
     if (!resetChainId) {

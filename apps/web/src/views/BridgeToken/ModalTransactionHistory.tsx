@@ -285,7 +285,6 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
           </ConfirmedIcon>
         ) : (
           <>
-          {historyData.length}
             {historyData && historyData.length !== 0 ? (
               <StyledTable>
                 <div className="table">
@@ -324,10 +323,7 @@ const ModalTransactionHistory: React.FC<React.PropsWithChildren<InjectedModalPro
                         </div>
                         <div className="row-item" style={{ width: '15%' }}>
                           <TxHash
-                            href={
-                              row.txSwapHash &&
-                              `${linkTransaction(row.toChainId)}${row.txSwapHash}`
-                            }
+                            href={row.txSwapHash && `${linkTransaction(row.toChainId)}${row.txSwapHash}`}
                             target="blank"
                           >
                             {row.txSwapHash ? shortenAddress(row.txSwapHash) : '........................'}

@@ -87,7 +87,7 @@ export const NETWORK_LINK: { [chainId in ChainId]?: any } = {
   [ChainId.ZKSYNC]: 'https://zkscan.io',
   [ChainId.ZKSYNC_TESTNET]: 'https://goerli.explorer.zksync.io',
   [ChainId.OPTIMISM]: 'https://optimistic.etherscan.io',
-  [ChainId.OPTIMISM_TESTNET]: 'https://optimism.io',
+  [ChainId.OPTIMISM_TESTNET]: 'https://goerli-optimism.etherscan.io/',
 }
 
 export const SITE_NAME: { [chainId in ChainId]?: any } = {
