@@ -65,7 +65,7 @@ const Wrapper = styled.div`
     }
 
     .box-4 {
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(4, 1fr);
     }
 
     .box-5 {
@@ -114,6 +114,9 @@ const EcosystemPartners = () => {
               src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
               alt="KyberNetwork-full"
             />
+          </a>
+          <a href="https://izumi.finance/home" target="_blank">
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/iZumi-full.svg`} alt="iZumi-full" />
           </a>
           <a href="https://syncswap.xyz/" target="_blank">
             <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`} alt="Syncswap-full" />

@@ -116,7 +116,7 @@ const WrapperItem = styled(Flex)`
     }
     > div {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0, 100px));
+      grid-template-columns: repeat(4, minmax(0, 100px));
       grid-column-gap: 24px;
       place-content: center;
       img {
@@ -282,6 +282,9 @@ const BackedByItem = ({ item }) => {
                   alt="KyberNetwork-full"
                 />
               </a>
+              <a href="https://izumi.finance/home" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/iZumi-full.svg`} alt="iZumi-full" />
+              </a>
               <a href="https://syncswap.xyz/" target="_blank">
                 <img
                   src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`}
@@ -323,6 +326,17 @@ const BackedByItem = ({ item }) => {
                   alt="BNBChain-full"
                 />
               </a>
+              <a href="https://kyberswap.com/" target="_blank">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
+                  alt="KyberNetwork-full"
+                />
+              </a>
+            </div>
+            <div>
+              <a href="https://izumi.finance/home" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/iZumi-full.svg`} alt="iZumi-full" />
+              </a>
               <a href="https://syncswap.xyz/" target="_blank">
                 <img
                   src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`}
@@ -334,33 +348,20 @@ const BackedByItem = ({ item }) => {
               <a href="https://bitgert.com/" target="_blank">
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
               </a>
-              <a href="https://kingpad.co/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
-              </a>
-            </div>
-            <div>
-              <a href="https://kyberswap.com/" target="_blank">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
-                  alt="KyberNetwork-full"
-                />
-              </a>
-              <a href="https://www.xo-dex.com" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
-              </a>
-            </div>
-            <div>
               <a href="https://app.velocore.xyz/swap" target="_blank">
                 <img
                   src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`}
                   alt="Velocore-full"
                 />
               </a>
-              {/* <a href="https://coin98.com/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
-              </a> */}
-              {/* <a href="" target="_blank"><img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/WalmartLogo.svg`} alt="WalmartLogo" /></a>
-              <a href="" target="_blank"><img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/FedExLogo.svg`} alt="FedExLogo" /></a> */}
+            </div>
+            <div>
+              <a href="https://kingpad.co/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
+              </a>
+              <a href="https://www.xo-dex.com" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
+              </a>
             </div>
           </>
         )}
