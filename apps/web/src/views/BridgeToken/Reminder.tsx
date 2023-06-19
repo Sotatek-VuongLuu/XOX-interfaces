@@ -147,7 +147,7 @@ const Reminder: React.FC<Props> = ({
       ? formatAmountNumber(
           parseFloat(new BigNumber(formatUnits(amountToParsed, decimals)).toFixed(6, BigNumber.ROUND_DOWN)),
           6,
-        )
+        ).toString()
       : amountBri && amountBri !== ('.' || '')
       ? '0'
       : ''
