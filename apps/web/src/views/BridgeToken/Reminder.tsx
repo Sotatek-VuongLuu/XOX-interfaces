@@ -75,51 +75,51 @@ const Reminder: React.FC<Props> = ({
   tokenOutput,
 }) => {
   const { t } = useTranslation()
-  const [bridgeTokenFee, setBridgeTokenFee] = useState<BridgeTokenFee>(initialBridgeTokenFee)
-  const addressTokenOutput = tokenOutput?.address
+  const [bridgeTokenFee, setBridgeTokenFee] = useState<BridgeTokenFee | undefined>(undefined)
 
-  const debounceFn = useCallback(debounce(fetchData, 800), [])
+  // const debounceFn = useCallback(debounce(fetchData, 800), [])
+
+  // useEffect(() => {
+  //   debounceFn(amount, chainId)
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [chainId, amount, addressTokenOutput])
 
   useEffect(() => {
-    debounceFn(amount, chainId)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, amount, addressTokenOutput])
+    if (!chainId) {
+      setBridgeTokenFee(initialBridgeTokenFee)
+      setAmountTo('')
+      return
+    }
 
-  async function fetchData(amountBri, chainIdBri) {
-    try {
-      if (!chainId) {
-        setBridgeTokenFee(initialBridgeTokenFee)
-        setAmountTo('')
-        return
-      }
+    fetchBridgeTokenFee(chainId, '1')
+      .then((res) => {
+        const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data
+        if (!bridgeTokenFeeCurrent) return
 
-      const res = await fetchBridgeTokenFee(chainIdBri, amountBri && amountBri !== ('.' || '') ? amountBri : '0')
-      const bridgeTokenFeeCurrent: BridgeTokenFee = res?.data || bridgeTokenFee
-      // const bridgeTokenFee: BridgeTokenFee = {
-      //   gasFee: '0.13681800000000000014',
-      //   minCrossChainFee: '0.01',
-      //   minAmount: '0.15681800000000000014',
-      //   maxAmount: '2000000',
-      // }
-      if (bridgeTokenFeeCurrent) {
         setBridgeTokenFee((prev) => ({
           ...prev,
           ...bridgeTokenFeeCurrent,
         }))
-        const amountTo = getAmountTo(
-          bridgeTokenFeeCurrent.gasFee,
-          bridgeTokenFeeCurrent.minCrossChainFee,
-          bridgeTokenFeeCurrent.minAmount,
-          amountBri,
-        )
-        setAmountTo(amountTo)
-        onBridgeTokenFeeChange(bridgeTokenFeeCurrent.minAmount, bridgeTokenFeeCurrent.maxAmount)
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log('error>>', error)
-    }
-  }
+      })
+      .catch((error) => {
+        // eslint-disable-next-line no-console
+        console.log('error>>', error)
+      })
+  }, [chainId])
+
+  useEffect(() => {
+    if (!bridgeTokenFee) return
+
+    const amountTo = getAmountTo(
+      bridgeTokenFee.gasFee,
+      bridgeTokenFee.minCrossChainFee,
+      bridgeTokenFee.minAmount,
+      amount,
+    )
+    setAmountTo(amountTo)
+    onBridgeTokenFeeChange(bridgeTokenFee.minAmount, bridgeTokenFee.maxAmount)
+  }, [bridgeTokenFee, amount])
+
   const formatNumberStr = (numberStr: string) => {
     if (!numberStr) {
       return '0.000'
