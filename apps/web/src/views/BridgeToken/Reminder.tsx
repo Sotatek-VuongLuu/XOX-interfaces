@@ -6,6 +6,7 @@ import debounce from 'lodash/debounce'
 import { fetchBridgeTokenFee } from '../../context/globalData'
 import BigNumber from 'bignumber.js'
 import { useTranslation } from '@pancakeswap/localization'
+import { formatAmountNumber } from '@pancakeswap/utils/formatBalance'
 
 const Wrapper = styled.div`
   border-radius: 10px;
@@ -143,7 +144,10 @@ const Reminder: React.FC<Props> = ({
     const totalFeeParsed = parseUnits(gasFee, decimals).add(parseUnits(crosschainFee, decimals))
     const amountToParsed = amountBri && amountBri !== ('.' || '') && parseUnits(amountBri, decimals).sub(totalFeeParsed)
     return amountBri && amountBri !== ('.' || '') && !amountToParsed.isNegative()
-      ? new BigNumber(formatUnits(amountToParsed, decimals)).toFixed(6, BigNumber.ROUND_DOWN)
+      ? formatAmountNumber(
+          parseFloat(new BigNumber(formatUnits(amountToParsed, decimals)).toFixed(6, BigNumber.ROUND_DOWN)),
+          6,
+        )
       : amountBri && amountBri !== ('.' || '')
       ? '0'
       : ''
