@@ -274,6 +274,11 @@ export default function CurrencyInputPanel({
     setActivePercent(null)
   }, [value])
 
+
+  useEffect(() => {
+    onUserInput('')
+  }, [])
+
   return (
     <Box position="relative" id={id}>
       <Flex alignItems="center" justifyContent="space-between">

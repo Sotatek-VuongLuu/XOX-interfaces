@@ -848,6 +848,10 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
     }
   }, [approval, approvalSubmitted])
 
+  useEffect(() => {
+    onLiquidityInput('')
+  }, [])
+
   return (
     <Page>
       {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
