@@ -64,11 +64,11 @@ const Wrapper = styled.div`
       place-content: center;
     }
 
-    .box-4 {
-      grid-template-columns: repeat(4, 1fr);
+    .box-3 {
+      grid-template-columns: repeat(3, 1fr);
     }
 
-    .box-5 {
+    .box-4 {
       grid-template-columns: repeat(4, 1fr);
     }
 
@@ -109,6 +109,20 @@ const EcosystemPartners = () => {
           <a href="https://www.bnbchain.org/en" target="_blank">
             <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`} alt="BNBChain-full" />
           </a>
+          <a href="https://www.okx.com/" target="_blank">
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/OKX-full.svg`} alt="OKX-full" />
+          </a>
+          <a href="https://quickswap.exchange/" target="_blank">
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Quickswap-full.svg`} alt="Quickswap-full" />
+          </a>
+          <a href="https://www.wombat.exchange/" target="_blank">
+            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Wombat-full.svg`} alt="Wombat-full" />
+          </a>
+          {/* <a href="https://coin98.com/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
+              </a> */}
+        </div>
+        <div className="box box-3">
           <a href="https://kyberswap.com/" target="_blank">
             <img
               src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
@@ -125,7 +139,7 @@ const EcosystemPartners = () => {
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
               </a> */}
         </div>
-        <div className="box box-5">
+        <div className="box box-4">
           <a href="https://bitgert.com/" target="_blank">
             <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
           </a>
@@ -142,7 +156,7 @@ const EcosystemPartners = () => {
                 <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
               </a> */}
         </div>
-        {/* <div className="box box-4">
+        {/* <div className="box box-3">
           <a href="https://bitgert.com/" target="_blank">
             <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
           </a>

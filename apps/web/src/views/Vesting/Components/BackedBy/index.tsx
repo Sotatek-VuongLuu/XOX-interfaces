@@ -150,7 +150,7 @@ const WrapperItem = styled(Flex)`
     }
 
     &.backed > div {
-      > div {
+      > div.list-logo {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
         grid-column-gap: 58px;
@@ -276,6 +276,20 @@ const BackedByItem = ({ item }) => {
                   alt="BNBChain-full"
                 />
               </a>
+              <a href="https://www.okx.com/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/OKX-full.svg`} alt="OKX-full" />
+              </a>
+              <a href="https://quickswap.exchange/" target="_blank">
+                <img
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Quickswap-full.svg`}
+                  alt="Quickswap-full"
+                />
+              </a>
+              <a href="https://www.wombat.exchange/" target="_blank">
+                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Wombat-full.svg`} alt="Wombat-full" />
+              </a>
+            </div>
+            <div>
               <a href="https://kyberswap.com/" target="_blank">
                 <img
                   src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
@@ -318,52 +332,50 @@ const BackedByItem = ({ item }) => {
         )}
 
         {width < 900 && (
-          <>
-            <div>
-              <a href="https://www.bnbchain.org/en" target="_blank">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`}
-                  alt="BNBChain-full"
-                />
-              </a>
-              <a href="https://kyberswap.com/" target="_blank">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
-                  alt="KyberNetwork-full"
-                />
-              </a>
-            </div>
-            <div>
-              <a href="https://izumi.finance/home" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/iZumi-full.svg`} alt="iZumi-full" />
-              </a>
-              <a href="https://syncswap.xyz/" target="_blank">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`}
-                  alt="Syncswap-full"
-                />
-              </a>
-            </div>
-            <div>
-              <a href="https://bitgert.com/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
-              </a>
-              <a href="https://app.velocore.xyz/swap" target="_blank">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`}
-                  alt="Velocore-full"
-                />
-              </a>
-            </div>
-            <div>
-              <a href="https://kingpad.co/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
-              </a>
-              <a href="https://www.xo-dex.com" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
-              </a>
-            </div>
-          </>
+          <div className="list-logo">
+            <a href="https://www.bnbchain.org/en" target="_blank">
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`} alt="BNBChain-full" />
+            </a>
+            <a href="https://www.okx.com/" target="_blank">
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/OKX-full.svg`} alt="OKX-full" />
+            </a>
+            <a href="https://quickswap.exchange/" target="_blank">
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Quickswap-full.svg`}
+                alt="Quickswap-full"
+              />
+            </a>
+            <a href="https://www.wombat.exchange/" target="_blank">
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Wombat-full.svg`}
+                alt="KyberNetwork-full"
+              />
+            </a>
+            <a href="https://kyberswap.com/" target="_blank">
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
+                alt="KyberNetwork-full"
+              />
+            </a>
+            <a href="https://izumi.finance/home" target="_blank">
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/iZumi-full.svg`} alt="iZumi-full" />
+            </a>
+            <a href="https://syncswap.xyz/" target="_blank">
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`} alt="Syncswap-full" />
+            </a>
+            <a href="https://bitgert.com/" target="_blank">
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
+            </a>
+            <a href="https://app.velocore.xyz/swap" target="_blank">
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`} alt="Velocore-full" />
+            </a>
+            <a href="https://kingpad.co/" target="_blank">
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
+            </a>
+            <a href="https://www.xo-dex.com" target="_blank">
+              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
+            </a>
+          </div>
         )}
       </div>
     </WrapperItem>
