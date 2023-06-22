@@ -1381,126 +1381,132 @@ function DevV2() {
   const { toastSuccess, toastError } = useToast()
   const [timeRecall, setTimeRecall] = useState(7)
   const { width } = useWindowSize()
-  const { isMobile } = useMatchBreakpoints()
 
-  const SOCIALS: Array<ISocial> = [
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/1.svg`,
-      name: t('XOX Dex V1'),
-      link: t('Trade Now'),
-      heft: '/swap',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/2.svg`,
-      name: t('Referral Program'),
-      link: t('Earn Now'),
-      heft: '/referral',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/3.svg`,
-      name: t('Bridge'),
-      link: t('Bridge Now'),
-      heft: '/bridge-token',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/4.svg`,
-      name: t('Stable Coin'),
-      link: t('Stake Now'),
-      heft: '/stable-coin',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/5.svg`,
-      name: t('Liquidity Mining'),
-      link: t('Earn Now'),
-      heft: '/liquidity',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/6.svg`,
-      name: t('Yield farming'),
-      link: t('Earn Now'),
-      heft: '/pools',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/7.svg`,
-      name: t('Assets Manager'),
-      link: t('Explore Now'),
-      heft: '/info',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/1.svg`,
-      name: t('XOX Dex V2'),
-      link: t('Best Rates on DeFi'),
-      heft: '/dex-v2',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/8.svg`,
-      name: t('XOX Mobile App'),
-      link: t('Your Defi Key'),
-      heft: '#',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/9.svg`,
-      name: t('XOX Launchpad'),
-      link: t('Invest Now'),
-      heft: '#',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/10.svg`,
-      name: t('Coin Listing Site'),
-      link: t('Don’t Miss Out'),
-      heft: '#',
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/11.svg`,
-      name: t('Lottery Game'),
-      link: t('Risk Small - Earn Big'),
-      heft: '#',
-    },
-  ]
+  const SOCIALS: Array<ISocial> = useMemo(() => {
+    return [
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/1.svg`,
+        name: t('XOX Dex V1'),
+        link: t('Trade Now'),
+        heft: '/swap',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/2.svg`,
+        name: t('Referral Program'),
+        link: t('Earn Now'),
+        heft: '/referral',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/3.svg`,
+        name: t('Bridge'),
+        link: t('Bridge Now'),
+        heft: '/bridge-token',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/4.svg`,
+        name: t('Stable Coin'),
+        link: t('Stake Now'),
+        heft: '/stable-coin',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/5.svg`,
+        name: t('Liquidity Mining'),
+        link: t('Earn Now'),
+        heft: '/liquidity',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/6.svg`,
+        name: t('Yield farming'),
+        link: t('Earn Now'),
+        heft: '/pools',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/7.svg`,
+        name: t('Assets Manager'),
+        link: t('Explore Now'),
+        heft: '/info',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/1.svg`,
+        name: t('XOX Dex V2'),
+        link: t('Best Rates on DeFi'),
+        heft: '/dex-v2',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/8.svg`,
+        name: t('XOX Mobile App'),
+        link: t('Your Defi Key'),
+        heft: '#',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/9.svg`,
+        name: t('XOX Launchpad'),
+        link: t('Invest Now'),
+        heft: '#',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/10.svg`,
+        name: t('Coin Listing Site'),
+        link: t('Don’t Miss Out'),
+        heft: '#',
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/11.svg`,
+        name: t('Lottery Game'),
+        link: t('Risk Small - Earn Big'),
+        heft: '#',
+      },
+    ]
+  }, [t])
 
-  const TABECOSYSTEM: Array<string> = ['DEXes', 'Aggregators', 'Blockchains', 'Bridges']
-  const TABWHATYOUCANDO: Array<string> = [t('Swap'), t('Limit Order'), t('Earn'), t('Liquidity'), t('API')]
+  const TABECOSYSTEM: Array<string> = useMemo(() => ['DEXes', 'Aggregators', 'Blockchains', 'Bridges'], [])
+  const TABWHATYOUCANDO: Array<string> = useMemo(
+    () => [t('Swap'), t('Limit Order'), t('Earn'), t('Liquidity'), t('API')],
+    [t],
+  )
 
-  const SAFERELIABLE: Array<any> = [
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Non-cutodial.png`,
-      name: t('Non-custodial'),
-      describe: t('XOX Dex V2 is a Permissionless and Non-custodial Decentralized Protocol.'),
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Anonymous.png`,
-      name: t('Anonymous'),
-      describe: t('No KYC or Sign Up required. Just connect your wallets and start trading.'),
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/transparent.png`,
-      name: t('Transparent'),
-      describe: t(
-        'Check every single transaction or smart contract before allowing it to access your funds, track the whole chain of events happening in every blockchain.',
-      ),
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Permissionless.png`,
-      name: t('Permissionless'),
-      describe: t(
-        'Every supported Blockchains is public and open for everyone to trade and own assets without the supervision of governments or financial institutions.',
-      ),
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audited.png`,
-      name: t('Audited'),
-      describe: t(
-        `XOX Labs' smart contracts and platforms are fully audited by top-tier auditors to ensure the security of the users.`,
-      ),
-    },
-    {
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Tested-02.png`,
-      name: t('Tested'),
-      describe: t(
-        'Every new feature and protocol integration is heavily tested in every possible situation before making it accessible to the users to ensure performance and safety.',
-      ),
-    },
-  ]
+  const SAFERELIABLE: Array<any> = useMemo(() => {
+    return [
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Non-cutodial.png`,
+        name: t('Non-custodial'),
+        describe: t('XOX Dex V2 is a Permissionless and Non-custodial Decentralized Protocol.'),
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Anonymous.png`,
+        name: t('Anonymous'),
+        describe: t('No KYC or Sign Up required. Just connect your wallets and start trading.'),
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/transparent.png`,
+        name: t('Transparent'),
+        describe: t(
+          'Check every single transaction or smart contract before allowing it to access your funds, track the whole chain of events happening in every blockchain.',
+        ),
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Permissionless.png`,
+        name: t('Permissionless'),
+        describe: t(
+          'Every supported Blockchains is public and open for everyone to trade and own assets without the supervision of governments or financial institutions.',
+        ),
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audited.png`,
+        name: t('Audited'),
+        describe: t(
+          `XOX Labs' smart contracts and platforms are fully audited by top-tier auditors to ensure the security of the users.`,
+        ),
+      },
+      {
+        icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Tested-02.png`,
+        name: t('Tested'),
+        describe: t(
+          'Every new feature and protocol integration is heavily tested in every possible situation before making it accessible to the users to ensure performance and safety.',
+        ),
+      },
+    ]
+  }, [t])
 
   const VALUE: Array<IValue> = [
     {
