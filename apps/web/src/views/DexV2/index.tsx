@@ -1659,7 +1659,7 @@ function DevV2() {
       setTabEcosystem(tabEcosystemTemp)
       document.getElementById('tab_ecosystem_wrapper').scrollTo({ left: 100 * tabEcosystemTemp, behavior: 'smooth' })
 
-      setTimeRecall(5)
+      setTimeRecall(4)
     }, 1000)
     return () => clearTimeout(myId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
