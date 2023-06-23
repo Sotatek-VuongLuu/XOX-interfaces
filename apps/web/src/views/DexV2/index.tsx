@@ -1379,7 +1379,8 @@ function DevV2() {
   const [emailErrorClass, setEmailErrorClass] = useState<string>('')
   const [textErrorClass, setTextErrorClass] = useState<string>('')
   const { toastSuccess, toastError } = useToast()
-  const [timeRecall, setTimeRecall] = useState(7)
+  const [timeRecall, setTimeRecall] = useState(5)
+  const [timeRecall2, setTimeRecall2] = useState(7)
   const { width } = useWindowSize()
 
   const SOCIALS: Array<ISocial> = useMemo(() => {
@@ -1650,7 +1651,7 @@ function DevV2() {
 
   useEffect(() => {
     const myId = setTimeout(() => {
-      if (timeRecall > 0) {
+      if (timeRecall >= 0) {
         setTimeRecall(timeRecall - 1)
         return
       }
@@ -1658,17 +1659,29 @@ function DevV2() {
       setTabEcosystem(tabEcosystemTemp)
       document.getElementById('tab_ecosystem_wrapper').scrollTo({ left: 100 * tabEcosystemTemp, behavior: 'smooth' })
 
+      setTimeRecall(5)
+    }, 1000)
+    return () => clearTimeout(myId)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [timeRecall])
+
+  useEffect(() => {
+    const myId = setTimeout(() => {
+      if (timeRecall2 >= 0) {
+        setTimeRecall2(timeRecall2 - 1)
+        return
+      }
       const tabWHatYouCanDoTemp = (tabWHatYouCanDo + 1) % 5
       setTabWHatYouCanDo(tabWHatYouCanDoTemp)
       document
         .getElementById('tab_what_you_can_do_wrapper')
         .scrollTo({ left: 100 * tabWHatYouCanDoTemp, behavior: 'smooth' })
 
-      setTimeRecall(7)
+      setTimeRecall2(7)
     }, 1000)
     return () => clearTimeout(myId)
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [timeRecall])
+  }, [timeRecall2])
 
   useEffect(() => {
     const textHeaders = document.querySelectorAll('.text-header div')
@@ -1842,7 +1855,10 @@ function DevV2() {
               >
                 <div
                   key={String(i + item)}
-                  onClick={() => setTabEcosystem(i)}
+                  onClick={() => {
+                    setTabEcosystem(i)
+                    setTimeRecall(30)
+                  }}
                   aria-hidden="true"
                   className={`${i === tabEcosystem ? 'tab_ecosystem active' : 'tab_ecosystem'}`}
                 >
