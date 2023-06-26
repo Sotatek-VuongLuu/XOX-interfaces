@@ -92,6 +92,81 @@ const Wrapper = styled.div`
   }
 `
 
+export const partnersList = [
+  [
+    {
+      image_name: 'BNBChain_logo',
+      href: 'https://www.bnbchain.org/en',
+    },
+    {
+      image_name: 'zksync_logo',
+      href: 'https://zksync.io/',
+    },
+    {
+      image_name: 'Syncswap_logo',
+      href: 'https://syncswap.xyz/',
+    },
+    {
+      image_name: 'OKX_logo',
+      href: 'https://www.okx.com',
+    },
+  ],
+  [
+    {
+      image_name: 'Quickswap_logo',
+      href: 'https://quickswap.exchange/',
+    },
+    {
+      image_name: 'Wombat_logo',
+      href: 'https://www.wombat.exchange/',
+    },
+    {
+      image_name: 'KyberNetwork_logo',
+      href: 'https://kyberswap.com',
+    },
+    {
+      image_name: 'ElkFinance_logo',
+      href: 'https://elk.finance/',
+    },
+  ],
+  [
+    {
+      image_name: 'Dexalot_logo',
+      href: 'https://dexalot.com/',
+    },
+    {
+      image_name: 'Bitgert_logo',
+      href: 'https://bitgert.com',
+    },
+    {
+      image_name: 'KingPad_logo',
+      href: 'https://kingpad.co',
+    },
+    {
+      image_name: 'iZumi_logo',
+      href: 'https://izumi.finance/home',
+    },
+  ],
+  [
+    {
+      image_name: 'Coin98_logo',
+      href: 'https://coin98.com',
+    },
+    {
+      image_name: 'Velocore_logo',
+      href: 'https://app.velocore.xyz/swap',
+    },
+    {
+      image_name: 'Xodex_logo',
+      href: 'https://www.xo-dex.com',
+    },
+    {
+      image_name: 'Orion_logo',
+      href: 'https://trade.orionprotocol.io/swap/ORN-USDT',
+    },
+  ],
+]
+
 const EcosystemPartners = () => {
   const { t } = useTranslation()
 
@@ -105,77 +180,22 @@ const EcosystemPartners = () => {
       </p>
 
       <div className="imgs">
-        <div className="box box-4">
-          <a href="https://www.bnbchain.org/en" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`} alt="BNBChain-full" />
-          </a>
-          <a href="https://www.okx.com/" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/OKX-full.svg`} alt="OKX-full" />
-          </a>
-          <a href="https://quickswap.exchange/" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Quickswap-full.svg`} alt="Quickswap-full" />
-          </a>
-          <a href="https://www.wombat.exchange/" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Wombat-full.svg`} alt="Wombat-full" />
-          </a>
-          {/* <a href="https://coin98.com/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
-              </a> */}
-        </div>
-        <div className="box box-3">
-          <a href="https://kyberswap.com/" target="_blank">
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
-              alt="KyberNetwork-full"
-            />
-          </a>
-          <a href="https://izumi.finance/home" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/iZumi-full.svg`} alt="iZumi-full" />
-          </a>
-          <a href="https://syncswap.xyz/" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`} alt="Syncswap-full" />
-          </a>
-          {/* <a href="https://coin98.com/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
-              </a> */}
-        </div>
-        <div className="box box-4">
-          <a href="https://bitgert.com/" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
-          </a>
-          <a href="https://app.velocore.xyz/swap" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`} alt="Velocore-full" />
-          </a>
-          <a href="https://kingpad.co/" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
-          </a>
-          <a href="https://www.xo-dex.com" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
-          </a>
-          {/* <a href="https://coin98.com/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
-              </a> */}
-        </div>
-        {/* <div className="box box-3">
-          <a href="https://bitgert.com/" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
-          </a>
-          <a href="https://kingpad.co/" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
-          </a>
-          <a href="https://kyberswap.com/" target="_blank">
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
-              alt="KyberNetwork-full"
-            />
-          </a>
-          <a href="https://www.xo-dex.com" target="_blank">
-            <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
-          </a>
-          <a href="https://coin98.com/" target="_blank">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Coin98-full.svg`} alt="Coin98-full" />
-              </a>
-        </div> */}
+        {partnersList.map((partnerGroup) => {
+          return (
+            <div className={`box box-${partnerGroup.length}`}>
+              {partnerGroup.map((partner) => {
+                return (
+                  <a href={partner.href} target="_blank">
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
+                      alt={partner.image_name}
+                    />
+                  </a>
+                )
+              })}
+            </div>
+          )
+        })}
       </div>
     </Wrapper>
   )

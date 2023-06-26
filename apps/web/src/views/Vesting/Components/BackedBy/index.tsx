@@ -6,6 +6,7 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
+import { partnersList } from 'views/Home/components/EcosystemPartners'
 
 const Wrapper = styled.div`
   margin: 24px 0px 42px;
@@ -272,6 +273,7 @@ const SecuredByItem = ({ item }) => {
 const BackedByItem = ({ item }) => {
   const { width } = useWindowSize()
   const { t } = useTranslation()
+
   return (
     <WrapperItem
       className="container backed"
@@ -292,128 +294,39 @@ const BackedByItem = ({ item }) => {
             slidesPerView={4}
             slidesPerGroup={4}
             loop={true}
+            speed={1500}
             autoplay={{
               delay: 3000,
               disableOnInteraction: false,
             }}
           >
-            <SwiperSlide>
-              <a href="https://www.bnbchain.org/en" target="_blank" className="logo-link">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`}
-                  alt="BNBChain-full"
-                />
-              </a>
-            </SwiperSlide>
-            <SwiperSlide>
-              <a href="https://www.okx.com/" target="_blank" className="logo-link">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/OKX-full.svg`} alt="OKX-full" />
-              </a>
-            </SwiperSlide>
-            <SwiperSlide>
-              <a href="https://quickswap.exchange/" target="_blank" className="logo-link">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Quickswap-full.svg`}
-                  alt="Quickswap-full"
-                />
-              </a>
-            </SwiperSlide>
-            <SwiperSlide>
-              <a href="https://www.wombat.exchange/" target="_blank" className="logo-link">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Wombat-full.svg`} alt="Wombat-full" />
-              </a>
-            </SwiperSlide>
-            <SwiperSlide>
-              <a href="https://kyberswap.com/" target="_blank" className="logo-link">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
-                  alt="KyberNetwork-full"
-                />
-              </a>
-            </SwiperSlide>
-            <SwiperSlide>
-              <a href="https://izumi.finance/home" target="_blank" className="logo-link">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/iZumi-full.svg`} alt="iZumi-full" />
-              </a>
-            </SwiperSlide>
-            <SwiperSlide>
-              <a href="https://syncswap.xyz/" target="_blank" className="logo-link">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`}
-                  alt="Syncswap-full"
-                />
-              </a>
-            </SwiperSlide>
-            <SwiperSlide>
-              <a href="https://bitgert.com/" target="_blank" className="logo-link">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
-              </a>
-            </SwiperSlide>
-            <SwiperSlide>
-              <a href="https://app.velocore.xyz/swap" target="_blank" className="logo-link">
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`}
-                  alt="Velocore-full"
-                />
-              </a>
-            </SwiperSlide>
-            <SwiperSlide>
-              <a href="https://kingpad.co/" target="_blank" className="logo-link">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
-              </a>
-            </SwiperSlide>
-            <SwiperSlide>
-              <a href="https://www.xo-dex.com" target="_blank" className="logo-link">
-                <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
-              </a>
-            </SwiperSlide>
+            {partnersList.flat().map((partner) => {
+              return (
+                <SwiperSlide>
+                  <a href={partner.href} target="_blank" className="logo-link">
+                    <img
+                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
+                      alt={partner.image_name}
+                    />
+                  </a>
+                </SwiperSlide>
+              )
+            })}
           </SwiperWrapper>
         )}
 
         {width < 900 && (
           <div className="list-logo">
-            <a href="https://www.bnbchain.org/en" target="_blank">
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/BNBChain-full.svg`} alt="BNBChain-full" />
-            </a>
-            <a href="https://www.okx.com/" target="_blank">
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/OKX-full.svg`} alt="OKX-full" />
-            </a>
-            <a href="https://quickswap.exchange/" target="_blank">
-              <img
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Quickswap-full.svg`}
-                alt="Quickswap-full"
-              />
-            </a>
-            <a href="https://www.wombat.exchange/" target="_blank">
-              <img
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Wombat-full.svg`}
-                alt="KyberNetwork-full"
-              />
-            </a>
-            <a href="https://kyberswap.com/" target="_blank">
-              <img
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KyberNetwork-full.svg`}
-                alt="KyberNetwork-full"
-              />
-            </a>
-            <a href="https://izumi.finance/home" target="_blank">
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/iZumi-full.svg`} alt="iZumi-full" />
-            </a>
-            <a href="https://syncswap.xyz/" target="_blank">
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Syncswap-full.svg`} alt="Syncswap-full" />
-            </a>
-            <a href="https://bitgert.com/" target="_blank">
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bitgert-full.svg`} alt="Bitgert-full" />
-            </a>
-            <a href="https://app.velocore.xyz/swap" target="_blank">
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Velocore-full.svg`} alt="Velocore-full" />
-            </a>
-            <a href="https://kingpad.co/" target="_blank">
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/KingPad-full.svg`} alt="KingPad-full" />
-            </a>
-            <a href="https://www.xo-dex.com" target="_blank">
-              <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Xodex-full.svg`} alt="Xodex-full" />
-            </a>
+            {partnersList.flat().map((partner) => {
+              return (
+                <a href={partner.href} target="_blank">
+                  <img
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
+                    alt={partner.image_name}
+                  />
+                </a>
+              )
+            })}
           </div>
         )}
       </div>
