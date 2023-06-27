@@ -128,6 +128,7 @@ function MobileModal<T>({
       fontWeight="400"
       lineHeight="24px"
       color="rgba(255, 255, 255, 0.6)"
+      style={{ lineHeight: '17px' }}
     >
       1.{' '}
       {t(
@@ -219,8 +220,19 @@ function MobileModal<T>({
         wallets={wallets}
         onClick={(wallet) => {
           connectWallet(wallet)
-          if (wallet.deepLink && wallet.installed === false) {
+          if (wallet.deepLink && wallet.installed === false && wallet.id !== 'okx') {
             window.open(wallet.deepLink)
+          } else if (wallet.deepLink) {
+            if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
+              window.open('https://play.google.com/store/apps/details?id=com.okinc.okex.gp&hl=en&gl=US', '_blank')
+            }
+            if (navigator.userAgent.toLowerCase().indexOf('iphone') > -1) {
+              window.open('https://apps.apple.com/us/app/okx-buy-bitcoin-eth-crypto/id1327268470', '_blank')
+            }
+            // setTimeout(() => {
+            //   window.open('https://itunes.com/apps/okx', '_blank')
+            // }, 25)
+            // window.location.href = wallet.deepLink
           }
         }}
       />
@@ -239,7 +251,7 @@ function WalletSelect<T>({
 }) {
   const [selected] = useSelectedWallet()
   const recentlyWallet = typeof window !== undefined && window.localStorage.getItem('recently-wallet')
-  const isMobile = useMatchBreakpoints()
+  const { isMobile } = useMatchBreakpoints()
 
   const marginX = isMobile ? '4px' : '10px'
 
@@ -260,8 +272,8 @@ function WalletSelect<T>({
             alignItems="center"
             style={{
               padding: '1px',
-              height: 'fit-content',
-              width: 'fit-content',
+              height: isMobile ? 'fit-content' : '150px',
+              width: isMobile ? 'fit-content' : '150px',
               maxWidth: '45%',
               margin: `0 ${marginX}`,
               background:

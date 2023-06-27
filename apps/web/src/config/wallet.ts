@@ -37,7 +37,7 @@ const walletsConfig = ({
     {
       id: 'metamask',
       title: 'Metamask',
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/wallets/metamask2.png`,
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/wallets/metamask.svg`,
       installed: typeof window !== 'undefined' && Boolean(window.ethereum?.isMetaMask) && metaMaskConnector.ready,
       connectorId: ConnectorNames.MetaMask,
       deepLink: `https://metamask.app.link/dapp/${process.env.NEXT_PUBLIC_SITE_DOMAIN}/swap/`,
@@ -47,7 +47,7 @@ const walletsConfig = ({
     {
       id: 'trust',
       title: 'Trust Wallet',
-      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/wallets/trustwallet.png`,
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/wallets/trust.svg`,
       connectorId: ConnectorNames.Injected,
       installed:
         typeof window !== 'undefined' &&
