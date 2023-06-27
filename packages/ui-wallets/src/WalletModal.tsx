@@ -214,6 +214,7 @@ function MobileModal<T>({
           </Text>
         </AtomBox>
       )}
+      {JSON.stringify(wallets)}
       <WalletSelect
         displayCount={MOBILE_DEFAULT_DISPLAY_COUNT}
         wallets={wallets}
