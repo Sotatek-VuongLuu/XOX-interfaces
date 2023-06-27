@@ -43,19 +43,9 @@ export const modalWrapperClass = style([
   }),
 ])
 
-export const desktopWalletSelectionClass = style(
-  responsiveStyle({
-    xs: {
-      maxWidth: '100%',
-    },
-    sm: {
-      maxWidth: '360px',
-    },
-    lg: {
-      maxWidth: '370px',
-    },
-  }),
-)
+export const desktopWalletSelectionClass = style({
+  maxWidth: '100%',
+})
 
 export const walletSelectWrapperClass = style(
   responsiveStyle({

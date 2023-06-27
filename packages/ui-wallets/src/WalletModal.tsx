@@ -5,16 +5,20 @@ import {
   Button,
   CloseIcon,
   Heading,
+  HelpIcon,
   Image,
   LinkExternal,
   ModalV2,
   ModalV2Props,
   ModalWrapper,
   MoreHorizontalIcon,
+  QuestionHelper,
   SvgProps,
   Tab,
   TabMenu,
   Text,
+  useMatchBreakpoints,
+  useTooltip,
   WarningIcon,
 } from '@pancakeswap/uikit'
 import { atom, useAtom } from 'jotai'
@@ -116,20 +120,37 @@ function MobileModal<T>({
   onDismiss: () => void
 }) {
   const { t } = useTranslation()
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    <Text
+      fontSize="16px"
+      fontFamily="Inter"
+      fontStyle="normal"
+      fontWeight="400"
+      lineHeight="24px"
+      color="rgba(255, 255, 255, 0.6)"
+    >
+      1.{' '}
+      {t(
+        'In case you already installed MetaMask and OKX extension, at the first connection, you have to choose MetaMask or OKX. Once you choose, the selected wallet will be connected after that no matter which wallet you choose is. To resolve the issue, you can disable the wallet which you do not want to connect, in the page chrome://extensions/',
+      )}
+      <br />
+      <br />
+      2.{' '}
+      {t(
+        'In case you installed OKX extension but MetaMask not yet, when clicking on MetaMask, you will be connected to OKX wallet.',
+      )}
+    </Text>,
+    { placement: 'auto' },
+  )
 
   const [selected] = useSelectedWallet()
   const [error] = useAtom(errorAtom)
 
   const installedWallets: WalletConfigV2<T>[] = wallets.filter((w) => w.installed)
-  const walletsToShow: WalletConfigV2<T>[] = wallets.filter((w) => {
-    if (installedWallets.length) {
-      return w.installed
-    }
-    return w.installed !== false || w.deepLink
-  })
+  const walletsToShow: WalletConfigV2<T>[] = [wallets[1]]
 
   return (
-    <AtomBox width="full" display="flex" flexDirection="column" style={{ padding: '32px 24px' }}>
+    <AtomBox width="full" display="flex" flexDirection="column" style={{ padding: '32px 12px' }}>
       {error ? (
         <AtomBox
           display="flex"
@@ -166,17 +187,33 @@ function MobileModal<T>({
             {t('Connect Wallet')}
           </Heading>
           <Text
-            fontSize="16px"
+            fontSize="14px"
             fontFamily="Inter"
             fontStyle="normal"
             fontWeight="400"
             lineHeight="24px"
             color="rgba(255, 255, 255, 0.6)"
             textAlign="center"
-            mb="40px"
+            margin="0 auto 16px auto"
             style={{ width: '239px' }}
           >
             {t('Start by connecting with one of these wallets below.')}
+          </Text>
+          <Text
+            fontSize="14px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="400"
+            lineHeight="17px"
+            color="rgba(255, 255, 255, 0.6)"
+            textAlign="center"
+            mb="40px"
+          >
+            {t('Reminder: Conflict between MetaMask and OKX')}
+            {tooltipVisible && tooltip}
+            <span ref={targetRef} style={{ position: 'relative', top: '5px' }}>
+              <HelpIcon color="#515151" width={24} />
+            </span>
           </Text>
         </AtomBox>
       )}
@@ -204,9 +241,15 @@ function WalletSelect<T>({
   displayCount?: number
 }) {
   const [selected] = useSelectedWallet()
+  const recentlyWallet = typeof window !== undefined && window.localStorage.getItem('recently-wallet')
+  const isMobile = useMatchBreakpoints()
+
+  const marginX = isMobile ? '4px' : '10px'
+  const paddingY = isMobile ? '4px' : '10px'
+
   return (
     <AtomBox className={walletSelectWrapperClass}>
-      {wallets.map((wallet) => {
+      {wallets.map((wallet, index) => {
         const isImage = typeof wallet.icon === 'string'
         const Icon = wallet.icon
 
@@ -220,17 +263,21 @@ function WalletSelect<T>({
             alignItems="center"
             style={{
               padding: '1px',
-              height: '142px',
+              height: 'fit-content',
               width: '150px',
               maxWidth: '45%',
-              margin: '0 10px',
+              margin:
+                index === 0 ? `0 ${marginX} 0 0` : index === wallets.length - 1 ? `0 0 0 ${marginX}` : `0 ${marginX}`,
               background:
-                wallet.id === selected?.id || (wallet.installed && !selected?.id)
+                wallet.id === selected?.id || (wallet.installed && !selected?.id && recentlyWallet === wallet.id)
                   ? 'linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)'
                   : '#1D1C1C',
             }}
             flexDirection="column"
-            onClick={() => onClick(wallet)}
+            onClick={() => {
+              onClick(wallet)
+              typeof window !== undefined && window.localStorage.setItem('recently-wallet', wallet.id)
+            }}
           >
             <div
               style={{
@@ -243,6 +290,7 @@ function WalletSelect<T>({
                 flexDirection: 'column',
                 background: '#1D1C1C',
                 borderRadius: '8px',
+                padding: `${paddingY} 0`,
               }}
             >
               <AtomBox
@@ -273,7 +321,7 @@ function WalletSelect<T>({
               )} */}
               </AtomBox>
               <Text
-                fontSize="18px"
+                fontSize={['14px', null, '18px']}
                 fontFamily="Inter"
                 fontStyle="normal"
                 fontWeight="400"
@@ -347,7 +395,11 @@ function DesktopModal<T>({
         zIndex="modal"
         borderRadius="card"
         className={desktopWalletSelectionClass}
-        style={{ border: '1px solid rgba(255, 255, 255, 0.1)', boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.2)' }}
+        style={{
+          border: '1px solid rgba(255, 255, 255, 0.1)',
+          boxShadow: '0px 0px 20px rgba(0, 0, 0, 0.2)',
+          background: '#101010',
+        }}
       >
         <div style={{ position: 'absolute', top: '11px', right: '11px', cursor: 'pointer' }} onClick={onDismiss}>
           <CloseIcon />
@@ -375,9 +427,49 @@ function DesktopModal<T>({
             lineHeight="24px"
             color="rgba(255, 255, 255, 0.6)"
             textAlign="center"
-            mb="40px"
+            style={{ width: '239px' }}
+            mb="16px"
+            mx="auto"
           >
-            {t('Start by connecting with one of these wallets below')}
+            {t('Start by connecting with one of these wallets below')}.
+          </Text>
+          <Text
+            fontSize="16px"
+            fontFamily="Inter"
+            fontStyle="normal"
+            fontWeight="400"
+            lineHeight="24px"
+            color="rgba(255, 255, 255, 0.6)"
+            textAlign="center"
+            mb="40px"
+            display="flex"
+          >
+            {t('Reminder: Conflict between MetaMask and OKX')}
+            <QuestionHelper
+              text={
+                <Text
+                  fontSize="16px"
+                  fontFamily="Inter"
+                  fontStyle="normal"
+                  fontWeight="400"
+                  lineHeight="24px"
+                  color="rgba(255, 255, 255, 0.6)"
+                >
+                  1.{' '}
+                  {t(
+                    'In case you already installed MetaMask and OKX extension, at the first connection, you have to choose MetaMask or OKX. Once you choose, the selected wallet will be connected after that no matter which wallet you choose is. To resolve the issue, you can disable the wallet which you do not want to connect, in the page chrome://extensions/',
+                  )}
+                  <br />
+                  <br />
+                  2.{' '}
+                  {t(
+                    'In case you installed OKX extension but MetaMask not yet, when clicking on MetaMask, you will be connected to OKX wallet.',
+                  )}
+                </Text>
+              }
+              placement="right-start"
+              ml="4px"
+            />
           </Text>
         </AtomBox>
         <WalletSelect

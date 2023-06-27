@@ -59,6 +59,22 @@ const walletsConfig = ({
       },
       qrCode,
     },
+    {
+      id: 'okx',
+      title: 'OKX Wallet',
+      icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/wallets/okx.svg`,
+      connectorId: ConnectorNames.Injected,
+      installed:
+        typeof window !== 'undefined' &&
+        Boolean((window as any).okxwallet) &&
+        Boolean(window.ethereum?.isMetaMask) &&
+        metaMaskConnector.ready,
+      deepLink: `okx://wallet/dapp/details?dappUrl=http://10.4.40.49:3001/swap`,
+      downloadLink: {
+        desktop: 'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
+      },
+      qrCode,
+    },
   ]
 }
 

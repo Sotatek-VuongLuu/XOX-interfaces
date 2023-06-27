@@ -2624,7 +2624,7 @@
   "Pre-sale Round 3 is live": "Pre-sale Round 3 is live",
   "Public ICO is Live!": "Public ICO is Live!",
   "Airdrop ending in": "Airdrop ending in",
-  "Pre Sale":"Pre Sale",
+  "Pre Sale": "Pre Sale",
   "XOX Token will be launching on ETH-BSC-ARB-POLY-zkSync-OPT.": "XOX Token will be launching on ETH-BSC-ARB-POLY-zkSync-OPT.",
   "$487k Raised on Pre-sales.": "$487k Raised on Pre-sales.",
   "Public Launch Incoming!": "Public Launch Incoming!",
@@ -2652,8 +2652,11 @@
   "This username already exists.": "This username already exists.",
   "Use Ref Code and Claim": "Use Ref Code and Claim",
   "Share Ref Code": "Share Ref Code",
-  "Earn & Trade like a Pro":"Earn & Trade like a Pro",
+  "Earn & Trade like a Pro": "Earn & Trade like a Pro",
   "Unlocking DeFi for millions of users.": "Unlocking DeFi for millions of users.",
   "Support Team": "Support Team",
-  "Partnerships Inquiries": "Partnerships Inquiries"
+  "Partnerships Inquiries": "Partnerships Inquiries",
+  "Reminder: Conflict between MetaMask and OKX": "Reminder: Conflict between MetaMask and OKX",
+  "In case you already installed MetaMask and OKX extension, at the first connection, you have to choose MetaMask or OKX. Once you choose, the selected wallet will be connected after that no matter which wallet you choose is. To resolve the issue, you can disable the wallet which you do not want to connect, in the page chrome://extensions/": "In case you already installed MetaMask and OKX extension, at the first connection, you have to choose MetaMask or OKX. Once you choose, the selected wallet will be connected after that no matter which wallet you choose is. To resolve the issue, you can disable the wallet which you do not want to connect, in the page chrome://extensions/",
+  "In case you installed OKX extension but MetaMask not yet, when clicking on MetaMask, you will be connected to OKX wallet.": "In case you installed OKX extension but MetaMask not yet, when clicking on MetaMask, you will be connected to OKX wallet."
 }

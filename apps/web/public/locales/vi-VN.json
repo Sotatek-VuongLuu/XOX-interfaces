@@ -2551,7 +2551,7 @@
   "Strategic Partnership (0% at TGE & 5 years vesting 20% Yearly)": "Đối tác chiến lược (0% tại TGE & trả 20% mỗi năm trong 5 năm)",
   "Ecosystem Growth (33.33% at TGE & 4 years vesting 16.67% Yearly)": "Tăng trưởng hệ sinh thái (33.33% tại TGE & trả 16.67% mỗi năm trong 4 năm)",
   "Community Rewards (25% at TGE & 3 years vesting 25% Yearly)": "Phần thưởng cộng đồng (25% tại TGE & trả 25% mỗi năm trong 3 năm)",
-  "25% at TGE & 3 years vesting 25% Yearly":"Trả 25% tại thời điểm phát hành & 25% hàng năm trong vòng 3 năm",
+  "25% at TGE & 3 years vesting 25% Yearly": "Trả 25% tại thời điểm phát hành & 25% hàng năm trong vòng 3 năm",
   "XOX labs Foundation (0% at TGE & 5 years vesting 20% Yearly)": "Quỹ XOX Labs (0% tại TGE & trả 20% mỗi năm trong 5 năm)",
   "LP Farming (20% at Launch then 10% unlock Each year for 8 years)": "Gửi lãi LP (20% tại TGE & trả 10% mỗi năm trong 8 năm)",
   "Seed Sale (10% TGE - 20% Unlock Monthly - 10% Last Month)": "Đợt bán đầu tiên (10% tại TGE - trả 20% mỗi tháng sau đó - 10% vào tháng cuối cùng)",
@@ -2625,7 +2625,7 @@
   "Pre-sale Round 3 is live": "Chương trình bán trước đợt 3 đang diễn ra",
   "Public ICO is Live!": "Chương trình ICO công khai đang diễn ra!",
   "Airdrop ending in": "Airdrop sẽ kết thúc vào",
-  "Pre Sale":"Chương trình bán trước",
+  "Pre Sale": "Chương trình bán trước",
   "XOX Token will be launching on ETH-BSC-ARB-POLY-zkSync-OPT.": "Đồng XOX sẽ ra mắt trên ETH-BSC-ARB-POLY-zkSync-OPT.",
   "Public Launch Incoming!": "Sắp ra mắt công khai!",
   "XOX Token is currently trading on the following chains!": "Đồng XOX hiện đang được giao dịch trên các chuỗi sau!",
@@ -2653,8 +2653,11 @@
   "This username already exists.": "Tên người dùng này đã tồn tại.",
   "Use Ref Code and Claim": "Sử dụng mã giới thiệu và nhận thưởng",
   "Share Ref Code": "Chia sẻ mã giới thiệu",
-  "Earn & Trade like a Pro":"Kiếm tiền & giao dịch như một chuyên gia",
+  "Earn & Trade like a Pro": "Kiếm tiền & giao dịch như một chuyên gia",
   "Unlocking DeFi for millions of users.": "Mở khóa DeFi cho hàng triệu người dùng.",
   "Support Team": "Đội hỗ trợ",
-  "Partnerships Inquiries": "Thắc mắc về đối tác"
+  "Partnerships Inquiries": "Thắc mắc về đối tác",
+  "Reminder: Conflict between MetaMask and OKX": "Nhắc nhở: Xung đột giữa MetaMask và OKX",
+  "In case you already installed MetaMask and OKX extension, at the first connection, you have to choose MetaMask or OKX. Once you choose, the selected wallet will be connected after that no matter which wallet you choose is. To resolve the issue, you can disable the wallet which you do not want to connect, in the page chrome://extensions/": "Trong trường hợp bạn đã cài đặt MetaMask và tiện ích mở rộng OKX, ở lần kết nối đầu tiên, bạn phải chọn MetaMask hoặc OKX. Sau khi bạn chọn, ví đã chọn sẽ được kết nối sau đó cho dù bạn chọn là ví nào. Để giải quyết vấn đề, bạn có thể tắt ví mà bạn không muốn kết nối, trong trang chrome://extensions/",
+  "In case you installed OKX extension but MetaMask not yet, when clicking on MetaMask, you will be connected to OKX wallet.": "Trong trường hợp bạn đã cài đặt tiện ích mở rộng OKX nhưng chưa có MetaMask, khi nhấp vào MetaMask, bạn sẽ được kết nối với ví OKX."
 }
