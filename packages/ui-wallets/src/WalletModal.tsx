@@ -146,14 +146,6 @@ function MobileModal<T>({
   const [selected] = useSelectedWallet()
   const [error] = useAtom(errorAtom)
 
-  const installedWallets: WalletConfigV2<T>[] = wallets.filter((w) => w.installed)
-  const walletsToShow: WalletConfigV2<T>[] = wallets.filter((w) => {
-    if (installedWallets.length) {
-      return w.installed
-    }
-    return w.installed !== false || w.deepLink
-  })
-
   return (
     <AtomBox width="full" display="flex" flexDirection="column" style={{ padding: '32px 12px' }}>
       {error ? (
@@ -224,7 +216,7 @@ function MobileModal<T>({
       )}
       <WalletSelect
         displayCount={MOBILE_DEFAULT_DISPLAY_COUNT}
-        wallets={walletsToShow}
+        wallets={wallets}
         onClick={(wallet) => {
           connectWallet(wallet)
           if (wallet.deepLink && wallet.installed === false) {
@@ -250,11 +242,11 @@ function WalletSelect<T>({
   const isMobile = useMatchBreakpoints()
 
   const marginX = isMobile ? '4px' : '10px'
-  const paddingY = isMobile ? '4px' : '10px'
 
   return (
     <AtomBox className={walletSelectWrapperClass}>
-      {wallets.map((wallet, index) => {
+      {wallets.map((wallet) => {
+        console.log(wallets.length)
         const isImage = typeof wallet.icon === 'string'
         const Icon = wallet.icon
 
@@ -269,10 +261,9 @@ function WalletSelect<T>({
             style={{
               padding: '1px',
               height: 'fit-content',
-              width: '150px',
+              width: 'fit-content',
               maxWidth: '45%',
-              margin:
-                index === 0 ? `0 ${marginX} 0 0` : index === wallets.length - 1 ? `0 0 0 ${marginX}` : `0 ${marginX}`,
+              margin: `0 ${marginX}`,
               background:
                 wallet.id === selected?.id || (wallet.installed && !selected?.id && recentlyWallet === wallet.id)
                   ? 'linear-gradient(95.32deg, #B809B5 -7.25%, #ED1C51 54.2%, #FFB000 113.13%)'
@@ -295,7 +286,8 @@ function WalletSelect<T>({
                 flexDirection: 'column',
                 background: '#1D1C1C',
                 borderRadius: '8px',
-                padding: `${paddingY} 0`,
+                padding: `5px`,
+                whiteSpace: 'nowrap',
               }}
             >
               <AtomBox
