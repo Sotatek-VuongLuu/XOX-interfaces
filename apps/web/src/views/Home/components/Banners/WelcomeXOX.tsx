@@ -343,13 +343,13 @@ const LeftContent = styled.div`
       display: flex;
       flex-direction: row;
       position: relative;
+      margin-top: 22px;
 
       .bg-btn {
         padding: 12px 0px;
         border-radius: 12px;
         position: relative;
         text-align: center;
-        margin-top: 22px;
         display: flex;
         position: relative;
         width: 100%;
@@ -361,10 +361,6 @@ const LeftContent = styled.div`
         font-weight: 700;
         cursor: pointer;
         align-items: center;
-
-        @media screen and (max-width: 400px) {
-          margin-top: 24px;
-        }
       }
 
       button {
@@ -539,11 +535,11 @@ const CustomDropdown = styled.div`
   min-width: 250px;
 
   .blur {
-    position: fixed;
+    position: absolute;
     left: 0;
-    top: 0;
-    bottom: 0;
-    right: 0;
+    top: -5px;
+    width: 100%;
+    height: 100%;
     z-index: -1;
   }
 
@@ -674,10 +670,6 @@ const WelcomeXOX = (): JSX.Element => {
     if (!lapTop) return
     lapTop.play()
   }, [lapTop])
-
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    setOpenDropdown(!openDropdown)
-  }
 
   const open = Boolean(anchorEl)
   const id = open ? 'simple-popover' : undefined
@@ -867,8 +859,8 @@ const WelcomeXOX = (): JSX.Element => {
                   </div>
                 </div>
 
-                <div className="more-btn" style={{ position: 'relative' }}>
-                  <Button aria-describedby={id} onClick={handleClick} className="bg-btn">
+                <div className="more-btn" style={{ position: 'relative' }} onMouseLeave={() => setOpenDropdown(false)}>
+                  <Button aria-describedby={id} onMouseOver={() => setOpenDropdown(true)} className="bg-btn">
                     <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/checklist.svg`} alt="checklist" />
                     {t('More')}
                     <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/hero/down.svg`} alt="down" />
