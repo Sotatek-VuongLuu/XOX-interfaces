@@ -196,10 +196,11 @@ const HoverableChart = ({
         <div className="btns">
           <a
             className="btn-get-token"
-            href={`/swap?chainId=${chainId}&inputCurrency=${USD_ADDRESS[chainId]}&outputCurrency=${
-              selectedCurrency === native ? native.symbol : (selectedCurrency as any).address
-            }`}
-            target="_blank"
+            href={null}
+            // href={`/swap?chainId=${chainId}&inputCurrency=${USD_ADDRESS[chainId]}&outputCurrency=${
+            //   selectedCurrency === native ? native.symbol : (selectedCurrency as any).address
+            // }`}
+            // target="_blank"
             rel="noreferrer"
           >
             <div className="boxed-child">

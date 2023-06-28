@@ -199,13 +199,6 @@ const Menu = (props) => {
   const menuItemsLanding = useMemo(() => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
   }, [t, isDark, currentLanguage.code, chainId])
-  const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    <span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>,
-    {
-      placement: 'top',
-      hideTimeout: 0,
-    },
-  )
 
   const activeMenuItem = getActiveMenuItem({ menuConfig: menuItems, pathname: route.pathname })
 
@@ -319,8 +312,7 @@ const Menu = (props) => {
                   hideLanguage
                 />
               )}
-              {tooltipVisible && tooltip}
-              <a href="javascript:void(0)" style={{ marginRight: '11px' }} ref={targetRef}>
+              <a href="/info" target="_blank" style={{ marginRight: '11px' }}>
                 <BTNLaunchApp>{t('Launch App')}</BTNLaunchApp>
               </a>
 

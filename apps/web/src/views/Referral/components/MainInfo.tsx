@@ -1197,7 +1197,7 @@ const MainInfo = ({
       dataFriend(account)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [chainId, account])  
+  }, [chainId, account])
 
   return (
     <Box sx={{ marginTop: '16px' }}>

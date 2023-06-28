@@ -320,14 +320,6 @@ const FeatureReferal = () => {
   const [listUserRanksMonthly, setListUserRanksMonthly] = useState<ListRankingByChain>()
   const [listUserRanksAllTime, setListUserRanksAllTime] = useState<ListRankingByChain>()
 
-  const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    <span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>,
-    {
-      placement: 'top',
-      hideTimeout: 0,
-    },
-  )
-
   const functionList: FunctionList = useMemo(() => {
     return {
       'All Time': [listUserRanksAllTime, setListUserRanksAllTime],
@@ -488,28 +480,28 @@ const FeatureReferal = () => {
   }
 
   const renderListUserRank = useMemo(() => {
-    if (!listUserRanks) {
-      return (
-        <NoDataWraper>
-          <ConfirmedIcon>
-            <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
-          </ConfirmedIcon>
-        </NoDataWraper>
-      )
-    }
+    return <NoDataWraper>{t('Coming Soon')}</NoDataWraper>
 
-    if (listUserRanks[tabChainLeaderBoard].length === 0) {
-      return <NoDataWraper>{t('No Data')}</NoDataWraper>
-    }
-
-    return (
-      <>
-        {listUserRanks[tabChainLeaderBoard]?.slice(0, 5).map((item: IMappingFormat, index: number) => {
-          // eslint-disable-next-line react/no-array-index-key
-          return <LeaderBoardItemLP item={item} key={`learder_item_${index}`} />
-        })}
-      </>
-    )
+    // if (!listUserRanks) {
+    //   return (
+    //     <NoDataWraper>
+    //       <ConfirmedIcon>
+    //         <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
+    //       </ConfirmedIcon>
+    //     </NoDataWraper>
+    //   )
+    // }
+    // if (listUserRanks[tabChainLeaderBoard].length === 0) {
+    //   return <NoDataWraper>{t('No Data')}</NoDataWraper>
+    // }
+    // return (
+    //   <>
+    //     {listUserRanks[tabChainLeaderBoard]?.slice(0, 5).map((item: IMappingFormat, index: number) => {
+    //       // eslint-disable-next-line react/no-array-index-key
+    //       return <LeaderBoardItemLP item={item} key={`learder_item_${index}`} />
+    //     })}
+    //   </>
+    // )
   }, [listUserRanks, tabChainLeaderBoard])
 
   useEffect(() => {
@@ -591,8 +583,7 @@ const FeatureReferal = () => {
               })}
             </div>
 
-            {tooltipVisible && tooltip}
-            <a href={null} ref={targetRef}>
+            <a href="/referral" target="_blank">
               <button className="btn_join">{t('Join Now')}</button>
             </a>
           </div>

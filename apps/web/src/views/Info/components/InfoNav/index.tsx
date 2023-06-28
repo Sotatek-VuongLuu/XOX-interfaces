@@ -302,8 +302,9 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
         </Text>
         <div className="flex_container">
           <a
-            href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
-            target="_blank"
+            href={null}
+            // href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
+            // target="_blank"
             rel="noreferrer"
           >
             <Button className="get-xox">{t('Get %sym%', { sym: titleBtn1 })}</Button>

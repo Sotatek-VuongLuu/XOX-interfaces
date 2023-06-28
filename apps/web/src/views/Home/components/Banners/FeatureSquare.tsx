@@ -140,13 +140,6 @@ const Icon = styled.div`
 const SquareItem = ({ item }: Iprops) => {
   const { t } = useTranslation()
   const [isShowReadMore, setIsShow] = useState(item.description.length > 330)
-  const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    <span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>,
-    {
-      placement: 'top',
-      hideTimeout: 0,
-    },
-  )
 
   return (
     <WrapperI className="item">
@@ -170,10 +163,8 @@ const SquareItem = ({ item }: Iprops) => {
             ) : null}
           </Description>
         </div>
-        {/* <a href={item.link} target="_blank" rel="noreferrer"> */}
-        {tooltipVisible && tooltip}
         <div className="get_xox">
-          <a href="javascript:void(0)" rel="noreferrer" ref={targetRef}>
+          <a href={item.link} target="_blank" rel="noreferrer">
             <div className="boxed-child">
               <span>{t('Discover More')}</span>
             </div>

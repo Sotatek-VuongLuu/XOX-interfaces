@@ -661,13 +661,6 @@ const WelcomeXOX = (): JSX.Element => {
   const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
   const { chainId } = useActiveChainId()
   const [openDropdown, setOpenDropdown] = useState(false)
-  const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    <span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>,
-    {
-      placement: 'top',
-      hideTimeout: 0,
-    },
-  )
   const {
     targetRef: targetRef2,
     tooltip: tooltip2,
@@ -772,13 +765,7 @@ const WelcomeXOX = (): JSX.Element => {
                 </div>
 
                 <div>
-                  {/* <a href="/info" target="_blank"> */}
-                  {tooltipVisible && tooltip}
-                  <a
-                    href="javascript:void(0)"
-                    // target="_blank"
-                    ref={targetRef}
-                  >
+                  <a href="/info" target="_blank">
                     <div className="chart">
                       <div className="bg-button">
                         <p>{t('Chart')}</p>
