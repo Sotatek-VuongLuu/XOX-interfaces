@@ -20,6 +20,7 @@ import { filterChain, FilterChain, filterTime, FilterTime, ListRankingByChain } 
 import { GridLoader } from 'react-spinners'
 import { ColumnCenter } from 'components/Layout/Column'
 import { useTranslation } from '@pancakeswap/localization'
+import { useTooltip } from '@pancakeswap/uikit'
 
 export interface IItemLeaderBoard {
   name: string
@@ -319,6 +320,14 @@ const FeatureReferal = () => {
   const [listUserRanksMonthly, setListUserRanksMonthly] = useState<ListRankingByChain>()
   const [listUserRanksAllTime, setListUserRanksAllTime] = useState<ListRankingByChain>()
 
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    <span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>,
+    {
+      placement: 'top',
+      hideTimeout: 0,
+    },
+  )
+
   const functionList: FunctionList = useMemo(() => {
     return {
       'All Time': [listUserRanksAllTime, setListUserRanksAllTime],
@@ -582,7 +591,8 @@ const FeatureReferal = () => {
               })}
             </div>
 
-            <a href="javascript:void(0)" target="_blank">
+            {tooltipVisible && tooltip}
+            <a href={null} ref={targetRef}>
               <button className="btn_join">{t('Join Now')}</button>
             </a>
           </div>

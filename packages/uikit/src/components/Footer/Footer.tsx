@@ -1,6 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { vars } from "@pancakeswap/ui/css/vars.css";
-import { Text } from "@pancakeswap/uikit";
+import { Text, useTooltip } from "@pancakeswap/uikit";
 import React from "react";
 import { Box, Flex } from "../Box";
 import { Link } from "../Link";
@@ -20,6 +20,7 @@ import {
 import { LogoWithTextIcon } from "../Svg";
 import { FooterProps } from "./types";
 import { useTranslation } from "@pancakeswap/localization";
+import FooterItem from "./FooterItem";
 
 const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   items,
@@ -34,6 +35,10 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
   ...props
 }) => {
   const { t } = useTranslation();
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(t("Live At Launch"), {
+    placement: "top",
+    hideTimeout: 0,
+  });
 
   return (
     <Flex
@@ -91,69 +96,17 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
             >
               <SubTitleStyle>{t(item.label)}</SubTitleStyle>
               <StyledList key={item.label}>
-                {item.items?.map(({ label, href, isHighlighted = false, label2, href2, icon, product }) => (
-                  <StyledListItem key={label}>
-                    {icon && <div className="iconx" dangerouslySetInnerHTML={{ __html: icon }} />}
-                    {href ? (
-                      <Link
-                        data-theme="dark"
-                        href={href}
-                        target="_blank"
-                        rel="noreferrer noopener"
-                        color={isHighlighted ? vars.colors.warning : "text"}
-                        bold={false}
-                      >
-                        {`${t(label)} `}
-                        {label2 && !href2 && (
-                          <>
-                            <br />
-                            {label2}
-                          </>
-                        )}
-                        {product && (
-                          <StyledIconArrow>
-                            <svg
-                              width="10"
-                              height="11"
-                              viewBox="0 0 10 11"
-                              fill="none"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path d="M2.5 8L7.5 3" stroke="white" strokeLinecap="round" strokeLinejoin="round" />
-                              <path
-                                d="M3.4375 3H7.5V7.0625"
-                                stroke="white"
-                                strokeLinecap="round"
-                                strokeLinejoin="round"
-                              />
-                            </svg>
-                          </StyledIconArrow>
-                        )}
-                      </Link>
-                    ) : (
-                      <div>
-                        <StyledText>{`${t(label)} `}</StyledText>
-                        {label2 && !href2 && (
-                          <StyledText>
-                            <br />
-                            {label2}
-                          </StyledText>
-                        )}
-                        {label2 && href2 && (
-                          <Link
-                            data-theme="dark"
-                            href={href2}
-                            target="_blank"
-                            rel="noreferrer noopener"
-                            color={isHighlighted ? vars.colors.warning : "text"}
-                            bold={false}
-                          >
-                            {label2}
-                          </Link>
-                        )}
-                      </div>
-                    )}
-                  </StyledListItem>
+                {item.items?.map(({ label, href, isHighlighted = false, label2, href2, icon, product, inactive }) => (
+                  <FooterItem
+                    label={label}
+                    href={href}
+                    isHighlighted={isHighlighted}
+                    label2={label2}
+                    href2={href2}
+                    icon={icon}
+                    product={product}
+                    inactive={inactive}
+                  />
                 ))}
               </StyledList>
             </Flex>

@@ -1,7 +1,7 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { Tooltip } from '@mui/material'
-import { CopyButton } from '@pancakeswap/uikit'
+import { CopyButton, useTooltip } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { useEffect, useMemo } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
@@ -76,7 +76,8 @@ function Address({ addr, ...props }: { addr: IAddress }) {
           width="19px"
           height="19px"
           className="copied_btn"
-          text={address || ''}
+          text={''}
+          // text={address || ''}
           tooltipMessage={t('Copied')}
           button={
             <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/CopySimple.svg`} alt="CopySimple" />
@@ -84,9 +85,12 @@ function Address({ addr, ...props }: { addr: IAddress }) {
         />
       </div>
       {chainId ? (
-        <a href={chainId ? `/swap?chainId=${chainId}` : null} target="_blank" rel="noreferrer">
-          {t('Get %symbol_buy%', { symbol_buy: 'XOX' })}
-        </a>
+        <Tooltip title={t('Live At Launch')} placement="top">
+          {/* <a href={chainId ? `/swap?chainId=${chainId}` : null} target="_blank" rel="noreferrer"> */}
+          <a href={null} target="_blank" rel="noreferrer">
+            {t('Get %symbol_buy%', { symbol_buy: 'XOX' })}
+          </a>
+        </Tooltip>
       ) : (
         <Tooltip title={t('Deployment Coming')} placement="top">
           <a href={null} target="_blank" rel="noreferrer">
@@ -109,6 +113,21 @@ export default function TokenomicsPage() {
   const { t } = useTranslation()
   const { width } = useWindowSize()
   const LAUNCH_APP_TIME = 1679850000 /// (seconds) can change
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    <span style={{ whiteSpace: 'nowrap' }}>{t('Coming Soon')}</span>,
+    {
+      placement: 'top',
+      hideTimeout: 0,
+    },
+  )
+  const {
+    targetRef: targetRef2,
+    tooltip: tooltip2,
+    tooltipVisible: tooltipVisible2,
+  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Coming Soon')}</span>, {
+    placement: 'top',
+    hideTimeout: 0,
+  })
 
   useEffect(() => {
     ;(document.getElementById('pieChart') as any).play()
@@ -658,17 +677,19 @@ export default function TokenomicsPage() {
               loading="lazy"
             />
           </a>
-          <a href="javascript:void(0)">
+          {tooltipVisible2 && tooltip2}
+          <a href="https://www.zellic.io/" target="_blank" ref={targetRef2}>
             <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Hacken.svg`}
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Zellic.svg`}
               alt=""
               draggable="false"
               loading="lazy"
             />
           </a>
-          <a href="javascript:void(0)">
+          {tooltipVisible && tooltip}
+          <a href="https://hacken.io/" target="_blank" ref={targetRef}>
             <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Zellic.svg`}
+              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Hacken.svg`}
               alt=""
               draggable="false"
               loading="lazy"

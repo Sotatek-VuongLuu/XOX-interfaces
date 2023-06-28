@@ -12,6 +12,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
+import { useTooltip } from '@pancakeswap/uikit'
 
 // eslint-disable-next-line import/no-cycle
 
@@ -63,6 +64,10 @@ const WrapperI = styled.div`
       border-radius: 8px;
       background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
       cursor: pointer;
+
+      a {
+        border-radius: 8px;
+      }
 
       .boxed-child {
         width: 100%;
@@ -135,6 +140,13 @@ const Icon = styled.div`
 const SquareItem = ({ item }: Iprops) => {
   const { t } = useTranslation()
   const [isShowReadMore, setIsShow] = useState(item.description.length > 330)
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    <span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>,
+    {
+      placement: 'top',
+      hideTimeout: 0,
+    },
+  )
 
   return (
     <WrapperI className="item">
@@ -158,13 +170,15 @@ const SquareItem = ({ item }: Iprops) => {
             ) : null}
           </Description>
         </div>
-        <a href={item.link} target="_blank" rel="noreferrer">
-          <div className="get_xox">
+        {/* <a href={item.link} target="_blank" rel="noreferrer"> */}
+        {tooltipVisible && tooltip}
+        <div className="get_xox">
+          <a href="javascript:void(0)" rel="noreferrer" ref={targetRef}>
             <div className="boxed-child">
               <span>{t('Discover More')}</span>
             </div>
-          </div>
-        </a>
+          </a>
+        </div>
       </div>
     </WrapperI>
   )

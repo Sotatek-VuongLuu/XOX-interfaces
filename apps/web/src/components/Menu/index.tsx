@@ -10,6 +10,7 @@ import {
   Text,
   useMatchBreakpoints,
   useOnClickOutside,
+  useTooltip,
 } from '@pancakeswap/uikit'
 import { useTranslation, languageList } from '@pancakeswap/localization'
 import { NetworkSwitcher } from 'components/NetworkSwitcher'
@@ -198,6 +199,13 @@ const Menu = (props) => {
   const menuItemsLanding = useMemo(() => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
   }, [t, isDark, currentLanguage.code, chainId])
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    <span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>,
+    {
+      placement: 'top',
+      hideTimeout: 0,
+    },
+  )
 
   const activeMenuItem = getActiveMenuItem({ menuConfig: menuItems, pathname: route.pathname })
 
@@ -311,7 +319,8 @@ const Menu = (props) => {
                   hideLanguage
                 />
               )}
-              <a href="/swap" style={{ marginRight: '11px' }} target="_blank">
+              {tooltipVisible && tooltip}
+              <a href="javascript:void(0)" style={{ marginRight: '11px' }} ref={targetRef}>
                 <BTNLaunchApp>{t('Launch App')}</BTNLaunchApp>
               </a>
 

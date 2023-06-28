@@ -1,6 +1,6 @@
 import { Tooltip } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
-import { Box } from '@pancakeswap/uikit'
+import { Box, useTooltip } from '@pancakeswap/uikit'
 import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 import MenberMobile from './components/MenberMobile'
@@ -130,6 +130,7 @@ export const StyledCard = styled('div')`
     left: 0;
     right: 0;
     bottom: 0;
+    z-index: -1;
     border-width: 1px;
     border-radius: inherit;
     border-color: white;
@@ -375,36 +376,54 @@ interface ISocial {
 
 export function CardSocial({ social, ...props }: { social: ISocial }) {
   const { t } = useTranslation()
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    <span style={{ whiteSpace: 'nowrap' }}>{t('Under Development')}</span>,
+    {
+      placement: 'top',
+      hideTimeout: 0,
+    },
+  )
+
+  const {
+    targetRef: targetRef2,
+    tooltip: tooltip2,
+    tooltipVisible: tooltipVisible2,
+  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>, {
+    placement: 'top',
+    hideTimeout: 0,
+  })
+
   return (
     <a
-      href={social.heft === '#' ? null : social.heft}
-      target="_blank"
+      // href={social.heft === '#' ? null : social.heft}
+      href={social.name === 'XOX Dex V2' ? social.heft : null}
+      // target="_blank"
       rel="noreferrer"
       style={{ display: 'inline-block', cursor: 'pointer' }}
     >
+      {tooltipVisible && tooltip}
+      {tooltipVisible2 && tooltip2}
       {social.heft === '#' ? (
-        <Tooltip title={t('Under Development')} placement="top">
-          <StyledCardSocial {...props}>
-            <div>
-              <img src={social.icon} alt="" draggable="false" loading="lazy" />
-            </div>
-            <div>
-              <h4 className="social_name">{social.name}</h4>
-              <p style={{ whiteSpace: 'nowrap' }}>
-                <span>•</span>
-                {social.link}{' '}
-                <img
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/ArrowUpRight.svg`}
-                  alt=""
-                  draggable="false"
-                  loading="lazy"
-                />
-              </p>
-            </div>
-          </StyledCardSocial>
-        </Tooltip>
+        <StyledCardSocial {...props} ref={targetRef}>
+          <div>
+            <img src={social.icon} alt="" draggable="false" loading="lazy" />
+          </div>
+          <div>
+            <h4 className="social_name">{social.name}</h4>
+            <p style={{ whiteSpace: 'nowrap' }}>
+              <span>•</span>
+              {social.link}{' '}
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/ArrowUpRight.svg`}
+                alt=""
+                draggable="false"
+                loading="lazy"
+              />
+            </p>
+          </div>
+        </StyledCardSocial>
       ) : (
-        <StyledCardSocial {...props}>
+        <StyledCardSocial {...props} ref={social.name === 'XOX Dex V2' ? null : targetRef2}>
           <div>
             <img src={social.icon} alt="" draggable="false" loading="lazy" />
           </div>

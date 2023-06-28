@@ -3,7 +3,7 @@
 /* eslint-disable react/button-has-type */
 import styled from 'styled-components'
 import { Box, Grid } from '@mui/material'
-import { useMatchBreakpoints, CopyButton } from '@pancakeswap/uikit'
+import { useMatchBreakpoints, CopyButton, useTooltip } from '@pancakeswap/uikit'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -661,6 +661,21 @@ const WelcomeXOX = (): JSX.Element => {
   const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
   const { chainId } = useActiveChainId()
   const [openDropdown, setOpenDropdown] = useState(false)
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(
+    <span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>,
+    {
+      placement: 'top',
+      hideTimeout: 0,
+    },
+  )
+  const {
+    targetRef: targetRef2,
+    tooltip: tooltip2,
+    tooltipVisible: tooltipVisible2,
+  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>, {
+    placement: 'top',
+    hideTimeout: 0,
+  })
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
@@ -697,11 +712,14 @@ const WelcomeXOX = (): JSX.Element => {
                   </Button>
                 </div>
                 <div>
+                  {tooltipVisible2 && tooltip2}
                   <a
-                    href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
-                    target="_blank"
+                    // href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
+                    href="javascript:void(0)"
+                    // target="_blank"
                     rel="noreferrer"
                     className="get_xox_link"
+                    ref={targetRef2}
                   >
                     <div className="get_xox">
                       <div className="boxed-child">
@@ -754,7 +772,13 @@ const WelcomeXOX = (): JSX.Element => {
                 </div>
 
                 <div>
-                  <a href="/info" target="_blank">
+                  {/* <a href="/info" target="_blank"> */}
+                  {tooltipVisible && tooltip}
+                  <a
+                    href="javascript:void(0)"
+                    // target="_blank"
+                    ref={targetRef}
+                  >
                     <div className="chart">
                       <div className="bg-button">
                         <p>{t('Chart')}</p>

@@ -25,7 +25,7 @@ import EnglishIcon from 'components/Svg/EnglishIcon'
 import VietNamIcon from 'components/Svg/VietNamIcon'
 import LotteryGame from 'components/Svg/LotteryGameIcon'
 
-export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean; showTooltip?: boolean }
+export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean; showTooltip?: string }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
   items?: ConfigMenuDropDownItemsType[]
 }
@@ -202,55 +202,62 @@ export const configLanding: (
       items: [
         {
           label: t('Swap'),
-          href: '/swap',
+          href: 'javascript:void(0)',
           icon: SwapIcon,
           fillIcon: SwapIcon,
+          showTooltip: t("Live At Launch"),
         },
         {
           label: t('Bridge'),
           icon: BridgeIcon,
           fillIcon: BridgeIcon,
-          href: '/bridge-token',
+          href: 'javascript:void(0)',
+          showTooltip:  t("Live At Launch"),
         },
         {
           label: t('Liquidity'),
           icon: LiquidityIcon,
           fillIcon: LiquidityIcon,
-          href: '/liquidity',
+          href: 'javascript:void(0)',
+          showTooltip:  t("Live At Launch"),
         },
         {
           label: t('Farming'),
-          href: '/pools',
+          href: 'javascript:void(0)',
           icon: FarmingIcon,
           fillIcon: FarmingIcon,
           image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/decorations/pe2.png`,
+          showTooltip:  t("Live At Launch"),
         },
         {
           label: t('Referral'),
-          href: '/referral',
+          href: 'javascript:void(0)',
           icon: ReferralIcon,
           fillIcon: ReferralIcon,
           image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/decorations/pe2.png`,
+          showTooltip:  t("Live At Launch"),
         },
         {
           label: t('Assets'),
-          href: '/info',
+          href: 'javascript:void(0)',
           icon: AssetIcon,
           fillIcon: AssetIcon,
           image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/decorations/pe2.png`,
+          showTooltip:  t("Live At Launch"),
         },
         {
           label: 'Stable Coin',
           icon: StableCoinIcon,
           fillIcon: StableCoinIcon,
-          href: '/stable-coin',
+          href: 'javascript:void(0)',
+          showTooltip:  t("Live At Launch"),
         },
         {
           label: t('Lottery Game'),
           icon: LotteryGame,
           fillIcon: '',
-          href: '#',
-          showTooltip: true,
+          href: 'javascript:void(0)',
+          showTooltip: t("Live At Launch"),
         },
         {
           label: t('XOX Dex V2'),
@@ -262,22 +269,22 @@ export const configLanding: (
           label: t('Mobile App'),
           icon: MobileIcon,
           fillIcon: '',
-          href: '#',
-          showTooltip: true,
+          href: 'javascript:void(0)',
+          showTooltip: t("Under Development"),
         },
         {
           label: t('Launchpad'),
           icon: LaunchpadIcon,
           fillIcon: 'StableCoinIcon',
-          href: '#',
-          showTooltip: true,
+          href: 'javascript:void(0)',
+          showTooltip: t("Under Development"),
         },
         {
           label: t('Coin Listing'),
           icon: RankingIcon,
           fillIcon: 'StableCoinIcon',
-          href: '#',
-          showTooltip: true,
+          href: 'javascript:void(0)',
+          showTooltip: t("Under Development"),
         },
       ].map((item) => addMenuItemSupported(item, chainId)),
     },

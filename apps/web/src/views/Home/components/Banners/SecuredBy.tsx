@@ -722,7 +722,7 @@ const SecuredBy = () => {
               onMouseOut={handleMouseOutAirBnb}
             />
           </a>
-          {isHoveringAirBnb && <HoverTextAirBnb />}
+          {/* {isHoveringAirBnb && <HoverTextAirBnb />} */}
         </div>
         {/* <div className="hubspot-box">
           <img
