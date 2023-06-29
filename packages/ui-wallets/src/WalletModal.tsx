@@ -223,16 +223,15 @@ function MobileModal<T>({
           if (wallet.deepLink && wallet.installed === false && wallet.id !== 'okx') {
             window.open(wallet.deepLink)
           } else if (wallet.deepLink) {
-            if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
-              window.open('https://play.google.com/store/apps/details?id=com.okinc.okex.gp&hl=en&gl=US', '_blank')
-            }
-            if (navigator.userAgent.toLowerCase().indexOf('iphone') > -1) {
-              window.open('https://apps.apple.com/us/app/okx-buy-bitcoin-eth-crypto/', '_blank')
-            }
-            // setTimeout(() => {
-            //   window.open('https://itunes.com/apps/okx', '_blank')
-            // }, 25)
-            // window.location.href = wallet.deepLink
+            setTimeout(() => {
+              if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
+                window.open('https://play.google.com/store/apps/details?id=com.okinc.okex.gp&hl=en&gl=US', '_blank')
+              }
+              if (navigator.userAgent.toLowerCase().indexOf('iphone') > -1) {
+                window.open('https://apps.apple.com/us/app/okx-buy-bitcoin-eth-crypto/id1327268470', '_blank')
+              }
+            }, 25)
+            window.location.href = wallet.deepLink
           }
         }}
       />
