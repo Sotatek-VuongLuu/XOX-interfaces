@@ -582,7 +582,7 @@ export default function BridgeToken() {
   }, [account])
 
   useEffect(() => {
-    if(!chainIdFrom) return
+    if (!chainIdFrom) return
     setTokenFrom(XOX[chainIdFrom])
     if (chainIdFrom === chainIdTo) {
       const chainTo = defaultChainIdTo(chainIdFrom)
@@ -602,7 +602,7 @@ export default function BridgeToken() {
     } else if (
       account &&
       bal &&
-      tokenFromAmount && 
+      tokenFromAmount &&
       // parseEther(amountInput).gt(parseEther(tokenFromAmount?.toExact())) &&
       parseUnits(tokenFromAmount, tokenFrom.decimals).gt(parseUnits(bal, tokenFrom.decimals))
     ) {
@@ -776,14 +776,15 @@ export default function BridgeToken() {
                   <WapperConnectBtn onClick={handleClick}>{t('Connect Wallet')}</WapperConnectBtn>
                 ) : (
                   <SwapButton
-                    disabled={
-                      (messageButton !== t('Bridge') &&
-                        messageButton !== t('Approve %symbol%', { symbol: tokenFrom.symbol })) ||
-                      messageAddress !== '' ||
-                      tokenToAmount === '' ||
-                      loading ||
-                      pendingApprove
-                    }
+                    disabled
+                    // disabled={
+                    //   (messageButton !== t('Bridge') &&
+                    //     messageButton !== t('Approve %symbol%', { symbol: tokenFrom.symbol })) ||
+                    //   messageAddress !== '' ||
+                    //   tokenToAmount === '' ||
+                    //   loading ||
+                    //   pendingApprove
+                    // }
                     onClick={handleSwapButtonClick}
                   >
                     <span>{messageButton}</span>

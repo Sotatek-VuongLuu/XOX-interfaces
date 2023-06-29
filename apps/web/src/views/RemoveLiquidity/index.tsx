@@ -1175,11 +1175,12 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                           : 'primary'
                       }
                       onClick={isZap ? approveCallback : onAttemptToApprove}
-                      disabled={
-                        approval !== ApprovalState.NOT_APPROVED ||
-                        (!isZap && signatureData !== null) ||
-                        approvalSubmitted
-                      }
+                      disabled
+                      // disabled={
+                      //   approval !== ApprovalState.NOT_APPROVED ||
+                      //   (!isZap && signatureData !== null) ||
+                      //   approvalSubmitted
+                      // }
                       width="100%"
                       mr={['0', , '0.5rem']}
                       style={{ fontWeight: 700 }}
@@ -1207,12 +1208,13 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                         onPresentRemoveLiquidity()
                       }}
                       width="100%"
-                      disabled={
-                        !isValid ||
-                        (!isZap && signatureData === null && approval !== ApprovalState.APPROVED) ||
-                        (isZap && approval !== ApprovalState.APPROVED) ||
-                        transactionState !== 'finished'
-                      }
+                      disabled
+                      // disabled={
+                      //   !isValid ||
+                      //   (!isZap && signatureData === null && approval !== ApprovalState.APPROVED) ||
+                      //   (isZap && approval !== ApprovalState.APPROVED) ||
+                      //   transactionState !== 'finished'
+                      // }
                       style={{ fontWeight: 700 }}
                     >
                       {error || t('Remove')}

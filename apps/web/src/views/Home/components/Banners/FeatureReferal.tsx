@@ -502,7 +502,7 @@ const FeatureReferal = () => {
     //     })}
     //   </>
     // )
-  }, [listUserRanks, tabChainLeaderBoard])
+  }, [listUserRanks, tabChainLeaderBoard, t])
 
   useEffect(() => {
     handleGetUserRanks('General', 'All Time', listUserRanksAllTime, setListUserRanksAllTime)

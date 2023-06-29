@@ -1168,29 +1168,31 @@ const MainInfo = ({
   }
 
   const renderListUserRank = useMemo(() => {
-    if (!listUserRanks) {
-      return (
-        <NoDataWraper>
-          <ConfirmedIcon>
-            <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
-          </ConfirmedIcon>
-        </NoDataWraper>
-      )
-    }
+    return <NoDataWraper>{t('Coming Soon')}</NoDataWraper>
 
-    if (listUserRanks[tabChainLeaderBoard]?.length === 0) {
-      return <NoDataWraper>{t('No Data')}</NoDataWraper>
-    }
+    // if (!listUserRanks) {
+    //   return (
+    //     <NoDataWraper>
+    //       <ConfirmedIcon>
+    //         <GridLoader color="#FB8618" style={{ width: '51px', height: '51px' }} />
+    //       </ConfirmedIcon>
+    //     </NoDataWraper>
+    //   )
+    // }
 
-    return (
-      <>
-        {listUserRanks[tabChainLeaderBoard]?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
-          // eslint-disable-next-line react/no-array-index-key
-          return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
-        })}
-      </>
-    )
-  }, [listUserRanks, tabChainLeaderBoard])
+    // if (listUserRanks[tabChainLeaderBoard]?.length === 0) {
+    //   return <NoDataWraper>{t('No Data')}</NoDataWraper>
+    // }
+
+    // return (
+    //   <>
+    //     {listUserRanks[tabChainLeaderBoard]?.slice(0, 5)?.map((item: IMappingFormat, index: number) => {
+    //       // eslint-disable-next-line react/no-array-index-key
+    //       return <LeaderBoardItem item={item} key={`learder_item_${index}`} />
+    //     })}
+    //   </>
+    // )
+  }, [listUserRanks, tabChainLeaderBoard, t])
 
   useEffect(() => {
     if (account && chainId) {

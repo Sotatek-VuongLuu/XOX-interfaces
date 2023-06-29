@@ -1122,7 +1122,8 @@ export default function AddLiquidity({ currencyA, currencyB }) {
                             onPresentAddLiquidityModal()
                           }
                         }}
-                        disabled={buttonDisabled}
+                        disabled
+                        // disabled={buttonDisabled}
                         height={43}
                         className="btn"
                       >

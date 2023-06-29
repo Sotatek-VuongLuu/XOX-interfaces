@@ -287,7 +287,8 @@ export default function SwapCommitButton({
             <CommitButton
               variant={approval === ApprovalState.APPROVED ? 'success' : 'primary'}
               onClick={approveCallback}
-              disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
+              disabled
+              // disabled={approval !== ApprovalState.NOT_APPROVED || approvalSubmitted}
               width="100%"
               style={{ fontSize: isMobile ? '16px' : '18px' }}
             >
@@ -310,7 +311,8 @@ export default function SwapCommitButton({
               width="100%"
               id="swap-button"
               height={43}
-              disabled={isSwap}
+              disabled
+              // disabled={isSwap}
               style={{ fontSize: isMobile ? '16px' : '18px' }}
             >
               {priceImpactSeverity > 3 && !isExpertMode
@@ -339,7 +341,8 @@ export default function SwapCommitButton({
         id="swap-button"
         height={43}
         width="100%"
-        disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
+        disabled
+        // disabled={!isValid || (priceImpactSeverity > 3 && !isExpertMode) || !!swapCallbackError}
         style={{ fontSize: isMobile ? '16px' : '18px' }}
       >
         {swapInputError ||

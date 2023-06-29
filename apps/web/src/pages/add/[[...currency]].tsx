@@ -10,6 +10,7 @@ import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import Liquidity from 'views/Pool'
+import DeploymentComing from 'components/DeploymentComing'
 
 const AddLiquidityPage = () => {
   const router = useRouter()
@@ -40,9 +41,15 @@ const AddLiquidityPage = () => {
   }, [dispatch, currencyIdA, currencyIdB])
 
   return currencyIdA === undefined && currencyIdB === undefined ? (
-    <Liquidity stateAdd />
+    <>
+      <DeploymentComing />
+      <Liquidity stateAdd />
+    </>
   ) : (
-    <AddLiquidity currencyA={currencyA} currencyB={currencyB} />
+    <>
+      <DeploymentComing />
+      <AddLiquidity currencyA={currencyA} currencyB={currencyB} />
+    </>
   )
 }
 
