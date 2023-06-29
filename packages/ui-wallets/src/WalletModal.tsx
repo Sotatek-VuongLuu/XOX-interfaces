@@ -232,7 +232,7 @@ function MobileModal<T>({
               if (navigator.userAgent.toLowerCase().indexOf('iphone') > -1) {
                 window.open('itms-apps://itunes.apple.com/app/okx-buy-bitcoin-eth-crypto/id1327268470?mt=8', '_blank')
               }
-            }, 1000)
+            }, 500)
             var userAgent = window.navigator.userAgent
 
             if (
