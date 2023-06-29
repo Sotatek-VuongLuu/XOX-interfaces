@@ -1,11 +1,14 @@
 import { title } from 'process'
 import React, { useMemo } from 'react'
+import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
   position: fixed;
   width: 100vw;
   height: 100vh;
+  top: 0;
+  left: 0;
   display: grid;
   place-content: center;
   z-index: 9999;
@@ -170,7 +173,9 @@ const Wrapper = styled.div`
 `
 
 const DeploymentComing = () => {
-  return (
+  const modalElement = document.getElementById('modal-popup-deployment')
+
+  return createPortal(
     <Wrapper>
       <div className="main-content">
         <h2>Deployment Coming</h2>
@@ -192,7 +197,8 @@ const DeploymentComing = () => {
           })}
         </ul>
       </div>
-    </Wrapper>
+    </Wrapper>,
+    modalElement,
   )
 }
 
