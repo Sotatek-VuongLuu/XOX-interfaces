@@ -70,7 +70,7 @@ const walletsConfig = ({
         Boolean((window as any).okxwallet) &&
         Boolean(window.ethereum?.isMetaMask) &&
         metaMaskConnector.ready,
-      deepLink: `okx://wallet/dapp/details?dappUrl=http://10.4.40.77:3001/swap`,
+      deepLink: `okx://wallet/dapp/details?dappUrl=https://${process.env.NEXT_PUBLIC_SITE_DOMAIN}/swap/`,
       downloadLink: {
         desktop: 'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
       },
