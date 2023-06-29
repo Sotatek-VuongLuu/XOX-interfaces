@@ -52,7 +52,6 @@ class MyDocument extends Document {
           <div id="portal-root" />
           <div id="modal-root" />
           <div id="modal-popup-presale" />
-          <div id="modal-popup-deployment" />
         </body>
       </Html>
     )
