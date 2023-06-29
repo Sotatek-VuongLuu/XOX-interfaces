@@ -64,12 +64,13 @@ const walletsConfig = ({
       title: 'OKX Wallet',
       icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/wallets/okx.svg`,
       connectorId: ConnectorNames.Injected,
+      installed2: typeof window !== 'undefined' && Boolean(window.ethereum),
       installed:
         typeof window !== 'undefined' &&
         Boolean((window as any).okxwallet) &&
         Boolean(window.ethereum?.isMetaMask) &&
         metaMaskConnector.ready,
-      deepLink: `okx://wallet/dapp/details?dappUrl=https://${process.env.NEXT_PUBLIC_SITE_DOMAIN}/swap`,
+      deepLink: `okx://wallet/dapp/details?dappUrl=http://10.4.40.77:3001/swap`,
       downloadLink: {
         desktop: 'https://chrome.google.com/webstore/detail/okx-wallet/mcohilncbfahbmgdjkbpemcciiolgcge',
       },

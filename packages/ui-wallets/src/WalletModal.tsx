@@ -51,6 +51,7 @@ export type WalletConfigV2<T = unknown> = {
   connectorId: T
   deepLink?: string
   installed?: boolean
+  installed2?: boolean
   guide?: LinkOfDevice
   downloadLink?: LinkOfDevice
   mobileOnly?: boolean
@@ -220,20 +221,22 @@ function MobileModal<T>({
         wallets={wallets}
         onClick={(wallet) => {
           connectWallet(wallet)
-          if (wallet.deepLink && wallet.installed === false && wallet.id !== 'okx') {
-            window.open(wallet.deepLink)
-          } else if (wallet.deepLink) {
-            var now = new Date().valueOf()
-            setTimeout(() => {
-              if (new Date().valueOf() - now > 1500) return
-              if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
-                window.open('https://play.google.com/store/apps/details?id=com.okinc.okex.gp&hl=en&gl=US', '_blank')
-              }
-              if (navigator.userAgent.toLowerCase().indexOf('iphone') > -1) {
-                window.open('itms-apps://itunes.apple.com/app/okx-buy-bitcoin-eth-crypto/id1327268470?mt=8', '_blank')
-              }
-            }, 1000)
-            window.location.href = wallet.deepLink
+          if (wallet.deepLink && wallet.installed === false) {
+            if (wallet.id !== 'okx') {
+              window.open(wallet.deepLink)
+            } else if (wallet.deepLink && wallet.installed2 === false) {
+              var now = new Date().valueOf()
+              setTimeout(() => {
+                if (new Date().valueOf() - now > 1500) return
+                if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
+                  window.open('https://play.google.com/store/apps/details?id=com.okinc.okex.gp&hl=en&gl=US', '_blank')
+                }
+                if (navigator.userAgent.toLowerCase().indexOf('iphone') > -1) {
+                  window.open('itms-apps://itunes.apple.com/app/okx-buy-bitcoin-eth-crypto/id1327268470?mt=8', '_blank')
+                }
+              }, 1000)
+              window.location.href = wallet.deepLink
+            }
           }
         }}
       />
@@ -561,7 +564,7 @@ export function WalletModalV2<T = unknown>(props: WalletModalV2Props<T>) {
   const connectWallet = (wallet: WalletConfigV2<T>) => {
     setSelected(wallet)
     setError('')
-    if (wallet.installed !== false) {
+    if (wallet.installed !== false || wallet.installed2 !== false) {
       login(wallet.connectorId)
         .then((v) => {
           if (v) {
