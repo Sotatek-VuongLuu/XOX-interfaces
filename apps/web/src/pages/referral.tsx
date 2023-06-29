@@ -1,9 +1,10 @@
-import { PageMeta } from 'components/Layout/Page'
+import DeploymentComing from 'components/DeploymentComing'
 import Referral from 'views/Referral'
 
 const ReferralPage = () => {
   return (
     <>
+      <DeploymentComing />
       <Referral />
     </>
   )

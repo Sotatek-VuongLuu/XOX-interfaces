@@ -1,10 +1,10 @@
-import { CHAIN_IDS } from 'utils/wagmi'
 import StableCoin from '../../views/StableCoin'
-import { PageMeta } from 'components/Layout/Page'
+import DeploymentComing from 'components/DeploymentComing'
 
 const PageStableCoin = () => {
   return (
     <>
+      <DeploymentComing />
       <StableCoin />
     </>
   )

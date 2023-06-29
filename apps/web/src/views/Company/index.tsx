@@ -384,25 +384,14 @@ export function CardSocial({ social, ...props }: { social: ISocial }) {
     },
   )
 
-  const {
-    targetRef: targetRef2,
-    tooltip: tooltip2,
-    tooltipVisible: tooltipVisible2,
-  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>, {
-    placement: 'top',
-    hideTimeout: 0,
-  })
-
   return (
     <a
-      // href={social.heft === '#' ? null : social.heft}
-      href={social.name === 'XOX Dex V2' ? social.heft : null}
-      // target="_blank"
+      href={social.heft === '#' ? null : social.heft}
+      target="_blank"
       rel="noreferrer"
       style={{ display: 'inline-block', cursor: 'pointer' }}
     >
       {tooltipVisible && tooltip}
-      {tooltipVisible2 && tooltip2}
       {social.heft === '#' ? (
         <StyledCardSocial {...props} ref={targetRef}>
           <div>
@@ -423,7 +412,7 @@ export function CardSocial({ social, ...props }: { social: ISocial }) {
           </div>
         </StyledCardSocial>
       ) : (
-        <StyledCardSocial {...props} ref={social.name === 'XOX Dex V2' ? null : targetRef2}>
+        <StyledCardSocial {...props}>
           <div>
             <img src={social.icon} alt="" draggable="false" loading="lazy" />
           </div>

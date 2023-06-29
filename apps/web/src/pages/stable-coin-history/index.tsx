@@ -1,10 +1,10 @@
-import { CHAIN_IDS } from 'utils/wagmi'
 import LayoutHistory from '../../views/StableCoinHistory'
-import { PageMeta } from 'components/Layout/Page'
+import DeploymentComing from 'components/DeploymentComing'
 
 const PageHistory = () => {
   return (
     <>
+      <DeploymentComing />
       <LayoutHistory />
     </>
   )

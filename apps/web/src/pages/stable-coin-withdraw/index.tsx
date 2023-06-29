@@ -1,10 +1,10 @@
-import { CHAIN_IDS } from 'utils/wagmi'
 import WithDrawLayout from '../../views/StableCoinWithdraw'
-import { PageMeta } from 'components/Layout/Page'
+import DeploymentComing from 'components/DeploymentComing'
 
 const PageWithdraw = () => {
   return (
     <>
+      <DeploymentComing />
       <WithDrawLayout />
     </>
   )
