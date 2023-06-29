@@ -233,14 +233,7 @@ function MobileModal<T>({
                 window.open('itms-apps://itunes.apple.com/app/okx-buy-bitcoin-eth-crypto/id1327268470?mt=8', '_blank')
               }
             }, 1000)
-            var userAgent = window.navigator.userAgent
-
-            if (
-              (!userAgent.match(/iPad/i) && !userAgent.match(/iPhone/i)) ||
-              !navigator.userAgent.match(/AppleWebKit/)
-            ) {
-              window.location.href = wallet.deepLink
-            }
+            window.location.href = wallet.deepLink
           }
         }}
       />
