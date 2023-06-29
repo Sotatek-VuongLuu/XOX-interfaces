@@ -776,15 +776,15 @@ export default function BridgeToken() {
                   <WapperConnectBtn onClick={handleClick}>{t('Connect Wallet')}</WapperConnectBtn>
                 ) : (
                   <SwapButton
-                    disabled
-                    // disabled={
-                    //   (messageButton !== t('Bridge') &&
-                    //     messageButton !== t('Approve %symbol%', { symbol: tokenFrom.symbol })) ||
-                    //   messageAddress !== '' ||
-                    //   tokenToAmount === '' ||
-                    //   loading ||
-                    //   pendingApprove
-                    // }
+                    // disabled
+                    disabled={
+                      (messageButton !== t('Bridge') &&
+                        messageButton !== t('Approve %symbol%', { symbol: tokenFrom.symbol })) ||
+                      messageAddress !== '' ||
+                      tokenToAmount === '' ||
+                      loading ||
+                      pendingApprove
+                    }
                     onClick={handleSwapButtonClick}
                   >
                     <span>{messageButton}</span>

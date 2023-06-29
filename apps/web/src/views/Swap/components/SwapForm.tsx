@@ -114,9 +114,7 @@ export default function SwapForm() {
   // get custom setting values for user
   const [allowedSlippage] = useUserSlippageTolerance()
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    t(
-      'Enter the code to get XOXS rewards (for you and for referrer)',
-    ),
+    t('Enter the code to get XOXS rewards (for you and for referrer)'),
     { placement: 'top' },
   )
 
@@ -328,6 +326,7 @@ export default function SwapForm() {
             showCommonBases
             showBUSD
             commonBasesType={CommonBasesType.SWAP_LIMITORDER}
+            disabled={!currencies[Field.OUTPUT] || !currencies[Field.INPUT]}
           />
 
           <AutoColumn justify="space-between">
@@ -359,6 +358,7 @@ export default function SwapForm() {
             showCommonBases
             showBUSD
             commonBasesType={CommonBasesType.SWAP_LIMITORDER}
+            disabled={!currencies[Field.OUTPUT] || !currencies[Field.INPUT]}
           />
 
           {/* {isAccessTokenSupported && (
