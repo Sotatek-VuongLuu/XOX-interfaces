@@ -225,14 +225,14 @@ function MobileModal<T>({
           } else if (wallet.deepLink) {
             var now = new Date().valueOf()
             setTimeout(() => {
-              if (new Date().valueOf() - now > 1000) return
+              if (new Date().valueOf() - now > 1500) return
               if (navigator.userAgent.toLowerCase().indexOf('android') > -1) {
                 window.open('https://play.google.com/store/apps/details?id=com.okinc.okex.gp&hl=en&gl=US', '_blank')
               }
               if (navigator.userAgent.toLowerCase().indexOf('iphone') > -1) {
                 window.open('itms-apps://itunes.apple.com/app/okx-buy-bitcoin-eth-crypto/id1327268470?mt=8', '_blank')
               }
-            }, 500)
+            }, 1000)
             var userAgent = window.navigator.userAgent
 
             if (
