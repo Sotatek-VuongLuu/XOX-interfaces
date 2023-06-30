@@ -5,6 +5,7 @@ import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
 import MenberMobile from './components/MenberMobile'
 import MenberPC from './components/MenberPC'
+import Advisors from './components/Advisors'
 
 export const StyledS = styled('div')`
   margin: 48px auto 100px auto;
@@ -601,6 +602,12 @@ export default function CompanyPage() {
 
         {width < 968 && <MenberMobile />}
         {!(width < 968) && <MenberPC />}
+
+        <StyledSectionText style={{ marginBottom: 40 }}>
+          <h3>{t('XOX Labs Advisors')}</h3>
+        </StyledSectionText>
+
+        {<Advisors />}
 
         <StyledTitle>{t('XOX Labs Ecosystem Products')}</StyledTitle>
         <StyledSubtitle style={{ marginBottom: 48 }}>

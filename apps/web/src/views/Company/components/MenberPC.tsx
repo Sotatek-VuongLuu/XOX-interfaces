@@ -13,6 +13,9 @@ const StyledCard = styled('div')`
   background: rgba(16, 16, 16, 0.3);
   backdrop-filter: blur(10px);
   border-radius: 16px;
+  width: fit-content;
+  max-width: 250px;
+  height: 100%;
 
   &:before {
     content: '';
@@ -63,7 +66,9 @@ const StyledMembers = styled(Box)`
     gap: 24px;
   }
   ${({ theme }) => theme.mediaQueries.lg} {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(5, minmax(0, 250px));
+    place-items: center;
+    place-content: center;
   }
 `
 
@@ -78,7 +83,9 @@ const ReStyledMembersTwo = styled(StyledMembers)`
   }
 
   ${({ theme }) => theme.mediaQueries.lg} {
-    grid-template-columns: repeat(5, minmax(0, 1fr));
+    grid-template-columns: repeat(4, minmax(0, 250px));
+    place-content: center;
+    place-items: center;
   }
 `
 
@@ -88,6 +95,8 @@ const ReStyledMembersThree = styled(Box)`
   max-width: 100%;
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
+  place-content: center;
+  place-items: center;
   gap: 15px;
   ${({ theme }) => theme.mediaQueries.md} {
     gap: 24px;
@@ -129,17 +138,12 @@ function MenberPC() {
       position: t('Lead Designer'),
     },
     {
-      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/BOM.png`,
-      name: 'Tran Huu Hung',
-      position: t('BDM at Kyber Network - Strategic advisor for XOX Labs'),
-    },
-  ]
-  const MEMBERS_TWO: Array<IMember> = [
-    {
       avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Kane Nguyen.png`,
       name: 'Kane Nguyen',
       position: t('Project Manager'),
     },
+  ]
+  const MEMBERS_TWO: Array<IMember> = [
     {
       avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Victor Luu.png`,
       name: 'Victor Luu',

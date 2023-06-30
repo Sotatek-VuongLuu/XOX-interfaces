@@ -7,18 +7,13 @@ const StyledMembersOne = styled(Box)`
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 15px;
-  margin-bottom: 15px;
-`
+  margin-bottom: 100px;
+  place-items: center;
+  place-content: center;
 
-const ReStyledMembers = styled(StyledMembersOne)`
-  display: grid;
-  margin: auto;
-  max-width: calc(100% - 50% - 7.5px);
-  width: calc(100% - 50% - 7.5px);
-  grid-template-columns: repeat(1, minmax(0, 1fr));
-  gap: 15px;
-  ${({ theme }) => theme.mediaQueries.md} {
-    gap: 24px;
+  div:last-child {
+    grid-column-start: span 2;
+    width: calc(50% - 7px);
   }
 `
 
@@ -45,11 +40,6 @@ function MenberMobile() {
       avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Edward.png`,
       name: 'Edward',
       position: t('Lead Designer'),
-    },
-    {
-      avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/BOM.png`,
-      name: 'Tran Huu Hung',
-      position: t('BDM at Kyber Network - Strategic advisor for XOX Labs'),
     },
     {
       avatar: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/company/Kane Nguyen.png`,
@@ -87,7 +77,7 @@ function MenberMobile() {
       position: t('Quality Control'),
     },
   ]
-  
+
   return (
     <>
       <StyledMembersOne>
@@ -95,14 +85,6 @@ function MenberMobile() {
           <CardMember member={member} key={String(i + member.name)} />
         ))}
       </StyledMembersOne>
-
-      <Box>
-        <ReStyledMembers marginBottom={['64px', null, null, null]}>
-          {/* {MEMBERS_TWO.map((member, i) => (
-            <CardMember member={member} key={String(i + member.name)} />
-          ))} */}
-        </ReStyledMembers>
-      </Box>
     </>
   )
 }

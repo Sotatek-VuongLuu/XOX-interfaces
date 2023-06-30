@@ -2659,5 +2659,8 @@
   "Live At Launch": "Live At Launch",
   "Reminder: Conflict between MetaMask and OKX": "Reminder: Conflict between MetaMask and OKX",
   "In case you already installed MetaMask and OKX extension, at the first connection, you have to choose MetaMask or OKX. Once you choose, the selected wallet will be connected after that no matter which wallet you choose is. To resolve the issue, you can disable the wallet which you do not want to connect, in the page chrome://extensions/": "In case you already installed MetaMask and OKX extension, at the first connection, you have to choose MetaMask or OKX. Once you choose, the selected wallet will be connected after that no matter which wallet you choose is. To resolve the issue, you can disable the wallet which you do not want to connect, in the page chrome://extensions/",
-  "In case you installed OKX extension but MetaMask not yet, when clicking on MetaMask, you will be connected to OKX wallet.": "In case you installed OKX extension but MetaMask not yet, when clicking on MetaMask, you will be connected to OKX wallet."
+  "In case you installed OKX extension but MetaMask not yet, when clicking on MetaMask, you will be connected to OKX wallet.": "In case you installed OKX extension but MetaMask not yet, when clicking on MetaMask, you will be connected to OKX wallet.",
+  "Previously responsible for Growth and Ecosystem Development at NEAR Foundation. Currently leading partnerships at Neon Labs, entity behind development of Neon EVM, first and only EVM on Solana.": "Previously responsible for Growth and Ecosystem Development at NEAR Foundation. Currently leading partnerships at Neon Labs, entity behind development of Neon EVM, first and only EVM on Solana.",
+  "BDM at Kyber Network - Strategic advisor for XOX Labs": "BDM at Kyber Network - Strategic advisor for XOX Labs",
+  "XOX Labs Advisors": "XOX Labs Advisors"
 }
