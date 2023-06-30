@@ -12,7 +12,7 @@ const Wrapper = styled.div<{ testMode: boolean }>`
   right: 0;
   display: ${({ testMode }) => (testMode ? 'none' : 'grid')};
   place-content: center;
-  z-index: 19;
+  z-index: 9999;
 
   .main-content {
     display: inline-flex;

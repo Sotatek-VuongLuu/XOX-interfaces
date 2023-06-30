@@ -23,12 +23,10 @@ export const NETWORK_ICON = {
   [ChainId.OPTIMISM_TESTNET]: Optimism,
 }
 
-export const DAPP_CHAINS = [
-  ChainId.BSC,
-  ChainId.ETHEREUM,
-  ChainId.BSC_TESTNET,
-  ChainId.GOERLI,
-]
+export const DAPP_CHAINS =
+  process.env.NEXT_PUBLIC_TEST_MODE === '1'
+    ? [ChainId.BSC, ChainId.ETHEREUM, ChainId.BSC_TESTNET, ChainId.GOERLI]
+    : [ChainId.BSC, ChainId.ETHEREUM]
 
 export const MAINNET_CHAINS = [
   ChainId.BSC,
@@ -39,71 +37,87 @@ export const MAINNET_CHAINS = [
   ChainId.OPTIMISM,
 ]
 
-export const TESTNET_CHAINS = [
-  ChainId.BSC_TESTNET,
-  ChainId.GOERLI,
-  ChainId.ARBITRUM_TESTNET,
-  ChainId.POLYGON_TESTNET,
-  ChainId.ZKSYNC_TESTNET,
-  ChainId.OPTIMISM_TESTNET,
-]
+export const TESTNET_CHAINS = []
 
-export const BRIDGE_CHAINS_ONLY = [
-  ChainId.ARBITRUM,
-  ChainId.POLYGON,
-  ChainId.ZKSYNC,
-  ChainId.OPTIMISM,
-  ChainId.ARBITRUM_TESTNET,
-  ChainId.POLYGON_TESTNET,
-  ChainId.ZKSYNC_TESTNET,
-  ChainId.OPTIMISM_TESTNET,
-]
+export const BRIDGE_CHAINS_ONLY = [ChainId.ARBITRUM, ChainId.POLYGON, ChainId.ZKSYNC, ChainId.OPTIMISM]
 
-export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
-  [ChainId.RINKEBY]: 'Rinkeby',
-  [ChainId.BSC_TESTNET]: 'BSC Testnet',
-  [ChainId.BSC]: 'BSC',
-  [ChainId.ETHEREUM]: 'Ethereum',
-  [ChainId.GOERLI]: 'Goerli',
-  [ChainId.ARBITRUM]: 'Arbitrum',
-  [ChainId.ARBITRUM_TESTNET]: 'ArbitrumTest',
-  [ChainId.POLYGON]: 'Polygon',
-  [ChainId.POLYGON_TESTNET]: 'PolygonTest',
-  [ChainId.ZKSYNC]: 'zkSync',
-  [ChainId.ZKSYNC_TESTNET]: 'zkSyncTest',
-  [ChainId.OPTIMISM]: 'Optimism',
-  [ChainId.OPTIMISM_TESTNET]: 'OptimismTest',
-}
+export const NETWORK_LABEL: { [chainId in ChainId]?: string } =
+  process.env.NEXT_PUBLIC_TEST_MODE === '1'
+    ? {
+        [ChainId.RINKEBY]: 'Rinkeby',
+        [ChainId.BSC_TESTNET]: 'BSC Testnet',
+        [ChainId.BSC]: 'BSC',
+        [ChainId.ETHEREUM]: 'Ethereum',
+        [ChainId.GOERLI]: 'Goerli',
+        [ChainId.ARBITRUM]: 'Arbitrum',
+        [ChainId.ARBITRUM_TESTNET]: 'ArbitrumTest',
+        [ChainId.POLYGON]: 'Polygon',
+        [ChainId.POLYGON_TESTNET]: 'PolygonTest',
+        [ChainId.ZKSYNC]: 'zkSync',
+        [ChainId.ZKSYNC_TESTNET]: 'zkSyncTest',
+        [ChainId.OPTIMISM]: 'Optimism',
+        [ChainId.OPTIMISM_TESTNET]: 'OptimismTest',
+      }
+    : {
+        [ChainId.BSC]: 'BSC',
+        [ChainId.ETHEREUM]: 'Ethereum',
+        [ChainId.ARBITRUM]: 'Arbitrum',
+        [ChainId.POLYGON]: 'Polygon',
+        [ChainId.ZKSYNC]: 'zkSync',
+        [ChainId.OPTIMISM]: 'Optimism',
+      }
 
-export const NETWORK_LINK: { [chainId in ChainId]?: any } = {
-  [ChainId.RINKEBY]: 'https://rinkeby.etherscan.io',
-  [ChainId.GOERLI]: 'https://goerli.etherscan.io',
-  [ChainId.BSC]: 'https://bscscan.com',
-  [ChainId.BSC_TESTNET]: 'https://testnet.bscscan.com',
-  [ChainId.ARBITRUM]: 'https://arbiscan.io',
-  [ChainId.ARBITRUM_TESTNET]: 'https://goerli-rollup-explorer.arbitrum.io',
-  [ChainId.POLYGON]: 'https://polygonscan.com',
-  [ChainId.POLYGON_TESTNET]: 'https://mumbai.polygonscan.com',
-  [ChainId.ZKSYNC]: 'https://zkscan.io',
-  [ChainId.ZKSYNC_TESTNET]: 'https://goerli.explorer.zksync.io',
-  [ChainId.OPTIMISM]: 'https://optimistic.etherscan.io',
-  [ChainId.OPTIMISM_TESTNET]: 'https://goerli-optimism.etherscan.io/',
-}
+export const NETWORK_LINK: { [chainId in ChainId]?: any } =
+  process.env.NEXT_PUBLIC_TEST_MODE === '1'
+    ? {
+        [ChainId.ETHEREUM]: 'https://etherscan.io',
+        [ChainId.RINKEBY]: 'https://rinkeby.etherscan.io',
+        [ChainId.GOERLI]: 'https://goerli.etherscan.io',
+        [ChainId.BSC]: 'https://bscscan.com',
+        [ChainId.BSC_TESTNET]: 'https://testnet.bscscan.com',
+        [ChainId.ARBITRUM]: 'https://arbiscan.io',
+        [ChainId.ARBITRUM_TESTNET]: 'https://goerli-rollup-explorer.arbitrum.io',
+        [ChainId.POLYGON]: 'https://polygonscan.com',
+        [ChainId.POLYGON_TESTNET]: 'https://mumbai.polygonscan.com',
+        [ChainId.ZKSYNC]: 'https://zkscan.io',
+        [ChainId.ZKSYNC_TESTNET]: 'https://goerli.explorer.zksync.io',
+        [ChainId.OPTIMISM]: 'https://optimistic.etherscan.io',
+        [ChainId.OPTIMISM_TESTNET]: 'https://goerli-optimism.etherscan.io/',
+      }
+    : {
+        [ChainId.ETHEREUM]: 'https://etherscan.io',
+        [ChainId.BSC]: 'https://bscscan.com',
+        [ChainId.ARBITRUM]: 'https://arbiscan.io',
+        [ChainId.POLYGON]: 'https://polygonscan.com',
+        [ChainId.ZKSYNC]: 'https://zkscan.io',
+        [ChainId.OPTIMISM]: 'https://optimistic.etherscan.io',
+      }
 
-export const SITE_NAME: { [chainId in ChainId]?: any } = {
-  [ChainId.RINKEBY]: 'Etherscan',
-  [ChainId.GOERLI]: 'Etherscan',
-  [ChainId.BSC]: 'Bscscan',
-  [ChainId.BSC_TESTNET]: 'Bscscan',
-  [ChainId.ARBITRUM]: 'Arbiscan',
-  [ChainId.ARBITRUM_TESTNET]: 'Arbiscan',
-  [ChainId.POLYGON]: 'Polygonscan',
-  [ChainId.POLYGON_TESTNET]: 'Polygonscan',
-  [ChainId.ZKSYNC]: 'Zkscan',
-  [ChainId.ZKSYNC_TESTNET]: 'Zkscan',
-  [ChainId.OPTIMISM]: 'Optimismscan',
-  [ChainId.OPTIMISM_TESTNET]: 'Optimismscan',
-}
+export const SITE_NAME: { [chainId in ChainId]?: any } =
+  process.env.NEXT_PUBLIC_TEST_MODE === '1'
+    ? {
+        [ChainId.ETHEREUM]: 'Etherscan',
+        [ChainId.RINKEBY]: 'Etherscan',
+        [ChainId.GOERLI]: 'Etherscan',
+        [ChainId.BSC]: 'Bscscan',
+        [ChainId.BSC_TESTNET]: 'Bscscan',
+        [ChainId.ARBITRUM]: 'Arbiscan',
+        [ChainId.ARBITRUM_TESTNET]: 'Arbiscan',
+        [ChainId.POLYGON]: 'Polygonscan',
+        [ChainId.POLYGON_TESTNET]: 'Polygonscan',
+        [ChainId.ZKSYNC]: 'Zkscan',
+        [ChainId.ZKSYNC_TESTNET]: 'Zkscan',
+        [ChainId.OPTIMISM]: 'Optimismscan',
+        [ChainId.OPTIMISM_TESTNET]: 'Optimismscan',
+      }
+    : {
+        [ChainId.ETHEREUM]: 'Etherscan',
+        [ChainId.BSC]: 'Bscscan',
+        [ChainId.ARBITRUM]: 'Arbiscan',
+        [ChainId.POLYGON]: 'Polygonscan',
+        [ChainId.ZKSYNC]: 'Zkscan',
+        [ChainId.OPTIMISM]: 'Optimismscan',
+      }
 
 export const CONTRACT_BRIDGE_POOL = {
   [ChainId.GOERLI]: '0x27D2ec949C4D93D6246E538eBCACf1A76d7A899E',

@@ -48,8 +48,8 @@ export const useActiveChainId = () => {
         ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
         : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
       : router.pathname === '/bridge-token'
-      ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
-      : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
+      ? [...MAINNET_CHAINS]
+      : [...MAINNET_CHAINS.slice(0, 2)]
 
   const localChainId = useLocalNetworkChain()
   const queryChainId = useAtomValue(queryChainIdAtom)

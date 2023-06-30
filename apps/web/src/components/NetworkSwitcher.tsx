@@ -37,8 +37,8 @@ const NetworkSelect = ({ switchNetwork, chainId, removeTxtHeader }) => {
         ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
         : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
       : router.pathname === '/bridge-token'
-      ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
-      : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
+      ? [...MAINNET_CHAINS]
+      : [...MAINNET_CHAINS.slice(0, 2)]
 
   return (
     <>
@@ -52,13 +52,17 @@ const NetworkSelect = ({ switchNetwork, chainId, removeTxtHeader }) => {
       )}
       {chains.map((chain) => {
         return activeChains.includes(chain.id) ? (
-          <UserMenuItem key={chain.id} style={{ justifyContent: 'flex-start' }} onClick={() => {
-            switchNetwork(chain.id).then(response => {
-              if(!response) return 
-              
-              replaceBrowserHistory('chainId', chain.id)
-            })
-          }}>
+          <UserMenuItem
+            key={chain.id}
+            style={{ justifyContent: 'flex-start' }}
+            onClick={() => {
+              switchNetwork(chain.id).then((response) => {
+                if (!response) return
+
+                replaceBrowserHistory('chainId', chain.id)
+              })
+            }}
+          >
             <ChainLogo chainId={chain.id} />
             <Text color={chain.id === chainId ? '#FB8618' : 'text'} bold={chain.id === chainId} pl="12px">
               {chain.name}
@@ -80,8 +84,8 @@ const WrongNetworkSelect = ({ switchNetwork, chainId }) => {
         ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
         : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
       : router.pathname === '/bridge-token'
-      ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
-      : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
+      ? [...MAINNET_CHAINS]
+      : [...MAINNET_CHAINS.slice(0, 2)]
 
   const { targetRef, tooltip, tooltipVisible } = useTooltip(
     t(

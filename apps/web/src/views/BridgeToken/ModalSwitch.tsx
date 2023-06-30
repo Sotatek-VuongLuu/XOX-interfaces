@@ -128,20 +128,23 @@ export default function SwitchNetworkModal(props: Props): JSX.Element {
   const { t } = useTranslation()
   const { chainId: activedChainId } = useActiveChainId()
 
-  const arrNetwork = [
-    ChainId.ETHEREUM,
-    ChainId.GOERLI,
-    ChainId.BSC,
-    ChainId.BSC_TESTNET,
-    ChainId.ARBITRUM,
-    ChainId.ARBITRUM_TESTNET,
-    ChainId.POLYGON,
-    ChainId.POLYGON_TESTNET,
-    ChainId.ZKSYNC,
-    ChainId.ZKSYNC_TESTNET,
-    ChainId.OPTIMISM,
-    ChainId.OPTIMISM_TESTNET,
-  ]
+  const arrNetwork =
+    process.env.NEXT_PUBLIC_TEST_MODE === '1'
+      ? [
+          ChainId.ETHEREUM,
+          ChainId.GOERLI,
+          ChainId.BSC,
+          ChainId.BSC_TESTNET,
+          ChainId.ARBITRUM,
+          ChainId.ARBITRUM_TESTNET,
+          ChainId.POLYGON,
+          ChainId.POLYGON_TESTNET,
+          ChainId.ZKSYNC,
+          ChainId.ZKSYNC_TESTNET,
+          ChainId.OPTIMISM,
+          ChainId.OPTIMISM_TESTNET,
+        ]
+      : [ChainId.ETHEREUM, ChainId.BSC, ChainId.ARBITRUM, ChainId.POLYGON, ChainId.ZKSYNC, ChainId.OPTIMISM]
 
   const handleOnSelectNetwork = (cid: ChainId) => {
     if (cid === currentToken.chainId) return

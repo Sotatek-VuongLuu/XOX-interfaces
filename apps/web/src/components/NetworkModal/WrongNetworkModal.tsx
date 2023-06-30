@@ -98,7 +98,13 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
                   <Button
                     isLoading={isLoading && isLoadingA}
                     onClick={() => {
-                      switchNetworkAsync(BRIDGE_CHAINS_ONLY.includes(chainId) ? 1 : chainId)
+                      switchNetworkAsync(
+                        BRIDGE_CHAINS_ONLY.includes(chainId)
+                          ? 1
+                          : process.env.NEXT_PUBLIC_TEST_MODE === '1'
+                          ? chainId
+                          : 1,
+                      )
                       setLoadingA(true)
                     }}
                     height={43}
@@ -126,7 +132,13 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
                   <Button
                     isLoading={isLoading && isLoadingB}
                     onClick={() => {
-                      switchNetworkAsync(BRIDGE_CHAINS_ONLY.includes(chainId) ? 56 : chainId)
+                      switchNetworkAsync(
+                        BRIDGE_CHAINS_ONLY.includes(chainId)
+                          ? 56
+                          : process.env.NEXT_PUBLIC_TEST_MODE === '1'
+                          ? chainId
+                          : 56,
+                      )
                       setLoadingB(true)
                     }}
                     height={43}
