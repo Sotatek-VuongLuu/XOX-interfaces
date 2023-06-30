@@ -37,9 +37,31 @@ export const MAINNET_CHAINS = [
   ChainId.OPTIMISM,
 ]
 
-export const TESTNET_CHAINS = []
+export const TESTNET_CHAINS =
+  process.env.NEXT_PUBLIC_TEST_MODE === '1'
+    ? [
+        ChainId.BSC_TESTNET,
+        ChainId.GOERLI,
+        ChainId.ARBITRUM_TESTNET,
+        ChainId.POLYGON_TESTNET,
+        ChainId.ZKSYNC_TESTNET,
+        ChainId.OPTIMISM_TESTNET,
+      ]
+    : []
 
-export const BRIDGE_CHAINS_ONLY = [ChainId.ARBITRUM, ChainId.POLYGON, ChainId.ZKSYNC, ChainId.OPTIMISM]
+export const BRIDGE_CHAINS_ONLY =
+  process.env.NEXT_PUBLIC_TEST_MODE === '1'
+    ? [
+        ChainId.ARBITRUM,
+        ChainId.POLYGON,
+        ChainId.ZKSYNC,
+        ChainId.OPTIMISM,
+        ChainId.ARBITRUM_TESTNET,
+        ChainId.POLYGON_TESTNET,
+        ChainId.ZKSYNC_TESTNET,
+        ChainId.OPTIMISM_TESTNET,
+      ]
+    : [ChainId.ARBITRUM, ChainId.POLYGON, ChainId.ZKSYNC, ChainId.OPTIMISM]
 
 export const NETWORK_LABEL: { [chainId in ChainId]?: string } =
   process.env.NEXT_PUBLIC_TEST_MODE === '1'
