@@ -8,7 +8,7 @@ const Bridges = () => {
           {[...Array(10).keys()].map((item) => (
             <Overlay>
               <img
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bridgesnew/${item}.svg`}
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/Bridgesnew/${item + 1}.svg`}
                 key={item}
                 alt="dex"
                 loading="lazy"
