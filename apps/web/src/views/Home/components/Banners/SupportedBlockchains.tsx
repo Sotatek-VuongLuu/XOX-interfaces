@@ -212,7 +212,11 @@ const CoinItemDisplay = ({ item }: ItemProps) => {
     <WrapperI className="item list-coin">
       <div className="main_container">
         <Icon>
-          <img src={item.icon} alt="icon" style={{ width: item.icon.includes('zkSync') ? '36px' : 'auto' }} />
+          <img
+            src={item.icon}
+            alt="icon"
+            style={{ width: item.icon.includes('zkSync') || item.icon.includes('Solana') ? '36px' : 'auto' }}
+          />
         </Icon>
       </div>
     </WrapperI>
@@ -476,7 +480,7 @@ const listCoin = [
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/10_ethereumPOW.svg`,
   },
   {
-    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/11_kava.svg`,
+    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/11_Solana.svg`,
   },
   {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/12_algorand.svg`,
@@ -618,9 +622,6 @@ const listCoin = [
   },
   {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/58_tomochain.svg`,
-  },
-  {
-    icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/59_shiden.svg`,
   },
   {
     icon: `${process.env.NEXT_PUBLIC_ASSETS_URI}/images/home/coins/60_evmos.svg`,

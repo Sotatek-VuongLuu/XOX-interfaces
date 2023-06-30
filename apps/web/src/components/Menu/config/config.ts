@@ -250,7 +250,7 @@ export const configLanding: (
           icon: LotteryGame,
           fillIcon: '',
           href: 'javascript:void(0)',
-          showTooltip: t('Live At Launch'),
+          showTooltip: t('Under Development'),
         },
         {
           label: t('XOX Dex V2'),
