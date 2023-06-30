@@ -14,6 +14,10 @@ import BackedBy from 'views/Vesting/Components/BackedBy'
 import axios from 'axios'
 import anime from 'animejs'
 import NewTopIcon from 'components/Svg/NewTopIcon'
+import DexesComponent from './DexesComponent'
+import Aggregators from './Aggregators'
+import BlockChains from './BlockChains'
+import Bridges from './Bridges'
 
 interface ISocial {
   icon: string
@@ -836,42 +840,6 @@ const StyledTabEcosystem = styled.div`
   }
 `
 
-const StyledDexes = styled.div`
-  width: 1100px;
-  max-width: 100%;
-  height: 100%;
-  overflow-y: scroll;
-  display: grid;
-  margin: auto;
-  margin-top: 32px;
-  grid-template-columns: repeat(7, minmax(0, 1fr));
-  grid-row-gap: 15px;
-  grid-column-gap: 8px;
-
-  > img {
-    display: block;
-    margin: auto;
-    max-width: 100% !important;
-  }
-
-  ${({ theme }) => theme.mediaQueries.xl} {
-    grid-row-gap: 32px;
-    grid-template-columns: repeat(14, minmax(0, 1fr));
-  }
-`
-
-const AUTOHEIGHT = ['aggregators', 'bridges']
-interface IPropsStyledAggregator {
-  name?: string
-}
-
-const StyledAggregator = styled(StyledDexes)<IPropsStyledAggregator>`
-  height: ${({ name }) => (name && AUTOHEIGHT.includes(name) ? 'auto' : '100%')};
-  ${({ theme }) => theme.mediaQueries.xl} {
-    height: auto;
-  }
-`
-
 const StyledBtnStartTrading = styled.div`
   width: 100%;
   margin-top: 40px;
@@ -1050,40 +1018,10 @@ const StyledSwap = styled.div`
   }
 `
 
-const StyleFixHeight = styled.div`
-  height: 325px;
-  ${({ theme }) => theme.mediaQueries.xl} {
-    height: 520px;
-  }
-`
-
 const ReStyledTitle = styled(StyledTitle)`
   font-size: 20px;
   ${({ theme }) => theme.mediaQueries.xl} {
     font-size: 36px;
-  }
-`
-
-const Overlay = styled.div`
-  display: flex;
-  margin: auto;
-  width: 56px;
-  height: 56px;
-  background: rgba(255, 255, 255, 0.03);
-  box-shadow: inset 0px 0px 6px rgba(255, 255, 255, 0.3);
-  border-radius: 50%;
-  padding: 9px;
-  img {
-    display: block;
-    margin: auto;
-    width: 100%;
-    max-width: 100%;
-  }
-
-  @media screen and (max-width: 538px) {
-    width: 34px;
-    height: 34px;
-    padding: 5px;
   }
 `
 
@@ -1127,37 +1065,72 @@ const Tooltip = styled.div`
   }
 `
 
-const handleRange = (start: number, end: number, step = 1) => {
-  const range = []
-  const typeofStart = typeof start
-  const typeofEnd = typeof end
+export const AUTOHEIGHT = ['aggregators', 'bridges']
 
-  if (step === 0) {
-    throw TypeError('Step cannot be zero.')
-  }
-
-  if (typeofStart === 'undefined' || typeofEnd === 'undefined') {
-    throw TypeError('Must pass start and end arguments.')
-  } else if (typeofStart !== typeofEnd) {
-    throw TypeError('Start and end arguments must be of same type.')
-  }
-
-  if (end < start) {
-    // eslint-disable-next-line no-param-reassign
-    step = -step
-  }
-
-  if (typeofStart === 'number') {
-    while (step > 0 ? end >= start : end <= start) {
-      range.push(start)
-      // eslint-disable-next-line no-param-reassign
-      start += step
-    }
-  } else {
-    throw TypeError('Only string and number types are supported')
-  }
-  return range
+interface IPropsStyledAggregator {
+  name?: string
 }
+
+export const StyleFixHeight = styled.div`
+  height: 325px;
+  ${({ theme }) => theme.mediaQueries.xl} {
+    height: 520px;
+  }
+`
+
+export const StyledDexes = styled.div`
+  width: 1100px;
+  max-width: 100%;
+  height: 100%;
+  overflow-y: scroll;
+  display: grid;
+  margin: auto;
+  margin-top: 32px;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  grid-row-gap: 15px;
+  grid-column-gap: 8px;
+
+  > img {
+    display: block;
+    margin: auto;
+    max-width: 100% !important;
+  }
+
+  ${({ theme }) => theme.mediaQueries.xl} {
+    grid-row-gap: 32px;
+    grid-template-columns: repeat(14, minmax(0, 1fr));
+  }
+`
+
+export const StyledAggregator = styled(StyledDexes)<IPropsStyledAggregator>`
+  height: ${({ name }) => (name && AUTOHEIGHT.includes(name) ? 'auto' : '100%')};
+  ${({ theme }) => theme.mediaQueries.xl} {
+    height: auto;
+  }
+`
+
+export const Overlay = styled.div`
+  display: flex;
+  margin: auto;
+  width: 56px;
+  height: 56px;
+  background: rgba(255, 255, 255, 0.03);
+  box-shadow: inset 0px 0px 6px rgba(255, 255, 255, 0.3);
+  border-radius: 50%;
+  padding: 9px;
+  img {
+    display: block;
+    margin: auto;
+    width: 100%;
+    max-width: 100%;
+  }
+
+  @media screen and (max-width: 538px) {
+    width: 34px;
+    height: 34px;
+    padding: 5px;
+  }
+`
 
 const CardSafeReliable = ({ safe }: { safe: ISafeReliable }) => {
   return (
@@ -1169,7 +1142,7 @@ const CardSafeReliable = ({ safe }: { safe: ISafeReliable }) => {
   )
 }
 
-const BtnLearMore = ({ href }: { href?: string }) => {
+export const BtnLearMore = ({ href }: { href?: string }) => {
   const { t } = useTranslation()
 
   return (
@@ -1268,101 +1241,6 @@ const API = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
-      </div>
-    </>
-  )
-}
-
-const DexesComponent = () => {
-  return (
-    <>
-      <StyleFixHeight>
-        <StyledDexes>
-          {handleRange(1, 149).map((item, i) => (
-            <Overlay>
-              <img
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/dexes/${item}.png`}
-                key={String(i + item)}
-                alt="dex"
-                loading="lazy"
-              />
-            </Overlay>
-          ))}
-        </StyledDexes>
-      </StyleFixHeight>
-
-      <div className="btn_learn_more_ecosystem">
-        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
-      </div>
-    </>
-  )
-}
-
-const Aggregators = () => {
-  return (
-    <>
-      <StyleFixHeight>
-        <StyledAggregator name="aggregators">
-          {handleRange(1, 30).map((item, i) => (
-            <Overlay>
-              <img
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/aggregators/${item}.png`}
-                key={String(i + item)}
-                alt="dex"
-                loading="lazy"
-              />
-            </Overlay>
-          ))}
-        </StyledAggregator>
-      </StyleFixHeight>
-
-      <div className="btn_learn_more_ecosystem">
-        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
-      </div>
-    </>
-  )
-}
-const BlockChains = () => {
-  return (
-    <>
-      <StyleFixHeight>
-        <StyledAggregator>
-          {handleRange(1, 69).map((item, i) => (
-            <Overlay>
-              <img src={`/images/dex-v2/blockchains/${item}.png`} key={String(i + item)} alt="dex" loading="lazy" />
-            </Overlay>
-          ))}
-          <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/blockchains/70.png`} alt="dex" />
-        </StyledAggregator>
-      </StyleFixHeight>
-
-      <div className="btn_learn_more_ecosystem">
-        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
-      </div>
-    </>
-  )
-}
-
-const Bridges = () => {
-  return (
-    <>
-      <StyleFixHeight>
-        <StyledAggregator name="bridges">
-          {handleRange(1, 13).map((item, i) => (
-            <Overlay>
-              <img
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/bridges/${item}.png`}
-                key={String(i + item)}
-                alt="dex"
-                loading="lazy"
-              />
-            </Overlay>
-          ))}
-        </StyledAggregator>
-      </StyleFixHeight>
-
-      <div className="btn_learn_more_ecosystem">
         <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
       </div>
     </>
