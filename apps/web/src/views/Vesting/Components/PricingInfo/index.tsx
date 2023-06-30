@@ -506,13 +506,15 @@ function PricingInfo({ onModalExchangeSale, currentRound, isInTimeRangeSale, set
                 onModalExchangeSale()
                 setTypeBuyPrice(TYPE_BY.BY_ERC20)
               }}
-              disabled={!isInTimeRangeSale}
+              disabled={process.env.NEXT_PUBLIC_TEST_MODE !== '1' || !isInTimeRangeSale}
             >
               {t('Buy with USDT')}
             </CustomButton>
 
             {!isInTimeRangeSale ? (
-              <CustomButton disabled={!isInTimeRangeSale}>{t('Buy with ETH')}</CustomButton>
+              <CustomButton disabled={process.env.NEXT_PUBLIC_TEST_MODE !== '1' || !isInTimeRangeSale}>
+                {t('Buy with ETH')}
+              </CustomButton>
             ) : (
               <ButtonETH
                 className="btn_get_eth"

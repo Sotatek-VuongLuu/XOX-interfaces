@@ -776,8 +776,8 @@ export default function BridgeToken() {
                   <WapperConnectBtn onClick={handleClick}>{t('Connect Wallet')}</WapperConnectBtn>
                 ) : (
                   <SwapButton
-                    // disabled
                     disabled={
+                      process.env.NEXT_PUBLIC_TEST_MODE !== '1' ||
                       (messageButton !== t('Bridge') &&
                         messageButton !== t('Approve %symbol%', { symbol: tokenFrom.symbol })) ||
                       messageAddress !== '' ||

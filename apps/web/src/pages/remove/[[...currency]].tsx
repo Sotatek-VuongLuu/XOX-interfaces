@@ -1,4 +1,5 @@
 import DeploymentComing from 'components/DeploymentComing'
+import DeploymentComing2 from 'components/DeploymentComing2'
 import { PageMeta } from 'components/Layout/Page'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useCurrency } from 'hooks/Tokens'
@@ -46,6 +47,7 @@ const RemoveLiquidityPage = () => {
   return stableConfig.stableSwapConfig && router.query.stable === '1' ? (
     <>
       <DeploymentComing />
+      <DeploymentComing2 />
       <StableConfigContext.Provider value={stableConfig}>
         <RemoveStableLiquidity {...props} />
       </StableConfigContext.Provider>
@@ -53,6 +55,7 @@ const RemoveLiquidityPage = () => {
   ) : (
     <>
       <DeploymentComing />
+      <DeploymentComing2 />
       <RemoveLiquidity {...props} />
     </>
   )

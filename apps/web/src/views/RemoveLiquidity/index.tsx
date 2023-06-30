@@ -1177,6 +1177,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                       onClick={isZap ? approveCallback : onAttemptToApprove}
                       // disabled
                       disabled={
+                        process.env.NEXT_PUBLIC_TEST_MODE !== '1' ||
                         approval !== ApprovalState.NOT_APPROVED ||
                         (!isZap && signatureData !== null) ||
                         approvalSubmitted
@@ -1210,6 +1211,7 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
                       width="100%"
                       // disabled
                       disabled={
+                        process.env.NEXT_PUBLIC_TEST_MODE !== '1' ||
                         !isValid ||
                         (!isZap && signatureData === null && approval !== ApprovalState.APPROVED) ||
                         (isZap && approval !== ApprovalState.APPROVED) ||

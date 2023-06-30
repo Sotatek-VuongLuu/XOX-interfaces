@@ -1,16 +1,18 @@
 import React from 'react'
+import { createPortal } from 'react-dom'
 import styled from 'styled-components'
 
-const Wrapper = styled.div`
+const Wrapper = styled.div<{ testMode: boolean }>`
   position: fixed;
   width: 100vw;
   height: 100%;
-  top: 0;
+  top: 200px;
   left: 0;
-  display: none;
+  bottom: 0;
+  right: 0;
+  display: ${({ testMode }) => (testMode ? 'none' : 'grid')};
   place-content: center;
   z-index: 19;
-  background: rgba(0, 0, 0, 0.4);
 
   .main-content {
     display: inline-flex;
@@ -23,6 +25,7 @@ const Wrapper = styled.div`
     background: #101010;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     position: relative;
+    margin-top: -350px;
 
     &:before {
       display: block;
@@ -146,7 +149,7 @@ const Wrapper = styled.div`
     li a {
       display: flex;
       width: 150px;
-      height: 142px;
+      height: 112px;
       padding: 24px;
       flex-direction: column;
       justify-content: center;
@@ -166,13 +169,16 @@ const Wrapper = styled.div`
 
     .logo-name {
       font-size: 16px;
+      margin-top: 0;
     }
   }
 `
 
 const DeploymentComing = () => {
-  return (
-    <Wrapper>
+  const element = document.querySelector('#modal-popup-deployment-coming')
+
+  return createPortal(
+    <Wrapper testMode={process.env.NEXT_PUBLIC_TEST_MODE === '1'}>
       <div className="main-content">
         <h2>Deployment Coming</h2>
         <p className="description">
@@ -193,7 +199,8 @@ const DeploymentComing = () => {
           })}
         </ul>
       </div>
-    </Wrapper>
+    </Wrapper>,
+    element,
   )
 }
 
