@@ -5,12 +5,11 @@ import styled from 'styled-components'
 
 const Wrapper = styled.div<{ testMode: boolean }>`
   position: fixed;
-  width: 100vw;
-  height: 100%;
-  top: 200px;
-  left: 0;
-  bottom: 0;
-  right: 0;
+  width: fit-content;
+  height: fit-content;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
   display: ${({ testMode }) => (testMode ? 'none' : 'grid')};
   place-content: center;
   z-index: 9999;
@@ -26,7 +25,6 @@ const Wrapper = styled.div<{ testMode: boolean }>`
     background: #101010;
     box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
     position: relative;
-    margin-top: -350px;
 
     &:before {
       display: block;
@@ -188,7 +186,7 @@ const DeploymentComing = () => {
           {listItems.map((item) => {
             return (
               <li key={item.title}>
-                <a href={item.href}>
+                <a href={item.href} target="_blank">
                   <span className="fill-white">{item.image}</span>
                   <span className="fill-auto">{item.image}</span>
                   <p className="logo-name">{item.title}</p>
