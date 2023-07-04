@@ -11,6 +11,7 @@ import {
   UserMenu,
   UserMenuDivider,
   UserMenuItem,
+  useMatchBreakpoints,
   useTooltip,
 } from '@pancakeswap/uikit'
 import { useNetwork } from 'wagmi'
@@ -147,6 +148,16 @@ export const NetworkSwitcher = (props: any) => {
   // const router = useRouter()
   // const { address: account } = useAccount()
 
+  const { isMobile } = useMatchBreakpoints()
+  const router = useRouter()
+
+  const disabled = useMemo(() => {
+    const routerLink = ['/swap', '/bridge-token', '/pools', '/liquidity', '/referral', '/stable-coin']
+    if (process.env.NEXT_PUBLIC_TEST_MODE !== '1' && routerLink.includes(router.pathname) && isMobile) return true
+
+    return false
+  }, [])
+
   useNetworkConnectorUpdater()
 
   const foundChain = useMemo(
@@ -173,7 +184,7 @@ export const NetworkSwitcher = (props: any) => {
         placement="bottom"
         variant={isLoading ? 'pending' : isWrongNetwork ? 'danger' : 'default'}
         avatarSrc={`/images/chains/${chainId}.svg`}
-        disabled={cannotChangeNetwork}
+        disabled={cannotChangeNetwork || disabled}
         text={
           isLoading ? (
             t('Requesting')

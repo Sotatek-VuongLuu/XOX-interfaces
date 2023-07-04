@@ -10,12 +10,13 @@ import {
   UserMenu as UIKitUserMenu,
   UserMenuDivider,
   WalletFilledIcon,
+  useMatchBreakpoints,
 } from '@pancakeswap/uikit'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import Trans from 'components/Trans'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useAuth from 'hooks/useAuth'
-import { useCallback, useEffect, useState } from 'react'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 import { useProfile } from 'state/profile/hooks'
 import { useAccount, useNetwork, useProvider, useSigner } from 'wagmi'
 import { parseUnits } from '@ethersproject/units'
@@ -111,6 +112,15 @@ const UserMenu = () => {
   const [balanceXOX, setBalanceXOX] = useState<any>()
   const provider = useProvider({ chainId })
   const { data: signer } = useSigner()
+  const { isMobile } = useMatchBreakpoints()
+  const router = useRouter()
+
+  const disabled = useMemo(() => {
+    const routerLink = ['/swap', '/bridge-token', '/pools', '/liquidity', '/referral', '/stable-coin']
+    if (process.env.NEXT_PUBLIC_TEST_MODE !== '1' && routerLink.includes(router.pathname) && isMobile) return true
+
+    return false
+  }, [])
 
   // useEffect(() => {
   //   const handleChangeChainToBscTestnet = (hexChainId) => {
@@ -210,7 +220,9 @@ const UserMenu = () => {
   }, [account])
 
   const UserMenuItems = ({ setOpen }) => {
-    return (
+    return disabled ? (
+      <></>
+    ) : (
       <UserMenuStyle>
         <div>
           <Flex flexDirection="row">
@@ -357,7 +369,14 @@ const UserMenu = () => {
 
   if (account) {
     return (
-      <UIKitUserMenu account={account} avatarSrc={avatarSrc} text="" variant="default" uncloseWhenClick>
+      <UIKitUserMenu
+        disabled={disabled}
+        account={account}
+        avatarSrc={avatarSrc}
+        text=""
+        variant="default"
+        uncloseWhenClick
+      >
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )
@@ -365,7 +384,7 @@ const UserMenu = () => {
 
   if (isWrongNetwork && userProfile) {
     return (
-      <UIKitUserMenu text={t('Network')} variant="danger" uncloseWhenClick>
+      <UIKitUserMenu disabled={disabled} text={t('Network')} variant="danger" uncloseWhenClick>
         {({ isOpen, setIsOpen }) => (isOpen ? <UserMenuItems setOpen={setIsOpen} /> : null)}
       </UIKitUserMenu>
     )

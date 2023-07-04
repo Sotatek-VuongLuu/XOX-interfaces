@@ -11,7 +11,7 @@ const Wrapper = styled.div<{ testMode: boolean }>`
   left: 50%;
   transform: translate(-50%, -50%);
   display: ${({ testMode }) => (testMode ? 'none' : 'block')};
-  z-index: 9999;
+  z-index: 18;
 
   .main-content {
     display: inline-flex;
