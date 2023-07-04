@@ -53,7 +53,6 @@ class MyDocument extends Document {
           <div id="modal-root" />
           <div id="modal-popup-presale" />
           <div id="modal-popup-deployment-coming" />
-          <div id="menu-root" />
         </body>
       </Html>
     )
