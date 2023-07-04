@@ -1,4 +1,4 @@
-import { ReactElement, useCallback } from 'react'
+import { ReactElement, useCallback, useEffect, useMemo } from 'react'
 import { ChainId, Currency, Token } from '@pancakeswap/sdk'
 import styled from 'styled-components'
 import {
@@ -132,6 +132,14 @@ export function TransactionSubmittedContent({
 
   const token: Token | undefined = wrappedCurrency(currencyToAdd, chainId)
 
+  const isNeedAddToken = useMemo(() => {
+    const tokensAdded = JSON.parse(window.localStorage.getItem('tokensAdded'))
+
+    if (!tokensAdded || !tokensAdded[token.address]) return true
+
+    return false
+  }, [])
+
   return (
     <Wrapper style={{ maxWidth: '100%' }}>
       <Section>
@@ -158,7 +166,7 @@ export function TransactionSubmittedContent({
             <Button onClick={onDismiss} maxWidth="200px" height={43} style={{ background: '#313131' }}>
               {t('Close')}
             </Button>
-            {currencyToAdd && (
+            {currencyToAdd && isNeedAddToken && (
               <AddToWalletButton
                 variant="tertiary"
                 maxWidth="200px"

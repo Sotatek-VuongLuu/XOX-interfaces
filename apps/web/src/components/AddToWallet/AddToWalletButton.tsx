@@ -93,13 +93,20 @@ const AddToWalletButton: React.FC<AddToWalletButtonProps & ButtonProps> = ({
       {...props}
       onClick={() => {
         const image = tokenLogo ? (BAD_SRCS[tokenLogo] ? undefined : tokenLogo) : undefined
-        connector.watchAsset?.({
-          address: tokenAddress,
-          symbol: tokenSymbol,
-          image,
-          // @ts-ignore
-          decimals: tokenDecimals,
-        })
+        connector
+          .watchAsset?.({
+            address: tokenAddress,
+            symbol: tokenSymbol,
+            image,
+            // @ts-ignore
+            decimals: tokenDecimals,
+          })
+          .then(() => {
+            const tokensAdded = JSON.parse(window.localStorage.getItem('tokensAdded'))
+
+            let listToken = tokensAdded ?? {}
+            window.localStorage.setItem('tokensAdded', JSON.stringify({ ...listToken, [tokenAddress]: true }))
+          })
       }}
     >
       {getWalletText(textOptions, tokenSymbol, t)}

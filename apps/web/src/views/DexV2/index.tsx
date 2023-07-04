@@ -1123,6 +1123,7 @@ export const Overlay = styled.div`
     margin: auto;
     width: 100%;
     max-width: 100%;
+    padding: 5px;
   }
 
   @media screen and (max-width: 538px) {
