@@ -10,8 +10,7 @@ const Wrapper = styled.div<{ testMode: boolean }>`
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  display: ${({ testMode }) => (testMode ? 'none' : 'grid')};
-  place-content: center;
+  display: ${({ testMode }) => (testMode ? 'none' : 'block')};
   z-index: 9999;
 
   .main-content {
