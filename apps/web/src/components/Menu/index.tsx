@@ -30,6 +30,7 @@ import { useMenuItems } from './hooks/useMenuItems'
 import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { configLanding } from './config/config'
+import { createPortal } from 'react-dom'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;
@@ -200,6 +201,8 @@ const Menu = (props) => {
     return configLanding(t, isDark, currentLanguage.code, chainId)
   }, [t, isDark, currentLanguage.code, chainId])
 
+  const menuElement = document.querySelector('#menu-root')
+
   const activeMenuItem = getActiveMenuItem({ menuConfig: menuItems, pathname: route.pathname })
 
   const activeMenuItemLanding = getActiveMenuItem({ menuConfig: menuItemsLanding, pathname: route.pathname })
@@ -281,7 +284,7 @@ const Menu = (props) => {
     }, [setIsOpen]),
   )
 
-  return (
+  return createPortal(
     <>
       <ModalV2Wrapper closeOnOverlayClick isOpen={openHeader} onDismiss={handleCloseHeaderMenu}>
         <CustomModalWrapper onDismiss={handleCloseHeaderMenu} style={{ overflow: 'visible', border: 'none' }}>
@@ -447,7 +450,8 @@ const Menu = (props) => {
         isLanding={menuLandingPath.includes(route.pathname)}
         {...props}
       />
-    </>
+    </>,
+    menuElement,
   )
 }
 
