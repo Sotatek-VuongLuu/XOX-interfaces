@@ -319,7 +319,7 @@ const BackedByItem = ({ item }) => {
           <div className="list-logo">
             {partnersList.flat().map((partner) => {
               return (
-                <a href={partner.href} target="_blank">
+                <a href={partner.href} target="_blank" key={JSON.stringify(partner)}>
                   <img
                     src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
                     alt={partner.image_name}

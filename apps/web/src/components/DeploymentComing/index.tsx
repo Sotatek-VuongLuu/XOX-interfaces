@@ -174,14 +174,19 @@ const Wrapper = styled.div<{ testMode: boolean }>`
 `
 
 const DeploymentComing = () => {
-  const {t} = useTranslation();
+  const { t } = useTranslation()
   const element = document.querySelector('#modal-popup-deployment-coming')
 
   return createPortal(
     <Wrapper testMode={process.env.NEXT_PUBLIC_TEST_MODE === '1'}>
       <div className="main-content">
-        <h2>{t("Deployment Coming")}</h2>
-        <p className="description" dangerouslySetInnerHTML={{__html: t("Meanwhile explore the ecosystem, participate in <br /> airdrops and join the community!")}} />
+        <h2>{t('Deployment Coming')}</h2>
+        <p
+          className="description"
+          dangerouslySetInnerHTML={{
+            __html: t('Meanwhile explore the ecosystem, participate in <br /> airdrops and join the community!'),
+          }}
+        />
         <ul className="item-list">
           {listItems.map((item) => {
             return (
@@ -272,7 +277,7 @@ const listItems = [
       </svg>
     ),
     title: '@Xox_Labs',
-    href: 'https://discord.com/xoxlabs',
+    href: 'https://discord.gg/xoxlabs',
   },
   {
     image: (
