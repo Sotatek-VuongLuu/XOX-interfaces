@@ -556,6 +556,7 @@ const TransactionTable: React.FC<React.PropsWithChildren<any>> = ({ currencyData
               {tokensBalance.map((balance, index: number) => {
                 return (
                   <Flex
+                    key={index}
                     alignItems="center"
                     p="16px"
                     borderRadius="6px"

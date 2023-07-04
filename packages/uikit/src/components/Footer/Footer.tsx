@@ -98,6 +98,7 @@ const MenuItem: React.FC<React.PropsWithChildren<FooterProps>> = ({
               <StyledList key={item.label}>
                 {item.items?.map(({ label, href, isHighlighted = false, label2, href2, icon, product, inactive }) => (
                   <FooterItem
+                    key={label}
                     label={label}
                     href={href}
                     isHighlighted={isHighlighted}

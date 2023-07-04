@@ -302,7 +302,7 @@ const BackedByItem = ({ item }) => {
           >
             {partnersList.flat().map((partner) => {
               return (
-                <SwiperSlide>
+                <SwiperSlide key={JSON.stringify(partner)}>
                   <a href={partner.href} target="_blank" className="logo-link">
                     <img
                       src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}

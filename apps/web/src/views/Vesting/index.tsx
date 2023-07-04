@@ -800,7 +800,7 @@ function VestingPage() {
       }
     } catch (error: any) {
       if (error?.code !== 4001) {
-        toastError('Error', t('Transaction failed'))
+        // toastError('Error', t('Transaction failed'))
       }
     }
   }

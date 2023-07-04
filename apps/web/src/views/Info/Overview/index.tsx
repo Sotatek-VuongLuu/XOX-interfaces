@@ -292,7 +292,6 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
         const points = result.data?.data?.points
         if (!points) return
         const pointKeys = Object.keys(points)
-        console.log(points)
         let prevPrice
         const data = pointKeys.map((key) => {
           const res = {
