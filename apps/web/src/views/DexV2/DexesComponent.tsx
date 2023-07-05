@@ -14,6 +14,7 @@ const DexesComponent = () => {
                 loading="lazy"
                 width="38px"
                 height="38px"
+                style={{ paddingTop: item.includes('74') ? '0' : '5px' }}
               />
             </Overlay>
           ))}
