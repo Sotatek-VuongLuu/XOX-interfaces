@@ -15,6 +15,7 @@ const Wrapper = styled.div<{ testMode: boolean }>`
 
 const DeploymentComing2 = () => {
   useEffect(() => {
+    if (process.env.NEXT_PUBLIC_TEST_MODE === '1') return
     document.body.style.overflow = 'hidden'
     return () => {
       document.body.style.overflow = 'auto'
