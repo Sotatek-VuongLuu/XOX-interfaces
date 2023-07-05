@@ -268,25 +268,25 @@ const listItem = [
     title: 'XOX Dex V2',
     describe:
       'Why trade in a single Dex when you can Trade in all DEXs at Once. XOX Dex V2 finds you the best prices across 60+ Chains & 150+ DEXs and combines them into a single trade, all while giving you many other trade options to choose from, Ranking them by lowest fees, best rates and higher liquidity.',
-    link: '/dex-v2',
+    link: 'https://xoxlabs.io/dex-v2',
   },
   {
     title: 'XOX Multi-Chain Launchpad',
     describe:
       "XOX Labs is committed to developing the best web3 multi-chain launchpad in the market. With extensive research on over 50 launchpads, we'll provide seamless and secure access to profitable ICOs, fair launches, and pre-sales. Setting the industry standard and maximizing returns for investors.",
-    link: 'https://docs.xoxlabs.io/products-under-development/xox-multi-chain-launchpad',
+    link: 'https://docs.xoxlabs.io/xox-product-roadmap/xox-multi-chain-launchpad',
   },
   {
     title: 'XOX Mobile App/Wallet',
     describe:
       'In light of recent events, decentralized wallets such as Trust Wallet and Metamask have become increasingly important for investors who value the security of their assets. Our XOX Decentralized Wallet offers advanced multi-chain capabilities to users while ensuring the safety of their funds. With top-of-the-line security features and seamless chain management, our wallet provides a convenient and secure solution for navigating the complex world of cryptocurrency.',
-    link: 'https://docs.xoxlabs.io/products-under-development/xox-mobile-app-wallet',
+    link: 'https://docs.xoxlabs.io/xox-product-roadmap/xox-mobile-wallet',
   },
   {
     title: 'XOX Coin Listing/Rating Site',
     describe:
       'Multiple Studies have shown that at least 80% of crypto holders check CoinMarketCap once a day. The problem is that there is no accurate ranking system dedicated to a specific community. So we will create our own one, fully dedicated and targeted towards the needs of the XOX Community. No more searching around multiple platforms.',
-    link: 'https://docs.xoxlabs.io/products-under-development/xox-coin-listing-ranking-site',
+    link: 'https://docs.xoxlabs.io/xox-product-roadmap/xox-multi-chain-coin-listing-site',
   },
 ]
 
