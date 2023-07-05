@@ -7,6 +7,7 @@ import {
   Button,
   Text,
   useMatchBreakpoints,
+  useTooltip,
 } from '@pancakeswap/uikit'
 import { useCallback } from 'react'
 import { ChainId } from '@pancakeswap/sdk'
@@ -282,8 +283,12 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
   textThird = '',
 }) => {
   const { t } = useTranslation()
-  const { chainId } = useActiveChainId()
   const { isMobile } = useMatchBreakpoints()
+
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(t('Deployment comming'), {
+    placement: 'top-start',
+    hideTimeout: 0,
+  })
 
   return (
     <NavWrapper hasPadding={hasPadding}>
@@ -301,10 +306,12 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
           {textContentBanner || t('Stake XOXS automatically to earn more')}
         </Text>
         <div className="flex_container">
+          {tooltipVisible && tooltip}
           <a
             href={null}
             // href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
             // target="_blank"
+            ref={targetRef}
             rel="noreferrer"
           >
             <Button className="get-xox">{t('Get %sym%', { sym: titleBtn1 })}</Button>

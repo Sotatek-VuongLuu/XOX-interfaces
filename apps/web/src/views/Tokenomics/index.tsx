@@ -21,11 +21,11 @@ import {
   Dot,
   StyledF2,
   StyledAddress,
-  StyledCertik,
   StyledTVS,
   ContainnerStyledF2,
 } from './styled'
 import ADDComponent from './ADDComponent'
+import CertikWithTooltip from './CertikWithTooltip'
 
 interface IAddress {
   asset: string
@@ -113,21 +113,6 @@ export default function TokenomicsPage() {
   const { t } = useTranslation()
   const { width } = useWindowSize()
   const LAUNCH_APP_TIME = 1679850000 /// (seconds) can change
-  const { targetRef, tooltip, tooltipVisible } = useTooltip(
-    <span style={{ whiteSpace: 'nowrap' }}>{t('Coming Soon')}</span>,
-    {
-      placement: 'top',
-      hideTimeout: 0,
-    },
-  )
-  const {
-    targetRef: targetRef2,
-    tooltip: tooltip2,
-    tooltipVisible: tooltipVisible2,
-  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Coming Soon')}</span>, {
-    placement: 'top',
-    hideTimeout: 0,
-  })
 
   useEffect(() => {
     ;(document.getElementById('pieChart') as any).play()
@@ -668,34 +653,7 @@ export default function TokenomicsPage() {
           </StyledF2>
         </ContainnerStyledF2>
 
-        <StyledCertik>
-          <a href="https://www.certik.com/" target="_blank">
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Certik.svg`}
-              alt=""
-              draggable="false"
-              loading="lazy"
-            />
-          </a>
-          {tooltipVisible2 && tooltip2}
-          <a href="https://www.zellic.io/" target="_blank" ref={targetRef2}>
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Zellic.svg`}
-              alt=""
-              draggable="false"
-              loading="lazy"
-            />
-          </a>
-          {tooltipVisible && tooltip}
-          <a href="https://hacken.io/" target="_blank" ref={targetRef}>
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Hacken.svg`}
-              alt=""
-              draggable="false"
-              loading="lazy"
-            />
-          </a>
-        </StyledCertik>
+        <CertikWithTooltip />
 
         <ADDComponent />
 

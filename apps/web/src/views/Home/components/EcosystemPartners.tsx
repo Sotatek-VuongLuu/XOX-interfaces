@@ -1,16 +1,9 @@
 /* eslint-disable react/no-unknown-property */
 /* eslint-disable react/self-closing-comp */
 /* eslint-disable jsx-a11y/mouse-events-have-key-events */
-import useWindowSize from 'hooks/useWindowSize'
 import styled from 'styled-components'
-import React, { useState } from 'react'
-import { Button, Popover } from '@mui/material'
+import React from 'react'
 import { useTranslation } from '@pancakeswap/localization'
-import { useTooltip } from '@pancakeswap/uikit'
-
-interface SecureProps {
-  item: SecureItem
-}
 
 export interface SecureItem {
   imagePathDesktop: string
@@ -56,6 +49,7 @@ const Wrapper = styled.div`
     flex-direction: column;
     align-items: center;
     padding: 0px;
+    gap-y: -20px;
     margin-bottom: 100px;
 
     .box {
@@ -64,17 +58,21 @@ const Wrapper = styled.div`
       place-content: center;
     }
 
-    .box-3 {
-      grid-template-columns: repeat(3, 1fr);
+    .box-5 {
+      grid-template-columns: repeat(5, 1fr);
     }
 
-    .box-4 {
-      grid-template-columns: repeat(4, 1fr);
+    .box-6 {
+      grid-template-columns: repeat(6, 1fr);
+    }
+
+    .box-7 {
+      grid-template-columns: repeat(7, 1fr);
     }
 
     .box img {
       cursor: pointer;
-      width: 200px;
+      width: 170px;
       padding: 0 25px;
       box-sizing: content-box;
     }
@@ -91,81 +89,6 @@ const Wrapper = styled.div`
     }
   }
 `
-
-export const partnersList = [
-  [
-    {
-      image_name: 'BNBChain_logo',
-      href: 'https://www.bnbchain.org/en',
-    },
-    {
-      image_name: 'zksync_logo',
-      href: 'https://zksync.io/',
-    },
-    {
-      image_name: 'Syncswap_logo',
-      href: 'https://syncswap.xyz/',
-    },
-    {
-      image_name: 'OKX_logo',
-      href: 'https://www.okx.com',
-    },
-  ],
-  [
-    {
-      image_name: 'Quickswap_logo',
-      href: 'https://quickswap.exchange/',
-    },
-    {
-      image_name: 'Wombat_logo',
-      href: 'https://www.wombat.exchange/',
-    },
-    {
-      image_name: 'KyberNetwork_logo',
-      href: 'https://kyberswap.com',
-    },
-    {
-      image_name: 'ElkFinance_logo',
-      href: 'https://elk.finance/',
-    },
-  ],
-  [
-    {
-      image_name: 'Dexalot_logo',
-      href: 'https://dexalot.com/',
-    },
-    {
-      image_name: 'Bitgert_logo',
-      href: 'https://bitgert.com',
-    },
-    {
-      image_name: 'KingPad_logo',
-      href: 'https://kingpad.co',
-    },
-    {
-      image_name: 'iZumi_logo',
-      href: 'https://izumi.finance/home',
-    },
-  ],
-  [
-    {
-      image_name: 'Coin98_logo',
-      href: 'https://coin98.com',
-    },
-    {
-      image_name: 'Velocore_logo',
-      href: 'https://app.velocore.xyz/swap',
-    },
-    {
-      image_name: 'Xodex_logo',
-      href: 'https://www.xo-dex.com',
-    },
-    {
-      image_name: 'Orion_logo',
-      href: 'https://trade.orionprotocol.io/swap/ORN-USDT',
-    },
-  ],
-]
 
 const EcosystemPartners = () => {
   const { t } = useTranslation()
@@ -200,5 +123,120 @@ const EcosystemPartners = () => {
     </Wrapper>
   )
 }
+
+export const partnersList = [
+  [
+    {
+      image_name: 'BNBChain_logo',
+      href: 'https://bnbchain.org/',
+    },
+    {
+      image_name: 'zksync_logo',
+      href: 'https://zksync.io/',
+    },
+    {
+      image_name: 'Linea_logo',
+      href: 'https://linea.build/',
+    },
+    {
+      image_name: 'KyberNetwork_logo',
+      href: 'https://kyber.network/',
+    },
+    {
+      image_name: 'OKX_logo',
+      href: 'https://www.okx.com/',
+    },
+    {
+      image_name: 'Level_logo',
+      href: 'https://level.finance/',
+    },
+  ],
+  [
+    {
+      image_name: 'Syncswap_logo',
+      href: 'https://syncswap.xyz/',
+    },
+    {
+      image_name: 'Symbiosis_logo',
+      href: 'https://symbiosis.finance/',
+    },
+    {
+      image_name: 'Pangolin_logo',
+      href: 'https://www.pangolin.exchange/',
+    },
+    {
+      image_name: 'MummyFinance_logo',
+      href: 'https://www.mummy.finance/',
+    },
+    {
+      image_name: 'Orion_logo',
+      href: 'https://www.orionprotocol.io/',
+    },
+    {
+      image_name: 'Quickswap_logo',
+      href: 'https://quickswap.exchange/',
+    },
+    {
+      image_name: 'Wombat_logo',
+      href: 'https://www.wombat.exchange/',
+    },
+  ],
+  [
+    {
+      image_name: 'Rubic_logo',
+      href: 'https://rubic.exchange/',
+    },
+    {
+      image_name: 'Swing_logo',
+      href: 'https://swing.xyz/',
+    },
+    {
+      image_name: 'Chainge_logo',
+      href: 'https://www.chainge.finance/',
+    },
+    {
+      image_name: 'iZumi_logo',
+      href: 'https://izumi.finance/home',
+    },
+    {
+      image_name: 'Dexalot_logo',
+      href: 'https://dexalot.com/',
+    },
+    {
+      image_name: 'ODOS_logo',
+      href: 'https://odos.xyz/',
+    },
+  ],
+  [
+    {
+      image_name: 'Orbiter_logo',
+      href: 'https://www.orbiter.finance/',
+    },
+    {
+      image_name: 'ElkFinance_logo',
+      href: 'https://elk.finance/',
+    },
+    {
+      image_name: 'Velocore_logo',
+      href: 'https://app.velocore.xyz/',
+    },
+    {
+      image_name: 'debridge_logo',
+      href: 'https://debridge.finance/',
+    },
+    {
+      image_name: 'Bitgert_logo',
+      href: 'https://bitgert.com/',
+    },
+    {
+      image_name: 'KingPad_logo',
+      href: 'https://kingpad.finance/',
+    },
+    {
+      image_name: 'Xodex_logo',
+      href: 'https://www.xo-dex.com/',
+    },
+  ],
+]
 
 export default EcosystemPartners

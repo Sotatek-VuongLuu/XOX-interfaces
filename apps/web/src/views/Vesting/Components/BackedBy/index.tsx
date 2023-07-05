@@ -6,7 +6,6 @@ import { Swiper, SwiperSlide } from 'swiper/react'
 import { Pagination, Autoplay } from 'swiper'
 import 'swiper/css'
 import 'swiper/css/pagination'
-import { partnersList } from 'views/Home/components/EcosystemPartners'
 
 const Wrapper = styled.div`
   margin: 24px 0px 42px;
@@ -121,7 +120,7 @@ const WrapperItem = styled(Flex)`
     }
     > div {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0, 100px));
+      grid-template-columns: repeat(3, minmax(0, 100px));
       grid-column-gap: 24px;
       place-content: center;
       img {
@@ -130,8 +129,12 @@ const WrapperItem = styled(Flex)`
         cursor: pointer !important;
       }
     }
-    > .second-line {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    .group-partner {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      grid-column-gap: 24px;
+      place-content: center;
       img {
         max-width: 100%;
         width: 100px;
@@ -155,22 +158,41 @@ const WrapperItem = styled(Flex)`
     }
 
     &.backed > div {
-      > div.list-logo {
+      .group-partner {
         display: grid;
         grid-template-columns: repeat(2, minmax(0, 1fr));
-        grid-column-gap: 58px;
-      }
-      > div:nth-child(1) {
-        padding: 0px;
-      }
-      > div:nth-child(2) {
-        padding-left: 0px;
-        margin: 0px;
+        grid-column-gap: 24px;
+        place-content: center;
+
+        a {
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+
+        img {
+          max-width: 100%;
+          width: 100px;
+          cursor: pointer !important;
+        }
       }
 
-      img {
-        width: 100px;
-      }
+      // > div.list-logo {
+      //   display: grid;
+      //   grid-template-columns: repeat(2, minmax(0, 1fr));
+      //   grid-column-gap: 58px;
+      // }
+      // > div:nth-child(1) {
+      //   padding: 0px;
+      // }
+      // > div:nth-child(2) {
+      //   padding-left: 0px;
+      //   margin: 0px;
+      // }
+
+      // img {
+      //   width: 100px;
+      // }
     }
   }
   @media screen and (max-width: 560px) {
@@ -286,49 +308,67 @@ const BackedByItem = ({ item }) => {
       <p className="describe">{t(item.describe)}</p>
 
       <div>
-        {width >= 900 && (
-          <SwiperWrapper
-            modules={[Pagination, Autoplay]}
-            pagination={{ clickable: true }}
-            spaceBetween={50}
-            slidesPerView={4}
-            slidesPerGroup={4}
-            loop={true}
-            speed={1500}
-            autoplay={{
-              delay: 3000,
-              disableOnInteraction: false,
-            }}
-          >
-            {partnersList.flat().map((partner) => {
-              return (
-                <SwiperSlide key={JSON.stringify(partner)}>
-                  <a href={partner.href} target="_blank" className="logo-link">
+        <SwiperWrapper
+          modules={[Pagination, Autoplay]}
+          pagination={{ clickable: true }}
+          spaceBetween={50}
+          slidesPerView={1}
+          slidesPerGroup={1}
+          loop={true}
+          speed={1500}
+          autoplay={{
+            delay: 300000,
+            disableOnInteraction: false,
+          }}
+        >
+          {partnersList.map((partnerGroup1) => {
+            return (
+              <SwiperSlide key={JSON.stringify(partnerGroup1)}>
+                <div className="group-partner">
+                  {partnerGroup1.map((partner: any) => {
+                    return (
+                      <a href={partner.href} target="_blank" className="logo-link">
+                        <img
+                          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
+                          alt={partner.image_name}
+                        />
+                      </a>
+                    )
+                  })}
+                </div>
+              </SwiperSlide>
+            )
+          })}
+        </SwiperWrapper>
+
+        {/* {width < 900 && (
+          <div className="list-logo">
+            <SwiperWrapper
+              modules={[Pagination, Autoplay]}
+              pagination={{ clickable: true }}
+              spaceBetween={50}
+              slidesPerView={4}
+              slidesPerGroup={4}
+              loop={true}
+              speed={1500}
+              autoplay={{
+                delay: 3000,
+                disableOnInteraction: false,
+              }}
+            >
+              {partnersList.flat().map((partner) => {
+                return (
+                  <a href={partner.href} target="_blank" key={JSON.stringify(partner)}>
                     <img
                       src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
                       alt={partner.image_name}
                     />
                   </a>
-                </SwiperSlide>
-              )
-            })}
-          </SwiperWrapper>
-        )}
-
-        {width < 900 && (
-          <div className="list-logo">
-            {partnersList.flat().map((partner) => {
-              return (
-                <a href={partner.href} target="_blank" key={JSON.stringify(partner)}>
-                  <img
-                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
-                    alt={partner.image_name}
-                  />
-                </a>
-              )
-            })}
+                )
+              })}
+            </SwiperWrapper>
           </div>
-        )}
+        )} */}
       </div>
     </WrapperItem>
   )
@@ -354,5 +394,122 @@ function BackedBy() {
     </Wrapper>
   )
 }
+
+export const partnersList = [
+  [
+    {
+      image_name: 'BNBChain_logo',
+      href: 'https://bnbchain.org/',
+    },
+    {
+      image_name: 'zksync_logo',
+      href: 'https://zksync.io/',
+    },
+    {
+      image_name: 'Linea_logo',
+      href: 'https://linea.build/',
+    },
+    {
+      image_name: 'KyberNetwork_logo',
+      href: 'https://kyber.network/',
+    },
+    {
+      image_name: 'OKX_logo',
+      href: 'https://www.okx.com/',
+    },
+    {
+      image_name: 'Level_logo',
+      href: 'https://level.finance/',
+    },
+  ],
+  [
+    {
+      image_name: 'Syncswap_logo',
+      href: 'https://syncswap.xyz/',
+    },
+    {
+      image_name: 'Symbiosis_logo',
+      href: 'https://symbiosis.finance/',
+    },
+    {
+      image_name: 'Pangolin_logo',
+      href: 'https://www.pangolin.exchange/',
+    },
+    {
+      image_name: 'MummyFinance_logo',
+      href: 'https://www.mummy.finance/',
+    },
+    {
+      image_name: 'Orion_logo',
+      href: 'https://www.orionprotocol.io/',
+    },
+    {
+      image_name: 'Quickswap_logo',
+      href: 'https://quickswap.exchange/',
+    },
+  ],
+  [
+    {
+      image_name: 'Wombat_logo',
+      href: 'https://www.wombat.exchange/',
+    },
+    {
+      image_name: 'Rubic_logo',
+      href: 'https://rubic.exchange/',
+    },
+    {
+      image_name: 'Swing_logo',
+      href: 'https://swing.xyz/',
+    },
+    {
+      image_name: 'Chainge_logo',
+      href: 'https://www.chainge.finance/',
+    },
+    {
+      image_name: 'iZumi_logo',
+      href: 'https://izumi.finance/home',
+    },
+    {
+      image_name: 'Dexalot_logo',
+      href: 'https://dexalot.com/',
+    },
+  ],
+  [
+    {
+      image_name: 'ODOS_logo',
+      href: 'https://odos.xyz/',
+    },
+    {
+      image_name: 'Orbiter_logo',
+      href: 'https://www.orbiter.finance/',
+    },
+    {
+      image_name: 'ElkFinance_logo',
+      href: 'https://elk.finance/',
+    },
+    {
+      image_name: 'Velocore_logo',
+      href: 'https://app.velocore.xyz/',
+    },
+    {
+      image_name: 'debridge_logo',
+      href: 'https://debridge.finance/',
+    },
+    {
+      image_name: 'Bitgert_logo',
+      href: 'https://bitgert.com/',
+    },
+  ],
+  [
+    {
+      image_name: 'KingPad_logo',
+      href: 'https://kingpad.finance/',
+    },
+    {
+      image_name: 'Xodex_logo',
+      href: 'https://www.xo-dex.com/',
+    },
+  ],
+]
 
 export default BackedBy

@@ -1,11 +1,12 @@
 import ReactECharts from 'echarts-for-react'
-import { Ref, useEffect, useRef, useState } from 'react'
+import React, { Ref, useCallback, useEffect, useMemo, useRef, useState } from 'react'
 import { BTNLearnMore } from 'views/Company'
 import useWindowSize from 'hooks/useWindowSize'
 import { useTranslation } from '@pancakeswap/localization'
 import { EChartsOption, SeriesOption } from 'echarts'
 import BigNumber from 'bignumber.js'
 import { StyledAAD, StyledItemAAD, StyledTitle } from './styled'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
 
 interface IAAD {
   title: string
@@ -47,106 +48,113 @@ function AADItem({
   )
 }
 
-export default function ADDComponent() {
+const ADDComponent = () => {
   const { t } = useTranslation()
   const AADChart = useRef<ReactECharts>()
   const { width } = useWindowSize()
+  const { isDesktop } = useMatchBreakpoints()
 
-  const AAD_DATA_L: Array<IAAD> = [
-    {
-      title: t('Team allocation'),
-      content: [`${new BigNumber(12600000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
-      color: '#D8D8D8',
-      value: 12600000,
-    },
-    {
-      title: t('Company Reserve'),
-      content: [`${new BigNumber(18000000).toFormat()} Tokens`, t('0% at TGE & 4 years vesting 25% Yearly')],
-      color: '#969696',
-      value: 18000000,
-    },
-    {
-      title: t('Strategic Partnership'),
-      content: [`${new BigNumber(9000000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
-      color: '#BAFFBF',
-      value: 9000000,
-    },
-    {
-      title: t('Ecosystem Growth'),
-      content: [`${new BigNumber(27000000).toFormat()} Tokens`, t('33.33% at TGE & 4 years vesting 16.67% Yearly')],
-      color: '#86B6FF',
-      value: 27000000,
-    },
-    {
-      title: t('Community Rewards'),
-      content: [`${new BigNumber(1800000).toFormat()} Tokens`, t('25% at TGE & 3 years vesting 25% Yearly')],
-      color: '#50817C',
-      value: 1800000,
-    },
-    {
-      title: t('XOX labs Foundation'),
-      content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
-      color: '#64C6BA',
-      value: 5400000,
-    },
-  ]
-  const AAD_DATA_R: Array<IAAD> = [
-    {
-      title: t('LP Farming'),
-      content: [
-        `${new BigNumber(18000000).toFormat()} Tokens`,
-        t('20% at Launch then 10% unlock Each year for 8 years'),
-      ],
-      color: '#FFB547',
-      value: 18000000,
-    },
-    {
-      title: t('Seed Sale'),
-      content: [`${new BigNumber(3600000).toFormat()} Tokens`, t('10% TGE - 20% Unlock Monthly - 10% Last Month')],
-      color: '#FB8618',
-      value: 3600000,
-    },
-    {
-      title: t('Partners Sale'),
-      content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('10% release at TGE then 5% release Monthly')],
-      color: '#FF5353',
-      value: 5400000,
-    },
-    {
-      title: t('Pre Sale'),
-      content: [`${new BigNumber(10800000).toFormat()} Tokens`, t('10% release at TGE then 10% release Monthly')],
-      color: '#C20DA3',
-      value: 10800000,
-    },
-    {
-      title: t('Public Sale'),
-      content: [`${new BigNumber(36000000).toFormat()} Tokens`, t('40% realease at TGE then 10% Monthly')],
-      color: '#A964C9',
-      value: 36000000,
-    },
-    {
-      title: t('Liquidity Pools DEX'),
-      content: [`${new BigNumber(14400000).toFormat()} Tokens`, t('100% lock 5 years')],
-      color: '#3D8AFF',
-      value: 14400000,
-    },
-    {
-      title: t('CEX Listing'),
-      content: [`${new BigNumber(18000000).toFormat()} Tokens`, t('TGE = 40% then 10% Monthly Release')],
-      color: 'pink',
-      value: 18000000,
-    },
-  ]
-  const AAD_TOTAL = [...AAD_DATA_L, ...AAD_DATA_R].map((aad) => aad.value).reduce((a, b) => a + b, 0)
-  const AAD_DATA_TOTAL: IAAD = {
-    title: t('XOX Token Metrics'),
-    content: [`TGE (28.35%) - 51,030,000 Tokens`],
-    highLight: true,
-    value: AAD_TOTAL,
-  }
-  const AADIndex: Array<string> = []
-  AAD_DATA_L.forEach((aad, i) => AADIndex.push(`${i}`))
-  AAD_DATA_R.forEach((aad, i) => AADIndex.push(`${i + AAD_DATA_L.length}`))
+  const AAD_DATA_L: Array<IAAD> = useMemo(() => {
+    return [
+      {
+        title: t('Team allocation'),
+        content: [`${new BigNumber(12600000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
+        color: '#D8D8D8',
+        value: 12600000,
+      },
+      {
+        title: t('Company Reserve'),
+        content: [`${new BigNumber(18000000).toFormat()} Tokens`, t('0% at TGE & 4 years vesting 25% Yearly')],
+        color: '#969696',
+        value: 18000000,
+      },
+      {
+        title: t('Strategic Partnership'),
+        content: [`${new BigNumber(9000000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
+        color: '#BAFFBF',
+        value: 9000000,
+      },
+      {
+        title: t('Ecosystem Growth'),
+        content: [`${new BigNumber(27000000).toFormat()} Tokens`, t('33.33% at TGE & 4 years vesting 16.67% Yearly')],
+        color: '#86B6FF',
+        value: 27000000,
+      },
+      {
+        title: t('Community Rewards'),
+        content: [`${new BigNumber(1800000).toFormat()} Tokens`, t('25% at TGE & 3 years vesting 25% Yearly')],
+        color: '#50817C',
+        value: 1800000,
+      },
+      {
+        title: t('XOX labs Foundation'),
+        content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('0% at TGE & 5 years vesting 20% Yearly')],
+        color: '#64C6BA',
+        value: 5400000,
+      },
+    ]
+  }, [])
+  const AAD_DATA_R: Array<IAAD> = useMemo(() => {
+    return [
+      {
+        title: t('LP Farming'),
+        content: [
+          `${new BigNumber(18000000).toFormat()} Tokens`,
+          t('20% at Launch then 10% unlock Each year for 8 years'),
+        ],
+        color: '#FFB547',
+        value: 18000000,
+      },
+      {
+        title: t('Seed Sale'),
+        content: [`${new BigNumber(3600000).toFormat()} Tokens`, t('10% TGE - 20% Unlock Monthly - 10% Last Month')],
+        color: '#FB8618',
+        value: 3600000,
+      },
+      {
+        title: t('Partners Sale'),
+        content: [`${new BigNumber(5400000).toFormat()} Tokens`, t('10% release at TGE then 5% release Monthly')],
+        color: '#FF5353',
+        value: 5400000,
+      },
+      {
+        title: t('Pre Sale'),
+        content: [`${new BigNumber(10800000).toFormat()} Tokens`, t('10% release at TGE then 10% release Monthly')],
+        color: '#C20DA3',
+        value: 10800000,
+      },
+      {
+        title: t('Public Sale'),
+        content: [`${new BigNumber(36000000).toFormat()} Tokens`, t('40% realease at TGE then 10% Monthly')],
+        color: '#A964C9',
+        value: 36000000,
+      },
+      {
+        title: t('Liquidity Pools DEX'),
+        content: [`${new BigNumber(14400000).toFormat()} Tokens`, t('100% lock 5 years')],
+        color: '#3D8AFF',
+        value: 14400000,
+      },
+      {
+        title: t('CEX Listing'),
+        content: [`${new BigNumber(18000000).toFormat()} Tokens`, t('TGE = 40% then 10% Monthly Release')],
+        color: 'pink',
+        value: 18000000,
+      },
+    ]
+  }, [])
+  const AAD_TOTAL = useMemo(() => {
+    return [...AAD_DATA_L, ...AAD_DATA_R].map((aad) => aad.value).reduce((a, b) => a + b, 0)
+  }, [AAD_DATA_L, AAD_DATA_R])
+
+  const AAD_DATA_TOTAL: IAAD = useMemo(() => {
+    return {
+      title: t('XOX Token Metrics'),
+      content: [`TGE (28.35%) - 51,030,000 Tokens`],
+      highLight: true,
+      value: AAD_TOTAL,
+    }
+  }, [AAD_TOTAL])
 
   const AAD_CHART_OPTION: EChartsOption = {
     tooltip: { show: false },
@@ -194,18 +202,21 @@ export default function ADDComponent() {
     ],
   }
 
-  function itemHandleChart(id: string | Array<string>, highLight: boolean) {
-    const a = AADChart.current.getEchartsInstance()
-    a.dispatchAction({ type: highLight ? 'highlight' : 'downplay', dataIndex: id })
-  }
-  function chartHandleItem(params: any, highLight: boolean) {
+  const itemHandleChart = useCallback(
+    (id: string | Array<string>, highLight: boolean) => {
+      const a = AADChart.current.getEchartsInstance()
+      a.dispatchAction({ type: highLight ? 'highlight' : 'downplay', dataIndex: id })
+    },
+    [AADChart],
+  )
+  const chartHandleItem = useCallback((params: any, highLight: boolean) => {
     const items = document.querySelectorAll('#AADItem')
     if (highLight) {
       items[params.dataIndex + 1].classList.add('active')
     } else {
       items[params.dataIndex + 1].classList.remove('active')
     }
-  }
+  }, [])
 
   return (
     <>
@@ -223,8 +234,8 @@ export default function ADDComponent() {
             <AADItem
               data={item}
               key={String(`a${i}`)}
-              onMouseEnter={() => itemHandleChart(`${i}`, true)}
-              onMouseLeave={() => itemHandleChart(`${i}`, false)}
+              onMouseEnter={() => isDesktop && itemHandleChart(`${i}`, true)}
+              onMouseLeave={() => isDesktop && itemHandleChart(`${i}`, false)}
             />
           ))}
         </div>
@@ -234,10 +245,14 @@ export default function ADDComponent() {
               option={AAD_CHART_OPTION}
               style={{ height: 'inherit' }}
               ref={AADChart}
-              onEvents={{
-                mouseover: (eve) => chartHandleItem(eve, true),
-                mouseout: (eve) => chartHandleItem(eve, false),
-              }}
+              onEvents={
+                isDesktop
+                  ? {
+                      mouseover: (eve) => isDesktop && chartHandleItem(eve, true),
+                      mouseout: (eve) => isDesktop && chartHandleItem(eve, false),
+                    }
+                  : {}
+              }
             />
             <div>
               <h1>{t('Total Supply')}</h1>
@@ -255,8 +270,8 @@ export default function ADDComponent() {
               data={item}
               key={String(`a${i}`)}
               className="b-l"
-              onMouseEnter={() => itemHandleChart(`${i + AAD_DATA_L.length}`, true)}
-              onMouseLeave={() => itemHandleChart(`${i + AAD_DATA_L.length}`, false)}
+              onMouseEnter={() => isDesktop && itemHandleChart(`${i + AAD_DATA_L.length}`, true)}
+              onMouseLeave={() => isDesktop && itemHandleChart(`${i + AAD_DATA_L.length}`, false)}
             />
           ))}
         </div>
@@ -270,3 +285,5 @@ export default function ADDComponent() {
     </>
   )
 }
+
+export default ADDComponent
