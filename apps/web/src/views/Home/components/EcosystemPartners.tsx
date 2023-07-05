@@ -61,7 +61,7 @@ const Wrapper = styled.div`
     .h100 {
       display: block;
       align: center;
-      height: 100px;
+      height: 120px;
       width: 200px;
       position: relative;
 
