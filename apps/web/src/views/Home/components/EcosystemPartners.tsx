@@ -4,6 +4,12 @@
 import styled from 'styled-components'
 import React from 'react'
 import { useTranslation } from '@pancakeswap/localization'
+import { useMatchBreakpoints } from '@pancakeswap/uikit'
+import { Swiper, SwiperSlide } from 'swiper/react'
+import { Pagination, Autoplay } from 'swiper'
+import 'swiper/css'
+import 'swiper/css/pagination'
+import { partnersList as partnersListMobile } from 'views/Vesting/Components/BackedBy'
 
 export interface SecureItem {
   imagePathDesktop: string
@@ -90,8 +96,43 @@ const Wrapper = styled.div`
   }
 `
 
+const SwiperWrapper = styled(Swiper)`
+  width: calc(100vw - 32px);
+
+  .swiper-pagination {
+    bottom: 0;
+  }
+
+  .swiper-pagination-bullet {
+    background: white;
+  }
+  // .swiper-pagination-bullet-active {
+  //   background: linear-gradient(95.32deg, #b809b5 -7.25%, #ed1c51 54.2%, #ffb000 113.13%);
+  // }
+
+  .group-partner {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-column-gap: 24px;
+    place-content: center;
+
+    a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    img {
+      max-width: 100%;
+      width: 100px;
+      cursor: pointer !important;
+    }
+  }
+`
+
 const EcosystemPartners = () => {
   const { t } = useTranslation()
+  const { isDesktop } = useMatchBreakpoints()
 
   return (
     <Wrapper>
@@ -103,28 +144,63 @@ const EcosystemPartners = () => {
       </p>
 
       <div className="imgs">
-        {partnersList.map((partnerGroup) => {
-          return (
-            <div className={`box box-${partnerGroup.length}`}>
-              {partnerGroup.map((partner) => {
-                return (
-                  <a href={partner.href} target="_blank">
-                    <img
-                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
-                      alt={partner.image_name}
-                    />
-                  </a>
-                )
-              })}
-            </div>
-          )
-        })}
+        {isDesktop ? (
+          partnersList.map((partnerGroup) => {
+            return (
+              <div className={`box box-${partnerGroup.length}`}>
+                {partnerGroup.map((partner) => {
+                  return (
+                    <a href={partner.href} target="_blank">
+                      <img
+                        src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
+                        alt={partner.image_name}
+                      />
+                    </a>
+                  )
+                })}
+              </div>
+            )
+          })
+        ) : (
+          <SwiperWrapper
+            modules={[Pagination, Autoplay]}
+            pagination={{ clickable: true }}
+            spaceBetween={50}
+            slidesPerView={1}
+            slidesPerGroup={1}
+            loop={true}
+            speed={1500}
+            autoplay={{
+              delay: 3000,
+              disableOnInteraction: false,
+            }}
+          >
+            {partnersListMobile.map((partnerGroup1) => {
+              return (
+                <SwiperSlide key={JSON.stringify(partnerGroup1)}>
+                  <div className="group-partner">
+                    {partnerGroup1.map((partner: any) => {
+                      return (
+                        <a href={partner.href} target="_blank" className="logo-link">
+                          <img
+                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
+                            alt={partner.image_name}
+                          />
+                        </a>
+                      )
+                    })}
+                  </div>
+                </SwiperSlide>
+              )
+            })}
+          </SwiperWrapper>
+        )}
       </div>
     </Wrapper>
   )
 }
 
-export const partnersList = [
+const partnersList = [
   [
     {
       image_name: 'BNBChain_logo',
@@ -139,19 +215,19 @@ export const partnersList = [
       href: 'https://linea.build/',
     },
     {
-      image_name: 'KyberNetwork_logo',
-      href: 'https://kyber.network/',
-    },
-    {
       image_name: 'OKX_logo',
       href: 'https://www.okx.com/',
     },
     {
-      image_name: 'Level_logo',
-      href: 'https://level.finance/',
+      image_name: 'KyberNetwork_logo',
+      href: 'https://kyber.network/',
     },
   ],
   [
+    {
+      image_name: 'Level_logo',
+      href: 'https://level.finance/',
+    },
     {
       image_name: 'Syncswap_logo',
       href: 'https://syncswap.xyz/',
@@ -172,6 +248,8 @@ export const partnersList = [
       image_name: 'Orion_logo',
       href: 'https://www.orionprotocol.io/',
     },
+  ],
+  [
     {
       image_name: 'Quickswap_logo',
       href: 'https://quickswap.exchange/',
@@ -180,16 +258,20 @@ export const partnersList = [
       image_name: 'Wombat_logo',
       href: 'https://www.wombat.exchange/',
     },
-  ],
-  [
     {
       image_name: 'Rubic_logo',
       href: 'https://rubic.exchange/',
     },
     {
+      image_name: 'Gnosis_logo',
+      href: 'https://www.gnosis.io/',
+    },
+    {
       image_name: 'Swing_logo',
       href: 'https://swing.xyz/',
     },
+  ],
+  [
     {
       image_name: 'Chainge_logo',
       href: 'https://www.chainge.finance/',
@@ -206,8 +288,6 @@ export const partnersList = [
       image_name: 'ODOS_logo',
       href: 'https://odos.xyz/',
     },
-  ],
-  [
     {
       image_name: 'Orbiter_logo',
       href: 'https://www.orbiter.finance/',
@@ -216,6 +296,8 @@ export const partnersList = [
       image_name: 'ElkFinance_logo',
       href: 'https://elk.finance/',
     },
+  ],
+  [
     {
       image_name: 'Velocore_logo',
       href: 'https://app.velocore.xyz/',

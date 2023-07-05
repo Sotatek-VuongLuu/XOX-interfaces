@@ -317,7 +317,7 @@ const BackedByItem = ({ item }) => {
           loop={true}
           speed={1500}
           autoplay={{
-            delay: 300000,
+            delay: 3000,
             disableOnInteraction: false,
           }}
         >
@@ -410,12 +410,12 @@ export const partnersList = [
       href: 'https://linea.build/',
     },
     {
-      image_name: 'KyberNetwork_logo',
-      href: 'https://kyber.network/',
-    },
-    {
       image_name: 'OKX_logo',
       href: 'https://www.okx.com/',
+    },
+    {
+      image_name: 'KyberNetwork_logo',
+      href: 'https://kyber.network/',
     },
     {
       image_name: 'Level_logo',
@@ -458,6 +458,10 @@ export const partnersList = [
       href: 'https://rubic.exchange/',
     },
     {
+      image_name: 'Gnosis_logo',
+      href: 'https://www.gnosis.io/',
+    },
+    {
       image_name: 'Swing_logo',
       href: 'https://swing.xyz/',
     },
@@ -469,12 +473,12 @@ export const partnersList = [
       image_name: 'iZumi_logo',
       href: 'https://izumi.finance/home',
     },
+  ],
+  [
     {
       image_name: 'Dexalot_logo',
       href: 'https://dexalot.com/',
     },
-  ],
-  [
     {
       image_name: 'ODOS_logo',
       href: 'https://odos.xyz/',
@@ -495,12 +499,12 @@ export const partnersList = [
       image_name: 'debridge_logo',
       href: 'https://debridge.finance/',
     },
+  ],
+  [
     {
       image_name: 'Bitgert_logo',
       href: 'https://bitgert.com/',
     },
-  ],
-  [
     {
       image_name: 'KingPad_logo',
       href: 'https://kingpad.finance/',
