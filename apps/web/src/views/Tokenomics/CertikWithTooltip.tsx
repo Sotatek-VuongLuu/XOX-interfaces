@@ -22,9 +22,18 @@ const CertikWithTooltip = () => {
     hideTimeout: 0,
   })
 
+  const {
+    targetRef: certikRef,
+    tooltip: certikTooltip,
+    tooltipVisible: certikTooltipVisible,
+  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Onboarding')}</span>, {
+    placement: 'top',
+  })
+
   return (
     <StyledCertik>
-      <a href="https://www.certik.com/" target="_blank">
+      {certikTooltipVisible && certikTooltip}
+      <a href="https://www.certik.com/" target="_blank" ref={certikRef}>
         <img
           src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/tokenomics/Certik.svg`}
           alt=""

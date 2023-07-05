@@ -230,13 +230,22 @@ const SecuredByItem = ({ item }) => {
     placement: 'top',
   })
 
+  const {
+    targetRef: certikRef,
+    tooltip: certikTooltip,
+    tooltipVisible: certikTooltipVisible,
+  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Onboarding')}</span>, {
+    placement: 'top',
+  })
+
   return (
     <WrapperItem className="container secured" flexDirection="column" alignItems="center" position="relative">
       <p className="title">{t(item.title)}</p>
       <p className="describe">{t(item.describe)}</p>
 
+      {certikTooltipVisible && certikTooltip}
       <div className="logos">
-        <div>
+        <div ref={certikRef}>
           <a href="https://www.certik.com/" target="_blank">
             <img
               src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-short.svg`}
