@@ -9,6 +9,7 @@ import SwiperCore, { Autoplay } from 'swiper'
 import { useState } from 'react'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
+import Partner from './Partner'
 
 SwiperCore.use([Autoplay])
 
@@ -140,144 +141,6 @@ const Wrapper = styled.div`
   }
 `
 
-const SliderWrapper = styled.div`
-  div.container {
-    transition: all 0.3s ease;
-  }
-  div.container h1 {
-    margin: 15px 0 0 0;
-  }
-  div.container h3 {
-    margin: 0 0 25px 0;
-  }
-  @media (max-width: 992px) {
-    padding: 0;
-  }
-  .slide-option {
-    margin: 0 0 50px 0;
-  }
-  .slide-option .no-marg {
-    margin: 0 0 0 0;
-  }
-  div.highway-slider {
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 160px;
-
-    @media (max-width: 560px) {
-      height: 120px;
-    }
-  }
-  div.highway-slider div.highway-barrier {
-    overflow: hidden;
-    position: relative;
-  }
-  div.highway-slider ul.highway-lane {
-    display: flex;
-    height: 100%;
-  }
-  div.highway-slider ul.highway-lane li.highway-car {
-    flex: 1;
-    display: grid;
-    grid-template-columns: repeat(21, 1fr)
-    gap: 64px;
-    justify-content: center;
-    align-items: center;
-    color: #343434;
-  }
-  
-  @keyframes translateinfinitetl {
-    100% {
-      transform: translateX(calc(-160px * 7));
-    }
-  }
-  @keyframes translateinfinitetr {
-    0% {
-      transform: translateX(calc(-160px * 7));
-    }
-    100% {
-      transform: translateX(0);
-    }
-  }
-
-  @keyframes scale1 {
-    0% {
-      transform: scale(1);
-    }
-    50% {
-      transform: scale(1.1);
-    }
-    100% {
-      transform: scale(1);
-    }
-  }
-  #infinite div.highway-barrier ul.highway-lane {
-    width: calc(160px * 21);
-    &:hover li.highway-car{
-      animation-play-state: paused !important;
-      position: relative;
-    }
-
-    img.icon-short {
-      opacity: 1;
-      height: 80px;
-      position: absolute;
-      transform: translate(-50%, -50%);
-      left: 50%;
-      top: 50%;
-      z-index: 2;
-    }
-    
-    img.icon-short:hover {
-      opacity: 0;
-    }
-    
-    img.icon-short + img {
-      opacity: 0;
-      height: 160px;
-    }
-
-    @media (max-width: 560px) {
-      img.icon-short + img {
-        opacity: 0;
-        height: 120px;
-      }
-    }
-    
-    img.icon-short:hover + img {
-      background: rgba(255, 255, 255, 0.05);
-      border-radius: 10px;
-      padding: 10px;
-      opacity: 1;
-    }
-
-    // & img.partner:hover {
-    //   animation: scale1 2.8s infinite;
-    // }
-
-    // & img {
-    //   cursor: pointer;
-    // }
-  }
-  #infinite.infinitetl div.highway-barrier ul.highway-lane li.highway-car {
-    width: 160px;
-    animation: translateinfinitetl 23s linear infinite;
-  }
-  #infinite.infinitetr div.highway-barrier ul.highway-lane li.highway-car {
-    width: 160px;
-    animation: translateinfinitetr 23s linear infinite;
-  }
-  #infinite.infinitetl.speed-20 div.highway-barrier ul.highway-lane li.highway-car {
-    width: 160px;
-    animation: translateinfinitetl 23s linear infinite;
-  }
-  #infinite.infinitetr.speed-20 div.highway-barrier ul.highway-lane li.highway-car {
-    width: 160px;
-    animation: translateinfinitetr 23s linear infinite;
-  }
-`
-
 const Partners = () => {
   const { t } = useTranslation()
   const [isShowMore, setIsShowMore] = useState(false)
@@ -307,145 +170,9 @@ const Partners = () => {
       </p>
 
       <div className="slide_container">
-        <SliderWrapper>
-          <div id="infinite" className="infinitetl highway-slider">
-            <div className="container highway-barrier">
-              <ul className="highway-lane">
-                {[1, 2, 3].map(() =>
-                  listPartners1.map(({ iconName, href }) => {
-                    return (
-                      <li className="highway-car" key={iconName}>
-                        <a href={href} target="_blank">
-                          <img
-                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
-                            alt={iconName}
-                            className="partner icon-short"
-                          />
-                          <img
-                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-full.svg`}
-                            alt={iconName}
-                            className="partner icon-full"
-                          />
-                        </a>
-                      </li>
-                    )
-                  }),
-                )}
-                {isMobile &&
-                  listPartners1.map(({ iconName, href }) => {
-                    return (
-                      <li className="highway-car" key={iconName}>
-                        <a href={href} target="_blank">
-                          <img
-                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
-                            alt={iconName}
-                            className={isHovering ? 'partner' : ''}
-                            onMouseOver={handleMouseOver}
-                            onMouseOut={handleMouseOut}
-                          />
-                        </a>
-                      </li>
-                    )
-                  })}
-              </ul>
-            </div>
-          </div>
-        </SliderWrapper>
-
-        <SliderWrapper>
-          <div id="infinite" className="infinitetr speed-20 highway-slider">
-            <div className="container highway-barrier">
-              <ul className="highway-lane">
-                {[1, 2, 3].map(() =>
-                  listPartners2.map(({ iconName, href }) => {
-                    return (
-                      <li className="highway-car" key={iconName}>
-                        <a href={href} target="_blank">
-                          <img
-                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
-                            alt={iconName}
-                            className="partner icon-short"
-                          />
-                          <img
-                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-full.svg`}
-                            alt={iconName}
-                            className="partner icon-full"
-                          />
-                        </a>
-                      </li>
-                    )
-                  }),
-                )}
-              </ul>
-            </div>
-          </div>
-        </SliderWrapper>
-
-        <SliderWrapper>
-          <div id="infinite" className="infinitetl speed-20 highway-slider">
-            <div className="container highway-barrier">
-              <ul className="highway-lane">
-                {[1, 2, 3].map(() =>
-                  listPartners3.map(({ iconName, href }) => {
-                    return (
-                      <li className="highway-car" key={iconName}>
-                        <a href={href} target="_blank">
-                          <img
-                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-short.svg`}
-                            alt={iconName}
-                            className="partner icon-short"
-                          />
-                          <img
-                            src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/${iconName}-full.svg`}
-                            alt={iconName}
-                            className="partner icon-full"
-                          />
-                        </a>
-                      </li>
-                    )
-                  }),
-                )}
-              </ul>
-            </div>
-          </div>
-        </SliderWrapper>
-
-        {/* {isShowMore ? (
-          <SliderWrapper>
-            <div id="infinite" className="infinitetr highway-slider">
-              <div className="container highway-barrier">
-                <ul className="highway-lane">
-                  {listPartners.map(({ icon }) => {
-                    return (
-                      <li className="highway-car" key={icon}>
-                        <img
-                          src={icon}
-                          alt="icon"
-                          className={isHovering ? 'partner' : ''}
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        />
-                      </li>
-                    )
-                  })}
-                  {listPartners.map(({ icon }) => {
-                    return (
-                      <li className="highway-car" key={icon}>
-                        <img
-                          src={icon}
-                          alt="icon"
-                          className={isHovering ? 'partner' : ''}
-                          onMouseOver={handleMouseOver}
-                          onMouseOut={handleMouseOut}
-                        />
-                      </li>
-                    )
-                  })}
-                </ul>
-              </div>
-            </div>
-          </SliderWrapper>
-        ) : null} */}
+        <Partner items={listPartners1} isMobile={isMobile} type="infinitetl" />
+        <Partner items={listPartners2} type="infinitetr" />
+        <Partner items={listPartners3} type="infinitetl" />
       </div>
 
       <div className="btn_see_all" data-aos="fade-up" style={{ display: 'none' }}>
@@ -482,7 +209,6 @@ const listPartners3 = [
   { iconName: 'CoinmarketcapAPI', href: 'https://coinmarketcap.com/api/' },
   { iconName: 'Metamask', href: 'https://metamask.io/' },
   { iconName: 'TrustWallet', href: 'https://trustwallet.com/' },
-  { iconName: 'Maverick', href: 'https://www.mav.xyz/' },
   { iconName: 'Coingecko', href: 'https://www.coingecko.com/' },
   { iconName: 'DefiLlama', href: 'https://defillama.com/' },
 ]
