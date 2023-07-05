@@ -83,6 +83,7 @@ const AddToWalletButton: React.FC<AddToWalletButtonProps & ButtonProps> = ({
   const { t } = useTranslation()
   const { connector, isConnected } = useAccount()
   const isCanRegisterToken = canRegisterToken()
+  const { address } = useAccount()
 
   if (connector && connector.name === 'Binance') return null
   if (!(connector && connector.watchAsset && isConnected)) return null
@@ -105,7 +106,10 @@ const AddToWalletButton: React.FC<AddToWalletButtonProps & ButtonProps> = ({
             const tokensAdded = JSON.parse(window.localStorage.getItem('tokensAdded'))
 
             let listToken = tokensAdded ?? {}
-            window.localStorage.setItem('tokensAdded', JSON.stringify({ ...listToken, [tokenAddress]: true }))
+            window.localStorage.setItem(
+              'tokensAdded',
+              JSON.stringify({ ...listToken, [`${address}:${tokenAddress}`]: true }),
+            )
           })
       }}
     >

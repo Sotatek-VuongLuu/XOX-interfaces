@@ -20,6 +20,7 @@ import { GridLoader } from 'react-spinners'
 import { AutoColumn, ColumnCenter } from '../Layout/Column'
 import { getBlockExploreLink } from '../../utils'
 import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToWalletButton'
+import { useAccount } from 'wagmi'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -129,13 +130,14 @@ export function TransactionSubmittedContent({
 }) {
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpoints()
+  const { address } = useAccount()
 
   const token: Token | undefined = wrappedCurrency(currencyToAdd, chainId)
 
   const isNeedAddToken = useMemo(() => {
     const tokensAdded = JSON.parse(window.localStorage.getItem('tokensAdded'))
 
-    if (!tokensAdded || !tokensAdded[token.address]) return true
+    if (!tokensAdded || !tokensAdded[`${address}:${token.address}`]) return true
 
     return false
   }, [])
