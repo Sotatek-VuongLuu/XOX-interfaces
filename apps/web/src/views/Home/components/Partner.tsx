@@ -55,6 +55,13 @@ const SliderWrapper = styled.div<{ length: number }>`
     justify-content: center;
     align-items: center;
     color: #343434;
+
+    a {
+      display: block;
+      width: 160px;
+      height: 160px;
+      position: relative;
+    }
   }
 
   @keyframes translateinfinitetl {
