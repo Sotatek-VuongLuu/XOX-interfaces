@@ -665,7 +665,7 @@ const WelcomeXOX = (): JSX.Element => {
     targetRef: targetRef2,
     tooltip: tooltip2,
     tooltipVisible: tooltipVisible2,
-  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Live At Launch')}</span>, {
+  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Deployment Coming')}</span>, {
     placement: 'top',
     hideTimeout: 0,
   })

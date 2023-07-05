@@ -229,7 +229,7 @@ const listItems = [
       </svg>
     ),
     title: 'linktr.ee/xoxlabs',
-    href: null,
+    href: 'https://linktr.ee/xoxlabs',
   },
   {
     image: (
