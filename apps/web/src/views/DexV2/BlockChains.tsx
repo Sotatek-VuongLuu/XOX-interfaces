@@ -21,7 +21,7 @@ const BlockChains = () => {
       </StyleFixHeight>
 
       <div className="btn_learn_more_ecosystem">
-        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
+        <BtnLearMore href="https://docs.xoxlabs.io/xox-product-roadmap/xox-dex-v2/supported-chains-dexs-and-aggregators" />
       </div>
     </>
   )

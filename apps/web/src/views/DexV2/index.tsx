@@ -1170,7 +1170,7 @@ const Swap = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
+        <BtnLearMore href="https://docs.xoxlabs.io/xox-product-roadmap/xox-dex-v2/supported-chains-dexs-and-aggregators" />
       </div>
     </>
   )
@@ -1188,7 +1188,7 @@ const LimitOrder = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
+        <BtnLearMore href="https://docs.xoxlabs.io/xox-product-roadmap/xox-dex-v2/supported-chains-dexs-and-aggregators" />
       </div>
     </>
   )
@@ -1206,7 +1206,7 @@ const Earn = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
+        <BtnLearMore href="https://docs.xoxlabs.io/xox-product-roadmap/xox-dex-v2/supported-chains-dexs-and-aggregators" />
       </div>
     </>
   )
@@ -1224,7 +1224,7 @@ const Liquidity = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
+        <BtnLearMore href="https://docs.xoxlabs.io/xox-product-roadmap/xox-dex-v2/supported-chains-dexs-and-aggregators" />
       </div>
     </>
   )
@@ -1242,7 +1242,7 @@ const API = ({ t }: { t: TranslateFunction }) => {
       </StyledSwap>
 
       <div className="btn_learn_more_wycd">
-        <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2" />
+        <BtnLearMore href="https://docs.xoxlabs.io/xox-product-roadmap/xox-dex-v2/supported-chains-dexs-and-aggregators" />
       </div>
     </>
   )
@@ -1836,7 +1836,7 @@ function DevV2() {
             />
 
             <div>
-              <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2/protocols-unique-features" />
+              <BtnLearMore href="https://docs.xoxlabs.io/xox-product-roadmap/xox-dex-v2/business-case/platform-fees-and-distribution" />
             </div>
           </div>
 
@@ -1900,7 +1900,7 @@ function DevV2() {
             </ul>
 
             <div>
-              <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2/platform-revenue-sources-and-estimations" />
+              <BtnLearMore href="https://docs.xoxlabs.io/xox-product-roadmap/xox-dex-v2/business-case/platform-fees-and-distribution" />
             </div>
           </div>
         </StyledRevenue>
@@ -1921,7 +1921,7 @@ function DevV2() {
             justifyContent: 'center',
           }}
         >
-          <BtnLearMore href="https://docs.xoxlabs.io/products-under-development/xox-dex-v2/security-and-audits" />
+          <BtnLearMore href="https://docs.xoxlabs.io/xox-product-roadmap/xox-dex-v2" />
         </div>
 
         <ReStyledTitle>{t('XOX Labs Ecosystem Products')}</ReStyledTitle>
