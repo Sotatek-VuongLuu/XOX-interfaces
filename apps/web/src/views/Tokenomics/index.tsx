@@ -85,7 +85,7 @@ function Address({ addr, ...props }: { addr: IAddress }) {
         />
       </div>
       {chainId ? (
-        <Tooltip title={t('Live At Launch')} placement="top">
+        <Tooltip title={t('Deployment Coming')} placement="top">
           {/* <a href={chainId ? `/swap?chainId=${chainId}` : null} target="_blank" rel="noreferrer"> */}
           <a href={null} target="_blank" rel="noreferrer">
             {t('Get %symbol_buy%', { symbol_buy: 'XOX' })}
