@@ -58,6 +58,23 @@ const Wrapper = styled.div`
     gap-y: -20px;
     margin-bottom: 100px;
 
+    .h100 {
+      display: block;
+      align: center;
+      height: 100px;
+      width: 200px;
+      position: relative;
+
+      img {
+        position: absolute;
+        width: 100%;
+        height: auto;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+      }
+    }
+
     .box {
       position: relative;
       display: grid;
@@ -150,7 +167,7 @@ const EcosystemPartners = () => {
               <div className={`box box-${partnerGroup.length}`}>
                 {partnerGroup.map((partner) => {
                   return (
-                    <a href={partner.href} target="_blank">
+                    <a href={partner.href} target="_blank" className="h100">
                       <img
                         src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/audit/${partner.image_name}.svg`}
                         alt={partner.image_name}

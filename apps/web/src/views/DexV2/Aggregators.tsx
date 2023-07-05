@@ -57,7 +57,7 @@ const aggregators = [
   '27. Shell Protocol',
   '28. Sushi',
   '29. Convergence',
-  '30. 0x',
+  '31. 0x',
 ]
 
 export default Aggregators

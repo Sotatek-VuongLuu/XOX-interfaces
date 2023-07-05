@@ -114,7 +114,7 @@ const dexes = [
   '83. LiquidSwap',
   '84. Bancor',
   '85. Tinyman',
-  '86. 0x',
+  '30. 0x',
   '87. WanSwap Dex',
   '88. AlienFi',
   '89. Clipper',

@@ -285,7 +285,7 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpoints()
 
-  const { targetRef, tooltip, tooltipVisible } = useTooltip(t('Deployment comming'), {
+  const { targetRef, tooltip, tooltipVisible } = useTooltip(t('Deployment coming'), {
     placement: 'top-start',
     hideTimeout: 0,
   })
