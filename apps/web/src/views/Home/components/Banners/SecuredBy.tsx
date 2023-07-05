@@ -665,6 +665,14 @@ const SecuredBy = () => {
   )
 
   const {
+    targetRef: certikRef,
+    tooltip: certikTooltip,
+    tooltipVisible: certikTooltipVisible,
+  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Onboarding')}</span>, {
+    placement: 'top',
+  })
+
+  const {
     targetRef: zellicRef,
     tooltip: zellicTooltip,
     tooltipVisible: zellicTooltipVisible,
@@ -706,7 +714,8 @@ const SecuredBy = () => {
       </p>
 
       <div className="imgs">
-        <div className="box airbnb-box">
+        {certikTooltipVisible && certikTooltip}
+        <div className="box airbnb-box" ref={certikRef}>
           <a href="https://www.certik.com/" target="_blank">
             <img
               src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-short.svg`}
