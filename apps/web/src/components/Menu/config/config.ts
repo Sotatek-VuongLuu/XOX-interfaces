@@ -165,27 +165,27 @@ export const configLanding: (
       image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/decorations/pe2.png`,
       items: [],
     },
-    {
-      label: t('Whitepaper'),
-      href: '#',
-      icon: WhitepaperIcon,
-      fillIcon: SwapFillIcon,
-      showItemsOnMobile: false,
-      items: [
-        {
-          label: t('English'),
-          href: '#',
-          icon: EnglishIcon,
-          fillIcon: EnglishIcon,
-        },
-        {
-          label: t('Vietnamese'),
-          icon: VietNamIcon,
-          fillIcon: VietNamIcon,
-          href: '#',
-        },
-      ].map((item) => addMenuItemSupported(item, chainId)),
-    },
+    // {
+    //   label: t('Whitepaper'),
+    //   href: '#',
+    //   icon: WhitepaperIcon,
+    //   fillIcon: SwapFillIcon,
+    //   showItemsOnMobile: false,
+    //   items: [
+    //     {
+    //       label: t('English'),
+    //       href: '#',
+    //       icon: EnglishIcon,
+    //       fillIcon: EnglishIcon,
+    //     },
+    //     {
+    //       label: t('Vietnamese'),
+    //       icon: VietNamIcon,
+    //       fillIcon: VietNamIcon,
+    //       href: '#',
+    //     },
+    //   ].map((item) => addMenuItemSupported(item, chainId)),
+    // },
     {
       label: t('Company'),
       icon: CompanyIcon,
