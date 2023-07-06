@@ -216,15 +216,17 @@ function NotificationBannerAirdrop() {
                 <span>{t('XOX Token will be launching on ETH-BSC-ARB-POLY-zkSync-OPT.')}&nbsp;</span>
                 <span>{t('Soon')}</span>
               </p>
-              <a href="/#">
+              <a href="https://gleam.io/UCxGB/40000-xox-airdrop-xoxs-giveaway">
                 <span>{t('Participate Now')}!</span>
               </a>
             </div>
-            <div>
-              <p>{t('Airdrop ending in')}:</p>
+            {TIME_START_COUNTDOWN < new Date().getTime() && (
+              <div>
+                <p>{t('Airdrop ending in')}:</p>
 
-              {TIME_START_COUNTDOWN < new Date().getTime() && <CountDown endTime={1694091600000} />}
-            </div>
+                <CountDown endTime={1694091600000} />
+              </div>
+            )}
           </InterOuter>
           <span className="svg" onClick={hideBanner} aria-hidden="true">
             <XClose />
