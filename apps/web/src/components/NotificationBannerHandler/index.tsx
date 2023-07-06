@@ -85,7 +85,7 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     discription: 'Total Prize $40,000',
     btnText: 'Participate Now',
     href: 'https://gleam.io/UCxGB/40000-xox-airdrop-xoxs-giveaway',
-    start: 1688731200,
+    start: 1688644800,
     end: 1690981200,
   },
   {

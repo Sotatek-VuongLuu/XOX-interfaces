@@ -142,7 +142,7 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const { isMobile } = useMatchBreakpoints()
   const route = useRouter()
   const currentTimestamp = () => Math.round(new Date().getTime() / 1000)
-  const timeLineBannerAirdrop = { start: 1688734800, end: 1694091600 }
+  const timeLineBannerAirdrop = { start: 1688644800, end: 1694088000 }
   const timeLineBannerChain = { start: 1688734800, end: 1682670600 }
   // Use the layout defined at the page level, if available
   const Layout = Component.Layout || Fragment
