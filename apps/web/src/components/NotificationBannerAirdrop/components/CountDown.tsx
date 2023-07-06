@@ -137,7 +137,7 @@ function CountDown({ endTime, stop }: Props) {
 
   const timeStart = Math.floor(new Date(endTime).getTime()) / 1000
 
-  const NOW = Date.now() / 1000
+  const NOW = stop ? 1688734800 : Date.now() / 1000
   const periodTime = Math.floor(timeStart - NOW)
 
   const handleCountDown = () => {
