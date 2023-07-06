@@ -349,7 +349,7 @@ const listItems = [
       </svg>
     ),
     title: 'Airdrops',
-    href: null,
+    href: 'https://gleam.io/UCxGB/40000-xox-airdrop-xoxs-giveaway',
   },
 ]
 
