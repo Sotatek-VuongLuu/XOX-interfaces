@@ -112,7 +112,7 @@ interface IDataOBJReturn {
 export default function TokenomicsPage() {
   const { t } = useTranslation()
   const { width } = useWindowSize()
-  const LAUNCH_APP_TIME = 1679850000 /// (seconds) can change
+  const LAUNCH_APP_TIME = 1694754000 /// (seconds) can change
 
   useEffect(() => {
     ;(document.getElementById('pieChart') as any).play()
