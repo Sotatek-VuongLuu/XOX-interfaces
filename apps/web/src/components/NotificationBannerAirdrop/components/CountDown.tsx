@@ -118,14 +118,14 @@ const CountDownWrapper = styled.div`
 `
 
 interface Props {
-  startTime: number
+  endTime: number
 }
 
 export const handleTime = (time: number) => {
   return time < 10 ? `0${time}` : time
 }
 
-function CountDown({ startTime }: Props) {
+function CountDown({ endTime }: Props) {
   const { t } = useTranslation()
   const [timeList, setTimeList] = useState({
     days: 0,
@@ -134,7 +134,7 @@ function CountDown({ startTime }: Props) {
     seconds: 0,
   })
 
-  const timeStart = Math.floor(new Date(startTime).getTime()) / 1000
+  const timeStart = Math.floor(new Date(endTime).getTime()) / 1000
 
   const NOW = Date.now() / 1000
   const periodTime = Math.floor(timeStart - NOW)

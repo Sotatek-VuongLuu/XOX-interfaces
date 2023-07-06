@@ -432,7 +432,7 @@ const Menu = (props) => {
             </>
           )
         }
-        banner={['/company'].includes(route.pathname) ? bannerTop : null}
+        banner={['/', '/company', '/tokenomics', '/dex-v2'].includes(route.pathname) ? bannerTop : null}
         isDark={isDark}
         toggleTheme={toggleTheme}
         currentLang={currentLanguage.code}

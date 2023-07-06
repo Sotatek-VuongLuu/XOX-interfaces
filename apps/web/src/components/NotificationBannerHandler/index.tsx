@@ -33,6 +33,7 @@ export function useNotificationHandle() {
     })
     const bannerTimeAllow: ITimeLineArr[] = checkTimeAllow.filter((item) => item.show === true)
     setBannerAllowed(bannerTimeAllow)
+    console.log(bannerTimeAllow)
     return bannerTimeAllow
   }
 
@@ -83,9 +84,9 @@ const TIMELINEARRAY: ITimeLineArr[] = [
     name: '$20K in XOX Tokens Airdrop + 20K XOXS Giveaway is Live!',
     discription: 'Total Prize $40,000',
     btnText: 'Participate Now',
-    href: '/#',
-    start: 0,
-    end: 0,
+    href: 'https://gleam.io/UCxGB/40000-xox-airdrop-xoxs-giveaway',
+    start: 1688731200,
+    end: 1690981200,
   },
   {
     id: 2,

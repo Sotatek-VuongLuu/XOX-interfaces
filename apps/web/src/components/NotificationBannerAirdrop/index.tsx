@@ -167,6 +167,8 @@ const InterOuter = styled.div`
   }
 `
 
+const TIME_START_COUNTDOWN = 1688734800000
+
 function NotificationBannerAirdrop() {
   const dispatch = useAppDispatch()
   const { width } = useWindowSize()
@@ -220,7 +222,8 @@ function NotificationBannerAirdrop() {
             </div>
             <div>
               <p>{t('Airdrop ending in')}:</p>
-              <CountDown startTime={1683166694000} />
+
+              {TIME_START_COUNTDOWN < new Date().getTime() && <CountDown endTime={1694091600000} />}
             </div>
           </InterOuter>
           <span className="svg" onClick={hideBanner} aria-hidden="true">

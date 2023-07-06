@@ -142,8 +142,8 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
   const { isMobile } = useMatchBreakpoints()
   const route = useRouter()
   const currentTimestamp = () => Math.round(new Date().getTime() / 1000)
-  const timeLineBannerAirdrop = { start: 1682669700, end: 1682670000 }
-  const timeLineBannerChain = { start: 1682670300, end: 1682670600 }
+  const timeLineBannerAirdrop = { start: 1688734800, end: 1694091600 }
+  const timeLineBannerChain = { start: 1688734800, end: 1682670600 }
   // Use the layout defined at the page level, if available
   const Layout = Component.Layout || Fragment
   const ShowMenu = Component.mp ? Fragment : Menu
@@ -192,8 +192,12 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
           <Component {...pageProps} />
         </Layout>
       </ShowMenu>
-      {Number(route.query?.id) === 1 && ['/company'].includes(route.pathname) && <NotificationBannerAirdrop />}
-      {Number(route.query?.id) === 2 && ['/company'].includes(route.pathname) && <NotificationBannerChains />}
+      {isShowBannerAirdrop && ['/', '/company', '/tokenomics', '/dex-v2'].includes(route.pathname) && (
+        <NotificationBannerAirdrop />
+      )}
+      {Number(route.query?.id) === 2 && ['/', '/company', '/tokenomics', '/dex-v2'].includes(route.pathname) && (
+        <NotificationBannerChains />
+      )}
       <EasterEgg iterations={2} />
       <ToastListener />
       <FixedSubgraphHealthIndicator />
