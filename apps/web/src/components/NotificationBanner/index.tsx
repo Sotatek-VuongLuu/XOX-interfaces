@@ -112,7 +112,9 @@ function NotificationBanner({ title, description, btnText = 'Participate', href 
       <InnerContainer>
         <span>{t(title)}&nbsp;</span>
         <span>{t(description)}</span>
-        <a href={href}>{t(btnText)}</a>
+        <a href={href} target="_blank">
+          {t(btnText)}
+        </a>
       </InnerContainer>
       <span aria-hidden="true" onClick={() => onRemove && onRemove(id)} className="svg">
         <BannerCloseX />

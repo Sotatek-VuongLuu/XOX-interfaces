@@ -216,7 +216,7 @@ function NotificationBannerAirdrop() {
                 <span>{t('XOX Token will be launching on ETH-BSC-ARB-POLY-zkSync-OPT.')}&nbsp;</span>
                 <span>{t('Soon')}</span>
               </p>
-              <a href="https://gleam.io/UCxGB/40000-xox-airdrop-xoxs-giveaway">
+              <a href="https://gleam.io/UCxGB/40000-xox-airdrop-xoxs-giveaway" target="_blank">
                 <span>{t('Participate Now')}!</span>
               </a>
             </div>
