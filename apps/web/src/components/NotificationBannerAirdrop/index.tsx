@@ -220,13 +220,11 @@ function NotificationBannerAirdrop() {
                 <span>{t('Participate Now')}!</span>
               </a>
             </div>
-            {TIME_START_COUNTDOWN < new Date().getTime() && (
-              <div>
-                <p>{t('Airdrop ending in')}:</p>
+            <div>
+              <p>{t('Airdrop ending in')}:</p>
 
-                <CountDown endTime={1694091600000} />
-              </div>
-            )}
+              <CountDown stop={TIME_START_COUNTDOWN > new Date().getTime()} endTime={1694091600000} />
+            </div>
           </InterOuter>
           <span className="svg" onClick={hideBanner} aria-hidden="true">
             <XClose />

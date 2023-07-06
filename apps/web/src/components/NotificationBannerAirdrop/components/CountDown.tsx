@@ -119,13 +119,14 @@ const CountDownWrapper = styled.div`
 
 interface Props {
   endTime: number
+  stop: boolean
 }
 
 export const handleTime = (time: number) => {
   return time < 10 ? `0${time}` : time
 }
 
-function CountDown({ endTime }: Props) {
+function CountDown({ endTime, stop }: Props) {
   const { t } = useTranslation()
   const [timeList, setTimeList] = useState({
     days: 0,
@@ -148,12 +149,18 @@ function CountDown({ endTime }: Props) {
   }
 
   useEffect(() => {
+    if (stop) return
     if (Math.floor(periodTime) >= 0) {
       const refreshInterval = setInterval(handleCountDown, 1000)
+
       return () => clearInterval(refreshInterval)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [timeList, timeStart])
+
+  useEffect(() => {
+    handleCountDown()
+  }, [])
 
   return (
     <CountDownWrapper>
