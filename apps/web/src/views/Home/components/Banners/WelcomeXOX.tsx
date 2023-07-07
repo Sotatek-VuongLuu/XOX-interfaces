@@ -695,7 +695,7 @@ const WelcomeXOX = (): JSX.Element => {
               <Feature className="feature">{t('Revolutionary - Scalable - Sustainable')}</Feature>
               <Description className="description">
                 {t('Swap, stake, store, bridge, refer, invest and earn with ease on the')}
-                <br />
+                {isMobile || isTablet ? ' ' : <br />}
                 {t('leading Decentralized Blockchain Ecosystem.')}
               </Description>
               <div className="grid-button">
