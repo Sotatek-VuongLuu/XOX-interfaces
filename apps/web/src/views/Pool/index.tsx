@@ -592,14 +592,14 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
                   <StyledCardFooter style={{ textAlign: 'center' }}>
                     {account ? (
                       <Link
-                        href="javascript:void(0)"
-                        // href={
-                        //   allV2PairsWithLiquidity.length > 0 && !stateAdd
-                        //     ? '/add'
-                        //     : `/add/${XOX_ADDRESS[chainId]}/${
-                        //         selectedCurrency?.isNative ? native.symbol : selectedCurrency?.wrapped?.address
-                        //       }`
-                        // }
+                        // href="javascript:void(0)"
+                        href={
+                          allV2PairsWithLiquidity.length > 0 && !stateAdd
+                            ? '/add'
+                            : `/add/${XOX_ADDRESS[chainId]}/${
+                                selectedCurrency?.isNative ? native.symbol : selectedCurrency?.wrapped?.address
+                              }`
+                        }
                         passHref
                       >
                         <ButtonWrapper id="join-pool-button" width="100%">
