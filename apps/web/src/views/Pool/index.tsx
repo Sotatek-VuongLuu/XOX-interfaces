@@ -602,7 +602,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
                         // }
                         passHref
                       >
-                        <ButtonWrapper id="join-pool-button" width="100%" disabled>
+                        <ButtonWrapper id="join-pool-button" width="100%">
                           {t('Add Liquidity')}
                         </ButtonWrapper>
                       </Link>
