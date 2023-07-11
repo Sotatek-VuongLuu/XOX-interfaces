@@ -9,6 +9,7 @@ import { Box, Grid } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
 import axios from 'axios'
 import { formatAmountNumber, formatNumber } from '@pancakeswap/utils/formatBalance'
+import { useInView } from 'react-intersection-observer'
 // eslint-disable-next-line import/no-cycle
 interface ItemProps {
   item: CoinItem
@@ -358,6 +359,12 @@ const Wrapper = styled.div`
 const SupportedBlockchains = () => {
   const { t } = useTranslation()
   const [dataAnalyst, setdataAnalyst] = useState<DataItem[]>(dataCollected)
+  const [video, setVideo] = useState(false)
+  const { ref, inView } = useInView({ threshold: 1 })
+
+  useEffect(() => {
+    if (inView) setVideo(true)
+  }, [inView])
 
   const handleGetDataAnalyst = () => {
     axios
@@ -435,12 +442,17 @@ const SupportedBlockchains = () => {
             controls={false}
             preload="yes"
             style={{ pointerEvents: 'none' }}
+            ref={ref}
           >
-            <source
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/DappPromo.mov`}
-              type='video/mp4; codecs="hvc1"'
-            />
-            <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/DappPromo.webm`} type="video/webm" />
+            {video && (
+              <>
+                <source
+                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/DappPromo.mov`}
+                  type='video/mp4; codecs="hvc1"'
+                />
+                <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/DappPromo.webm`} type="video/webm" />
+              </>
+            )}
           </video>
         </div>
       </div>
