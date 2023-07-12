@@ -243,7 +243,8 @@ const StyledHeader = styled.div`
       display: block;
       margin: auto;
     }
-    > svg {
+    > svg,
+    object {
       display: block;
       margin: auto;
       width: 100%;
@@ -1679,7 +1680,8 @@ function DevV2() {
           </div>
 
           <div>
-            <NewTopIcon />
+            {/* <NewTopIcon /> */}
+            <object data="/images/new-top.svg" />
           </div>
         </StyledHeader>
 
