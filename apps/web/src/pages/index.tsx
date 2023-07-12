@@ -1,6 +1,11 @@
 import { SWRConfig } from 'swr'
 import Home from '../views/Home'
-import { PageMeta } from 'components/Layout/Page'
+
+export const getStaticProps = async (props: any) => {
+  return {
+    props,
+  }
+}
 
 const IndexPage = ({ totalTx30Days, addressCount30Days, tvl }) => {
   return (
@@ -21,5 +26,4 @@ const IndexPage = ({ totalTx30Days, addressCount30Days, tvl }) => {
 }
 
 IndexPage.chains = []
-
 export default IndexPage
