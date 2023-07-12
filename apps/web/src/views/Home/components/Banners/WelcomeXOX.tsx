@@ -2,13 +2,14 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable react/button-has-type */
 import styled from 'styled-components'
-import { Box, Grid } from '@mui/material'
+import { Box, Grid, Tooltip } from '@mui/material'
 import { useMatchBreakpoints, CopyButton, useTooltip } from '@pancakeswap/uikit'
 import React, { useEffect, useState } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { ChainId } from '@pancakeswap/sdk'
+import { TooltipCustom } from 'components/ToolTipCustom'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -661,14 +662,6 @@ const WelcomeXOX = (): JSX.Element => {
   const { isMobile, isTablet, isDesktop } = useMatchBreakpoints()
   const { chainId } = useActiveChainId()
   const [openDropdown, setOpenDropdown] = useState(false)
-  const {
-    targetRef: targetRef2,
-    tooltip: tooltip2,
-    tooltipVisible: tooltipVisible2,
-  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Deployment Coming')}</span>, {
-    placement: 'top',
-    hideTimeout: 0,
-  })
 
   const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(null)
 
@@ -705,21 +698,21 @@ const WelcomeXOX = (): JSX.Element => {
                   </Button>
                 </div>
                 <div>
-                  {tooltipVisible2 && tooltip2}
-                  <a
-                    // href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
-                    href="javascript:void(0)"
-                    // target="_blank"
-                    rel="noreferrer"
-                    className="get_xox_link"
-                    ref={targetRef2}
-                  >
-                    <div className="get_xox">
-                      <div className="boxed-child">
-                        <span>{t('Get %symbol%', { symbol: 'XOX' })}</span>
+                  <TooltipCustom title={t('Deployment Coming')}>
+                    <a
+                      // href={`/swap?chainId=${chainId}&outputCurrency=${XOX_ADDRESS[chainId]}&inputCurrency=${USD_ADDRESS[chainId]}`}
+                      href="javascript:void(0)"
+                      // target="_blank"
+                      rel="noreferrer"
+                      className="get_xox_link"
+                    >
+                      <div className="get_xox">
+                        <div className="boxed-child">
+                          <span>{t('Get %symbol%', { symbol: 'XOX' })}</span>
+                        </div>
                       </div>
-                    </div>
-                  </a>
+                    </a>
+                  </TooltipCustom>
                 </div>
                 <div className="icon-box">
                   <div className="single-icon">
