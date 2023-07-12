@@ -206,7 +206,6 @@ export default function LayoutHistory() {
 
   return (
     <>
-      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <ContainerBanner>
         <div className="banner">
           <InfoNav textContentBanner={t('Earn USDT/USDC from your XOXS Indefinitely')} hasPadding={false} />

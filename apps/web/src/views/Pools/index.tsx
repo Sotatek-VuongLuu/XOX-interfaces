@@ -34,8 +34,6 @@ import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
 import { linkTransaction } from 'views/BridgeToken'
 import BigNumber from 'bignumber.js'
-import GalaxyMobileIcon from 'components/Svg/galaxy.svg'
-import GalaxyIcon from 'components/Svg/galaxy-desktop.svg'
 import { TooltipCustom } from 'components/ToolTipCustom'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
@@ -59,7 +57,7 @@ const Banner = styled.div`
   margin-top: 20px;
   position: relative;
 
-  & > svg {
+  & > svg, & > object {
     position: absolute;
     transform: translateX(-40%);
     left: 50%;
@@ -1074,7 +1072,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         <div className="content">
           <NavWrapper>
             <Banner>
-              {isMobile ? <GalaxyMobileIcon /> : <GalaxyIcon />}
+              {isMobile ? <object data="/images/galaxy.svg" /> : <object data="/images/galaxy-desktop.svg" />}
               <div className="corner1" />
               <div className="edge1" />
               <div className="corner2" />

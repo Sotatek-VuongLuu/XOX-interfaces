@@ -854,7 +854,6 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
 
   return (
     <Page>
-      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <Flex
         width={['330px', , '450px']}
         marginTop="100px"
@@ -865,29 +864,6 @@ export default function RemoveLiquidity({ currencyA, currencyB, currencyIdA, cur
         position="relative"
       >
         <Wrapper flex="column" position="relative">
-          {/* {isMobile ? (
-            <>
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundMobile />
-              </SwapBackgroundWrapper>
-
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundBorderMobile />
-              </SwapBackgroundWrapper>
-            </>
-          ) : (
-            <>
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundDesktop />
-              </SwapBackgroundWrapper>
-
-              <SwapBackgroundWrapper>
-                <LiquidityBackgroundBorderDesktop />
-              </SwapBackgroundWrapper>
-            </>
-          )}
-          <BackgroundWrapper /> */}
-
           <StyledLiquidityContainer>
             <StyledHeader>
               <Link passHref href="/liquidity">

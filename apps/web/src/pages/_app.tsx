@@ -21,8 +21,6 @@ import TransactionsDetailModal from 'components/TransactionDetailModal'
 import FormReferralModal from 'components/Menu/UserMenu/FormReferralModal'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
-import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 import NotificationBannerAirdrop from 'components/NotificationBannerAirdrop'
 import { showBannerAirdrop, hideBannerAirdrop, showBannerChains, hideBannerChains } from 'state/user/actions'
 import NotificationBannerChains from 'components/NotificationBannerChains'
@@ -40,6 +38,8 @@ const MainBackground = styled.div`
   left: 0;
   width: 100%;
   height: fit-content;
+
+  object,
   svg,
   img {
     width: 100vw;
@@ -182,9 +182,9 @@ const App = ({ Component, pageProps }: AppPropsWithLayout) => {
         {['/company', '/tokenomics', '/dex-v2', '/'].includes(route.pathname) ? (
           <></>
         ) : isMobile ? (
-          <SwapMainBackgroundMobile />
+          <object data="/images/swap_main_background_mobile.svg" />
         ) : (
-          <SwapMainBackgroundDesktop />
+          <object data="/images/swap_main_background_desktop.svg" />
         )}
       </MainBackground>
       <ShowMenu>

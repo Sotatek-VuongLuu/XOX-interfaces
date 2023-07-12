@@ -62,8 +62,6 @@ import { useCurrencySelectRoute } from './useCurrencySelectRoute'
 import { CommonBasesType } from '../../components/SearchModal/types'
 import { MinimalPositionCard } from 'components/PositionCard'
 import useNativeCurrency from 'hooks/useNativeCurrency'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
-import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
 import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
 import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
@@ -774,7 +772,6 @@ export default function AddLiquidity({ currencyA, currencyB }) {
 
   return (
     <Page>
-      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <WapperHeight>
         <Flex width={['328px', , '559px']}>
           <Wrapper flex="column" position="relative">
