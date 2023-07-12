@@ -13,7 +13,6 @@ import { StyledTitle } from 'views/Tokenomics/styled'
 import BackedBy from 'views/Vesting/Components/BackedBy'
 import axios from 'axios'
 import anime from 'animejs'
-import NewTopIcon from 'components/Svg/NewTopIcon'
 import DexesComponent from './DexesComponent'
 import Aggregators from './Aggregators'
 import BlockChains from './BlockChains'
@@ -1680,7 +1679,6 @@ function DevV2() {
           </div>
 
           <div>
-            {/* <NewTopIcon /> */}
             <object data="/images/new-top.svg" />
           </div>
         </StyledHeader>
