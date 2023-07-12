@@ -19,17 +19,20 @@ import { AppState, persistor, useAppDispatch, useStore } from 'state'
 import { usePollBlockNumber } from 'state/block/hooks'
 import TransactionsDetailModal from 'components/TransactionDetailModal'
 import FormReferralModal from 'components/Menu/UserMenu/FormReferralModal'
-import { useRouter } from 'next/router'
+import Router, { useRouter } from 'next/router'
 import styled from 'styled-components'
 import NotificationBannerAirdrop from 'components/NotificationBannerAirdrop'
 import { showBannerAirdrop, hideBannerAirdrop, showBannerChains, hideBannerChains } from 'state/user/actions'
 import NotificationBannerChains from 'components/NotificationBannerChains'
 import { useSelector } from 'react-redux'
+import { PageMeta } from 'components/Layout/Page'
+import NProgress from 'nprogress'
 import { Blocklist, Updaters } from '..'
 import Menu from '../components/Menu'
 import Providers from '../Providers'
 import GlobalStyle from '../style/Global'
-import { PageMeta } from 'components/Layout/Page'
+import 'nprogress/nprogress.css'
+import '../style/Nprogress.css'
 
 const MainBackground = styled.div`
   position: fixed;
@@ -72,7 +75,10 @@ function MPGlobalHooks() {
   useAccountEventListener()
   return null
 }
-
+Router.events.on('routeChangeStart', () => NProgress.start())
+Router.events.on('routeChangeComplete', () => NProgress.done())
+Router.events.on('routeChangeError', () => NProgress.done())
+NProgress.configure({ showSpinner: false })
 function MyApp(props: AppProps<{ initialReduxState: any }>) {
   const { pageProps, Component } = props
   const store = useStore(pageProps.initialReduxState)
