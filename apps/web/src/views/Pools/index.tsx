@@ -34,8 +34,7 @@ import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
 import { linkTransaction } from 'views/BridgeToken'
 import BigNumber from 'bignumber.js'
-import GalaxyMobileIcon from 'components/Svg/galaxy.svg'
-import GalaxyIcon from 'components/Svg/galaxy-desktop.svg'
+import { TooltipCustom } from 'components/ToolTipCustom'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
@@ -58,7 +57,7 @@ const Banner = styled.div`
   margin-top: 20px;
   position: relative;
 
-  & > svg {
+  & > svg, & > object {
     position: absolute;
     transform: translateX(-40%);
     left: 50%;
@@ -1073,7 +1072,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         <div className="content">
           <NavWrapper>
             <Banner>
-              {isMobile ? <GalaxyMobileIcon /> : <GalaxyIcon />}
+              {isMobile ? <object data="/images/galaxy.svg" /> : <object data="/images/galaxy-desktop.svg" />}
               <div className="corner1" />
               <div className="edge1" />
               <div className="corner2" />
@@ -1138,30 +1137,14 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                             {account ? (
                               <>
                                 <ShowBalance balance={liquidity} name="liquidity" />
-                                <Tooltip
-                                  title={t('Total value of the funds in this farm’s liquidity pair')}
-                                  placement="top"
-                                  id="u_question_farming"
-                                  PopperProps={{
-                                    sx: (theme) => ({
-                                      '& .MuiTooltip-tooltip': {
-                                        border: '1px solid #FE4039',
-                                        background: '#242424',
-                                        padding: '6px',
-                                        color: 'rgba(255, 255, 255, 0.6) !important',
-                                        borderRadius: '10px',
-                                        fontSize: '14px !important',
-                                      },
-                                    }),
-                                  }}
-                                >
+                                <TooltipCustom title={t('Total value of the funds in this farm’s liquidity pair')}>
                                   <span className="u_question" style={{ cursor: 'pointer' }}>
                                     <img
                                       src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/u_question-circle.svg`}
                                       alt="u_question-circle"
                                     />
                                   </span>
-                                </Tooltip>
+                                </TooltipCustom>
                               </>
                             ) : (
                               <span className="liquidity">-</span>

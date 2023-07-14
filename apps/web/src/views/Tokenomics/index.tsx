@@ -1,7 +1,6 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
-import { Tooltip } from '@mui/material'
-import { CopyButton, useTooltip } from '@pancakeswap/uikit'
+import { CopyButton } from '@pancakeswap/uikit'
 import { useTranslation } from '@pancakeswap/localization'
 import { useEffect, useMemo } from 'react'
 import useWindowSize from 'hooks/useWindowSize'
@@ -9,6 +8,7 @@ import { BTNLearnMore } from 'views/Company'
 import ReactECharts from 'echarts-for-react'
 import { EChartsOption, SeriesOption } from 'echarts'
 import moment from 'moment'
+import { TooltipCustom } from 'components/ToolTipCustom'
 import {
   StyledBG,
   StyledCard1,
@@ -85,18 +85,18 @@ function Address({ addr, ...props }: { addr: IAddress }) {
         />
       </div>
       {chainId ? (
-        <Tooltip title={t('Deployment Coming')} placement="top">
+        <TooltipCustom title={t('Deployment Coming')}>
           {/* <a href={chainId ? `/swap?chainId=${chainId}` : null} target="_blank" rel="noreferrer"> */}
           <a href={null} target="_blank" rel="noreferrer">
             {t('Get %symbol_buy%', { symbol_buy: 'XOX' })}
           </a>
-        </Tooltip>
+        </TooltipCustom>
       ) : (
-        <Tooltip title={t('Deployment Coming')} placement="top">
+        <TooltipCustom title={t('Deployment Coming')}>
           <a href={null} target="_blank" rel="noreferrer">
             {t('Get %symbol_buy%', { symbol_buy: 'XOX' })}
           </a>
-        </Tooltip>
+        </TooltipCustom>
       )}
     </StyledAddress>
   )

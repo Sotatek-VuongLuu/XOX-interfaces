@@ -661,7 +661,6 @@ export default function BridgeToken() {
   return (
     <Page>
       <WapperHeight>
-        {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
         <Flex width={['328px', , '559px']}>
           <Wrapper flex="column" position="relative">
             {isMobile ? (

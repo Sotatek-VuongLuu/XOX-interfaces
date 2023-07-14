@@ -7,8 +7,6 @@ import { Box } from '@mui/material'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import { useWeb3React } from '@pancakeswap/wagmi'
 import BigNumber from 'bignumber.js'
-import SwapMainBackgroundMobile from 'components/Svg/LiquidityMainBackgroundMobile'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
 import { USD_DECIMALS } from 'config/constants/exchange'
 import { useTreasuryXOX } from 'hooks/useContract'
 import useWindowSize from 'hooks/useWindowSize'
@@ -642,7 +640,6 @@ export default function Refferal() {
 
   return (
     <>
-      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <Wrapper>
         <BoxStyled>
           <div className="content">

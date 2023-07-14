@@ -452,8 +452,6 @@ export default function StableCoin() {
 
   return (
     <>
-      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
-
       <FullWrapper>
         <ContainerBanner>
           <div className="banner">

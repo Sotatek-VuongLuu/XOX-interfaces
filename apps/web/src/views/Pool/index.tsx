@@ -9,12 +9,8 @@ import { useLPTokensWithBalanceByAccount } from 'views/Swap/StableSwap/hooks/use
 import useNativeCurrency from 'hooks/useNativeCurrency'
 import { unwrappedToken } from 'utils/wrappedCurrency'
 import { Token } from '@pancakeswap/sdk'
-import SwapMainBackgroundDesktop from 'components/Svg/SwapMainBackgroundDesktop'
-import SwapMainBackgroundMobile from 'components/Svg/SwapMainBackgroundMobile'
 import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
-import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
 import LiquidityMainBackgroundBorderDesktop from 'components/Svg/LiquidityMainBackgroundBorderDesktop'
-import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
 import ConnectWalletButton from 'components/ConnectWalletButton'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import { useActiveChainId } from 'hooks/useActiveChainId'
@@ -545,7 +541,6 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
   return (
     <Page>
       <WapperHeight>
-        {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
         <Flex width={['328px', , '559px']}>
           <Wrapper flex="column" position="relative">
             {isMobile ? (
@@ -592,17 +587,17 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
                   <StyledCardFooter style={{ textAlign: 'center' }}>
                     {account ? (
                       <Link
-                        href="javascript:void(0)"
-                        // href={
-                        //   allV2PairsWithLiquidity.length > 0 && !stateAdd
-                        //     ? '/add'
-                        //     : `/add/${XOX_ADDRESS[chainId]}/${
-                        //         selectedCurrency?.isNative ? native.symbol : selectedCurrency?.wrapped?.address
-                        //       }`
-                        // }
+                        // href="javascript:void(0)"
+                        href={
+                          allV2PairsWithLiquidity.length > 0 && !stateAdd
+                            ? '/add'
+                            : `/add/${XOX_ADDRESS[chainId]}/${
+                                selectedCurrency?.isNative ? native.symbol : selectedCurrency?.wrapped?.address
+                              }`
+                        }
                         passHref
                       >
-                        <ButtonWrapper id="join-pool-button" width="100%" disabled>
+                        <ButtonWrapper id="join-pool-button" width="100%">
                           {t('Add Liquidity')}
                         </ButtonWrapper>
                       </Link>

@@ -21,8 +21,8 @@ import { ChainLogo } from 'components/Logo/ChainLogo'
 import { bsc, mainnet } from '@pancakeswap/wagmi/chains'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
-import GalaxyIcon from 'components/Svg/galaxy-desktop.svg'
-import GalaxyMobileIcon from 'components/Svg/galaxy.svg'
+// import GalaxyIcon from 'components/Svg/galaxy-desktop.svg'
+// import GalaxyMobileIcon from 'components/Svg/galaxy.svg'
 
 interface INavWrapper {
   hasPadding?: boolean
@@ -94,7 +94,8 @@ const MainContent = styled.div`
     background: linear-gradient(0deg, #ffffff30 0%, #ffffff00 100%);
   }
 
-  & > svg {
+  & > svg,
+  & > object {
     position: absolute;
     transform: translateX(-50%);
     left: 50%;
@@ -182,7 +183,8 @@ const MainContent = styled.div`
     height: 200px;
     padding: 30px 40px;
 
-    & > svg {
+    & > svg,
+    & > object {
       position: absolute;
       transform: translate(0, -50%);
       top: 50%;
@@ -297,7 +299,8 @@ const InfoNav: React.FC<{ textContentBanner?: any; hasPadding?: boolean; titleBt
         <div className="edge1" />
         <div className="corner2" />
         <div className="edge2" />
-        {isMobile ? <GalaxyMobileIcon /> : <GalaxyIcon />}
+        {isMobile ? <object data="/images/galaxy.svg" /> : <object data="/images/galaxy-desktop.svg" />}
+        {/* {isMobile ? <GalaxyMobileIcon /> : <GalaxyIcon />} */}
 
         <Text className="title" marginBottom="8px" mt={['118px', , '0']}>
           {t('Swap to get XOX & XOXS. Earn like a Pro')}

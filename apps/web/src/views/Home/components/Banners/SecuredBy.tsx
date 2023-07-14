@@ -7,6 +7,7 @@ import React, { useState } from 'react'
 import { Button, Popover } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
 import { useTooltip } from '@pancakeswap/uikit'
+import { TooltipCustom } from 'components/ToolTipCustom'
 
 interface SecureProps {
   item: SecureItem
@@ -664,22 +665,6 @@ const SecuredBy = () => {
     },
   )
 
-  const {
-    targetRef: certikRef,
-    tooltip: certikTooltip,
-    tooltipVisible: certikTooltipVisible,
-  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Onboarding')}</span>, {
-    placement: 'top',
-  })
-
-  const {
-    targetRef: zellicRef,
-    tooltip: zellicTooltip,
-    tooltipVisible: zellicTooltipVisible,
-  } = useTooltip(<span style={{ whiteSpace: 'nowrap' }}>{t('Coming Soon')}</span>, {
-    placement: 'top',
-  })
-
   const handleMouseOverAirBnb = () => {
     if (width > 900) setIsHoveringAirBnb(true)
   }
@@ -714,25 +699,27 @@ const SecuredBy = () => {
       </p>
 
       <div className="imgs">
-        {certikTooltipVisible && certikTooltip}
-        <div className="box airbnb-box" ref={certikRef}>
-          <a href="https://www.certik.com/" target="_blank">
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-short.svg`}
-              alt="airbnb"
-              className="icon-short"
-              data-aos="fade-right"
-            />
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-full.svg`}
-              alt="airbnb"
-              className="icon-full"
-              onMouseOver={handleMouseOverAirBnb}
-              onMouseOut={handleMouseOutAirBnb}
-            />
-          </a>
-          {/* {isHoveringAirBnb && <HoverTextAirBnb />} */}
-        </div>
+        <TooltipCustom title={t('Onboarding')}>
+          <div className="box airbnb-box">
+            <a href="https://www.certik.com/" target="_blank">
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-short.svg`}
+                alt="airbnb"
+                className="icon-short"
+                data-aos="fade-right"
+              />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Certik-full.svg`}
+                alt="airbnb"
+                className="icon-full"
+                onMouseOver={handleMouseOverAirBnb}
+                onMouseOut={handleMouseOutAirBnb}
+              />
+            </a>
+            {/* {isHoveringAirBnb && <HoverTextAirBnb />} */}
+          </div>
+        </TooltipCustom>
+
         {/* <div className="hubspot-box">
           <img
             src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/hubspot.svg`}
@@ -743,50 +730,50 @@ const SecuredBy = () => {
           />
           {isHoveringHubspot && <HoverTextAirBnb />}
         </div> */}
-
-        {zellicTooltipVisible && zellicTooltip}
-        <div className="box zellic-box" ref={zellicRef}>
-          <a href="https://www.zellic.io/" target="_blank">
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-short.svg`}
-              alt="zellic"
-              className="icon-short"
-              data-aos="fade-up"
-              // onMouseOver={handleMouseOverAirBnb}
-              // onMouseOut={handleMouseOutAirBnb}
-            />
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-full.svg`}
-              alt="zellic"
-              className="icon-full"
-              // onMouseOver={handleMouseOverAirBnb}
-              // onMouseOut={handleMouseOutAirBnb}
-            />
-          </a>
-          {/* {isHoveringAirBnb && <HoverTextAirBnb />} */}
-        </div>
-
-        {tooltipVisible && tooltip}
-        <div className="box google-box" ref={targetRef}>
-          <a href="https://hacken.io/" target="_blank">
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-short.svg`}
-              alt="google"
-              className="icon-short"
-              data-aos="fade-left"
-              // onMouseOver={handleMouseOverGoogle}
-              // onMouseOut={handleMouseOutGoogle}
-            />
-            <img
-              src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-full.svg`}
-              alt="google"
-              className="icon-full"
-              // onMouseOver={handleMouseOverGoogle}
-              // onMouseOut={handleMouseOutGoogle}
-            />
-          </a>
-          {isHoveringGoogle && <HoverTextAirBnb />}
-        </div>
+        <TooltipCustom title={t('Coming Soon')}>
+          <div className="box zellic-box">
+            <a href="https://www.zellic.io/" target="_blank">
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-short.svg`}
+                alt="zellic"
+                className="icon-short"
+                data-aos="fade-up"
+                // onMouseOver={handleMouseOverAirBnb}
+                // onMouseOut={handleMouseOutAirBnb}
+              />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Zellic-full.svg`}
+                alt="zellic"
+                className="icon-full"
+                // onMouseOver={handleMouseOverAirBnb}
+                // onMouseOut={handleMouseOutAirBnb}
+              />
+            </a>
+            {/* {isHoveringAirBnb && <HoverTextAirBnb />} */}
+          </div>
+        </TooltipCustom>
+        <TooltipCustom title={t('Coming Soon')}>
+          <div className="box google-box">
+            <a href="https://hacken.io/" target="_blank">
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-short.svg`}
+                alt="google"
+                className="icon-short"
+                data-aos="fade-left"
+                // onMouseOver={handleMouseOverGoogle}
+                // onMouseOut={handleMouseOutGoogle}
+              />
+              <img
+                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/partners/Hacken-full.svg`}
+                alt="google"
+                className="icon-full"
+                // onMouseOver={handleMouseOverGoogle}
+                // onMouseOut={handleMouseOutGoogle}
+              />
+            </a>
+            {isHoveringGoogle && <HoverTextAirBnb />}
+          </div>
+        </TooltipCustom>
       </div>
     </Wrapper>
   )

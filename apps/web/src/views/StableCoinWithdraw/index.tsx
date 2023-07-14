@@ -239,7 +239,6 @@ export default function WithDrawLayout() {
 
   return (
     <FullWrapper>
-      {/* <MainBackground>{isMobile ? <SwapMainBackgroundMobile /> : <SwapMainBackgroundDesktop />}</MainBackground> */}
       <ContainerBanner>
         <div className="banner">
           <InfoNav textContentBanner={t('Earn USDT/USDC from your XOXS Indefinitely')} hasPadding={false} />

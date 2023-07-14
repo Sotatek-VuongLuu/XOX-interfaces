@@ -13,11 +13,11 @@ import { StyledTitle } from 'views/Tokenomics/styled'
 import BackedBy from 'views/Vesting/Components/BackedBy'
 import axios from 'axios'
 import anime from 'animejs'
-import NewTopIcon from 'components/Svg/NewTopIcon'
 import DexesComponent from './DexesComponent'
 import Aggregators from './Aggregators'
 import BlockChains from './BlockChains'
 import Bridges from './Bridges'
+import { useInView } from 'react-intersection-observer'
 
 interface ISocial {
   icon: string
@@ -242,7 +242,8 @@ const StyledHeader = styled.div`
       display: block;
       margin: auto;
     }
-    > svg {
+    > svg,
+    object {
       display: block;
       margin: auto;
       width: 100%;
@@ -1261,6 +1262,25 @@ function DevV2() {
   const [timeRecall, setTimeRecall] = useState(5)
   const [timeRecall2, setTimeRecall2] = useState(7)
   const { width } = useWindowSize()
+  const [newAggregatorsUrl, setNewAggregatorsUrl] = useState('')
+  const [newUrl, setNewUrl] = useState('')
+  const [newRevenueUrl, setNewRevenueUrl] = useState('')
+  const { ref: newAggregatorsRef, inView: newAggregatorsInView } = useInView({ threshold: 1 })
+  const { ref: newRef, inView: newInView } = useInView({ threshold: 1 })
+  const { ref: newRevenueRef, inView: newRevenueInView } = useInView({ threshold: 1 })
+
+  useEffect(() => {
+    if (newAggregatorsInView)
+      setNewAggregatorsUrl(`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_aggregators`)
+  }, [newAggregatorsInView])
+
+  useEffect(() => {
+    if (newInView) setNewUrl(`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_ref`)
+  }, [newInView])
+
+  useEffect(() => {
+    if (newRevenueInView) setNewRevenueUrl(`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_revenue`)
+  }, [newRevenueInView])
 
   const SOCIALS: Array<ISocial> = useMemo(() => {
     return [
@@ -1659,7 +1679,7 @@ function DevV2() {
           </div>
 
           <div>
-            <NewTopIcon />
+            <object data="/images/new-top.svg" />
           </div>
         </StyledHeader>
 
@@ -1772,15 +1792,20 @@ function DevV2() {
               style={{ pointerEvents: 'none' }}
               controlsList="nodownload"
               muted
+              ref={newAggregatorsRef}
             >
-              <source
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_aggregators.mov`}
-                type='video/mp4; codecs="hvc1"'
-              />
-              <source
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_aggregators.webm`}
-                type="video/webm"
-              />
+              {newAggregatorsUrl && (
+                <>
+                  <source
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_aggregators.mov`}
+                    type='video/mp4; codecs="hvc1"'
+                  />
+                  <source
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_aggregators.webm`}
+                    type="video/webm"
+                  />
+                </>
+              )}
             </video>
           </div>
         </StyledBLock>
@@ -1850,12 +1875,17 @@ function DevV2() {
               style={{ pointerEvents: 'none' }}
               controlsList="nodownload"
               muted
+              ref={newRef}
             >
-              <source
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_ref.mov`}
-                type='video/mp4; codecs="hvc1"'
-              />
-              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_ref.webm`} type="video/webm" />
+              {newUrl && (
+                <>
+                  <source
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_ref.mov`}
+                    type='video/mp4; codecs="hvc1"'
+                  />
+                  <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_ref.webm`} type="video/webm" />
+                </>
+              )}
             </video>
           </div>
         </StyledReferralProgram>
@@ -1871,12 +1901,20 @@ function DevV2() {
               style={{ pointerEvents: 'none' }}
               controlsList="nodownload"
               muted
+              ref={newRevenueRef}
             >
-              <source
-                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_revenue.mov`}
-                type='video/mp4; codecs="hvc1"'
-              />
-              <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_revenue.webm`} type="video/webm" />
+              {newRevenueUrl && (
+                <>
+                  <source
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_revenue.mov`}
+                    type='video/mp4; codecs="hvc1"'
+                  />
+                  <source
+                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/dex-v2/new_revenue.webm`}
+                    type="video/webm"
+                  />
+                </>
+              )}{' '}
             </video>
           </div>
 

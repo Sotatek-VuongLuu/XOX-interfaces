@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import styled, { css } from "styled-components";
 import { useMatchBreakpoints } from "../../contexts";
 import { Box, BoxProps } from "../Box";
@@ -136,20 +136,26 @@ const Select: React.FunctionComponent<React.PropsWithChildren<SelectProps>> = ({
   const [selectedOptionIndex, setSelectedOptionIndex] = useState(defaultOptionIndex);
   const { isMobile } = useMatchBreakpoints();
 
-  const toggling = (event: React.MouseEvent<HTMLDivElement>) => {
-    setIsOpen(!isOpen);
-    event.stopPropagation();
-  };
+  const toggling = useCallback(
+    (event: React.MouseEvent<HTMLDivElement>) => {
+      setIsOpen(!isOpen);
+      event.stopPropagation();
+    },
+    [isOpen]
+  );
 
-  const onOptionClicked = (selectedIndex: number) => () => {
-    setSelectedOptionIndex(selectedIndex);
-    setIsOpen(false);
-    setOptionSelected(true);
+  const onOptionClicked = useCallback(
+    (selectedIndex: number) => () => {
+      setSelectedOptionIndex(selectedIndex);
+      setIsOpen(false);
+      setOptionSelected(true);
 
-    if (onOptionChange) {
-      onOptionChange(options[selectedIndex]);
-    }
-  };
+      if (onOptionChange) {
+        onOptionChange(options[selectedIndex]);
+      }
+    },
+    [options]
+  );
 
   useEffect(() => {
     const handleClickOutside = () => {
@@ -170,10 +176,10 @@ const Select: React.FunctionComponent<React.PropsWithChildren<SelectProps>> = ({
   }, [defaultOptionIndex]);
 
   return (
-    <DropDownContainer isOpen={isOpen} {...props}>
-      <DropDownHeader onClick={toggling}>
+    <DropDownContainer isOpen={isOpen} onClick={toggling} {...props}>
+      <DropDownHeader>
         <Text color={!optionSelected && placeHolderText ? "text" : undefined}>
-          {!optionSelected && placeHolderText ? placeHolderText : options[selectedOptionIndex].label}
+          {!optionSelected && placeHolderText ? placeHolderText : options[selectedOptionIndex]?.label}
         </Text>
       </DropDownHeader>
       <ArrowDropDownIcon color="text" onClick={toggling} />

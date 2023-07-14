@@ -2,8 +2,9 @@
 import { Box, Grid } from '@mui/material'
 import { useTranslation } from '@pancakeswap/localization'
 import useWindowSize from 'hooks/useWindowSize'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import styled, { keyframes } from 'styled-components'
+import { useInView } from 'react-intersection-observer'
 
 const floatingAnim = (x: string, y: string) => keyframes`
   from {
@@ -185,6 +186,12 @@ const Watch = styled.div`
 
 const FeaturePlant = () => {
   const { t } = useTranslation()
+  const [videoUrl, setVideoUrl] = useState('')
+  const { ref, inView } = useInView({ threshold: 1 })
+
+  useEffect(() => {
+    if (inView) setVideoUrl(`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/3d_xox`)
+  }, [inView])
 
   const dboxVideo = document.getElementById('3dboxVideo') as any
 
@@ -239,12 +246,17 @@ const FeaturePlant = () => {
                 controls={false}
                 preload="yes"
                 style={{ pointerEvents: 'none' }}
+                ref={ref}
               >
-                <source
-                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/3d_xox.mov`}
-                  type='video/mp4; codecs="hvc1"'
-                />
-                <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/3d_xox.webm`} type="video/webm" />
+                {videoUrl && (
+                  <>
+                    <source
+                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/3d_xox.mov`}
+                      type='video/mp4; codecs="hvc1"'
+                    />
+                    <source src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/videos/home/3d_xox.webm`} type="video/webm" />
+                  </>
+                )}
               </video>
             </div>
           </RightContent>

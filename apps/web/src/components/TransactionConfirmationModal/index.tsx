@@ -137,6 +137,8 @@ export function TransactionSubmittedContent({
   const isNeedAddToken = useMemo(() => {
     const tokensAdded = JSON.parse(window.localStorage.getItem('tokensAdded'))
 
+    if (!token?.address) return false
+
     if (!tokensAdded || !tokensAdded[`${address}:${token.address}`]) return true
 
     return false
