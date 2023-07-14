@@ -31,6 +31,7 @@ import { getActiveMenuItem, getActiveSubMenuItem } from './utils'
 import { footerLinks } from './config/footerConfig'
 import { configLanding } from './config/config'
 import { createPortal } from 'react-dom'
+import Link from 'next/link'
 
 const BTNLaunchApp = styled.button`
   font-weight: 700;
@@ -315,9 +316,9 @@ const Menu = (props) => {
                   hideLanguage
                 />
               )}
-              <a href="/info" target="_blank" style={{ marginRight: '11px' }}>
-                <BTNLaunchApp>{t('Launch App')}</BTNLaunchApp>
-              </a>
+              <Link href="/info" target="_blank" style={{ marginRight: '11px' }}>
+                <BTNLaunchApp>{t('Enter App')}</BTNLaunchApp>
+              </Link>
 
               {openHeader ? (
                 <HamburgerButton>

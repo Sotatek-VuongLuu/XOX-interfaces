@@ -5,7 +5,6 @@ import { Button, InjectedModalProps, ModalContainer, ModalHeader } from '@pancak
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { USD_ADDRESS, XOX_ADDRESS } from 'config/constants/exchange'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { parseEther } from '@ethersproject/units'
 import { Tooltip } from '@mui/material'
@@ -279,6 +278,8 @@ interface Props extends InjectedModalProps {
   balanceLP: any
   totalSupply: any
   reverse: any
+  firstToken: any
+  secondToken: any
   handleCallbackAfterSuccess?: () => void
   handleConfirm?: any
   amount?: string
@@ -293,6 +294,8 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   balanceLP,
   totalSupply,
   reverse,
+  firstToken,
+  secondToken,
   handleConfirm,
   amount,
   setAmount,
@@ -301,7 +304,6 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
   handleApprove,
 }) => {
   const { t } = useTranslation()
-  const chainIdSupport = [97, 56]
   const { chainId } = useActiveChainId()
   const { account } = useActiveWeb3React()
   const listTimesPercents = ['25%', '50%', '75%', 'Max']
@@ -336,7 +338,7 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
         ) {
           setMessageError(
             t('Insuficient Your %symbol% Balance', {
-              symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC',
+              symbol: `${firstToken?.symbol} - ${secondToken?.symbol} LP`,
             }),
           )
         } else {
@@ -348,12 +350,12 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
     } else {
       setMessageError(
         t('No tokens to stake: Get %symbol%', {
-          symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+          symbol: `${firstToken?.symbol} - ${secondToken?.symbol} LP`,
         }),
       )
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [amount, balanceLP])
+  }, [amount, balanceLP, firstToken, secondToken])
 
   const handlePercent = (item: string) => {
     switch (item) {
@@ -389,8 +391,6 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
 
   const isNotAllowApprove = messageError.includes('Insuficient') || messageError.includes('No tokens')
 
-  console.log(`amountActive`, amountActive)
-
   return (
     <>
       <StyledModalContainer>
@@ -408,7 +408,9 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
                 onUserInput={(value) => setAmount(value)}
                 placeholder="0"
               />
-              <p>{chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP</p>
+              <p>
+                {firstToken?.symbol} - {secondToken?.symbol} LP
+              </p>
             </div>
             <div className="token_usd">
               <Tooltip title={`${amountUSD ? `$${formatNumber(amountUSD)}` : ''}`} placement="top-start">
@@ -483,14 +485,12 @@ const ModalStake: React.FC<React.PropsWithChildren<Props>> = ({
           </ButtonGroup>
           <GetLP className="get_lp">
             <a
-              href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
+              href={`/add/${firstToken?.address}/${secondToken?.address}?step=1&chainId=${chainId}`}
               target="_blank"
               rel="noreferrer"
             >
               <p style={{ display: 'flex', alignItems: 'center' }}>
-                <span>
-                  {t('Get %symbol%', { symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP' })}
-                </span>
+                <span>{t('Get %symbol%', { symbol: `${firstToken?.symbol} - ${secondToken?.symbol} LP` })}</span>
                 <span style={{ marginLeft: 8, display: 'flex', alignItems: 'center' }}>
                   <img src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/external-icon.svg`} alt="external-icon" />
                 </span>
