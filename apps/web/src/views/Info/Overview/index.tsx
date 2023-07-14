@@ -240,7 +240,7 @@ const Overview: React.FC<React.PropsWithChildren> = () => {
       .map((key: any) => {
         const token = allTokens[key]
         const { address } = token
-        if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[chainId][address]) {
+        if (token.symbol.toUpperCase() === native.symbol.toUpperCase() || _tokenList[chainId]?.[address]) {
           return undefined
         }
         return token
