@@ -892,11 +892,9 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           .toFixed(18)
           .toString()
 
-        // TODO: Check this later
         // eslint-disable-next-line no-await-in-loop
         const data: any = await getUserFarmingData(chainId, account, _poolId)
         const earned = data?.userFarmingDatas[0]?.amount ? formatEther(data?.userFarmingDatas[0]?.amount) : 0
-        // const earned = 0
         _poolList = [
           ..._poolList,
           {
