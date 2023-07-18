@@ -4,6 +4,31 @@
     "inputs": [
       {
         "indexed": true,
+        "internalType": "uint256",
+        "name": "poolId",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "allocPoint",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "contract IERC20Upgradeable",
+        "name": "lpToken",
+        "type": "address"
+      }
+    ],
+    "name": "AddPool",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
         "internalType": "address",
         "name": "user",
         "type": "address"
@@ -12,6 +37,18 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "rewardAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "poolId",
         "type": "uint256"
       }
     ],
@@ -31,6 +68,12 @@
         "indexed": false,
         "internalType": "uint256",
         "name": "amount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "poolId",
         "type": "uint256"
       }
     ],
@@ -102,10 +145,40 @@
         "internalType": "uint256",
         "name": "amount",
         "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "rewardAmount",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "poolId",
+        "type": "uint256"
       }
     ],
     "name": "Withdraw",
     "type": "event"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_allocPoint",
+        "type": "uint256"
+      },
+      {
+        "internalType": "address",
+        "name": "_tokenAddress",
+        "type": "address"
+      }
+    ],
+    "name": "addPool",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
   },
   {
     "inputs": [],
@@ -139,6 +212,11 @@
         "internalType": "uint256",
         "name": "_stakeAmount",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_poolId",
+        "type": "uint256"
       }
     ],
     "name": "deposit",
@@ -160,7 +238,13 @@
     "type": "function"
   },
   {
-    "inputs": [],
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_poolId",
+        "type": "uint256"
+      }
+    ],
     "name": "emergencyWithdraw",
     "outputs": [],
     "stateMutability": "nonpayable",
@@ -192,11 +276,6 @@
   },
   {
     "inputs": [
-      {
-        "internalType": "address",
-        "name": "_lpAddress",
-        "type": "address"
-      },
       {
         "internalType": "address",
         "name": "_rewardTokenAddress",
@@ -260,6 +339,11 @@
         "internalType": "address",
         "name": "_user",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_poolId",
+        "type": "uint256"
       }
     ],
     "name": "pendingReward",
@@ -297,6 +381,29 @@
         "internalType": "uint256",
         "name": "accXOXPerShare",
         "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "allocPoint",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "totalStaking",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "poolLength",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "pools",
+        "type": "uint256"
       }
     ],
     "stateMutability": "view",
@@ -308,6 +415,11 @@
         "internalType": "address",
         "name": "_blacklistAddress",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_poolId",
+        "type": "uint256"
       }
     ],
     "name": "removeBlackList",
@@ -367,6 +479,11 @@
         "internalType": "address",
         "name": "_blacklistAddress",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_poolId",
+        "type": "uint256"
       }
     ],
     "name": "setBlackList",
@@ -383,6 +500,24 @@
       }
     ],
     "name": "setBonusEndBlock",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_poolId",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_allocPoint",
+        "type": "uint256"
+      }
+    ],
+    "name": "setPoolAllocationPoint",
     "outputs": [],
     "stateMutability": "nonpayable",
     "type": "function"
@@ -414,6 +549,19 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "totalAllocPoint",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {
         "internalType": "address",
@@ -432,6 +580,11 @@
         "internalType": "address",
         "name": "",
         "type": "address"
+      },
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
       }
     ],
     "name": "userInfo",
@@ -460,6 +613,11 @@
       {
         "internalType": "uint256",
         "name": "_amount",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_poolId",
         "type": "uint256"
       }
     ],

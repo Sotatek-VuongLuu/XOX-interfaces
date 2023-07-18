@@ -6,12 +6,15 @@ import styled from 'styled-components'
 import { Flex, Text, Button, useModal, useMatchBreakpoints, LinkExternal, useToast } from '@pancakeswap/uikit'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useCallback, useContext, useEffect, useMemo, useState } from 'react'
-import { useContractFarmingLP, useXOXPoolContract } from 'hooks/useContract'
+import { useContractFarmingLP } from 'hooks/useContract'
 import useWindowSize from 'hooks/useWindowSize'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
+import type { Signer } from '@ethersproject/abstract-signer'
+import type { Provider } from '@ethersproject/providers'
+import { Contract } from '@ethersproject/contracts'
 import { getContractFarmingLPAddress, getXOXPoolAddress } from 'utils/addressHelpers'
 import { formatEther, formatUnits, parseEther } from '@ethersproject/units'
-import { USD_ADDRESS, USD_DECIMALS, XOX_ADDRESS, XOX_LP } from 'config/constants/exchange'
+import { XOX_ADDRESS } from 'config/constants/exchange'
 import { useConnect, useProvider } from 'wagmi'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { getUserFarmingData } from 'services/pools'
@@ -27,14 +30,17 @@ import { AppState } from 'state'
 import { createWallets, getDocLink } from 'config/wallet'
 import { useTranslation } from '@pancakeswap/localization'
 import { WalletModalV2 } from '@pancakeswap/ui-wallets'
-import { ChainId } from '@pancakeswap/sdk'
-import { XOXLP } from '@pancakeswap/tokens'
+import { ChainId, ERC20Token, WNATIVE, NATIVE } from '@pancakeswap/sdk'
 import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { useApproveCallback, ApprovalState } from 'hooks/useApproveCallback'
 import { Context } from '@pancakeswap/uikit/src/widgets/Modal/ModalContext'
 import { linkTransaction } from 'views/BridgeToken'
 import BigNumber from 'bignumber.js'
 import { TooltipCustom } from 'components/ToolTipCustom'
+import { Erc20, Erc20XOXPool } from 'config/abi/types'
+import xoxPoolAbi from 'config/abi/erc20XOXPool.json'
+import bep20Abi from 'config/abi/erc20.json'
+import { useProviderOrSigner } from 'hooks/useProviderOrSigner'
 import ModalStake from './components/ModalStake'
 import PairToken from './components/PairToken'
 import ModalUnStake from './components/ModalUnStake'
@@ -696,6 +702,25 @@ const Container = styled.div`
 interface IPropsButtonUnStake {
   disabled?: boolean
 }
+interface IToken {
+  address: string
+  symbol: string
+}
+
+interface IPoolProps {
+  poolId: number
+  pairAddress: string
+  reserves1: number
+  totalSupply: number
+  APRPercent: number
+  rewardPBlock: number
+  userPendingReward: number
+  userStaked: null | string
+  firstToken: IToken
+  secondToken: IToken
+  liquidity: number
+  earned: number
+}
 const ButtonUnStake = styled.div<IPropsButtonUnStake>``
 
 export const linkAddressScan = (chainId) => {
@@ -711,26 +736,20 @@ export const NETWORK_LABEL: { [chainId in ChainId]?: string } = {
 }
 
 const Pools: React.FC<React.PropsWithChildren> = () => {
-  const [aprPercent, setAprPercent] = useState<null | string | number>(null)
-  const [pendingRewardOfUser, setPendingRewardOfUser] = useState<string>(null)
-  const [liquidity, setLiquidity] = useState<null | number | string>(null)
-  const [totalSupplyLP, setTotalSupplyLP] = useState<any>(null)
-  const [userStaked, setUserStaked] = useState<null | string>()
-  const [reserve, setReserve] = useState<any>()
+  const [poolList, setPoolList] = useState<IPoolProps[]>([])
   const { chainId } = useActiveChainId()
   const { account } = useActiveWeb3React()
   const { width } = useWindowSize()
   const chainIdSupport = [97, 56]
   const contractFarmingLP = useContractFarmingLP()
-  const contractPair = useXOXPoolContract()
   const provider = useProvider({ chainId })
   const [balanceLP, setBalanceLP] = useState<any>()
+  const [poolId, setPoolId] = useState<number>(undefined)
   const { isMobile } = useMatchBreakpoints()
   const [modalReject, setModalReject] = useState<{ isShow: boolean; message: string }>({ isShow: false, message: '' })
   const [isOpenLoadingClaimModal, setIsOpenLoadingClaimModal] = useState<boolean>(false)
   const [isOpenSuccessModal, setIsOpenSuccessModal] = useState<boolean>(false)
   const [txHash, setTxHash] = useState('')
-  const [earned, setEarned] = useState<any>(null)
   const [amount, setAmount] = useState('')
   const [amountUnStake, setAmountUnStake] = useState('')
   const [notiMess, setNotiMess] = useState('')
@@ -740,9 +759,39 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   const { toastError, toastWarning, toastSuccess } = useToast()
   const [approvalSubmitted, setApprovalSubmitted] = useState<boolean>(false)
   const [approvalState, approveCallback] = useApproveCallback(
-    XOX_LP[chainId] && tryParseAmount(String(amount), XOXLP[chainId]),
+    poolList[poolId]?.pairAddress &&
+      tryParseAmount(
+        String(amount),
+        new ERC20Token(
+          chainId,
+          poolList[poolId]?.pairAddress,
+          18,
+          `${poolList[poolId]?.firstToken.symbol}-${poolList[poolId]?.secondToken.symbol}`,
+          `${poolList[poolId]?.firstToken.symbol}-${poolList[poolId]?.secondToken.symbol}`,
+          `http://localhost:3001/pools?chainId=${chainId}`,
+        ),
+      ),
     getContractFarmingLPAddress(chainId),
   )
+  const providerOrSigner = useProviderOrSigner(true)
+
+  const getContractXOXPool = (signer?: Signer | Provider, address?: string) => {
+    try {
+      const signerOrProvider = signer ?? provider
+      return new Contract(address, xoxPoolAbi, signerOrProvider) as Erc20XOXPool
+    } catch (error) {
+      return undefined
+    }
+  }
+
+  const getContractERC20 = (signer?: Signer | Provider, address?: string) => {
+    try {
+      const signerOrProvider = signer ?? provider
+      return new Contract(address, bep20Abi, signerOrProvider) as Erc20
+    } catch (error) {
+      return undefined
+    }
+  }
 
   const handleApprove = useCallback(async () => {
     await approveCallback()
@@ -750,67 +799,132 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleGetDataFarming = async () => {
     try {
-      const [reserves, totalSupplyBN, amountFarmingBN, endBlock, startBlock, rewardPBlock, pendingReward, userInfo] =
-        await Promise.all([
-          contractPair.getReserves(),
-          contractPair.totalSupply(),
-          contractPair.balanceOf(addressFarming),
-          contractFarmingLP.bonusEndBlock(),
-          contractFarmingLP.startBlock(),
-          contractFarmingLP.rewardPerBlock(),
-          contractFarmingLP.pendingReward(account),
-          contractFarmingLP.userInfo(account),
-        ])
+      const poolLength = await contractFarmingLP.poolLength()
+      let _poolList = []
+      for (let i = 0; i < Number(poolLength); i++) {
+        const _poolId = i
+        // eslint-disable-next-line no-await-in-loop
+        const pairAddress = (await contractFarmingLP.poolInfo(_poolId)).lpToken
+        const contractPair = getContractXOXPool(providerOrSigner, pairAddress)
+        const [
+          reserves,
+          totalSupplyBN,
+          amountFarmingBN,
+          token0,
+          token1,
+          endBlock,
+          startBlock,
+          rewardPBlock,
+          pendingReward,
+          userInfo,
+        ] =
+          // eslint-disable-next-line no-await-in-loop
+          await Promise.all([
+            contractPair.getReserves(),
+            contractPair.totalSupply(),
+            contractPair.balanceOf(addressFarming),
+            contractPair.token0(),
+            contractPair.token1(),
+            contractFarmingLP.bonusEndBlock(),
+            contractFarmingLP.startBlock(),
+            contractFarmingLP.rewardPerBlock(),
+            contractFarmingLP.pendingReward(account, _poolId),
+            contractFarmingLP.userInfo(account, _poolId),
+          ])
 
-      const totalSupply = formatEther(totalSupplyBN._hex)
-      const reserves1 = formatUnits(reserves[1]._hex, USD_DECIMALS[chainId])
+        let firstToken = {
+          address: XOX_ADDRESS[chainId],
+          symbol: 'XOX',
+        }
+        let secondToken = {}
+        const contractToken1 = getContractERC20(providerOrSigner, token1)
+        if (token0 === XOX_ADDRESS[chainId].toLowerCase()) {
+          // eslint-disable-next-line no-await-in-loop
+          const secondTokenSymbol = await contractToken1.symbol()
 
-      setTotalSupplyLP(totalSupply)
-      if (!Number(formatEther(userInfo[0]._hex))) {
-        setUserStaked(null)
-      } else {
-        setUserStaked(formatEther(userInfo[0]._hex))
-      }
+          secondToken = {
+            address: token1,
+            symbol: secondTokenSymbol === WNATIVE[chainId].symbol ? NATIVE[chainId].symbol : secondTokenSymbol,
+          }
+        } else if (token1 === XOX_ADDRESS[chainId].toLowerCase()) {
+          const contractToken0 = getContractERC20(providerOrSigner, token0)
+          // eslint-disable-next-line no-await-in-loop
+          const secondTokenSymbol = await contractToken0.symbol()
+          secondToken = {
+            address: token0,
+            symbol: secondTokenSymbol === WNATIVE[chainId].symbol ? NATIVE[chainId].symbol : secondTokenSymbol,
+          }
+        } else {
+          const contractToken0 = getContractERC20(providerOrSigner, token0)
+          // eslint-disable-next-line no-await-in-loop
+          const firstTokenSymbol = await contractToken0.symbol()
+          // eslint-disable-next-line no-await-in-loop
+          const secondTokenSymbol = await contractToken1.symbol()
+          firstToken = {
+            address: token0,
+            symbol: firstTokenSymbol === WNATIVE[chainId].symbol ? NATIVE[chainId].symbol : firstTokenSymbol,
+          }
+          secondToken = {
+            address: token1,
+            symbol: secondTokenSymbol === WNATIVE[chainId].symbol ? NATIVE[chainId].symbol : secondTokenSymbol,
+          }
+        }
 
-      setReserve(reserves1)
-      setPendingRewardOfUser(formatEther(pendingReward._hex))
-      const balanceOfFarming = formatEther(amountFarmingBN._hex)
-
-      const delta = new BigNumber(endBlock.toNumber() - startBlock.toNumber())
-
-      getDataFarming()
-
-      if (!Number(balanceOfFarming)) {
-        setAprPercent(0)
-      } else {
-        const resultPercent = delta
-          .multipliedBy(100)
-          .multipliedBy(formatEther(rewardPBlock._hex))
-          .dividedBy(balanceOfFarming)
+        const totalSupply = formatEther(totalSupplyBN._hex)
+        // eslint-disable-next-line no-await-in-loop
+        const token1Decimals = await contractToken1.decimals()
+        const reserves1 = formatUnits(reserves[1]._hex, token1Decimals)
+        const userStake = !Number(formatEther(userInfo[0]._hex)) ? null : formatEther(userInfo[0]._hex)
+        const userPendingReward = formatEther(pendingReward._hex)
+        const balanceOfFarming = formatEther(amountFarmingBN._hex)
+        const delta = new BigNumber(endBlock.toNumber() - startBlock.toNumber())
+        const APRPercent = !Number(balanceOfFarming)
+          ? 0
+          : delta
+              .multipliedBy(100)
+              .multipliedBy(formatEther(rewardPBlock._hex))
+              .dividedBy(balanceOfFarming)
+              .toFixed(18)
+              .toString()
+        const liquidity = new BigNumber(balanceOfFarming)
+          .multipliedBy(reserves1)
+          .dividedBy(totalSupply)
           .toFixed(18)
           .toString()
 
-        setAprPercent(resultPercent)
+        // eslint-disable-next-line no-await-in-loop
+        const data: any = await getUserFarmingData(chainId, account, _poolId)
+        const earned = data?.userFarmingDatas[0]?.amount ? formatEther(data?.userFarmingDatas[0]?.amount) : 0
+        _poolList = [
+          ..._poolList,
+          {
+            poolId: _poolId,
+            pairAddress,
+            reserves1,
+            totalSupply,
+            APRPercent,
+            rewardPBlock,
+            userPendingReward,
+            userStake,
+            firstToken,
+            secondToken,
+            liquidity,
+            earned,
+          },
+        ]
       }
-
-      const amountLiquidity = new BigNumber(balanceOfFarming)
-        .multipliedBy(reserves1)
-        .dividedBy(totalSupply)
-        .toFixed(18)
-        .toString()
-
-      setLiquidity(amountLiquidity)
+      setPoolList(_poolList)
     } catch (error) {
       // eslint-disable-next-line no-console
       console.log(`error`, error)
     }
   }
 
-  const handleGetBalanceOfUser = () => {
+  const handleGetBalanceOfUser = (contractAddress?: string) => {
     const currentProvider = provider
     getBalancesForEthereumAddress({
       // erc20 tokens you want to query!
-      contractAddresses: [getXOXPoolAddress(chainId)],
+      contractAddresses: [contractAddress || getXOXPoolAddress(chainId)],
       // ethereum address of the user you want to get the balances for
       ethereumAddress: account,
       // your ethers provider
@@ -832,12 +946,12 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [account, chainId, provider, isOpenSuccessModal])
 
-  const handleWithdraw = async () => {
+  const handleWithdraw = async (pendingRewardOfUser: number) => {
     try {
       setNotiMess(t('Withdraw %amount% XOX', { amount: pendingRewardOfUser }))
       setIsOpenLoadingClaimModal(true)
-      const gasFee = await contractFarmingLP.estimateGas.withdraw(0)
-      const txWithdraw = await contractFarmingLP.withdraw(0, {
+      const gasFee = await contractFarmingLP.estimateGas.withdraw(0, 0)
+      const txWithdraw = await contractFarmingLP.withdraw(0, 0, {
         gasLimit: gasFee,
       })
       const tx = await txWithdraw.wait(1)
@@ -891,31 +1005,19 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     }
   }
 
-  const getDataFarming = async () => {
-    try {
-      const data = await getUserFarmingData(chainId, account)
-      if (data?.userFarmingDatas[0]?.amount) {
-        setEarned(formatEther(data?.userFarmingDatas[0]?.amount))
-      } else {
-        setEarned(0)
-      }
-    } catch (error) {
-      // eslint-disable-next-line no-console
-      console.log(error)
-    }
-  }
-
   const handleConfirmWithdraw = async () => {
     try {
+      if (!poolId) return
+      const pool = poolList[poolId]
       setIsOpenLoadingClaimModal(true)
       setNotiMess(
         t('Unstake %amount% %symbol%', {
           amount: amountUnStake,
-          symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+          symbol: `${pool.firstToken.symbol} - ${pool.secondToken.symbol} LP`,
         }),
       )
-      const gasFee = await contractFarmingLP.estimateGas.withdraw(parseEther(amountUnStake.toString()))
-      const txWithdraw = await contractFarmingLP.withdraw(parseEther(amountUnStake.toString()), {
+      const gasFee = await contractFarmingLP.estimateGas.withdraw(parseEther(amountUnStake.toString()), poolId)
+      const txWithdraw = await contractFarmingLP.withdraw(parseEther(amountUnStake.toString()), poolId, {
         gasLimit: gasFee,
       })
       const tx = await txWithdraw.wait(1)
@@ -953,15 +1055,17 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleConfirmDeposit = async () => {
     try {
+      if (!poolId) return
+      const pool = poolList[poolId]
       setNotiMess(
         t('Stake %amount% %symbol%', {
           amount,
-          symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+          symbol: `${pool.firstToken.symbol} - ${pool.secondToken.symbol} LP`,
         }),
       )
       setIsOpenLoadingClaimModal(true)
-      const gasFee = await contractFarmingLP.estimateGas.deposit(parseEther(amount.toString()))
-      const txDeposit = await contractFarmingLP.deposit(parseEther(amount.toString()), {
+      const gasFee = await contractFarmingLP.estimateGas.deposit(parseEther(amount.toString()), poolId)
+      const txDeposit = await contractFarmingLP.deposit(parseEther(amount.toString()), poolId, {
         gasLimit: gasFee,
       })
       const tx = await txDeposit.wait(1)
@@ -997,15 +1101,16 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
   }
 
   const handleCallbackAfterSuccess = async () => {
-    await getDataFarming()
     await handleGetDataFarming()
   }
 
   const [onModalStake, onDismissStake] = useModal(
     <ModalStake
       balanceLP={balanceLP}
-      totalSupply={totalSupplyLP}
-      reverse={reserve}
+      totalSupply={poolList[poolId]?.totalSupply}
+      reverse={poolList[poolId]?.reserves1}
+      firstToken={poolList[poolId]?.firstToken}
+      secondToken={poolList[poolId]?.secondToken}
       handleCallbackAfterSuccess={handleCallbackAfterSuccess}
       handleConfirm={handleConfirmDeposit}
       amount={amount}
@@ -1018,11 +1123,14 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
     true,
     'ModalStake',
   )
+
   const [onModalUnStake, onDismissUnStake] = useModal(
     <ModalUnStake
-      balanceLP={userStaked}
-      totalSupply={totalSupplyLP}
-      reverse={reserve}
+      balanceLP={poolList[poolId]?.userStaked}
+      totalSupply={poolList[poolId]?.totalSupply}
+      reverse={poolList[poolId]?.reserves1}
+      firstToken={poolList[poolId]?.firstToken}
+      secondToken={poolList[poolId]?.secondToken}
       handleCallbackAfterSuccess={handleCallbackAfterSuccess}
       handleConfirm={handleConfirmWithdraw}
       amount={amountUnStake}
@@ -1072,6 +1180,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         <div className="content">
           <NavWrapper>
             <Banner>
+              {/* eslint-disable-next-line jsx-a11y/alt-text */}
               {isMobile ? <object data="/images/galaxy.svg" /> : <object data="/images/galaxy-desktop.svg" />}
               <div className="corner1" />
               <div className="edge1" />
@@ -1084,11 +1193,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
                 {t('Level Up your DeFi Game')}
               </Text>
               <Flex>
-                <a
-                  href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
-                  target="_blank"
-                  rel="noreferrer"
-                >
+                <a href="/add" target="_blank" rel="noreferrer">
                   <Button className="get-xox">{t('Get %sym%', { sym: 'LP Token' })}</Button>
                 </a>
                 <a href="https://docs.xoxlabs.io/" target="_blank" rel="noreferrer">
@@ -1097,279 +1202,294 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
               </Flex>
             </Banner>
           </NavWrapper>
-
-          <NavWrapper>
-            <Main userStaked={Boolean(userStaked) && Boolean(account)}>
-              <div className="content_container">
-                <div className="corner1" />
-                <div className="edge1" />
-                <div className="corner2" />
-                <div className="edge2" />
-                <div className="header_container">
-                  <div className="header">
-                    <div className="flex">
-                      {chainIdSupport.includes(chainId) ? (
-                        <PairToken
-                          linkTokenSecond={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/0xdAC17F958D2ee523a2206206994597C13D831ec7.png`}
-                          symbolTokenSecond="USDT"
-                        />
-                      ) : (
-                        <PairToken />
-                      )}
-                    </div>
-                    {width > 576 ? (
-                      <>
-                        <div className="flex flex_direction">
-                          <span className="name">APR:</span>
-                          {account ? (
-                            <ShowBalance balance={aprPercent} unit="%" notSpace />
+          {poolList.map((pool) => {
+            return (
+              <NavWrapper>
+                <Main userStaked={Boolean(pool.userStaked) && Boolean(account)}>
+                  <div className="content_container">
+                    <div className="corner1" />
+                    <div className="edge1" />
+                    <div className="corner2" />
+                    <div className="edge2" />
+                    <div className="header_container">
+                      <div className="header">
+                        <div className="flex">
+                          {chainIdSupport.includes(chainId) ? (
+                            <PairToken
+                              linkTokenFirst={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/${pool.firstToken.address}.png`}
+                              symbolTokenFirst={pool.firstToken.symbol}
+                              linkTokenSecond={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/1/tokens/${pool.secondToken.address}.png`}
+                              symbolTokenSecond={pool.secondToken.symbol}
+                            />
                           ) : (
-                            <span className="value">-</span>
+                            <PairToken />
                           )}
                         </div>
-                        <div className="flex flex_direction">
-                          <span className="name">{t('Earned:')}</span>
-                          {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
-                        </div>
-                        <div className="flex flex_direction">
-                          <span className="name">{t('Liquidity')}</span>
-                          <span className="value _flex">
-                            {account ? (
-                              <>
-                                <ShowBalance balance={liquidity} name="liquidity" />
-                                <TooltipCustom title={t('Total value of the funds in this farm’s liquidity pair')}>
-                                  <span className="u_question" style={{ cursor: 'pointer' }}>
-                                    <img
-                                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/u_question-circle.svg`}
-                                      alt="u_question-circle"
-                                    />
-                                  </span>
-                                </TooltipCustom>
-                              </>
-                            ) : (
-                              <span className="liquidity">-</span>
-                            )}
-                          </span>
-                        </div>
-                      </>
-                    ) : (
-                      <div>
-                        <p className="flex space_between apr_mb">
-                          <span className="name">APR:</span>
-                          {account ? (
-                            <ShowBalance balance={aprPercent} unit="%" notSpace />
-                          ) : (
-                            <span className="value">-</span>
-                          )}
-                        </p>
-                        <p className="flex space_between earned_mb">
-                          <span className="name">{t('Earned:')}</span>
-                          {account ? <ShowBalance balance={earned} unit="XOX" /> : <span className="value">-</span>}
-                        </p>
-                        <p className="flex space_between liquidity_mb">
-                          <span className="name">{t('Liquidity')}:</span>
-                          <span className="_flex">
-                            {account ? (
-                              <>
-                                <ShowBalance balance={liquidity} name="liquidity" />
-                                <Tooltip
-                                  title={t('Total value of the funds in this farm’s liquidity pair')}
-                                  placement="top"
-                                  PopperProps={{
-                                    sx: (theme) => ({
-                                      '& .MuiTooltip-tooltip': {
-                                        border: '1px solid #FE4039',
-                                        background: '#242424',
-                                        padding: '6px',
-                                        color: 'rgba(255, 255, 255, 0.6) !important',
-                                        borderRadius: '10px',
-                                        fontSize: '14px !important',
-                                      },
-                                    }),
-                                  }}
-                                >
-                                  <span className="u_question" style={{ cursor: 'pointer' }}>
-                                    <img
-                                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/u_question-circle.svg`}
-                                      alt="u_question-circle"
-                                    />
-                                  </span>
-                                </Tooltip>
-                              </>
-                            ) : (
-                              <span className="value">-</span>
-                            )}
-                          </span>
-                        </p>
-                      </div>
-                    )}
-                  </div>
-                </div>
-                <div className="diver" />
-                <div className="create_lp">
-                  {width > 576 && (
-                    <div className="get_xox_lp">
-                      <div>
-                        <a
-                          href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <p className="_flex" style={{ marginBottom: '8px' }}>
-                            <span>
-                              {t('Get %symbol%', {
-                                symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
-                              })}{' '}
-                            </span>
-                            <span style={{ marginLeft: 8 }}>
-                              <img
-                                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/external-icon.svg`}
-                                alt="external-icon"
-                              />
-                            </span>
-                          </p>
-                        </a>
-                        <a
-                          href={`${linkAddressScan(chainId)}${getXOXPoolAddress(chainId)}`}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <p className="_flex">
-                            <span>{t('View Contract')}</span>
-                            <span style={{ marginLeft: 8 }}>
-                              <img
-                                src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/external-icon.svg`}
-                                alt="external-icon"
-                              />
-                            </span>
-                          </p>
-                        </a>
-                      </div>
-                    </div>
-                  )}
-                  <div>
-                    <div className="rectangle _flex">
-                      <div>
-                        <p className="current_XOX_reward">{t('Current %symbol% reward', { symbol: 'XOX' })}</p>
-                        {account ? (
-                          <div style={{ width: '100%', marginTop: 16 }}>
-                            <ShowBalance balance={pendingRewardOfUser} unit="" />
-                          </div>
+                        {width > 576 ? (
+                          <>
+                            <div className="flex flex_direction">
+                              <span className="name">APR:</span>
+                              {account ? (
+                                <ShowBalance balance={pool.APRPercent} unit="%" notSpace />
+                              ) : (
+                                <span className="value">-</span>
+                              )}
+                            </div>
+                            <div className="flex flex_direction">
+                              <span className="name">{t('Earned:')}</span>
+                              {account ? (
+                                <ShowBalance balance={pool.earned} unit="XOX" />
+                              ) : (
+                                <span className="value">-</span>
+                              )}
+                            </div>
+                            <div className="flex flex_direction">
+                              <span className="name">{t('Liquidity')}</span>
+                              <span className="value _flex">
+                                {account ? (
+                                  <>
+                                    <ShowBalance balance={pool.liquidity} name="liquidity" />
+                                    <TooltipCustom title={t('Total value of the funds in this farm’s liquidity pair')}>
+                                      <span className="u_question" style={{ cursor: 'pointer' }}>
+                                        <img
+                                          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/u_question-circle.svg`}
+                                          alt="u_question-circle"
+                                        />
+                                      </span>
+                                    </TooltipCustom>
+                                  </>
+                                ) : (
+                                  <span className="liquidity">-</span>
+                                )}
+                              </span>
+                            </div>
+                          </>
                         ) : (
-                          <span className="current_XOX_reward_value">-</span>
+                          <div>
+                            <p className="flex space_between apr_mb">
+                              <span className="name">APR:</span>
+                              {account ? (
+                                <ShowBalance balance={pool.APRPercent} unit="%" notSpace />
+                              ) : (
+                                <span className="value">-</span>
+                              )}
+                            </p>
+                            <p className="flex space_between earned_mb">
+                              <span className="name">{t('Earned:')}</span>
+                              {account ? (
+                                <ShowBalance balance={pool.earned} unit="XOX" />
+                              ) : (
+                                <span className="value">-</span>
+                              )}
+                            </p>
+                            <p className="flex space_between liquidity_mb">
+                              <span className="name">{t('Liquidity')}:</span>
+                              <span className="_flex">
+                                {account ? (
+                                  <>
+                                    <ShowBalance balance={pool.liquidity} name="liquidity" />
+                                    <Tooltip
+                                      title={t('Total value of the funds in this farm’s liquidity pair')}
+                                      placement="top"
+                                      PopperProps={{
+                                        sx: () => ({
+                                          '& .MuiTooltip-tooltip': {
+                                            border: '1px solid #FE4039',
+                                            background: '#242424',
+                                            padding: '6px',
+                                            color: 'rgba(255, 255, 255, 0.6) !important',
+                                            borderRadius: '10px',
+                                            fontSize: '14px !important',
+                                          },
+                                        }),
+                                      }}
+                                    >
+                                      <span className="u_question" style={{ cursor: 'pointer' }}>
+                                        <img
+                                          src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/u_question-circle.svg`}
+                                          alt="u_question-circle"
+                                        />
+                                      </span>
+                                    </Tooltip>
+                                  </>
+                                ) : (
+                                  <span className="value">-</span>
+                                )}
+                              </span>
+                            </p>
+                          </div>
                         )}
                       </div>
-                      <CustomButton
-                        type="button"
-                        className="withdraw"
-                        onClick={handleWithdraw}
-                        disabled={!Number(pendingRewardOfUser)}
-                        mt={16}
-                      >
-                        {t('Withdraw')}
-                      </CustomButton>
                     </div>
-                  </div>
-                  <div>
-                    <div className="rectangle enable_farm">
-                      <p className="current_XOX_reward">
-                        {userStaked && account
-                          ? t('%asset% Staked', {
-                              asset: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
-                            })
-                          : t('Stake %symbol%', {
-                              symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
-                            })}
-                      </p>
-                      {userStaked && account && (
-                        <div style={{ width: '100%', marginTop: 16 }}>
-                          <ShowBalance balance={userStaked} />
-                        </div>
-                      )}
-
-                      {!account && (
-                        <div className="group_btn_stake">
-                          <CustomButton type="button" className="nable mt" onClick={handleClick}>
-                            {t('Connect Wallet')}
-                          </CustomButton>
-                        </div>
-                      )}
-
-                      {account && (
-                        <div className="group_btn_stake">
-                          {userStaked && (
-                            <ButtonUnStake
-                              className="container_unstake_border"
-                              onClick={onModalUnStake}
-                              role="button"
-                              disabled={!reserve || !totalSupplyLP}
+                    <div className="diver" />
+                    <div className="create_lp">
+                      {width > 576 && (
+                        <div className="get_xox_lp">
+                          <div>
+                            <a
+                              href={`/add/${pool.firstToken.address}/${pool.secondToken.address}?step=1&chainId=${chainId}`}
+                              target="_blank"
+                              rel="noreferrer"
                             >
-                              <div className="inner_container">
-                                <span>{t('Unstake')}</span>
+                              <p className="_flex" style={{ marginBottom: '8px' }}>
+                                <span>
+                                  {t('Get %symbol%', {
+                                    symbol: `${pool.firstToken.symbol} - ${pool.secondToken.symbol} LP`,
+                                  })}{' '}
+                                </span>
+                                <span style={{ marginLeft: 8 }}>
+                                  <img
+                                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/external-icon.svg`}
+                                    alt="external-icon"
+                                  />
+                                </span>
+                              </p>
+                            </a>
+                            <a href={`${linkAddressScan(chainId)}${pool.pairAddress}`} target="_blank" rel="noreferrer">
+                              <p className="_flex">
+                                <span>{t('View Contract')}</span>
+                                <span style={{ marginLeft: 8 }}>
+                                  <img
+                                    src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/external-icon.svg`}
+                                    alt="external-icon"
+                                  />
+                                </span>
+                              </p>
+                            </a>
+                          </div>
+                        </div>
+                      )}
+                      <div>
+                        <div className="rectangle _flex">
+                          <div>
+                            {/* TODO: CHANGE THIS IF NECCESSARY */}
+                            <p className="current_XOX_reward">{t('Current %symbol% reward', { symbol: 'XOX' })}</p>
+                            {account ? (
+                              <div style={{ width: '100%', marginTop: 16 }}>
+                                <ShowBalance balance={pool.userPendingReward} unit="" />
                               </div>
-                            </ButtonUnStake>
-                          )}
+                            ) : (
+                              <span className="current_XOX_reward_value">-</span>
+                            )}
+                          </div>
                           <CustomButton
                             type="button"
-                            className="nable"
-                            onClick={() => {
-                              onModalStake()
-                              handleGetBalanceOfUser()
-                            }}
-                            disabled={!reserve || !totalSupplyLP}
+                            className="withdraw"
+                            onClick={() => handleWithdraw(pool.userPendingReward)}
+                            disabled={!Number(pool.userPendingReward)}
+                            mt={16}
                           >
-                            {t('Stake')}
+                            {t('Withdraw')}
                           </CustomButton>
                         </div>
+                      </div>
+                      <div>
+                        <div className="rectangle enable_farm">
+                          <p className="current_XOX_reward">
+                            {pool.userStaked && account
+                              ? t('%asset% Staked', {
+                                  asset: `${pool.firstToken.symbol} - ${pool.secondToken.symbol} LP`,
+                                })
+                              : t('Stake %symbol%', {
+                                  symbol: `${pool.firstToken.symbol} - ${pool.secondToken.symbol} LP`,
+                                })}
+                          </p>
+                          {pool.userStaked && account && (
+                            <div style={{ width: '100%', marginTop: 16 }}>
+                              <ShowBalance balance={pool.userStaked} />
+                            </div>
+                          )}
+
+                          {!account && (
+                            <div className="group_btn_stake">
+                              <CustomButton type="button" className="nable mt" onClick={handleClick}>
+                                {t('Connect Wallet')}
+                              </CustomButton>
+                            </div>
+                          )}
+
+                          {account && (
+                            <div className="group_btn_stake">
+                              {pool.userStaked && (
+                                <ButtonUnStake
+                                  className="container_unstake_border"
+                                  onClick={() => {
+                                    setPoolId(pool.poolId)
+                                    onModalUnStake()
+                                  }}
+                                  role="button"
+                                  disabled={!pool.reserves1 || !pool.totalSupply}
+                                >
+                                  <div className="inner_container">
+                                    <span>{t('Unstake')}</span>
+                                  </div>
+                                </ButtonUnStake>
+                              )}
+                              <CustomButton
+                                type="button"
+                                className="nable"
+                                onClick={() => {
+                                  setPoolId(pool.poolId)
+                                  setBalanceLP('-')
+                                  onModalStake()
+                                  handleGetBalanceOfUser(pool.pairAddress)
+                                }}
+                                disabled={!pool.reserves1 || !pool.totalSupply}
+                              >
+                                {t('Stake')}
+                              </CustomButton>
+                            </div>
+                          )}
+                        </div>
+                      </div>
+                      {width <= 576 && (
+                        <>
+                          <div className="get_xox_lp">
+                            <div>
+                              <a
+                                href={`/add/${pool.firstToken.address}/${pool.secondToken.address}?step=1&chainId=${chainId}`}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                <p className="_flex lp_mb">
+                                  <span>
+                                    {t('Get %symbol%', {
+                                      symbol: `${pool.firstToken.symbol} - ${pool.secondToken.symbol} LP`,
+                                    })}
+                                  </span>
+                                  <span style={{ marginLeft: 8 }}>
+                                    <img
+                                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/external-icon.svg`}
+                                      alt="external-icon"
+                                    />
+                                  </span>
+                                </p>
+                              </a>
+                              <a
+                                href={`${linkAddressScan(chainId)}${pool.pairAddress}`}
+                                target="_blank"
+                                rel="noreferrer"
+                              >
+                                <p className="_flex">
+                                  <span>{t('View Contract')}</span>
+                                  <span style={{ marginLeft: 8 }}>
+                                    <img
+                                      src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/external-icon.svg`}
+                                      alt="external-icon"
+                                    />
+                                  </span>
+                                </p>
+                              </a>
+                            </div>
+                          </div>
+                        </>
                       )}
                     </div>
                   </div>
-                  {width <= 576 && (
-                    <>
-                      <div className="get_xox_lp">
-                        <div>
-                          <a
-                            href={`/add/${XOX_ADDRESS[chainId]}/${USD_ADDRESS[chainId]}?step=1&chainId=${chainId}`}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            <p className="_flex lp_mb">
-                              <span>
-                                {t('Get %symbol%', {
-                                  symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
-                                })}
-                              </span>
-                              <span style={{ marginLeft: 8 }}>
-                                <img
-                                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/external-icon.svg`}
-                                  alt="external-icon"
-                                />
-                              </span>
-                            </p>
-                          </a>
-                          <a
-                            href={`${linkAddressScan(chainId)}${getXOXPoolAddress(chainId)}`}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            <p className="_flex">
-                              <span>{t('View Contract')}</span>
-                              <span style={{ marginLeft: 8 }}>
-                                <img
-                                  src={`${process.env.NEXT_PUBLIC_ASSETS_URI}/images/external-icon.svg`}
-                                  alt="external-icon"
-                                />
-                              </span>
-                            </p>
-                          </a>
-                        </div>
-                      </div>
-                    </>
-                  )}
-                </div>
-              </div>
-            </Main>
-          </NavWrapper>
+                </Main>
+              </NavWrapper>
+            )
+          })}
         </div>
       </Container>
       <ModalBase

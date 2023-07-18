@@ -207,7 +207,7 @@ export default {
     [ChainId.BSC]: '',
   },
   farmingLP: {
-    [ChainId.BSC_TESTNET]: '0x05d14C442D34a456940D751c0d2BCEa914f10933',
+    [ChainId.BSC_TESTNET]: '0x5Ece4C8b89Fa842D35b6238C52dC8D9E65cd724f',
     [ChainId.GOERLI]: '0xC9A913D792E5197cAeAE525c34C61700fe93aEE8',
     [ChainId.ETHEREUM]: '', // TODO: change address
     [ChainId.BSC]: '',

@@ -2,7 +2,6 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/interactive-supports-focus */
 import { Button, InjectedModalProps, ModalContainer, ModalHeader, NumericalInput } from '@pancakeswap/uikit'
-import { useActiveChainId } from 'hooks/useActiveChainId'
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { parseEther } from '@ethersproject/units'
@@ -10,8 +9,8 @@ import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { formatNumber } from '@pancakeswap/utils/formatBalance'
 import { Tooltip } from '@mui/material'
 import BigNumber from 'bignumber.js'
-import { formatToShowBalance } from './utils/formatBalance'
 import { useTranslation } from '@pancakeswap/localization'
+import { formatToShowBalance } from './utils/formatBalance'
 
 const StyledModalContainer = styled(ModalContainer)`
   position: relative;
@@ -281,7 +280,7 @@ const CustomButton = styled(Button)`
 
 export const ShowBalance = ({ balance }) => {
   const { t } = useTranslation()
-
+  if (balance === '-') return <span>Balance: -</span>
   return (
     <>
       {Number(balance) <= 0.000001 ? (
@@ -312,6 +311,8 @@ interface Props extends InjectedModalProps {
   balanceLP: any
   totalSupply: any
   reverse: any
+  firstToken: any
+  secondToken: any
   handleCallbackAfterSuccess?: () => void
   handleConfirm?: any
   amount?: any
@@ -323,13 +324,13 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
   balanceLP,
   totalSupply,
   reverse,
+  firstToken,
+  secondToken,
   handleConfirm,
   amount,
   setAmount,
 }) => {
   const { t } = useTranslation()
-  const chainIdSupport = [97, 56]
-  const { chainId } = useActiveChainId()
   const listTimesPercents = ['25%', '50%', '75%', 'Max']
   const { account } = useActiveWeb3React()
   const [messageError, setMessageError] = useState('')
@@ -383,7 +384,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
         ) {
           setMessageError(
             t('Insuficient Your %symbol% Balance', {
-              symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC',
+              symbol: `${firstToken?.symbol} - ${secondToken?.symbol} LP`,
             }),
           )
         } else {
@@ -395,7 +396,7 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
     } else {
       setMessageError(
         t('No tokens to stake: Get %symbol%', {
-          symbol: chainIdSupport.includes(chainId) ? 'XOX - USDT LP' : 'XOX - USDC LP',
+          symbol: `${firstToken?.symbol} - ${secondToken?.symbol} LP`,
         }),
       )
     }
@@ -429,7 +430,9 @@ const ModalUnStake: React.FC<React.PropsWithChildren<Props>> = ({
                 onUserInput={(value) => setAmount(value)}
                 placeholder="0"
               />
-              <p>{chainIdSupport.includes(chainId) ? 'XOX - USDT' : 'XOX - USDC'} LP</p>
+              <p>
+                {firstToken?.symbol} - ${secondToken?.symbol} LP
+              </p>
             </div>
             <div className="token_usd">
               <Tooltip title={`${amountUSD ? `$${formatNumber(amountUSD)}` : ''}`} placement="top-start">
