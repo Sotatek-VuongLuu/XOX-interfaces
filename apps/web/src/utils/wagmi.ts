@@ -13,6 +13,7 @@ import {
   zksync_testnet,
   optimism,
   optimism_testnet,
+  linea_testnet,
 } from '@pancakeswap/wagmi/chains'
 import { configureChains, createClient } from 'wagmi'
 import memoize from 'lodash/memoize'
@@ -37,6 +38,7 @@ const CHAINS = [
   zksync_testnet,
   optimism,
   optimism_testnet,
+  linea_testnet,
 ]
 
 const getNodeRealUrl = (networkName: string) => {

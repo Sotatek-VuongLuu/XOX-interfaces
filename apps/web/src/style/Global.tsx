@@ -7,6 +7,9 @@ declare module 'styled-components' {
 }
 
 const GlobalStyle = createGlobalStyle`
+  :root {
+    color-scheme: only light!important;
+  }
   * {
     font-family: 'Inter', sans-serif !important;
   }
@@ -190,7 +193,6 @@ const GlobalStyle = createGlobalStyle`
  .open-icon {
   margin-bottom: -3px !important; 
  }
-
 `
 
 export default GlobalStyle

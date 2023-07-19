@@ -38,7 +38,7 @@ export function WrongNetworkModal({ currentChain, onDismiss }: { currentChain: C
   return (
     <Modal title={t('You are in wrong network')} headerBackground="gradientCardHeader" onDismiss={onDismiss}>
       <Grid style={{ gap: '16px', padding: '16px 0' }} maxWidth="336px">
-        {router.pathname === '/bridge-token' ? (
+        {router.pathname === '/bridge-token' || (router.pathname === '/swap' && router.query.tab === 'kyberswap') ? (
           <>
             <Text textAlign="center">{t('This page is located for %network%.', { network: currentChain.name })}</Text>
             {canSwitch ? (

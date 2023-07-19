@@ -30,8 +30,11 @@ export function useLocalNetworkChain() {
   const chainId = +(sessionChainId || query.chainId || queryChainId)
 
   if (
-    (pathname !== '/bridge-token' && isChainSupported(chainId)) ||
-    (pathname === '/bridge-token' && isBridgeChainSupported(chainId))
+    (pathname !== '/bridge-token' &&
+      !(pathname === 'swap' && query.tab === 'kyberswap') &&
+      isChainSupported(chainId)) ||
+    ((pathname === '/bridge-token' || (pathname === '/swap' && query.tab === 'kyberswap')) &&
+      isBridgeChainSupported(chainId))
   ) {
     return chainId
   }
@@ -44,10 +47,10 @@ export const useActiveChainId = () => {
 
   const activeChains =
     process.env.NEXT_PUBLIC_TEST_MODE === '1'
-      ? router.pathname === '/bridge-token'
+      ? router.pathname === '/bridge-token' || (router.pathname === '/swap' && router.query.tab === 'kyberswap')
         ? [...MAINNET_CHAINS, ...TESTNET_CHAINS]
         : [...MAINNET_CHAINS.slice(0, 2), ...TESTNET_CHAINS.slice(0, 2)]
-      : router.pathname === '/bridge-token'
+      : router.pathname === 'bridge-token' || (router.pathname === '/swap' && router.query.tab === 'kyberswap')
       ? [...MAINNET_CHAINS]
       : [...MAINNET_CHAINS.slice(0, 2)]
 

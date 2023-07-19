@@ -16,6 +16,8 @@ export enum ChainId {
   OPTIMISM_TESTNET = 420,
 }
 
+export const LINEA_TESTNET = 59140
+
 export const FACTORY_ADDRESS = '0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73'
 
 const FACTORY_ADDRESS_ETH = '0x9C1B26D5edBB2BA5697EBE01DA48f8CC0cF45C03'
@@ -161,4 +163,5 @@ export const NATIVE: Record<
   [ChainId.ZKSYNC_TESTNET]: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   [ChainId.OPTIMISM]: { name: 'Ether', symbol: 'ETH', decimals: 18 },
   [ChainId.OPTIMISM_TESTNET]: { name: 'Ether', symbol: 'ETH', decimals: 18 },
+  [LINEA_TESTNET]: { name: 'Ether', symbol: 'ETH', decimals: 18 },
 }

@@ -293,3 +293,21 @@ export const optimism_testnet: Chain = {
     default: { name: 'Optimism', url: 'https://optimism.io/' },
   },
 }
+
+export const linea_testnet: Chain = {
+  id: 59140,
+  name: 'Linea Goerli Testnet',
+  network: 'linea-testnet',
+  nativeCurrency: {
+    decimals: 18,
+    name: 'Ethereum',
+    symbol: 'ETH',
+  },
+  rpcUrls: {
+    public: 'https://rpc.goerli.linea.build',
+    default: 'https://rpc.goerli.linea.build',
+  },
+  blockExplorers: {
+    default: { name: 'Linea', url: 'https://explorer.goerli.linea.build/' },
+  },
+}

@@ -1,4 +1,4 @@
-import { ChainId } from '@pancakeswap/sdk'
+import { ChainId, LINEA_TESTNET } from '@pancakeswap/sdk'
 
 const Bsc = `/images/chains/56.svg`
 const Ethereum = `/images/chains/1.svg`
@@ -46,6 +46,7 @@ export const TESTNET_CHAINS =
         ChainId.POLYGON_TESTNET,
         ChainId.ZKSYNC_TESTNET,
         ChainId.OPTIMISM_TESTNET,
+        LINEA_TESTNET,
       ]
     : []
 
@@ -60,10 +61,11 @@ export const BRIDGE_CHAINS_ONLY =
         ChainId.POLYGON_TESTNET,
         ChainId.ZKSYNC_TESTNET,
         ChainId.OPTIMISM_TESTNET,
+        LINEA_TESTNET,
       ]
     : [ChainId.ARBITRUM, ChainId.POLYGON, ChainId.ZKSYNC, ChainId.OPTIMISM]
 
-export const NETWORK_LABEL: { [chainId in ChainId]?: string } =
+export const NETWORK_LABEL =
   process.env.NEXT_PUBLIC_TEST_MODE === '1'
     ? {
         [ChainId.RINKEBY]: 'Rinkeby',
@@ -79,6 +81,7 @@ export const NETWORK_LABEL: { [chainId in ChainId]?: string } =
         [ChainId.ZKSYNC_TESTNET]: 'zkSyncTest',
         [ChainId.OPTIMISM]: 'Optimism',
         [ChainId.OPTIMISM_TESTNET]: 'OptimismTest',
+        [LINEA_TESTNET]: 'LineaTest',
       }
     : {
         [ChainId.BSC]: 'BSC',
@@ -89,7 +92,7 @@ export const NETWORK_LABEL: { [chainId in ChainId]?: string } =
         [ChainId.OPTIMISM]: 'Optimism',
       }
 
-export const NETWORK_LINK: { [chainId in ChainId]?: any } =
+export const NETWORK_LINK =
   process.env.NEXT_PUBLIC_TEST_MODE === '1'
     ? {
         [ChainId.ETHEREUM]: 'https://etherscan.io',
@@ -104,7 +107,8 @@ export const NETWORK_LINK: { [chainId in ChainId]?: any } =
         [ChainId.ZKSYNC]: 'https://zkscan.io',
         [ChainId.ZKSYNC_TESTNET]: 'https://goerli.explorer.zksync.io',
         [ChainId.OPTIMISM]: 'https://optimistic.etherscan.io',
-        [ChainId.OPTIMISM_TESTNET]: 'https://goerli-optimism.etherscan.io/',
+        [ChainId.OPTIMISM_TESTNET]: 'https://goerli-optimism.etherscan.io',
+        [LINEA_TESTNET]: 'https://explorer.goerli.linea.build',
       }
     : {
         [ChainId.ETHEREUM]: 'https://etherscan.io',
@@ -115,7 +119,7 @@ export const NETWORK_LINK: { [chainId in ChainId]?: any } =
         [ChainId.OPTIMISM]: 'https://optimistic.etherscan.io',
       }
 
-export const SITE_NAME: { [chainId in ChainId]?: any } =
+export const SITE_NAME =
   process.env.NEXT_PUBLIC_TEST_MODE === '1'
     ? {
         [ChainId.ETHEREUM]: 'Etherscan',
@@ -131,6 +135,7 @@ export const SITE_NAME: { [chainId in ChainId]?: any } =
         [ChainId.ZKSYNC_TESTNET]: 'Zkscan',
         [ChainId.OPTIMISM]: 'Optimismscan',
         [ChainId.OPTIMISM_TESTNET]: 'Optimismscan',
+        [LINEA_TESTNET]: 'Linea',
       }
     : {
         [ChainId.ETHEREUM]: 'Etherscan',
@@ -143,4 +148,14 @@ export const SITE_NAME: { [chainId in ChainId]?: any } =
 
 export const CONTRACT_BRIDGE_POOL = {
   [ChainId.GOERLI]: '0x27D2ec949C4D93D6246E538eBCACf1A76d7A899E',
+}
+
+export const KYBERSWAP_NETWORK_CHAIN = {
+  [ChainId.BSC]: 'bsc',
+  [ChainId.ETHEREUM]: 'ethereum',
+  [ChainId.ARBITRUM]: 'arbitrum',
+  [ChainId.POLYGON]: 'polygon',
+  [ChainId.ZKSYNC]: 'zksync',
+  [ChainId.OPTIMISM]: 'optimism',
+  [LINEA_TESTNET]: 'linea-goerli',
 }

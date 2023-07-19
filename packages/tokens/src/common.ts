@@ -1,4 +1,4 @@
-import { ChainId, ERC20Token } from '@pancakeswap/sdk'
+import { ChainId, ERC20Token, LINEA_TESTNET } from '@pancakeswap/sdk'
 
 export const XOX_BSC_MAINNET = new ERC20Token(
   ChainId.BSC,
@@ -223,7 +223,7 @@ export const USDT_BSC = new ERC20Token(
   '0x55d398326f99059fF775485246999027B3197955',
   18,
   'USDT',
-  'Tether USD',
+  'Tether',
   'https://tether.to/',
 )
 
@@ -232,7 +232,7 @@ export const USDT_ETH = new ERC20Token(
   '0xdAC17F958D2ee523a2206206994597C13D831ec7',
   6,
   'USDT',
-  'Tether USD',
+  'Tether',
   'https://tether.to/',
 )
 
@@ -442,3 +442,76 @@ export const WBTC_ETH = new ERC20Token(
   'WBTC',
   'Wrapped Bitcoin',
 )
+
+export const USDC_LINEA = new ERC20Token(LINEA_TESTNET, '0xf56dc6695cF1f5c364eDEbC7Dc7077ac9B586068', 6, 'USDC')
+export const ETH_LINEA = new ERC20Token(LINEA_TESTNET, '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', 18, 'ETH')
+export const MATIC_POLYGON = new ERC20Token(ChainId.POLYGON, '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', 18, 'MATIC')
+export const WETH_ARBITRUM = new ERC20Token(ChainId.ARBITRUM, '0x82aF49447D8a07e3bd95BD0d56f35241523fBab1', 18, 'WETH')
+export const USDC_OPTIMISM = new ERC20Token(ChainId.OPTIMISM, '0x7F5c764cBc14f9669B88837ca1490cCa17c31607', 6, 'USDC')
+export const USDC_ZKSYNC = new ERC20Token(ChainId.ZKSYNC, '0x3355df6D4c9C3035724Fd0e3914dE96A5a83aaf4', 6, 'USDC')
+
+export const KYBERSWAP_DEFAULT_TOKEN = {
+  [LINEA_TESTNET]: {
+    TOKEN_IN: {
+      token: ETH_LINEA,
+      imgURL: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+    },
+    TOKEN_OUT: {
+      token: USDC_LINEA,
+      imgURL: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389',
+    },
+  },
+  [ChainId.ETHEREUM]: {
+    TOKEN_IN: {
+      token: USDC_ETHEREUM,
+      imgURL: 'https://assets.coingecko.com/coins/images/279/small/ethereum.png',
+    },
+    TOKEN_OUT: {
+      token: XOX[ChainId.ETHEREUM],
+    },
+  },
+  [ChainId.BSC]: {
+    TOKEN_IN: {
+      token: USDT_BSC,
+      imgURL: 'https://assets.coingecko.com/coins/images/325/small/Tether-logo.png?1598003707',
+    },
+    TOKEN_OUT: {
+      token: XOX[ChainId.BSC],
+    },
+  },
+  [ChainId.POLYGON]: {
+    TOKEN_IN: {
+      token: MATIC_POLYGON,
+      imgURL: 'https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912',
+    },
+    TOKEN_OUT: {
+      token: XOX[ChainId.POLYGON],
+    },
+  },
+  [ChainId.ARBITRUM]: {
+    TOKEN_IN: {
+      token: WETH_ARBITRUM,
+    },
+    TOKEN_OUT: {
+      token: XOX[ChainId.ARBITRUM],
+    },
+  },
+  [ChainId.ZKSYNC]: {
+    TOKEN_IN: {
+      token: USDC_ZKSYNC,
+      imgURL: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389',
+    },
+    TOKEN_OUT: {
+      token: XOX[ChainId.ZKSYNC],
+    },
+  },
+  [ChainId.OPTIMISM]: {
+    TOKEN_IN: {
+      token: USDC_OPTIMISM,
+      imgURL: 'https://assets.coingecko.com/coins/images/6319/small/USD_Coin_icon.png?1547042389',
+    },
+    TOKEN_OUT: {
+      token: XOX[ChainId.OPTIMISM],
+    },
+  },
+}

@@ -7,6 +7,14 @@ export const Wrapper = styled(Flex)`
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem 0;
+
+  .price {
+    color: var(--dark-text-secondary, rgba(255, 255, 255, 0.6));
+    font-size: 16px;
+    font-weight: 400;
+    display: flex;
+    align-items: center;
+  }
 `
 
 export const ArrowWrapper = styled.div<{ clickable: boolean }>`

@@ -11,7 +11,7 @@ export const StyledSwapContainer = styled(Flex)<{ $isChartExpanded: boolean }>`
   padding: 18px;
 
   ${({ theme }) => theme.mediaQueries.md} {
-    padding: 28px 28px 20px 28px;
+    padding: 33px 28px 20px 28px;
   }
 `
 

@@ -142,7 +142,6 @@ export const formatAmountNumber2 = (number: number, decimals = 2) => {
   return `${firstNumber}.${lastNumber}`
 }
 
-
 export const formatAmountStable = (number: number, decimals = 2) => {
   if (number > 0 && number <= 0.000001) {
     return `< 0.01`

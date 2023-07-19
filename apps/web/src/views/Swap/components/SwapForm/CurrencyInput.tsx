@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Currency, Pair } from '@pancakeswap/sdk'
+import { Currency, CurrencyAmount } from '@pancakeswap/sdk'
 import {
   Button,
   ChevronDownIcon,
@@ -8,22 +8,14 @@ import {
   Flex,
   Box,
   NumericalInput,
-  CopyButton,
   useMatchBreakpoints,
 } from '@pancakeswap/uikit'
 import styled, { css } from 'styled-components'
-import { isAddress } from 'utils'
 import { useTranslation } from '@pancakeswap/localization'
-import { WrappedTokenInfo } from '@pancakeswap/token-lists'
-
-import { useBUSDCurrencyAmount } from 'hooks/useBUSDPrice'
-import { formatAmountNumber, formatAmountNumber2, formatNumber } from '@pancakeswap/utils/formatBalance'
-import { StablePair } from 'views/AddLiquidity/AddStableLiquidity/hooks/useStableLPDerivedMintInfo'
-
+import { formatAmountNumber2, formatNumber } from '@pancakeswap/utils/formatBalance'
 import { useAccount } from 'wagmi'
-import { useCurrencyBalance } from '../../state/wallet/hooks'
-import CurrencySearchModal from '../SearchModal/CurrencySearchModal'
-import { CurrencyLogo, DoubleCurrencyLogo } from '../Logo'
+import CurrencySearchModal from 'components/SearchModal/CurrencySearchModal'
+import { CurrencyLogo } from 'components/Logo'
 
 const ForDolar = styled.div`
   position: absolute;
@@ -80,7 +72,8 @@ const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm'
 
   .token-info img {
     width: 16px;
-    height: 16px;
+    height: auto;
+    margin-right: 5px;
   }
 
   #pair {
@@ -92,8 +85,9 @@ const CurrencySelectButton = styled(Button).attrs({ variant: 'text', scale: 'sm'
 
   ${({ theme }) => theme.mediaQueries.md} {
     .token-info img {
-      width: 24px;
-      height: 24px;
+      width: 25px;
+      height: auto;
+      margin-right: 10px;
     }
 
     #pair {
@@ -164,85 +158,48 @@ const NumericalInputWrapper = styled(NumericalInput)`
 
 type ZapStyle = 'noZap' | 'zap'
 
-interface CurrencyInputPanelProps {
+interface CurrencyInputProps {
+  id: string
   value: string
-  onUserInput: (value: string) => void
-  onInputBlur?: () => void
-  onPercentInput?: (percent: number) => void
-  onMax?: () => void
   showQuickInputButton?: boolean
   showMaxButton: boolean
   label?: string
-  onCurrencySelect?: (currency: Currency) => void
   currency?: Currency | null
-  disableCurrencySelect?: boolean
-  hideBalance?: boolean
-  pair?: Pair | StablePair | null
   otherCurrency?: Currency | null
-  id: string
-  showCommonBases?: boolean
-  commonBasesType?: string
-  zapStyle?: ZapStyle
-  beforeButton?: React.ReactNode
+  balance: CurrencyAmount<Currency>
+  imgUrl: string
   disabled?: boolean
-  error?: boolean
   showBUSD?: boolean
-  forLiquidity?: boolean
+  onUserInput: (value: string) => void
+  onPercentInput?: (percent: number) => void
+  onMax?: () => void
+  onCurrencySelect?: (currency: Currency) => void
 }
-export default function CurrencyInputPanel({
+export default function CurrencyInput({
+  id,
+  label,
   value,
+  showMaxButton,
+  showQuickInputButton,
+  currency,
+  otherCurrency,
+  balance,
+  imgUrl,
+  showBUSD,
+  disabled,
   onUserInput,
-  onInputBlur,
   onPercentInput,
   onMax,
-  showQuickInputButton = false,
-  showMaxButton,
-  label,
   onCurrencySelect,
-  currency,
-  disableCurrencySelect = false,
-  hideBalance = false,
-  zapStyle,
-  beforeButton,
-  pair = null, // used for double token logo
-  otherCurrency,
-  id,
-  showCommonBases,
-  commonBasesType,
-  disabled,
-  error,
-  showBUSD,
-  forLiquidity,
-}: CurrencyInputPanelProps) {
+}: CurrencyInputProps) {
   const { address: account } = useAccount()
-  const selectedCurrencyBalance = useCurrencyBalance(account ?? undefined, currency ?? undefined)
   const { t } = useTranslation()
   const { isMobile } = useMatchBreakpoints()
   const [activePercent, setActivePercent] = useState<any>(null)
   const [autoChange, setAutoChange] = useState(false)
 
-  const amountInDollar = useBUSDCurrencyAmount(
-    showBUSD ? currency : undefined,
-    Number.isFinite(+value) ? +value : undefined,
-  )
-
-  const [onPresentCurrencyModal] = useModal(
-    <CurrencySearchModal
-      onCurrencySelect={onCurrencySelect}
-      selectedCurrency={currency}
-      otherSelectedCurrency={otherCurrency}
-      showCommonBases={showCommonBases}
-      commonBasesType={commonBasesType}
-      forliquidity={forLiquidity}
-    />,
-  )
-  const isShowPercent =
-    account &&
-    currency &&
-    selectedCurrencyBalance?.greaterThan(0) &&
-    !disabled &&
-    label !== 'To' &&
-    label !== 'To (estimated)'
+  const [amountInDollar, setAmountInDola] = useState()
+  const isShowPercent = balance?.greaterThan(0) && !disabled && label !== 'To (estimated)'
   const isShowDolar = !!currency && showBUSD && Number.isFinite(amountInDollar)
 
   const checkHeightInput = () => {
@@ -266,6 +223,14 @@ export default function CurrencyInputPanel({
     return height
   }
 
+  const [onPresentCurrencyModal] = useModal(
+    <CurrencySearchModal
+      onCurrencySelect={onCurrencySelect}
+      selectedCurrency={currency}
+      otherSelectedCurrency={otherCurrency}
+    />,
+  )
+
   useEffect(() => {
     if (autoChange) {
       setAutoChange(false)
@@ -280,54 +245,17 @@ export default function CurrencyInputPanel({
 
   return (
     <Box position="relative" id={id}>
-      <Flex alignItems="center" justifyContent="space-between">
-        <Flex>
-          {beforeButton}
-
-          {/* {token && tokenAddress ? (
-            <Flex style={{ gap: '4px' }} ml="4px" alignItems="center">
-              <CopyButton
-                width="16px"
-                buttonColor="textSubtle"
-                text={tokenAddress}
-                tooltipMessage={t('Token address copied')}
-              />
-              <AddToWalletButton
-                variant="text"
-                p="0"
-                height="auto"
-                width="fit-content"
-                tokenAddress={tokenAddress}
-                tokenSymbol={token.symbol}
-                tokenDecimals={token.decimals}
-                tokenLogo={token instanceof WrappedTokenInfo ? token.logoURI : undefined}
-              />
-            </Flex>
-          ) : null} */}
-        </Flex>
-      </Flex>
       <InputPanel>
-        <Container as="label" zapStyle={zapStyle} error={error} style={{ height: checkHeightInput() }}>
+        <Container as="label" style={{ height: checkHeightInput() }}>
           <LabelRow>
             <NumericalInputWrapper
-              error={error}
               disabled={disabled}
               className="token-amount-input"
               value={value}
-              onBlur={onInputBlur}
               onUserInput={(val) => {
                 onUserInput(val)
                 setActivePercent(val)
               }}
-              // style={
-              //   isShowPercent && isShowDolar
-              //     ? { marginTop: '-70px' }
-              //     : isShowPercent
-              //     ? { marginTop: '-36px' }
-              //     : isShowDolar
-              //     ? { marginTop: '-36px' }
-              //     : { marginTop: '-10px' }
-              // }
             />
             {account && (
               <TextBalance
@@ -342,10 +270,9 @@ export default function CurrencyInputPanel({
                 // fontSize="14px"
                 // style={{ display: 'inline', cursor: 'pointer', fontSize: '16px' }}
               >
-                {!hideBalance && !!currency
+                {!!currency
                   ? t('Balance: %balance%', {
-                      balance:
-                        formatAmountNumber2(parseFloat(selectedCurrencyBalance?.toFixed()) || 0, 6) ?? t('Loading'),
+                      balance: formatAmountNumber2(parseFloat(balance?.toFixed()) || 0, 6) ?? t('Loading'),
                     })
                   : ' -'}
               </TextBalance>
@@ -370,7 +297,7 @@ export default function CurrencyInputPanel({
               </Flex>
             </ForDolar>
           )}
-          <InputRow selected={disableCurrencySelect} style={{ paddingBottom: 15 }}>
+          <InputRow selected={true} style={{ paddingBottom: 15 }}>
             {isShowPercent && (
               <Flex alignItems="center" justifyContent="start">
                 {showQuickInputButton &&
@@ -426,36 +353,27 @@ export default function CurrencyInputPanel({
           </InputRow>
           <CurrencySelectButton
             // style={isMobile && !account?{top:'23%'}:isShowPercent?{top:'60%'}: {top:'45%'}}
-            style={{ bottom: isMobile && isShowPercent ? 50 : 15, cursor: disableCurrencySelect ? 'unset' : 'cursor' }}
+            style={{ bottom: isMobile && isShowPercent ? 50 : 15, cursor: 'unset' }}
             className="open-currency-select-button"
             selected={!!currency}
             onClick={() => {
-              if (!disableCurrencySelect) {
-                onPresentCurrencyModal()
-              }
+              onCurrencySelect && onPresentCurrencyModal()
             }}
           >
             <Flex alignItems="center" justifyContent="space-between" className="token-info">
-              {pair ? (
-                <DoubleCurrencyLogo currency0={pair.token0} currency1={pair.token1} margin />
-              ) : currency ? (
-                <CurrencyLogo currency={currency} style={{ marginRight: '8px' }} />
-              ) : null}
-              {pair ? (
-                <Text id="pair" bold>
-                  {pair?.token0.symbol}:{pair?.token1.symbol}
-                </Text>
+              {currency ? (
+                <>
+                  {imgUrl ? (
+                    <img src={imgUrl} alt="" />
+                  ) : (
+                    <CurrencyLogo currency={currency} style={{ marginRight: '8px' }} size="24px" />
+                  )}
+                  {currency?.symbol}
+                </>
               ) : (
-                <Text id="pair" bold>
-                  {(currency && currency.symbol && currency.symbol.length > 20
-                    ? `${currency.symbol.slice(0, 4)}...${currency.symbol.slice(
-                        currency.symbol.length - 5,
-                        currency.symbol.length,
-                      )}`
-                    : currency?.symbol) || t('Select a currency')}
-                </Text>
+                <>Select a currency</>
               )}
-              {!disableCurrencySelect && <ChevronDownIcon />}
+              {onCurrencySelect && <ChevronDownIcon />}
             </Flex>
           </CurrencySelectButton>
         </Container>

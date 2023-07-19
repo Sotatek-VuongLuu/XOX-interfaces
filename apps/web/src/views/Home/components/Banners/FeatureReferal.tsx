@@ -354,6 +354,7 @@ const FeatureReferal = () => {
       let userPointBSC: any
       let userPointETH: any
 
+      // TODO: fix to production
       const chainEthId = ChainId.GOERLI
       const chainBscId = ChainId.BSC_TESTNET
 

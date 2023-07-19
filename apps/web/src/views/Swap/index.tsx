@@ -23,12 +23,12 @@ const Wrapper = styled(Flex)`
   justify-content: center;
   margin: 150px 0 100px;
 
-  ${({ theme }) => theme.mediaQueries.lg} {
-    margin-top: 30px;
-    position: absolute;
-    transform: translateY(-50%);
-    top: 50%;
-  }
+  // ${({ theme }) => theme.mediaQueries.lg} {
+  //   margin-top: 30px;
+  //   position: absolute;
+  //   transform: translateY(-50%);
+  //   top: 50%;
+  // }
 `
 
 const WapperHeight = styled.div`
