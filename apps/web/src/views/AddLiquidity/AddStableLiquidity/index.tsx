@@ -116,7 +116,6 @@ export default function AddStableLiquidity({ currencyA, currencyB }) {
 
   async function onAdd() {
     if (!chainId || !account || !stableSwapContract) return
-
     const { [Field.CURRENCY_A]: parsedAmountA, [Field.CURRENCY_B]: parsedAmountB } = parsedAmounts
     if (!parsedAmountA || !parsedAmountB || !currencyA || !currencyB) {
       return

@@ -49,7 +49,7 @@ export const ROUTER_XOX: ChainMap<string> = {
   [ChainId.RINKEBY]: '',
   [ChainId.GOERLI]: '0xF11Ade53C190AB901CE915b13E9d1fc035C99899',
   [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0x7eca9b8132A03B881FF24fb4a2D93AecB0F78E01',
+  [ChainId.BSC_TESTNET]: '0x13184464dD9ABFCBfc001e13619A2195678024AA',
 }
 
 export const XOX_ADDRESS: ChainMap<string> = {
