@@ -317,6 +317,7 @@ const useTotalUSDValue = ({ currency0, currency1, token0Deposited, token1Deposit
 const usePoolTokenPercentage = ({ userPoolBalance, totalPoolTokens }) => {
   return !!userPoolBalance &&
     !!totalPoolTokens &&
+    JSBI.toNumber(totalPoolTokens.numerator) > 0 &&
     JSBI.greaterThanOrEqual(totalPoolTokens.quotient, userPoolBalance.quotient)
     ? new Percent(userPoolBalance.quotient, totalPoolTokens.quotient)
     : undefined
@@ -349,7 +350,8 @@ const withLPValuesFactory =
       [userPoolBalance, props.pair, totalPoolTokens],
     )
 
-    const [token0Deposited, token1Deposited] = useLPValuesHook(args)
+    const [token0Deposited, token1Deposited] =
+      JSBI.toNumber(userPoolBalance?.numerator) === 0 ? [0, 0] : useLPValuesHook(args)
 
     const totalUSDValue = useTotalUSDValue({ currency0, currency1, token0Deposited, token1Deposited })
 
