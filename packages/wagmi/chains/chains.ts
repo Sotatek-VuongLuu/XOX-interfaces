@@ -308,6 +308,6 @@ export const linea_testnet: Chain = {
     default: 'https://rpc.goerli.linea.build',
   },
   blockExplorers: {
-    default: { name: 'Linea', url: 'https://explorer.goerli.linea.build/' },
+    default: { name: 'Linea', url: 'https://goerli.lineascan.build' },
   },
 }

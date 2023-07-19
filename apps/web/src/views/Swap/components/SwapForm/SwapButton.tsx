@@ -7,12 +7,13 @@ import { AutoRow } from 'components/Layout/Row'
 import { ApprovalState } from 'hooks/useApproveCallback'
 import { parseEther, parseUnits } from '@ethersproject/units'
 import ConfirmKyberSwapModal from './ConfirmKyberSwapModal'
-import useKyberswap from 'hooks/useKyberswap'
+import useBuildKyberswap from 'hooks/useBuildKyberswap'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useSigner } from 'wagmi'
 import { ToastDescriptionWithTx } from 'components/Toast'
 import ConnectWalletButton from 'components/ConnectWalletButton'
+import { useTransactionAdder } from 'state/transactions/hooks'
 
 type Props = {
   approval: ApprovalState
@@ -54,7 +55,7 @@ const SwapButton = ({
   const { isMobile } = useMatchBreakpoints()
   const { chainId } = useActiveChainId()
   const { account } = useActiveWeb3React()
-  const { buildSwap, data } = useKyberswap({
+  const { buildSwap, data } = useBuildKyberswap({
     fullRoute,
     slippage: allowedSlippage,
     chainId,
@@ -63,6 +64,7 @@ const SwapButton = ({
   const { toastSuccess, toastError } = useToast()
   const { data: signer } = useSigner()
   const [transaction, setTransaction] = useState<any>()
+  const addTransaction = useTransactionAdder()
 
   const onSwap = useCallback(async () => {
     if (!data || attemptingTxn) return
@@ -75,17 +77,29 @@ const SwapButton = ({
       transaction['value'] = summary.amountIn
     }
     try {
-      // const estimatedGasLimit = await signer.estimateGas(transaction)
       const transactionResponse = await signer.sendTransaction(transaction)
       toastSuccess(t('Transaction has succeeded!'), <ToastDescriptionWithTx txHash={transactionResponse.hash} />)
+      const translatableWithRecipient = 'Swap %inputAmount% %inputSymbol% for %outputAmount% %outputSymbol%'
+      addTransaction(transactionResponse, {
+        summary: account,
+        translatableSummary: {
+          text: translatableWithRecipient,
+          data: {
+            inputAmount: CurrencyAmount.fromRawAmount(currencyIn, summary.amountIn).toSignificant(6),
+            inputSymbol: currencyIn.symbol,
+            outputAmount: CurrencyAmount.fromRawAmount(currencyIn, summary.amountOut).toSignificant(6),
+            outputSymbol: currencyOut.symbol,
+          },
+        },
+        type: 'kyber-swap',
+      })
       setTransaction(transactionResponse)
     } catch (error) {
       setTransaction({ swapErrorMessage: error })
-      console.log(error)
       toastError(t('Error'), t('Transaction failed'))
     }
     setAttemptingTxn(false)
-  }, [data, account, tokenInAmount, currencyIn, data])
+  }, [data, account, currencyIn, currencyOut, routerAddress, attemptingTxn, summary])
 
   const onDismiss = useCallback(() => {
     setTransaction(undefined)

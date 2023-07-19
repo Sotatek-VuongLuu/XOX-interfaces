@@ -108,7 +108,7 @@ export const NETWORK_LINK =
         [ChainId.ZKSYNC_TESTNET]: 'https://goerli.explorer.zksync.io',
         [ChainId.OPTIMISM]: 'https://optimistic.etherscan.io',
         [ChainId.OPTIMISM_TESTNET]: 'https://goerli-optimism.etherscan.io',
-        [LINEA_TESTNET]: 'https://explorer.goerli.linea.build',
+        [LINEA_TESTNET]: 'https://goerli.lineascan.build',
       }
     : {
         [ChainId.ETHEREUM]: 'https://etherscan.io',
@@ -135,7 +135,7 @@ export const SITE_NAME =
         [ChainId.ZKSYNC_TESTNET]: 'Zkscan',
         [ChainId.OPTIMISM]: 'Optimismscan',
         [ChainId.OPTIMISM_TESTNET]: 'Optimismscan',
-        [LINEA_TESTNET]: 'Linea',
+        [LINEA_TESTNET]: 'Lineascan',
       }
     : {
         [ChainId.ETHEREUM]: 'Etherscan',

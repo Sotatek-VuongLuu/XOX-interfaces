@@ -21,6 +21,7 @@ import { AutoColumn, ColumnCenter } from '../Layout/Column'
 import { getBlockExploreLink } from '../../utils'
 import AddToWalletButton, { AddToWalletTextOptions } from '../AddToWallet/AddToWalletButton'
 import { useAccount } from 'wagmi'
+import { SITE_NAME } from 'views/BridgeToken/networks'
 
 const Wrapper = styled.div`
   width: 100%;
@@ -163,7 +164,7 @@ export function TransactionSubmittedContent({
               style={{ fontWeight: 400, marginBottom: '16px' }}
               hiddenIcon
             >
-              {t('View on %site%', { site: chainId === 1 || chainId === 5 ? 'Etherscan' : 'Bscscan' })}
+              {t('View on %site%', { site: SITE_NAME[chainId] })}
             </LinkExternal>
           )}
           <ButtonFooters style={{ width: isMobile ? 'auto' : '400px', maxWidth: '100%' }}>
