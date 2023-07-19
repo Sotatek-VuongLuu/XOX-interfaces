@@ -94,40 +94,6 @@ export default function KyberSwap() {
     return CurrencyAmount.fromRawAmount(currency, amountInWei).toExact()
   }
 
-  const handleInputSelect = useCallback(
-    (newCurrencyInput: Currency) => {
-      if (currencyOut && (newCurrencyInput as any)?.address == (currencyOut as any)?.address) {
-        return
-      }
-      setTokenIn(
-        new Token(
-          newCurrencyInput.chainId,
-          newCurrencyInput.isNative ? GELATO_NATIVE : (newCurrencyInput as Token).address,
-          newCurrencyInput.decimals,
-          newCurrencyInput.symbol,
-        ),
-      )
-    },
-    [currencyOut],
-  )
-
-  const handleOutputSelect = useCallback(
-    (newCurrencyOutput: Currency) => {
-      if ((newCurrencyOutput as any)?.address == (currencyIn as any)?.address) {
-        return
-      }
-      setTokenOut(
-        new Token(
-          newCurrencyOutput.chainId,
-          newCurrencyOutput.isNative ? GELATO_NATIVE : (newCurrencyOutput as Token).address,
-          newCurrencyOutput.decimals,
-          newCurrencyOutput.symbol,
-        ),
-      )
-    },
-    [currencyIn],
-  )
-
   const handleOnClickedBtnSwapToken = useCallback(() => {
     if (
       currencyOut &&
@@ -149,6 +115,42 @@ export default function KyberSwap() {
   const handleTypeInput = useCallback((amount: string) => {
     setInputAmountIn(amount)
   }, [])
+
+  const handleInputSelect = useCallback(
+    (newCurrencyInput: Currency) => {
+      if (currencyOut && (newCurrencyInput as any)?.address == (currencyOut as any)?.address) {
+        handleOnClickedBtnSwapToken()
+        return
+      }
+      setTokenIn(
+        new Token(
+          newCurrencyInput.chainId,
+          newCurrencyInput.isNative ? GELATO_NATIVE : (newCurrencyInput as Token).address,
+          newCurrencyInput.decimals,
+          newCurrencyInput.symbol,
+        ),
+      )
+    },
+    [currencyOut, handleOnClickedBtnSwapToken],
+  )
+
+  const handleOutputSelect = useCallback(
+    (newCurrencyOutput: Currency) => {
+      if ((newCurrencyOutput as any)?.address == (currencyIn as any)?.address) {
+        handleOnClickedBtnSwapToken()
+        return
+      }
+      setTokenOut(
+        new Token(
+          newCurrencyOutput.chainId,
+          newCurrencyOutput.isNative ? GELATO_NATIVE : (newCurrencyOutput as Token).address,
+          newCurrencyOutput.decimals,
+          newCurrencyOutput.symbol,
+        ),
+      )
+    },
+    [currencyIn, handleOnClickedBtnSwapToken],
+  )
 
   useEffect(() => {
     if (!currencyIn) return
