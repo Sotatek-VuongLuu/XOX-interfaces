@@ -169,7 +169,7 @@ export default {
     [ChainId.BSC]: '',
   },
   contractXOXToken: {
-    [ChainId.BSC_TESTNET]: '0xC82f6DF626787D0FD686Ed211A232Fe8Cd1EF42d',
+    [ChainId.BSC_TESTNET]: '0x6bb15Fd179539BFD6E78f18f5d91543142e0Ad9e',
     [ChainId.GOERLI]: '0x92b3d85b4589bBEE8e3a04114C217Aa497B44aDD',
     [ChainId.ETHEREUM]: '', // TODO: change address
     [ChainId.BSC]: '',

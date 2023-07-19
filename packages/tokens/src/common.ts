@@ -2,7 +2,7 @@ import { ChainId, ERC20Token, LINEA_TESTNET } from '@pancakeswap/sdk'
 
 export const XOX_BSC_MAINNET = new ERC20Token(
   ChainId.BSC,
-  '0xC82f6DF626787D0FD686Ed211A232Fe8Cd1EF42d',
+  '0x6bb15Fd179539BFD6E78f18f5d91543142e0Ad9e',
   18,
   'XOX',
   'XOX',

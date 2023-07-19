@@ -43,7 +43,7 @@ export const XOX_ADDRESS: Record<number, string> = {
   // [ChainId.RINKEBY]: '',
   [ChainId.GOERLI]: '0x92b3d85b4589bBEE8e3a04114C217Aa497B44aDD',
   // [ChainId.BSC]: '',
-  [ChainId.BSC_TESTNET]: '0xC82f6DF626787D0FD686Ed211A232Fe8Cd1EF42d',
+  [ChainId.BSC_TESTNET]: '0x6bb15Fd179539BFD6E78f18f5d91543142e0Ad9e',
   // [ChainId.BSC]: '',
   [ChainId.ARBITRUM_TESTNET]: '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
   // [ChainId.BSC]: '',
