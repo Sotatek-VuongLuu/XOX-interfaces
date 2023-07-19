@@ -192,14 +192,14 @@ export default function KyberSwap() {
             showMaxButton={!false}
             showQuickInputButton
             currency={currencyIn}
-            onUserInput={handleTypeInput}
-            onPercentInput={handlePercentInput}
-            onMax={() => handlePercentInput(100)}
             balance={currencyInBalance}
             imgUrl={tokenInImgUrl}
             otherCurrency={currencyOut}
+            amountUsd={summary?.amountInUsd}
+            onUserInput={handleTypeInput}
+            onPercentInput={handlePercentInput}
+            onMax={() => handlePercentInput(100)}
             onCurrencySelect={handleInputSelect}
-            showBUSD
           />
 
           <AutoColumn justify="space-between">
@@ -234,8 +234,8 @@ export default function KyberSwap() {
             otherCurrency={currencyIn}
             balance={currencyOutBalance}
             imgUrl={tokenOutImgUrl}
+            amountUsd={summary?.amountOutUsd}
             onCurrencySelect={handleOutputSelect}
-            showBUSD
             disabled
           />
         </AutoColumn>

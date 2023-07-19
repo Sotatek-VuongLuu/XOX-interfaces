@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { Currency, CurrencyAmount } from '@pancakeswap/sdk'
 import {
   Button,
@@ -169,7 +169,7 @@ interface CurrencyInputProps {
   balance: CurrencyAmount<Currency>
   imgUrl: string
   disabled?: boolean
-  showBUSD?: boolean
+  amountUsd?: string
   onUserInput: (value: string) => void
   onPercentInput?: (percent: number) => void
   onMax?: () => void
@@ -185,8 +185,8 @@ export default function CurrencyInput({
   otherCurrency,
   balance,
   imgUrl,
-  showBUSD,
   disabled,
+  amountUsd,
   onUserInput,
   onPercentInput,
   onMax,
@@ -200,7 +200,6 @@ export default function CurrencyInput({
 
   const [amountInDollar, setAmountInDola] = useState()
   const isShowPercent = balance?.greaterThan(0) && !disabled && label !== 'To (estimated)'
-  const isShowDolar = !!currency && showBUSD && Number.isFinite(amountInDollar)
 
   const checkHeightInput = () => {
     let height
@@ -215,7 +214,7 @@ export default function CurrencyInput({
       } else {
         height = '52px'
       }
-    } else if (isShowDolar && isShowPercent) {
+    } else if (isShowPercent) {
       height = '128px'
     } else {
       height = '95px'
@@ -242,6 +241,10 @@ export default function CurrencyInput({
   useEffect(() => {
     onUserInput('')
   }, [])
+
+  const amountUsdValue = useMemo(() => {
+    return amountUsd && formatAmountNumber2(parseFloat(amountUsd), 6).toString()
+  }, [amountUsd])
 
   return (
     <Box position="relative" id={id}>
@@ -272,25 +275,25 @@ export default function CurrencyInput({
               >
                 {!!currency
                   ? t('Balance: %balance%', {
-                      balance: formatAmountNumber2(parseFloat(balance?.toFixed()) || 0, 6) ?? t('Loading'),
+                      balance: formatAmountNumber2(parseFloat(balance?.toSignificant(10)) || 0, 6) ?? t('Loading'),
                     })
                   : ' -'}
               </TextBalance>
             )}
           </LabelRow>
-          {isShowDolar && (
+          {!!amountUsdValue && (
             <ForDolar style={isShowPercent ? { bottom: '58px' } : { bottom: '22px' }}>
               <Flex justifyContent="flex-end" mr="1rem">
                 <Flex maxWidth="200px">
                   <Text fontSize="12px" color="textSubtle" style={{ whiteSpace: 'nowrap' }}>
                     ~$
                     {isMobile
-                      ? formatNumber(amountInDollar).length > 10
-                        ? `${formatNumber(amountInDollar).substring(0, 10)}...`
-                        : formatNumber(amountInDollar)
-                      : formatNumber(amountInDollar).length > 30
-                      ? `${formatNumber(amountInDollar).substring(0, 30)}...`
-                      : formatNumber(amountInDollar)}{' '}
+                      ? amountUsdValue.length > 10
+                        ? `${amountUsdValue.substring(0, 10)}...`
+                        : amountUsdValue
+                      : amountUsdValue.length > 30
+                      ? `${amountUsdValue.substring(0, 30)}...`
+                      : amountUsdValue}{' '}
                     {/* USD */}
                   </Text>
                 </Flex>

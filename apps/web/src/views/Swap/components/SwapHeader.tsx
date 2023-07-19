@@ -55,6 +55,16 @@ const Wrapper = styled.div`
     font-size: 18px;
     font-weight: 700;
   }
+
+  @media screen and (max-width: 640px) {
+    .tab-item {
+      font-size: 16px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
 `
 
 const SwapHeader: React.FC<React.PropsWithChildren<Props>> = ({ activeTab, setActiveTab, onRefreshPrice }) => {
