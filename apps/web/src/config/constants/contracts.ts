@@ -183,7 +183,7 @@ export default {
     [ChainId.OPTIMISM_TESTNET]: '0xce221120f145b456ba41b370f11d5e536ecd2bcb', // TODO: change address
   },
   contractXOXPool: {
-    [ChainId.BSC_TESTNET]: '0x1cee830b7f20cefb4dcff3b3e9e7859923827248',
+    [ChainId.BSC_TESTNET]: '0xaad96063144d0d7d9395db418a5060512f71d41f',
     [ChainId.GOERLI]: '0xE8D6f48CE1beCeCa40a848bEb177BcD17C25303B',
   },
   contractBridgeToken: {

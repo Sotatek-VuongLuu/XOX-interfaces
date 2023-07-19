@@ -35,7 +35,7 @@ export const PAIR_XOX_BUSD: Record<number, string> = {
   // [ChainId.RINKEBY]: FACTORY_ADDRESS_ETH,
   [ChainId.GOERLI]: '0xE8D6f48CE1beCeCa40a848bEb177BcD17C25303B',
   // [ChainId.BSC]: FACTORY_ADDRESS,
-  [ChainId.BSC_TESTNET]: '0x1cee830b7f20cefb4dcff3b3e9e7859923827248',
+  [ChainId.BSC_TESTNET]: '0xaad96063144d0d7d9395db418a5060512f71d41f',
 }
 
 export const XOX_ADDRESS: Record<number, string> = {

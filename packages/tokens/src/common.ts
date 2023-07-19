@@ -110,7 +110,7 @@ export const XOX_OPTIMISM_TESTNET = new ERC20Token(
 
 export const XOX_BUSD_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0x1cee830b7f20cefb4dcff3b3e9e7859923827248',
+  '0xaad96063144d0d7d9395db418a5060512f71d41f',
   18,
   'XOX-BUSD',
   'XOX-BUSD',
