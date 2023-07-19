@@ -87,7 +87,7 @@ const SwapButton = ({
           data: {
             inputAmount: CurrencyAmount.fromRawAmount(currencyIn, summary.amountIn).toSignificant(6),
             inputSymbol: currencyIn.symbol,
-            outputAmount: CurrencyAmount.fromRawAmount(currencyIn, summary.amountOut).toSignificant(6),
+            outputAmount: CurrencyAmount.fromRawAmount(currencyOut, summary.amountOut).toSignificant(6),
             outputSymbol: currencyOut.symbol,
           },
         },

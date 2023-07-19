@@ -104,7 +104,6 @@ export function useAllTransactions(): { [chainId: number]: { [txHash: string]: T
 export function useAllSortedRecentTransactions(kyber: boolean = false): {
   [chainId: number]: { [txHash: string]: TransactionDetails }
 } {
-  console.log(kyber)
   const allTransactions = useAllTransactions()
   return useMemo(() => {
     return omitBy(
