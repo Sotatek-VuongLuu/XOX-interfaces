@@ -13,6 +13,8 @@ export type TransactionType =
   | 'limit-order-approval'
   | 'non-bsc-farm'
   | 'withdraw'
+  | 'kyber-approve'
+  | 'kyber-swap'
 
 export interface SerializableTransactionReceipt {
   to: string

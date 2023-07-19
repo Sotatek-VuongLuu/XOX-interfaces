@@ -101,14 +101,20 @@ export function useAllTransactions(): { [chainId: number]: { [txHash: string]: T
   }, [account, state])
 }
 
-export function useAllSortedRecentTransactions(): { [chainId: number]: { [txHash: string]: TransactionDetails } } {
+export function useAllSortedRecentTransactions(kyber: boolean = false): {
+  [chainId: number]: { [txHash: string]: TransactionDetails }
+} {
+  console.log(kyber)
   const allTransactions = useAllTransactions()
   return useMemo(() => {
     return omitBy(
       mapValues(allTransactions, (transactions) =>
         keyBy(
           orderBy(
-            pickBy(transactions, (trxDetails) => isTransactionRecent(trxDetails)),
+            pickBy(
+              transactions,
+              (trxDetails) => isTransactionRecent(trxDetails) && (kyber ? isKyber(trxDetails) : !isKyber(trxDetails)),
+            ),
             ['addedTime'],
             'desc',
           ),
@@ -157,6 +163,14 @@ export function useIsTransactionPending(transactionHash?: string): boolean {
  */
 export function isTransactionRecent(tx: TransactionDetails): boolean {
   return new Date().getTime() - tx.addedTime < 86_400_000
+}
+
+/**
+ * Returns whether a transaction of kyber or not
+ * @param tx to check for recency
+ */
+export function isKyber(tx: TransactionDetails): boolean {
+  return tx.type === 'kyber-approve' || tx.type === 'kyber-swap'
 }
 
 // returns whether a token has a pending approval transaction

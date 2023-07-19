@@ -9,7 +9,7 @@ type Props = {
   account: string
 }
 
-const useKyberswap = ({ fullRoute, slippage, chainId, account }: Props) => {
+const useBuildKyberswap = ({ fullRoute, slippage, chainId, account }: Props) => {
   const [data, setData] = useState('')
 
   const buildSwap = useCallback(() => {
@@ -40,4 +40,4 @@ const useKyberswap = ({ fullRoute, slippage, chainId, account }: Props) => {
   }
 }
 
-export default useKyberswap
+export default useBuildKyberswap

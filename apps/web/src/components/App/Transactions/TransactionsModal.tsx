@@ -13,6 +13,7 @@ import { useAccount } from 'wagmi'
 import { AutoRow } from '../../Layout/Row'
 import Transaction from './Transaction'
 import ConnectWalletButton from '../../ConnectWalletButton'
+import { useRouter } from 'next/router'
 
 const RecentButton = styled(Button)`
   width: 98px;
@@ -70,9 +71,10 @@ function renderTransactions(transactions: TransactionDetails[], chainId: number,
 }
 
 const TransactionsModal: React.FC<React.PropsWithChildren<InjectedModalProps>> = ({ onDismiss }) => {
-  const { address: account } = useAccount()
   const dispatch = useAppDispatch()
-  const sortedRecentTransactions = useAllSortedRecentTransactions()
+  const { address: account } = useAccount()
+  const { query } = useRouter()
+  const sortedRecentTransactions = useAllSortedRecentTransactions(query?.tab === 'kyberswap')
   const { isMobile } = useMatchBreakpoints()
 
   const { t } = useTranslation()
