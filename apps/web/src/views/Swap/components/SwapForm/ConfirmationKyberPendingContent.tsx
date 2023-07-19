@@ -3,7 +3,7 @@ import { Text } from '@pancakeswap/uikit'
 import { GridLoader } from 'react-spinners'
 import { useTranslation } from '@pancakeswap/localization'
 import { AutoColumn, ColumnCenter } from 'components/Layout/Column'
-import { Currency, CurrencyAmount } from '@pancakeswap/sdk'
+import { Currency, CurrencyAmount, Percent } from '@pancakeswap/sdk'
 import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 import { useMemo } from 'react'
 

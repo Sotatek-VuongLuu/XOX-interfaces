@@ -7,6 +7,7 @@ import { BigNumber } from '@ethersproject/bignumber'
 import { TSingleRoute, TSwapRoute } from 'utils/swapHelpers'
 import BuildRoute from './BuildRoute'
 import { parseUnits } from '@ethersproject/units'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 type Props = {
   swapRoute: TSwapRoute[][]
@@ -76,10 +77,14 @@ const KyberSwapRoute = ({
                     <span>
                       {!!swapRoute.length &&
                         currencyIn &&
-                        CurrencyAmount.fromRawAmount(
-                          currencyIn,
-                          parseUnits(amountIn || '0', currencyIn?.decimals).toString(),
-                        ).toSignificant(6)}{' '}
+                        formatAmountNumber2(
+                          parseFloat(
+                            CurrencyAmount.fromRawAmount(
+                              currencyIn,
+                              parseUnits(amountIn || '0', currencyIn?.decimals).toString(),
+                            ).toSignificant(6),
+                          ),
+                        )}{' '}
                       {currencyIn?.symbol}{' '}
                     </span>
                   </div>
@@ -88,7 +93,11 @@ const KyberSwapRoute = ({
                 <div className="to__token">
                   <div className="token-logo" style={{ border: 'none' }}>
                     <span>
-                      {amountIn && amountOut && CurrencyAmount.fromRawAmount(currencyOut, amountOut).toSignificant(6)}{' '}
+                      {amountIn &&
+                        amountOut &&
+                        formatAmountNumber2(
+                          parseFloat(CurrencyAmount.fromRawAmount(currencyOut, amountOut).toSignificant(6)),
+                        )}{' '}
                       {currencyOut?.symbol}
                     </span>
                     <img alt="" src={tokenOutImgUrl} />

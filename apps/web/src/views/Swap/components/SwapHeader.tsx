@@ -113,7 +113,7 @@ const SwapHeader: React.FC<React.PropsWithChildren<Props>> = ({ activeTab, setAc
                     {tabs.kyberswap.title}
                   </span>
                 </div>
-                <p>{t('Swap')}</p>
+                <p>{activeTab === 'kyberswap' && t('Swap')}</p>
               </Wrapper>
             </Swap.CurrencyInputHeaderTitle>
             <Swap.CurrencyInputHeaderSubTitle>{tabs[activeTab].subtitle}</Swap.CurrencyInputHeaderSubTitle>
