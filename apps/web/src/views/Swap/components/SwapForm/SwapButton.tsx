@@ -65,17 +65,21 @@ const SwapButton = ({
   const onSwap = useCallback(async () => {
     if (!data || attemptingTxn) return
     setAttemptingTxn(true)
-    const transaction = {
+    let transaction = {
       to: routerAddress,
-      value: tokenInAmount ? parseUnits(tokenInAmount, currencyIn?.decimals).toString() : '0',
       data: data,
     }
+    if (currencyIn.isNative) {
+      transaction['value'] = summary.amountIn
+    }
     try {
+      // const estimatedGasLimit = await signer.estimateGas(transaction)
       const transactionResponse = await signer.sendTransaction(transaction)
       toastSuccess(t('Transaction has succeeded!'), <ToastDescriptionWithTx txHash={transactionResponse.hash} />)
       setTransaction(transactionResponse)
     } catch (error) {
       setTransaction({ swapErrorMessage: error })
+      console.log(error)
       toastError(t('Error'), t('Transaction failed'))
     }
     setAttemptingTxn(false)

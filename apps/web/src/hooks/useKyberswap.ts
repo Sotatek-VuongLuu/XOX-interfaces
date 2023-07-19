@@ -19,10 +19,10 @@ const useKyberswap = ({ fullRoute, slippage, chainId, account }: Props) => {
         `https://aggregator-api.kyberswap.com/${KYBERSWAP_NETWORK_CHAIN[chainId]}/api/v1/route/build`,
         {
           ...fullRoute,
-          deadline: 0,
           slippageTolerance: slippage,
           sender: account,
           recipient: account,
+          source: 'xoxlabs',
         },
         {
           headers: { 'x-client-id': 'xoxlabs' },
