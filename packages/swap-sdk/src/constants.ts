@@ -27,7 +27,7 @@ export const FACTORY_ADDRESS_MAP: Record<number, string> = {
   [ChainId.RINKEBY]: FACTORY_ADDRESS_ETH,
   [ChainId.GOERLI]: FACTORY_ADDRESS_ETH,
   [ChainId.BSC]: FACTORY_ADDRESS,
-  [ChainId.BSC_TESTNET]: '0xb058aaA0E02054b778C456135F9b1Db87229a597',
+  [ChainId.BSC_TESTNET]: '0x6725F303b657a9451d8BA641348b6761A6CC7a17',
 }
 
 export const PAIR_XOX_BUSD: Record<number, string> = {

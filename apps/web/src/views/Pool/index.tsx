@@ -295,6 +295,7 @@ export default function Pool({ stateAdd }: { stateAdd?: boolean }) {
     () => tokenPairsWithLiquidityTokens.map((tpwlt) => tpwlt.liquidityToken),
     [tokenPairsWithLiquidityTokens],
   )
+
   const [v2PairsBalances, fetchingV2PairBalances] = useTokenBalancesWithLoadingIndicator(
     account ?? undefined,
     liquidityTokens,
