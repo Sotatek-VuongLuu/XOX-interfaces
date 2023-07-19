@@ -13,6 +13,7 @@ import LiquidityBackgroundMobile from 'components/Svg/LiquidityBackgroundMobile'
 import LiquidityBackgroundBorderMobile from 'components/Svg/LiquidityBackgroundBorderMobile'
 import LiquidityBackgroundDesktop from 'components/Svg/LiquidityBackgroundDesktop'
 import LiquidityBackgroundBorderDesktop from 'components/Svg/LiquidityBackgroundBorderDesktop'
+import { useRouter } from 'next/router'
 
 const Wrapper = styled(Flex)`
   width: 100%;
@@ -76,11 +77,12 @@ export default function Swap() {
   const { address: account } = useAccount()
   const { chainId } = useActiveWeb3React()
   const { isChartExpanded } = useContext(SwapFeaturesContext)
+  const { query } = useRouter()
 
   const [loadOk, setLoadOk] = useState(false)
   useEffect(() => {
     if (!chainId || !account) return
-    if (loadOk) window.location.reload()
+    if (loadOk && query.tab != 'kyberswap') window.location.reload()
     setLoadOk(true)
   }, [chainId, account])
 
