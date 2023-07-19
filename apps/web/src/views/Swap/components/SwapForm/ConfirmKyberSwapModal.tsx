@@ -5,7 +5,7 @@ import ConfirmSwapModalContainer from '../ConfirmSwapModalContainer'
 import ConfirmationKyberPendingContent from './ConfirmationKyberPendingContent'
 import { TransactionSubmittedContent } from 'components/TransactionConfirmationModal'
 import ConfirmationKyberContent from './ConfirmationKyberContent'
-import { Currency } from '@pancakeswap/sdk'
+import { Currency, Percent } from '@pancakeswap/sdk'
 
 interface ConfirmSwapModalProps {
   currencyIn: Currency
@@ -21,6 +21,7 @@ interface ConfirmSwapModalProps {
   txHash?: string
   swapErrorMessage?: string
   disabled: boolean
+  priceImpact: Percent
   onConfirm?: () => void
   customOnDismiss?: () => void
 }
@@ -39,6 +40,7 @@ const ConfirmKyberSwapModal: React.FC<React.PropsWithChildren<InjectedModalProps
   txHash,
   swapErrorMessage,
   disabled,
+  priceImpact,
   onConfirm,
   onDismiss,
   customOnDismiss,
@@ -81,6 +83,7 @@ const ConfirmKyberSwapModal: React.FC<React.PropsWithChildren<InjectedModalProps
           recipient={recipient}
           routerAddress={routerAddress}
           disabled={disabled}
+          priceImpact={priceImpact}
           onConfirm={onConfirm}
         />
       )}

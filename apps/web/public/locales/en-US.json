@@ -2671,5 +2671,6 @@
   "Max Slippage": "Max Slippage",
   "Slippage is high. Your transaction may be front-run": "Slippage is high. Your transaction may be front-run",
   "Slippage is low. Your transaction may fail": "Slippage is low. Your transaction may fail",
-  "MORE INFORMATION": "MORE INFORMATION"
+  "MORE INFORMATION": "MORE INFORMATION",
+  "Your trade route": "Your trade route"
 }

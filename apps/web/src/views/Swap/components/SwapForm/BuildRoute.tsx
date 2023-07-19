@@ -28,7 +28,7 @@ const RouteBox = ({ currencyOutAddress, routes, currencyOut, tokenOutImgUrl }: P
   }, [routes])
 
   const calculatePercent = useCallback((number: string, sum: BigNumber) => {
-    return BigNumber.from(number).mul(100).div(sum).toNumber().toFixed(2)
+    return BigNumber.from(number).mul(100).div(sum).toNumber().toFixed(0)
   }, [])
 
   return (

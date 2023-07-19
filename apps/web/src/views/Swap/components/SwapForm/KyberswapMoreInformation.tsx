@@ -1,9 +1,11 @@
 import { useTranslation } from '@pancakeswap/localization'
-import { Currency, CurrencyAmount } from '@pancakeswap/sdk'
+import { ChainId, Currency, CurrencyAmount, Percent } from '@pancakeswap/sdk'
 import { Flex } from '@pancakeswap/uikit'
 import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 import React, { useState } from 'react'
 import styled from 'styled-components'
+import FormattedPriceImpact from '../FormattedPriceImpact'
+import BigNumber from 'bignumber.js'
 
 const Wrapper = styled.div`
   display: grid;
@@ -97,9 +99,11 @@ const Wrapper = styled.div`
 type Props = {
   currencyOut: Currency
   summary: any
+  priceImpact: Percent
+  chainId: number
 }
 
-const KyberswapMoreInformation = ({ summary, currencyOut }: Props) => {
+const KyberswapMoreInformation = ({ summary, currencyOut, priceImpact, chainId }: Props) => {
   const { t } = useTranslation()
   const [showMore, setShowMore] = useState(false)
 
@@ -135,7 +139,15 @@ const KyberswapMoreInformation = ({ summary, currencyOut }: Props) => {
                 }}
               >
                 <div className="value">
-                  {CurrencyAmount.fromRawAmount(currencyOut, summary.amountOut).toSignificant(6)}
+                  {formatAmountNumber2(
+                    parseFloat(
+                      CurrencyAmount.fromRawAmount(currencyOut, summary.amountOut)
+                        .multiply(9995)
+                        .divide(10000)
+                        .toSignificant(6),
+                    ),
+                    6,
+                  )}
                 </div>
                 <div className="symbol" style={{ minWidth: 'auto', marginLeft: '8px' }}>
                   {currencyOut.symbol}
@@ -147,13 +159,23 @@ const KyberswapMoreInformation = ({ summary, currencyOut }: Props) => {
             <div className="left">
               <div className="text">{t('Price Impact')}</div>
             </div>
-            <div className="right value">&lt; 0.01%</div>
+            <div className="right value">
+              <FormattedPriceImpact priceImpact={priceImpact} />
+            </div>
           </div>
           <div className="info__group">
             <div className="left">
               <div className="text">{t('Est. Gas Fee')}</div>
             </div>
-            <div className="right value">${formatAmountNumber2(summary.gasUsd)}</div>
+            <div className="right value">
+              $
+              {formatAmountNumber2(
+                chainId === ChainId.ETHEREUM
+                  ? new BigNumber(summary.gasUsd).multipliedBy(1.5).toNumber()
+                  : new BigNumber(summary.gasUsd).toNumber(),
+                0,
+              )}
+            </div>
           </div>
         </>
       )}

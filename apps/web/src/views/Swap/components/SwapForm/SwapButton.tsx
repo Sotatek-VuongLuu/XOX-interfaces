@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useState } from 'react'
 import { useTranslation } from '@pancakeswap/localization'
-import { Currency, CurrencyAmount } from '@pancakeswap/swap-sdk-core'
+import { Currency, CurrencyAmount, Percent } from '@pancakeswap/swap-sdk-core'
 import { CircleLoader, useMatchBreakpoints, useModal, useToast } from '@pancakeswap/uikit'
 import { CommitButton } from 'components/CommitButton'
 import { AutoRow } from 'components/Layout/Row'
@@ -28,6 +28,7 @@ type Props = {
   routerAddress: string
   fullRoute: any
   attemptingTxn: boolean
+  priceImpact: Percent
   setAttemptingTxn: (b: boolean) => void
   approveCallback: () => Promise<void>
 }
@@ -45,6 +46,7 @@ const SwapButton = ({
   routerAddress,
   fullRoute,
   attemptingTxn,
+  priceImpact,
   setAttemptingTxn,
   approveCallback,
 }: Props) => {
@@ -65,17 +67,21 @@ const SwapButton = ({
   const onSwap = useCallback(async () => {
     if (!data || attemptingTxn) return
     setAttemptingTxn(true)
-    const transaction = {
+    let transaction = {
       to: routerAddress,
-      value: tokenInAmount ? parseUnits(tokenInAmount, currencyIn?.decimals).toString() : '0',
       data: data,
     }
+    if (currencyIn.isNative) {
+      transaction['value'] = summary.amountIn
+    }
     try {
+      // const estimatedGasLimit = await signer.estimateGas(transaction)
       const transactionResponse = await signer.sendTransaction(transaction)
       toastSuccess(t('Transaction has succeeded!'), <ToastDescriptionWithTx txHash={transactionResponse.hash} />)
       setTransaction(transactionResponse)
     } catch (error) {
       setTransaction({ swapErrorMessage: error })
+      console.log(error)
       toastError(t('Error'), t('Transaction failed'))
     }
     setAttemptingTxn(false)
@@ -100,6 +106,7 @@ const SwapButton = ({
       txHash={transaction?.hash}
       swapErrorMessage={transaction?.swapErrorMessage}
       disabled={!data}
+      priceImpact={priceImpact}
       onConfirm={onSwap}
       customOnDismiss={onDismiss}
     />,

@@ -2,11 +2,15 @@ import React, { useCallback, useState } from 'react'
 import AlertSlippage from './AlertSlippage'
 import { ConfirmationKyberContentWrapper } from './styles'
 import { Button, LinkExternal } from '@pancakeswap/uikit'
-import { Currency, CurrencyAmount, Price } from '@pancakeswap/sdk'
+import { ChainId, Currency, CurrencyAmount, Percent, Price } from '@pancakeswap/sdk'
 import { useTranslation } from '@pancakeswap/localization'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import { NETWORK_LABEL, NETWORK_LINK } from 'views/BridgeToken/networks'
 import { CurrencyLogo } from 'components/Logo'
+import FormattedPriceImpact from '../FormattedPriceImpact'
+import BigNumber from 'bignumber.js'
+import { BigNumber as EtherBigNumber } from '@ethersproject/bignumber'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 type Props = {
   currencyIn: Currency
@@ -19,6 +23,7 @@ type Props = {
   recipient: string | null
   routerAddress: string
   disabled: boolean
+  priceImpact: Percent
   onConfirm: () => void
 }
 
@@ -33,6 +38,7 @@ const ConfirmationKyberContent = ({
   recipient,
   routerAddress,
   disabled,
+  priceImpact,
   onConfirm,
 }: Props) => {
   const { t } = useTranslation()
@@ -59,7 +65,9 @@ const ConfirmationKyberContent = ({
             <div className="token-group">
               <div className="token-amount">{tokenInAmount}</div>
               <div className="token-info">
-                <div className="token-amount-usd">{summary && `~${parseFloat(summary.amountInUsd).toFixed(2)}`}</div>
+                <div className="token-amount-usd">
+                  {summary && `~${formatAmountNumber2(parseFloat(parseFloat(summary.amountInUsd).toFixed(6)))}`}
+                </div>
                 {tokenInImgUrl ? (
                   <img src={tokenInImgUrl} alt="" className="token-logo" />
                 ) : (
@@ -93,7 +101,9 @@ const ConfirmationKyberContent = ({
                 {currencyOut && summary && CurrencyAmount.fromRawAmount(currencyOut, summary?.amountOut).toExact()}
               </div>
               <div className="token-info">
-                <div className="token-amount-usd">{summary && `~${parseFloat(summary.amountOutUsd).toFixed(2)}`}</div>
+                <div className="token-amount-usd">
+                  {summary && `~${formatAmountNumber2(parseFloat(parseFloat(summary.amountOutUsd).toFixed(6)))}`}
+                </div>
                 {tokenOutImgUrl ? (
                   <img src={tokenOutImgUrl} alt="" className="token-logo" />
                 ) : (
@@ -114,11 +124,13 @@ const ConfirmationKyberContent = ({
             <div className="right ">
               {reversePrice ? (
                 <div className="value" style={{ whiteSpace: 'nowrap', minWidth: 'max-content' }}>
-                  1 {currencyOut.symbol} = {executionPrice().invert().toSignificant(6)} {currencyIn.symbol}
+                  1 {currencyOut.symbol} ={' '}
+                  {formatAmountNumber2(parseFloat(executionPrice().invert().toSignificant(6)), 6)} {currencyIn.symbol}
                 </div>
               ) : (
                 <div className="value" style={{ whiteSpace: 'nowrap', minWidth: 'max-content' }}>
-                  1 {currencyIn.symbol} = {executionPrice().toSignificant(6)} {currencyOut.symbol}
+                  1 {currencyIn.symbol} = {formatAmountNumber2(parseFloat(executionPrice().toSignificant(6)), 6)}{' '}
+                  {currencyOut.symbol}
                 </div>
               )}
               <div className="price" role="button" onClick={handleInvertPrice}>
@@ -150,7 +162,15 @@ const ConfirmationKyberContent = ({
               }}
             >
               <div className="value">
-                {CurrencyAmount.fromRawAmount(currencyOut, summary.amountOut).toSignificant(6)}
+                {formatAmountNumber2(
+                  parseFloat(
+                    CurrencyAmount.fromRawAmount(currencyOut, summary.amountOut)
+                      .multiply(9995)
+                      .divide(10000)
+                      .toSignificant(6),
+                  ),
+                  6,
+                )}
               </div>
               <div className="symbol" style={{ minWidth: 'auto', marginLeft: '8px' }}>
                 {currencyOut.symbol}
@@ -162,13 +182,23 @@ const ConfirmationKyberContent = ({
           <div className="left">
             <div className="text">{t('Price Impact')}</div>
           </div>
-          <div className="right value">&lt; 0.01%</div>
+          <div className="right value">
+            <FormattedPriceImpact priceImpact={priceImpact} />
+          </div>
         </div>
         <div className="info__group">
           <div className="left">
             <div className="text">{t('Est. Gas Fee')}</div>
           </div>
-          <div className="right value">${summary.gasUsd}</div>
+          <div className="right value">
+            $
+            {formatAmountNumber2(
+              chainId === ChainId.ETHEREUM
+                ? new BigNumber(summary.gasUsd).multipliedBy(1.5).toNumber()
+                : new BigNumber(summary.gasUsd).toNumber(),
+              0,
+            )}
+          </div>
         </div>
         <div className="info__group">
           <div className="left">
@@ -197,7 +227,7 @@ const ConfirmationKyberContent = ({
           </div>
         </div>
       </div>
-      <AlertSlippage allowedSlippage={null} classname="no-margin" />
+      <AlertSlippage allowedSlippage={allowedSlippage} classname="no-margin" />
       <div className="swap-button">
         <Button
           id="confirm-swap-or-send"

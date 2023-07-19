@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from 'react'
-import { ChainId, Currency, CurrencyAmount, LINEA_TESTNET, Price, Token } from '@pancakeswap/sdk'
+import { ChainId, Currency, CurrencyAmount, JSBI, LINEA_TESTNET, Percent, Price, Token, ZERO } from '@pancakeswap/sdk'
 import { Box, Swap as SwapUI, useMatchBreakpoints } from '@pancakeswap/uikit'
 import useActiveWeb3React from 'hooks/useActiveWeb3React'
 import { useTranslation } from '@pancakeswap/localization'
@@ -24,6 +24,8 @@ import tryParseAmount from '@pancakeswap/utils/tryParseAmount'
 import { useDebounce } from '@pancakeswap/hooks'
 import KyberswapMoreInformation from './KyberswapMoreInformation'
 import { GELATO_NATIVE } from 'config/constants'
+import BigNumber from 'bignumber.js'
+import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
 
 export default function KyberSwap() {
   const { t } = useTranslation()
@@ -61,6 +63,16 @@ export default function KyberSwap() {
       tokenInAmount: tokenInAmountDebound,
       saveGas: minGas,
     })
+
+  const priceImpact = useMemo(() => {
+    if (!summary) return new Percent(ZERO)
+
+    const amountInUsd = new BigNumber(summary.amountInUsd)
+    const amountOutUsd = new BigNumber(summary.amountOutUsd)
+
+    const res = parseInt(amountInUsd.minus(amountOutUsd).dividedBy(amountInUsd).multipliedBy(10000).toFixed(4))
+    return new Percent(res, 10000)
+  }, [summary])
 
   const [approval, approveCallback] = useApproveCallback(parsedInAmount, routerAddress)
 
@@ -197,7 +209,7 @@ export default function KyberSwap() {
                   <>
                     {' '}
                     1 {currencyIn?.symbol} ={'  '}
-                    {executionPrice?.toSignificant(6)}
+                    {formatAmountNumber2(parseFloat(executionPrice?.toSignificant(6)), 6)}
                     {'  '}
                     {currencyOut?.symbol}
                   </>
@@ -244,12 +256,18 @@ export default function KyberSwap() {
             recipient={account}
             routerAddress={routerAddress}
             attemptingTxn={attemptingTxn}
+            priceImpact={priceImpact}
             setAttemptingTxn={setAttemptingTxn}
             approveCallback={approveCallback}
           />
         </Box>
       </Wrapper>
-      <KyberswapMoreInformation summary={summary} currencyOut={currencyOut} />
+      <KyberswapMoreInformation
+        chainId={chainId}
+        summary={summary}
+        currencyOut={currencyOut}
+        priceImpact={priceImpact}
+      />
       <KyberSwapRoute
         swapRoute={swapRoute}
         currencyIn={currencyIn}
