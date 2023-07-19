@@ -1007,7 +1007,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleConfirmWithdraw = async () => {
     try {
-      if (!poolId) return
+      if (Number.isNaN(poolId) || poolId < 0) return
       const pool = poolList[poolId]
       setIsOpenLoadingClaimModal(true)
       setNotiMess(
@@ -1055,7 +1055,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleConfirmDeposit = async () => {
     try {
-      if (!poolId) return
+      if (Number.isNaN(poolId) || poolId < 0) return
       const pool = poolList[poolId]
       setNotiMess(
         t('Stake %amount% %symbol%', {
