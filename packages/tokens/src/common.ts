@@ -11,7 +11,7 @@ export const XOX_BSC_MAINNET = new ERC20Token(
 
 export const XOX_BSC_TESTNET = new ERC20Token(
   ChainId.BSC_TESTNET,
-  '0xC82f6DF626787D0FD686Ed211A232Fe8Cd1EF42d',
+  '0x6bb15Fd179539BFD6E78f18f5d91543142e0Ad9e',
   18,
   'XOX',
   'XOX',
