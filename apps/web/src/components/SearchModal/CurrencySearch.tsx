@@ -21,6 +21,7 @@ import { createFilterToken, useSortedTokensByQuery } from './filtering'
 import { getSwapSound } from './swapSound'
 import ImportRow from './ImportRow'
 import { USD_ADDRESS } from 'config/constants/exchange'
+import { useRouter } from 'next/router'
 
 const InputWrapper = styled.div`
   position: relative;
@@ -123,6 +124,7 @@ function CurrencySearch({
 }: CurrencySearchProps) {
   const { t } = useTranslation()
   const { chainId } = useActiveChainId()
+  const { query } = useRouter()
 
   // refs for fixed size lists
   const fixedList = useRef<FixedSizeList>()
@@ -132,7 +134,7 @@ function CurrencySearch({
 
   // const [invertSearchOrder] = useState<boolean>(false)
 
-  const allTokens = useAllTokens()
+  const allTokens = useAllTokens(query?.tab === 'kyberswap')
 
   // if they input an address, use it
   const searchToken = useToken(debouncedQuery)
@@ -150,7 +152,9 @@ function CurrencySearch({
 
   const filteredTokens: Token[] = useMemo(() => {
     const filterToken = createFilterToken(debouncedQuery)
-    return [...Object.values(allTokens), native as any].filter(filterToken)
+    return [...Object.values(allTokens).slice(0, 1), native as any, ...Object.values(allTokens).slice(1)].filter(
+      filterToken,
+    )
   }, [allTokens, debouncedQuery])
 
   const filteredQueryTokens = useSortedTokensByQuery(filteredTokens, debouncedQuery)

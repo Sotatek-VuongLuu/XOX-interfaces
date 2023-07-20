@@ -8,6 +8,7 @@ import { useAtomValue } from 'jotai'
 import { useMemo } from 'react'
 import { SUGGESTED_BASES } from 'config/constants/exchange'
 import {
+  combinedKyberTokenMapFromActiveUrlsAtom,
   combinedTokenMapFromActiveUrlsAtom,
   combinedTokenMapFromOfficialsUrlsAtom,
   useUnsupportedTokenList,
@@ -29,9 +30,9 @@ const mapWithoutUrls = (tokenMap: TokenAddressMap<ChainId>, chainId: number) =>
 /**
  * Returns all tokens that are from active urls and user added tokens
  */
-export function useAllTokens(): { [address: string]: ERC20Token } {
+export function useAllTokens(kyber?: boolean): { [address: string]: ERC20Token } {
   const { chainId } = useActiveChainId()
-  const tokenMap = useAtomValue(combinedTokenMapFromActiveUrlsAtom)
+  const tokenMap = useAtomValue(kyber ? combinedKyberTokenMapFromActiveUrlsAtom : combinedTokenMapFromActiveUrlsAtom)
   const userAddedTokens = useUserAddedTokens()
   return useMemo(() => {
     return (

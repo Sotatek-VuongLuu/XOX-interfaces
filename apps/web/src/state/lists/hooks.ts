@@ -10,6 +10,7 @@ import { EMPTY_LIST } from '@pancakeswap/tokens'
 import uniqBy from 'lodash/uniqBy'
 import { useMemo } from 'react'
 import DEFAULT_TOKEN_LIST from '../../config/constants/tokenLists/pancake-default.tokenlist.json'
+import DEFAULT_KYBER_TOKEN_LIST from '../../config/constants/tokenLists/kyber-default.tokenlist.json'
 import UNSUPPORTED_TOKEN_LIST from '../../config/constants/tokenLists/pancake-unsupported.tokenlist.json'
 import WARNING_TOKEN_LIST from '../../config/constants/tokenLists/pancake-warning.tokenlist.json'
 import { listsAtom } from './lists'
@@ -48,6 +49,12 @@ const combineTokenMapsWithDefault = (lists: ListsState['byUrl'], urls: string[])
   return combineMaps(combineTokenMaps(lists, urls), defaultTokenMap)
 }
 
+const combineKyberTokenMapsWithDefault = (lists: ListsState['byUrl'], urls: string[]) => {
+  const defaultTokenMap = listToTokenMap(DEFAULT_KYBER_TOKEN_LIST)
+  if (!urls) return defaultTokenMap
+  return combineMaps(combineTokenMaps(lists, urls), defaultTokenMap)
+}
+
 const combineTokenMaps = (lists: ListsState['byUrl'], urls: string[]) => {
   if (!urls) return EMPTY_LIST
   return (
@@ -72,6 +79,11 @@ const combineTokenMaps = (lists: ListsState['byUrl'], urls: string[]) => {
 export const combinedTokenMapFromActiveUrlsAtom = atom((get) => {
   const [selectorByUrls, selectorActiveUrls] = [get(selectorByUrlsAtom), get(selectorActiveUrlsAtom)]
   return combineTokenMapsWithDefault(selectorByUrls, selectorActiveUrls)
+})
+
+export const combinedKyberTokenMapFromActiveUrlsAtom = atom((get) => {
+  const [selectorByUrls, selectorActiveUrls] = [get(selectorByUrlsAtom), get(selectorActiveUrlsAtom)]
+  return combineKyberTokenMapsWithDefault(selectorByUrls, selectorActiveUrls)
 })
 
 const inactiveUrlAtom = atom((get) => {

@@ -1,0 +1,3975 @@
+{
+  "name": "XOX Default List",
+  "timestamp": "2022-01-26T11:45:09Z",
+  "version": {
+    "major": 4,
+    "minor": 0,
+    "patch": 0
+  },
+  "tags": {},
+  "logoURI": "https://xoxnet.io/logo.png",
+  "keywords": ["pancake", "default"],
+  "tokens": [
+    {
+      "chainId": 1,
+      "address": "0x7be48633d86aa9821284b01030b8a3f9b06ea876",
+      "symbol": "HUAHUA",
+      "name": "Chihuahua",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/feee1fdc-404d-46ef-9a84-fe648a1241ad.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x5283d291dbcf85356a21ba090e6db59121208b44",
+      "symbol": "BLUR",
+      "name": "Blur",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/d2e0588c-cadb-4629-bc87-55d59dafd39f.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x7ab1c4b08cbfc7a1bec23e74548143217c862f40fbfb4f73b6d844e8a4dddb0a"
+    },
+    {
+      "chainId": 1,
+      "address": "0x5026f006b85729a8b14553fae6af249ad16c9aab",
+      "symbol": "WOJAK",
+      "name": "WOJAK",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/cd414035-ea56-4d7a-bcca-923290c9c4ad.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xd8e163967fed76806df0097b704ba721b9b37656",
+      "symbol": "COPE",
+      "name": "Cope Coin",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/345ea794-c00d-4ed1-9613-68ed2b0b8ef0.jpg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x7d8146cf21e8d7cbe46054e01588207b51198729",
+      "symbol": "BOB",
+      "name": "BOB",
+      "decimals": 18,
+      "logoURI": "https://etherscan.io/token/images/memebob_32.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xa35923162c49cf95e6bf26623385eb431ad920d3",
+      "symbol": "TURBO",
+      "name": "Turbo",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/fb39367a-8263-48d7-b6a4-4298e6eacb96.webp",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xe46091dce9c67691bcf22768bbee0bc9e20d4beb",
+      "symbol": "WSBC",
+      "name": "WSB Classic",
+      "decimals": 9,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/24941.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x244b797d622d4dee8b188b03546acaabd0cf91a0",
+      "symbol": "FOUR",
+      "name": "Four Token",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/25049.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x1f3f677ecc58f6a1f9e2cf410df4776a8546b5de",
+      "symbol": "VNDC",
+      "name": "VNDC",
+      "decimals": 18,
+      "logoURI": "",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x0ccd5dd52dee42b171a623478e5261c1eaae092a",
+      "symbol": "DFM",
+      "name": "DeFi on MCW",
+      "decimals": 18,
+      "logoURI": "https://mycoldwalletnow.wpcomstaging.com/htdocs/wp-content/mcwhp/img/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xdb25f211ab05b1c97d595516f45794528a807ad8",
+      "symbol": "EURS",
+      "name": "STASIS EURS Token",
+      "decimals": 2,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/53cdf1aa-db5d-4de0-a466-a1bf8a64af46.jpg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xff56cc6b1e6ded347aa0b7676c85ab0b3d08b0fa",
+      "symbol": "ORBS",
+      "name": "Orbs",
+      "decimals": 18,
+      "logoURI": "",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xbe9375c6a420d2eeb258962efb95551a5b722803",
+      "symbol": "STMX",
+      "name": "StormX",
+      "decimals": 18,
+      "logoURI": "",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xebd9d99a3982d547c5bb4db7e3b1f9f14b67eb83",
+      "symbol": "ID",
+      "name": "Everest ID",
+      "decimals": 18,
+      "logoURI": "",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xc57d533c50bc22247d49a368880fb49a1caa39f7",
+      "symbol": "PTF",
+      "name": "PowerTrade Fuel Token",
+      "decimals": 18,
+      "logoURI": "",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x0bfec35a1a3550deed3f6fc76dde7fc412729a91",
+      "symbol": "xKNCa",
+      "name": "xKNC",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/13995/thumb/Token-4.png?1613545763",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x6710c63432a2de02954fc0f851db07146a6c0312",
+      "symbol": "MFG",
+      "name": "SyncFab Smart Manufacturing Blockchain",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/oReNLqf.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xbcd515d6c5de70d3a31d999a7fa6a299657de294",
+      "symbol": "RICE",
+      "name": "RICE",
+      "decimals": 18,
+      "logoURI": "https://drive.google.com/uc?export=download&id=16PVXI1Da5P27cywWiyqrcV-Q17u1aXsi",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x0f17bc9a994b87b5225cfb6a2cd4d667adb4f20b",
+      "symbol": "jEUR",
+      "name": "Jarvis Synthetic Euro",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/92uhfao.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x7409856cae628f5d578b285b45669b36e7005283",
+      "symbol": "jGBP",
+      "name": "Jarvis Synthetic British Pound",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/HS7BMfs.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x53dfea0a8cc2a2a2e425e1c174bc162999723ea0",
+      "symbol": "jCHF",
+      "name": "Jarvis Synthetic Swiss Franc",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/Fp31dDB.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x7f3edcdd180dbe4819bd98fee8929b5cedb3adeb",
+      "symbol": "XTK",
+      "name": "xToken",
+      "decimals": 18,
+      "logoURI": "",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xd7dcd9b99787c619b4d57979521258d1a7267ad7",
+      "symbol": "EVRY",
+      "name": "EvrynetToken",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/11458.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x8db253a1943dddf1af9bcf8706ac9a0ce939d922",
+      "symbol": "UNB",
+      "name": "Unbound",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/7846.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xd5a0aeb9dfba04973e459920457dffda30ae02bb9c520077f6891c11ea94204b"
+    },
+    {
+      "chainId": 1,
+      "address": "0x0c0f2b41f758d66bb8e694693b0f9e6fae726499",
+      "symbol": "UND",
+      "name": "Unbound Dollar",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/7848.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x63de1042eefae79660e39ea7cac48a6e38357907f2a9e25b5b74b3466495f01b"
+    },
+    {
+      "chainId": 1,
+      "address": "0x0a5e677a6a24b2f1a2bf4f3bffc443231d2fdec8",
+      "symbol": "USX",
+      "name": "dForce USD",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/dforce-network/documents/2eea27372fda6a207f60fba4274ad68008d63694/logos/Lending/USX.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x793a212f62d4adb1b930ac67fd0ccf62abdf8fa51b743442acdc9a44bbb7ef11"
+    },
+    {
+      "chainId": 1,
+      "address": "0xb986f3a2d91d3704dc974a24fb735dcc5e3c1e70",
+      "symbol": "EUX",
+      "name": "dForce EUR",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/dforce-network/documents/2eea27372fda6a207f60fba4274ad68008d63694/logos/Lending/EUX.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x3e93b68d26fdb383941a7aa0f261ae9fc8248be0f7bf6f518ff59d3e4c6c1578"
+    },
+    {
+      "chainId": 1,
+      "address": "0x60ef10edff6d600cd91caeca04caed2a2e605fe5",
+      "symbol": "MOCHI",
+      "name": "Mochi Inu",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/14315.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xb620be8a1949aa9532e6a3510132864ef9bc3f82",
+      "symbol": "LFT",
+      "name": "LendFlare DAO Token",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/19189.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xa64c3a85ddc4cd351eeb7aecebc6a44a64a76392",
+      "symbol": "RICE",
+      "name": "RICE",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/RICE.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x9c354503c38481a7a7a51629142963f98ecc12d0",
+      "symbol": "OGV",
+      "name": "Origin Dollar Governance",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/26353/large/ogv-200x200.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xd2af830e8cbdfed6cc11bab697bb25496ed6fa62",
+      "symbol": "WOUSD",
+      "name": "Wrapped OUSD",
+      "decimals": 18,
+      "logoURI": "https://www.ousd.com/images/ousd-coin.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x2a8e1e676ec238d8a992307b495b45b3feaa5e86",
+      "symbol": "OUSD",
+      "name": "Origin Dollar",
+      "decimals": 18,
+      "logoURI": "https://www.ousd.com/images/ousd-coin.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x8207c1ffc5b6804f6024322ccf34f29c3541ae26",
+      "symbol": "OGN",
+      "name": "OriginToken",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5117.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xff20817765cb7f73d4bde2e66e067e58d11095c2",
+      "symbol": "AMP",
+      "name": "Amp",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/6945.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x1f573d6fb3f13d689ff844b4ce37794d79a7ff1c",
+      "symbol": "BNT",
+      "name": "Bancor Network Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x41e5560054824ea6b0732e656e3ad64e20e94e45",
+      "symbol": "CVC",
+      "name": "Civic",
+      "decimals": 8,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/1816.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x0abdace70d3790235af448c88547603b945604ea",
+      "symbol": "DNT",
+      "name": "district0x Network Token",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/1856.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x6810e776880c02933d47db1b9fc05908e5386b96",
+      "symbol": "GNO",
+      "name": "Gnosis Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x6810e776880C02933D47DB1b9fc05908e5386b96/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x85eee30c52b0b379b046fb0f85f4f3dc3009afec",
+      "symbol": "KEEP",
+      "name": "KEEP Token",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5566.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xbbbbca6a901c926f240b89eacb641d8aec7aeafd",
+      "symbol": "LRC",
+      "name": "LoopringCoin V2",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xBBbbCA6A901c926F240b89EacB641d8Aec7AEafD/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x1776e1f26f98b1a5df9cd347953a26dd3cb46671",
+      "symbol": "NMR",
+      "name": "Numeraire",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x1776e1F26f98b1A5dF9cD347953a26dd3Cb46671/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x4fe83213d56308330ec302a8bd641f1d0113a4cc",
+      "symbol": "NU",
+      "name": "NuCypher",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/4761.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x4575f41308ec1483f3d399aa9a2826d74da13deb",
+      "symbol": "OXT",
+      "name": "Orchid",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x4575f41308EC1483f3d399aa9a2826d74Da13Deb/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x408e41876cccdc0f92210600ef50372656052a38",
+      "symbol": "REN",
+      "name": "Republic Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x408e41876cCCDC0F92210600ef50372656052a38/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x1985365e9f78359a9b6ad760e32412f4a445e862",
+      "symbol": "REP",
+      "name": "Reputation",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x1985365e9f78359a9B6AD760e32412f4a445E862/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xc011a73ee8576fb46f5e1c5751ca3b9fe0af2a6f",
+      "symbol": "SNX",
+      "name": "Synthetix Network Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/SNX.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x57ab1ec28d129707052df4df418d58a2d46d5f51",
+      "symbol": "sUSD",
+      "name": "Synth sUSD",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/2927.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x8daebade922df735c38c80c7ebd708af50815faa",
+      "symbol": "TBTC",
+      "name": "tBTC",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5776.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x04fa0d235c4abf4bcf4787af4cf447de572ef828",
+      "symbol": "UMA",
+      "name": "UMA Voting Token v1",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x04Fa0d235C4abf4BcF4787aF4CF447DE572eF828/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x0bc529c00c6401aef6d220be8c6ea1667f6ad93e",
+      "symbol": "YFI",
+      "name": "yearn.finance",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5864.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xe41d2489571d322189246dafa5ebde1f4699f498",
+      "symbol": "ZRX",
+      "name": "0x Protocol Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/ZRX.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xc285b7e09a4584d027e5bc36571785b515898246",
+      "symbol": "CUSD",
+      "name": "Coin98 Dollar",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9c83c438-c1a8-41a6-be94-823dda2f65dc.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x2af5d2ad76741191d15dfe7bf6ac92d4bd912ca3",
+      "symbol": "LEO",
+      "name": "Bitfinex LEO Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/1dc17949-c011-4822-b3f8-6e202cb69cd0.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x900db999074d9277c5da2a43f252d74366230da0",
+      "symbol": "GIV",
+      "name": "Giveth",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/721ba326-a346-4cd4-8ebe-f0cea62b7b12.jpg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xc9fe6e1c76210be83dc1b5b20ec7fd010b0b1d15",
+      "symbol": "FRIN",
+      "name": "Fringe",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/4d5f5d59-e871-4ae2-ae56-b24e5ecd42fc.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x8f8221afbb33998d8584a2b05749ba73c37a938a",
+      "symbol": "REQ",
+      "name": "Request Token",
+      "decimals": 18,
+      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0x8f8221aFbB33998d8584A2B05749bA73c37a938a/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xd38bb40815d2b0c2d2c866e0c72c5728ffc76dd9",
+      "symbol": "SIS",
+      "name": "Symbiosis",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/ac76221b-55cd-44bb-97b3-43d794007f1c.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x14be05e1f3605c03782bdc9efdd11512cfc5df6603057fc64d897d5a5a5199db"
+    },
+    {
+      "chainId": 1,
+      "address": "0x1a7e4e63778b4f12a199c062f3efdd288afcbce8",
+      "symbol": "agEUR",
+      "name": "agEUR",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/7e2bcdff-1fc2-4c9c-bb2a-691724b447df.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x7cd562791c8802693be3d732713fdd807428117218268db838898f3a5806398e"
+    },
+    {
+      "chainId": 1,
+      "address": "0xb4d930279552397bba2ee473229f89ec245bc365",
+      "symbol": "MAHA",
+      "name": "MahaDAO",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9477b67c-b7af-4181-a7db-e9b8a34d9576.jpg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xae12c5930881c53715b369cec7606b70d8eb229f",
+      "symbol": "C98",
+      "name": "Coin98",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/c409e441-9439-4905-96be-8bf78588d704.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x26dcfbfa8bc267b250432c01c982eaf81cc5480c",
+      "symbol": "ankrMATIC",
+      "name": "Ankr Staked MATIC",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/d20d2527-2ee8-4882-b48e-fd291364fe91.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x1e4ede388cbc9f4b5c79681b7f94d36a11abebc9",
+      "symbol": "X2Y2",
+      "name": "X2Y2Token",
+      "decimals": 18,
+      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0x1E4EDE388cbc9F4b5c79681B7f94d36a11ABEBC9/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x249ca82617ec3dfb2589c4c17ab7ec9765350a18",
+      "symbol": "VERSE",
+      "name": "Verse",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/8742b997-ad02-4e6d-95cb-a8d2ef1a99b5.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x1d2df9c8e3422bf9ca691e736d999c2cdd4f150dfaceea19721be0ddba100cb7"
+    },
+    {
+      "chainId": 1,
+      "address": "0x72b886d09c117654ab7da13a14d603001de0b777",
+      "symbol": "XDEFI",
+      "name": "XDEFI Wallet",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/09a46735-db5b-4675-81df-933632ef6b64.jpg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x9784ae39ad9a36fc49eb00e1aa5b882820d0c8e266de982aa5b963bc4e5ce266"
+    },
+    {
+      "chainId": 1,
+      "address": "0x467719ad09025fcc6cf6f8311755809d45a5e5f3",
+      "symbol": "AXL",
+      "name": "Axelar",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/01dfd5f3-3cb5-4aaf-99db-6497ae49f97b.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xc2ef7c4f9bcedc4065bf96c4c353adec4d6a3fa9ce6507c4922f082e950b9921"
+    },
+    {
+      "chainId": 1,
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/25fafcd1-a4f7-46d1-a623-529c5aabfa21.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x3b79a28264fc52c7b4cea90558aa0b162f7faf57",
+      "symbol": "wMEMO",
+      "name": "wrapped MEMO",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9a3055e7-879e-4807-a30b-bff6693dec2c.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x6604159382950c884928ba97867b559ea08f256d2ee2446aaa360fe4f8d8fa83"
+    },
+    {
+      "chainId": 1,
+      "address": "0xeeeeeb57642040be42185f49c52f7e9b38f8eeee",
+      "symbol": "ELK",
+      "name": "Elk",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/17813/small/elk.png?1629336971",
+      "isWhitelisted": true,
+      "domainSeparator": "0x9f8ab0b4bf551e7e5250ad6b68be4b13ddac93c1c881075af6922fa38d542a49"
+    },
+    {
+      "chainId": 1,
+      "address": "0xb50721bcf8d664c30412cfbc6cf7a15145234ad1",
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/e758f900-014c-40ab-b27b-c2dfb743e5f5.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x055a8bda09cca6bc107520b3942894ed42aa366fd71c8d9ad516129e24adba22"
+    },
+    {
+      "chainId": 1,
+      "address": "0x152649ea73beab28c5b49b26eb48f7ead6d4c898",
+      "symbol": "Cake",
+      "name": "PancakeSwap Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/a4f8a2ed-749e-4187-9be8-d43bf346800e.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xb0b195aefa3650a6908f15cdac7d92f8a5791b0b",
+      "symbol": "BOB",
+      "name": "BOB",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/e8c75f40-6824-44b6-b2be-c4f7de5315ce.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x89ae8e5c4b66ead9633eda9b816caf7be1b63c83da93250c795d803856f7c588"
+    },
+    {
+      "chainId": 1,
+      "address": "0x3a810ff7211b40c4fa76205a14efe161615d0385",
+      "symbol": "AIN",
+      "name": "AI Network",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/7c456fdf-c0fb-4022-98d8-c594523282af.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x8cc0f052fff7ead7f2edcccac895502e884a8a71",
+      "symbol": "ARTH",
+      "name": "ARTH Valuecoin",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/76a85e6a-1e06-479e-80cd-db3ef58dd00f.webp",
+      "isWhitelisted": true,
+      "domainSeparator": "0xea13bf92069a9692ca196df8227e0cd4d81fc6b16735a0b21c23e4a380331587"
+    },
+    {
+      "chainId": 1,
+      "address": "0xf951e335afb289353dc249e82926178eac7ded78",
+      "symbol": "swETH",
+      "name": "swETH",
+      "decimals": 18,
+      "logoURI": "https://etherscan.io/token/images/swellnetwork_32.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x6982508145454ce325ddbe47a25d4ec3d2311933",
+      "symbol": "PEPE",
+      "name": "PEPE",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/4601c85b-76dc-4ffb-a5f2-6e82c1eed45b.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x856c4efb76c1d1ae02e20ceb03a2a6a08b0b8dc3",
+      "symbol": "OETH",
+      "name": "Origin ETH",
+      "decimals": 18,
+      "logoURI": "https://etherscan.io/token/images/originoeth_32.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xba11d00c5f74255f56a5e366f4f77f5a186d7f55",
+      "symbol": "BAND",
+      "name": "BandToken",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/4679.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x9559aaa82d9649c7a7b220e7c461d2e74c9a3593",
+      "symbol": "rETH",
+      "name": "StaFi ETH",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/93723339-825c-4d09-9bf1-2b3bfa9c4c7c.webp",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x970b9bb2c0444f5e81e9d0efb84c8ccdcdcaf84d",
+      "symbol": "Fuse",
+      "name": "Fuse Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/811c6ee8-d2d0-44d4-87c8-1ba8a5cb6350.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x0ae38f7e10a43b5b2fb064b42a2f4514cba909ef",
+      "symbol": "unshETH",
+      "name": "unshETH Ether",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/c282bf09-3079-4fd3-b393-9701d0cd471d.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x9a7f5488a4730dcc45666d243c22f5d009e873ccb25403926ecb58a0a65e9ca9"
+    },
+    {
+      "chainId": 1,
+      "address": "0xb64ef51c888972c908cfacf59b47c1afbc0ab8ac",
+      "symbol": "STORJ",
+      "name": "StorjToken",
+      "decimals": 8,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xB64ef51C888972c908CFacf59B47C1AfBC0Ab8aC/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xec67005c4e498ec7f55e092bd1d35cbc47c91892",
+      "symbol": "MLN",
+      "name": "Melon Token",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/605/thumb/melon.png?1547034295",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x431ad2ff6a9c365805ebad47ee021148d6f7dbe0",
+      "symbol": "DF",
+      "name": "dForce",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/dforce-network/documents/2eea27372fda6a207f60fba4274ad68008d63694/logos/Lending/DF.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x656c00e1bcd96f256f224ad9112ff426ef053733",
+      "symbol": "EFI",
+      "name": "Efinity Token",
+      "decimals": 18,
+      "logoURI": "",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/daf2a75f-31c3-457c-a3b8-dad625f9d91a.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xdbb8cf42e1ecb028be3f3dbc922e1d878b963f411dc388ced501601c60f7c6f7"
+    },
+    {
+      "chainId": 1,
+      "address": "0x69af81e73a73b40adf4f3d4223cd9b1ece623074",
+      "symbol": "MASK",
+      "name": "Mask Network",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/865ce8a5-22b0-4a08-8b52-9de2cf2222f1.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xcf0c122c6b73ff809c693db761e7baebe62b6a2e",
+      "symbol": "FLOKI",
+      "name": "FLOKI",
+      "decimals": 9,
+      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0xcf0C122c6b73ff809C693DB761e7BaeBe62b6a2E/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xae7ab96520de3a18e5e111b5eaab095312d7fe84",
+      "symbol": "stETH",
+      "name": "Liquid staked Ether 2.0",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/13442/large/steth_logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x4d224452801aced8b2f0aebe155379bb5d594381",
+      "symbol": "APE",
+      "name": "ApeCoin",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/fade08a5-6f3c-4d49-8265-1fb735187a9d.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/d090ffcb-030b-4760-9592-0c9f15cb4a9c.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe"
+    },
+    {
+      "chainId": 1,
+      "address": "0xd533a949740bb3306d119cc777fa900ba034cd52",
+      "symbol": "CRV",
+      "name": "Curve DAO Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xD533a949740bb3306d119CC777fa900bA034cd52/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9870e9ab-1b0f-496f-a6aa-4d5d256fde89.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xcc8fa225d80b9c7d42f96e9570156c65d6caaa25",
+      "symbol": "SLP",
+      "name": "Smooth Love Potion",
+      "decimals": 0,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/slp.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xf4d2888d29d722226fafa5d9b24f9164c092421e",
+      "symbol": "LOOKS",
+      "name": "LooksRare Token",
+      "decimals": 18,
+      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0xf4d2888d29D722226FafA5d9B24F9164c092421E/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098",
+      "symbol": "SAN",
+      "name": "SANtiment network token",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/OH663J3.jpg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x196f4727526ea7fb1e17b2071b3d8eaa38486988",
+      "symbol": "RSV",
+      "name": "Reserve",
+      "decimals": 18,
+      "logoURI": "",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/6d56d3df-a60d-416d-bffb-25634cbf3c34.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "symbol": "MKR",
+      "name": "Maker",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/MKR.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x1f9840a85d5af5bf1d1762f925bdaddc4201f984",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "decimals": 18,
+      "logoURI": "ipfs://QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x0f5d2fb29fb7d3cfee444a200298f468908cc942",
+      "symbol": "MANA",
+      "name": "Decentraland MANA",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/1966.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xcc8fa225d80b9c7d42f96e9570156c65d6caaa25",
+      "symbol": "SLP",
+      "name": "Smooth Love Potion",
+      "decimals": 0,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/slp.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xae78736cd615f374d3085123a210448e74fc6393",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/016793eb-ada3-4c2c-967e-f9e275eb34d5.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xc00e94cb662c3520282e6f5717214004a7f26888",
+      "symbol": "COMP",
+      "name": "Compound",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xc00e94Cb662C3520282E6f5717214004A7f26888/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x7f39c581f595b53c5cb19bd0b3f8da6c935e2ca0",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/d090ffcb-030b-4760-9592-0c9f15cb4a9c.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xd4a8ff90a402dc7d4fcbf60f5488291263c743ccff180e139f47d139cedfd5fe"
+    },
+    {
+      "chainId": 1,
+      "address": "0x70e8de73ce538da2beed35d14187f6959a8eca96",
+      "symbol": "XSGD",
+      "name": "XSGD",
+      "decimals": 6,
+      "logoURI": "https://assets.website-files.com/600e34cbaf525c42912af8b6/600e34cbaf525c7ad82af99b_xgd-img%20(1).svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xc944e90c64b2c07662a292be6244bdf05cda44a7",
+      "symbol": "GRT",
+      "name": "Graph Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/GRT.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x514910771af9ca656af840dff83e8264ecf986ca",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9a0478d0-7c05-4bc2-880a-734e4087f893.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x2260fac5e5542a773aa44fbcfedf7c193bc2c599",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "decimals": 8,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/74a53978-aaa4-44e3-9e3f-8012d19f9c38.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "symbol": "USDC",
+      "name": "USDC",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/755d9eee-8d2d-44b8-ad38-1f2765f036ce.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x06c37168a7db5138defc7866392bb87a741f9b3d104deb5094588ce041cae335"
+    },
+    {
+      "chainId": 1,
+      "address": "0x7fc66500c84a76ad7e9c93437bfc5ac33e2ddae9",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/7278.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x2901a982e363189e3f2e4db2e5c3291fa1067b815a3ac9890ac6573e51bf33b0"
+    },
+    {
+      "chainId": 1,
+      "address": "0xba100000625a3754423978a60c9317c58a424e3d",
+      "symbol": "BAL",
+      "name": "Balancer",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/c3ecdf5c-84dc-493c-b2d3-cd831846e473.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x0f7e6db4bd29f5b0743e892c53690ee939ed780f756e0d021b93ed86993b03f4"
+    },
+    {
+      "chainId": 1,
+      "address": "0x3845badade8e6dff049820680d1f14bd3903a5d0",
+      "symbol": "SAND",
+      "name": "SAND",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/1c5c4a3b-d44d-4953-aa83-db14b7eb59d5.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x9f52c8ecbee10e00d9faaac5ee9ba0ff6550f511",
+      "symbol": "SIPHER",
+      "name": "Sipher Token",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/zhZo9Bx.jpg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xcf0c122c6b73ff809c693db761e7baebe62b6a2e",
+      "symbol": "FLOKI",
+      "name": "FLOKI",
+      "decimals": 9,
+      "logoURI": "https://assets-cdn.trustwallet.com/blockchains/ethereum/assets/0xcf0C122c6b73ff809C693DB761e7BaeBe62b6a2E/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xd533a949740bb3306d119cc777fa900ba034cd52",
+      "symbol": "CRV",
+      "name": "Curve DAO Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0xD533a949740bb3306d119CC777fa900bA034cd52/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x7c5a0ce9267ed19b22f8cae653f198e3e8daf098",
+      "symbol": "SAN",
+      "name": "SANtiment network token",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/OH663J3.jpg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "symbol": "MKR",
+      "name": "Maker",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/MKR.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x808507121b80c02388fad14726482e061b8da827",
+      "symbol": "PENDLE",
+      "name": "Pendle",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/8483be54-885d-459d-b4f1-d1e084ecd147.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9870e9ab-1b0f-496f-a6aa-4d5d256fde89.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 1,
+      "address": "0x6b175474e89094c44da98b954eedeac495271d0f",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/daf2a75f-31c3-457c-a3b8-dad625f9d91a.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xdbb8cf42e1ecb028be3f3dbc922e1d878b963f411dc388ced501601c60f7c6f7"
+    },
+    {
+      "chainId": 56,
+      "address": "0x059ca11ba3099683dc2e46f048063f5799a7f34c",
+      "symbol": "IVI",
+      "name": "IVIRSE",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/22580.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xd6cce248263ea1e2b8cb765178c944fc16ed0727",
+      "symbol": "CTR",
+      "name": "Creator Chain",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/10391.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x36d89685e721f393d22b929cf1ea9fca2a54d263d5477eb781112cc12decf391"
+    },
+    {
+      "chainId": 56,
+      "address": "0xb5102cee1528ce2c760893034a4603663495fd72",
+      "symbol": "USX",
+      "name": "dForce USD",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/dforce-network/documents/2eea27372fda6a207f60fba4274ad68008d63694/logos/Lending/USX.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0xdc7d81550056ec3dc306f244a2b3b367a7657fb7a60b7f6afcd4cd53506a5084"
+    },
+    {
+      "chainId": 56,
+      "address": "0x367c17d19fcd0f7746764455497d63c8e8b2bba3",
+      "symbol": "EUX",
+      "name": "dForce EUR",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/dforce-network/documents/2eea27372fda6a207f60fba4274ad68008d63694/logos/Lending/EUX.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0xb2b48f69c3605a276375f5ed81b3aa1aeb2fef67ed395d78fe8cb25a132d637e"
+    },
+    {
+      "chainId": 56,
+      "address": "0x3944ac66b9b9b40a6474022d6962b6caa001b5e3",
+      "symbol": "EBA",
+      "name": "Elpis Battle",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/Tzs373u.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xc04a23149efdf9a63697f3eb60705147e9f07ffd",
+      "symbol": "GENI",
+      "name": "GemUni",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/f5JZgpy.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x5fdab5bdbad5277b383b3482d085f4bfef68828c",
+      "symbol": "DFH",
+      "name": "DefiHorse",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/nQryhVr.jpg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x301af3eff0c904dc5ddd06faa808f653474f7fcc",
+      "symbol": "UNB",
+      "name": "Unbound",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/7846.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xc0d3af815d213d473a8630dac311cae89cf5441ec9f812a60199f71c317a82a9"
+    },
+    {
+      "chainId": 56,
+      "address": "0xe7c04392a3a426d532f83ca968bcc0341e99583d",
+      "symbol": "UND",
+      "name": "Unbound Dollar",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/7848.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xe7953861b58ddcc4b3fc1c68df902421f33871bb0715c9426f0dfb2dc8f91344"
+    },
+    {
+      "chainId": 56,
+      "address": "0x393c44a497706dde15996bb0c7bdf691a79de38a",
+      "symbol": "FBL",
+      "name": "FootballBattle",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/fbl.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x261c94f2d3cccae76f86f6c8f2c93785dd6ce022",
+      "symbol": "ATH",
+      "name": "AETHR Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/ath.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xcf909ef9a61dc5b05d46b5490a9f00d51c40bb28",
+      "symbol": "RICE",
+      "name": "RICE",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/RICE.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x92da433da84d58dfe2aade1943349e491cbd6820",
+      "symbol": "RDR",
+      "name": "Rise of Defenders Token",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/16051.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xee89bd9af5e72b19b48cac3e51acde3a09a3ade3",
+      "symbol": "TRUSTK",
+      "name": "TrustKeys Coin",
+      "decimals": 18,
+      "logoURI": "https://blog.trustkeys.network/wp-content/uploads/2019/08/cropped-AppIcon_OK_500.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xf018aea0a08a5d88674f0837bdac27ab89824dee",
+      "symbol": "MMG",
+      "name": "MMG Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/645075da-5213-4c69-be82-a87bff6b0f9c.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x0acfc95a193009f1ea45b7faeef2d5e4a47c21b4",
+      "symbol": "VERSA",
+      "name": "VersaGames",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/0acc4bb4-91a5-4c6d-aeb3-69a709b670d5.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x3b8ec4e15cbe2de8ae7dce13f2789617da8400cbe9ab84f13ecd7537c1779b5a",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 56,
+      "address": "0xfa4ba88cf97e282c505bea095297786c16070129",
+      "symbol": "CUSD",
+      "name": "Coin98 Dollar",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/8742dae1-3114-4b7c-b14e-a8a18714f84b.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xb46049c79d77ff1d555a67835fba6978536581af",
+      "symbol": "MFO",
+      "name": "Moonfarm Finance",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/a864b094-b253-4210-bbf6-e302df4d0a0a.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x738d96caf7096659db4c1afbf1e1bdfd281f388c",
+      "symbol": "ankrMATIC",
+      "name": "Ankr Staked MATIC",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/b1d9146d-d836-4b2e-b79f-408d4802718a.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x1dc5779ed65bcc1f0a42d654444fb0ce59d7783b",
+      "symbol": "PMR",
+      "name": "Pomerium Utility Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/e6a11911-ec7c-4d4c-a940-16cc2babe47d.webp",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x0aa93a07848fc2e566788a82f9cdcd7e950af4c8",
+      "symbol": "REB",
+      "name": "Realbox Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/60776271-2de9-4191-9c77-6f18b99678e4.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x81d637e890270f52b15d99d441796bf95c92e6cfd367468fdfd34a270e3475a6"
+    },
+    {
+      "chainId": 56,
+      "address": "0x17635b9fe3b1cebd3c809548c5a74d7054ff99c7",
+      "symbol": "RTTG",
+      "name": "The Tropicana Garden Bao Loc",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/bd1f664b-b567-45a3-8456-2747f354faac.jpg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x742cf390e0deb7010b368712e2cd7d79cdbacf83ea995ebafd7dbcde94e9535f"
+    },
+    {
+      "chainId": 56,
+      "address": "0xeeeeeb57642040be42185f49c52f7e9b38f8eeee",
+      "symbol": "ELK",
+      "name": "Elk",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/0bdaf94f-d057-469f-b4a5-7a72e92a3793.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x78134c5f36a393750422a4c32abd129faff0548739529eecf3d9cfa9e297cea6"
+    },
+    {
+      "chainId": 56,
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "BNB",
+      "name": "BNB",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png?1644979850",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xf7de7e8a6bd59ed41a4b5fe50278b3b7f31384df",
+      "symbol": "RDNT",
+      "name": "Radiant",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/0a682027-1b11-45f9-a213-9a4033ac3e65.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xe81257d932280ae440b17afc5f07c8a110d21432",
+      "symbol": "ZUKI",
+      "name": "ZUKI MOBA",
+      "decimals": 18,
+      "logoURI": "https://zukimoba.com/images/logos/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x9840652dc04fb9db2c43853633f0f62be6f00f98",
+      "symbol": "CGPT",
+      "name": "ChainGPT",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/a0c891fd-b849-46a1-a8b2-31bc72485e60.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xb0b195aefa3650a6908f15cdac7d92f8a5791b0b",
+      "symbol": "BOB",
+      "name": "BOB",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/2e8e9914-3b12-40e1-b7b9-b520ac7d1f26.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x6b959b12abe54c05b628f48312e1fa44953373c582433e9d3fb922ff7673eaf1"
+    },
+    {
+      "chainId": 56,
+      "address": "0x501e3d716a72e11e1e22edcf0365556b357da0c9",
+      "symbol": "axlWMAI",
+      "name": "Axelar Wrapped WMAI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/7b696c59-7de5-49a7-8fe9-c8509ec5a122.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xe7692ed1ee18788ac12f9f056d97be0972ed2527f49610b919346e6d3d22bdc2"
+    },
+    {
+      "chainId": 56,
+      "address": "0x4268b8f0b87b6eae5d897996e6b845ddbd99adf3",
+      "symbol": "axlUSDC",
+      "name": "Axelar Wrapped USDC",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/a5ad3e11-67d3-4637-903b-336abe246dc2.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x64685346f65f645902b5d475fd0e272357e6de1074b81b161b0357b08aa6b640"
+    },
+    {
+      "chainId": 56,
+      "address": "0xe8176d414560cfe1bf82fd73b986823b89e4f545",
+      "symbol": "HERO",
+      "name": "StepHero",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/17700/small/stephero.PNG",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x3910db0600ea925f63c36ddb1351ab6e2c6eb102",
+      "symbol": "SPARTA",
+      "name": "Spartan Protocol Token V2",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/f0ab1fbe-62b9-4fb6-bf13-918cdb7e364a.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c",
+      "symbol": "WBNB",
+      "name": "Wrapped BNB",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/b340e159-a1f0-47e8-9633-6b44b87850bd.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xe91a8d2c584ca93c7405f15c22cdfe53c29896e3",
+      "symbol": "DEXT",
+      "name": "DEXTools",
+      "decimals": 18,
+      "logoURI": "https://bscscan.com/token/images/dextools_32.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x1708b24f154acf95592cb1aa2f4b2023672fdddb412144628122df0843ae2847"
+    },
+    {
+      "chainId": 56,
+      "address": "0x3019bf2a2ef8040c242c9a4c5c4bd4c81678b2a1",
+      "symbol": "GMT",
+      "name": "Green Metaverse Token",
+      "decimals": 8,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/18069.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xe9e7cea3dedca5984780bafc599bd69add087d56",
+      "symbol": "BUSD",
+      "name": "BUSD Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/c31c1d67-3b3b-4792-ba5f-d5821e9b35ca.webp",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x715d400f88c167884bbcc41c5fea407ed4d2f8a0",
+      "symbol": "AXS",
+      "name": "Axie Infinity Shard",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/axs.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xfe56d5892bdffc7bf58f2e84be1b2c32d21c308b",
+      "symbol": "KNC",
+      "name": "Kyber Network Crystal",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/dmm-interface/main/src/assets/images/KNC.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x3f56e0c36d275367b8c502090edf38289b3dea0d",
+      "symbol": "MAI",
+      "name": "MAI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/e3d74f15-971e-446b-a1f7-982782162024.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x7083609fce4d1d8dc0c979aab8c869ea2c873402",
+      "symbol": "DOT",
+      "name": "Polkadot Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/dot.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xd07e82440a395f3f3551b42da9210cd1ef4f8b24",
+      "symbol": "PRL",
+      "name": "Parallel Token",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/99UaEcO.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xfb5b838b6cfeedc2873ab27866079ac55363d37e",
+      "symbol": "FLOKI",
+      "name": "FLOKI",
+      "decimals": 9,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/1b518a60-a4e8-4062-9efe-0b6319b61737.floki",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x8717e80eff08f53a45b4a925009957e14860a8a8",
+      "symbol": "BHO",
+      "name": "Bholdus Token",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/12280.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x85eac5ac2f758618dfa09bdbe0cf174e7d574d5b",
+      "symbol": "TRX",
+      "name": "TRON",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/trx.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xdbccd9131405dd1fe7320090af337952b9845dfa",
+      "symbol": "BOT",
+      "name": "Starbots Token",
+      "decimals": 8,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/BOT.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x48758b0820263575a0010726a0ee4acbc06732b3cf7bcc5cbdfe42722d091a74"
+    },
+    {
+      "chainId": 56,
+      "address": "0x4a9a2b2b04549c3927dd2c9668a5ef3fca473623",
+      "symbol": "DF",
+      "name": "dForce",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/dforce-network/documents/2eea27372fda6a207f60fba4274ad68008d63694/logos/Lending/DF.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x2170ed0880ac9a755fd29b2688956bd959f933f8",
+      "symbol": "ETH",
+      "name": "Ethereum Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/45a2d23c-0fa1-4b71-a854-ce79a24b8b0c.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x1af3f329e8be154074d8769d1ffa4ee058b1dbc3",
+      "symbol": "DAI",
+      "name": "Dai Token",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/9956/large/dai-multi-collateral-mcd.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x633237c6fa30fae46cc5bb22014da30e50a718cc",
+      "symbol": "FIWA",
+      "name": "Defi Warrior Token",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/18208/small/defi_warrior.PNG?1630986310",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0xcc42724c6683b7e57334c4e856f4c9965ed682bd",
+      "symbol": "MATIC",
+      "name": "Matic Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/3d5c0673-8dee-43c4-b06c-d13ee6e5f2ed.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x55d398326f99059ff775485246999027b3197955",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "decimals": 18,
+      "logoURI": "https://coin.top/production/logo/usdtlogo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x0e09fabb73bd3ade0a17ecc321fd13a19e81ce82",
+      "symbol": "Cake",
+      "name": "PancakeSwap Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/5eb5b8bf-1aa6-448a-877e-b7973ac56d2a.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 56,
+      "address": "0x8ac76a51cc950d9822d68b83fe1ad97b32cd580d",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x18c11fd286c5ec11c3b683caa813b77f5163a122",
+      "symbol": "GNS",
+      "name": "Gains Network",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/defa480e-a84f-4c68-88e2-c654719432a4.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0xd85e038593d7a098614721eae955ec2022b9b91b",
+      "symbol": "gDAI",
+      "name": "Gains Network DAI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/4a46f42c-ab50-491e-9936-dd9a21e373ee.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x9e758b8a98a42d612b3d38b66a22074dc03d7370",
+      "symbol": "SIS",
+      "name": "Symbiosis",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/8fa6beb8-b465-4816-94b3-cca3dc0d75d7.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x369d18990135570599c58ea4a257338ef8e85a3b1234e25d80dfb3b74ff0abe8"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x319f865b287fcc10b30d8ce6144e8b6d1b476999",
+      "symbol": "CTSI",
+      "name": "Cartesi Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/CTSI.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xc7aa5348f205dacbc34c9a409326b3d99c88239e8c160b4e48e11abd3be44577",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x9fb9a33956351cf4fa040f65a13b835a3c8764e3",
+      "symbol": "MULTI",
+      "name": "Multichain",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/MULTI.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xa72a83a9781b45a54d6357651f83ceda76edde8abad724e595865f57f493efbf"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xee9801669c6138e84bd50deb500827b776777d28",
+      "symbol": "O3",
+      "name": "O3 Swap Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/O3.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x21e60ee73f17ac0a411ae5d690f908c3ed66fe12",
+      "symbol": "DERI",
+      "name": "Deri",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/DERI.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x68fbbdef15a70b82e31c7e8b9d7ef121f689fe620d6cf33c67aea1189d45e114",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x316772cfec9a3e976fde42c3ba21f5a13aaaff12",
+      "symbol": "mKNC",
+      "name": "Kyber Network Crystal v2",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/f67581b8-3ae4-41c6-83ce-dab18766f527.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x8616e8ea83f048ab9a5ec513c9412dd2993bce3f",
+      "symbol": "fxUSD",
+      "name": "handleUSD",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/d9c82dea-152f-489a-9003-38c0e56cfb76.jpeg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x0c4681e6c0235179ec3d4f4fc4df3d14fdd96017",
+      "symbol": "RDNT",
+      "name": "Radiant",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/3bfe2b40-9b70-408e-8cf8-484fad4ced76.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0xb9c8f0d3254007ee4b98970b94544e473cd610ec",
+      "symbol": "QI",
+      "name": "QiDao",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/c95f282a-1cb3-4561-bc52-ae9ae712d84a.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0xfa5ed56a203466cbbc2430a43c66b9d8723528e7",
+      "symbol": "agEUR",
+      "name": "agEUR",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/f1606977-d481-49ed-8539-1f650f4cdc30.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x113b07a53197177b838e31b394805c93ece5d3a1980b84925f25dbdff58c7380"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x5979d7b546e38e414f7e9822514be443a4800529",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/eefe31b6-7d9c-4b31-9a3f-7e1bfe2264e2.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x3d9907f9a368ad0a51be60f7da3b97cf940982d8",
+      "symbol": "GRAIL",
+      "name": "Camelot Token",
+      "decimals": 18,
+      "logoURI": "https://arbiscan.io/token/images/camelotexchange_32.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x656b80b667a46869144047e6e6c0000c81610253",
+      "symbol": "ANGLE",
+      "name": "ANGLE_arbitrum",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/7fe8fb0d-eb70-4727-bfa7-39500a32b0eb.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0xd2fda6749bbdc982bdfdefc129319974798dddd4374f9f3faf3915df994fb1ff"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xb0b195aefa3650a6908f15cdac7d92f8a5791b0b",
+      "symbol": "BOB",
+      "name": "BOB",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/3a323481-0460-4902-80a1-bb00ee006179.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x60381d6ec544f8cd4f93f59eb45b01c5ed5c769f39f908d1632f786a0168dfe0"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x09e18590e8f76b6cf471b3cd75fe1a1a9d2b2c2b",
+      "symbol": "AIDOGE",
+      "name": "ArbDoge AI",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/5f8933f6-b5f2-445e-83b3-eb363f4334e6.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x13ad51ed4f1b7e9dc168d8a00cb3f4ddd85efa60",
+      "symbol": "LDO",
+      "name": "Lido DAO Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/aeab462b-5c15-44a9-b2e9-7ab937c30b2d.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x81b0c96c44a52f3c065233fbbd5b2ef65b4900f707b327e6c0385b9251b52af6"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xf763fa322dc58dee588252fafee5f448e863b633",
+      "symbol": "SWTH",
+      "name": "Carbon Token",
+      "decimals": 8,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/4227c7e5-4d2d-4774-ad37-db22866e7d9c.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x0c880f6761f1af8d9aa9c466984b80dab9a8c9e8",
+      "symbol": "PENDLE",
+      "name": "Pendle",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/baff3af0-f9a7-4d4f-bd2b-87ca3d031f03.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x51c881379d502b27709ba0ee4b7c17e4aa2ed1cea04d32666e9c7a0665a40bf5"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/f0487ef6-8d55-4dcc-9215-42c91c440540.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0xeeeeeb57642040be42185f49c52f7e9b38f8eeee",
+      "symbol": "ELK",
+      "name": "Elk",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/ec4d199b-a4df-4609-b89d-7be1685dff97.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x809307dda4bbb79edac338daa73286edcbcfcf209da442f7dc6bc875c5b2a90c"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x4cfa50b7ce747e2d61724fcac57f24b748ff2b2a",
+      "symbol": "fUSDC",
+      "name": "Fluid USDC",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/48773afd-ad36-46f0-9dfa-16ca91d4c6af.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0xe936828fd531a3eeef53ff40cc5fb0ba30d0e32210dae17d82826fa37fab7322"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x1ad1db091c14c4f5a988b58ac8a34fb01f672a8a",
+      "symbol": "CPI",
+      "name": "Consumer Price Index",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/d25b326f-81e4-4f84-9cb3-4449c0e3479e.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x92d41a7a00361ddd081bbc2037ca4e57757f8f1202309de041e4c32aa31fd486"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x8ffd9f31980f26fbf4ac693678db700f1d8c51f6",
+      "symbol": "LSETH",
+      "name": "Liquid Staked ETH",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/6ebc4543-fcd6-4166-bd73-c73bb341672b.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x3bfd0a27b07c98fd8cbe25aa6880825e19106d73ac73bf13f7e4c140061beafa"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xafdefd913286a1cec75aca503938c6bba01a5445",
+      "symbol": "JPG",
+      "name": "JPG NFT Index",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/fac1abd3-5218-46c4-af4b-01efa1f82f01.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xaba1edc483858c9d59a7b1998af7bf9c4b544de82eb4e4cf431806297ef0a80e"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x3082cc23568ea640225c2467653db90e9250aaa0",
+      "symbol": "RDNT",
+      "name": "Radiant",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/2d999546-78da-44a4-bf29-b1b6778ac3cf.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x43c25f828390de5a3648864eb485cc523e039e67",
+      "symbol": "PET",
+      "name": "Pet Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9d7d1761-53a5-41c4-a0d8-0f1e13ef0ee4.jpeg",
+      "isWhitelisted": true,
+      "domainSeparator": "0xb82e8c952e9387418c7dda707a249b3ca0aac524456dfd1606b43dc2cd58616d"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xaaa6c1e32c55a7bfa8066a6fae9b42650f262418",
+      "symbol": "RAM",
+      "name": "Ramses",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/2819fc1b-55ed-4371-9a63-a181600a9a0d.webp",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x15b2fb8f08e4ac1ce019eadae02ee92aedf06851",
+      "symbol": "CHR",
+      "name": "CHRONOS",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/34e10246-6651-4728-80e1-3b459439f5d6.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x15a808ed3846d25e88ae868de79f1bcb1ac382b5",
+      "symbol": "MVD",
+      "name": "Metavault DAO",
+      "decimals": 9,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/0b695f53-d4df-4635-8362-37f29aa60e37.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x60c7604e22e2ed2266d507250af2ac822883c377bdd9954b52d755865c15f75f"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x9dca587dc65ac0a043828b0acd946d71eb8d46c1",
+      "symbol": "iFARM",
+      "name": "iFARM",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/46408c8d-520d-4c97-b95b-ce090c1e0ec0.jpeg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x6d97f23b08b6053f2f30c3ab8f863385f87aa8740aad2d89d5c9143d6e9c97f7"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xe2105bea3819d3131b5b2306d44eb3271bfcfe0e",
+      "symbol": "FIEF",
+      "name": "Fief",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/404aefe1-2022-4066-9256-e70048b5d609.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xfc15193f745bcf7e5ad08f0603cc235daf9ac42ac6ed5ffa381342069eafe7ef"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x23ee2343b892b1bb63503a4fabc840e0e2c6810f",
+      "symbol": "AXL",
+      "name": "Axelar",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/f25e0d05-64f2-47b9-88fc-632e795813c3.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x857e302637446c4286aaf628122ed8d70bbcdd206127d5e080509178d518e9bc"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xaf88d065e77c8cc2239327c5edb3a432268e5831",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/e6265034-bfad-4e1f-aac0-20afa09fec29.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x08d11903f8419e68b1b8721bcbe2e9fc68569122a77ef18c216f10b3b5112c78"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xe4dddfe67e7164b0fe14e218d80dc4c08edc01cb",
+      "symbol": "KNC",
+      "name": "Kyber Network Crystal v2",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/f2ab6b4c-63c2-4a9a-8257-3dac3d172310.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x91776f0aa1fa00cc9b4ec5e84d9422d69b147c7a3e45822b61ee9e35f72965b2",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x88dfaaabaf06f3a41d2606ea98bc8eda109abebb",
+      "symbol": "axlWMAI",
+      "name": "Axelar Wrapped WMAI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/ee545533-f800-425d-90f4-ac8a74d97459.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x1847f0ce23c229cd7add1e1a93eb5fef5f056efa9252c48b4e1d034b7f67cc9b"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x912ce59144191c1204e64559fe8253a0e49e6548",
+      "symbol": "ARB",
+      "name": "Arbitrum",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/e123a120-6556-4a72-83c8-af4cce475e43.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x81e28e6f37e32d4756bbeaf3c057b82178ac53398af819adfc680fad31b2ecd5"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+      "symbol": "axlUSDC",
+      "name": "Axelar Wrapped USDC",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/a326f5d1-8fb6-4889-b3bc-c00c26e9c62c.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x6d3826532b7502fc544874e82f93738a4a4660589ef9d12a74659907c3feefbf"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xdb298285fe4c5410b05390ca80e8fbe9de1f259b",
+      "symbol": "FOREX",
+      "name": "handleFOREX",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/e822f60f-5c2d-4334-8413-d37279919774.jpeg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x9d2f299715d94d8a7e6f5eaa8e654e8c74a988a7",
+      "symbol": "FXS",
+      "name": "Frax Share",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/FXS.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0xc3e042a50b3cdcaf4b7f61df755a870ceae1b2896001cbeb8b3f6808e9c63864",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x080f6aed32fc474dd5717105dba5ea57268f46eb",
+      "symbol": "SYN",
+      "name": "Synapse",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/SYN.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x63eb0b7471bfe69b3567ef2739d13e4b5f4501988ce98708e014fba6bb2cf677",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x68ead55c258d6fa5e46d67fc90f53211eab885be",
+      "symbol": "POP",
+      "name": "Popcorn",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/POP.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x2b43dfbc3cb53e8c75428a4ec7c2d8b0a7c0d74bb35a8f1442021a8c57ee92b5",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x1622bf67e6e5747b81866fe0b85178a93c7f86e3",
+      "symbol": "UMAMI",
+      "name": "Umami",
+      "decimals": 9,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/09de5273-356b-48f5-846c-c338fd52a7c3.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x00da32098b5ddf0d199820c9695703bfdb5326e1bc1250a2ed112f7c3cb6e3fb"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xff970a61a04b1ca14834a43f5de4533ebddb5cc8",
+      "symbol": "USDC.e",
+      "name": "USD Coin ",
+      "decimals": 6,
+      "logoURI": "https://assets.coingecko.com/coins/images/6319/large/USD_Coin_icon.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xa074269f06a6961e917f3c53d7204a31a08aec9a5f4a5801e8a8f837483b62a0",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x6694340fc020c5e6b96567843da2df01b2ce1eb6",
+      "symbol": "STG",
+      "name": "StargateToken",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/STG.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+      "symbol": "DAI",
+      "name": "Dai Stablecoin",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/8278aa07-a39f-47a9-a4a1-0556876bf8ee.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x8990f9dbb6294602194fe5f05549dd56bac20e2291d6034e1ba5746495dc4d37"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xf97f4df75117a78c1a5a0dbb814af92458539fb4",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/d5dcd1dd-7222-479b-89dd-6cce8487ea12.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x42684971c6f486437d3de866e7dafff06b9b8f570323c8f2dcc519e998333f97"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x2f2a2543b76a4166549f7aab2e75bef0aefc5b0f",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "decimals": 8,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/2d0f304e-0b0b-4c8b-9fc5-7d62bd5ee722.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x5a8dcb3325ce248306e60935ba6afde41646fd4e466b684babc515bce77ce7af",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xfc5a1a6eb076a2c7ad06ed22c90d7e710e35ad0a",
+      "symbol": "GMX",
+      "name": "GMX",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/GMX.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0x99c409e5f62e4bd2ac142f17cafb6810b8f0baae",
+      "symbol": "BIFI",
+      "name": "beefy.finance",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/BIFI.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x1e38ca635b176feb44f746c4329a5a4bcd8e4141a357c9b2985d0b679d5dafd7",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0xfd086bc7cd5c481dcc9c85ebe478a1c0b69fcbb9",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/4687182f-ae3e-4931-b92a-fd711cb4b2f4.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xac9d14034394f4b1d4bb6a20191a30c20faf508b6c4670e931b954eb281b8a33",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x3f56e0c36d275367b8c502090edf38289b3dea0d",
+      "symbol": "MAI",
+      "name": "MAI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/a80a88d3-6bd8-4588-9948-59ccebabfea1.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 42161,
+      "address": "0xd74f5255d557944cf7dd0e45ff521520002d5748",
+      "symbol": "USDs",
+      "name": "Sperax USD",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/USDS.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0xb867823257323749c326b07d00f5e52563d468947e16373b65004ded60afe2eb",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x17fc002b466eec40dae837fc4be5c67993ddbd6f",
+      "symbol": "FRAX",
+      "name": "Frax",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/b921cd2c-f61f-4b84-a133-7beb7881670c.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x66bf3ec29abafbf17148297fbefdd3632a17654c85419b3505decc968d3aad8a"
+    },
+    {
+      "chainId": 42161,
+      "address": "0x82af49447d8a07e3bd95bd0d56f35241523fbab1",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/ecacbc53-99c0-4806-b1ea-c14de6d73f76.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xac33225466df015cad7b0e1bf31afc69a49f20d95501a98d9644ad21163469a0",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0x91993f2101cc758d0deb7279d41e880f7defe827",
+      "symbol": "gDAI",
+      "name": "Gains Network DAI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/a2093cb9-67c4-41dd-941f-26c602764160.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x3a3e7650f8b9f667da98f236010fbf44ee4b2975",
+      "symbol": "xUSD",
+      "name": "xDollar Stablecoin",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/16291/small/xUSD-web-transparent.png?1623661715",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x3dc7b06dd0b1f08ef9acbbd2564f8605b4868eea",
+      "symbol": "XDO",
+      "name": "xDollar",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/16289/small/logo-web-transparent_2.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x00e5646f60ac6fb446f621d146b6e1886f002905",
+      "symbol": "RAI",
+      "name": "Rai Reflex Index (PoS)",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/14004/small/RAI-logo-coin.png?1613592334",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xfade2934b8e7685070149034384fb7863860d86e",
+      "symbol": "AUR-0112",
+      "name": "Aureus",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/PyipL43.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x6fb2415463e949af08ce50f83e94b7e008babf07",
+      "symbol": "AUR-FEB22",
+      "name": "Aureus",
+      "decimals": 18,
+      "logoURI": "",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x5c4b7ccbf908e64f32e12c6650ec0c96d717f03f",
+      "symbol": "BNB",
+      "name": "Binance Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/89450f89-dcbd-4f38-8cd4-8589b4f9fae2.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xb85517b87bf64942adf3a0b9e4c71e4bc5caa4e5",
+      "symbol": "FTM",
+      "name": "Fantom Token",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/3513.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x7dff46370e9ea5f0bad3c4e29711ad50062ea7a4",
+      "symbol": "SOL",
+      "name": "SOL",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5426.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xf2d8124b8f9267dad61351c7ad252362880c6638",
+      "symbol": "WCRO",
+      "name": "Wrapped CRO",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/14532.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x80c0cbdb8d0b190238795d376f0bd57fd40525f2",
+      "symbol": "WONE",
+      "name": "Wrapped ONE",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/11696.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xc25351811983818c9fe6d8c580531819c8ade90f",
+      "symbol": "IDLE",
+      "name": "Idle (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/7841.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x9f994e2783b44c83204377589854a17c6b0c226d",
+      "symbol": "RIGY",
+      "name": "RIGY",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/0uZyC7M.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xd81f558b71a5323e433729009d55159955f8a7f9",
+      "symbol": "UNB",
+      "name": "Unbound",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/7846.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x94fe05aabd92c2de72c5329eef76d25cd2fb62e996105c2e52b40b85d308705d",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0x1eba4b44c4f8cc2695347c6a78f0b7a002d26413",
+      "symbol": "UND",
+      "name": "Unbound Dollar",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/7848.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x6eb3a0b6df9a094e0dfa07a2a34d25c4c8d8abcfe9751f38b00908a1798914bd",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0x60138efceb1f7d8e10c8cb89bb61bbdbeebb4ffc",
+      "symbol": "RICE",
+      "name": "RICE",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/RICE.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x013f9c3fac3e2759d7e90aca4f9540f75194a0d7",
+      "symbol": "USDN",
+      "name": "Neutrino USD",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/5068.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xb46e0ae620efd98516f49bb00263317096c114b2",
+      "symbol": "THETA",
+      "name": "Theta Token (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/2416.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x6f7c932e7684666c9fd1d44527765433e01ff61d",
+      "symbol": "MKR",
+      "name": "MAKER (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/MKR.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x6f3b3286fd86d8b47ec737ceb3d0d354cc657b3e",
+      "symbol": "PAX",
+      "name": "Paxos Standard (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/3330.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xfad65eb62a97ff5ed91b23afd039956aaca6e93b",
+      "symbol": "HT",
+      "name": "HuobiToken (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/2502.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xffa4d863c96e743a2e1513824ea006b8d0353c57",
+      "symbol": "USDD",
+      "name": "Decentralized USD (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/USDD.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x0621d647cecbfb64b79e44302c1933cb4f27054d",
+      "symbol": "AMP",
+      "name": "Amp Token (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/6945.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xf1938ce12400f9a761084e7a80d37e732a4da056",
+      "symbol": "CHZ",
+      "name": "CHZ (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/4066.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x553d3d295e0f695b9228246232edf400ed3560b5",
+      "symbol": "PAXG",
+      "name": "Paxos Gold (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/4705.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x84e1670f61347cdaed56dcc736fb990fbb47ddc1",
+      "symbol": "LRC",
+      "name": "LoopringCoin V2 (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/1934.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x7ec26842f195c852fa843bb9f6d8b583a274a157",
+      "symbol": "ENJ",
+      "name": "Enjin Coin (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/2130.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x6bf2eb299e51fc5df30dec81d9445dde70e3f185",
+      "symbol": "SRM",
+      "name": "Serum (PoS)",
+      "decimals": 6,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/SRM.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x0c51f415cf478f8d08c246a6c6ee180c5dc3a012",
+      "symbol": "HOT",
+      "name": "HOLO (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/2682.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x5ffd62d3c3ee2e81c00a7b9079fb248e7df024a8",
+      "symbol": "GNO",
+      "name": "Gnosis Token (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/1659.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x41b3966b4ff7b427969ddf5da3627d6aeae9a48e",
+      "symbol": "NEXO",
+      "name": "Nexo (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/2694.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x7205705771547cf79201111b4bd8aaf29467b9ec",
+      "symbol": "RPL",
+      "name": "Rocket Pool (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/RPL.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x62414d03084eeb269e18c970a21f45d2967f0170",
+      "symbol": "OMG",
+      "name": "OMGToken (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/1808.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xcb059c5573646047d6d88dddb87b745c18161d3b",
+      "symbol": "POLY",
+      "name": "Polymath (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/2496.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x5559edb74751a0ede9dea4dc23aee72cca6be3d5",
+      "symbol": "ZRX",
+      "name": "0x Protocol Token (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/ZRX.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x3962f4a0a0051dcce0be73a7e09cef5756736712",
+      "symbol": "LPT",
+      "name": "Livepeer Token (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/3640.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x6abb753c1893194de4a83c6e8b4eadfc105fd5f5",
+      "symbol": "SXP",
+      "name": "Swipe (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/4279.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x0b220b82f3ea3b7f6d9a1d8ab58930c064a2b5bf",
+      "symbol": "GLM",
+      "name": "Golem Network Token (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/1455.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x67ce67ec4fcd4aca0fcb738dd080b2a21ff69d75",
+      "symbol": "CHSB",
+      "name": "SwissBorg (PoS)",
+      "decimals": 8,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/2499.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x3066818837c5e6ed6601bd5a91b0762877a6b731",
+      "symbol": "UMA",
+      "name": "UMA Voting Token v1 (PoS)",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/logos/UMA.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xc8a94a3d3d2dabc3c1caffffdca6a7543c3e3e65",
+      "symbol": "GUSD",
+      "name": "Gemini dollar (PoS)",
+      "decimals": 2,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/3306.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xe3322702bedaaed36cddab233360b939775ae5f1",
+      "symbol": "TRB",
+      "name": "Tellor Tributes (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/4944.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xd07a7fac2857901e4bec0d89bbdae764723aab86",
+      "symbol": "USDK",
+      "name": "USDK (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/4064.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xc26d47d5c33ac71ac5cf9f776d63ba292a4f7842",
+      "symbol": "BNT",
+      "name": "Bancor Network Token (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/trustwallet/assets/master/blockchains/ethereum/assets/0x1F573D6Fb3F13d689FF844B4cE37794d79a7FF1C/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x22a31bd4cb694433b6de19e0acc2899e553e9481",
+      "symbol": "MMF",
+      "name": "Mad Meerkat Finance",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/565ae5d6-d401-41c1-863c-01a2aa4ed907.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x8497842420cfdbc97896c2353d75d89fc8d5be5d",
+      "symbol": "VERSA",
+      "name": "VersaGames",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/7afd3e87-45ed-4b76-8790-b3275570468b.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x5dad8fdbef59d3a93c8a6ffb9c66c3aa24e36cf0432a35f5a2e73f1ee1e47b48"
+    },
+    {
+      "chainId": 137,
+      "address": "0x0e9b89007eee9c958c0eda24ef70723c2c93dd58",
+      "symbol": "ankrMATIC",
+      "name": "Ankr Staked MATIC",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/347c8107-010d-40d3-8e87-3033d69f9bd8.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x874e178a2f3f3f9d34db862453cd756e7eab0381",
+      "symbol": "GFI",
+      "name": "Gravity Finance",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/8378a358-25cf-4ef1-8e30-0b09c6e246be.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x9c9e5fd8bbc25984b178fdce6117defa39d2db39",
+      "symbol": "BUSD",
+      "name": "BUSD Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/b1e59f56-fc01-4ef9-83eb-c0fe65e87706.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xb75691f0b9cc2928f917b5ef4057c6508dc4cb5b12d0f2d8ee5b0f3cd51eb315"
+    },
+    {
+      "chainId": 137,
+      "address": "0x9f28e2455f9ffcfac9ebd6084853417362bc5dbb",
+      "symbol": "rMATIC",
+      "name": "StaFi rMATIC (PoS)",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/35b5785b-ba74-45b4-a976-3fc857d072fb.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xb0b195aefa3650a6908f15cdac7d92f8a5791b0b",
+      "symbol": "BOB",
+      "name": "BOB",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/5e85265e-659d-4b40-af15-0779004ddade.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0xde8d39718fa34d2ebac775c3e965466635eaf72920c6ea519f1d49359b1068a8"
+    },
+    {
+      "chainId": 137,
+      "address": "0x5eee4d55961705eb55d12cb6fa70eb93c4063216",
+      "symbol": "BSGG",
+      "name": "Betswap.gg",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/06a33760-bcf5-4017-b76e-7f10758b9a98.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xf0e327b8ec4b4f551c1ee2474f65ff18e803c92056801927894bab0cb581feb8"
+    },
+    {
+      "chainId": 137,
+      "address": "0xbe788feae3c004ee759149c55db2d173407633f2",
+      "symbol": "UNITY",
+      "name": "UnityChain",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/44a8083b-f8cb-42e0-867c-8c30d7fa239c.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "MATIC",
+      "name": "Polygon",
+      "decimals": 18,
+      "logoURI": "https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x03b54a6e9a984069379fae1a4fc4dbae93b3bccd",
+      "symbol": "wstETH",
+      "name": "Wrapped liquid staked Ether 2.0 (PoS)",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/29d93d6c-20f4-4ecc-b2f1-0760c6445e3b.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x7a7b94f18ef6ad056cda648588181cda84800f94",
+      "symbol": "FIS",
+      "name": "StaFi (PoS)",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/b6ba5af1-2480-47d3-bb15-5a4e512f4ec5.webp",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x5736df66b4f8401d639ffa915a46b4c548c09ac1",
+      "symbol": "rETH",
+      "name": "StaFi (PoS)",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/c805361b-42c8-45e7-9ba0-c3cb7b87947a.webp",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xceed2671d8634e3ee65000edbbee66139b132fbf",
+      "symbol": "axlUSDT",
+      "name": "Axelar Wrapped USDT",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/f1bb59a6-cc0b-406c-a343-2b7cb69bd985.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x8603e2f923ab256f536d0c20eff67e189c0be208c1b6e790d467d1b83803e043"
+    },
+    {
+      "chainId": 137,
+      "address": "0x1d0ab64ed0f1ee4a886462146d26effc6dd00d0b",
+      "symbol": "fxT",
+      "name": "Threshold Network Token ",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/ebf93524-215c-47e6-9b9a-1eff841e7da9.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x6e4e624106cb12e168e6533f8ec7c82263358940",
+      "symbol": "AXL",
+      "name": "Axelar",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/fe1b006d-518b-4b32-9195-1f3bfda10dc8.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xd860621a4eabbebfeca79db3c8e9e9ec21f4a20fd0fb3c06b799bef4c155cd9e"
+    },
+    {
+      "chainId": 137,
+      "address": "0xcaf5191fc480f43e4df80106c7695eca56e48b18",
+      "symbol": "DNXC",
+      "name": "DinoX Coin",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/aa7c2b0a-09c5-4528-a02d-c1b9ea4b15b7.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xbb6dbc8a72b70e3255cb32eef2a45a8023d516f58691fdf40bb3e0a36c39b395",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0x236aa50979d5f3de3bd1eeb40e81137f22ab794b",
+      "symbol": "tBTC",
+      "name": "Polygon tBTC v2",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/df967916-1d2c-4743-b38c-bfea6fa30eec.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x4effd575a1872f7f0cffd08b50a92a908e9faaeb8b6cff359e40052da711324e"
+    },
+    {
+      "chainId": 137,
+      "address": "0x08ad99fb3f9f262853b54613249b4064901bd358",
+      "symbol": "axlWMAI",
+      "name": "Axelar Wrapped WMAI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/3cf7d9db-0553-485f-91db-78d842f318d1.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x5fe3a68d255e132b1d5daf576f9f63434289af0f995938ebb3eff7567aec7f38"
+    },
+    {
+      "chainId": 137,
+      "address": "0xf8f9efc0db77d8881500bb06ff5d6abc3070e695",
+      "symbol": "SYN",
+      "name": "Synapse",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/SYN.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x2c31510c1c5b54384cc66c566d5cfb05389a1f1c7a3ddc94a18d1b17870339f4",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0xd6df932a45c0f255f85145f286ea0b292b21c90b",
+      "symbol": "AAVE",
+      "name": "Aave (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/7278.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x750e4c4984a9e0f12978ea6742bc1c5d248f40ed",
+      "symbol": "axlUSDC",
+      "name": "Axelar Wrapped USDC",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/7e4ed790-bad1-46ce-b0b8-d80cfb63a792.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xdecdaca515ea72aa5cb84c77f87adb1f2a845e6ac87c2459b58d2b261b8eb6aa"
+    },
+    {
+      "chainId": 137,
+      "address": "0x9111d6446ac5b88a84cf06425c6286658368542f",
+      "symbol": "FLAG - PoS",
+      "name": "ForLootAndGlory",
+      "decimals": 18,
+      "logoURI": "https://app.forlootandglory.io/token_logo.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x4749352517a919c22e82622bc773963fa45614b985ae57700fb3d4dd49751f69",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0x3a58a54c066fdc0f2d55fc9c89f0415c92ebf3c4",
+      "symbol": "stMATIC",
+      "name": "Staked MATIC (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/18688.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xbd1463f02f61676d53fd183c2b19282bff93d099",
+      "symbol": "jCHF",
+      "name": "Jarvis Synthetic Swiss Franc",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/Fp31dDB.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xf7eac54f487b10b30179ad7cab5a41e8b1c767b1b16a710536040ca43f0716d1",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0x767058f11800fba6a682e73a6e79ec5eb74fac8c",
+      "symbol": "jGBP",
+      "name": "Jarvis Synthetic British Pound",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/HS7BMfs.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x19debe0b109ea4ebffb8f001b7431aed1f006233beb2a35a90f919187b56e87f",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0x53e0bca35ec356bd5dddfebbd1fc0fd03fabad39",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/177687ad-5e60-4456-a661-c2a355e818d3.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x1bfd67037b42cf73acf2047067bd4f2c47d9bfd6",
+      "symbol": "WBTC",
+      "name": "(PoS) Wrapped BTC",
+      "decimals": 8,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/93705ef2-b255-466d-98e1-b7dc9f7ce29b.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xfbbd93fc3be8b048c007666af4846e4a36bacc95",
+      "symbol": "RIKEN",
+      "name": "RIKEN",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/cTLXfWJ.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x33c4ea4f1657167265ebec172d99ebea810d8e42dfc86c2a2b09ff5642ed052e",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0x2760e46d9bb43dafcbecaad1f64b93207f9f0ed7",
+      "symbol": "MVX",
+      "name": "Metavault Trade",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/60abdbf9-c5a6-40a9-964a-e3bb30ebec2f.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xe0b52e49357fd4daf2c15e02058dce6bc0057db4",
+      "symbol": "agEUR",
+      "name": "agEUR",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/120142a5-1a08-4e04-94b6-278a02703f6f.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xb33eaad8d922b1083446dc23f610c2567fb5180f",
+      "symbol": "UNI",
+      "name": "Uniswap (PoS)",
+      "decimals": 18,
+      "logoURI": "ipfs://QmXttGpZrECX5qCyXbBQiqgQNytVGeZW5Anewvh2jc4psg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x580a84c73811e1839f75d86d75d88cca0c241ff4",
+      "symbol": "QI",
+      "name": "Qi Dao",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/QI.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xe0339c80ffde91f3e20494df88d4206d86024cdf",
+      "symbol": "ELON",
+      "name": "Dogelon (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/ELON.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xeeeeeb57642040be42185f49c52f7e9b38f8eeee",
+      "symbol": "ELK",
+      "name": "Elk",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/3128d31d-85af-4777-82a1-64ece37126e0.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x1c956378975a29ab3fc84cc85df724e2fb1a8f3c7a5421db007b6836d442a569",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0x45c32fa6df82ead1e2ef74d17b76547eddfaff89",
+      "symbol": "FRAX",
+      "name": "Frax",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/2d090f99-fdd8-4423-9c6e-97cb394462b7.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x662c57e9a76c01c325c112730038819c2ed3ee92e139862af33871c92c6bb697"
+    },
+    {
+      "chainId": 137,
+      "address": "0x0b3f868e0be5597d5db7feb59e1cadbb0fdda50a",
+      "symbol": "SUSHI",
+      "name": "SushiToken (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/SUSHI.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x8f3cf7ad23cd3cadbd9735aff958023239c6a063",
+      "symbol": "DAI",
+      "name": "(PoS) Dai Stablecoin",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9d4eb7a6-d869-4520-ab11-d45e709c75e8.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x1c954e8fe737f99f68fa1ccda3e51ebdb291948c",
+      "symbol": "KNC",
+      "name": "Kyber Network Crystal v2 (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/dmm-interface/main/src/assets/images/KNC.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x7ceb23fd6bc0add59e62ac25578270cff1b9f619",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/7f031254-81f1-4997-8cb0-26e170bae6dc.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x2c89bbc92bd86f8075d1decc58c7f4e0107f286b",
+      "symbol": "AVAX",
+      "name": "Avalanche Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xe5417af564e4bfda1c483642db72007871397896",
+      "symbol": "GNS",
+      "name": "Gains Network",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/503e7ecc-a94f-41db-b594-37ccac7f70e1.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xc2132d05d31c914a87c6611c10748aeb04b58e8f",
+      "symbol": "USDT",
+      "name": "(PoS) Tether USD",
+      "decimals": 6,
+      "logoURI": "https://coin.top/production/logo/usdtlogo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x9a71012b13ca4d3d0cdc72a177df3ef03b0e76a3",
+      "symbol": "BAL",
+      "name": "Balancer (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/5728.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x385eeac5cb85a38a9a07a70c73e0a3271cfb54a7",
+      "symbol": "GHST",
+      "name": "Aavegotchi GHST Token (PoS)",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/16c072cd-0dd0-41b9-8ac2-ea5997daf508.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x61299774020da444af134c82fa83e3810b309991",
+      "symbol": "RNDR",
+      "name": "Render Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/c19a7e29-a914-462a-a718-305bce05d479.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x5fe2b58c013d7601147dcdd68c143a77499f5531",
+      "symbol": "GRT",
+      "name": "Graph Token (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/GRT.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x2e1ad108ff1d8c782fcbbb89aad783ac49586756",
+      "symbol": "TUSD",
+      "name": "TrueUSD (PoS)",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/eb999667-b26a-4155-ac28-98c5fa9f62be.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x50b728d8d964fd00c2d0aad81718b71311fef68a",
+      "symbol": "SNX",
+      "name": "Synthetix Network Token (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/SNX.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xcc1b9517460d8ae86fe576f614d091fca65a28fc",
+      "symbol": "VIS",
+      "name": "Vigorus",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/20a7e519-4cbf-4da7-8002-b951b4f21840.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x0d500b1d8e8ef31e21c99d1db9a6444d3adf1270",
+      "symbol": "WMATIC",
+      "name": "Wrapped Matic",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/fe1e451f-f0a9-44d1-8e8f-976f2c7a1d6f.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xbbba073c31bf03b8acf7c28ef0738decf3695683",
+      "symbol": "SAND",
+      "name": "SAND",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/bb8c0a7a-c150-4e6d-9ea9-62605a568d37.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x1b815d120b3ef02039ee11dc2d33de7aa4a8c603",
+      "symbol": "WOO",
+      "name": "Wootrade Network (PoS)",
+      "decimals": 18,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/128x128/7501.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xe06bd4f5aac8d0aa337d13ec88db6defc6eaeefe",
+      "symbol": "IXT",
+      "name": "PlanetIX",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/fb448a8a-849d-4f88-8195-8963636b0d45.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0xa3fa99a148fa48d14ed51d610c367c61876997f1",
+      "symbol": "MAI",
+      "name": "MAI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/d349f737-f46a-467e-a610-b32a23b616da.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x4e3decbb3645551b8a19f0ea1678079fcb33fb4c",
+      "symbol": "jEUR",
+      "name": "Jarvis Synthetic Euro",
+      "decimals": 18,
+      "logoURI": "https://i.imgur.com/92uhfao.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x07f09ade2123e8338ab169f88b68af45d13f3a6051cdd56693590ef74b10ae82",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 137,
+      "address": "0x1c954e8fe737f99f68fa1ccda3e51ebdb291948c",
+      "symbol": "KNC",
+      "name": "Kyber Network Crystal v2 (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/dmm-interface/main/src/assets/images/KNC.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x0b3f868e0be5597d5db7feb59e1cadbb0fdda50a",
+      "symbol": "SUSHI",
+      "name": "SushiToken (PoS)",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/SUSHI.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 137,
+      "address": "0x2c89bbc92bd86f8075d1decc58c7f4e0107f286b",
+      "symbol": "AVAX",
+      "name": "Avalanche Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/ava-labs/bridge-tokens/main/avalanche-tokens/0xB31f66AA3C1e785363F0875A1B74E27b85FD66c7/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x7bcd44c0b91be28827426f607424e1a8a02d4e69",
+      "symbol": "anyETH",
+      "name": "Multichain ETH",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/8a859fdd-a6a4-43d6-a47c-7f9d86f1202f.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x3355df6d4c9c3035724fd0e3914de96a5a83aaf4",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/67c97b93-3dde-4fe2-a5ed-17eb169d4eb9.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x7400793aad94c8ca801aa036357d10f5fd0ce08f",
+      "symbol": "cBNB",
+      "name": "Celer Network BNB",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/66eb3682-720b-4640-9a1a-d4074b1a492c.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x42c1c56be243c250ab24d2ecdcc77f9ccaa59601",
+      "symbol": "PERP",
+      "name": "Perpetual",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/499378cf-23de-4820-b245-6e1a03bb6c99.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0xd0ea21ba66b67be636de1ec4bd9696eb8c61e9aa",
+      "symbol": "OT",
+      "name": "Onchain Trade",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/7b4f7e9f-8c50-49ec-bcdc-818a7a04f059.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0xfc7e56298657b002b3e656400e746b7212912757",
+      "symbol": "zkUSD",
+      "name": "zkUSD Dollar",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/665e69e3-03bf-468c-8969-be664503d4d3.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0xc2b13bb90e33f1e191b8aa8f44ce11534d5698e3",
+      "symbol": "COMBO",
+      "name": "Furucombo",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/e9ed8197-943a-4fd4-b16f-e07637e76573.webp",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x0e97c7a0f8b2c9885c8ac9fc6136e829cbc21d42",
+      "symbol": "MUTE",
+      "name": "Mute.io",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9b6357d5-3235-4e80-a686-048b7778ebc0.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x8e86e46278518efc1c5ced245cba2c7e3ef11557",
+      "symbol": "USD+",
+      "name": "USD+",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/dffb121f-5f4a-408a-a694-859f5730dd37.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x85d84c774cf8e9ff85342684b0e795df72a24908",
+      "symbol": "VC",
+      "name": "Velocore",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/66a39c5e-7894-4300-81d1-d24e7d50de03.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x28a487240e4d45cff4a2980d334cc933b7483842",
+      "symbol": "cMATIC",
+      "name": "Celer Network MATIC",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/46319446-0b42-4a83-a3f8-a32bd1e71b14.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x493257fd37edb34451f62edf8d2a0c418852ba4c",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/62f37864-62d7-44f7-b451-9cb6df20730a.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x47260090ce5e83454d5f05a0abbb2c953835f777",
+      "symbol": "SPACE",
+      "name": "SPACE",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/e862d3a4-c23d-44ba-895f-00d112649ff1.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x503234f203fc7eb888eec8513210612a43cf6115",
+      "symbol": "LUSD",
+      "name": "LUSD Stablecoin",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/0590b6f0-ea78-4d6c-97be-2c60bbe8723d.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0xbbd1ba24d589c319c86519646817f2f153c9b716",
+      "symbol": "DVF",
+      "name": "DeversiFi Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/4eb3ff0e-b6f1-43b8-aab3-aea9573cc936.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0xbbeb516fb02a01611cbbe0453fe3c580d7281011",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "decimals": 8,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/60ab839d-2e84-4a96-8fa6-3fad3f0e19ca.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0xd599da85f8fc4877e61f547dfacffe1238a7149e",
+      "symbol": "Cheems",
+      "name": "Cheems Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/b047ce83-e47b-4008-af2d-3e39a4c8ff5a.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0xbe9f8c0d6f0fd7e46cdacca340747ea2f247991d",
+      "symbol": "IBEX",
+      "name": "Impermax",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/2f498c90-2362-4d41-ba7e-c4ea94be69ee.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "ETH",
+      "name": "Ethereum",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9d299a31-a940-4129-845a-48da9224c2bc.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0xcab3f741fa54e79e34753b95717b23018332b8ac",
+      "symbol": "TES",
+      "name": "Tiny Era Shard Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/02218675-10ee-473e-84d5-315c645f1c20.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x32fd44bb869620c0ef993754c8a00be67c464806",
+      "symbol": "rETH",
+      "name": "Rocket Pool ETH",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/199a1b98-39c1-4fb3-8347-72c716d8df9e.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0xd63ef5e9c628c8a0e8984cdfb7444aee44b09044",
+      "symbol": "GOVI",
+      "name": "GOVI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/a92c9002-6b77-48aa-a22e-cde99532da11.webp",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x26ac1d9945f65392b8e4e6b895969b5c01a7b414",
+      "symbol": "KANA",
+      "name": "Kannagi Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/46db6331-4442-46c8-8cbe-8520d271bf17.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x2039bb4116b4efc145ec4f0e2ea75012d6c0f181",
+      "symbol": "cBUSD",
+      "name": "Celer Network BUSD",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/4cff4553-3d67-4ed2-b2b5-22395ccddc58.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x6a5279e99ca7786fb13f827fc1fb4f61684933d6",
+      "symbol": "cAVAX",
+      "name": "Celer Network AVAX",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/ef6b1750-55f5-4d6d-9b0b-99be85f72833.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 324,
+      "address": "0x5aea5775959fbc2557cc8789bc1bf90a239d9a91",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/20386b3b-5acf-4437-ac52-7e8c6d757507.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xa8f5be359d5418a641b1f93d80f0193fcb169b66be484b4500d0be81dcffe636"
+    },
+    {
+      "chainId": 10,
+      "address": "0xe0bb0d3de8c10976511e5030ca403dbf4c25165b",
+      "symbol": "0xBTC",
+      "name": "0xBitcoin",
+      "decimals": 8,
+      "logoURI": "https://ethereum-optimism.github.io/data/0xBTC/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x65559aa14915a70190438ef90104769e5e890a00",
+      "symbol": "ENS",
+      "name": "Ethereum Name Service",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/ENS/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x298b9b95708152ff6968aafd889c6586e9169f1d",
+      "symbol": "sBTC",
+      "name": "Synth sBTC",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/sBTC/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xc5db22719a06418028a40a9b5e9a7c02959d0d08",
+      "symbol": "sLINK",
+      "name": "Synthetic Chainlink",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/sLINK/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xc40f949f8a4e094d1b49a23ea9241d289b7b2819",
+      "symbol": "LUSD",
+      "name": "LUSD Stablecoin",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/LUSD/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xb548f63d4405466b36c0c0ac3318a22fdcec711a",
+      "symbol": "RGT",
+      "name": "Rari Governance Token",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/RGT/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x7fb688ccf682d58f86d7e38e03f9d22e7705448b",
+      "symbol": "RAI",
+      "name": "Rai Reflex Index",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/RAI/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x00f932f0fe257456b32deda4758922e56a4f4b42",
+      "symbol": "PAPER",
+      "name": "Paper",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/PAPER/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x7c6b91d9be155a6db01f749217d76ff02a7227f2",
+      "symbol": "SARCO",
+      "name": "Sarcophagus",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/SARCO/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x5029c236320b8f15ef0a657054b84d90bfbeded3",
+      "symbol": "BitANT",
+      "name": "BitANT",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/BitANT/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xc98b98d17435aa00830c87ea02474c5007e1f272",
+      "symbol": "BitBTC",
+      "name": "BitBTC",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/BitBTC/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xe7798f023fc62146e8aa1b36da45fb70855a77ea",
+      "symbol": "UMA",
+      "name": "UMA Voting Token v1",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/UMA/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x9e5aac1ba1a2e6aed6b32689dfcf62a509ca96f3",
+      "symbol": "DF",
+      "name": "dForce",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/DF/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xbfd291da8a403daaf7e5e9dc1ec0aceacd4848b9",
+      "symbol": "USX",
+      "name": "dForce USD",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/USX/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x3e7ef8f50246f725885102e8238cbba33f276747",
+      "symbol": "BOND",
+      "name": "BarnBridge Governance Token (Optimism)",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/BOND/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x7b0bcc23851bbf7601efc9e9fe532bf5284f65d3",
+      "symbol": "EST",
+      "name": "Erica Social Token",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/EST/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x1da650c3b2daa8aa9ff6f661d4156ce24d08a062",
+      "symbol": "DCN",
+      "name": "Dentacoin",
+      "decimals": 0,
+      "logoURI": "https://ethereum-optimism.github.io/data/DCN/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xaf9fe3b5ccdae78188b1f8b9a49da7ae9510f151",
+      "symbol": "DHT",
+      "name": "dHEDGE DAO Token",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/DHT/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xab7badef82e9fe11f6f33f87bc9bc2aa27f2fcb5",
+      "symbol": "MKR",
+      "name": "Maker",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/MKR.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x3bb4445d30ac020a84c1b5a8a2c6248ebc9779d0",
+      "symbol": "LIZ",
+      "name": "Theranos Coin",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/LIZ/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x3390108e913824b8ead638444cc52b9abdf63798",
+      "symbol": "MASK",
+      "name": "Mask Network",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/MASK/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x0994206dfe8de6ec6920ff4d779b0d950605fb53",
+      "symbol": "CRV",
+      "name": "Curve DAO Token",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/CRV/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xcfd1d50ce23c46d3cf6407487b2f8934e96dc8f9",
+      "symbol": "SPANK",
+      "name": "SPANK",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/SPANK/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xfeaa9194f9f8c1b65429e31341a103071464907e",
+      "symbol": "LRC",
+      "name": "LoopringCoin V2",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/LRC/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xba28feb4b6a6b81e3f26f08b83a19e715c4294fd",
+      "symbol": "UST",
+      "name": "UST (Wormhole)",
+      "decimals": 6,
+      "logoURI": "https://ethereum-optimism.github.io/data/UST/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xe4f27b04cc7729901876b44f4eaa5102ec150265",
+      "symbol": "XCHF",
+      "name": "CryptoFranc",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/XCHF/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x76fb31fb4af56892a25e32cfc43de717950c9278",
+      "symbol": "AAVE",
+      "name": "Aave Token",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/AAVE/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x81ab7e0d570b01411fcc4afd3d50ec8c241cb74b",
+      "symbol": "EQZ",
+      "name": "Equalizer",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/EQZ/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x117cfd9060525452db4a34d51c0b3b7599087f05",
+      "symbol": "GYSR",
+      "name": "Geyser",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/GYSR/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xfe8b128ba8c78aabc59d4c64cee7ff28e9379921",
+      "symbol": "BAL",
+      "name": "Balancer",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/BAL/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x1eba7a6a72c894026cd654ac5cdcf83a46445b08",
+      "symbol": "GTC",
+      "name": "Gitcoin",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/GTC/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x8ae125e8653821e851f12a49f7765db9a9ce7384",
+      "symbol": "DOLA",
+      "name": "Dola USD Stablecoin",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/DOLA/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x2e3d870790dc77a83dd1d18184acc7439a53f475",
+      "symbol": "FRAX",
+      "name": "Frax",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/FRAX.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xc22885e06cd8507c5c74a948c59af853aed1ea5c",
+      "symbol": "USDD",
+      "name": "Decentralized USD",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/USDD.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x67ccea5bb16181e7b4109c9c2143c24a1c2205be",
+      "symbol": "FXS",
+      "name": "Frax Share",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/FXS.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0x93c56da7302f5ca534469719078a368b4ed5c5f8df3b1eda9c886c01012e811d",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 10,
+      "address": "0xee9801669c6138e84bd50deb500827b776777d28",
+      "symbol": "O3",
+      "name": "O3 Swap Token",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/O3.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xb12c13e66ade1f72f71834f2fc5082db8c091358",
+      "symbol": "ROOBEE",
+      "name": "ROOBEE",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/ROOBEE.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xa00e3a3511aac35ca78530c85007afcd31753819",
+      "symbol": "KNC",
+      "name": "Kyber Network Crystal v2",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/0ebb709e-9984-4f11-9705-eab89ce29393.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x4518231a8fdf6ac553b9bbd51bbb86825b583263",
+      "symbol": "mKNC",
+      "name": "Kyber Network Crystal v2 Multichain",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/dmm-interface/main/src/assets/images/KNC.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x1f32b1c2345538c0c6f582fcb022739c4a194ebb",
+      "symbol": "wstETH",
+      "name": "Lido Wrapped Staked ETH",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/056b85aa-e28e-4fc2-a08f-3635e5c514e7.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x920cf626a271321c151d027030d5d08af699456b",
+      "symbol": "KWENTA",
+      "name": "Kwenta",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/d7c5dcd7-d271-4732-887c-1260d9492dab.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xb0b195aefa3650a6908f15cdac7d92f8a5791b0b",
+      "symbol": "BOB",
+      "name": "BOB",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/1f49c3a1-952e-44fd-b234-d178e9d0edca.svg",
+      "isWhitelisted": true,
+      "domainSeparator": "0xb23bf3c5aee6b73a93c5f441104927f0b7cd5fc945e7a1142b91792e9f9b72f7"
+    },
+    {
+      "chainId": 10,
+      "address": "0x9485aca5bbbe1667ad97c7fe7c4531a624c8b1ed",
+      "symbol": "agEUR",
+      "name": "agEUR",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/1b7cebe7-27a2-4e2b-9138-8dbef9515843.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x0576bdf5d6ffcc6230d080dd3cdf65d961781b737494bc057e700e549a5026ed"
+    },
+    {
+      "chainId": 10,
+      "address": "0xfdb794692724153d1488ccdbe0c56c252596735f",
+      "symbol": "LDO",
+      "name": "Lido DAO Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/da9720a3-e4de-4890-97e3-f62d75e50e33.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+      "symbol": "ETH",
+      "name": "Ether",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/2e005aef-9acb-403c-b085-8f9444a15243.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xdfa46478f9e5ea86d57387849598dbfb2e964b02",
+      "symbol": "MAI",
+      "name": "MAI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/de37ffe7-6eb2-4d7f-944f-7f2a0c2ea6d9.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x9a601c5bb360811d96a23689066af316a30c3027",
+      "symbol": "PIKA",
+      "name": "Pika Protocol",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/5562f858-8463-4482-9123-0f3c33a3e531.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x23ee2343b892b1bb63503a4fabc840e0e2c6810f",
+      "symbol": "AXL",
+      "name": "Axelar",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/1861abc8-357d-434b-be73-f154d7e07add.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x848d88df672aceac322dee8ecb0c8b1904de6b1e27a6d87aaf871acda5ea676f"
+    },
+    {
+      "chainId": 10,
+      "address": "0x88dfaaabaf06f3a41d2606ea98bc8eda109abebb",
+      "symbol": "axlWMAI",
+      "name": "Axelar Wrapped WMAI",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/f43c5fec-ef02-47e2-a1fc-cf79bb5ea1b2.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0x6d5683fb02645aa043df55599df64cd99ac9e1041d984f7e8d0bd7ff257e7b68"
+    },
+    {
+      "chainId": 10,
+      "address": "0xfdeffc7ad816bf7867c642df7ebc2cc5554ec265",
+      "symbol": "BeVELO",
+      "name": "Beefy Velo",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/1fcb0066-7b02-4180-b4c2-00931f05f0f2.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xeb466342c4d449bc9f53a865d5cb90586f405215",
+      "symbol": "axlUSDC",
+      "name": "Axelar Wrapped USDC",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/752f9d01-3f3d-4759-aa34-5ee385fbad55.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xf573ab3481811211b13df6bf9e1ee802424f5cee9e05e166e8eb78f6b390f24f"
+    },
+    {
+      "chainId": 10,
+      "address": "0xf98dcd95217e15e05d8638da4c91125e59590b07",
+      "symbol": "KROM",
+      "name": "Kromatika",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/KROM/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x50c5725949a6f0c72e6c4a641f24049a917db0cb",
+      "symbol": "LYRA",
+      "name": "Lyra",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/LYRA/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x68f180fcce6836688e9084f035309e29bf0a2095",
+      "symbol": "WBTC",
+      "name": "Wrapped BTC",
+      "decimals": 8,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/70e8470d-9647-42bd-833e-999b36346de0.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x4200000000000000000000000000000000000042",
+      "symbol": "OP",
+      "name": "Optimism",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/7dd69eb0-bbff-4fbc-a581-1562070eff66.png",
+      "isWhitelisted": true,
+      "domainSeparator": "0xd423c9c6b838296762a6bbf9663d4609148ea6bc83b5e94ce2c05615edc69072",
+      "permitType": "EIP-2612"
+    },
+    {
+      "chainId": 10,
+      "address": "0x217d47011b23bb961eb6d93ca9945b7501a5bb11",
+      "symbol": "THALES",
+      "name": "Thales DAO Token",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/THALES/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x9e1028f5f1d5ede59748ffcee5532509976840e0",
+      "symbol": "PERP",
+      "name": "Perpetual",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/PERP/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x350a791bfc2c21f9ed5d10980dad2e2638ffa7f6",
+      "symbol": "LINK",
+      "name": "ChainLink Token",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/84f27e9a-a21a-4789-94dc-62fbc75d67ad.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x8c6f28f2f1a3c87f0f938b96d27520d9751ec8d9",
+      "symbol": "sUSD",
+      "name": "Synthetix USD",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/8c752201-235a-4c13-a67e-9d50a14f21ef.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x6fd9d7ad17242c41f7131d257212c54a0e816691",
+      "symbol": "UNI",
+      "name": "Uniswap",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/UNI/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xe405de8f52ba7559f9df3c368500b6e6ae6cee49",
+      "symbol": "sETH",
+      "name": "Synthetic Ether",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/sETH/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x4200000000000000000000000000000000000006",
+      "symbol": "WETH",
+      "name": "Wrapped Ether",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9c7ae518-e0a3-4048-a244-9256f58a7f02.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x94b008aa00579c1307b0ef2c499ad98a8ce58e58",
+      "symbol": "USDT",
+      "name": "Tether USD",
+      "decimals": 6,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/0881af9f-3cda-4be8-97b2-2fc4e8968a19.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0xda10009cbd5d07dd0cecc66161fc93d7c9000da1",
+      "symbol": "DAI",
+      "name": "Dai stable coin",
+      "decimals": 18,
+      "logoURI": "https://ethereum-optimism.github.io/data/DAI/logo.svg",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x7f5c764cbc14f9669b88837ca1490cca17c31607",
+      "symbol": "USDC",
+      "name": "USD Coin",
+      "decimals": 6,
+      "logoURI": "https://ethereum-optimism.github.io/data/USDC/logo.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x3c8b650257cfb5f272f799f5e2b4e65093a11a05",
+      "symbol": "VELO",
+      "name": "Velodrome",
+      "decimals": 18,
+      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/20f4ca0a-a004-4d82-9f03-0cefdc769f02.png",
+      "isWhitelisted": true
+    },
+    {
+      "chainId": 10,
+      "address": "0x8700daec35af8ff88c16bdf0418774cb3d7599b4",
+      "symbol": "SNX",
+      "name": "Synthetix",
+      "decimals": 18,
+      "logoURI": "https://raw.githubusercontent.com/KyberNetwork/ks-assets/main/img/token/SNX.svg",
+      "isWhitelisted": true
+    }
+  ]
+}
