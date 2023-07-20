@@ -1,11 +1,12 @@
 import { useDebounce } from '@pancakeswap/hooks'
-import { Token } from '@pancakeswap/sdk'
+import { ChainId, Token } from '@pancakeswap/sdk'
 import { useActiveChainId } from 'hooks/useActiveChainId'
 import _ from 'lodash'
 import React, { useCallback, useEffect, useRef, useState } from 'react'
 import useSWR from 'swr'
 import { useMatchBreakpoints } from '@pancakeswap/uikit'
 import { SearchInputWrapper as Wrapper } from './styles'
+import { useTranslation } from '@pancakeswap/localization'
 
 type Props = {
   tokenIn: Token
@@ -28,6 +29,15 @@ type Pair = {
   }
 }
 
+const PLACEHODER = {
+  [ChainId.ETHEREUM]: 'Try Typing “100 USDC to XOX“',
+  [ChainId.BSC]: 'Try Typing “100 USDT to XOX“',
+  [ChainId.POLYGON]: 'Try Typing “100 MATIC to XOX“',
+  [ChainId.ARBITRUM]: 'Try Typing “100 WETH to XOX“',
+  [ChainId.OPTIMISM]: 'Try Typing “100 USDC to XOX“',
+  [ChainId.ZKSYNC]: 'Try Typing “100 USDC to XOX“',
+}
+
 const SearchInput = ({
   tokenIn: selectedTokenIn,
   tokenOut: selectedTokenOut,
@@ -37,6 +47,7 @@ const SearchInput = ({
   setTokenOutImgURL,
   setInputAmountIn,
 }: Props) => {
+  const { t } = useTranslation()
   const [searchTerm, setSearchTerm] = useState('')
   const [isOpen, setOpen] = useState(false)
   const [pairs, setPairs] = useState<Pair[]>([])
@@ -146,7 +157,7 @@ const SearchInput = ({
           value={searchTerm}
           onFocus={() => setOpen(true)}
           onChange={handleOnChangeSearchTerm}
-          placeholder="Try typing “10 ETH to KNC”"
+          placeholder={PLACEHODER[chainId]}
           onKeyDown={handleKeyDown}
         />
 
@@ -202,37 +213,65 @@ const SearchInput = ({
           </button>
         )}
       </div>
-
-      <ul className={`dropdown-items ${isOpen && 'active'}`}>
-        {pairs.map(({ tokenIn, tokenOut }) => {
-          return (
-            <li
-              className={`dropdown-item ${
-                tokenIn.token.address === selectedTokenIn?.address &&
-                tokenOut.token.address === selectedTokenOut?.address &&
-                'active'
-              }`}
-              role="button"
-              onClick={() => handleOnClickedPair({ tokenIn, tokenOut })}
-              key={`${tokenIn.token.address}-${tokenOut.token.address}`}
+      <div className={`dropdown-items ${isOpen && 'active'}`}>
+        {pairs.length === 0 ? (
+          <div className="not-found">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="17"
+              height="17"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="#A9A9A9"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
             >
-              <div>
-                <img src={tokenIn.imgUrl} alt="" />
-                <img src={tokenOut.imgUrl} alt="" />
-              </div>
-              <div className="pair-information">
-                <p>
-                  {amount && `${amount} `}
-                  {tokenIn.token.symbol} - {tokenOut.token.symbol}
-                </p>
-                <p>
-                  {tokenIn.token.name} - {tokenOut.token.name}
-                </p>
-              </div>
-            </li>
-          )
-        })}
-      </ul>
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" y1="9" x2="12" y2="13"></line>
+              <line x1="12" y1="17" x2="12.01" y2="17"></line>
+            </svg>
+            <div className="css-vurnku">{t('We could not find anything. Try again.')}</div>
+          </div>
+        ) : (
+          <>
+            <p className="title-trading-pair">{t('Top traded pairs')}</p>
+            <ul>
+              {pairs.map(({ tokenIn, tokenOut }) => {
+                return (
+                  <li
+                    className={`dropdown-item ${
+                      tokenIn.token.address === selectedTokenIn?.address &&
+                      tokenOut.token.address === selectedTokenOut?.address &&
+                      'active'
+                    }`}
+                    role="button"
+                    onClick={() => handleOnClickedPair({ tokenIn, tokenOut })}
+                    key={`${tokenIn.token.address}-${tokenOut.token.address}`}
+                  >
+                    <div>
+                      <img src={tokenIn.imgUrl} alt="" />
+                      <img src={tokenOut.imgUrl} alt="" />
+                    </div>
+                    <div className="pair-information">
+                      <p>
+                        {amount && `${amount} `}
+                        {tokenIn.token.symbol} - {tokenOut.token.symbol}
+                      </p>
+                      <p>
+                        {tokenIn.token.name} - {tokenOut.token.name}
+                      </p>
+                    </div>
+                  </li>
+                )
+              })}
+            </ul>
+          </>
+        )}
+        <hr style={{ opacity: '0.38' }} />
+
+        <p className="try-typing">{PLACEHODER[chainId]}</p>
+      </div>
     </Wrapper>
   )
 }

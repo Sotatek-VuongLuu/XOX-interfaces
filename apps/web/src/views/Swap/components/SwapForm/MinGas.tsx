@@ -8,6 +8,7 @@ const Wrapper = styled.div`
   background: #1d1c1c;
   padding: 2px;
   margin-top: 20px;
+  margin-bottom: 20px;
   gap: 5px;
 
   .button-group {

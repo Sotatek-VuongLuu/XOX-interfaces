@@ -12,7 +12,7 @@ const Wrapper = styled.div`
   font-size: 12px;
   line-height: 16px;
   padding: 12px 16px;
-  margin: 20px 0 20px;
+  margin: 0 0 16px 0;
 
   &.no-margin {
     margin: 0;

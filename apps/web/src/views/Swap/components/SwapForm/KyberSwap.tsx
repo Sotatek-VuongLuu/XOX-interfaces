@@ -164,6 +164,13 @@ export default function KyberSwap() {
     setTokenInAmount(res)
   }, [inputAmountIn, currencyIn])
 
+  useEffect(() => {
+    setTokenIn(KYBERSWAP_DEFAULT_TOKEN[chainId]?.TOKEN_IN?.token)
+    setTokenInImgUrl(KYBERSWAP_DEFAULT_TOKEN[chainId]?.TOKEN_IN?.imgURL)
+    setTokenOut(KYBERSWAP_DEFAULT_TOKEN[chainId]?.TOKEN_OUT?.token)
+    setTokenOutImgUrl(KYBERSWAP_DEFAULT_TOKEN[chainId]?.TOKEN_OUT?.imgURL)
+  }, [chainId])
+
   const handlePercentInput = useCallback(
     (percent) => {
       if (!maxAmountInput) return

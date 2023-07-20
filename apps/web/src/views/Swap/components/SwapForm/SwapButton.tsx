@@ -5,7 +5,7 @@ import { CircleLoader, useMatchBreakpoints, useModal, useToast } from '@pancakes
 import { CommitButton } from 'components/CommitButton'
 import { AutoRow } from 'components/Layout/Row'
 import { ApprovalState } from 'hooks/useApproveCallback'
-import { parseEther, parseUnits } from '@ethersproject/units'
+import { parseEther } from '@ethersproject/units'
 import ConfirmKyberSwapModal from './ConfirmKyberSwapModal'
 import useBuildKyberswap from 'hooks/useBuildKyberswap'
 import { useActiveChainId } from 'hooks/useActiveChainId'

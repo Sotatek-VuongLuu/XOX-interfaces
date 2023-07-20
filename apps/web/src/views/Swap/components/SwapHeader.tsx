@@ -27,7 +27,7 @@ const Wrapper = styled.div`
     color: rgba(255, 255, 255, 0.3);
     font-size: 24px;
     font-weight: 700;
-    cursor: poiter;
+    cursor: pointer;
 
     &:nth-child(2) {
       position: relative;

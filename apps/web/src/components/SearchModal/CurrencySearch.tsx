@@ -160,6 +160,7 @@ function CurrencySearch({
   const filteredSortedTokens: Token[] = useMemo(() => {
     return [...filteredQueryTokens] //.sort(tokenComparator)
   }, [filteredQueryTokens])
+  console.log(allTokens, filteredSortedTokens)
 
   const handleCurrencySelect = useCallback(
     (currency: Currency) => {

@@ -11,6 +11,7 @@ import FormattedPriceImpact from '../FormattedPriceImpact'
 import BigNumber from 'bignumber.js'
 import { BigNumber as EtherBigNumber } from '@ethersproject/bignumber'
 import { formatAmountNumber2 } from '@pancakeswap/utils/formatBalance'
+import { parseUnits } from '@ethersproject/units'
 
 type Props = {
   currencyIn: Currency
@@ -162,15 +163,22 @@ const ConfirmationKyberContent = ({
               }}
             >
               <div className="value">
-                {formatAmountNumber2(
-                  parseFloat(
-                    CurrencyAmount.fromRawAmount(currencyOut, summary.amountOut)
+                {CurrencyAmount.fromRawAmount(currencyOut, summary.amountOut).greaterThan(
+                  parseUnits('1', currencyOut?.decimals).toString(),
+                )
+                  ? formatAmountNumber2(
+                      parseFloat(
+                        CurrencyAmount.fromRawAmount(currencyOut, summary.amountOut)
+                          .multiply(9995)
+                          .divide(10000)
+                          .toSignificant(6),
+                      ),
+                      6,
+                    )
+                  : CurrencyAmount.fromRawAmount(currencyOut, summary.amountOut)
                       .multiply(9995)
                       .divide(10000)
-                      .toSignificant(6),
-                  ),
-                  6,
-                )}
+                      .toSignificant(6)}
               </div>
               <div className="symbol" style={{ minWidth: 'auto', marginLeft: '8px' }}>
                 {currencyOut.symbol}
