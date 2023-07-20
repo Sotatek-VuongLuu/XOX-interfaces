@@ -349,9 +349,8 @@ const withLPValuesFactory =
         }),
       [userPoolBalance, props.pair, totalPoolTokens],
     )
-
-    const [token0Deposited, token1Deposited] =
-      JSBI.toNumber(userPoolBalance?.numerator) === 0 ? [0, 0] : useLPValuesHook(args)
+    const numerator = userPoolBalance ? JSBI.toNumber(userPoolBalance?.numerator) : 0
+    const [token0Deposited, token1Deposited] = numerator === 0 ? [0, 0] : useLPValuesHook(args)
 
     const totalUSDValue = useTotalUSDValue({ currency0, currency1, token0Deposited, token1Deposited })
 

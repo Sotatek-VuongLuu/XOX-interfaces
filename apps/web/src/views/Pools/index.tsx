@@ -922,6 +922,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
 
   const handleGetBalanceOfUser = (contractAddress?: string) => {
     const currentProvider = provider
+
     getBalancesForEthereumAddress({
       // erc20 tokens you want to query!
       contractAddresses: [contractAddress || getXOXPoolAddress(chainId)],
