@@ -7,7 +7,9 @@ export const getUserFarmingData = async (chainId: ChainId, account: string, pool
     ENDPOINT_GRAPHQL_WITH_CHAIN[chainId],
     gql`
         query getDataFarming {
-            userFarmingDatas(where: { id: "${account?.toLocaleLowerCase()}", poolId: ${poolId} }) {
+            userFarmingDatas(where: { id: "${account
+              ?.toLocaleLowerCase()
+              .concat('_', poolId.toString())}", poolId: ${poolId} }) {
                 id,
                 address,
                 amount

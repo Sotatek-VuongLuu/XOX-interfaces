@@ -227,7 +227,7 @@ const Banner = styled.div`
     backdrop-filter: blur(10px);
     border-radius: 20px;
 
-    & > svg {
+    & > svg, & > object {
       position: absolute;
       transform: translate(0, -50%);
       top: 50%;
@@ -874,7 +874,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
         // eslint-disable-next-line no-await-in-loop
         const token1Decimals = await contractToken1.decimals()
         const reserves1 = formatUnits(reserves[1]._hex, token1Decimals)
-        const userStake = !Number(formatEther(userInfo[0]._hex)) ? null : formatEther(userInfo[0]._hex)
+        const userStaked = !Number(formatEther(userInfo[0]._hex)) ? null : formatEther(userInfo[0]._hex)
         const userPendingReward = formatEther(pendingReward._hex)
         const balanceOfFarming = formatEther(amountFarmingBN._hex)
         const delta = new BigNumber(endBlock.toNumber() - startBlock.toNumber())
@@ -905,7 +905,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
             APRPercent,
             rewardPBlock,
             userPendingReward,
-            userStake,
+            userStaked,
             firstToken,
             secondToken,
             liquidity,
@@ -1182,7 +1182,8 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           <NavWrapper>
             <Banner>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
-              {isMobile ? <object data="/images/galaxy.svg" /> : <object data="/images/galaxy-desktop.svg" />}
+              <object data="/images/galaxy-desktop.svg" />
+              {/* {isMobile ? <object data="/images/galaxy.svg" /> : <object data="/images/galaxy-desktop.svg" />} */}
               <div className="corner1" />
               <div className="edge1" />
               <div className="corner2" />
@@ -1493,6 +1494,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           })}
         </div>
       </Container>
+
       <ModalBase
         open={modalReject.isShow}
         handleClose={() => setModalReject({ ...modalReject, isShow: false })}
