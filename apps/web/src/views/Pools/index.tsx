@@ -1182,8 +1182,7 @@ const Pools: React.FC<React.PropsWithChildren> = () => {
           <NavWrapper>
             <Banner>
               {/* eslint-disable-next-line jsx-a11y/alt-text */}
-              <object data="/images/galaxy-desktop.svg" />
-              {/* {isMobile ? <object data="/images/galaxy.svg" /> : <object data="/images/galaxy-desktop.svg" />} */}
+              {isMobile ? <object data="/images/galaxy.svg" /> : <object data="/images/galaxy-desktop.svg" />}
               <div className="corner1" />
               <div className="edge1" />
               <div className="corner2" />
