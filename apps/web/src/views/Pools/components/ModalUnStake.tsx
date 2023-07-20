@@ -280,7 +280,7 @@ const CustomButton = styled(Button)`
 
 export const ShowBalance = ({ balance }) => {
   const { t } = useTranslation()
-  if (balance === '-') return <span>Balance: -</span>
+  if (balance === '-') return <span className="balance_container">Balance: -</span>
   return (
     <>
       {Number(balance) <= 0.000001 ? (
