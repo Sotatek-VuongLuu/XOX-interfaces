@@ -2672,5 +2672,7 @@
   "Slippage is high. Your transaction may be front-run": "Slippage is high. Your transaction may be front-run",
   "Slippage is low. Your transaction may fail": "Slippage is low. Your transaction may fail",
   "MORE INFORMATION": "MORE INFORMATION",
-  "Your trade route": "Your trade route"
+  "Your trade route": "Your trade route",
+  "We could not find anything. Try again.": "We could not find anything. Try again.",
+  "Top traded pairs": "Top traded pairs"
 }

@@ -370,6 +370,28 @@ export const SearchInputWrapper = styled.div`
     display: block;
   }
 
+  .title-trading-pair {
+    color: rgba(255, 255, 255, 0.38);
+    margin-bottom: 16px;
+    padding: 0 16px;
+  }
+
+  .try-typing {
+    color: rgba(255, 255, 255, 0.38);
+    padding: 0 16px;
+  }
+
+  .not-found {
+    color: rgba(255, 255, 255, 0.38);
+    margin-bottom: 16px;
+    padding: 0 16px;
+    display: flex;
+
+    svg {
+      margin-right: 10px;
+    }
+  }
+
   .dropdown-item {
     display: flex;
     flex-direction: row;
