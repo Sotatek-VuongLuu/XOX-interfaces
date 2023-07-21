@@ -75,6 +75,13 @@ export function useSortedTokensByQuery(tokens: Token[] | undefined, searchQuery:
 
     const trimmedSearchQuery = searchQuery.toLowerCase().trim()
 
+    if (searchQuery === '') {
+      return [
+        ...tokens.slice(0, 2),
+        ...tokens.slice(2).sort((a, b) => (a.symbol < b.symbol ? -1 : a.symbol === b.symbol ? 0 : 1)),
+      ]
+    }
+
     const symbolMatch = trimmedSearchQuery.split(/\s+/).filter((s) => s.length > 0)
 
     if (symbolMatch.length > 1) {

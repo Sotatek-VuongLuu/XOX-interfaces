@@ -152,9 +152,9 @@ function CurrencySearch({
 
   const filteredTokens: Token[] = useMemo(() => {
     const filterToken = createFilterToken(debouncedQuery)
-    return [...Object.values(allTokens).slice(0, 1), native as any, ...Object.values(allTokens).slice(1)].filter(
-      filterToken,
-    )
+    return [...Object.values(allTokens).slice(0, 1), native as any, ...Object.values(allTokens).slice(1)]
+      .filter((t) => !!t)
+      .filter(filterToken)
   }, [allTokens, debouncedQuery])
 
   const filteredQueryTokens = useSortedTokensByQuery(filteredTokens, debouncedQuery)
@@ -164,7 +164,6 @@ function CurrencySearch({
   const filteredSortedTokens: Token[] = useMemo(() => {
     return [...filteredQueryTokens] //.sort(tokenComparator)
   }, [filteredQueryTokens])
-  console.log(allTokens, filteredSortedTokens)
 
   const handleCurrencySelect = useCallback(
     (currency: Currency) => {

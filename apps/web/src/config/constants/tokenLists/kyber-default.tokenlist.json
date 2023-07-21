@@ -616,15 +616,6 @@
     },
     {
       "chainId": 1,
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
-      "name": "Ethereum",
-      "decimals": 18,
-      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/25fafcd1-a4f7-46d1-a623-529c5aabfa21.png",
-      "isWhitelisted": true
-    },
-    {
-      "chainId": 1,
       "address": "0x3b79a28264fc52c7b4cea90558aa0b162f7faf57",
       "symbol": "wMEMO",
       "name": "wrapped MEMO",
@@ -1341,15 +1332,6 @@
     },
     {
       "chainId": 56,
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "BNB",
-      "name": "BNB",
-      "decimals": 18,
-      "logoURI": "https://assets.coingecko.com/coins/images/825/small/bnb-icon2_2x.png?1644979850",
-      "isWhitelisted": true
-    },
-    {
-      "chainId": 56,
       "address": "0xf7de7e8a6bd59ed41a4b5fe50278b3b7f31384df",
       "symbol": "RDNT",
       "name": "Radiant",
@@ -1804,15 +1786,6 @@
       "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/baff3af0-f9a7-4d4f-bd2b-87ca3d031f03.png",
       "isWhitelisted": true,
       "domainSeparator": "0x51c881379d502b27709ba0ee4b7c17e4aa2ed1cea04d32666e9c7a0665a40bf5"
-    },
-    {
-      "chainId": 42161,
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
-      "name": "Ethereum",
-      "decimals": 18,
-      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/f0487ef6-8d55-4dcc-9215-42c91c440540.png",
-      "isWhitelisted": true
     },
     {
       "chainId": 42161,
@@ -2654,15 +2627,6 @@
     },
     {
       "chainId": 137,
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "MATIC",
-      "name": "Polygon",
-      "decimals": 18,
-      "logoURI": "https://assets.coingecko.com/coins/images/4713/small/matic-token-icon.png?1624446912",
-      "isWhitelisted": true
-    },
-    {
-      "chainId": 137,
       "address": "0x03b54a6e9a984069379fae1a4fc4dbae93b3bccd",
       "symbol": "wstETH",
       "name": "Wrapped liquid staked Ether 2.0 (PoS)",
@@ -3288,15 +3252,6 @@
     },
     {
       "chainId": 324,
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
-      "name": "Ethereum",
-      "decimals": 18,
-      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/9d299a31-a940-4129-845a-48da9224c2bc.png",
-      "isWhitelisted": true
-    },
-    {
-      "chainId": 324,
       "address": "0xcab3f741fa54e79e34753b95717b23018332b8ac",
       "symbol": "TES",
       "name": "Tiny Era Shard Token",
@@ -3757,15 +3712,6 @@
       "name": "Lido DAO Token",
       "decimals": 18,
       "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/da9720a3-e4de-4890-97e3-f62d75e50e33.png",
-      "isWhitelisted": true
-    },
-    {
-      "chainId": 10,
-      "address": "0xeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-      "symbol": "ETH",
-      "name": "Ether",
-      "decimals": 18,
-      "logoURI": "https://storage.googleapis.com/ks-setting-1d682dca/2e005aef-9acb-403c-b085-8f9444a15243.png",
       "isWhitelisted": true
     },
     {
