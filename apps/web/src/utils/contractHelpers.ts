@@ -49,6 +49,7 @@ import {
   getXOXTokenAddressBridge,
   getContractFarmingLPAddress,
   getContractPreSaleAddress,
+  getContractSeedSaleAddress,
 } from 'utils/addressHelpers'
 
 // ABI
@@ -109,6 +110,7 @@ import xoxPoolAbi from 'config/abi/erc20XOXPool.json'
 import xoxBridgeAbi from 'config/abi/xoxBridge.json'
 import XOXFarmingLPAbi from 'config/abi/XOXFarmingLP.json'
 import xOXPreSaleAbi from 'config/abi/xOXPreSale.json'
+import XOXSeedSaleAbi from 'config/abi/XOXSeedSale.json'
 
 // Types
 import type {
@@ -471,4 +473,13 @@ export const getContractPreSale = (signer?: Signer | Provider, chainId?: number)
     chainId,
     signer,
   }) as XOXPreSale
+}
+
+export const getContractSeedSale = (signer?: Signer | Provider, chainId?: number) => {
+  return getContract({
+    abi: XOXSeedSaleAbi,
+    address: getContractSeedSaleAddress(chainId),
+    chainId,
+    signer,
+  })
 }

@@ -15,11 +15,11 @@ export const useProviderOrSigner = (withSignerIfPossible = true, forceBSC?: bool
   )
 }
 
-export const useProviderOrSignerPresale = (withSignerIfPossible = true, chainId: ChainId) => {
+export const useProviderOrSignerVestingsale = (withSignerIfPossible = true, chainId: ChainId) => {
   const provider = useProvider({ chainId })
   const { address, isConnected } = useAccount()
   const { data: signer } = useSigner()
-  const isSupport = [ChainId.ETHEREUM, ChainId.GOERLI].includes(chainId)
+  const isSupport = [ChainId.ETHEREUM, ChainId.GOERLI, ChainId.POLYGON_TESTNET].includes(chainId)
   return useMemo(
     () => (withSignerIfPossible && address && isConnected && signer && isSupport ? signer : provider),
     [address, isConnected, signer, withSignerIfPossible, isSupport, provider],

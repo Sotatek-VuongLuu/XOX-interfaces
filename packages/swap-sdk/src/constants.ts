@@ -28,6 +28,7 @@ export const FACTORY_ADDRESS_MAP: Record<number, string> = {
   [ChainId.GOERLI]: FACTORY_ADDRESS_ETH,
   [ChainId.BSC]: FACTORY_ADDRESS,
   [ChainId.BSC_TESTNET]: '0x6725F303b657a9451d8BA641348b6761A6CC7a17',
+  [ChainId.POLYGON_TESTNET]: '0x641AA9B97EEf1c4A56475609D6ad1B5507804cfD',
 }
 
 export const PAIR_XOX_BUSD: Record<number, string> = {
@@ -36,6 +37,8 @@ export const PAIR_XOX_BUSD: Record<number, string> = {
   [ChainId.GOERLI]: '0xE8D6f48CE1beCeCa40a848bEb177BcD17C25303B',
   // [ChainId.BSC]: FACTORY_ADDRESS,
   [ChainId.BSC_TESTNET]: '0xaad96063144d0d7d9395db418a5060512f71d41f',
+  [ChainId.POLYGON_TESTNET]: '0x407324896E66b223AC9B011d5CEe2d6413985A04',
+
 }
 
 export const XOX_ADDRESS: Record<number, string> = {
@@ -47,7 +50,7 @@ export const XOX_ADDRESS: Record<number, string> = {
   // [ChainId.BSC]: '',
   [ChainId.ARBITRUM_TESTNET]: '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
   // [ChainId.BSC]: '',
-  [ChainId.POLYGON_TESTNET]: '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
+  [ChainId.POLYGON_TESTNET]: '0x2fBc0d2910483a458213E2beb3d31B92A2D58145',
   // [ChainId.BSC]: '',
   [ChainId.ZKSYNC_TESTNET]: '0xCc7283a00481de9AdBE379c3c2459691a6ee274a',
   // [ChainId.BSC]: '',
@@ -60,6 +63,7 @@ export const USD_ADDRESS: Record<number, string> = {
   [ChainId.GOERLI]: '0x8E96c0aC1ABd86ba1652D843CA024FD0939b3760',
   [ChainId.BSC]: '0xe9e7CEA3DedcA5984780Bafc599bD69ADd087D56',
   [ChainId.BSC_TESTNET]: '0xc60a52351918c13eF3B27F72e5E71877ca3cB13A',
+  [ChainId.POLYGON_TESTNET]: '0x15baecA8C5fAbC7fa441B49d54e5A4a2a30C907a',
 }
 export const INIT_CODE_HASH = '0x00fb7f630766e6a796048ea87d01acd3068e8ff67d078148a3fa3f4a84f69bd5'
 

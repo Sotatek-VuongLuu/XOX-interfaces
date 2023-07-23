@@ -31,7 +31,7 @@ import {
 } from 'services/presale'
 import { getBalancesForEthereumAddress } from 'ethereum-erc20-token-balances-multicall'
 import { useProvider } from 'wagmi'
-import { USDT, USDT_GOERLI } from '@pancakeswap/tokens'
+import { USDT, USDT_MUMBAI } from '@pancakeswap/tokens'
 import BackedBy from './Components/BackedBy'
 import ChartSalePage from './Components/Chart'
 import CountDownBlock from './Components/CountDownBlock'
@@ -338,7 +338,7 @@ export enum TYPE_BY {
   BY_ETH,
 }
 
-export const USDC_TEST = '0x8E96c0aC1ABd86ba1652D843CA024FD0939b3760'
+export const USDC_TEST = '0x15baecA8C5fAbC7fa441B49d54e5A4a2a30C907a'
 
 export const NATIVE_TOKEN = '0x0000000000000000000000000000000000000000'
 export const ADDRESS_CODE = '0x0000000000000000000000000000000000000000'
@@ -394,7 +394,7 @@ interface IDataWhitelist {
 }
 
 export const USDC_TESTNET = new ERC20Token(
-  ChainId.GOERLI,
+  ChainId.POLYGON_TESTNET,
   USDC_TEST,
   6,
   'USDC',
@@ -444,19 +444,19 @@ function VestingPage() {
   const contractPreSale = !account
     ? process.env.NODE_ENV === 'production'
       ? notSupport.includes(chainId)
-        ? useXOXPreSaleContract(ChainId.GOERLI)
-        : useXOXPreSaleContract(ChainId.GOERLI) /// OR ETH ON MAINNET
-      : useXOXPreSaleContract(ChainId.GOERLI)
+        ? useXOXPreSaleContract(ChainId.POLYGON_TESTNET)
+        : useXOXPreSaleContract(ChainId.POLYGON_TESTNET) /// OR ETH ON MAINNET
+      : useXOXPreSaleContract(ChainId.POLYGON_TESTNET)
     : notSupport.includes(chainId)
-    ? useXOXPreSaleContract(ChainId.GOERLI)
-    : useXOXPreSaleContract(ChainId.GOERLI)
-
+    ? useXOXPreSaleContract(ChainId.POLYGON_TESTNET)
+    : useXOXPreSaleContract(ChainId.POLYGON_TESTNET)
+  
   const [whiteList, setWhiteList] = useState<string[]>([])
   const [isUserInWhiteList, setIsUserInWhiteList] = useState<boolean>(false)
   const [lanchTime, setLanchTime] = useState<number | null>(null)
 
   const [approvalState, approveCallback] = useApproveCallback(
-    USDT[ChainId.GOERLI] && tryParseAmount(String(amount), USDT_GOERLI),
+    USDT[ChainId.POLYGON_TESTNET] && tryParseAmount(String(amount), USDT_MUMBAI),
     getContractPreSaleAddress(5),
   )
   const [dataRef, setDataRef] = useState<IRefInfo[]>(initialRefInfo)
@@ -622,7 +622,7 @@ function VestingPage() {
   const handeInvest = async (code: any, current: number) => {
     const timeStamp = Date.now()
     const valueETH = typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseEther('0')
-    const addressTokenBuy = typeBuyPrice === TYPE_BY.BY_ETH ? NATIVE_TOKEN : USDT[ChainId.GOERLI]
+    const addressTokenBuy = typeBuyPrice === TYPE_BY.BY_ETH ? NATIVE_TOKEN : USDT[ChainId.POLYGON_TESTNET]
     const amountParse =
       typeBuyPrice === TYPE_BY.BY_ETH ? parseEther(amount.toString()) : parseUnits(amount.toString(), decimal)
     setMessageConfirm(`${t('Buying')} ${Number(amountXOX).toLocaleString()} XOX`)
@@ -992,7 +992,7 @@ function VestingPage() {
     })
     getBalancesForEthereumAddress({
       // erc20 tokens you want to query!
-      contractAddresses: [USDT[ChainId.GOERLI]],
+      contractAddresses: [USDT[ChainId.POLYGON_TESTNET]],
       // ethereum address of the user you want to get the balances for
       ethereumAddress: account,
       // your ethers provider

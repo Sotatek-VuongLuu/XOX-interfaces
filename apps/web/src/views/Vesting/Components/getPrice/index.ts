@@ -2,9 +2,9 @@ import { ethers } from 'ethers'
 import aggregatorV3InterfaceABI from './abi/aggregatorV3InterfaceABI.json'
 
 export const getPriceUsdPerToken = async () => {
-  const provider = new ethers.providers.JsonRpcProvider('https://rpc.ankr.com/eth_goerli')
+  const provider = new ethers.providers.JsonRpcProvider('https://rpc.ankr.com/polygon_mumbai')
   const priceFeed = new ethers.Contract(
-    '0xD4a33860578De61DBAbDc8BFdb98FD742fA7028e',
+    '0xf33426fb1a9513a91C1D96d92Ee020BE035b4f6f',
     aggregatorV3InterfaceABI,
     provider,
   )

@@ -160,3 +160,7 @@ export const getContractFarmingLPAddress = (chainId?: number) => {
 export const getContractPreSaleAddress = (chainId?: number) => {
   return getAddress(addresses.preSaleContactAddress, chainId)
 }
+
+export const getContractSeedSaleAddress = (chainId?: number) => {
+  return getAddress(addresses.seedSaleContactAddress, chainId)
+}

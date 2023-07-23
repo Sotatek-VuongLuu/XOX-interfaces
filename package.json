@@ -23,7 +23,8 @@
     "clean": "turbo run clean && rm -rf node_modules",
     "changeset": "changeset",
     "version-packages": "changeset version",
-    "release-packages": "turbo run build --filter=./packages/* && changeset version && changeset publish"
+    "release-packages": "turbo run build --filter=./packages/* && changeset version && changeset publish",
+    "vercel-build": "PORT=3001 turbo run build --filter=web..."
   },
   "engines": {
     "node": ">=16.0.0"

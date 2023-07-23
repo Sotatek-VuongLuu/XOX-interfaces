@@ -167,6 +167,7 @@ export default {
     [ChainId.GOERLI]: '0x1275a89b68eb8563a972600e5e06Fbf1bDf47660',
     [ChainId.ETHEREUM]: '',
     [ChainId.BSC]: '',
+    [ChainId.POLYGON_TESTNET]: '0xC82f6DF626787D0FD686Ed211A232Fe8Cd1EF42d',
   },
   contractXOXToken: {
     [ChainId.BSC_TESTNET]: '0x6bb15Fd179539BFD6E78f18f5d91543142e0Ad9e',
@@ -176,7 +177,7 @@ export default {
     [ChainId.ARBITRUM]: '0x90fded525b5E613c9dc0fE600d9b52a648386e2E', // TODO: change address
     [ChainId.ARBITRUM_TESTNET]: '0x90fded525b5E613c9dc0fE600d9b52a648386e2E', // TODO: change address
     [ChainId.POLYGON]: '0x47869A5dcECd2593F02d27f65cB4A5278DE16CD2', // TODO: change address
-    [ChainId.POLYGON_TESTNET]: '0x47869A5dcECd2593F02d27f65cB4A5278DE16CD2', // TODO: change address
+    [ChainId.POLYGON_TESTNET]: '0x2fBc0d2910483a458213E2beb3d31B92A2D58145', // TODO: change address
     [ChainId.ZKSYNC]: '0x34a12190B65b684A5CC1ec27a6f8d924D1a317be', // TODO: change address
     [ChainId.ZKSYNC_TESTNET]: '0x34a12190B65b684A5CC1ec27a6f8d924D1a317be', // TODO: change address
     [ChainId.OPTIMISM]: '0xce221120f145b456ba41b370f11d5e536ecd2bcb', // TODO: change address
@@ -185,6 +186,7 @@ export default {
   contractXOXPool: {
     [ChainId.BSC_TESTNET]: '0xaad96063144d0d7d9395db418a5060512f71d41f',
     [ChainId.GOERLI]: '0xE8D6f48CE1beCeCa40a848bEb177BcD17C25303B',
+    [ChainId.POLYGON_TESTNET]: '0x407324896E66b223AC9B011d5CEe2d6413985A04',
   },
   contractBridgeToken: {
     [ChainId.ETHEREUM]: '0x27D2ec949C4D93D6246E538eBCACf1A76d7A899E', // TODO: change address
@@ -205,17 +207,27 @@ export default {
     [ChainId.GOERLI]: '0x92b3d85b4589bBEE8e3a04114C217Aa497B44aDD',
     [ChainId.ETHEREUM]: '', // TODO: change address
     [ChainId.BSC]: '',
+    [ChainId.POLYGON_TESTNET]: '0x2fBc0d2910483a458213E2beb3d31B92A2D58145'
   },
   farmingLP: {
     [ChainId.BSC_TESTNET]: '0xA5002aFA8B19a6B4A6040bB0b82a07dA56291E4d',
     [ChainId.GOERLI]: '0xC9A913D792E5197cAeAE525c34C61700fe93aEE8',
     [ChainId.ETHEREUM]: '', // TODO: change address
     [ChainId.BSC]: '',
+    [ChainId.POLYGON_TESTNET]: '0xd4AFF0E854F2d40292ceb7c1F8BB52402f2368Ad'
   },
   preSaleContactAddress: {
     [ChainId.GOERLI]: '0xA5A0097B195691C3799E85aE6fa6cAc4DD31BD4e',
     [ChainId.BSC_TESTNET]: '',
     [ChainId.BSC]: '',
     [ChainId.ETHEREUM]: '', // TODO: change address
+    [ChainId.POLYGON_TESTNET]: '0xb736D7B1c7E64561C59587D02fb8Cd3370A46F01'
+  },
+  seedSaleContactAddress: {
+    [ChainId.GOERLI]: '',
+    [ChainId.BSC_TESTNET]: '',
+    [ChainId.BSC]: '',
+    [ChainId.ETHEREUM]: '', // TODO: change address
+    [ChainId.POLYGON_TESTNET]: '0x05d14C442D34a456940D751c0d2BCEa914f10933'
   },
 }

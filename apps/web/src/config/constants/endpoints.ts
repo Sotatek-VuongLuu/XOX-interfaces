@@ -42,6 +42,7 @@ export const ENDPOINT_GRAPHQL_WITH_CHAIN = {
   [ChainId.ETHEREUM]: '',
   [ChainId.BSC_TESTNET]: 'https://dev-subgraph.xoxnet.sotatek.works/subgraphs/name/staging',
   [ChainId.GOERLI]: 'https://api.studio.thegraph.com/query/43777/staging-xox-lab-subgraph/v0.0.1',
+  [ChainId.POLYGON_TESTNET]:'https://api.studio.thegraph.com/query/50063/victor_xoxlabs_subgraph_dev/v0.0.8'
 }
 
 export const INFO_CLIENT_WITH_CHAIN = {

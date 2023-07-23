@@ -24,6 +24,7 @@ import RankingIcon from 'components/Svg/RankingIcon'
 import EnglishIcon from 'components/Svg/EnglishIcon'
 import VietNamIcon from 'components/Svg/VietNamIcon'
 import LotteryGame from 'components/Svg/LotteryGameIcon'
+import { SUPPORT_ONLY_ETH } from 'config/constants/supportChains'
 
 export type ConfigMenuDropDownItemsType = DropdownMenuItems & { hideSubNav?: boolean; showTooltip?: string }
 export type ConfigMenuItemsType = Omit<MenuItemsType, 'items'> & { hideSubNav?: boolean; image?: string } & {
@@ -147,6 +148,16 @@ const config: (
       fillIcon: EarnFillIcon,
       image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/decorations/pe2.png`,
       items: [],
+      //  supportChainIds: SUPPORT_ONLY_ETH,
+    },
+    {
+      label: t('Seed-sales'),
+      href: '/seed-sales',
+      icon: EarnIcon,
+      fillIcon: EarnFillIcon,
+      image: `${process.env.NEXT_PUBLIC_ASSETS_URI}/decorations/pe2.png`,
+      items: [],
+      // supportChainIds: SUPPORT_ONLY_ETH,
     },
   ].map((item) => addMenuItemSupported(item, chainId))
 

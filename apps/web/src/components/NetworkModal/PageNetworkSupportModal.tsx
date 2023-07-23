@@ -65,7 +65,7 @@ export function PageNetworkSupportModal() {
           <Button
             variant={foundChain && lastValidPath ? 'secondary' : 'primary'}
             isLoading={isLoading}
-            onClick={() => switchNetworkAsync(ChainId.ETHEREUM)}
+            onClick={() => switchNetworkAsync(ChainId.POLYGON_TESTNET)}
           >
             {t('Switch to %chain%', { chain: 'Ethereum' })}
           </Button>

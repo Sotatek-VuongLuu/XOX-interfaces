@@ -222,6 +222,14 @@
       "logoURI": ""
     },
     {
+      "name": "XOX",
+      "address": "0x2fBc0d2910483a458213E2beb3d31B92A2D58145",
+      "symbol": "XOX",
+      "decimals": 18,
+      "chainId": 80001,
+      "logoURI": ""
+    },
+    {
       "name": "Wrapped Bitcoin",
       "address": "0x2a924bcD60450C7a354413d8b2c906A3173F9208",
       "symbol": "WBTC",
@@ -243,6 +251,14 @@
       "symbol": "USDC",
       "decimals": 6,
       "chainId": 5,
+      "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
+    },
+    {
+      "name": "USD Coin",
+      "address": "0x15baecA8C5fAbC7fa441B49d54e5A4a2a30C907a",
+      "symbol": "USDC",
+      "decimals": 6,
+      "chainId": 80001,
       "logoURI": "https://s2.coinmarketcap.com/static/img/coins/64x64/3408.png"
     },
     {

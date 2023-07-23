@@ -56,7 +56,7 @@ export const XOX_ARBITRUM_TESTNET = new ERC20Token(
 
 export const XOX_POLYGON_MAINNET = new ERC20Token(
   ChainId.POLYGON,
-  '0x47869A5dcECd2593F02d27f65cB4A5278DE16CD2',
+  '0x2fBc0d2910483a458213E2beb3d31B92A2D58145',
   18,
   'XOX',
   'XOX',
@@ -65,7 +65,7 @@ export const XOX_POLYGON_MAINNET = new ERC20Token(
 
 export const XOX_POLYGON_TESTNET = new ERC20Token(
   ChainId.POLYGON_TESTNET,
-  '0x47869A5dcECd2593F02d27f65cB4A5278DE16CD2',
+  '0x2fBc0d2910483a458213E2beb3d31B92A2D58145',
   18,
   'XOX',
   'XOX',
@@ -126,6 +126,15 @@ export const XOX_USDC_TESTNET = new ERC20Token(
   'http://localhost:3001/pools?chainId=5',
 )
 
+export const XOX_USDC_MUMBAI = new ERC20Token(
+  ChainId.POLYGON_TESTNET,
+  '0x407324896E66b223AC9B011d5CEe2d6413985A04',
+  18,
+  'XOX-USDC',
+  'XOX-USDC',
+  'http://localhost:3001/pools?chainId=5',
+)
+
 export const XOX: Record<ChainId, ERC20Token> = {
   [ChainId.ETHEREUM]: XOX_MAINNET,
   [ChainId.RINKEBY]: XOX_GOERLI,
@@ -151,7 +160,7 @@ export const XOXLP: Record<ChainId, ERC20Token> = {
   [ChainId.ARBITRUM]: undefined,
   [ChainId.ARBITRUM_TESTNET]: undefined,
   [ChainId.POLYGON]: undefined,
-  [ChainId.POLYGON_TESTNET]: undefined,
+  [ChainId.POLYGON_TESTNET]: XOX_USDC_MUMBAI,
   [ChainId.ZKSYNC]: undefined,
   [ChainId.ZKSYNC_TESTNET]: undefined,
   [ChainId.OPTIMISM]: undefined,
@@ -213,6 +222,14 @@ export const USDC_RINKEBY = new ERC20Token(
 export const USDC_GOERLI = new ERC20Token(
   ChainId.GOERLI,
   '0x8E96c0aC1ABd86ba1652D843CA024FD0939b3760',
+  6,
+  'tUSDC',
+  'test USD Coin',
+)
+
+export const USDC_MUMBAI = new ERC20Token(
+  ChainId.POLYGON_TESTNET,
+  '0x15baecA8C5fAbC7fa441B49d54e5A4a2a30C907a',
   6,
   'tUSDC',
   'test USD Coin',
@@ -389,6 +406,14 @@ export const USDT_GOERLI = new ERC20Token(
   'tUSDT',
   'test USD Tether',
 )
+
+export const USDT_MUMBAI = new ERC20Token(
+  ChainId.POLYGON_TESTNET,
+  '0x773B68156b7EbEFD823A3eA4651f60c71A03A336',
+  6,
+  'tUSDT',
+  'test USD Tether',
+)
 // export const XOX_BSC_TESTNET = new ERC20Token(ChainId.BSC_TESTNET, '0x798bb5B1CD7ed74654EBfD5D58a24d3D9Cc67847', 18, 'XOX')
 
 export const BUSD: Record<ChainId, ERC20Token> = {
@@ -418,6 +443,7 @@ export const USDC = {
   [ChainId.ETHEREUM]: USDC_ETH,
   [ChainId.RINKEBY]: USDC_RINKEBY,
   [ChainId.GOERLI]: USDC_GOERLI,
+  [ChainId.POLYGON_TESTNET]: USDC_MUMBAI,
 }
 
 export const USDT = {
@@ -425,6 +451,8 @@ export const USDT = {
   [ChainId.ETHEREUM]: USDT_ETH,
   [ChainId.GOERLI]: '0x1b57aF4ab903fD70f96Ff033498dF44D7B61201C',
   [ChainId.BSC_TESTNET]: '0xc60a52351918c13eF3B27F72e5E71877ca3cB13A',
+  [ChainId.POLYGON_TESTNET]: '0x773B68156b7EbEFD823A3eA4651f60c71A03A336',
+
 }
 
 export const USD = {
@@ -433,6 +461,7 @@ export const USD = {
   [ChainId.ETHEREUM]: USDC_ETH,
   [ChainId.RINKEBY]: USDC_RINKEBY,
   [ChainId.GOERLI]: USDC_GOERLI,
+  [ChainId.POLYGON_TESTNET]: USDC_MUMBAI,
 }
 
 export const WBTC_ETH = new ERC20Token(

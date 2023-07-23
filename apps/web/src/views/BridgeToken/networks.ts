@@ -25,7 +25,7 @@ export const NETWORK_ICON = {
 
 export const DAPP_CHAINS =
   process.env.NEXT_PUBLIC_TEST_MODE === '1'
-    ? [ChainId.BSC, ChainId.ETHEREUM, ChainId.BSC_TESTNET, ChainId.GOERLI]
+    ? [ChainId.BSC, ChainId.ETHEREUM, ChainId.BSC_TESTNET, ChainId.GOERLI, ChainId.POLYGON_TESTNET]
     : [ChainId.BSC, ChainId.ETHEREUM]
 
 export const MAINNET_CHAINS = [

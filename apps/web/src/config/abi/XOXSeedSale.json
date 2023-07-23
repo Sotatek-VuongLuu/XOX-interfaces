@@ -1,0 +1,558 @@
+[
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_xoxTokenAddress",
+        "type": "address"
+      },
+      {
+        "internalType": "address",
+        "name": "_treasuryContractAddress",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "vestingAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "claimAmountXOX",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountBonusXOXS",
+        "type": "uint256"
+      }
+    ],
+    "name": "ClaimedPartnerSale",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "internalType": "address",
+        "name": "vestingAddress",
+        "type": "address"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "claimAmountXOX",
+        "type": "uint256"
+      },
+      {
+        "indexed": false,
+        "internalType": "uint256",
+        "name": "amountBonusXOXS",
+        "type": "uint256"
+      }
+    ],
+    "name": "ClaimedSeedSale",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "previousOwner",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": true,
+        "internalType": "address",
+        "name": "vestingToken",
+        "type": "address"
+      },
+      {
+        "indexed": true,
+        "internalType": "uint256",
+        "name": "vestingAmount",
+        "type": "uint256"
+      }
+    ],
+    "name": "VestingAppliedToken",
+    "type": "event"
+  },
+  {
+    "inputs": [],
+    "name": "TIME_TOKEN_LAUNCH",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_ONE_MONTH",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_part",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amountVesting",
+        "type": "uint256"
+      }
+    ],
+    "name": "_calculatorAmountPartnerSaleClaim",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_part",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "_amountVesting",
+        "type": "uint256"
+      }
+    ],
+    "name": "_calculatorAmountSeedSaleClaim",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "pure",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "_getNumberofClaims",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "amountVesting",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "applyVesting",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_time",
+        "type": "uint256"
+      }
+    ],
+    "name": "changeOneMonth",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "uint256",
+        "name": "_time",
+        "type": "uint256"
+      }
+    ],
+    "name": "changeTimeLaunch",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimPartnerSale",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "claimSeedSale",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "durationLockPartnerSale",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "durationLockSeedSale",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getPendingAmountPartnerSale",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "account",
+        "type": "address"
+      }
+    ],
+    "name": "getPendingAmountSeedSale",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "investors_",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amountXOXArr_",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amountXOXSBonusArr_",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "setupPartnerSale",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address[]",
+        "name": "investors_",
+        "type": "address[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amountXOXArr_",
+        "type": "uint256[]"
+      },
+      {
+        "internalType": "uint256[]",
+        "name": "amountXOXSBonusArr_",
+        "type": "uint256[]"
+      }
+    ],
+    "name": "setupSeedSale",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "newOwner",
+        "type": "address"
+      }
+    ],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "_newContractAddress",
+        "type": "address"
+      }
+    ],
+    "name": "updateTreasuryContractAddress",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "vestingInfoPartnerSale",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountTokenAllocation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountTGE",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "xoxsAmountBonus",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "numberOfClaims",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "vestingInfoSeedSale",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountTokenAllocation",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountTGE",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "xoxsAmountBonus",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "numberOfClaims",
+        "type": "uint256"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "vestingSchedulePartnerSale",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountOfGrant",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountClaimed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "numberOfClaimed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "isClaimedTGE",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "name": "vestingScheduleSeedSale",
+    "outputs": [
+      {
+        "internalType": "uint256",
+        "name": "amountOfGrant",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "amountClaimed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "uint256",
+        "name": "numberOfClaimed",
+        "type": "uint256"
+      },
+      {
+        "internalType": "bool",
+        "name": "isClaimedTGE",
+        "type": "bool"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "xox",
+    "outputs": [
+      {
+        "internalType": "address",
+        "name": "",
+        "type": "address"
+      }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]

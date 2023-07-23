@@ -1,0 +1,7 @@
+{
+    "version": 2,
+    "framework": "next.js",
+    "buildCommand": "turbo run build --filter=web",
+    "devCommand": "turbo run start --filter=web",
+    "outputDirectory": "apps/web/.next"
+  }
